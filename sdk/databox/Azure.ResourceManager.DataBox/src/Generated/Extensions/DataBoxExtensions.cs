@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataBox.Mock;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,224 +20,78 @@ namespace Azure.ResourceManager.DataBox
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataBox. </summary>
     public static partial class DataBoxExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static DataBoxJobResourceExtensionClient GetDataBoxJobResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new DataBoxJobResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static DataBoxJobResourceExtensionClient GetDataBoxJobResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DataBoxJobResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region DataBoxJobResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DataBoxJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxJobResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataBoxJobResource" /> object. </returns>
+        public static DataBoxJobResource GetDataBoxJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DataBoxJobResource.ValidateResourceId(id);
+                return new DataBoxJobResource(client, id);
             }
             );
         }
-
-        /// <summary>
-        /// Lists all the jobs available under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataBoxJobResource> GetDataBoxJobsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDataBoxJobsAsync(skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the jobs available under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataBoxJobResource> GetDataBoxJobs(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDataBoxJobs(skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_ValidateAddress</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Shipping address of the customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<AddressValidationOutput>> ValidateAddressAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).ValidateAddressAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_ValidateAddress</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Shipping address of the customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<AddressValidationOutput> ValidateAddress(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).ValidateAddress(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// This method does all necessary pre-job creation validation under subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_ValidateInputs</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Inputs of the customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// This method does all necessary pre-job creation validation under subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_ValidateInputs</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Inputs of the customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<DataBoxValidationResult> ValidateInputs(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).ValidateInputs(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// This API provides configuration details specific to given region/location at Subscription level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_RegionConfiguration</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Request body to get the configuration for the region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// This API provides configuration details specific to given region/location at Subscription level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_RegionConfiguration</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Request body to get the configuration for the region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<RegionConfigurationResult> GetRegionConfiguration(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).GetRegionConfiguration(location, content, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
+        #endregion
 
         /// <summary> Gets a collection of DataBoxJobResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataBoxJobResources and their operations over a DataBoxJobResource. </returns>
         public static DataBoxJobCollection GetDataBoxJobs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetDataBoxJobs();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataBoxJobs();
         }
 
         /// <summary>
@@ -312,7 +167,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).GetAvailableSkusAsync(location, content, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableSkusAsync(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -338,7 +193,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).GetAvailableSkus(location, content, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableSkus(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -363,7 +218,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(resourceGroupResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -388,7 +243,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).ValidateInputs(location, content, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).ValidateInputs(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -413,7 +268,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(resourceGroupResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -438,26 +293,201 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).GetRegionConfiguration(location, content, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRegionConfiguration(location, content, cancellationToken);
         }
 
-        #region DataBoxJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxJobResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Lists all the jobs available under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxJobResource" /> object. </returns>
-        public static DataBoxJobResource GetDataBoxJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataBoxJobResource> GetDataBoxJobsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxJobResource.ValidateResourceId(id);
-                return new DataBoxJobResource(client, id);
-            }
-            );
+            return GetDataBoxJobResourceExtensionClient(subscriptionResource).GetDataBoxJobsAsync(skipToken, cancellationToken);
         }
-        #endregion
+
+        /// <summary>
+        /// Lists all the jobs available under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataBoxJobResource> GetDataBoxJobs(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            return GetDataBoxJobResourceExtensionClient(subscriptionResource).GetDataBoxJobs(skipToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateAddress</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="content"> Shipping address of the customer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<AddressValidationOutput>> ValidateAddressAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateAddressAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateAddress</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="content"> Shipping address of the customer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<AddressValidationOutput> ValidateAddress(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateAddress(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// This method does all necessary pre-job creation validation under subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputs</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="content"> Inputs of the customer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This method does all necessary pre-job creation validation under subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputs</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="content"> Inputs of the customer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<DataBoxValidationResult> ValidateInputs(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateInputs(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// This API provides configuration details specific to given region/location at Subscription level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="content"> Request body to get the configuration for the region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This API provides configuration details specific to given region/location at Subscription level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="content"> Request body to get the configuration for the region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<RegionConfigurationResult> GetRegionConfiguration(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegionConfiguration(location, content, cancellationToken);
+        }
     }
 }

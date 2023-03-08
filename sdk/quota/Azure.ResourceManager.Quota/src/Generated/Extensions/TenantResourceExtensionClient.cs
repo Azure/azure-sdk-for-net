@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Quota;
 using Azure.ResourceManager.Quota.Models;
 
-namespace Azure.ResourceManager.Quota
+namespace Azure.ResourceManager.Quota.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _quotaOperationClientDiagnostics;
         private QuotaOperationRestOperations _quotaOperationRestClient;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Quota
         {
         }
 
-        private ClientDiagnostics QuotaOperationClientDiagnostics => _quotaOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics QuotaOperationClientDiagnostics => _quotaOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private QuotaOperationRestOperations QuotaOperationRestClient => _quotaOperationRestClient ??= new QuotaOperationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

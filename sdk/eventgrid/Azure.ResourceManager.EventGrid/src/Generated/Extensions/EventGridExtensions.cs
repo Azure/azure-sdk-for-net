@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EventGrid.Mock;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,897 +20,181 @@ namespace Azure.ResourceManager.EventGrid
     /// <summary> A class to add extension methods to Azure.ResourceManager.EventGrid. </summary>
     public static partial class EventGridExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new ArmResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of TopicTypeResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of TopicTypeResources and their operations over a TopicTypeResource. </returns>
-        public static TopicTypeCollection GetTopicTypes(this TenantResource tenantResource)
-        {
-            return GetExtensionClient(tenantResource).GetTopicTypes();
-        }
-
-        /// <summary>
-        /// Get information about a topic type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TopicTypes_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="topicTypeName"> Name of the topic type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TopicTypeResource>> GetTopicTypeAsync(this TenantResource tenantResource, string topicTypeName, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetTopicTypes().GetAsync(topicTypeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get information about a topic type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TopicTypes_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="topicTypeName"> Name of the topic type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<TopicTypeResource> GetTopicType(this TenantResource tenantResource, string topicTypeName, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetTopicTypes().Get(topicTypeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of VerifiedPartnerResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VerifiedPartnerResources and their operations over a VerifiedPartnerResource. </returns>
-        public static VerifiedPartnerCollection GetVerifiedPartners(this TenantResource tenantResource)
-        {
-            return GetExtensionClient(tenantResource).GetVerifiedPartners();
-        }
-
-        /// <summary>
-        /// Get properties of a verified partner.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VerifiedPartners_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="verifiedPartnerName"> Name of the verified partner. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<VerifiedPartnerResource>> GetVerifiedPartnerAsync(this TenantResource tenantResource, string verifiedPartnerName, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetVerifiedPartners().GetAsync(verifiedPartnerName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get properties of a verified partner.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VerifiedPartners_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="verifiedPartnerName"> Name of the verified partner. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<VerifiedPartnerResource> GetVerifiedPartner(this TenantResource tenantResource, string verifiedPartnerName, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetVerifiedPartners().Get(verifiedPartnerName, cancellationToken);
-        }
-
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient((client) =>
-            {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
-        }
-
-        /// <summary>
-        /// List all the domains under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/domains</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Domains_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventGridDomainResource> GetEventGridDomainsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetEventGridDomainsAsync(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the domains under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/domains</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Domains_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventGridDomainResource> GetEventGridDomains(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetEventGridDomains(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the topics under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/topics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topics_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventGridTopicResource> GetEventGridTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetEventGridTopicsAsync(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the topics under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/topics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topics_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventGridTopicResource> GetEventGridTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetEventGridTopics(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the partner configurations under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerConfigurations_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PartnerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PartnerConfigurationResource> GetPartnerConfigurationsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPartnerConfigurationsAsync(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the partner configurations under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerConfigurations_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PartnerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PartnerConfigurationResource> GetPartnerConfigurations(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPartnerConfigurations(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the partner namespaces under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerNamespaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PartnerNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PartnerNamespaceResource> GetPartnerNamespacesAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPartnerNamespacesAsync(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the partner namespaces under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerNamespaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PartnerNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PartnerNamespaceResource> GetPartnerNamespaces(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPartnerNamespaces(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the partner registrations under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerRegistrations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PartnerRegistrationResource> GetPartnerRegistrationsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPartnerRegistrationsAsync(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the partner registrations under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerRegistrations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PartnerRegistrationResource> GetPartnerRegistrations(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPartnerRegistrations(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the partner topics under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerTopics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PartnerTopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PartnerTopicResource> GetPartnerTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPartnerTopicsAsync(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the partner topics under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerTopics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PartnerTopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PartnerTopicResource> GetPartnerTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPartnerTopics(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the system topics under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/systemTopics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SystemTopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SystemTopicResource> GetSystemTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSystemTopicsAsync(filter, top, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the system topics under an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/systemTopics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SystemTopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SystemTopicResource> GetSystemTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSystemTopics(filter, top, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
-
-        /// <summary> Gets a collection of EventGridDomainResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of EventGridDomainResources and their operations over a EventGridDomainResource. </returns>
-        public static EventGridDomainCollection GetEventGridDomains(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetEventGridDomains();
-        }
-
-        /// <summary>
-        /// Get properties of a domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Domains_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="domainName"> Name of the domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<EventGridDomainResource>> GetEventGridDomainAsync(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetEventGridDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get properties of a domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Domains_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="domainName"> Name of the domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<EventGridDomainResource> GetEventGridDomain(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetEventGridDomains().Get(domainName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EventGridTopicResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of EventGridTopicResources and their operations over a EventGridTopicResource. </returns>
-        public static EventGridTopicCollection GetEventGridTopics(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetEventGridTopics();
-        }
-
-        /// <summary>
-        /// Get properties of a topic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topics_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="topicName"> Name of the topic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<EventGridTopicResource>> GetEventGridTopicAsync(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetEventGridTopics().GetAsync(topicName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get properties of a topic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topics_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="topicName"> Name of the topic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<EventGridTopicResource> GetEventGridTopic(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetEventGridTopics().Get(topicName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PartnerConfigurationResource" /> object. </returns>
-        public static PartnerConfigurationResource GetPartnerConfiguration(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetPartnerConfiguration();
-        }
-
-        /// <summary> Gets a collection of PartnerNamespaceResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PartnerNamespaceResources and their operations over a PartnerNamespaceResource. </returns>
-        public static PartnerNamespaceCollection GetPartnerNamespaces(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetPartnerNamespaces();
-        }
-
-        /// <summary>
-        /// Get properties of a partner namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerNamespaceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PartnerNamespaceResource>> GetPartnerNamespaceAsync(this ResourceGroupResource resourceGroupResource, string partnerNamespaceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetPartnerNamespaces().GetAsync(partnerNamespaceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get properties of a partner namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerNamespaceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PartnerNamespaceResource> GetPartnerNamespace(this ResourceGroupResource resourceGroupResource, string partnerNamespaceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetPartnerNamespaces().Get(partnerNamespaceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PartnerRegistrationResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PartnerRegistrationResources and their operations over a PartnerRegistrationResource. </returns>
-        public static PartnerRegistrationCollection GetPartnerRegistrations(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetPartnerRegistrations();
-        }
-
-        /// <summary>
-        /// Gets a partner registration with the specified parameters.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PartnerRegistrationResource>> GetPartnerRegistrationAsync(this ResourceGroupResource resourceGroupResource, string partnerRegistrationName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetPartnerRegistrations().GetAsync(partnerRegistrationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a partner registration with the specified parameters.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PartnerRegistrationResource> GetPartnerRegistration(this ResourceGroupResource resourceGroupResource, string partnerRegistrationName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetPartnerRegistrations().Get(partnerRegistrationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PartnerTopicResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PartnerTopicResources and their operations over a PartnerTopicResource. </returns>
-        public static PartnerTopicCollection GetPartnerTopics(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetPartnerTopics();
-        }
-
-        /// <summary>
-        /// Get properties of a partner topic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="partnerTopicName"> Name of the partner topic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PartnerTopicResource>> GetPartnerTopicAsync(this ResourceGroupResource resourceGroupResource, string partnerTopicName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetPartnerTopics().GetAsync(partnerTopicName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get properties of a partner topic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="partnerTopicName"> Name of the partner topic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PartnerTopicResource> GetPartnerTopic(this ResourceGroupResource resourceGroupResource, string partnerTopicName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetPartnerTopics().Get(partnerTopicName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SystemTopicResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SystemTopicResources and their operations over a SystemTopicResource. </returns>
-        public static SystemTopicCollection GetSystemTopics(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetSystemTopics();
-        }
-
-        /// <summary>
-        /// Get properties of a system topic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="systemTopicName"> Name of the system topic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SystemTopicResource>> GetSystemTopicAsync(this ResourceGroupResource resourceGroupResource, string systemTopicName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSystemTopics().GetAsync(systemTopicName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get properties of a system topic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="systemTopicName"> Name of the system topic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SystemTopicResource> GetSystemTopic(this ResourceGroupResource resourceGroupResource, string systemTopicName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSystemTopics().Get(systemTopicName, cancellationToken);
-        }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
                 return new ArmResourceExtensionClient(client, scope);
-            }
-            );
+            });
         }
 
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        private static EventGridDomainResourceExtensionClient GetEventGridDomainResourceExtensionClient(ArmResource resource)
         {
-            return armResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, armResource.Id);
-            }
-            );
+                return new EventGridDomainResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of EventSubscriptionResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of EventSubscriptionResources and their operations over a EventSubscriptionResource. </returns>
-        public static EventSubscriptionCollection GetEventSubscriptions(this ArmClient client, ResourceIdentifier scope)
+        private static EventGridDomainResourceExtensionClient GetEventGridDomainResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetEventSubscriptions();
+            return client.GetResourceClient(() =>
+            {
+                return new EventGridDomainResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Get properties of an event subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventSubscriptions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<EventSubscriptionResource>> GetEventSubscriptionAsync(this ArmClient client, ResourceIdentifier scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        private static EventGridTopicResourceExtensionClient GetEventGridTopicResourceExtensionClient(ArmResource resource)
         {
-            return await client.GetEventSubscriptions(scope).GetAsync(eventSubscriptionName, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new EventGridTopicResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Get properties of an event subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventSubscriptions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<EventSubscriptionResource> GetEventSubscription(this ArmClient client, ResourceIdentifier scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        private static EventGridTopicResourceExtensionClient GetEventGridTopicResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return client.GetEventSubscriptions(scope).Get(eventSubscriptionName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new EventGridTopicResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets an object representing a ExtensionTopicResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="ExtensionTopicResource" /> object. </returns>
-        public static ExtensionTopicResource GetExtensionTopic(this ArmClient client, ResourceIdentifier scope)
+        private static EventSubscriptionResourceExtensionClient GetEventSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(client, scope).GetExtensionTopic();
+            return resource.GetCachedClient(client =>
+            {
+                return new EventSubscriptionResourceExtensionClient(client, resource.Id);
+            });
         }
 
+        private static EventSubscriptionResourceExtensionClient GetEventSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new EventSubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static PartnerConfigurationResourceExtensionClient GetPartnerConfigurationResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PartnerConfigurationResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static PartnerConfigurationResourceExtensionClient GetPartnerConfigurationResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PartnerConfigurationResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static PartnerNamespaceResourceExtensionClient GetPartnerNamespaceResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PartnerNamespaceResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static PartnerNamespaceResourceExtensionClient GetPartnerNamespaceResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PartnerNamespaceResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static PartnerRegistrationResourceExtensionClient GetPartnerRegistrationResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PartnerRegistrationResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static PartnerRegistrationResourceExtensionClient GetPartnerRegistrationResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PartnerRegistrationResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static PartnerTopicResourceExtensionClient GetPartnerTopicResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new PartnerTopicResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static PartnerTopicResourceExtensionClient GetPartnerTopicResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new PartnerTopicResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static Mock.ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new Mock.ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static Mock.ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new Mock.ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SystemTopicResourceExtensionClient GetSystemTopicResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SystemTopicResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SystemTopicResourceExtensionClient GetSystemTopicResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SystemTopicResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
+        }
         #region PartnerNamespaceChannelResource
         /// <summary>
         /// Gets an object representing a <see cref="PartnerNamespaceChannelResource" /> along with the instance operations that can be performed on it but with no data.
@@ -1365,5 +650,851 @@ namespace Azure.ResourceManager.EventGrid
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of EventSubscriptionResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of EventSubscriptionResources and their operations over a EventSubscriptionResource. </returns>
+        public static EventSubscriptionCollection GetEventSubscriptions(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetEventSubscriptions();
+        }
+
+        /// <summary>
+        /// Get properties of an event subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<EventSubscriptionResource>> GetEventSubscriptionAsync(this ArmClient client, ResourceIdentifier scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetEventSubscriptions(scope).GetAsync(eventSubscriptionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of an event subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<EventSubscriptionResource> GetEventSubscription(this ArmClient client, ResourceIdentifier scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        {
+            return client.GetEventSubscriptions(scope).Get(eventSubscriptionName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a ExtensionTopicResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="ExtensionTopicResource" /> object. </returns>
+        public static ExtensionTopicResource GetExtensionTopic(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetExtensionTopic();
+        }
+
+        /// <summary> Gets a collection of EventGridDomainResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of EventGridDomainResources and their operations over a EventGridDomainResource. </returns>
+        public static EventGridDomainCollection GetEventGridDomains(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventGridDomains();
+        }
+
+        /// <summary>
+        /// Get properties of a domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="domainName"> Name of the domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<EventGridDomainResource>> GetEventGridDomainAsync(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetEventGridDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="domainName"> Name of the domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<EventGridDomainResource> GetEventGridDomain(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetEventGridDomains().Get(domainName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EventGridTopicResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of EventGridTopicResources and their operations over a EventGridTopicResource. </returns>
+        public static EventGridTopicCollection GetEventGridTopics(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventGridTopics();
+        }
+
+        /// <summary>
+        /// Get properties of a topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="topicName"> Name of the topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<EventGridTopicResource>> GetEventGridTopicAsync(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetEventGridTopics().GetAsync(topicName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="topicName"> Name of the topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<EventGridTopicResource> GetEventGridTopic(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetEventGridTopics().Get(topicName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="PartnerConfigurationResource" /> object. </returns>
+        public static PartnerConfigurationResource GetPartnerConfiguration(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPartnerConfiguration();
+        }
+
+        /// <summary> Gets a collection of PartnerNamespaceResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PartnerNamespaceResources and their operations over a PartnerNamespaceResource. </returns>
+        public static PartnerNamespaceCollection GetPartnerNamespaces(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPartnerNamespaces();
+        }
+
+        /// <summary>
+        /// Get properties of a partner namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerNamespaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerNamespaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PartnerNamespaceResource>> GetPartnerNamespaceAsync(this ResourceGroupResource resourceGroupResource, string partnerNamespaceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetPartnerNamespaces().GetAsync(partnerNamespaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a partner namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerNamespaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerNamespaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PartnerNamespaceResource> GetPartnerNamespace(this ResourceGroupResource resourceGroupResource, string partnerNamespaceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetPartnerNamespaces().Get(partnerNamespaceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PartnerRegistrationResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PartnerRegistrationResources and their operations over a PartnerRegistrationResource. </returns>
+        public static PartnerRegistrationCollection GetPartnerRegistrations(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPartnerRegistrations();
+        }
+
+        /// <summary>
+        /// Gets a partner registration with the specified parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PartnerRegistrationResource>> GetPartnerRegistrationAsync(this ResourceGroupResource resourceGroupResource, string partnerRegistrationName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetPartnerRegistrations().GetAsync(partnerRegistrationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a partner registration with the specified parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PartnerRegistrationResource> GetPartnerRegistration(this ResourceGroupResource resourceGroupResource, string partnerRegistrationName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetPartnerRegistrations().Get(partnerRegistrationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PartnerTopicResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PartnerTopicResources and their operations over a PartnerTopicResource. </returns>
+        public static PartnerTopicCollection GetPartnerTopics(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPartnerTopics();
+        }
+
+        /// <summary>
+        /// Get properties of a partner topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerTopics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="partnerTopicName"> Name of the partner topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PartnerTopicResource>> GetPartnerTopicAsync(this ResourceGroupResource resourceGroupResource, string partnerTopicName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetPartnerTopics().GetAsync(partnerTopicName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a partner topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerTopics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="partnerTopicName"> Name of the partner topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PartnerTopicResource> GetPartnerTopic(this ResourceGroupResource resourceGroupResource, string partnerTopicName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetPartnerTopics().Get(partnerTopicName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SystemTopicResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SystemTopicResources and their operations over a SystemTopicResource. </returns>
+        public static SystemTopicCollection GetSystemTopics(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSystemTopics();
+        }
+
+        /// <summary>
+        /// Get properties of a system topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemTopics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="systemTopicName"> Name of the system topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SystemTopicResource>> GetSystemTopicAsync(this ResourceGroupResource resourceGroupResource, string systemTopicName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSystemTopics().GetAsync(systemTopicName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a system topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemTopics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="systemTopicName"> Name of the system topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SystemTopicResource> GetSystemTopic(this ResourceGroupResource resourceGroupResource, string systemTopicName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSystemTopics().Get(systemTopicName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the domains under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/domains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EventGridDomainResource> GetEventGridDomainsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetEventGridDomainResourceExtensionClient(subscriptionResource).GetEventGridDomainsAsync(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the domains under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/domains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EventGridDomainResource> GetEventGridDomains(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetEventGridDomainResourceExtensionClient(subscriptionResource).GetEventGridDomains(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the topics under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/topics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EventGridTopicResource> GetEventGridTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetEventGridTopicResourceExtensionClient(subscriptionResource).GetEventGridTopicsAsync(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the topics under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/topics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EventGridTopicResource> GetEventGridTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetEventGridTopicResourceExtensionClient(subscriptionResource).GetEventGridTopics(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the partner configurations under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerConfigurations_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PartnerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PartnerConfigurationResource> GetPartnerConfigurationsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetPartnerConfigurationResourceExtensionClient(subscriptionResource).GetPartnerConfigurationsAsync(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the partner configurations under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerConfigurations_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartnerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PartnerConfigurationResource> GetPartnerConfigurations(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetPartnerConfigurationResourceExtensionClient(subscriptionResource).GetPartnerConfigurations(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the partner namespaces under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerNamespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerNamespaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PartnerNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PartnerNamespaceResource> GetPartnerNamespacesAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetPartnerNamespaceResourceExtensionClient(subscriptionResource).GetPartnerNamespacesAsync(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the partner namespaces under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerNamespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerNamespaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartnerNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PartnerNamespaceResource> GetPartnerNamespaces(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetPartnerNamespaceResourceExtensionClient(subscriptionResource).GetPartnerNamespaces(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the partner registrations under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerRegistrations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerRegistrations_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PartnerRegistrationResource> GetPartnerRegistrationsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetPartnerRegistrationResourceExtensionClient(subscriptionResource).GetPartnerRegistrationsAsync(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the partner registrations under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerRegistrations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerRegistrations_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PartnerRegistrationResource> GetPartnerRegistrations(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetPartnerRegistrationResourceExtensionClient(subscriptionResource).GetPartnerRegistrations(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the partner topics under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerTopics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerTopics_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PartnerTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PartnerTopicResource> GetPartnerTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetPartnerTopicResourceExtensionClient(subscriptionResource).GetPartnerTopicsAsync(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the partner topics under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerTopics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerTopics_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartnerTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PartnerTopicResource> GetPartnerTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetPartnerTopicResourceExtensionClient(subscriptionResource).GetPartnerTopics(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the system topics under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/systemTopics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemTopics_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SystemTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SystemTopicResource> GetSystemTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetSystemTopicResourceExtensionClient(subscriptionResource).GetSystemTopicsAsync(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the system topics under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/systemTopics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemTopics_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SystemTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SystemTopicResource> GetSystemTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetSystemTopicResourceExtensionClient(subscriptionResource).GetSystemTopics(filter, top, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TopicTypeResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of TopicTypeResources and their operations over a TopicTypeResource. </returns>
+        public static TopicTypeCollection GetTopicTypes(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetTopicTypes();
+        }
+
+        /// <summary>
+        /// Get information about a topic type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="topicTypeName"> Name of the topic type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TopicTypeResource>> GetTopicTypeAsync(this TenantResource tenantResource, string topicTypeName, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetTopicTypes().GetAsync(topicTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get information about a topic type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="topicTypeName"> Name of the topic type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TopicTypeResource> GetTopicType(this TenantResource tenantResource, string topicTypeName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetTopicTypes().Get(topicTypeName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VerifiedPartnerResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VerifiedPartnerResources and their operations over a VerifiedPartnerResource. </returns>
+        public static VerifiedPartnerCollection GetVerifiedPartners(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetVerifiedPartners();
+        }
+
+        /// <summary>
+        /// Get properties of a verified partner.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VerifiedPartners_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="verifiedPartnerName"> Name of the verified partner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<VerifiedPartnerResource>> GetVerifiedPartnerAsync(this TenantResource tenantResource, string verifiedPartnerName, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetVerifiedPartners().GetAsync(verifiedPartnerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a verified partner.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VerifiedPartners_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="verifiedPartnerName"> Name of the verified partner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<VerifiedPartnerResource> GetVerifiedPartner(this TenantResource tenantResource, string verifiedPartnerName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetVerifiedPartners().Get(verifiedPartnerName, cancellationToken);
+        }
     }
 }

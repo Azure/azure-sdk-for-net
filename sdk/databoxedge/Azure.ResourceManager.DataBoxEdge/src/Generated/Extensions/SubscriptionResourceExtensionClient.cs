@@ -10,17 +10,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.DataBoxEdge.Models;
 
-namespace Azure.ResourceManager.DataBoxEdge
+namespace Azure.ResourceManager.DataBoxEdge.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _availableSkusClientDiagnostics;
         private AvailableSkusRestOperations _availableSkusRestClient;
-        private ClientDiagnostics _dataBoxEdgeDeviceDevicesClientDiagnostics;
-        private DevicesRestOperations _dataBoxEdgeDeviceDevicesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,10 +33,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
         }
 
-        private ClientDiagnostics AvailableSkusClientDiagnostics => _availableSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AvailableSkusClientDiagnostics => _availableSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AvailableSkusRestOperations AvailableSkusRestClient => _availableSkusRestClient ??= new AvailableSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DataBoxEdgeDeviceDevicesClientDiagnostics => _dataBoxEdgeDeviceDevicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeDeviceResource.ResourceType.Namespace, Diagnostics);
-        private DevicesRestOperations DataBoxEdgeDeviceDevicesRestClient => _dataBoxEdgeDeviceDevicesRestClient ??= new DevicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataBoxEdgeDeviceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -87,52 +84,6 @@ namespace Azure.ResourceManager.DataBoxEdge
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku, AvailableSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the Data Box Edge/Data Box Gateway devices in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevicesAsync(string expand = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the Data Box Edge/Data Box Gateway devices in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevices(string expand = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
         }
     }
 }

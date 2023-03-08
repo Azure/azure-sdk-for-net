@@ -12,11 +12,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
-namespace Azure.ResourceManager.PostgreSql.FlexibleServers
+namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _getPrivateDnsZoneSuffixClientDiagnostics;
         private GetPrivateDnsZoneSuffixRestOperations _getPrivateDnsZoneSuffixRestClient;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
         }
 
-        private ClientDiagnostics GetPrivateDnsZoneSuffixClientDiagnostics => _getPrivateDnsZoneSuffixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics GetPrivateDnsZoneSuffixClientDiagnostics => _getPrivateDnsZoneSuffixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private GetPrivateDnsZoneSuffixRestOperations GetPrivateDnsZoneSuffixRestClient => _getPrivateDnsZoneSuffixRestClient ??= new GetPrivateDnsZoneSuffixRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

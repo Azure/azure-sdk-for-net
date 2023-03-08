@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Consumption.Models;
 
-namespace Azure.ResourceManager.Consumption
+namespace Azure.ResourceManager.Consumption.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _priceSheetClientDiagnostics;
         private PriceSheetRestOperations _priceSheetRestClient;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Consumption
         {
         }
 
-        private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PriceSheetRestOperations PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -100,6 +101,82 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = PriceSheetRestClient.Get(Id.SubscriptionId, expand, skipToken, top, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via this API only for May 1, 2014 or later.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_GetByBillingPeriod</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the top N results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingPeriodName"/> is null. </exception>
+        public virtual async Task<Response<PriceSheetResult>> GetPriceSheetAsync(string billingPeriodName, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+
+            using var scope = PriceSheetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPriceSheet");
+            scope.Start();
+            try
+            {
+                var response = await PriceSheetRestClient.GetByBillingPeriodAsync(Id.SubscriptionId, billingPeriodName, expand, skipToken, top, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via this API only for May 1, 2014 or later.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_GetByBillingPeriod</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the top N results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingPeriodName"/> is null. </exception>
+        public virtual Response<PriceSheetResult> GetPriceSheet(string billingPeriodName, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+
+            using var scope = PriceSheetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPriceSheet");
+            scope.Start();
+            try
+            {
+                var response = PriceSheetRestClient.GetByBillingPeriod(Id.SubscriptionId, billingPeriodName, expand, skipToken, top, cancellationToken);
                 return response;
             }
             catch (Exception e)

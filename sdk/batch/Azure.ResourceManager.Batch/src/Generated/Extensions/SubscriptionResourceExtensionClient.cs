@@ -12,15 +12,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Batch.Models;
 
-namespace Azure.ResourceManager.Batch
+namespace Azure.ResourceManager.Batch.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _batchAccountClientDiagnostics;
-        private BatchAccountRestOperations _batchAccountRestClient;
         private ClientDiagnostics _locationClientDiagnostics;
         private LocationRestOperations _locationRestClient;
 
@@ -36,59 +35,13 @@ namespace Azure.ResourceManager.Batch
         {
         }
 
-        private ClientDiagnostics BatchAccountClientDiagnostics => _batchAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch", BatchAccountResource.ResourceType.Namespace, Diagnostics);
-        private BatchAccountRestOperations BatchAccountRestClient => _batchAccountRestClient ??= new BatchAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BatchAccountResource.ResourceType));
-        private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationRestOperations LocationRestClient => _locationRestClient ??= new LocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets information about the Batch accounts associated with the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/batchAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BatchAccount_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchAccountResource> GetBatchAccountsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BatchAccountRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BatchAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchAccountResource(Client, BatchAccountData.DeserializeBatchAccountData(e)), BatchAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBatchAccounts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the Batch accounts associated with the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/batchAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BatchAccount_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchAccountResource> GetBatchAccounts(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BatchAccountRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BatchAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchAccountResource(Client, BatchAccountData.DeserializeBatchAccountData(e)), BatchAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBatchAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -269,8 +222,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckBatchNameAvailability");
             scope.Start();
             try
@@ -301,8 +257,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckBatchNameAvailability");
             scope.Start();
             try

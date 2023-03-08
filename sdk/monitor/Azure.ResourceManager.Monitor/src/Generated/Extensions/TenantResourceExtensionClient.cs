@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
 
-namespace Azure.ResourceManager.Monitor
+namespace Azure.ResourceManager.Monitor.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _eventCategoriesClientDiagnostics;
         private EventCategoriesRestOperations _eventCategoriesRestClient;
@@ -34,9 +35,9 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        private ClientDiagnostics EventCategoriesClientDiagnostics => _eventCategoriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics EventCategoriesClientDiagnostics => _eventCategoriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private EventCategoriesRestOperations EventCategoriesRestClient => _eventCategoriesRestClient ??= new EventCategoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics TenantActivityLogsClientDiagnostics => _tenantActivityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics TenantActivityLogsClientDiagnostics => _tenantActivityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private TenantActivityLogsRestOperations TenantActivityLogsRestClient => _tenantActivityLogsRestClient ??= new TenantActivityLogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

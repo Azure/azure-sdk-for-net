@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.FrontDoor.Models;
 
-namespace Azure.ResourceManager.FrontDoor
+namespace Azure.ResourceManager.FrontDoor.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _frontDoorNameAvailabilityClientDiagnostics;
         private FrontDoorNameAvailabilityRestOperations _frontDoorNameAvailabilityRestClient;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
         }
 
-        private ClientDiagnostics FrontDoorNameAvailabilityClientDiagnostics => _frontDoorNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics FrontDoorNameAvailabilityClientDiagnostics => _frontDoorNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private FrontDoorNameAvailabilityRestOperations FrontDoorNameAvailabilityRestClient => _frontDoorNameAvailabilityRestClient ??= new FrontDoorNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -58,8 +59,11 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = FrontDoorNameAvailabilityClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckFrontDoorNameAvailability");
             scope.Start();
             try
@@ -89,8 +93,11 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = FrontDoorNameAvailabilityClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckFrontDoorNameAvailability");
             scope.Start();
             try

@@ -12,226 +12,60 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityDevOps.Mock;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecurityDevOps. </summary>
     public static partial class SecurityDevOpsExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static AzureDevOpsConnectorResourceExtensionClient GetAzureDevOpsConnectorResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new AzureDevOpsConnectorResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Returns a list of monitored AzureDevOps Connectors.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureDevOpsConnector_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        private static AzureDevOpsConnectorResourceExtensionClient GetAzureDevOpsConnectorResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(subscriptionResource).GetAzureDevOpsConnectorsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns a list of monitored AzureDevOps Connectors.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureDevOpsConnector_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAzureDevOpsConnectors(cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns a list of monitored GitHub Connectors.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/gitHubConnectors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GitHubConnector_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GitHubConnectorResource> GetGitHubConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetGitHubConnectorsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns a list of monitored GitHub Connectors.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/gitHubConnectors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GitHubConnector_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GitHubConnectorResource> GetGitHubConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetGitHubConnectors(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new AzureDevOpsConnectorResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of AzureDevOpsConnectorResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AzureDevOpsConnectorResources and their operations over a AzureDevOpsConnectorResource. </returns>
-        public static AzureDevOpsConnectorCollection GetAzureDevOpsConnectors(this ResourceGroupResource resourceGroupResource)
+        private static GitHubConnectorResourceExtensionClient GetGitHubConnectorResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetAzureDevOpsConnectors();
+            return resource.GetCachedClient(client =>
+            {
+                return new GitHubConnectorResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Returns a monitored AzureDevOps Connector resource for a given ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureDevOpsConnector_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<AzureDevOpsConnectorResource>> GetAzureDevOpsConnectorAsync(this ResourceGroupResource resourceGroupResource, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
+        private static GitHubConnectorResourceExtensionClient GetGitHubConnectorResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetAzureDevOpsConnectors().GetAsync(azureDevOpsConnectorName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new GitHubConnectorResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Returns a monitored AzureDevOps Connector resource for a given ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureDevOpsConnector_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<AzureDevOpsConnectorResource> GetAzureDevOpsConnector(this ResourceGroupResource resourceGroupResource, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return resourceGroupResource.GetAzureDevOpsConnectors().Get(azureDevOpsConnectorName, cancellationToken);
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of GitHubConnectorResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of GitHubConnectorResources and their operations over a GitHubConnectorResource. </returns>
-        public static GitHubConnectorCollection GetGitHubConnectors(this ResourceGroupResource resourceGroupResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(resourceGroupResource).GetGitHubConnectors();
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Returns a monitored GitHub Connector resource for a given ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GitHubConnector_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<GitHubConnectorResource>> GetGitHubConnectorAsync(this ResourceGroupResource resourceGroupResource, string gitHubConnectorName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetGitHubConnectors().GetAsync(gitHubConnectorName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a monitored GitHub Connector resource for a given ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GitHubConnector_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<GitHubConnectorResource> GetGitHubConnector(this ResourceGroupResource resourceGroupResource, string gitHubConnectorName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetGitHubConnectors().Get(gitHubConnectorName, cancellationToken);
-        }
-
         #region AzureDevOpsConnectorResource
         /// <summary>
         /// Gets an object representing an <see cref="AzureDevOpsConnectorResource" /> along with the instance operations that can be performed on it but with no data.
@@ -364,5 +198,201 @@ namespace Azure.ResourceManager.SecurityDevOps
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of AzureDevOpsConnectorResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AzureDevOpsConnectorResources and their operations over a AzureDevOpsConnectorResource. </returns>
+        public static AzureDevOpsConnectorCollection GetAzureDevOpsConnectors(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzureDevOpsConnectors();
+        }
+
+        /// <summary>
+        /// Returns a monitored AzureDevOps Connector resource for a given ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsConnector_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AzureDevOpsConnectorResource>> GetAzureDevOpsConnectorAsync(this ResourceGroupResource resourceGroupResource, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetAzureDevOpsConnectors().GetAsync(azureDevOpsConnectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns a monitored AzureDevOps Connector resource for a given ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsConnector_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AzureDevOpsConnectorResource> GetAzureDevOpsConnector(this ResourceGroupResource resourceGroupResource, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetAzureDevOpsConnectors().Get(azureDevOpsConnectorName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GitHubConnectorResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of GitHubConnectorResources and their operations over a GitHubConnectorResource. </returns>
+        public static GitHubConnectorCollection GetGitHubConnectors(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetGitHubConnectors();
+        }
+
+        /// <summary>
+        /// Returns a monitored GitHub Connector resource for a given ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubConnector_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<GitHubConnectorResource>> GetGitHubConnectorAsync(this ResourceGroupResource resourceGroupResource, string gitHubConnectorName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetGitHubConnectors().GetAsync(gitHubConnectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns a monitored GitHub Connector resource for a given ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubConnector_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<GitHubConnectorResource> GetGitHubConnector(this ResourceGroupResource resourceGroupResource, string gitHubConnectorName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetGitHubConnectors().Get(gitHubConnectorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of monitored AzureDevOps Connectors.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsConnector_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetAzureDevOpsConnectorResourceExtensionClient(subscriptionResource).GetAzureDevOpsConnectorsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of monitored AzureDevOps Connectors.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsConnector_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetAzureDevOpsConnectorResourceExtensionClient(subscriptionResource).GetAzureDevOpsConnectors(cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of monitored GitHub Connectors.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/gitHubConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubConnector_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GitHubConnectorResource> GetGitHubConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetGitHubConnectorResourceExtensionClient(subscriptionResource).GetGitHubConnectorsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of monitored GitHub Connectors.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/gitHubConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubConnector_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GitHubConnectorResource> GetGitHubConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetGitHubConnectorResourceExtensionClient(subscriptionResource).GetGitHubConnectors(cancellationToken);
+        }
     }
 }

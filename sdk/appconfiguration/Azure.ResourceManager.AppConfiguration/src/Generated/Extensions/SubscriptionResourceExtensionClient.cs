@@ -12,15 +12,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.AppConfiguration.Models;
 
-namespace Azure.ResourceManager.AppConfiguration
+namespace Azure.ResourceManager.AppConfiguration.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _appConfigurationStoreConfigurationStoresClientDiagnostics;
-        private ConfigurationStoresRestOperations _appConfigurationStoreConfigurationStoresRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
         private AppConfigurationManagementRestOperations _defaultRestClient;
 
@@ -36,9 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
         }
 
-        private ClientDiagnostics AppConfigurationStoreConfigurationStoresClientDiagnostics => _appConfigurationStoreConfigurationStoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", AppConfigurationStoreResource.ResourceType.Namespace, Diagnostics);
-        private ConfigurationStoresRestOperations AppConfigurationStoreConfigurationStoresRestClient => _appConfigurationStoreConfigurationStoresRestClient ??= new ConfigurationStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppConfigurationStoreResource.ResourceType));
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AppConfigurationManagementRestOperations DefaultRestClient => _defaultRestClient ??= new AppConfigurationManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -52,52 +49,6 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual DeletedAppConfigurationStoreCollection GetDeletedAppConfigurationStores()
         {
             return GetCachedClient(Client => new DeletedAppConfigurationStoreCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Lists the configuration stores for a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/configurationStores</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationStores_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppConfigurationStoreResource> GetAppConfigurationStoresAsync(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AppConfigurationStoreConfigurationStoresRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppConfigurationStoreConfigurationStoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the configuration stores for a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/configurationStores</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationStores_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppConfigurationStoreResource> GetAppConfigurationStores(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AppConfigurationStoreConfigurationStoresRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppConfigurationStoreConfigurationStoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -115,8 +66,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AppConfigurationNameAvailabilityResult>> CheckAppConfigurationNameAvailabilityAsync(AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAppConfigurationNameAvailability");
             scope.Start();
             try
@@ -146,8 +100,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AppConfigurationNameAvailabilityResult> CheckAppConfigurationNameAvailability(AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAppConfigurationNameAvailability");
             scope.Start();
             try

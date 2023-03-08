@@ -12,33 +12,22 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SecurityCenter;
 using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _mdeOnboardingsClientDiagnostics;
         private MdeOnboardingsRestOperations _mdeOnboardingsRestClient;
-        private ClientDiagnostics _customAssessmentAutomationClientDiagnostics;
-        private CustomAssessmentAutomationsRestOperations _customAssessmentAutomationRestClient;
-        private ClientDiagnostics _customEntityStoreAssignmentClientDiagnostics;
-        private CustomEntityStoreAssignmentsRestOperations _customEntityStoreAssignmentRestClient;
-        private ClientDiagnostics _iotSecuritySolutionClientDiagnostics;
-        private IotSecuritySolutionRestOperations _iotSecuritySolutionRestClient;
         private ClientDiagnostics _tasksClientDiagnostics;
         private TasksRestOperations _tasksRestClient;
-        private ClientDiagnostics _securityAutomationAutomationsClientDiagnostics;
-        private AutomationsRestOperations _securityAutomationAutomationsRestClient;
-        private ClientDiagnostics _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics;
-        private AdaptiveApplicationControlsRestOperations _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient;
         private ClientDiagnostics _allowedConnectionsClientDiagnostics;
         private AllowedConnectionsRestOperations _allowedConnectionsRestClient;
         private ClientDiagnostics _topologyClientDiagnostics;
         private TopologyRestOperations _topologyRestClient;
-        private ClientDiagnostics _jitNetworkAccessPolicyClientDiagnostics;
-        private JitNetworkAccessPoliciesRestOperations _jitNetworkAccessPolicyRestClient;
         private ClientDiagnostics _discoveredSecuritySolutionsClientDiagnostics;
         private DiscoveredSecuritySolutionsRestOperations _discoveredSecuritySolutionsRestClient;
         private ClientDiagnostics _securitySolutionsReferenceDataClientDiagnostics;
@@ -53,10 +42,6 @@ namespace Azure.ResourceManager.SecurityCenter
         private SecuritySolutionsRestOperations _securitySolutionsRestClient;
         private ClientDiagnostics _alertsClientDiagnostics;
         private AlertsRestOperations _alertsRestClient;
-        private ClientDiagnostics _softwareInventoryClientDiagnostics;
-        private SoftwareInventoriesRestOperations _softwareInventoryRestClient;
-        private ClientDiagnostics _securityConnectorClientDiagnostics;
-        private SecurityConnectorsRestOperations _securityConnectorRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -70,44 +55,28 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        private ClientDiagnostics MdeOnboardingsClientDiagnostics => _mdeOnboardingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics MdeOnboardingsClientDiagnostics => _mdeOnboardingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private MdeOnboardingsRestOperations MdeOnboardingsRestClient => _mdeOnboardingsRestClient ??= new MdeOnboardingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics CustomAssessmentAutomationClientDiagnostics => _customAssessmentAutomationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", CustomAssessmentAutomationResource.ResourceType.Namespace, Diagnostics);
-        private CustomAssessmentAutomationsRestOperations CustomAssessmentAutomationRestClient => _customAssessmentAutomationRestClient ??= new CustomAssessmentAutomationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CustomAssessmentAutomationResource.ResourceType));
-        private ClientDiagnostics CustomEntityStoreAssignmentClientDiagnostics => _customEntityStoreAssignmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", CustomEntityStoreAssignmentResource.ResourceType.Namespace, Diagnostics);
-        private CustomEntityStoreAssignmentsRestOperations CustomEntityStoreAssignmentRestClient => _customEntityStoreAssignmentRestClient ??= new CustomEntityStoreAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CustomEntityStoreAssignmentResource.ResourceType));
-        private ClientDiagnostics IotSecuritySolutionClientDiagnostics => _iotSecuritySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", IotSecuritySolutionResource.ResourceType.Namespace, Diagnostics);
-        private IotSecuritySolutionRestOperations IotSecuritySolutionRestClient => _iotSecuritySolutionRestClient ??= new IotSecuritySolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IotSecuritySolutionResource.ResourceType));
-        private ClientDiagnostics TasksClientDiagnostics => _tasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics TasksClientDiagnostics => _tasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private TasksRestOperations TasksRestClient => _tasksRestClient ??= new TasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SecurityAutomationAutomationsClientDiagnostics => _securityAutomationAutomationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityAutomationResource.ResourceType.Namespace, Diagnostics);
-        private AutomationsRestOperations SecurityAutomationAutomationsRestClient => _securityAutomationAutomationsRestClient ??= new AutomationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecurityAutomationResource.ResourceType));
-        private ClientDiagnostics AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics => _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AdaptiveApplicationControlGroupResource.ResourceType.Namespace, Diagnostics);
-        private AdaptiveApplicationControlsRestOperations AdaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient => _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient ??= new AdaptiveApplicationControlsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AdaptiveApplicationControlGroupResource.ResourceType));
-        private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AllowedConnectionsRestOperations AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private TopologyRestOperations TopologyRestClient => _topologyRestClient ??= new TopologyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics JitNetworkAccessPolicyClientDiagnostics => _jitNetworkAccessPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", JitNetworkAccessPolicyResource.ResourceType.Namespace, Diagnostics);
-        private JitNetworkAccessPoliciesRestOperations JitNetworkAccessPolicyRestClient => _jitNetworkAccessPolicyRestClient ??= new JitNetworkAccessPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JitNetworkAccessPolicyResource.ResourceType));
-        private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DiscoveredSecuritySolutionsRestOperations DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics securitySolutionsReferenceDataClientDiagnostics => _securitySolutionsReferenceDataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics securitySolutionsReferenceDataClientDiagnostics => _securitySolutionsReferenceDataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SecuritySolutionsReferenceDataRestOperations securitySolutionsReferenceDataRestClient => _securitySolutionsReferenceDataRestClient ??= new SecuritySolutionsReferenceDataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ExternalSecuritySolutionsRestOperations ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SecureScoreControlsClientDiagnostics => _secureScoreControlsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SecureScoreControlsClientDiagnostics => _secureScoreControlsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SecureScoreControlsRestOperations SecureScoreControlsRestClient => _secureScoreControlsRestClient ??= new SecureScoreControlsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SecureScoreControlDefinitionsClientDiagnostics => _secureScoreControlDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SecureScoreControlDefinitionsClientDiagnostics => _secureScoreControlDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SecureScoreControlDefinitionsRestOperations SecureScoreControlDefinitionsRestClient => _secureScoreControlDefinitionsRestClient ??= new SecureScoreControlDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SecuritySolutionsClientDiagnostics => _securitySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SecuritySolutionsClientDiagnostics => _securitySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SecuritySolutionsRestOperations SecuritySolutionsRestClient => _securitySolutionsRestClient ??= new SecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AlertsRestOperations AlertsRestClient => _alertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SoftwareInventoryClientDiagnostics => _softwareInventoryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SoftwareInventoryResource.ResourceType.Namespace, Diagnostics);
-        private SoftwareInventoriesRestOperations SoftwareInventoryRestClient => _softwareInventoryRestClient ??= new SoftwareInventoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SoftwareInventoryResource.ResourceType));
-        private ClientDiagnostics SecurityConnectorClientDiagnostics => _securityConnectorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorResource.ResourceType.Namespace, Diagnostics);
-        private SecurityConnectorsRestOperations SecurityConnectorRestClient => _securityConnectorRestClient ??= new SecurityConnectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecurityConnectorResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -316,140 +285,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// List custom assessment automations by provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customAssessmentAutomations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomAssessmentAutomations_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomationsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), CustomAssessmentAutomationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomAssessmentAutomations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List custom assessment automations by provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customAssessmentAutomations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomAssessmentAutomations_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomations(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), CustomAssessmentAutomationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomAssessmentAutomations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List custom entity store assignments by provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customEntityStoreAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomEntityStoreAssignments_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignmentsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), CustomEntityStoreAssignmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomEntityStoreAssignments", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List custom entity store assignments by provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customEntityStoreAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomEntityStoreAssignments_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignments(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), CustomEntityStoreAssignmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomEntityStoreAssignments", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Use this method to get the list of IoT Security solutions by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/iotSecuritySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolution_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IotSecuritySolutionResource> GetIotSecuritySolutionsAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IotSecuritySolutionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotSecuritySolutionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), IotSecuritySolutionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotSecuritySolutions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Use this method to get the list of IoT Security solutions by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/iotSecuritySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolution_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IotSecuritySolutionResource> GetIotSecuritySolutions(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IotSecuritySolutionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotSecuritySolutionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), IotSecuritySolutionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotSecuritySolutions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
         /// <list type="bullet">
         /// <item>
@@ -493,96 +328,6 @@ namespace Azure.ResourceManager.SecurityCenter
             HttpMessage FirstPageRequest(int? pageSizeHint) => TasksRestClient.CreateListRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecurityTaskData.DeserializeSecurityTaskData, TasksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTasks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the security automations in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security automations for the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/automations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityAutomationResource> GetSecurityAutomationsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAutomationAutomationsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAutomationAutomationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), SecurityAutomationAutomationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityAutomations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the security automations in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security automations for the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/automations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityAutomationResource> GetSecurityAutomations(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAutomationAutomationsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAutomationAutomationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), SecurityAutomationAutomationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityAutomations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of application control machine groups for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdaptiveApplicationControls_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="includePathRecommendations"> Include the policy rules. </param>
-        /// <param name="summary"> Return output in a summarized form. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroupsAsync(bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AdaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.CreateListRequest(Id.SubscriptionId, includePathRecommendations, summary);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AdaptiveApplicationControlGroupResource(Client, AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(e)), AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAdaptiveApplicationControlGroups", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of application control machine groups for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdaptiveApplicationControls_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="includePathRecommendations"> Include the policy rules. </param>
-        /// <param name="summary"> Return output in a summarized form. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroups(bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AdaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.CreateListRequest(Id.SubscriptionId, includePathRecommendations, summary);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AdaptiveApplicationControlGroupResource(Client, AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(e)), AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAdaptiveApplicationControlGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -671,50 +416,6 @@ namespace Azure.ResourceManager.SecurityCenter
             HttpMessage FirstPageRequest(int? pageSizeHint) => TopologyRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TopologyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecurityTopologyResource.DeserializeSecurityTopologyResource, TopologyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTopologies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JitNetworkAccessPolicies_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JitNetworkAccessPolicies_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1023,94 +724,6 @@ namespace Azure.ResourceManager.SecurityCenter
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AlertsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecurityAlertData.DeserializeSecurityAlertData, AlertsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAlerts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the software inventory of all virtual machines in the subscriptions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/softwareInventories</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareInventories_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SoftwareInventoryResource> GetSoftwareInventoriesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SoftwareInventoryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SoftwareInventoryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), SoftwareInventoryClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSoftwareInventories", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the software inventory of all virtual machines in the subscriptions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/softwareInventories</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareInventories_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SoftwareInventoryResource> GetSoftwareInventories(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SoftwareInventoryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SoftwareInventoryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), SoftwareInventoryClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSoftwareInventories", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the security connectors in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityConnectors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityConnectorResource> GetSecurityConnectorsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityConnectorRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityConnectorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorResource(Client, SecurityConnectorData.DeserializeSecurityConnectorData(e)), SecurityConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityConnectors", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the security connectors in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityConnectors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityConnectorResource> GetSecurityConnectors(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityConnectorRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityConnectorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorResource(Client, SecurityConnectorData.DeserializeSecurityConnectorData(e)), SecurityConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityConnectors", "value", "nextLink", cancellationToken);
         }
     }
 }

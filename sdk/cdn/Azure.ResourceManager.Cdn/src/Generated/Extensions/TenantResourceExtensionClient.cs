@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Cdn.Models;
 
-namespace Azure.ResourceManager.Cdn
+namespace Azure.ResourceManager.Cdn.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _defaultClientDiagnostics;
         private CdnManagementRestOperations _defaultRestClient;
@@ -36,9 +37,9 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CdnManagementRestOperations DefaultRestClient => _defaultRestClient ??= new CdnManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics EdgeNodesClientDiagnostics => _edgeNodesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics EdgeNodesClientDiagnostics => _edgeNodesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private EdgeNodesRestOperations EdgeNodesRestClient => _edgeNodesRestClient ??= new EdgeNodesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -62,8 +63,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckCdnNameAvailability");
             scope.Start();
             try
@@ -93,8 +97,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CdnNameAvailabilityResult> CheckCdnNameAvailability(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckCdnNameAvailability");
             scope.Start();
             try

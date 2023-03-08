@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.AppPlatform.Models;
 
-namespace Azure.ResourceManager.AppPlatform
+namespace Azure.ResourceManager.AppPlatform.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _runtimeVersionsClientDiagnostics;
         private RuntimeVersionsRestOperations _runtimeVersionsRestClient;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        private ClientDiagnostics RuntimeVersionsClientDiagnostics => _runtimeVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics RuntimeVersionsClientDiagnostics => _runtimeVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppPlatform.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private RuntimeVersionsRestOperations RuntimeVersionsRestClient => _runtimeVersionsRestClient ??= new RuntimeVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

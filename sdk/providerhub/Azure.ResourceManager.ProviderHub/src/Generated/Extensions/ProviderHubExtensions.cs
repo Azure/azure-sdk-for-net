@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ProviderHub.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ProviderHub
@@ -18,71 +19,21 @@ namespace Azure.ResourceManager.ProviderHub
     /// <summary> A class to add extension methods to Azure.ResourceManager.ProviderHub. </summary>
     public static partial class ProviderHubExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of ProviderRegistrationResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ProviderRegistrationResources and their operations over a ProviderRegistrationResource. </returns>
-        public static ProviderRegistrationCollection GetProviderRegistrations(this SubscriptionResource subscriptionResource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(subscriptionResource).GetProviderRegistrations();
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Gets the provider registration details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ProviderRegistrationResource>> GetProviderRegistrationAsync(this SubscriptionResource subscriptionResource, string providerNamespace, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetProviderRegistrations().GetAsync(providerNamespace, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the provider registration details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderRegistrations_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ProviderRegistrationResource> GetProviderRegistration(this SubscriptionResource subscriptionResource, string providerNamespace, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetProviderRegistrations().Get(providerNamespace, cancellationToken);
-        }
-
         #region CustomRolloutResource
         /// <summary>
         /// Gets an object representing a <see cref="CustomRolloutResource" /> along with the instance operations that can be performed on it but with no data.
@@ -253,5 +204,61 @@ namespace Azure.ResourceManager.ProviderHub
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of ProviderRegistrationResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ProviderRegistrationResources and their operations over a ProviderRegistrationResource. </returns>
+        public static ProviderRegistrationCollection GetProviderRegistrations(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProviderRegistrations();
+        }
+
+        /// <summary>
+        /// Gets the provider registration details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ProviderRegistrationResource>> GetProviderRegistrationAsync(this SubscriptionResource subscriptionResource, string providerNamespace, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetProviderRegistrations().GetAsync(providerNamespace, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the provider registration details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ProviderRegistrationResource> GetProviderRegistration(this SubscriptionResource subscriptionResource, string providerNamespace, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetProviderRegistrations().Get(providerNamespace, cancellationToken);
+        }
     }
 }

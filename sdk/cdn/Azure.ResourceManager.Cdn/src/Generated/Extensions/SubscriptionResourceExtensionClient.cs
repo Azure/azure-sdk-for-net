@@ -12,17 +12,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Cdn.Models;
 
-namespace Azure.ResourceManager.Cdn
+namespace Azure.ResourceManager.Cdn.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _defaultClientDiagnostics;
         private CdnManagementRestOperations _defaultRestClient;
-        private ClientDiagnostics _profileClientDiagnostics;
-        private ProfilesRestOperations _profileRestClient;
         private ClientDiagnostics _resourceUsageClientDiagnostics;
         private ResourceUsageRestOperations _resourceUsageRestClient;
         private ClientDiagnostics _managedRuleSetsClientDiagnostics;
@@ -40,13 +39,11 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CdnManagementRestOperations DefaultRestClient => _defaultRestClient ??= new CdnManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ProfileClientDiagnostics => _profileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProfileResource.ResourceType.Namespace, Diagnostics);
-        private ProfilesRestOperations ProfileRestClient => _profileRestClient ??= new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProfileResource.ResourceType));
-        private ClientDiagnostics ResourceUsageClientDiagnostics => _resourceUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ResourceUsageClientDiagnostics => _resourceUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ResourceUsageRestOperations ResourceUsageRestClient => _resourceUsageRestClient ??= new ResourceUsageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ManagedRuleSetsRestOperations ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -70,8 +67,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCdnNameAvailabilityWithSubscription");
             scope.Start();
             try
@@ -101,8 +101,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCdnNameAvailabilityWithSubscription");
             scope.Start();
             try
@@ -132,8 +135,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ValidateProbeResult>> ValidateProbeAsync(ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateProbe");
             scope.Start();
             try
@@ -163,8 +169,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ValidateProbeResult> ValidateProbe(ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateProbe");
             scope.Start();
             try
@@ -177,50 +186,6 @@ namespace Azure.ResourceManager.Cdn
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProfileResource> GetProfilesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProfileRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProfileRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProfileResource(Client, ProfileData.DeserializeProfileData(e)), ProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProfiles", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProfileResource> GetProfiles(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProfileRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProfileRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProfileResource(Client, ProfileData.DeserializeProfileData(e)), ProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

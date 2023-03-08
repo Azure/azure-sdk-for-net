@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Consumption.Models;
 
-namespace Azure.ResourceManager.Consumption
+namespace Azure.ResourceManager.Consumption.Mock
 {
     /// <summary> A class to add extension methods to ManagementGroupResource. </summary>
-    internal partial class ManagementGroupResourceExtensionClient : ArmResource
+    public partial class ManagementGroupResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _aggregatedCostClientDiagnostics;
         private AggregatedCostRestOperations _aggregatedCostRestClient;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Consumption
         {
         }
 
-        private ClientDiagnostics AggregatedCostClientDiagnostics => _aggregatedCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AggregatedCostClientDiagnostics => _aggregatedCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AggregatedCostRestOperations AggregatedCostRestClient => _aggregatedCostRestClient ??= new AggregatedCostRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -96,6 +97,76 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = AggregatedCostRestClient.GetByManagementGroup(Id.Name, filter, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Provides the aggregate cost of a management group and all child management groups by specified billing period
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetForBillingPeriodByManagementGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingPeriodName"/> is null. </exception>
+        public virtual async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostWithBillingPeriodAsync(string billingPeriodName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+
+            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetAggregatedCostWithBillingPeriod");
+            scope.Start();
+            try
+            {
+                var response = await AggregatedCostRestClient.GetForBillingPeriodByManagementGroupAsync(Id.Name, billingPeriodName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Provides the aggregate cost of a management group and all child management groups by specified billing period
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetForBillingPeriodByManagementGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingPeriodName"/> is null. </exception>
+        public virtual Response<ConsumptionAggregatedCostResult> GetAggregatedCostWithBillingPeriod(string billingPeriodName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+
+            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetAggregatedCostWithBillingPeriod");
+            scope.Start();
+            try
+            {
+                var response = AggregatedCostRestClient.GetForBillingPeriodByManagementGroup(Id.Name, billingPeriodName, cancellationToken);
                 return response;
             }
             catch (Exception e)

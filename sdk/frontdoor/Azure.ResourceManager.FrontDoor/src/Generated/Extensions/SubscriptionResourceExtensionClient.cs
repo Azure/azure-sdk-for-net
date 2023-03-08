@@ -12,21 +12,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.FrontDoor.Models;
 
-namespace Azure.ResourceManager.FrontDoor
+namespace Azure.ResourceManager.FrontDoor.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _managedRuleSetsClientDiagnostics;
         private ManagedRuleSetsRestOperations _managedRuleSetsRestClient;
         private ClientDiagnostics _frontDoorNameAvailabilityWithSubscriptionClientDiagnostics;
         private FrontDoorNameAvailabilityWithSubscriptionRestOperations _frontDoorNameAvailabilityWithSubscriptionRestClient;
-        private ClientDiagnostics _frontDoorClientDiagnostics;
-        private FrontDoorsRestOperations _frontDoorRestClient;
-        private ClientDiagnostics _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics;
-        private NetworkExperimentProfilesRestOperations _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -40,14 +37,10 @@ namespace Azure.ResourceManager.FrontDoor
         {
         }
 
-        private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ManagedRuleSetsRestOperations ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics => _frontDoorNameAvailabilityWithSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics => _frontDoorNameAvailabilityWithSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private FrontDoorNameAvailabilityWithSubscriptionRestOperations FrontDoorNameAvailabilityWithSubscriptionRestClient => _frontDoorNameAvailabilityWithSubscriptionRestClient ??= new FrontDoorNameAvailabilityWithSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics FrontDoorClientDiagnostics => _frontDoorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorResource.ResourceType.Namespace, Diagnostics);
-        private FrontDoorsRestOperations FrontDoorRestClient => _frontDoorRestClient ??= new FrontDoorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FrontDoorResource.ResourceType));
-        private ClientDiagnostics FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorNetworkExperimentProfileResource.ResourceType.Namespace, Diagnostics);
-        private NetworkExperimentProfilesRestOperations FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient ??= new NetworkExperimentProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FrontDoorNetworkExperimentProfileResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -114,8 +107,11 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckFrontDoorNameAvailability");
             scope.Start();
             try
@@ -145,8 +141,11 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckFrontDoorNameAvailability");
             scope.Start();
             try
@@ -159,94 +158,6 @@ namespace Azure.ResourceManager.FrontDoor
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists all of the Front Doors within an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontDoorResource> GetFrontDoorsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), FrontDoorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFrontDoors", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the Front Doors within an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontDoorResource> GetFrontDoors(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), FrontDoorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFrontDoors", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of Network Experiment Profiles under a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/NetworkExperimentProfiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkExperimentProfiles_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfilesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFrontDoorNetworkExperimentProfiles", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of Network Experiment Profiles under a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/NetworkExperimentProfiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkExperimentProfiles_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfiles(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFrontDoorNetworkExperimentProfiles", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -12,19 +12,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.NetApp
+namespace Azure.ResourceManager.NetApp.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _netAppResourceClientDiagnostics;
         private NetAppResourceRestOperations _netAppResourceRestClient;
         private ClientDiagnostics _netAppResourceQuotaLimitsClientDiagnostics;
         private NetAppResourceQuotaLimitsRestOperations _netAppResourceQuotaLimitsRestClient;
-        private ClientDiagnostics _netAppAccountAccountsClientDiagnostics;
-        private AccountsRestOperations _netAppAccountAccountsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -38,12 +37,10 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        private ClientDiagnostics NetAppResourceClientDiagnostics => _netAppResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics NetAppResourceClientDiagnostics => _netAppResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private NetAppResourceRestOperations NetAppResourceRestClient => _netAppResourceRestClient ??= new NetAppResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics NetAppResourceQuotaLimitsClientDiagnostics => _netAppResourceQuotaLimitsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics NetAppResourceQuotaLimitsClientDiagnostics => _netAppResourceQuotaLimitsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private NetAppResourceQuotaLimitsRestOperations NetAppResourceQuotaLimitsRestClient => _netAppResourceQuotaLimitsRestClient ??= new NetAppResourceQuotaLimitsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics NetAppAccountAccountsClientDiagnostics => _netAppAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
-        private AccountsRestOperations NetAppAccountAccountsRestClient => _netAppAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetAppAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -67,8 +64,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNetAppNameAvailability");
             scope.Start();
             try
@@ -99,8 +99,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNetAppNameAvailability");
             scope.Start();
             try
@@ -131,8 +134,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         /// <param name="content"> File path availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNetAppFilePathAvailability");
             scope.Start();
             try
@@ -163,8 +169,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         /// <param name="content"> File path availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNetAppFilePathAvailability");
             scope.Start();
             try
@@ -195,8 +204,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         /// <param name="content"> Quota availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNetAppQuotaAvailability");
             scope.Start();
             try
@@ -227,8 +239,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         /// <param name="content"> Quota availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNetAppQuotaAvailability");
             scope.Start();
             try
@@ -365,8 +380,12 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
+
             using var scope = NetAppResourceQuotaLimitsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetAppQuotaLimit");
             scope.Start();
             try
@@ -397,8 +416,12 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
+
             using var scope = NetAppResourceQuotaLimitsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetAppQuotaLimit");
             scope.Start();
             try
@@ -411,50 +434,6 @@ namespace Azure.ResourceManager.NetApp
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List and describe all NetApp accounts in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/netAppAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetAppAccountResource> GetNetAppAccountsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List and describe all NetApp accounts in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/netAppAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetAppAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetAppAccountResource> GetNetAppAccounts(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -12,15 +12,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.VoiceServices;
 using Azure.ResourceManager.VoiceServices.Models;
 
-namespace Azure.ResourceManager.VoiceServices
+namespace Azure.ResourceManager.VoiceServices.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _communicationsGatewayClientDiagnostics;
-        private CommunicationsGatewaysRestOperations _communicationsGatewayRestClient;
         private ClientDiagnostics _nameAvailabilityClientDiagnostics;
         private NameAvailabilityRestOperations _nameAvailabilityRestClient;
 
@@ -36,59 +35,13 @@ namespace Azure.ResourceManager.VoiceServices
         {
         }
 
-        private ClientDiagnostics CommunicationsGatewayClientDiagnostics => _communicationsGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VoiceServices", CommunicationsGatewayResource.ResourceType.Namespace, Diagnostics);
-        private CommunicationsGatewaysRestOperations CommunicationsGatewayRestClient => _communicationsGatewayRestClient ??= new CommunicationsGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CommunicationsGatewayResource.ResourceType));
-        private ClientDiagnostics NameAvailabilityClientDiagnostics => _nameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VoiceServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics NameAvailabilityClientDiagnostics => _nameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VoiceServices.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private NameAvailabilityRestOperations NameAvailabilityRestClient => _nameAvailabilityRestClient ??= new NameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// List CommunicationsGateway resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.VoiceServices/communicationsGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunicationsGateways_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CommunicationsGatewayResource> GetCommunicationsGatewaysAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationsGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationsGatewayRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunicationsGatewayResource(Client, CommunicationsGatewayData.DeserializeCommunicationsGatewayData(e)), CommunicationsGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationsGateways", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List CommunicationsGateway resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.VoiceServices/communicationsGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunicationsGateways_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CommunicationsGatewayResource> GetCommunicationsGateways(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationsGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationsGatewayRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunicationsGatewayResource(Client, CommunicationsGatewayData.DeserializeCommunicationsGatewayData(e)), CommunicationsGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationsGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -107,8 +60,11 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="content"> The check availability request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckLocalNameAvailabilityAsync(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = NameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckLocalNameAvailability");
             scope.Start();
             try
@@ -139,8 +95,11 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="content"> The check availability request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CheckNameAvailabilityResponse> CheckLocalNameAvailability(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = NameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckLocalNameAvailability");
             scope.Start();
             try

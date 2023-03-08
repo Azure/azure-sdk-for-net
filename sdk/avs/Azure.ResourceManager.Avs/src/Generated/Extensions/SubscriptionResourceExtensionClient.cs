@@ -12,17 +12,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Avs;
 using Azure.ResourceManager.Avs.Models;
 
-namespace Azure.ResourceManager.Avs
+namespace Azure.ResourceManager.Avs.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _locationsClientDiagnostics;
         private LocationsRestOperations _locationsRestClient;
-        private ClientDiagnostics _avsPrivateCloudPrivateCloudsClientDiagnostics;
-        private PrivateCloudsRestOperations _avsPrivateCloudPrivateCloudsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -36,10 +35,8 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationsRestOperations LocationsRestClient => _locationsRestClient ??= new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AvsPrivateCloudPrivateCloudsClientDiagnostics => _avsPrivateCloudPrivateCloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs", AvsPrivateCloudResource.ResourceType.Namespace, Diagnostics);
-        private PrivateCloudsRestOperations AvsPrivateCloudPrivateCloudsRestClient => _avsPrivateCloudPrivateCloudsRestClient ??= new PrivateCloudsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AvsPrivateCloudResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -171,50 +168,6 @@ namespace Azure.ResourceManager.Avs
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List private clouds in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/privateClouds</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateClouds_ListInSubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvsPrivateCloudResource> GetAvsPrivateCloudsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), AvsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvsPrivateClouds", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List private clouds in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/privateClouds</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateClouds_ListInSubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvsPrivateCloudResource> GetAvsPrivateClouds(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), AvsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvsPrivateClouds", "value", "nextLink", cancellationToken);
         }
     }
 }

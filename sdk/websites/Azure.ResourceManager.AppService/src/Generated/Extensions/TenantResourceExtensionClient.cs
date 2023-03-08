@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _certificateRegistrationProviderClientDiagnostics;
         private CertificateRegistrationProviderRestOperations _certificateRegistrationProviderRestClient;
@@ -36,11 +37,11 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        private ClientDiagnostics CertificateRegistrationProviderClientDiagnostics => _certificateRegistrationProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics CertificateRegistrationProviderClientDiagnostics => _certificateRegistrationProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CertificateRegistrationProviderRestOperations CertificateRegistrationProviderRestClient => _certificateRegistrationProviderRestClient ??= new CertificateRegistrationProviderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DomainRegistrationProviderClientDiagnostics => _domainRegistrationProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DomainRegistrationProviderClientDiagnostics => _domainRegistrationProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DomainRegistrationProviderRestOperations DomainRegistrationProviderRestClient => _domainRegistrationProviderRestClient ??= new DomainRegistrationProviderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ProviderClientDiagnostics => _providerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ProviderClientDiagnostics => _providerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ProviderRestOperations ProviderRestClient => _providerRestClient ??= new ProviderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

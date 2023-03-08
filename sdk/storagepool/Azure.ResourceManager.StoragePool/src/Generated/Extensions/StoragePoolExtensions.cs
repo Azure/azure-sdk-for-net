@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StoragePool.Mock;
 using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
@@ -19,160 +20,97 @@ namespace Azure.ResourceManager.StoragePool
     /// <summary> A class to add extension methods to Azure.ResourceManager.StoragePool. </summary>
     public static partial class StoragePoolExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static DiskPoolResourceExtensionClient GetDiskPoolResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new DiskPoolResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static DiskPoolResourceExtensionClient GetDiskPoolResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new DiskPoolResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region DiskPoolResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DiskPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskPoolResource.CreateResourceIdentifier" /> to create a <see cref="DiskPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiskPoolResource" /> object. </returns>
+        public static DiskPoolResource GetDiskPoolResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DiskPoolResource.ValidateResourceId(id);
+                return new DiskPoolResource(client, id);
             }
             );
         }
+        #endregion
 
+        #region DiskPoolIscsiTargetResource
         /// <summary>
-        /// Gets a list of Disk Pools in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskPools_ListBySubscription</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="DiskPoolIscsiTargetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskPoolIscsiTargetResource.CreateResourceIdentifier" /> to create a <see cref="DiskPoolIscsiTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DiskPoolResource> GetDiskPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiskPoolIscsiTargetResource" /> object. </returns>
+        public static DiskPoolIscsiTargetResource GetDiskPoolIscsiTargetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetExtensionClient(subscriptionResource).GetDiskPoolsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of Disk Pools in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskPools_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DiskPoolResource> GetDiskPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDiskPools(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists available Disk Pool Skus in an Azure location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskPoolZones_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDiskPoolZonesAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists available Disk Pool Skus in an Azure location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskPoolZones_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DiskPoolZoneInfo> GetDiskPoolZones(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDiskPoolZones(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists available StoragePool resources and skus in an Azure location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceSkus_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StoragePoolSkuInfo> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetResourceSkusAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists available StoragePool resources and skus in an Azure location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceSkus_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StoragePoolSkuInfo> GetResourceSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetResourceSkus(location, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
+                DiskPoolIscsiTargetResource.ValidateResourceId(id);
+                return new DiskPoolIscsiTargetResource(client, id);
             }
             );
         }
+        #endregion
 
         /// <summary> Gets a collection of DiskPoolResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskPoolResources and their operations over a DiskPoolResource. </returns>
         public static DiskPoolCollection GetDiskPools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetDiskPools();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDiskPools();
         }
 
         /// <summary>
@@ -223,42 +161,134 @@ namespace Azure.ResourceManager.StoragePool
             return resourceGroupResource.GetDiskPools().Get(diskPoolName, cancellationToken);
         }
 
-        #region DiskPoolResource
         /// <summary>
-        /// Gets an object representing a <see cref="DiskPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiskPoolResource.CreateResourceIdentifier" /> to create a <see cref="DiskPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a list of Disk Pools in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPools_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiskPoolResource" /> object. </returns>
-        public static DiskPoolResource GetDiskPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiskPoolResource> GetDiskPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                DiskPoolResource.ValidateResourceId(id);
-                return new DiskPoolResource(client, id);
-            }
-            );
+            return GetDiskPoolResourceExtensionClient(subscriptionResource).GetDiskPoolsAsync(cancellationToken);
         }
-        #endregion
 
-        #region DiskPoolIscsiTargetResource
         /// <summary>
-        /// Gets an object representing a <see cref="DiskPoolIscsiTargetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiskPoolIscsiTargetResource.CreateResourceIdentifier" /> to create a <see cref="DiskPoolIscsiTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a list of Disk Pools in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPools_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiskPoolIscsiTargetResource" /> object. </returns>
-        public static DiskPoolIscsiTargetResource GetDiskPoolIscsiTargetResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiskPoolResource> GetDiskPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                DiskPoolIscsiTargetResource.ValidateResourceId(id);
-                return new DiskPoolIscsiTargetResource(client, id);
-            }
-            );
+            return GetDiskPoolResourceExtensionClient(subscriptionResource).GetDiskPools(cancellationToken);
         }
-        #endregion
+
+        /// <summary>
+        /// Lists available Disk Pool Skus in an Azure location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPoolZones_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDiskPoolZonesAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists available Disk Pool Skus in an Azure location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPoolZones_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiskPoolZoneInfo> GetDiskPoolZones(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDiskPoolZones(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists available StoragePool resources and skus in an Azure location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceSkus_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<StoragePoolSkuInfo> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceSkusAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists available StoragePool resources and skus in an Azure location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceSkus_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<StoragePoolSkuInfo> GetResourceSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceSkus(location, cancellationToken);
+        }
     }
 }

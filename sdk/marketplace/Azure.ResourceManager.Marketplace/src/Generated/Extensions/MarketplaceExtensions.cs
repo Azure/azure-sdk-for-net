@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Marketplace.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Marketplace
@@ -18,67 +19,21 @@ namespace Azure.ResourceManager.Marketplace
     /// <summary> A class to add extension methods to Azure.ResourceManager.Marketplace. </summary>
     public static partial class MarketplaceExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of PrivateStoreResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PrivateStoreResources and their operations over a PrivateStoreResource. </returns>
-        public static PrivateStoreCollection GetPrivateStores(this TenantResource tenantResource)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(tenantResource).GetPrivateStores();
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Get information about the private store
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateStore_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetPrivateStores().GetAsync(privateStoreId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get information about the private store
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateStore_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static Response<PrivateStoreResource> GetPrivateStore(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetPrivateStores().Get(privateStoreId, cancellationToken);
-        }
-
         #region PrivateStoreResource
         /// <summary>
         /// Gets an object representing a <see cref="PrivateStoreResource" /> along with the instance operations that can be performed on it but with no data.
@@ -173,5 +128,57 @@ namespace Azure.ResourceManager.Marketplace
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of PrivateStoreResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PrivateStoreResources and their operations over a PrivateStoreResource. </returns>
+        public static PrivateStoreCollection GetPrivateStores(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetPrivateStores();
+        }
+
+        /// <summary>
+        /// Get information about the private store
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetPrivateStores().GetAsync(privateStoreId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get information about the private store
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static Response<PrivateStoreResource> GetPrivateStore(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetPrivateStores().Get(privateStoreId, cancellationToken);
+        }
     }
 }

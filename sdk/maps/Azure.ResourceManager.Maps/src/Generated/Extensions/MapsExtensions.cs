@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Maps.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maps
@@ -18,72 +19,81 @@ namespace Azure.ResourceManager.Maps
     /// <summary> A class to add extension methods to Azure.ResourceManager.Maps. </summary>
     public static partial class MapsExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static MapsAccountResourceExtensionClient GetMapsAccountResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new MapsAccountResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static MapsAccountResourceExtensionClient GetMapsAccountResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new MapsAccountResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+        #region MapsAccountResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MapsAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MapsAccountResource.CreateResourceIdentifier" /> to create a <see cref="MapsAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MapsAccountResource" /> object. </returns>
+        public static MapsAccountResource GetMapsAccountResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MapsAccountResource.ValidateResourceId(id);
+                return new MapsAccountResource(client, id);
             }
             );
         }
+        #endregion
 
+        #region MapsCreatorResource
         /// <summary>
-        /// Get all Maps Accounts in a Subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maps/accounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="MapsCreatorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MapsCreatorResource.CreateResourceIdentifier" /> to create a <see cref="MapsCreatorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MapsAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MapsAccountResource> GetMapsAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MapsCreatorResource" /> object. </returns>
+        public static MapsCreatorResource GetMapsCreatorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetExtensionClient(subscriptionResource).GetMapsAccountsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all Maps Accounts in a Subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maps/accounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MapsAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MapsAccountResource> GetMapsAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMapsAccounts(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
+                MapsCreatorResource.ValidateResourceId(id);
+                return new MapsCreatorResource(client, id);
             }
             );
         }
+        #endregion
 
         /// <summary> Gets a collection of MapsAccountResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MapsAccountResources and their operations over a MapsAccountResource. </returns>
         public static MapsAccountCollection GetMapsAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetMapsAccounts();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMapsAccounts();
         }
 
         /// <summary>
@@ -134,42 +144,46 @@ namespace Azure.ResourceManager.Maps
             return resourceGroupResource.GetMapsAccounts().Get(accountName, cancellationToken);
         }
 
-        #region MapsAccountResource
         /// <summary>
-        /// Gets an object representing a <see cref="MapsAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MapsAccountResource.CreateResourceIdentifier" /> to create a <see cref="MapsAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Get all Maps Accounts in a Subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maps/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MapsAccountResource" /> object. </returns>
-        public static MapsAccountResource GetMapsAccountResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MapsAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MapsAccountResource> GetMapsAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                MapsAccountResource.ValidateResourceId(id);
-                return new MapsAccountResource(client, id);
-            }
-            );
+            return GetMapsAccountResourceExtensionClient(subscriptionResource).GetMapsAccountsAsync(cancellationToken);
         }
-        #endregion
 
-        #region MapsCreatorResource
         /// <summary>
-        /// Gets an object representing a <see cref="MapsCreatorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MapsCreatorResource.CreateResourceIdentifier" /> to create a <see cref="MapsCreatorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Get all Maps Accounts in a Subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maps/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MapsCreatorResource" /> object. </returns>
-        public static MapsCreatorResource GetMapsCreatorResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MapsAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MapsAccountResource> GetMapsAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                MapsCreatorResource.ValidateResourceId(id);
-                return new MapsCreatorResource(client, id);
-            }
-            );
+            return GetMapsAccountResourceExtensionClient(subscriptionResource).GetMapsAccounts(cancellationToken);
         }
-        #endregion
     }
 }

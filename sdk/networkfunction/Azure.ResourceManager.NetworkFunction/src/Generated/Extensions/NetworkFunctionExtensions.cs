@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetworkFunction.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkFunction
@@ -18,72 +19,81 @@ namespace Azure.ResourceManager.NetworkFunction
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetworkFunction. </summary>
     public static partial class NetworkFunctionExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region AzureTrafficCollectorResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AzureTrafficCollectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AzureTrafficCollectorResource.CreateResourceIdentifier" /> to create an <see cref="AzureTrafficCollectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AzureTrafficCollectorResource" /> object. </returns>
+        public static AzureTrafficCollectorResource GetAzureTrafficCollectorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AzureTrafficCollectorResource.ValidateResourceId(id);
+                return new AzureTrafficCollectorResource(client, id);
             }
             );
         }
+        #endregion
 
+        #region CollectorPolicyResource
         /// <summary>
-        /// Return list of Azure Traffic Collectors in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureTrafficCollectorsBySubscription_List</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="CollectorPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CollectorPolicyResource.CreateResourceIdentifier" /> to create a <see cref="CollectorPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CollectorPolicyResource" /> object. </returns>
+        public static CollectorPolicyResource GetCollectorPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetExtensionClient(subscriptionResource).GetAzureTrafficCollectorsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Return list of Azure Traffic Collectors in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureTrafficCollectorsBySubscription_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AzureTrafficCollectorResource> GetAzureTrafficCollectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAzureTrafficCollectors(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
+                CollectorPolicyResource.ValidateResourceId(id);
+                return new CollectorPolicyResource(client, id);
             }
             );
         }
+        #endregion
 
         /// <summary> Gets a collection of AzureTrafficCollectorResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AzureTrafficCollectorResources and their operations over a AzureTrafficCollectorResource. </returns>
         public static AzureTrafficCollectorCollection GetAzureTrafficCollectors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetAzureTrafficCollectors();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzureTrafficCollectors();
         }
 
         /// <summary>
@@ -134,42 +144,46 @@ namespace Azure.ResourceManager.NetworkFunction
             return resourceGroupResource.GetAzureTrafficCollectors().Get(azureTrafficCollectorName, cancellationToken);
         }
 
-        #region AzureTrafficCollectorResource
         /// <summary>
-        /// Gets an object representing an <see cref="AzureTrafficCollectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureTrafficCollectorResource.CreateResourceIdentifier" /> to create an <see cref="AzureTrafficCollectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Return list of Azure Traffic Collectors in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectorsBySubscription_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureTrafficCollectorResource" /> object. </returns>
-        public static AzureTrafficCollectorResource GetAzureTrafficCollectorResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                AzureTrafficCollectorResource.ValidateResourceId(id);
-                return new AzureTrafficCollectorResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureTrafficCollectorsAsync(cancellationToken);
         }
-        #endregion
 
-        #region CollectorPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="CollectorPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CollectorPolicyResource.CreateResourceIdentifier" /> to create a <see cref="CollectorPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Return list of Azure Traffic Collectors in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectorsBySubscription_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CollectorPolicyResource" /> object. </returns>
-        public static CollectorPolicyResource GetCollectorPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AzureTrafficCollectorResource> GetAzureTrafficCollectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                CollectorPolicyResource.ValidateResourceId(id);
-                return new CollectorPolicyResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureTrafficCollectors(cancellationToken);
         }
-        #endregion
     }
 }

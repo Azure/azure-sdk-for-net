@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DeploymentManager.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeploymentManager
@@ -18,241 +19,21 @@ namespace Azure.ResourceManager.DeploymentManager
     /// <summary> A class to add extension methods to Azure.ResourceManager.DeploymentManager. </summary>
     public static partial class DeploymentManagerExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of ServiceTopologyResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ServiceTopologyResources and their operations over a ServiceTopologyResource. </returns>
-        public static ServiceTopologyResourceCollection GetServiceTopologyResources(this ResourceGroupResource resourceGroupResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(resourceGroupResource).GetServiceTopologyResources();
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Gets the service topology.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/serviceTopologies/{serviceTopologyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceTopologies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="serviceTopologyName"> The name of the service topology . </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceTopologyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceTopologyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ServiceTopologyResource>> GetServiceTopologyResourceAsync(this ResourceGroupResource resourceGroupResource, string serviceTopologyName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetServiceTopologyResources().GetAsync(serviceTopologyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the service topology.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/serviceTopologies/{serviceTopologyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceTopologies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="serviceTopologyName"> The name of the service topology . </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceTopologyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceTopologyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ServiceTopologyResource> GetServiceTopologyResource(this ResourceGroupResource resourceGroupResource, string serviceTopologyName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetServiceTopologyResources().Get(serviceTopologyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StepResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of StepResources and their operations over a StepResource. </returns>
-        public static StepResourceCollection GetStepResources(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetStepResources();
-        }
-
-        /// <summary>
-        /// Gets the step.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/steps/{stepName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Steps_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="stepName"> The name of the deployment step. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<StepResource>> GetStepResourceAsync(this ResourceGroupResource resourceGroupResource, string stepName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetStepResources().GetAsync(stepName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the step.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/steps/{stepName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Steps_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="stepName"> The name of the deployment step. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<StepResource> GetStepResource(this ResourceGroupResource resourceGroupResource, string stepName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetStepResources().Get(stepName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RolloutResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RolloutResources and their operations over a RolloutResource. </returns>
-        public static RolloutCollection GetRollouts(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetRollouts();
-        }
-
-        /// <summary>
-        /// Gets detailed information of a rollout.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Rollouts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="rolloutName"> The rollout name. </param>
-        /// <param name="retryAttempt"> Rollout retry attempt ordinal to get the result of. If not specified, result of the latest attempt will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RolloutResource>> GetRolloutAsync(this ResourceGroupResource resourceGroupResource, string rolloutName, int? retryAttempt = null, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetRollouts().GetAsync(rolloutName, retryAttempt, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets detailed information of a rollout.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Rollouts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="rolloutName"> The rollout name. </param>
-        /// <param name="retryAttempt"> Rollout retry attempt ordinal to get the result of. If not specified, result of the latest attempt will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RolloutResource> GetRollout(this ResourceGroupResource resourceGroupResource, string rolloutName, int? retryAttempt = null, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetRollouts().Get(rolloutName, retryAttempt, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ArtifactSourceResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ArtifactSourceResources and their operations over a ArtifactSourceResource. </returns>
-        public static ArtifactSourceCollection GetArtifactSources(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetArtifactSources();
-        }
-
-        /// <summary>
-        /// Gets an artifact source.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/artifactSources/{artifactSourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactSources_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="artifactSourceName"> The name of the artifact source. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ArtifactSourceResource>> GetArtifactSourceAsync(this ResourceGroupResource resourceGroupResource, string artifactSourceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetArtifactSources().GetAsync(artifactSourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an artifact source.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/artifactSources/{artifactSourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactSources_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="artifactSourceName"> The name of the artifact source. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ArtifactSourceResource> GetArtifactSource(this ResourceGroupResource resourceGroupResource, string artifactSourceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetArtifactSources().Get(artifactSourceName, cancellationToken);
-        }
-
         #region ServiceTopologyResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceTopologyResource" /> along with the instance operations that can be performed on it but with no data.
@@ -366,5 +147,231 @@ namespace Azure.ResourceManager.DeploymentManager
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of ServiceTopologyResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ServiceTopologyResources and their operations over a ServiceTopologyResource. </returns>
+        public static ServiceTopologyResourceCollection GetServiceTopologyResources(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetServiceTopologyResources();
+        }
+
+        /// <summary>
+        /// Gets the service topology.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/serviceTopologies/{serviceTopologyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTopologies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="serviceTopologyName"> The name of the service topology . </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceTopologyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceTopologyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ServiceTopologyResource>> GetServiceTopologyResourceAsync(this ResourceGroupResource resourceGroupResource, string serviceTopologyName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetServiceTopologyResources().GetAsync(serviceTopologyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the service topology.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/serviceTopologies/{serviceTopologyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTopologies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="serviceTopologyName"> The name of the service topology . </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceTopologyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceTopologyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ServiceTopologyResource> GetServiceTopologyResource(this ResourceGroupResource resourceGroupResource, string serviceTopologyName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetServiceTopologyResources().Get(serviceTopologyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of StepResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of StepResources and their operations over a StepResource. </returns>
+        public static StepResourceCollection GetStepResources(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStepResources();
+        }
+
+        /// <summary>
+        /// Gets the step.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/steps/{stepName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Steps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="stepName"> The name of the deployment step. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<StepResource>> GetStepResourceAsync(this ResourceGroupResource resourceGroupResource, string stepName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetStepResources().GetAsync(stepName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the step.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/steps/{stepName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Steps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="stepName"> The name of the deployment step. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<StepResource> GetStepResource(this ResourceGroupResource resourceGroupResource, string stepName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetStepResources().Get(stepName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RolloutResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of RolloutResources and their operations over a RolloutResource. </returns>
+        public static RolloutCollection GetRollouts(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRollouts();
+        }
+
+        /// <summary>
+        /// Gets detailed information of a rollout.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="retryAttempt"> Rollout retry attempt ordinal to get the result of. If not specified, result of the latest attempt will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RolloutResource>> GetRolloutAsync(this ResourceGroupResource resourceGroupResource, string rolloutName, int? retryAttempt = null, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetRollouts().GetAsync(rolloutName, retryAttempt, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets detailed information of a rollout.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="retryAttempt"> Rollout retry attempt ordinal to get the result of. If not specified, result of the latest attempt will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RolloutResource> GetRollout(this ResourceGroupResource resourceGroupResource, string rolloutName, int? retryAttempt = null, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetRollouts().Get(rolloutName, retryAttempt, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ArtifactSourceResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ArtifactSourceResources and their operations over a ArtifactSourceResource. </returns>
+        public static ArtifactSourceCollection GetArtifactSources(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetArtifactSources();
+        }
+
+        /// <summary>
+        /// Gets an artifact source.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/artifactSources/{artifactSourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArtifactSources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ArtifactSourceResource>> GetArtifactSourceAsync(this ResourceGroupResource resourceGroupResource, string artifactSourceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetArtifactSources().GetAsync(artifactSourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an artifact source.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/artifactSources/{artifactSourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArtifactSources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ArtifactSourceResource> GetArtifactSource(this ResourceGroupResource resourceGroupResource, string artifactSourceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetArtifactSources().Get(artifactSourceName, cancellationToken);
+        }
     }
 }

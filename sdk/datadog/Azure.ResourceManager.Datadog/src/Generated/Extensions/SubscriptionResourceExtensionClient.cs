@@ -12,17 +12,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Datadog;
 using Azure.ResourceManager.Datadog.Models;
 
-namespace Azure.ResourceManager.Datadog
+namespace Azure.ResourceManager.Datadog.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _marketplaceAgreementsClientDiagnostics;
         private MarketplaceAgreementsRestOperations _marketplaceAgreementsRestClient;
-        private ClientDiagnostics _datadogMonitorResourceMonitorsClientDiagnostics;
-        private MonitorsRestOperations _datadogMonitorResourceMonitorsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -36,10 +35,8 @@ namespace Azure.ResourceManager.Datadog
         {
         }
 
-        private ClientDiagnostics MarketplaceAgreementsClientDiagnostics => _marketplaceAgreementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics MarketplaceAgreementsClientDiagnostics => _marketplaceAgreementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private MarketplaceAgreementsRestOperations MarketplaceAgreementsRestClient => _marketplaceAgreementsRestClient ??= new MarketplaceAgreementsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DatadogMonitorResourceMonitorsClientDiagnostics => _datadogMonitorResourceMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
-        private MonitorsRestOperations DatadogMonitorResourceMonitorsRestClient => _datadogMonitorResourceMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DatadogMonitorResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -151,50 +148,6 @@ namespace Azure.ResourceManager.Datadog
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List all monitors under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/monitors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatadogMonitorResource> GetDatadogMonitorResourcesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DatadogMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatadogMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), DatadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDatadogMonitorResources", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all monitors under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/monitors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatadogMonitorResource> GetDatadogMonitorResources(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DatadogMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatadogMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), DatadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDatadogMonitorResources", "value", "nextLink", cancellationToken);
         }
     }
 }

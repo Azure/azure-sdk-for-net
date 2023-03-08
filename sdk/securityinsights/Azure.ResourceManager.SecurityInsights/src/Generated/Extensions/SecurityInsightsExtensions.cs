@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityInsights.Mock;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
@@ -19,15 +20,21 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecurityInsights. </summary>
     public static partial class SecurityInsightsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
+        private static Mock.ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new Mock.ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
+        private static Mock.ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new Mock.ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
         #region SecurityInsightsAlertRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsAlertRuleResource" /> along with the instance operations that can be performed on it but with no data.
@@ -292,6 +299,5 @@ namespace Azure.ResourceManager.SecurityInsights
             }
             );
         }
-        #endregion
     }
 }

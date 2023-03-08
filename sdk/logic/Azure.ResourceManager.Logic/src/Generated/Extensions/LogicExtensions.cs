@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Logic.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Logic
@@ -18,382 +19,69 @@ namespace Azure.ResourceManager.Logic
     /// <summary> A class to add extension methods to Azure.ResourceManager.Logic. </summary>
     public static partial class LogicExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static IntegrationAccountResourceExtensionClient GetIntegrationAccountResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new IntegrationAccountResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets a list of workflows by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflows_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The number of items to be included in the result. </param>
-        /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LogicWorkflowResource> GetLogicWorkflowsAsync(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        private static IntegrationAccountResourceExtensionClient GetIntegrationAccountResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(subscriptionResource).GetLogicWorkflowsAsync(top, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of workflows by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflows_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The number of items to be included in the result. </param>
-        /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LogicWorkflowResource> GetLogicWorkflows(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetLogicWorkflows(top, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of integration accounts by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntegrationAccounts_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The number of items to be included in the result. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IntegrationAccountResource> GetIntegrationAccountsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetIntegrationAccountsAsync(top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of integration accounts by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntegrationAccounts_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The number of items to be included in the result. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IntegrationAccountResource> GetIntegrationAccounts(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetIntegrationAccounts(top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of integration service environments by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The number of items to be included in the result. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IntegrationServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironmentsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetIntegrationServiceEnvironmentsAsync(top, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of integration service environments by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The number of items to be included in the result. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IntegrationServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironments(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetIntegrationServiceEnvironments(top, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new IntegrationAccountResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of LogicWorkflowResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of LogicWorkflowResources and their operations over a LogicWorkflowResource. </returns>
-        public static LogicWorkflowCollection GetLogicWorkflows(this ResourceGroupResource resourceGroupResource)
+        private static IntegrationServiceEnvironmentResourceExtensionClient GetIntegrationServiceEnvironmentResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetLogicWorkflows();
+            return resource.GetCachedClient(client =>
+            {
+                return new IntegrationServiceEnvironmentResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets a workflow.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflows_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<LogicWorkflowResource>> GetLogicWorkflowAsync(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
+        private static IntegrationServiceEnvironmentResourceExtensionClient GetIntegrationServiceEnvironmentResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetLogicWorkflows().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new IntegrationServiceEnvironmentResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets a workflow.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflows_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<LogicWorkflowResource> GetLogicWorkflow(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
+        private static LogicWorkflowResourceExtensionClient GetLogicWorkflowResourceExtensionClient(ArmResource resource)
         {
-            return resourceGroupResource.GetLogicWorkflows().Get(workflowName, cancellationToken);
+            return resource.GetCachedClient(client =>
+            {
+                return new LogicWorkflowResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of IntegrationAccountResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IntegrationAccountResources and their operations over a IntegrationAccountResource. </returns>
-        public static IntegrationAccountCollection GetIntegrationAccounts(this ResourceGroupResource resourceGroupResource)
+        private static LogicWorkflowResourceExtensionClient GetLogicWorkflowResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(resourceGroupResource).GetIntegrationAccounts();
+            return client.GetResourceClient(() =>
+            {
+                return new LogicWorkflowResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets an integration account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntegrationAccounts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<IntegrationAccountResource>> GetIntegrationAccountAsync(this ResourceGroupResource resourceGroupResource, string integrationAccountName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return await resourceGroupResource.GetIntegrationAccounts().GetAsync(integrationAccountName, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets an integration account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntegrationAccounts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<IntegrationAccountResource> GetIntegrationAccount(this ResourceGroupResource resourceGroupResource, string integrationAccountName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return resourceGroupResource.GetIntegrationAccounts().Get(integrationAccountName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary> Gets a collection of IntegrationServiceEnvironmentResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IntegrationServiceEnvironmentResources and their operations over a IntegrationServiceEnvironmentResource. </returns>
-        public static IntegrationServiceEnvironmentCollection GetIntegrationServiceEnvironments(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetIntegrationServiceEnvironments();
-        }
-
-        /// <summary>
-        /// Gets an integration service environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Logic/integrationServiceEnvironments/{integrationServiceEnvironmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntegrationServiceEnvironments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<IntegrationServiceEnvironmentResource>> GetIntegrationServiceEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetIntegrationServiceEnvironments().GetAsync(integrationServiceEnvironmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an integration service environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Logic/integrationServiceEnvironments/{integrationServiceEnvironmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntegrationServiceEnvironments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironment(this ResourceGroupResource resourceGroupResource, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetIntegrationServiceEnvironments().Get(integrationServiceEnvironmentName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Validates the workflow definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflows_ValidateByLocation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The workflow location. </param>
-        /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="data"> The workflow. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
-        public static async Task<Response> ValidateByLocationWorkflowAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return await GetExtensionClient(resourceGroupResource).ValidateByLocationWorkflowAsync(location, workflowName, data, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Validates the workflow definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflows_ValidateByLocation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The workflow location. </param>
-        /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="data"> The workflow. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
-        public static Response ValidateByLocationWorkflow(this ResourceGroupResource resourceGroupResource, AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return GetExtensionClient(resourceGroupResource).ValidateByLocationWorkflow(location, workflowName, data, cancellationToken);
-        }
-
         #region LogicWorkflowResource
         /// <summary>
         /// Gets an object representing a <see cref="LogicWorkflowResource" /> along with the instance operations that can be performed on it but with no data.
@@ -811,5 +499,363 @@ namespace Azure.ResourceManager.Logic
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of LogicWorkflowResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of LogicWorkflowResources and their operations over a LogicWorkflowResource. </returns>
+        public static LogicWorkflowCollection GetLogicWorkflows(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLogicWorkflows();
+        }
+
+        /// <summary>
+        /// Gets a workflow.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workflowName"> The workflow name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<LogicWorkflowResource>> GetLogicWorkflowAsync(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetLogicWorkflows().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a workflow.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workflowName"> The workflow name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<LogicWorkflowResource> GetLogicWorkflow(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetLogicWorkflows().Get(workflowName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of IntegrationAccountResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of IntegrationAccountResources and their operations over a IntegrationAccountResource. </returns>
+        public static IntegrationAccountCollection GetIntegrationAccounts(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIntegrationAccounts();
+        }
+
+        /// <summary>
+        /// Gets an integration account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="integrationAccountName"> The integration account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<IntegrationAccountResource>> GetIntegrationAccountAsync(this ResourceGroupResource resourceGroupResource, string integrationAccountName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetIntegrationAccounts().GetAsync(integrationAccountName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an integration account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="integrationAccountName"> The integration account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<IntegrationAccountResource> GetIntegrationAccount(this ResourceGroupResource resourceGroupResource, string integrationAccountName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetIntegrationAccounts().Get(integrationAccountName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of IntegrationServiceEnvironmentResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of IntegrationServiceEnvironmentResources and their operations over a IntegrationServiceEnvironmentResource. </returns>
+        public static IntegrationServiceEnvironmentCollection GetIntegrationServiceEnvironments(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIntegrationServiceEnvironments();
+        }
+
+        /// <summary>
+        /// Gets an integration service environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Logic/integrationServiceEnvironments/{integrationServiceEnvironmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationServiceEnvironments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<IntegrationServiceEnvironmentResource>> GetIntegrationServiceEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetIntegrationServiceEnvironments().GetAsync(integrationServiceEnvironmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an integration service environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Logic/integrationServiceEnvironments/{integrationServiceEnvironmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationServiceEnvironments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironment(this ResourceGroupResource resourceGroupResource, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetIntegrationServiceEnvironments().Get(integrationServiceEnvironmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Validates the workflow definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ValidateByLocation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The workflow location. </param>
+        /// <param name="workflowName"> The workflow name. </param>
+        /// <param name="data"> The workflow. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
+        public static async Task<Response> ValidateByLocationWorkflowAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            return await GetLogicWorkflowResourceExtensionClient(resourceGroupResource).ValidateByLocationWorkflowAsync(location, workflowName, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Validates the workflow definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/locations/{location}/workflows/{workflowName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ValidateByLocation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The workflow location. </param>
+        /// <param name="workflowName"> The workflow name. </param>
+        /// <param name="data"> The workflow. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
+        public static Response ValidateByLocationWorkflow(this ResourceGroupResource resourceGroupResource, AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            return GetLogicWorkflowResourceExtensionClient(resourceGroupResource).ValidateByLocationWorkflow(location, workflowName, data, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of workflows by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The number of items to be included in the result. </param>
+        /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="LogicWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<LogicWorkflowResource> GetLogicWorkflowsAsync(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetLogicWorkflowResourceExtensionClient(subscriptionResource).GetLogicWorkflowsAsync(top, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of workflows by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The number of items to be included in the result. </param>
+        /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LogicWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<LogicWorkflowResource> GetLogicWorkflows(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetLogicWorkflowResourceExtensionClient(subscriptionResource).GetLogicWorkflows(top, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of integration accounts by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The number of items to be included in the result. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IntegrationAccountResource> GetIntegrationAccountsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetIntegrationAccountResourceExtensionClient(subscriptionResource).GetIntegrationAccountsAsync(top, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of integration accounts by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The number of items to be included in the result. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IntegrationAccountResource> GetIntegrationAccounts(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetIntegrationAccountResourceExtensionClient(subscriptionResource).GetIntegrationAccounts(top, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of integration service environments by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The number of items to be included in the result. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="IntegrationServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironmentsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetIntegrationServiceEnvironmentResourceExtensionClient(subscriptionResource).GetIntegrationServiceEnvironmentsAsync(top, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of integration service environments by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The number of items to be included in the result. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IntegrationServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironments(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetIntegrationServiceEnvironmentResourceExtensionClient(subscriptionResource).GetIntegrationServiceEnvironments(top, cancellationToken);
+        }
     }
 }

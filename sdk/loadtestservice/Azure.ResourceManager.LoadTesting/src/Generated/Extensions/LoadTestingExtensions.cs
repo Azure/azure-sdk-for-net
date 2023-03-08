@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.LoadTesting.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LoadTesting
@@ -18,13 +19,145 @@ namespace Azure.ResourceManager.LoadTesting
     /// <summary> A class to add extension methods to Azure.ResourceManager.LoadTesting. </summary>
     public static partial class LoadTestingExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static LoadTestingResourceExtensionClient GetLoadTestingResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new LoadTestingResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static LoadTestingResourceExtensionClient GetLoadTestingResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new LoadTestingResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region LoadTestingQuotaResource
+        /// <summary>
+        /// Gets an object representing a <see cref="LoadTestingQuotaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LoadTestingQuotaResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingQuotaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LoadTestingQuotaResource" /> object. </returns>
+        public static LoadTestingQuotaResource GetLoadTestingQuotaResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                LoadTestingQuotaResource.ValidateResourceId(id);
+                return new LoadTestingQuotaResource(client, id);
             }
             );
+        }
+        #endregion
+
+        #region LoadTestingResource
+        /// <summary>
+        /// Gets an object representing a <see cref="LoadTestingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LoadTestingResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LoadTestingResource" /> object. </returns>
+        public static LoadTestingResource GetLoadTestingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                LoadTestingResource.ValidateResourceId(id);
+                return new LoadTestingResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        /// <summary> Gets a collection of LoadTestingResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of LoadTestingResources and their operations over a LoadTestingResource. </returns>
+        public static LoadTestingResourceCollection GetLoadTestingResources(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLoadTestingResources();
+        }
+
+        /// <summary>
+        /// Get a LoadTest resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="loadTestName"> Load Test name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<LoadTestingResource>> GetLoadTestingResourceAsync(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetLoadTestingResources().GetAsync(loadTestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a LoadTest resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="loadTestName"> Load Test name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<LoadTestingResource> GetLoadTestingResource(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetLoadTestingResources().Get(loadTestName, cancellationToken);
         }
 
         /// <summary> Gets a collection of LoadTestingQuotaResources in the SubscriptionResource. </summary>
@@ -33,7 +166,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> An object representing collection of LoadTestingQuotaResources and their operations over a LoadTestingQuotaResource. </returns>
         public static LoadTestingQuotaCollection GetAllLoadTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            return GetExtensionClient(subscriptionResource).GetAllLoadTestingQuota(location);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllLoadTestingQuota(location);
         }
 
         /// <summary>
@@ -104,7 +237,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> An async collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LoadTestingResource> GetLoadTestingResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLoadTestingResourcesAsync(cancellationToken);
+            return GetLoadTestingResourceExtensionClient(subscriptionResource).GetLoadTestingResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -125,110 +258,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> A collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LoadTestingResource> GetLoadTestingResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLoadTestingResources(cancellationToken);
+            return GetLoadTestingResourceExtensionClient(subscriptionResource).GetLoadTestingResources(cancellationToken);
         }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
-
-        /// <summary> Gets a collection of LoadTestingResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of LoadTestingResources and their operations over a LoadTestingResource. </returns>
-        public static LoadTestingResourceCollection GetLoadTestingResources(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetLoadTestingResources();
-        }
-
-        /// <summary>
-        /// Get a LoadTest resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadTests_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="loadTestName"> Load Test name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<LoadTestingResource>> GetLoadTestingResourceAsync(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetLoadTestingResources().GetAsync(loadTestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a LoadTest resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadTests_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="loadTestName"> Load Test name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<LoadTestingResource> GetLoadTestingResource(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetLoadTestingResources().Get(loadTestName, cancellationToken);
-        }
-
-        #region LoadTestingQuotaResource
-        /// <summary>
-        /// Gets an object representing a <see cref="LoadTestingQuotaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LoadTestingQuotaResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingQuotaResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LoadTestingQuotaResource" /> object. </returns>
-        public static LoadTestingQuotaResource GetLoadTestingQuotaResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                LoadTestingQuotaResource.ValidateResourceId(id);
-                return new LoadTestingQuotaResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region LoadTestingResource
-        /// <summary>
-        /// Gets an object representing a <see cref="LoadTestingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LoadTestingResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LoadTestingResource" /> object. </returns>
-        public static LoadTestingResource GetLoadTestingResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                LoadTestingResource.ValidateResourceId(id);
-                return new LoadTestingResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }

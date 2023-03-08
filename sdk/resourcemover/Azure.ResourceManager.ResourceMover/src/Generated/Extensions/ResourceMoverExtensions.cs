@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceMover.Mock;
 using Azure.ResourceManager.ResourceMover.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,121 +20,97 @@ namespace Azure.ResourceManager.ResourceMover
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceMover. </summary>
     public static partial class ResourceMoverExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static MoverResourceSetResourceExtensionClient GetMoverResourceSetResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
+                return new MoverResourceSetResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static MoverResourceSetResourceExtensionClient GetMoverResourceSetResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new MoverResourceSetResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
+        }
+        #region MoverResourceSetResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MoverResourceSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MoverResourceSetResource.CreateResourceIdentifier" /> to create a <see cref="MoverResourceSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MoverResourceSetResource" /> object. </returns>
+        public static MoverResourceSetResource GetMoverResourceSetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MoverResourceSetResource.ValidateResourceId(id);
+                return new MoverResourceSetResource(client, id);
             }
             );
         }
+        #endregion
 
+        #region MoverResource
         /// <summary>
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Migrate/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationsDiscovery_Get</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="MoverResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MoverResource.CreateResourceIdentifier" /> to create a <see cref="MoverResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MoverResource" /> object. </returns>
+        public static MoverResource GetMoverResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetExtensionClient(tenantResource).GetOperationsDiscoveriesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Migrate/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationsDiscovery_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MoverOperationsDiscovery> GetOperationsDiscoveries(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetOperationsDiscoveries(cancellationToken);
-        }
-
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                MoverResource.ValidateResourceId(id);
+                return new MoverResource(client, id);
             }
             );
         }
-
-        /// <summary>
-        /// Get all the Move Collections in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Migrate/moveCollections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MoverResourceSetResource> GetMoverResourceSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMoverResourceSetsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all the Move Collections in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Migrate/moveCollections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MoverResourceSetResource> GetMoverResourceSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMoverResourceSets(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
+        #endregion
 
         /// <summary> Gets a collection of MoverResourceSetResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MoverResourceSetResources and their operations over a MoverResourceSetResource. </returns>
         public static MoverResourceSetCollection GetMoverResourceSets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetMoverResourceSets();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMoverResourceSets();
         }
 
         /// <summary>
@@ -184,42 +161,86 @@ namespace Azure.ResourceManager.ResourceMover
             return resourceGroupResource.GetMoverResourceSets().Get(moverResourceSetName, cancellationToken);
         }
 
-        #region MoverResourceSetResource
         /// <summary>
-        /// Gets an object representing a <see cref="MoverResourceSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MoverResourceSetResource.CreateResourceIdentifier" /> to create a <see cref="MoverResourceSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Get all the Move Collections in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Migrate/moveCollections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MoverResourceSetResource" /> object. </returns>
-        public static MoverResourceSetResource GetMoverResourceSetResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MoverResourceSetResource> GetMoverResourceSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                MoverResourceSetResource.ValidateResourceId(id);
-                return new MoverResourceSetResource(client, id);
-            }
-            );
+            return GetMoverResourceSetResourceExtensionClient(subscriptionResource).GetMoverResourceSetsAsync(cancellationToken);
         }
-        #endregion
 
-        #region MoverResource
         /// <summary>
-        /// Gets an object representing a <see cref="MoverResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MoverResource.CreateResourceIdentifier" /> to create a <see cref="MoverResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Get all the Move Collections in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Migrate/moveCollections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MoverResource" /> object. </returns>
-        public static MoverResource GetMoverResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MoverResourceSetResource> GetMoverResourceSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                MoverResource.ValidateResourceId(id);
-                return new MoverResource(client, id);
-            }
-            );
+            return GetMoverResourceSetResourceExtensionClient(subscriptionResource).GetMoverResourceSets(cancellationToken);
         }
-        #endregion
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Migrate/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsDiscovery_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetOperationsDiscoveriesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Migrate/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsDiscovery_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MoverOperationsDiscovery> GetOperationsDiscoveries(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetOperationsDiscoveries(cancellationToken);
+        }
     }
 }

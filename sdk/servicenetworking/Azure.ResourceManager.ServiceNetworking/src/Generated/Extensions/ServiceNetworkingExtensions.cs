@@ -12,128 +12,44 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ServiceNetworking.Mock;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.ServiceNetworking. </summary>
     public static partial class ServiceNetworkingExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// List TrafficController resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceNetworking/trafficControllers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<TrafficControllerResource> GetTrafficControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(subscriptionResource).GetTrafficControllersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List TrafficController resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceNetworking/trafficControllers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<TrafficControllerResource> GetTrafficControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetTrafficControllers(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of TrafficControllerResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of TrafficControllerResources and their operations over a TrafficControllerResource. </returns>
-        public static TrafficControllerCollection GetTrafficControllers(this ResourceGroupResource resourceGroupResource)
+        private static TrafficControllerResourceExtensionClient GetTrafficControllerResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetTrafficControllers();
+            return resource.GetCachedClient(client =>
+            {
+                return new TrafficControllerResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Get a TrafficController
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="trafficControllerName"> traffic controller name for path. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficControllerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TrafficControllerResource>> GetTrafficControllerAsync(this ResourceGroupResource resourceGroupResource, string trafficControllerName, CancellationToken cancellationToken = default)
+        private static TrafficControllerResourceExtensionClient GetTrafficControllerResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetTrafficControllers().GetAsync(trafficControllerName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new TrafficControllerResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Get a TrafficController
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="trafficControllerName"> traffic controller name for path. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficControllerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<TrafficControllerResource> GetTrafficController(this ResourceGroupResource resourceGroupResource, string trafficControllerName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetTrafficControllers().Get(trafficControllerName, cancellationToken);
-        }
-
         #region TrafficControllerResource
         /// <summary>
         /// Gets an object representing a <see cref="TrafficControllerResource" /> along with the instance operations that can be performed on it but with no data.
@@ -190,5 +106,103 @@ namespace Azure.ResourceManager.ServiceNetworking
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of TrafficControllerResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of TrafficControllerResources and their operations over a TrafficControllerResource. </returns>
+        public static TrafficControllerCollection GetTrafficControllers(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTrafficControllers();
+        }
+
+        /// <summary>
+        /// Get a TrafficController
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrafficControllerInterface_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="trafficControllerName"> traffic controller name for path. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="trafficControllerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TrafficControllerResource>> GetTrafficControllerAsync(this ResourceGroupResource resourceGroupResource, string trafficControllerName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetTrafficControllers().GetAsync(trafficControllerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a TrafficController
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrafficControllerInterface_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="trafficControllerName"> traffic controller name for path. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="trafficControllerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TrafficControllerResource> GetTrafficController(this ResourceGroupResource resourceGroupResource, string trafficControllerName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetTrafficControllers().Get(trafficControllerName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List TrafficController resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceNetworking/trafficControllers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrafficControllerInterface_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<TrafficControllerResource> GetTrafficControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetTrafficControllerResourceExtensionClient(subscriptionResource).GetTrafficControllersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List TrafficController resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceNetworking/trafficControllers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrafficControllerInterface_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<TrafficControllerResource> GetTrafficControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetTrafficControllerResourceExtensionClient(subscriptionResource).GetTrafficControllers(cancellationToken);
+        }
     }
 }

@@ -12,15 +12,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataBox;
 using Azure.ResourceManager.DataBox.Models;
 
-namespace Azure.ResourceManager.DataBox
+namespace Azure.ResourceManager.DataBox.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _dataBoxJobJobsClientDiagnostics;
-        private JobsRestOperations _dataBoxJobJobsRestClient;
         private ClientDiagnostics _serviceClientDiagnostics;
         private ServiceRestOperations _serviceRestClient;
 
@@ -36,61 +35,13 @@ namespace Azure.ResourceManager.DataBox
         {
         }
 
-        private ClientDiagnostics DataBoxJobJobsClientDiagnostics => _dataBoxJobJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
-        private JobsRestOperations DataBoxJobJobsRestClient => _dataBoxJobJobsRestClient ??= new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataBoxJobResource.ResourceType));
-        private ClientDiagnostics ServiceClientDiagnostics => _serviceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ServiceClientDiagnostics => _serviceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ServiceRestOperations ServiceRestClient => _serviceRestClient ??= new ServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Lists all the jobs available under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataBoxJobResource> GetDataBoxJobsAsync(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the jobs available under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataBoxJobResource> GetDataBoxJobs(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -109,8 +60,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AddressValidationOutput>> ValidateAddressAsync(AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateAddress");
             scope.Start();
             try
@@ -141,8 +95,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AddressValidationOutput> ValidateAddress(AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateAddress");
             scope.Start();
             try
@@ -173,8 +130,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateInputs");
             scope.Start();
             try
@@ -205,8 +165,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataBoxValidationResult> ValidateInputs(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateInputs");
             scope.Start();
             try
@@ -237,8 +200,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionConfiguration");
             scope.Start();
             try
@@ -269,8 +235,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<RegionConfigurationResult> GetRegionConfiguration(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionConfiguration");
             scope.Start();
             try

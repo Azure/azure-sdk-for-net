@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Purview.Mock;
 using Azure.ResourceManager.Purview.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,321 +20,53 @@ namespace Azure.ResourceManager.Purview
     /// <summary> A class to add extension methods to Azure.ResourceManager.Purview. </summary>
     public static partial class PurviewExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static PurviewAccountResourceExtensionClient GetPurviewAccountResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new PurviewAccountResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Get the default account for the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/getDefaultAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        private static PurviewAccountResourceExtensionClient GetPurviewAccountResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await GetExtensionClient(tenantResource).GetDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the default account for the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/getDefaultAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<DefaultPurviewAccountPayload> GetDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
-        }
-
-        /// <summary>
-        /// Sets the default account for the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Set</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
-        public static async Task<Response<DefaultPurviewAccountPayload>> SetDefaultAccountAsync(this TenantResource tenantResource, DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
-
-            return await GetExtensionClient(tenantResource).SetDefaultAccountAsync(defaultAccountPayload, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Sets the default account for the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Set</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
-        public static Response<DefaultPurviewAccountPayload> SetDefaultAccount(this TenantResource tenantResource, DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
-
-            return GetExtensionClient(tenantResource).SetDefaultAccount(defaultAccountPayload, cancellationToken);
-        }
-
-        /// <summary>
-        /// Removes the default account from the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Remove</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response> RemoveDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
-        {
-            return await GetExtensionClient(tenantResource).RemoveDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Removes the default account from the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Remove</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response RemoveDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).RemoveDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
-        }
-
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new PurviewAccountResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// List accounts in Subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="skipToken"> The skip token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PurviewAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PurviewAccountResource> GetPurviewAccountsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(subscriptionResource).GetPurviewAccountsAsync(skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// List accounts in Subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="skipToken"> The skip token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PurviewAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PurviewAccountResource> GetPurviewAccounts(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPurviewAccounts(skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks if account name is available.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_CheckNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The check name availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<PurviewAccountNameAvailabilityResult>> CheckPurviewAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).CheckPurviewAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks if account name is available.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_CheckNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The check name availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<PurviewAccountNameAvailabilityResult> CheckPurviewAccountNameAvailability(this SubscriptionResource subscriptionResource, PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).CheckPurviewAccountNameAvailability(content, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of PurviewAccountResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PurviewAccountResources and their operations over a PurviewAccountResource. </returns>
-        public static PurviewAccountCollection GetPurviewAccounts(this ResourceGroupResource resourceGroupResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(resourceGroupResource).GetPurviewAccounts();
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Get an account
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="accountName"> The name of the account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PurviewAccountResource>> GetPurviewAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
-            return await resourceGroupResource.GetPurviewAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Get an account
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="accountName"> The name of the account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PurviewAccountResource> GetPurviewAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return resourceGroupResource.GetPurviewAccounts().Get(accountName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
         }
-
         #region PurviewAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="PurviewAccountResource" /> along with the instance operations that can be performed on it but with no data.
@@ -390,5 +123,293 @@ namespace Azure.ResourceManager.Purview
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of PurviewAccountResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PurviewAccountResources and their operations over a PurviewAccountResource. </returns>
+        public static PurviewAccountCollection GetPurviewAccounts(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPurviewAccounts();
+        }
+
+        /// <summary>
+        /// Get an account
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="accountName"> The name of the account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PurviewAccountResource>> GetPurviewAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetPurviewAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get an account
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="accountName"> The name of the account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PurviewAccountResource> GetPurviewAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetPurviewAccounts().Get(accountName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List accounts in Subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="skipToken"> The skip token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PurviewAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PurviewAccountResource> GetPurviewAccountsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            return GetPurviewAccountResourceExtensionClient(subscriptionResource).GetPurviewAccountsAsync(skipToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// List accounts in Subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="skipToken"> The skip token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PurviewAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PurviewAccountResource> GetPurviewAccounts(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            return GetPurviewAccountResourceExtensionClient(subscriptionResource).GetPurviewAccounts(skipToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks if account name is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The check name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<PurviewAccountNameAvailabilityResult>> CheckPurviewAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetPurviewAccountResourceExtensionClient(subscriptionResource).CheckPurviewAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks if account name is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The check name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<PurviewAccountNameAvailabilityResult> CheckPurviewAccountNameAvailability(this SubscriptionResource subscriptionResource, PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetPurviewAccountResourceExtensionClient(subscriptionResource).CheckPurviewAccountNameAvailability(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the default account for the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/getDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="scopeTenantId"> The tenant ID. </param>
+        /// <param name="scopeType"> The scope for the default account. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        {
+            return await GetTenantResourceExtensionClient(tenantResource).GetDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the default account for the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/getDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="scopeTenantId"> The tenant ID. </param>
+        /// <param name="scopeType"> The scope for the default account. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<DefaultPurviewAccountPayload> GetDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// Sets the default account for the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Set</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
+        public static async Task<Response<DefaultPurviewAccountPayload>> SetDefaultAccountAsync(this TenantResource tenantResource, DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
+
+            return await GetTenantResourceExtensionClient(tenantResource).SetDefaultAccountAsync(defaultAccountPayload, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Sets the default account for the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Set</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
+        public static Response<DefaultPurviewAccountPayload> SetDefaultAccount(this TenantResource tenantResource, DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
+
+            return GetTenantResourceExtensionClient(tenantResource).SetDefaultAccount(defaultAccountPayload, cancellationToken);
+        }
+
+        /// <summary>
+        /// Removes the default account from the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Remove</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="scopeTenantId"> The tenant ID. </param>
+        /// <param name="scopeType"> The scope for the default account. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response> RemoveDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        {
+            return await GetTenantResourceExtensionClient(tenantResource).RemoveDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Removes the default account from the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Remove</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="scopeTenantId"> The tenant ID. </param>
+        /// <param name="scopeType"> The scope for the default account. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response RemoveDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).RemoveDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
+        }
     }
 }

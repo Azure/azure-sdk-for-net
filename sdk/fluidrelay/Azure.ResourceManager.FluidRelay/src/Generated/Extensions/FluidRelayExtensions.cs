@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.FluidRelay.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.FluidRelay
@@ -18,72 +19,81 @@ namespace Azure.ResourceManager.FluidRelay
     /// <summary> A class to add extension methods to Azure.ResourceManager.FluidRelay. </summary>
     public static partial class FluidRelayExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static FluidRelayServerResourceExtensionClient GetFluidRelayServerResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new FluidRelayServerResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static FluidRelayServerResourceExtensionClient GetFluidRelayServerResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new FluidRelayServerResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+        #region FluidRelayServerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FluidRelayServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FluidRelayServerResource.CreateResourceIdentifier" /> to create a <see cref="FluidRelayServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FluidRelayServerResource" /> object. </returns>
+        public static FluidRelayServerResource GetFluidRelayServerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FluidRelayServerResource.ValidateResourceId(id);
+                return new FluidRelayServerResource(client, id);
             }
             );
         }
+        #endregion
 
+        #region FluidRelayContainerResource
         /// <summary>
-        /// List all Fluid Relay servers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FluidRelayServers_ListBySubscription</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="FluidRelayContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FluidRelayContainerResource.CreateResourceIdentifier" /> to create a <see cref="FluidRelayContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FluidRelayServerResource> GetFluidRelayServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FluidRelayContainerResource" /> object. </returns>
+        public static FluidRelayContainerResource GetFluidRelayContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetExtensionClient(subscriptionResource).GetFluidRelayServersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List all Fluid Relay servers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FluidRelayServers_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FluidRelayServerResource> GetFluidRelayServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetFluidRelayServers(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
+                FluidRelayContainerResource.ValidateResourceId(id);
+                return new FluidRelayContainerResource(client, id);
             }
             );
         }
+        #endregion
 
         /// <summary> Gets a collection of FluidRelayServerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of FluidRelayServerResources and their operations over a FluidRelayServerResource. </returns>
         public static FluidRelayServerCollection GetFluidRelayServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetFluidRelayServers();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFluidRelayServers();
         }
 
         /// <summary>
@@ -134,42 +144,46 @@ namespace Azure.ResourceManager.FluidRelay
             return resourceGroupResource.GetFluidRelayServers().Get(fluidRelayServerName, cancellationToken);
         }
 
-        #region FluidRelayServerResource
         /// <summary>
-        /// Gets an object representing a <see cref="FluidRelayServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FluidRelayServerResource.CreateResourceIdentifier" /> to create a <see cref="FluidRelayServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// List all Fluid Relay servers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayServers_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FluidRelayServerResource" /> object. </returns>
-        public static FluidRelayServerResource GetFluidRelayServerResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FluidRelayServerResource> GetFluidRelayServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                FluidRelayServerResource.ValidateResourceId(id);
-                return new FluidRelayServerResource(client, id);
-            }
-            );
+            return GetFluidRelayServerResourceExtensionClient(subscriptionResource).GetFluidRelayServersAsync(cancellationToken);
         }
-        #endregion
 
-        #region FluidRelayContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="FluidRelayContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FluidRelayContainerResource.CreateResourceIdentifier" /> to create a <see cref="FluidRelayContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// List all Fluid Relay servers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayServers_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FluidRelayContainerResource" /> object. </returns>
-        public static FluidRelayContainerResource GetFluidRelayContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FluidRelayServerResource> GetFluidRelayServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                FluidRelayContainerResource.ValidateResourceId(id);
-                return new FluidRelayContainerResource(client, id);
-            }
-            );
+            return GetFluidRelayServerResourceExtensionClient(subscriptionResource).GetFluidRelayServers(cancellationToken);
         }
-        #endregion
     }
 }

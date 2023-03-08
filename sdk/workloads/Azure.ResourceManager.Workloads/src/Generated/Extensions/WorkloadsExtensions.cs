@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Workloads.Mock;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
@@ -19,396 +20,69 @@ namespace Azure.ResourceManager.Workloads
     /// <summary> A class to add extension methods to Azure.ResourceManager.Workloads. </summary>
     public static partial class WorkloadsExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPSizingRecommendations</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> SAP Sizing Recommendation Request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<SapSizingRecommendationResult>> SapSizingRecommendationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await GetExtensionClient(subscriptionResource).SapSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPSizingRecommendations</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> SAP Sizing Recommendation Request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<SapSizingRecommendationResult> SapSizingRecommendations(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).SapSizingRecommendations(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPSupportedSku</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> SAP Supported SKU Request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<SapSupportedResourceSkusResult>> SapSupportedSkuAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
-        {
-            return await GetExtensionClient(subscriptionResource).SapSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPSupportedSku</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> SAP Supported SKU Request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<SapSupportedResourceSkusResult> SapSupportedSku(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).SapSupportedSku(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPDiskConfigurations</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> SAP Disk Configurations Request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
-        {
-            return await GetExtensionClient(subscriptionResource).SapDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPDiskConfigurations</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> SAP Disk Configurations Request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<SapDiskConfigurationsResult> SapDiskConfigurations(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).SapDiskConfigurations(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the recommended SAP Availability Zone Pair Details for your region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPAvailabilityZoneDetails</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> SAP Availability Zone Details Request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
-        {
-            return await GetExtensionClient(subscriptionResource).SapAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the recommended SAP Availability Zone Pair Details for your region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPAvailabilityZoneDetails</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> SAP Availability Zone Details Request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).SapAvailabilityZoneDetails(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSapVirtualInstancesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSapVirtualInstances(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>monitors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SapMonitorResource> GetSapMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSapMonitorsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>monitors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SapMonitorResource> GetSapMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSapMonitors(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of SapVirtualInstanceResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SapVirtualInstanceResources and their operations over a SapVirtualInstanceResource. </returns>
-        public static SapVirtualInstanceCollection GetSapVirtualInstances(this ResourceGroupResource resourceGroupResource)
+        private static SapMonitorResourceExtensionClient GetSapMonitorResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetSapVirtualInstances();
+            return resource.GetCachedClient(client =>
+            {
+                return new SapMonitorResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets a Virtual Instance for SAP solutions resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SapVirtualInstanceResource>> GetSapVirtualInstanceAsync(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
+        private static SapMonitorResourceExtensionClient GetSapMonitorResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetSapVirtualInstances().GetAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new SapMonitorResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets a Virtual Instance for SAP solutions resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SapVirtualInstanceResource> GetSapVirtualInstance(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
+        private static SapVirtualInstanceResourceExtensionClient GetSapVirtualInstanceResourceExtensionClient(ArmResource resource)
         {
-            return resourceGroupResource.GetSapVirtualInstances().Get(sapVirtualInstanceName, cancellationToken);
+            return resource.GetCachedClient(client =>
+            {
+                return new SapVirtualInstanceResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of SapMonitorResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SapMonitorResources and their operations over a SapMonitorResource. </returns>
-        public static SapMonitorCollection GetSapMonitors(this ResourceGroupResource resourceGroupResource)
+        private static SapVirtualInstanceResourceExtensionClient GetSapVirtualInstanceResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(resourceGroupResource).GetSapMonitors();
+            return client.GetResourceClient(() =>
+            {
+                return new SapVirtualInstanceResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>monitors_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="monitorName"> Name of the SAP monitor resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SapMonitorResource>> GetSapMonitorAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return await resourceGroupResource.GetSapMonitors().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>monitors_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="monitorName"> Name of the SAP monitor resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SapMonitorResource> GetSapMonitor(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return resourceGroupResource.GetSapMonitors().Get(monitorName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
         }
-
         #region SapVirtualInstanceResource
         /// <summary>
         /// Gets an object representing a <see cref="SapVirtualInstanceResource" /> along with the instance operations that can be performed on it but with no data.
@@ -541,5 +215,377 @@ namespace Azure.ResourceManager.Workloads
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of SapVirtualInstanceResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SapVirtualInstanceResources and their operations over a SapVirtualInstanceResource. </returns>
+        public static SapVirtualInstanceCollection GetSapVirtualInstances(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSapVirtualInstances();
+        }
+
+        /// <summary>
+        /// Gets a Virtual Instance for SAP solutions resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPVirtualInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SapVirtualInstanceResource>> GetSapVirtualInstanceAsync(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSapVirtualInstances().GetAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Virtual Instance for SAP solutions resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPVirtualInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SapVirtualInstanceResource> GetSapVirtualInstance(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSapVirtualInstances().Get(sapVirtualInstanceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SapMonitorResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SapMonitorResources and their operations over a SapMonitorResource. </returns>
+        public static SapMonitorCollection GetSapMonitors(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSapMonitors();
+        }
+
+        /// <summary>
+        /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="monitorName"> Name of the SAP monitor resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SapMonitorResource>> GetSapMonitorAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSapMonitors().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="monitorName"> Name of the SAP monitor resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SapMonitorResource> GetSapMonitor(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSapMonitors().Get(monitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSizingRecommendations</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> SAP Sizing Recommendation Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<SapSizingRecommendationResult>> SapSizingRecommendationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSizingRecommendations</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> SAP Sizing Recommendation Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<SapSizingRecommendationResult> SapSizingRecommendations(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapSizingRecommendations(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSupportedSku</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> SAP Supported SKU Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<SapSupportedResourceSkusResult>> SapSupportedSkuAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPSupportedSku</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> SAP Supported SKU Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<SapSupportedResourceSkusResult> SapSupportedSku(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapSupportedSku(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPDiskConfigurations</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> SAP Disk Configurations Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPDiskConfigurations</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> SAP Disk Configurations Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<SapDiskConfigurationsResult> SapDiskConfigurations(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapDiskConfigurations(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPAvailabilityZoneDetails</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> SAP Availability Zone Details Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPAvailabilityZoneDetails</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> SAP Availability Zone Details Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapAvailabilityZoneDetails(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPVirtualInstances_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSapVirtualInstanceResourceExtensionClient(subscriptionResource).GetSapVirtualInstancesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPVirtualInstances_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSapVirtualInstanceResourceExtensionClient(subscriptionResource).GetSapVirtualInstances(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SapMonitorResource> GetSapMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSapMonitorResourceExtensionClient(subscriptionResource).GetSapMonitorsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SapMonitorResource> GetSapMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSapMonitorResourceExtensionClient(subscriptionResource).GetSapMonitors(cancellationToken);
+        }
     }
 }

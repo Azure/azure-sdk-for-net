@@ -7,11 +7,12 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ProviderHub;
 
-namespace Azure.ResourceManager.ProviderHub
+namespace Azure.ResourceManager.ProviderHub.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()

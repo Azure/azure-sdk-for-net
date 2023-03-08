@@ -5,23 +5,15 @@
 
 #nullable disable
 
-using System.Threading;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.EventGrid.Models;
+using Azure.ResourceManager.EventGrid;
 
-namespace Azure.ResourceManager.EventGrid
+namespace Azure.ResourceManager.EventGrid.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _eventSubscriptionClientDiagnostics;
-        private EventSubscriptionsRestOperations _eventSubscriptionRestClient;
-        private ClientDiagnostics _eventGridTopicTopicsClientDiagnostics;
-        private TopicsRestOperations _eventGridTopicTopicsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
         {
@@ -33,11 +25,6 @@ namespace Azure.ResourceManager.EventGrid
         internal ResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics EventSubscriptionClientDiagnostics => _eventSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventSubscriptionResource.ResourceType.Namespace, Diagnostics);
-        private EventSubscriptionsRestOperations EventSubscriptionRestClient => _eventSubscriptionRestClient ??= new EventSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventSubscriptionResource.ResourceType));
-        private ClientDiagnostics EventGridTopicTopicsClientDiagnostics => _eventGridTopicTopicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridTopicResource.ResourceType.Namespace, Diagnostics);
-        private TopicsRestOperations EventGridTopicTopicsRestClient => _eventGridTopicTopicsRestClient ??= new TopicsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventGridTopicResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -92,54 +79,6 @@ namespace Azure.ResourceManager.EventGrid
         public virtual SystemTopicCollection GetSystemTopics()
         {
             return GetCachedClient(Client => new SystemTopicCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// List event types for a topic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topics_ListEventTypes</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerNamespace"> Namespace of the provider of the topic. </param>
-        /// <param name="resourceTypeName"> Name of the topic type. </param>
-        /// <param name="resourceName"> Name of the topic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List event types for a topic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topics_ListEventTypes</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerNamespace"> Namespace of the provider of the topic. </param>
-        /// <param name="resourceTypeName"> Name of the topic type. </param>
-        /// <param name="resourceName"> Name of the topic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventTypeUnderTopic> GetEventTypes(string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
         }
     }
 }

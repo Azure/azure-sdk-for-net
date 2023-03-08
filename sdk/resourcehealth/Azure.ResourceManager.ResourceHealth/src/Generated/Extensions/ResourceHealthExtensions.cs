@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceHealth.Mock;
 using Azure.ResourceManager.ResourceHealth.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,279 +20,53 @@ namespace Azure.ResourceManager.ResourceHealth
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceHealth. </summary>
     public static partial class ResourceHealthExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new ArmResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of MetadataEntityResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of MetadataEntityResources and their operations over a MetadataEntityResource. </returns>
-        public static MetadataEntityCollection GetMetadataEntities(this TenantResource tenantResource)
-        {
-            return GetExtensionClient(tenantResource).GetMetadataEntities();
-        }
-
-        /// <summary>
-        /// Gets the list of metadata entities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/metadata/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Metadata_GetEntity</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Name of metadata entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<MetadataEntityResource>> GetMetadataEntityAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetMetadataEntities().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the list of metadata entities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/metadata/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Metadata_GetEntity</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Name of metadata entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<MetadataEntityResource> GetMetadataEntity(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetMetadataEntities().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of TenantEventResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of TenantEventResources and their operations over a TenantEventResource. </returns>
-        public static TenantEventCollection GetTenantEvents(this TenantResource tenantResource)
-        {
-            return GetExtensionClient(tenantResource).GetTenantEvents();
-        }
-
-        /// <summary>
-        /// Service health event in the tenant by event tracking id
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetByTenantIdAndTrackingId</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TenantEventResource>> GetTenantEventAsync(this TenantResource tenantResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetTenantEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Service health event in the tenant by event tracking id
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetByTenantIdAndTrackingId</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<TenantEventResource> GetTenantEvent(this TenantResource tenantResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetTenantEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EmergingIssuesGetResultResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of EmergingIssuesGetResultResources and their operations over a EmergingIssuesGetResultResource. </returns>
-        public static EmergingIssuesGetResultCollection GetEmergingIssuesGetResults(this TenantResource tenantResource)
-        {
-            return GetExtensionClient(tenantResource).GetEmergingIssuesGetResults();
-        }
-
-        /// <summary>
-        /// Gets Azure services&apos; emerging issues.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EmergingIssues_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="issueName"> The name of the emerging issue. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static async Task<Response<EmergingIssuesGetResultResource>> GetEmergingIssuesGetResultAsync(this TenantResource tenantResource, IssueNameParameter issueName, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetEmergingIssuesGetResults().GetAsync(issueName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets Azure services&apos; emerging issues.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EmergingIssues_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="issueName"> The name of the emerging issue. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static Response<EmergingIssuesGetResultResource> GetEmergingIssuesGetResult(this TenantResource tenantResource, IssueNameParameter issueName, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetEmergingIssuesGetResults().Get(issueName, cancellationToken);
-        }
-
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient((client) =>
-            {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
-        }
-
-        /// <summary> Gets a collection of SubscriptionEventResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SubscriptionEventResources and their operations over a SubscriptionEventResource. </returns>
-        public static SubscriptionEventCollection GetSubscriptionEvents(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSubscriptionEvents();
-        }
-
-        /// <summary>
-        /// Service health event in the subscription by event tracking id
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionEventResource>> GetSubscriptionEventAsync(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSubscriptionEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Service health event in the subscription by event tracking id
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SubscriptionEventResource> GetSubscriptionEvent(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSubscriptionEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
-        }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
                 return new ArmResourceExtensionClient(client, scope);
-            }
-            );
+            });
         }
 
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return armResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, armResource.Id);
-            }
-            );
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets an object representing a AvailabilityStatusResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="AvailabilityStatusResource" /> object. </returns>
-        public static AvailabilityStatusResource GetAvailabilityStatus(this ArmClient client, ResourceIdentifier scope)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetAvailabilityStatus();
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
         }
 
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
+        }
         #region AvailabilityStatusResource
         /// <summary>
         /// Gets an object representing an <see cref="AvailabilityStatusResource" /> along with the instance operations that can be performed on it but with no data.
@@ -424,5 +199,242 @@ namespace Azure.ResourceManager.ResourceHealth
             );
         }
         #endregion
+
+        /// <summary> Gets an object representing a AvailabilityStatusResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="AvailabilityStatusResource" /> object. </returns>
+        public static AvailabilityStatusResource GetAvailabilityStatus(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatus();
+        }
+
+        /// <summary> Gets a collection of SubscriptionEventResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SubscriptionEventResources and their operations over a SubscriptionEventResource. </returns>
+        public static SubscriptionEventCollection GetSubscriptionEvents(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionEvents();
+        }
+
+        /// <summary>
+        /// Service health event in the subscription by event tracking id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionEventResource>> GetSubscriptionEventAsync(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSubscriptionEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Service health event in the subscription by event tracking id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionEventResource> GetSubscriptionEvent(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSubscriptionEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MetadataEntityResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of MetadataEntityResources and their operations over a MetadataEntityResource. </returns>
+        public static MetadataEntityCollection GetMetadataEntities(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetMetadataEntities();
+        }
+
+        /// <summary>
+        /// Gets the list of metadata entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metadata_GetEntity</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of metadata entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<MetadataEntityResource>> GetMetadataEntityAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetMetadataEntities().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the list of metadata entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metadata_GetEntity</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of metadata entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<MetadataEntityResource> GetMetadataEntity(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetMetadataEntities().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TenantEventResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of TenantEventResources and their operations over a TenantEventResource. </returns>
+        public static TenantEventCollection GetTenantEvents(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetTenantEvents();
+        }
+
+        /// <summary>
+        /// Service health event in the tenant by event tracking id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TenantEventResource>> GetTenantEventAsync(this TenantResource tenantResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetTenantEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Service health event in the tenant by event tracking id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TenantEventResource> GetTenantEvent(this TenantResource tenantResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetTenantEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EmergingIssuesGetResultResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of EmergingIssuesGetResultResources and their operations over a EmergingIssuesGetResultResource. </returns>
+        public static EmergingIssuesGetResultCollection GetEmergingIssuesGetResults(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetEmergingIssuesGetResults();
+        }
+
+        /// <summary>
+        /// Gets Azure services&apos; emerging issues.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmergingIssues_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="issueName"> The name of the emerging issue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static async Task<Response<EmergingIssuesGetResultResource>> GetEmergingIssuesGetResultAsync(this TenantResource tenantResource, IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetEmergingIssuesGetResults().GetAsync(issueName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets Azure services&apos; emerging issues.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmergingIssues_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="issueName"> The name of the emerging issue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static Response<EmergingIssuesGetResultResource> GetEmergingIssuesGetResult(this TenantResource tenantResource, IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetEmergingIssuesGetResults().Get(issueName, cancellationToken);
+        }
     }
 }

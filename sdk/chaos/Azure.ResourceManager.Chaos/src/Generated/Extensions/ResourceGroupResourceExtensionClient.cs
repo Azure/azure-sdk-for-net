@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Chaos;
 
-namespace Azure.ResourceManager.Chaos
+namespace Azure.ResourceManager.Chaos.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
@@ -42,9 +44,15 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
         /// <param name="parentResourceType"> String that represents a resource type. </param>
         /// <param name="parentResourceName"> String that represents a resource name. </param>
+        /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is null. </exception>
         /// <returns> An object representing collection of TargetResources and their operations over a TargetResource. </returns>
         public virtual TargetCollection GetTargets(string parentProviderNamespace, string parentResourceType, string parentResourceName)
         {
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+
             return new TargetCollection(Client, Id, parentProviderNamespace, parentResourceType, parentResourceName);
         }
     }

@@ -12,15 +12,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Maintenance;
 using Azure.ResourceManager.Maintenance.Models;
 
-namespace Azure.ResourceManager.Maintenance
+namespace Azure.ResourceManager.Maintenance.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _maintenanceApplyUpdateApplyUpdatesClientDiagnostics;
-        private ApplyUpdatesRestOperations _maintenanceApplyUpdateApplyUpdatesRestClient;
         private ClientDiagnostics _configurationAssignmentsClientDiagnostics;
         private ConfigurationAssignmentsRestOperations _configurationAssignmentsRestClient;
         private ClientDiagnostics _applyUpdateForResourceGroupClientDiagnostics;
@@ -40,13 +39,11 @@ namespace Azure.ResourceManager.Maintenance
         {
         }
 
-        private ClientDiagnostics MaintenanceApplyUpdateApplyUpdatesClientDiagnostics => _maintenanceApplyUpdateApplyUpdatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceApplyUpdateResource.ResourceType.Namespace, Diagnostics);
-        private ApplyUpdatesRestOperations MaintenanceApplyUpdateApplyUpdatesRestClient => _maintenanceApplyUpdateApplyUpdatesRestClient ??= new ApplyUpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MaintenanceApplyUpdateResource.ResourceType));
-        private ClientDiagnostics ConfigurationAssignmentsClientDiagnostics => _configurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ConfigurationAssignmentsClientDiagnostics => _configurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ConfigurationAssignmentsRestOperations ConfigurationAssignmentsRestClient => _configurationAssignmentsRestClient ??= new ConfigurationAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ApplyUpdateForResourceGroupClientDiagnostics => _applyUpdateForResourceGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ApplyUpdateForResourceGroupClientDiagnostics => _applyUpdateForResourceGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ApplyUpdateForResourceGroupRestOperations ApplyUpdateForResourceGroupRestClient => _applyUpdateForResourceGroupRestClient ??= new ApplyUpdateForResourceGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics UpdatesClientDiagnostics => _updatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics UpdatesClientDiagnostics => _updatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UpdatesRestOperations UpdatesRestClient => _updatesRestClient ??= new UpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -70,204 +67,6 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Track maintenance updates to resource with parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplyUpdates_GetParent</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceApplyUpdateResource>> GetApplyUpdatesByParentAsync(ResourceGroupResourceGetApplyUpdatesByParentOptions options, CancellationToken cancellationToken = default)
-        {
-            using var scope = MaintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetApplyUpdatesByParent");
-            scope.Start();
-            try
-            {
-                var response = await MaintenanceApplyUpdateApplyUpdatesRestClient.GetParentAsync(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ApplyUpdateName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Track maintenance updates to resource with parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplyUpdates_GetParent</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceApplyUpdateResource> GetApplyUpdatesByParent(ResourceGroupResourceGetApplyUpdatesByParentOptions options, CancellationToken cancellationToken = default)
-        {
-            using var scope = MaintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetApplyUpdatesByParent");
-            scope.Start();
-            try
-            {
-                var response = MaintenanceApplyUpdateApplyUpdatesRestClient.GetParent(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ApplyUpdateName, cancellationToken);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Apply maintenance updates to resource with parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplyUpdates_CreateOrUpdateParent</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            using var scope = MaintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateApplyUpdateByParent");
-            scope.Start();
-            try
-            {
-                var response = await MaintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateParentAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Apply maintenance updates to resource with parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplyUpdates_CreateOrUpdateParent</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdateByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            using var scope = MaintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateApplyUpdateByParent");
-            scope.Start();
-            try
-            {
-                var response = MaintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateParent(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Apply maintenance updates to resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplyUpdates_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            using var scope = MaintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateApplyUpdate");
-            scope.Start();
-            try
-            {
-                var response = await MaintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Apply maintenance updates to resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplyUpdates_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdate(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            using var scope = MaintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateApplyUpdate");
-            scope.Start();
-            try
-            {
-                var response = MaintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, cancellationToken);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Register configuration for resource.
         /// <list type="bullet">
         /// <item>
@@ -282,8 +81,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignmentByParent");
             scope.Start();
             try
@@ -313,8 +115,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignmentByParent");
             scope.Start();
             try
@@ -344,8 +149,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignmentByParent");
             scope.Start();
             try
@@ -375,8 +183,11 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignmentByParent");
             scope.Start();
             try
@@ -410,8 +221,16 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignment");
             scope.Start();
             try
@@ -445,8 +264,16 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignment");
             scope.Start();
             try
@@ -479,8 +306,15 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignment");
             scope.Start();
             try
@@ -513,8 +347,15 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignment");
             scope.Start();
             try
@@ -548,9 +389,17 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
+            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
         }
@@ -574,9 +423,17 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
+            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
         }
@@ -598,9 +455,15 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignments", "value", null, cancellationToken);
         }
@@ -622,9 +485,15 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignments(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignments", "value", null, cancellationToken);
         }
@@ -690,9 +559,17 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="MaintenanceUpdate" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceUpdate> GetUpdatesByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
+            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdatesByParent", "value", null, cancellationToken);
         }
@@ -716,9 +593,17 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceUpdate" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceUpdate> GetUpdatesByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
+            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdatesByParent", "value", null, cancellationToken);
         }
@@ -740,9 +625,15 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="MaintenanceUpdate" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceUpdate> GetUpdatesAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdates", "value", null, cancellationToken);
         }
@@ -764,9 +655,15 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceUpdate" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceUpdate> GetUpdates(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdates", "value", null, cancellationToken);
         }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Peering.Mock;
 using Azure.ResourceManager.Peering.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,700 +20,69 @@ namespace Azure.ResourceManager.Peering
     /// <summary> A class to add extension methods to Azure.ResourceManager.Peering. </summary>
     public static partial class PeeringExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static PeeringResourceExtensionClient GetPeeringResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new PeeringResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of PeerAsnResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PeerAsnResources and their operations over a PeerAsnResource. </returns>
-        public static PeerAsnCollection GetPeerAsns(this SubscriptionResource subscriptionResource)
+        private static PeeringResourceExtensionClient GetPeeringResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(subscriptionResource).GetPeerAsns();
-        }
-
-        /// <summary>
-        /// Gets the peer ASN with the specified name under the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{peerAsnName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeerAsns_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="peerAsnName"> The peer ASN name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peerAsnName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PeerAsnResource>> GetPeerAsnAsync(this SubscriptionResource subscriptionResource, string peerAsnName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetPeerAsns().GetAsync(peerAsnName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the peer ASN with the specified name under the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{peerAsnName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeerAsns_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="peerAsnName"> The peer ASN name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peerAsnName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PeerAsnResource> GetPeerAsn(this SubscriptionResource subscriptionResource, string peerAsnName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetPeerAsns().Get(peerAsnName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the advertised prefixes for the specified peering location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/cdnPeeringPrefixes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnPeeringPrefixes_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="peeringLocation"> The peering location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CdnPeeringPrefix> GetCdnPeeringPrefixesAsync(this SubscriptionResource subscriptionResource, string peeringLocation, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
-
-            return GetExtensionClient(subscriptionResource).GetCdnPeeringPrefixesAsync(peeringLocation, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the advertised prefixes for the specified peering location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/cdnPeeringPrefixes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnPeeringPrefixes_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="peeringLocation"> The peering location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
-        /// <returns> A collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CdnPeeringPrefix> GetCdnPeeringPrefixes(this SubscriptionResource subscriptionResource, string peeringLocation, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
-
-            return GetExtensionClient(subscriptionResource).GetCdnPeeringPrefixes(peeringLocation, cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks if the peering service provider is present within 1000 miles of customer&apos;s location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckServiceProviderAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).CheckPeeringServiceProviderAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks if the peering service provider is present within 1000 miles of customer&apos;s location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckServiceProviderAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(this SubscriptionResource subscriptionResource, CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).CheckPeeringServiceProviderAvailability(content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LegacyPeerings_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
-
-            return GetExtensionClient(subscriptionResource).GetPeeringsByLegacyPeeringAsync(peeringLocation, kind, asn, directPeeringType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LegacyPeerings_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
-        /// <param name="directPeeringType"> The direct peering type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringResource> GetPeeringsByLegacyPeering(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
-
-            return GetExtensionClient(subscriptionResource).GetPeeringsByLegacyPeering(peeringLocation, kind, asn, directPeeringType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Run looking glass functionality
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LookingGlass_Invoke</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
-        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
-        /// <param name="sourceLocation"> The location of the source. </param>
-        /// <param name="destinationIP"> The IP address of the destination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
-        public static async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
-            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
-
-            return await GetExtensionClient(subscriptionResource).InvokeLookingGlassAsync(command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Run looking glass functionality
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LookingGlass_Invoke</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
-        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
-        /// <param name="sourceLocation"> The location of the source. </param>
-        /// <param name="destinationIP"> The IP address of the destination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
-        public static Response<LookingGlassOutput> InvokeLookingGlass(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
-            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
-
-            return GetExtensionClient(subscriptionResource).InvokeLookingGlass(command, sourceType, sourceLocation, destinationIP, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available peering locations for the specified kind of peering.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringLocations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="directPeeringType"> The type of direct peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringLocation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringLocation> GetPeeringLocationsAsync(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeeringLocationsAsync(kind, directPeeringType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available peering locations for the specified kind of peering.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringLocations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="directPeeringType"> The type of direct peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringLocation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringLocation> GetPeeringLocations(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeeringLocations(kind, directPeeringType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the peerings under the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Peerings_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringResource> GetPeeringsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeeringsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the peerings under the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Peerings_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringResource> GetPeerings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeerings(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available countries for peering service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceCountries_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringServiceCountry> GetPeeringServiceCountriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeeringServiceCountriesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available countries for peering service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceCountries_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringServiceCountry> GetPeeringServiceCountries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeeringServiceCountries(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available locations for peering service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceLocations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="country"> The country of interest, in which the locations are to be present. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringServiceLocation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringServiceLocation> GetPeeringServiceLocationsAsync(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeeringServiceLocationsAsync(country, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available locations for peering service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceLocations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="country"> The country of interest, in which the locations are to be present. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringServiceLocation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringServiceLocation> GetPeeringServiceLocations(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeeringServiceLocations(country, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available peering service locations for the specified kind of peering.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceProviders_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringServiceProvider> GetPeeringServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeeringServiceProvidersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available peering service locations for the specified kind of peering.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServiceProviders_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringServiceProvider> GetPeeringServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeeringServiceProviders(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the peerings under the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServices_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringServiceResource> GetPeeringServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeeringServicesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the peerings under the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServices_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringServiceResource> GetPeeringServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPeeringServices(cancellationToken);
-        }
-
-        /// <summary>
-        /// Initialize Peering Service for Connection Monitor functionality
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServices_InitializeConnectionMonitor</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response> InitializePeeringServiceConnectionMonitorAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return await GetExtensionClient(subscriptionResource).InitializePeeringServiceConnectionMonitorAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Initialize Peering Service for Connection Monitor functionality
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServices_InitializeConnectionMonitor</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response InitializePeeringServiceConnectionMonitor(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).InitializePeeringServiceConnectionMonitor(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new PeeringResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of PeeringResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PeeringResources and their operations over a PeeringResource. </returns>
-        public static PeeringCollection GetPeerings(this ResourceGroupResource resourceGroupResource)
+        private static PeeringServiceResourceExtensionClient GetPeeringServiceResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetPeerings();
+            return resource.GetCachedClient(client =>
+            {
+                return new PeeringServiceResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets an existing peering with the specified name under the given subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Peerings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="peeringName"> The name of the peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PeeringResource>> GetPeeringAsync(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
+        private static PeeringServiceResourceExtensionClient GetPeeringServiceResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetPeerings().GetAsync(peeringName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new PeeringServiceResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets an existing peering with the specified name under the given subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Peerings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="peeringName"> The name of the peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PeeringResource> GetPeering(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return resourceGroupResource.GetPeerings().Get(peeringName, cancellationToken);
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of PeeringServiceResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PeeringServiceResources and their operations over a PeeringServiceResource. </returns>
-        public static PeeringServiceCollection GetPeeringServices(this ResourceGroupResource resourceGroupResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(resourceGroupResource).GetPeeringServices();
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets an existing peering service with the specified name under the given subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServices_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="peeringServiceName"> The name of the peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PeeringServiceResource>> GetPeeringServiceAsync(this ResourceGroupResource resourceGroupResource, string peeringServiceName, CancellationToken cancellationToken = default)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return await resourceGroupResource.GetPeeringServices().GetAsync(peeringServiceName, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets an existing peering service with the specified name under the given subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServices_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="peeringServiceName"> The name of the peering. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PeeringServiceResource> GetPeeringService(this ResourceGroupResource resourceGroupResource, string peeringServiceName, CancellationToken cancellationToken = default)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return resourceGroupResource.GetPeeringServices().Get(peeringServiceName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
         }
-
         #region PeerAsnResource
         /// <summary>
         /// Gets an object representing a <see cref="PeerAsnResource" /> along with the instance operations that can be performed on it but with no data.
@@ -845,5 +215,681 @@ namespace Azure.ResourceManager.Peering
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of PeeringResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PeeringResources and their operations over a PeeringResource. </returns>
+        public static PeeringCollection GetPeerings(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPeerings();
+        }
+
+        /// <summary>
+        /// Gets an existing peering with the specified name under the given subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="peeringName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PeeringResource>> GetPeeringAsync(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetPeerings().GetAsync(peeringName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing peering with the specified name under the given subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="peeringName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PeeringResource> GetPeering(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetPeerings().Get(peeringName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PeeringServiceResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PeeringServiceResources and their operations over a PeeringServiceResource. </returns>
+        public static PeeringServiceCollection GetPeeringServices(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPeeringServices();
+        }
+
+        /// <summary>
+        /// Gets an existing peering service with the specified name under the given subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PeeringServiceResource>> GetPeeringServiceAsync(this ResourceGroupResource resourceGroupResource, string peeringServiceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetPeeringServices().GetAsync(peeringServiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing peering service with the specified name under the given subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PeeringServiceResource> GetPeeringService(this ResourceGroupResource resourceGroupResource, string peeringServiceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetPeeringServices().Get(peeringServiceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PeerAsnResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PeerAsnResources and their operations over a PeerAsnResource. </returns>
+        public static PeerAsnCollection GetPeerAsns(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeerAsns();
+        }
+
+        /// <summary>
+        /// Gets the peer ASN with the specified name under the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{peerAsnName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeerAsns_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="peerAsnName"> The peer ASN name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peerAsnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PeerAsnResource>> GetPeerAsnAsync(this SubscriptionResource subscriptionResource, string peerAsnName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetPeerAsns().GetAsync(peerAsnName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the peer ASN with the specified name under the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{peerAsnName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeerAsns_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="peerAsnName"> The peer ASN name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peerAsnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PeerAsnResource> GetPeerAsn(this SubscriptionResource subscriptionResource, string peerAsnName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetPeerAsns().Get(peerAsnName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the advertised prefixes for the specified peering location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/cdnPeeringPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CdnPeeringPrefixes_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="peeringLocation"> The peering location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CdnPeeringPrefix> GetCdnPeeringPrefixesAsync(this SubscriptionResource subscriptionResource, string peeringLocation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCdnPeeringPrefixesAsync(peeringLocation, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the advertised prefixes for the specified peering location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/cdnPeeringPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CdnPeeringPrefixes_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="peeringLocation"> The peering location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
+        /// <returns> A collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CdnPeeringPrefix> GetCdnPeeringPrefixes(this SubscriptionResource subscriptionResource, string peeringLocation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCdnPeeringPrefixes(peeringLocation, cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks if the peering service provider is present within 1000 miles of customer&apos;s location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckServiceProviderAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPeeringServiceProviderAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks if the peering service provider is present within 1000 miles of customer&apos;s location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckServiceProviderAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(this SubscriptionResource subscriptionResource, CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPeeringServiceProviderAvailability(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LegacyPeerings_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="peeringLocation"> The location of the peering. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
+        /// <param name="directPeeringType"> The direct peering type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringsByLegacyPeeringAsync(peeringLocation, kind, asn, directPeeringType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the legacy peerings under the given subscription matching the specified kind and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LegacyPeerings_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="peeringLocation"> The location of the peering. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="asn"> The ASN number associated with a legacy peering. </param>
+        /// <param name="directPeeringType"> The direct peering type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
+        /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringResource> GetPeeringsByLegacyPeering(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringsByLegacyPeering(peeringLocation, kind, asn, directPeeringType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Run looking glass functionality
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LookingGlass_Invoke</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
+        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
+        /// <param name="sourceLocation"> The location of the source. </param>
+        /// <param name="destinationIP"> The IP address of the destination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
+        public static async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
+            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).InvokeLookingGlassAsync(command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Run looking glass functionality
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LookingGlass_Invoke</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
+        /// <param name="sourceType"> The type of the source: Edge site or Azure Region. </param>
+        /// <param name="sourceLocation"> The location of the source. </param>
+        /// <param name="destinationIP"> The IP address of the destination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
+        public static Response<LookingGlassOutput> InvokeLookingGlass(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
+            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).InvokeLookingGlass(command, sourceType, sourceLocation, destinationIP, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available peering locations for the specified kind of peering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringLocations_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="directPeeringType"> The type of direct peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PeeringLocation" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringLocation> GetPeeringLocationsAsync(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringLocationsAsync(kind, directPeeringType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available peering locations for the specified kind of peering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringLocations_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <param name="directPeeringType"> The type of direct peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PeeringLocation" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringLocation> GetPeeringLocations(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringLocations(kind, directPeeringType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the peerings under the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringResource> GetPeeringsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetPeeringResourceExtensionClient(subscriptionResource).GetPeeringsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the peerings under the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringResource> GetPeerings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetPeeringResourceExtensionClient(subscriptionResource).GetPeerings(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available countries for peering service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceCountries_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringServiceCountry> GetPeeringServiceCountriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceCountriesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available countries for peering service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceCountries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceCountries_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringServiceCountry> GetPeeringServiceCountries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceCountries(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available locations for peering service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceLocations_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="country"> The country of interest, in which the locations are to be present. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PeeringServiceLocation" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringServiceLocation> GetPeeringServiceLocationsAsync(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceLocationsAsync(country, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available locations for peering service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceLocations_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="country"> The country of interest, in which the locations are to be present. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PeeringServiceLocation" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringServiceLocation> GetPeeringServiceLocations(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceLocations(country, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available peering service locations for the specified kind of peering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceProviders_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringServiceProvider> GetPeeringServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceProvidersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the available peering service locations for the specified kind of peering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServiceProviders_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringServiceProvider> GetPeeringServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceProviders(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the peerings under the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PeeringServiceResource> GetPeeringServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetPeeringServiceResourceExtensionClient(subscriptionResource).GetPeeringServicesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the peerings under the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PeeringServiceResource> GetPeeringServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetPeeringServiceResourceExtensionClient(subscriptionResource).GetPeeringServices(cancellationToken);
+        }
+
+        /// <summary>
+        /// Initialize Peering Service for Connection Monitor functionality
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response> InitializePeeringServiceConnectionMonitorAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return await GetPeeringServiceResourceExtensionClient(subscriptionResource).InitializePeeringServiceConnectionMonitorAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Initialize Peering Service for Connection Monitor functionality
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response InitializePeeringServiceConnectionMonitor(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetPeeringServiceResourceExtensionClient(subscriptionResource).InitializePeeringServiceConnectionMonitor(cancellationToken);
+        }
     }
 }

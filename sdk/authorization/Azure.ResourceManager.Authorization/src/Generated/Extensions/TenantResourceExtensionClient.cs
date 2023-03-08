@@ -12,11 +12,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization;
 
-namespace Azure.ResourceManager.Authorization
+namespace Azure.ResourceManager.Authorization.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _globalAdministratorClientDiagnostics;
         private GlobalAdministratorRestOperations _globalAdministratorRestClient;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Authorization
         {
         }
 
-        private ClientDiagnostics GlobalAdministratorClientDiagnostics => _globalAdministratorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics GlobalAdministratorClientDiagnostics => _globalAdministratorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private GlobalAdministratorRestOperations GlobalAdministratorRestClient => _globalAdministratorRestClient ??= new GlobalAdministratorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

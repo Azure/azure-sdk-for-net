@@ -12,15 +12,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Quantum;
 using Azure.ResourceManager.Quantum.Models;
 
-namespace Azure.ResourceManager.Quantum
+namespace Azure.ResourceManager.Quantum.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _quantumWorkspaceWorkspacesClientDiagnostics;
-        private WorkspacesRestOperations _quantumWorkspaceWorkspacesRestClient;
         private ClientDiagnostics _offeringsClientDiagnostics;
         private OfferingsRestOperations _offeringsRestClient;
         private ClientDiagnostics _workspaceClientDiagnostics;
@@ -38,61 +37,15 @@ namespace Azure.ResourceManager.Quantum
         {
         }
 
-        private ClientDiagnostics QuantumWorkspaceWorkspacesClientDiagnostics => _quantumWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum", QuantumWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private WorkspacesRestOperations QuantumWorkspaceWorkspacesRestClient => _quantumWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(QuantumWorkspaceResource.ResourceType));
-        private ClientDiagnostics OfferingsClientDiagnostics => _offeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics OfferingsClientDiagnostics => _offeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OfferingsRestOperations OfferingsRestClient => _offeringsRestClient ??= new OfferingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics WorkspaceClientDiagnostics => _workspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics WorkspaceClientDiagnostics => _workspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private WorkspaceRestOperations WorkspaceRestClient => _workspaceRestClient ??= new WorkspaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets the list of Workspaces within a Subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/workspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QuantumWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuantumWorkspaceResource> GetQuantumWorkspacesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), QuantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuantumWorkspaces", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of Workspaces within a Subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/workspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuantumWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuantumWorkspaceResource> GetQuantumWorkspaces(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), QuantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuantumWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -110,9 +63,13 @@ namespace Azure.ResourceManager.Quantum
         /// </summary>
         /// <param name="locationName"> Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProviderDescription" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderDescription> GetOfferingsAsync(string locationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProviderDescription.DeserializeProviderDescription, OfferingsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOfferings", "value", "nextLink", cancellationToken);
@@ -133,9 +90,13 @@ namespace Azure.ResourceManager.Quantum
         /// </summary>
         /// <param name="locationName"> Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> A collection of <see cref="ProviderDescription" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderDescription> GetOfferings(string locationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProviderDescription.DeserializeProviderDescription, OfferingsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOfferings", "value", "nextLink", cancellationToken);
@@ -157,8 +118,13 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="locationName"> Location. </param>
         /// <param name="content"> The name and type of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityWorkspaceAsync(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityWorkspace");
             scope.Start();
             try
@@ -189,8 +155,13 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="locationName"> Location. </param>
         /// <param name="content"> The name and type of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityWorkspace(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityWorkspace");
             scope.Start();
             try

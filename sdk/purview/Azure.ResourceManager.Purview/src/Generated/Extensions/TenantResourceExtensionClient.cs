@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Purview;
 using Azure.ResourceManager.Purview.Models;
 
-namespace Azure.ResourceManager.Purview
+namespace Azure.ResourceManager.Purview.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _defaultAccountsClientDiagnostics;
         private DefaultAccountsRestOperations _defaultAccountsRestClient;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Purview
         {
         }
 
-        private ClientDiagnostics DefaultAccountsClientDiagnostics => _defaultAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DefaultAccountsClientDiagnostics => _defaultAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DefaultAccountsRestOperations DefaultAccountsRestClient => _defaultAccountsRestClient ??= new DefaultAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -124,8 +125,11 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public virtual async Task<Response<DefaultPurviewAccountPayload>> SetDefaultAccountAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
+
             using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.SetDefaultAccount");
             scope.Start();
             try
@@ -155,8 +159,11 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public virtual Response<DefaultPurviewAccountPayload> SetDefaultAccount(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
+
             using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.SetDefaultAccount");
             scope.Start();
             try

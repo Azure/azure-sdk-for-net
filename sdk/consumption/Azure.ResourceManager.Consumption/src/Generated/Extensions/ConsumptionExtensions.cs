@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Consumption.Mock;
 using Azure.ResourceManager.Consumption.Models;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
@@ -20,138 +21,87 @@ namespace Azure.ResourceManager.Consumption
     /// <summary> A class to add extension methods to Azure.ResourceManager.Consumption. </summary>
     public static partial class ConsumptionExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static Mock.ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new Mock.ArmResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient((client) =>
-            {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
-        }
-
-        /// <summary>
-        /// Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PriceSheet_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the top N results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<PriceSheetResult>> GetPriceSheetAsync(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return await GetExtensionClient(subscriptionResource).GetPriceSheetAsync(expand, skipToken, top, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PriceSheet_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the top N results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<PriceSheetResult> GetPriceSheet(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPriceSheet(expand, skipToken, top, cancellationToken);
-        }
-
-        private static ManagementGroupResourceExtensionClient GetExtensionClient(ManagementGroupResource managementGroupResource)
-        {
-            return managementGroupResource.GetCachedClient((client) =>
-            {
-                return new ManagementGroupResourceExtensionClient(client, managementGroupResource.Id);
-            }
-            );
-        }
-
-        /// <summary>
-        /// Provides the aggregate cost of a management group and all child management groups by current billing period.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AggregatedCost_GetByManagementGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return await GetExtensionClient(managementGroupResource).GetAggregatedCostAsync(filter, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Provides the aggregate cost of a management group and all child management groups by current billing period.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AggregatedCost_GetByManagementGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<ConsumptionAggregatedCostResult> GetAggregatedCost(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(managementGroupResource).GetAggregatedCost(filter, cancellationToken);
-        }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static Mock.ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, scope);
-            }
-            );
+                return new Mock.ArmResourceExtensionClient(client, scope);
+            });
         }
 
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        private static Mock.ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmResource resource)
         {
-            return armResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, armResource.Id);
+                return new Mock.ManagementGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static Mock.ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new Mock.ManagementGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static Mock.SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new Mock.SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static Mock.SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new Mock.SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static Mock.TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new Mock.TenantResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static Mock.TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new Mock.TenantResourceExtensionClient(client, scope);
+            });
+        }
+        #region ConsumptionBudgetResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ConsumptionBudgetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConsumptionBudgetResource.CreateResourceIdentifier" /> to create a <see cref="ConsumptionBudgetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConsumptionBudgetResource" /> object. </returns>
+        public static ConsumptionBudgetResource GetConsumptionBudgetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ConsumptionBudgetResource.ValidateResourceId(id);
+                return new ConsumptionBudgetResource(client, id);
             }
             );
         }
+        #endregion
 
         /// <summary> Gets a collection of ConsumptionBudgetResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -159,7 +109,7 @@ namespace Azure.ResourceManager.Consumption
         /// <returns> An object representing collection of ConsumptionBudgetResources and their operations over a ConsumptionBudgetResource. </returns>
         public static ConsumptionBudgetCollection GetConsumptionBudgets(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetConsumptionBudgets();
+            return GetArmResourceExtensionClient(client, scope).GetConsumptionBudgets();
         }
 
         /// <summary>
@@ -212,23 +162,92 @@ namespace Azure.ResourceManager.Consumption
             return client.GetConsumptionBudgets(scope).Get(budgetName, cancellationToken);
         }
 
-        #region ConsumptionBudgetResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConsumptionBudgetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConsumptionBudgetResource.CreateResourceIdentifier" /> to create a <see cref="ConsumptionBudgetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Provides the aggregate cost of a management group and all child management groups by current billing period.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetByManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConsumptionBudgetResource" /> object. </returns>
-        public static ConsumptionBudgetResource GetConsumptionBudgetResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                ConsumptionBudgetResource.ValidateResourceId(id);
-                return new ConsumptionBudgetResource(client, id);
-            }
-            );
+            return await GetManagementGroupResourceExtensionClient(managementGroupResource).GetAggregatedCostAsync(filter, cancellationToken).ConfigureAwait(false);
         }
-        #endregion
+
+        /// <summary>
+        /// Provides the aggregate cost of a management group and all child management groups by current billing period.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetByManagementGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<ConsumptionAggregatedCostResult> GetAggregatedCost(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetManagementGroupResourceExtensionClient(managementGroupResource).GetAggregatedCost(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the top N results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<PriceSheetResult>> GetPriceSheetAsync(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetPriceSheetAsync(expand, skipToken, top, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the top N results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<PriceSheetResult> GetPriceSheet(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPriceSheet(expand, skipToken, top, cancellationToken);
+        }
     }
 }

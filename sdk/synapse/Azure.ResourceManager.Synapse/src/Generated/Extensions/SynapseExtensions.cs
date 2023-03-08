@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Synapse.Mock;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
@@ -19,312 +20,69 @@ namespace Azure.ResourceManager.Synapse
     /// <summary> A class to add extension methods to Azure.ResourceManager.Synapse. </summary>
     public static partial class SynapseExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Returns a list of privateLinkHubs in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkHubs_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(subscriptionResource).GetSynapsePrivateLinkHubsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns a list of privateLinkHubs in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkHubs_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSynapsePrivateLinkHubs(cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns a list of workspaces in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SynapseWorkspaceResource> GetSynapseWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSynapseWorkspacesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns a list of workspaces in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SynapseWorkspaceResource> GetSynapseWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSynapseWorkspaces(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists eligible SKUs for Kusto Pool resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KustoPools_ListSkus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSkusKustoPoolsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists eligible SKUs for Kusto Pool resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KustoPools_ListSkus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<KustoPoolSkuDescription> GetSkusKustoPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSkusKustoPools(cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks that the kusto pool name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KustoPools_CheckNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> The name of the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).CheckKustoPoolNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks that the kusto pool name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KustoPools_CheckNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> The name of the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).CheckKustoPoolNameAvailability(location, content, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of SynapsePrivateLinkHubResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SynapsePrivateLinkHubResources and their operations over a SynapsePrivateLinkHubResource. </returns>
-        public static SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs(this ResourceGroupResource resourceGroupResource)
+        private static SynapseKustoPoolResourceExtensionClient GetSynapseKustoPoolResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetSynapsePrivateLinkHubs();
+            return resource.GetCachedClient(client =>
+            {
+                return new SynapseKustoPoolResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets a privateLinkHub
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkHubs_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SynapsePrivateLinkHubResource>> GetSynapsePrivateLinkHubAsync(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
+        private static SynapseKustoPoolResourceExtensionClient GetSynapseKustoPoolResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetSynapsePrivateLinkHubs().GetAsync(privateLinkHubName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new SynapseKustoPoolResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets a privateLinkHub
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkHubs_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHub(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
+        private static SynapsePrivateLinkHubResourceExtensionClient GetSynapsePrivateLinkHubResourceExtensionClient(ArmResource resource)
         {
-            return resourceGroupResource.GetSynapsePrivateLinkHubs().Get(privateLinkHubName, cancellationToken);
+            return resource.GetCachedClient(client =>
+            {
+                return new SynapsePrivateLinkHubResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of SynapseWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SynapseWorkspaceResources and their operations over a SynapseWorkspaceResource. </returns>
-        public static SynapseWorkspaceCollection GetSynapseWorkspaces(this ResourceGroupResource resourceGroupResource)
+        private static SynapsePrivateLinkHubResourceExtensionClient GetSynapsePrivateLinkHubResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(resourceGroupResource).GetSynapseWorkspaces();
+            return client.GetResourceClient(() =>
+            {
+                return new SynapsePrivateLinkHubResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets a workspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SynapseWorkspaceResource>> GetSynapseWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        private static SynapseWorkspaceResourceExtensionClient GetSynapseWorkspaceResourceExtensionClient(ArmResource resource)
         {
-            return await resourceGroupResource.GetSynapseWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new SynapseWorkspaceResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets a workspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SynapseWorkspaceResource> GetSynapseWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        private static SynapseWorkspaceResourceExtensionClient GetSynapseWorkspaceResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return resourceGroupResource.GetSynapseWorkspaces().Get(workspaceName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new SynapseWorkspaceResourceExtensionClient(client, scope);
+            });
         }
-
         #region SynapseAadOnlyAuthenticationResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseAadOnlyAuthenticationResource" /> along with the instance operations that can be performed on it but with no data.
@@ -1350,5 +1108,293 @@ namespace Azure.ResourceManager.Synapse
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of SynapsePrivateLinkHubResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SynapsePrivateLinkHubResources and their operations over a SynapsePrivateLinkHubResource. </returns>
+        public static SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSynapsePrivateLinkHubs();
+        }
+
+        /// <summary>
+        /// Gets a privateLinkHub
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SynapsePrivateLinkHubResource>> GetSynapsePrivateLinkHubAsync(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSynapsePrivateLinkHubs().GetAsync(privateLinkHubName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a privateLinkHub
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHub(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSynapsePrivateLinkHubs().Get(privateLinkHubName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SynapseWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SynapseWorkspaceResources and their operations over a SynapseWorkspaceResource. </returns>
+        public static SynapseWorkspaceCollection GetSynapseWorkspaces(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSynapseWorkspaces();
+        }
+
+        /// <summary>
+        /// Gets a workspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SynapseWorkspaceResource>> GetSynapseWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSynapseWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a workspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SynapseWorkspaceResource> GetSynapseWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSynapseWorkspaces().Get(workspaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of privateLinkHubs in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSynapsePrivateLinkHubResourceExtensionClient(subscriptionResource).GetSynapsePrivateLinkHubsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of privateLinkHubs in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSynapsePrivateLinkHubResourceExtensionClient(subscriptionResource).GetSynapsePrivateLinkHubs(cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of workspaces in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SynapseWorkspaceResource> GetSynapseWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSynapseWorkspaceResourceExtensionClient(subscriptionResource).GetSynapseWorkspacesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of workspaces in a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SynapseWorkspaceResource> GetSynapseWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSynapseWorkspaceResourceExtensionClient(subscriptionResource).GetSynapseWorkspaces(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists eligible SKUs for Kusto Pool resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListSkus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSynapseKustoPoolResourceExtensionClient(subscriptionResource).GetSkusKustoPoolsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists eligible SKUs for Kusto Pool resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListSkus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<KustoPoolSkuDescription> GetSkusKustoPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSynapseKustoPoolResourceExtensionClient(subscriptionResource).GetSkusKustoPools(cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks that the kusto pool name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> The name of the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSynapseKustoPoolResourceExtensionClient(subscriptionResource).CheckKustoPoolNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks that the kusto pool name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> The name of the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSynapseKustoPoolResourceExtensionClient(subscriptionResource).CheckKustoPoolNameAvailability(location, content, cancellationToken);
+        }
     }
 }

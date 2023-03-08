@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Elastic.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Elastic
@@ -18,72 +19,81 @@ namespace Azure.ResourceManager.Elastic
     /// <summary> A class to add extension methods to Azure.ResourceManager.Elastic. </summary>
     public static partial class ElasticExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ElasticMonitorResourceExtensionClient GetElasticMonitorResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new ElasticMonitorResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ElasticMonitorResourceExtensionClient GetElasticMonitorResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ElasticMonitorResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+        #region ElasticMonitorResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticMonitorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticMonitorResource.CreateResourceIdentifier" /> to create an <see cref="ElasticMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticMonitorResource" /> object. </returns>
+        public static ElasticMonitorResource GetElasticMonitorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ElasticMonitorResource.ValidateResourceId(id);
+                return new ElasticMonitorResource(client, id);
             }
             );
         }
+        #endregion
 
+        #region MonitoringTagRuleResource
         /// <summary>
-        /// List all monitors under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_List</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="MonitoringTagRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringTagRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ElasticMonitorResource> GetElasticMonitorResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitoringTagRuleResource" /> object. </returns>
+        public static MonitoringTagRuleResource GetMonitoringTagRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetExtensionClient(subscriptionResource).GetElasticMonitorResourcesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List all monitors under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ElasticMonitorResource> GetElasticMonitorResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetElasticMonitorResources(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
+                MonitoringTagRuleResource.ValidateResourceId(id);
+                return new MonitoringTagRuleResource(client, id);
             }
             );
         }
+        #endregion
 
         /// <summary> Gets a collection of ElasticMonitorResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ElasticMonitorResources and their operations over a ElasticMonitorResource. </returns>
         public static ElasticMonitorResourceCollection GetElasticMonitorResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetElasticMonitorResources();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetElasticMonitorResources();
         }
 
         /// <summary>
@@ -134,42 +144,46 @@ namespace Azure.ResourceManager.Elastic
             return resourceGroupResource.GetElasticMonitorResources().Get(monitorName, cancellationToken);
         }
 
-        #region ElasticMonitorResource
         /// <summary>
-        /// Gets an object representing an <see cref="ElasticMonitorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ElasticMonitorResource.CreateResourceIdentifier" /> to create an <see cref="ElasticMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// List all monitors under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticMonitorResource" /> object. </returns>
-        public static ElasticMonitorResource GetElasticMonitorResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ElasticMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ElasticMonitorResource> GetElasticMonitorResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                ElasticMonitorResource.ValidateResourceId(id);
-                return new ElasticMonitorResource(client, id);
-            }
-            );
+            return GetElasticMonitorResourceExtensionClient(subscriptionResource).GetElasticMonitorResourcesAsync(cancellationToken);
         }
-        #endregion
 
-        #region MonitoringTagRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="MonitoringTagRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringTagRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// List all monitors under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitoringTagRuleResource" /> object. </returns>
-        public static MonitoringTagRuleResource GetMonitoringTagRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ElasticMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ElasticMonitorResource> GetElasticMonitorResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                MonitoringTagRuleResource.ValidateResourceId(id);
-                return new MonitoringTagRuleResource(client, id);
-            }
-            );
+            return GetElasticMonitorResourceExtensionClient(subscriptionResource).GetElasticMonitorResources(cancellationToken);
         }
-        #endregion
     }
 }

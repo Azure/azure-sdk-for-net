@@ -5,20 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.BillingBenefits;
 using Azure.ResourceManager.BillingBenefits.Models;
 
-namespace Azure.ResourceManager.BillingBenefits
+namespace Azure.ResourceManager.BillingBenefits.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics;
-        private SavingsPlanRestOperations _billingBenefitsSavingsPlanSavingsPlanRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
         private BillingBenefitsRPRestOperations _defaultRestClient;
 
@@ -34,9 +34,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
         }
 
-        private ClientDiagnostics BillingBenefitsSavingsPlanSavingsPlanClientDiagnostics => _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", BillingBenefitsSavingsPlanResource.ResourceType.Namespace, Diagnostics);
-        private SavingsPlanRestOperations BillingBenefitsSavingsPlanSavingsPlanRestClient => _billingBenefitsSavingsPlanSavingsPlanRestClient ??= new SavingsPlanRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BillingBenefitsSavingsPlanResource.ResourceType));
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BillingBenefitsRPRestOperations DefaultRestClient => _defaultRestClient ??= new BillingBenefitsRPRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -67,52 +65,6 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary>
-        /// List savings plans.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlan_ListAll</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllRequest(options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingBenefitsSavingsPlanResource(Client, BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(e)), BillingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBillingBenefitsSavingsPlans", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List savings plans.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlan_ListAll</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllRequest(options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingBenefitsSavingsPlanResource(Client, BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(e)), BillingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBillingBenefitsSavingsPlans", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Validate savings plan purchase.
         /// <list type="bullet">
         /// <item>
@@ -127,9 +79,12 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </summary>
         /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SavingsPlanValidateResult> ValidatePurchaseAsync(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, DefaultClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ValidatePurchase", "benefits", "nextLink", cancellationToken);
@@ -150,9 +105,12 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </summary>
         /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SavingsPlanValidateResult> ValidatePurchase(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, DefaultClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ValidatePurchase", "benefits", "nextLink", cancellationToken);

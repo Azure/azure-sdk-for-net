@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Quota.Mock;
 using Azure.ResourceManager.Quota.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,74 +20,93 @@ namespace Azure.ResourceManager.Quota
     /// <summary> A class to add extension methods to Azure.ResourceManager.Quota. </summary>
     public static partial class QuotaExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new ArmResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// List all the operations supported by the Microsoft.Quota resource provider.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Quota/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaOperation_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OperationResponse> GetQuotaOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetQuotaOperationsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the operations supported by the Microsoft.Quota resource provider.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Quota/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaOperation_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OperationResponse> GetQuotaOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetQuotaOperations(cancellationToken);
-        }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
                 return new ArmResourceExtensionClient(client, scope);
-            }
-            );
+            });
         }
 
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
-            return armResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, armResource.Id);
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
+        }
+        #region CurrentUsagesBaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CurrentUsagesBaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CurrentUsagesBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentUsagesBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CurrentUsagesBaseResource" /> object. </returns>
+        public static CurrentUsagesBaseResource GetCurrentUsagesBaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CurrentUsagesBaseResource.ValidateResourceId(id);
+                return new CurrentUsagesBaseResource(client, id);
             }
             );
         }
+        #endregion
+
+        #region CurrentQuotaLimitBaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CurrentQuotaLimitBaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CurrentQuotaLimitBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentQuotaLimitBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CurrentQuotaLimitBaseResource" /> object. </returns>
+        public static CurrentQuotaLimitBaseResource GetCurrentQuotaLimitBaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CurrentQuotaLimitBaseResource.ValidateResourceId(id);
+                return new CurrentQuotaLimitBaseResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region QuotaRequestDetailResource
+        /// <summary>
+        /// Gets an object representing a <see cref="QuotaRequestDetailResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QuotaRequestDetailResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="QuotaRequestDetailResource" /> object. </returns>
+        public static QuotaRequestDetailResource GetQuotaRequestDetailResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                QuotaRequestDetailResource.ValidateResourceId(id);
+                return new QuotaRequestDetailResource(client, id);
+            }
+            );
+        }
+        #endregion
 
         /// <summary> Gets a collection of CurrentUsagesBaseResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -94,7 +114,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An object representing collection of CurrentUsagesBaseResources and their operations over a CurrentUsagesBaseResource. </returns>
         public static CurrentUsagesBaseCollection GetCurrentUsagesBases(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetCurrentUsagesBases();
+            return GetArmResourceExtensionClient(client, scope).GetCurrentUsagesBases();
         }
 
         /// <summary>
@@ -163,7 +183,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An object representing collection of CurrentQuotaLimitBaseResources and their operations over a CurrentQuotaLimitBaseResource. </returns>
         public static CurrentQuotaLimitBaseCollection GetCurrentQuotaLimitBases(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetCurrentQuotaLimitBases();
+            return GetArmResourceExtensionClient(client, scope).GetCurrentQuotaLimitBases();
         }
 
         /// <summary>
@@ -232,7 +252,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
         public static QuotaRequestDetailCollection GetQuotaRequestDetails(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetQuotaRequestDetails();
+            return GetArmResourceExtensionClient(client, scope).GetQuotaRequestDetails();
         }
 
         /// <summary>
@@ -285,61 +305,46 @@ namespace Azure.ResourceManager.Quota
             return client.GetQuotaRequestDetails(scope).Get(id, cancellationToken);
         }
 
-        #region CurrentUsagesBaseResource
         /// <summary>
-        /// Gets an object representing a <see cref="CurrentUsagesBaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CurrentUsagesBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentUsagesBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// List all the operations supported by the Microsoft.Quota resource provider.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Quota/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaOperation_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CurrentUsagesBaseResource" /> object. </returns>
-        public static CurrentUsagesBaseResource GetCurrentUsagesBaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OperationResponse> GetQuotaOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                CurrentUsagesBaseResource.ValidateResourceId(id);
-                return new CurrentUsagesBaseResource(client, id);
-            }
-            );
+            return GetTenantResourceExtensionClient(tenantResource).GetQuotaOperationsAsync(cancellationToken);
         }
-        #endregion
 
-        #region CurrentQuotaLimitBaseResource
         /// <summary>
-        /// Gets an object representing a <see cref="CurrentQuotaLimitBaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CurrentQuotaLimitBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentQuotaLimitBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// List all the operations supported by the Microsoft.Quota resource provider.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Quota/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaOperation_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CurrentQuotaLimitBaseResource" /> object. </returns>
-        public static CurrentQuotaLimitBaseResource GetCurrentQuotaLimitBaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OperationResponse> GetQuotaOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                CurrentQuotaLimitBaseResource.ValidateResourceId(id);
-                return new CurrentQuotaLimitBaseResource(client, id);
-            }
-            );
+            return GetTenantResourceExtensionClient(tenantResource).GetQuotaOperations(cancellationToken);
         }
-        #endregion
-
-        #region QuotaRequestDetailResource
-        /// <summary>
-        /// Gets an object representing a <see cref="QuotaRequestDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QuotaRequestDetailResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QuotaRequestDetailResource" /> object. </returns>
-        public static QuotaRequestDetailResource GetQuotaRequestDetailResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                QuotaRequestDetailResource.ValidateResourceId(id);
-                return new QuotaRequestDetailResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }

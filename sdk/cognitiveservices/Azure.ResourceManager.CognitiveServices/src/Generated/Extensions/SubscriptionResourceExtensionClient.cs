@@ -12,25 +12,20 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.CognitiveServices.Models;
 
-namespace Azure.ResourceManager.CognitiveServices
+namespace Azure.ResourceManager.CognitiveServices.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _cognitiveServicesAccountAccountsClientDiagnostics;
-        private AccountsRestOperations _cognitiveServicesAccountAccountsRestClient;
-        private ClientDiagnostics _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics;
-        private DeletedAccountsRestOperations _cognitiveServicesDeletedAccountDeletedAccountsRestClient;
         private ClientDiagnostics _resourceSkusClientDiagnostics;
         private ResourceSkusRestOperations _resourceSkusRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
         private CognitiveServicesManagementRestOperations _defaultRestClient;
         private ClientDiagnostics _commitmentTiersClientDiagnostics;
         private CommitmentTiersRestOperations _commitmentTiersRestClient;
-        private ClientDiagnostics _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics;
-        private CommitmentPlansRestOperations _cognitiveServicesCommitmentPlanCommitmentPlansRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -44,18 +39,12 @@ namespace Azure.ResourceManager.CognitiveServices
         {
         }
 
-        private ClientDiagnostics CognitiveServicesAccountAccountsClientDiagnostics => _cognitiveServicesAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesAccountResource.ResourceType.Namespace, Diagnostics);
-        private AccountsRestOperations CognitiveServicesAccountAccountsRestClient => _cognitiveServicesAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CognitiveServicesAccountResource.ResourceType));
-        private ClientDiagnostics CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics => _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesDeletedAccountResource.ResourceType.Namespace, Diagnostics);
-        private DeletedAccountsRestOperations CognitiveServicesDeletedAccountDeletedAccountsRestClient => _cognitiveServicesDeletedAccountDeletedAccountsRestClient ??= new DeletedAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CognitiveServicesDeletedAccountResource.ResourceType));
-        private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CognitiveServicesManagementRestOperations DefaultRestClient => _defaultRestClient ??= new CognitiveServicesManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics CommitmentTiersClientDiagnostics => _commitmentTiersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics CommitmentTiersClientDiagnostics => _commitmentTiersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CommitmentTiersRestOperations CommitmentTiersRestClient => _commitmentTiersRestClient ??= new CommitmentTiersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics => _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesCommitmentPlanResource.ResourceType.Namespace, Diagnostics);
-        private CommitmentPlansRestOperations CognitiveServicesCommitmentPlanCommitmentPlansRestClient => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient ??= new CommitmentPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CognitiveServicesCommitmentPlanResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -68,94 +57,6 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual CognitiveServicesDeletedAccountCollection GetCognitiveServicesDeletedAccounts()
         {
             return GetCachedClient(Client => new CognitiveServicesDeletedAccountCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/accounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCognitiveServicesAccounts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/accounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServicesAccountResource> GetCognitiveServicesAccounts(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCognitiveServicesAccounts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedAccounts_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServicesDeletedAccountResource> GetDeletedAccountsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesDeletedAccountDeletedAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesDeletedAccountDeletedAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesDeletedAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAccounts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedAccounts_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServicesDeletedAccountResource> GetDeletedAccounts(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesDeletedAccountDeletedAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesDeletedAccountDeletedAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesDeletedAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -218,9 +119,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="location"> Resource location. </param>
         /// <param name="content"> Check SKU Availability POST body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="CognitiveServicesSkuAvailabilityList" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailabilityAsync(AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateCheckSkuAvailabilityRequest(Id.SubscriptionId, location, content);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.CheckSkuAvailability", "value", null, cancellationToken);
         }
@@ -241,9 +145,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="location"> Resource location. </param>
         /// <param name="content"> Check SKU Availability POST body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="CognitiveServicesSkuAvailabilityList" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailability(AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateCheckSkuAvailabilityRequest(Id.SubscriptionId, location, content);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.CheckSkuAvailability", "value", null, cancellationToken);
         }
@@ -263,8 +170,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="content"> Check Domain Availability parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CognitiveServicesDomainAvailabilityList>> CheckDomainAvailabilityAsync(CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDomainAvailability");
             scope.Start();
             try
@@ -294,8 +204,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="content"> Check Domain Availability parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CognitiveServicesDomainAvailabilityList> CheckDomainAvailability(CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDomainAvailability");
             scope.Start();
             try
@@ -354,50 +267,6 @@ namespace Azure.ResourceManager.CognitiveServices
             HttpMessage FirstPageRequest(int? pageSizeHint) => CommitmentTiersRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommitmentTiersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CommitmentTier.DeserializeCommitmentTier, CommitmentTiersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommitmentTiers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/commitmentPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_ListPlansBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlansAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/commitmentPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_ListPlansBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlans(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -5,20 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ServiceFabric;
 using Azure.ResourceManager.ServiceFabric.Models;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _serviceFabricClusterClustersClientDiagnostics;
-        private ClustersRestOperations _serviceFabricClusterClustersRestClient;
         private ClientDiagnostics _clusterVersionsClientDiagnostics;
         private ClusterVersionsRestOperations _clusterVersionsRestClient;
 
@@ -34,57 +34,13 @@ namespace Azure.ResourceManager.ServiceFabric
         {
         }
 
-        private ClientDiagnostics ServiceFabricClusterClustersClientDiagnostics => _serviceFabricClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceFabricClusterResource.ResourceType.Namespace, Diagnostics);
-        private ClustersRestOperations ServiceFabricClusterClustersRestClient => _serviceFabricClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceFabricClusterResource.ResourceType));
-        private ClientDiagnostics ClusterVersionsClientDiagnostics => _clusterVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ClusterVersionsClientDiagnostics => _clusterVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ClusterVersionsRestOperations ClusterVersionsRestClient => _clusterVersionsRestClient ??= new ClusterVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/clusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceFabricClusterResource> GetServiceFabricClustersAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), ServiceFabricClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricClusters", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/clusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceFabricClusterResource> GetServiceFabricClusters(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), ServiceFabricClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -103,9 +59,13 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetRequest(Id.SubscriptionId, location, clusterVersion);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersions", "value", null, cancellationToken);
         }
@@ -126,9 +86,13 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersions(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetRequest(Id.SubscriptionId, location, clusterVersion);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersions", "value", null, cancellationToken);
         }
@@ -150,9 +114,13 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetByEnvironmentRequest(Id.SubscriptionId, location, environment, clusterVersion);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
         }
@@ -174,9 +142,13 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetByEnvironmentRequest(Id.SubscriptionId, location, environment, clusterVersion);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
         }

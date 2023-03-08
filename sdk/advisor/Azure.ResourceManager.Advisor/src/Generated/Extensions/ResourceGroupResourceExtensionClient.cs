@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Advisor.Models;
 
-namespace Azure.ResourceManager.Advisor
+namespace Azure.ResourceManager.Advisor.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _configurationsClientDiagnostics;
         private ConfigurationsRestOperations _configurationsRestClient;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Advisor
         {
         }
 
-        private ClientDiagnostics ConfigurationsClientDiagnostics => _configurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ConfigurationsClientDiagnostics => _configurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ConfigurationsRestOperations ConfigurationsRestClient => _configurationsRestClient ??= new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -101,8 +102,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ConfigData>> CreateConfigurationAsync(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = ConfigurationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateConfiguration");
             scope.Start();
             try
@@ -133,8 +137,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ConfigData> CreateConfiguration(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = ConfigurationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateConfiguration");
             scope.Start();
             try

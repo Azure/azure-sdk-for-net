@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HealthBot.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthBot
@@ -18,72 +19,62 @@ namespace Azure.ResourceManager.HealthBot
     /// <summary> A class to add extension methods to Azure.ResourceManager.HealthBot. </summary>
     public static partial class HealthBotExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static HealthBotResourceExtensionClient GetHealthBotResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new HealthBotResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static HealthBotResourceExtensionClient GetHealthBotResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new HealthBotResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+        #region HealthBotResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HealthBotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthBotResource.CreateResourceIdentifier" /> to create a <see cref="HealthBotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HealthBotResource" /> object. </returns>
+        public static HealthBotResource GetHealthBotResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HealthBotResource.ValidateResourceId(id);
+                return new HealthBotResource(client, id);
             }
             );
         }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HealthBot/healthBots</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bots_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HealthBotResource> GetHealthBotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetHealthBotsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HealthBot/healthBots</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bots_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HealthBotResource> GetHealthBots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetHealthBots(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
+        #endregion
 
         /// <summary> Gets a collection of HealthBotResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HealthBotResources and their operations over a HealthBotResource. </returns>
         public static HealthBotCollection GetHealthBots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetHealthBots();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthBots();
         }
 
         /// <summary>
@@ -134,23 +125,46 @@ namespace Azure.ResourceManager.HealthBot
             return resourceGroupResource.GetHealthBots().Get(botName, cancellationToken);
         }
 
-        #region HealthBotResource
         /// <summary>
-        /// Gets an object representing a <see cref="HealthBotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthBotResource.CreateResourceIdentifier" /> to create a <see cref="HealthBotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Returns all the resources of a particular type belonging to a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HealthBot/healthBots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthBotResource" /> object. </returns>
-        public static HealthBotResource GetHealthBotResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HealthBotResource> GetHealthBotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthBotResource.ValidateResourceId(id);
-                return new HealthBotResource(client, id);
-            }
-            );
+            return GetHealthBotResourceExtensionClient(subscriptionResource).GetHealthBotsAsync(cancellationToken);
         }
-        #endregion
+
+        /// <summary>
+        /// Returns all the resources of a particular type belonging to a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HealthBot/healthBots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HealthBotResource> GetHealthBots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetHealthBotResourceExtensionClient(subscriptionResource).GetHealthBots(cancellationToken);
+        }
     }
 }

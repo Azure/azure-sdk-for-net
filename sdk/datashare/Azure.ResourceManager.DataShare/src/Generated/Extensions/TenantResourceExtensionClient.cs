@@ -12,15 +12,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.DataShare.Models;
 
-namespace Azure.ResourceManager.DataShare
+namespace Azure.ResourceManager.DataShare.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics;
-        private ConsumerInvitationsRestOperations _dataShareConsumerInvitationConsumerInvitationsRestClient;
         private ClientDiagnostics _emailRegistrationsClientDiagnostics;
         private EmailRegistrationsRestOperations _emailRegistrationsRestClient;
 
@@ -36,9 +35,7 @@ namespace Azure.ResourceManager.DataShare
         {
         }
 
-        private ClientDiagnostics DataShareConsumerInvitationConsumerInvitationsClientDiagnostics => _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataShare", DataShareConsumerInvitationResource.ResourceType.Namespace, Diagnostics);
-        private ConsumerInvitationsRestOperations DataShareConsumerInvitationConsumerInvitationsRestClient => _dataShareConsumerInvitationConsumerInvitationsRestClient ??= new ConsumerInvitationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataShareConsumerInvitationResource.ResourceType));
-        private ClientDiagnostics EmailRegistrationsClientDiagnostics => _emailRegistrationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataShare", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics EmailRegistrationsClientDiagnostics => _emailRegistrationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataShare.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private EmailRegistrationsRestOperations EmailRegistrationsRestClient => _emailRegistrationsRestClient ??= new EmailRegistrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -52,70 +49,6 @@ namespace Azure.ResourceManager.DataShare
         public virtual DataShareConsumerInvitationCollection GetDataShareConsumerInvitations()
         {
             return GetCachedClient(Client => new DataShareConsumerInvitationCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Reject an invitation
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.DataShare/locations/{location}/rejectInvitation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConsumerInvitations_RejectInvitation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Location of the invitation. </param>
-        /// <param name="data"> An invitation payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataShareConsumerInvitationResource>> RejectConsumerInvitationAsync(AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
-        {
-            using var scope = DataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.RejectConsumerInvitation");
-            scope.Start();
-            try
-            {
-                var response = await DataShareConsumerInvitationConsumerInvitationsRestClient.RejectInvitationAsync(location, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataShareConsumerInvitationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reject an invitation
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.DataShare/locations/{location}/rejectInvitation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConsumerInvitations_RejectInvitation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Location of the invitation. </param>
-        /// <param name="data"> An invitation payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataShareConsumerInvitationResource> RejectConsumerInvitation(AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
-        {
-            using var scope = DataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.RejectConsumerInvitation");
-            scope.Start();
-            try
-            {
-                var response = DataShareConsumerInvitationConsumerInvitationsRestClient.RejectInvitation(location, data, cancellationToken);
-                return Response.FromValue(new DataShareConsumerInvitationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -134,8 +67,11 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="location"> Location of the activation. </param>
         /// <param name="emailRegistration"> The payload for tenant domain activation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
         public virtual async Task<Response<DataShareEmailRegistration>> ActivateEmailAsync(AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
+
             using var scope = EmailRegistrationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.ActivateEmail");
             scope.Start();
             try
@@ -166,8 +102,11 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="location"> Location of the activation. </param>
         /// <param name="emailRegistration"> The payload for tenant domain activation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
         public virtual Response<DataShareEmailRegistration> ActivateEmail(AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
+
             using var scope = EmailRegistrationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.ActivateEmail");
             scope.Start();
             try

@@ -12,15 +12,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AgFoodPlatform;
 using Azure.ResourceManager.AgFoodPlatform.Models;
 
-namespace Azure.ResourceManager.AgFoodPlatform
+namespace Azure.ResourceManager.AgFoodPlatform.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _farmBeatFarmBeatsModelsClientDiagnostics;
-        private FarmBeatsModelsRestOperations _farmBeatFarmBeatsModelsRestClient;
         private ClientDiagnostics _locationsClientDiagnostics;
         private LocationsRestOperations _locationsRestClient;
 
@@ -36,69 +35,13 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
         }
 
-        private ClientDiagnostics FarmBeatFarmBeatsModelsClientDiagnostics => _farmBeatFarmBeatsModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AgFoodPlatform", FarmBeatResource.ResourceType.Namespace, Diagnostics);
-        private FarmBeatsModelsRestOperations FarmBeatFarmBeatsModelsRestClient => _farmBeatFarmBeatsModelsRestClient ??= new FarmBeatsModelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FarmBeatResource.ResourceType));
-        private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AgFoodPlatform", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AgFoodPlatform.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationsRestOperations LocationsRestClient => _locationsRestClient ??= new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Lists the FarmBeats instances for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FarmBeatsModels_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FarmBeatResource> GetFarmBeatsAsync(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFarmBeats", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the FarmBeats instances for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FarmBeatsModels_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FarmBeatResource> GetFarmBeats(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFarmBeats", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -116,8 +59,11 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityLocationAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
             scope.Start();
             try
@@ -147,8 +93,11 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityLocation(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
             scope.Start();
             try

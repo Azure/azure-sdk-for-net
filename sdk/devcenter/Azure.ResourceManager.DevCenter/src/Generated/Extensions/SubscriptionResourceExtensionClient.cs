@@ -12,25 +12,20 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevCenter;
 using Azure.ResourceManager.DevCenter.Models;
 
-namespace Azure.ResourceManager.DevCenter
+namespace Azure.ResourceManager.DevCenter.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _devCenterClientDiagnostics;
-        private DevCentersRestOperations _devCenterRestClient;
-        private ClientDiagnostics _projectClientDiagnostics;
-        private ProjectsRestOperations _projectRestClient;
         private ClientDiagnostics _operationStatusesClientDiagnostics;
         private OperationStatusesRestOperations _operationStatusesRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
         private UsagesRestOperations _usagesRestClient;
         private ClientDiagnostics _skusClientDiagnostics;
         private SkusRestOperations _skusRestClient;
-        private ClientDiagnostics _networkConnectionClientDiagnostics;
-        private NetworkConnectionsRestOperations _networkConnectionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -44,115 +39,17 @@ namespace Azure.ResourceManager.DevCenter
         {
         }
 
-        private ClientDiagnostics DevCenterClientDiagnostics => _devCenterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterResource.ResourceType.Namespace, Diagnostics);
-        private DevCentersRestOperations DevCenterRestClient => _devCenterRestClient ??= new DevCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DevCenterResource.ResourceType));
-        private ClientDiagnostics ProjectClientDiagnostics => _projectClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectResource.ResourceType.Namespace, Diagnostics);
-        private ProjectsRestOperations ProjectRestClient => _projectRestClient ??= new ProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProjectResource.ResourceType));
-        private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OperationStatusesRestOperations OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics NetworkConnectionClientDiagnostics => _networkConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter", NetworkConnectionResource.ResourceType.Namespace, Diagnostics);
-        private NetworkConnectionsRestOperations NetworkConnectionRestClient => _networkConnectionRestClient ??= new NetworkConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkConnectionResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Lists all devcenters in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/devcenters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevCenters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevCenterResource> GetDevCentersAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all devcenters in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/devcenters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevCenters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevCenterResource> GetDevCenters(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all projects in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProjectResource> GetProjectsAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProjectRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProjectRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectResource(Client, ProjectData.DeserializeProjectData(e)), ProjectClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProjects", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all projects in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/projects</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProjectResource> GetProjects(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProjectRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProjectRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectResource(Client, ProjectData.DeserializeProjectData(e)), ProjectClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,8 +68,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual async Task<Response<OperationStatus>> GetOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
             using var scope = OperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationStatus");
             scope.Start();
             try
@@ -203,8 +104,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response<OperationStatus> GetOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
             using var scope = OperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationStatus");
             scope.Start();
             try
@@ -309,52 +214,6 @@ namespace Azure.ResourceManager.DevCenter
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusBySubscription", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists network connections in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/networkConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkConnectionResource> GetNetworkConnectionsAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), NetworkConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkConnections", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists network connections in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevCenter/networkConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkConnectionResource> GetNetworkConnections(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), NetworkConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkConnections", "value", "nextLink", cancellationToken);
         }
     }
 }

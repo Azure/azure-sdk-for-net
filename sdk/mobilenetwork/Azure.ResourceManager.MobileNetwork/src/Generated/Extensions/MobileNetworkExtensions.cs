@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MobileNetwork.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MobileNetwork
@@ -18,383 +19,85 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary> A class to add extension methods to Azure.ResourceManager.MobileNetwork. </summary>
     public static partial class MobileNetworkExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static MobileNetworkResourceExtensionClient GetMobileNetworkResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new MobileNetworkResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of PacketCoreControlPlaneVersionResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PacketCoreControlPlaneVersionResources and their operations over a PacketCoreControlPlaneVersionResource. </returns>
-        public static PacketCoreControlPlaneVersionCollection GetPacketCoreControlPlaneVersions(this TenantResource tenantResource)
+        private static MobileNetworkResourceExtensionClient GetMobileNetworkResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(tenantResource).GetPacketCoreControlPlaneVersions();
-        }
-
-        /// <summary>
-        /// Gets information about the specified packet core control plane version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlaneVersions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="versionName"> The name of the packet core control plane version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PacketCoreControlPlaneVersionResource>> GetPacketCoreControlPlaneVersionAsync(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetPacketCoreControlPlaneVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified packet core control plane version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlaneVersions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="versionName"> The name of the packet core control plane version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PacketCoreControlPlaneVersionResource> GetPacketCoreControlPlaneVersion(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetPacketCoreControlPlaneVersions().Get(versionName, cancellationToken);
-        }
-
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new MobileNetworkResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Lists all the mobile networks in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MobileNetworkResource> GetMobileNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        private static PacketCoreControlPlaneResourceExtensionClient GetPacketCoreControlPlaneResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(subscriptionResource).GetMobileNetworksAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the mobile networks in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MobileNetworkResource> GetMobileNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMobileNetworks(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the packet core control planes in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPacketCoreControlPlanesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the packet core control planes in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetPacketCoreControlPlanes(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the SIM groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SimGroupResource> GetSimGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSimGroupsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the SIM groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SimGroupResource> GetSimGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSimGroups(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new PacketCoreControlPlaneResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of MobileNetworkResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of MobileNetworkResources and their operations over a MobileNetworkResource. </returns>
-        public static MobileNetworkCollection GetMobileNetworks(this ResourceGroupResource resourceGroupResource)
+        private static PacketCoreControlPlaneResourceExtensionClient GetPacketCoreControlPlaneResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(resourceGroupResource).GetMobileNetworks();
+            return client.GetResourceClient(() =>
+            {
+                return new PacketCoreControlPlaneResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets information about the specified mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="mobileNetworkName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<MobileNetworkResource>> GetMobileNetworkAsync(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return await resourceGroupResource.GetMobileNetworks().GetAsync(mobileNetworkName, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets information about the specified mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="mobileNetworkName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<MobileNetworkResource> GetMobileNetwork(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return resourceGroupResource.GetMobileNetworks().Get(mobileNetworkName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of PacketCoreControlPlaneResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PacketCoreControlPlaneResources and their operations over a PacketCoreControlPlaneResource. </returns>
-        public static PacketCoreControlPlaneCollection GetPacketCoreControlPlanes(this ResourceGroupResource resourceGroupResource)
+        private static SimGroupResourceExtensionClient GetSimGroupResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetPacketCoreControlPlanes();
+            return resource.GetCachedClient(client =>
+            {
+                return new SimGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets information about the specified packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PacketCoreControlPlaneResource>> GetPacketCoreControlPlaneAsync(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        private static SimGroupResourceExtensionClient GetSimGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetPacketCoreControlPlanes().GetAsync(packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new SimGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets information about the specified packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PacketCoreControlPlaneResource> GetPacketCoreControlPlane(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
-            return resourceGroupResource.GetPacketCoreControlPlanes().Get(packetCoreControlPlaneName, cancellationToken);
+            return resource.GetCachedClient(client =>
+            {
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of SimGroupResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SimGroupResources and their operations over a SimGroupResource. </returns>
-        public static SimGroupCollection GetSimGroups(this ResourceGroupResource resourceGroupResource)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(resourceGroupResource).GetSimGroups();
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Gets information about the specified SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SimGroupResource>> GetSimGroupAsync(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSimGroups().GetAsync(simGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SimGroupResource> GetSimGroup(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSimGroups().Get(simGroupName, cancellationToken);
-        }
-
         #region AttachedDataNetworkResource
         /// <summary>
         /// Gets an object representing an <see cref="AttachedDataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
@@ -622,5 +325,355 @@ namespace Azure.ResourceManager.MobileNetwork
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of MobileNetworkResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of MobileNetworkResources and their operations over a MobileNetworkResource. </returns>
+        public static MobileNetworkCollection GetMobileNetworks(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMobileNetworks();
+        }
+
+        /// <summary>
+        /// Gets information about the specified mobile network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MobileNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mobileNetworkName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<MobileNetworkResource>> GetMobileNetworkAsync(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetMobileNetworks().GetAsync(mobileNetworkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified mobile network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MobileNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mobileNetworkName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<MobileNetworkResource> GetMobileNetwork(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetMobileNetworks().Get(mobileNetworkName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PacketCoreControlPlaneResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PacketCoreControlPlaneResources and their operations over a PacketCoreControlPlaneResource. </returns>
+        public static PacketCoreControlPlaneCollection GetPacketCoreControlPlanes(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPacketCoreControlPlanes();
+        }
+
+        /// <summary>
+        /// Gets information about the specified packet core control plane.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlanes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PacketCoreControlPlaneResource>> GetPacketCoreControlPlaneAsync(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetPacketCoreControlPlanes().GetAsync(packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified packet core control plane.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlanes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PacketCoreControlPlaneResource> GetPacketCoreControlPlane(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetPacketCoreControlPlanes().Get(packetCoreControlPlaneName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SimGroupResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SimGroupResources and their operations over a SimGroupResource. </returns>
+        public static SimGroupCollection GetSimGroups(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSimGroups();
+        }
+
+        /// <summary>
+        /// Gets information about the specified SIM group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SimGroupResource>> GetSimGroupAsync(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSimGroups().GetAsync(simGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified SIM group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SimGroupResource> GetSimGroup(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSimGroups().Get(simGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the mobile networks in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MobileNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MobileNetworkResource> GetMobileNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetMobileNetworkResourceExtensionClient(subscriptionResource).GetMobileNetworksAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the mobile networks in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MobileNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MobileNetworkResource> GetMobileNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetMobileNetworkResourceExtensionClient(subscriptionResource).GetMobileNetworks(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the packet core control planes in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlanes_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetPacketCoreControlPlaneResourceExtensionClient(subscriptionResource).GetPacketCoreControlPlanesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the packet core control planes in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlanes_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetPacketCoreControlPlaneResourceExtensionClient(subscriptionResource).GetPacketCoreControlPlanes(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the SIM groups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimGroups_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SimGroupResource> GetSimGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSimGroupResourceExtensionClient(subscriptionResource).GetSimGroupsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the SIM groups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimGroups_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SimGroupResource> GetSimGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSimGroupResourceExtensionClient(subscriptionResource).GetSimGroups(cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PacketCoreControlPlaneVersionResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PacketCoreControlPlaneVersionResources and their operations over a PacketCoreControlPlaneVersionResource. </returns>
+        public static PacketCoreControlPlaneVersionCollection GetPacketCoreControlPlaneVersions(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlaneVersions();
+        }
+
+        /// <summary>
+        /// Gets information about the specified packet core control plane version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlaneVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="versionName"> The name of the packet core control plane version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PacketCoreControlPlaneVersionResource>> GetPacketCoreControlPlaneVersionAsync(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetPacketCoreControlPlaneVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified packet core control plane version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlaneVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="versionName"> The name of the packet core control plane version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PacketCoreControlPlaneVersionResource> GetPacketCoreControlPlaneVersion(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetPacketCoreControlPlaneVersions().Get(versionName, cancellationToken);
+        }
     }
 }

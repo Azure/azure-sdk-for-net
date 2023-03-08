@@ -7,11 +7,12 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PolicyInsights;
 
-namespace Azure.ResourceManager.PolicyInsights
+namespace Azure.ResourceManager.PolicyInsights.Mock
 {
     /// <summary> A class to add extension methods to ArmResource. </summary>
-    internal partial class ArmResourceExtensionClient : ArmResource
+    public partial class ArmResourceExtensionClient : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref="ArmResourceExtensionClient"/> class for mocking. </summary>
         protected ArmResourceExtensionClient()

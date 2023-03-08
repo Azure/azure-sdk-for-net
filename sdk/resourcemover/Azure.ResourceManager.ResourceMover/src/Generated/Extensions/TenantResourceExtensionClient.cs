@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceMover;
 using Azure.ResourceManager.ResourceMover.Models;
 
-namespace Azure.ResourceManager.ResourceMover
+namespace Azure.ResourceManager.ResourceMover.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _operationsDiscoveryClientDiagnostics;
         private OperationsDiscoveryRestOperations _operationsDiscoveryRestClient;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
         }
 
-        private ClientDiagnostics OperationsDiscoveryClientDiagnostics => _operationsDiscoveryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceMover", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics OperationsDiscoveryClientDiagnostics => _operationsDiscoveryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceMover.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OperationsDiscoveryRestOperations OperationsDiscoveryRestClient => _operationsDiscoveryRestClient ??= new OperationsDiscoveryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

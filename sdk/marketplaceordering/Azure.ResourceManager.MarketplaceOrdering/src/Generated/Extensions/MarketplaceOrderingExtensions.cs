@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MarketplaceOrdering.Mock;
 using Azure.ResourceManager.MarketplaceOrdering.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,21 +20,65 @@ namespace Azure.ResourceManager.MarketplaceOrdering
     /// <summary> A class to add extension methods to Azure.ResourceManager.MarketplaceOrdering. </summary>
     public static partial class MarketplaceOrderingExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region MarketplaceAgreementTermResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MarketplaceAgreementTermResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceAgreementTermResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementTermResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MarketplaceAgreementTermResource" /> object. </returns>
+        public static MarketplaceAgreementTermResource GetMarketplaceAgreementTermResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MarketplaceAgreementTermResource.ValidateResourceId(id);
+                return new MarketplaceAgreementTermResource(client, id);
             }
             );
         }
+        #endregion
+
+        #region MarketplaceAgreementResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MarketplaceAgreementResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceAgreementResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MarketplaceAgreementResource" /> object. </returns>
+        public static MarketplaceAgreementResource GetMarketplaceAgreementResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MarketplaceAgreementResource.ValidateResourceId(id);
+                return new MarketplaceAgreementResource(client, id);
+            }
+            );
+        }
+        #endregion
 
         /// <summary> Gets a collection of MarketplaceAgreementTermResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MarketplaceAgreementTermResources and their operations over a MarketplaceAgreementTermResource. </returns>
         public static MarketplaceAgreementTermCollection GetMarketplaceAgreementTerms(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetMarketplaceAgreementTerms();
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMarketplaceAgreementTerms();
         }
 
         /// <summary>
@@ -95,7 +140,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <returns> An object representing collection of MarketplaceAgreementResources and their operations over a MarketplaceAgreementResource. </returns>
         public static MarketplaceAgreementCollection GetMarketplaceAgreements(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetMarketplaceAgreements();
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMarketplaceAgreements();
         }
 
         /// <summary>
@@ -149,43 +194,5 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         {
             return subscriptionResource.GetMarketplaceAgreements().Get(publisherId, offerId, planId, cancellationToken);
         }
-
-        #region MarketplaceAgreementTermResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MarketplaceAgreementTermResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MarketplaceAgreementTermResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementTermResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MarketplaceAgreementTermResource" /> object. </returns>
-        public static MarketplaceAgreementTermResource GetMarketplaceAgreementTermResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MarketplaceAgreementTermResource.ValidateResourceId(id);
-                return new MarketplaceAgreementTermResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MarketplaceAgreementResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MarketplaceAgreementResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MarketplaceAgreementResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MarketplaceAgreementResource" /> object. </returns>
-        public static MarketplaceAgreementResource GetMarketplaceAgreementResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MarketplaceAgreementResource.ValidateResourceId(id);
-                return new MarketplaceAgreementResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }

@@ -5,23 +5,15 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.DataProtectionBackup.Models;
+using Azure.ResourceManager.DataProtectionBackup;
 
-namespace Azure.ResourceManager.DataProtectionBackup
+namespace Azure.ResourceManager.DataProtectionBackup.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _dataProtectionBackupVaultBackupVaultsClientDiagnostics;
-        private BackupVaultsRestOperations _dataProtectionBackupVaultBackupVaultsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
         {
@@ -33,9 +25,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         internal ResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics DataProtectionBackupVaultBackupVaultsClientDiagnostics => _dataProtectionBackupVaultBackupVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupVaultResource.ResourceType.Namespace, Diagnostics);
-        private BackupVaultsRestOperations DataProtectionBackupVaultBackupVaultsRestClient => _dataProtectionBackupVaultBackupVaultsRestClient ??= new BackupVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataProtectionBackupVaultResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -55,70 +44,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public virtual ResourceGuardCollection GetResourceGuards()
         {
             return GetCachedClient(Client => new ResourceGuardCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// API to check for resource name availability
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupVaults_CheckNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
-        /// <param name="content"> Check name availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataProtectionBackupNameAvailabilityResult>> CheckDataProtectionBackupVaultNameAvailabilityAsync(AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = DataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckDataProtectionBackupVaultNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await DataProtectionBackupVaultBackupVaultsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// API to check for resource name availability
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupVaults_CheckNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
-        /// <param name="content"> Check name availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataProtectionBackupNameAvailabilityResult> CheckDataProtectionBackupVaultNameAvailability(AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = DataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckDataProtectionBackupVaultNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = DataProtectionBackupVaultBackupVaultsRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

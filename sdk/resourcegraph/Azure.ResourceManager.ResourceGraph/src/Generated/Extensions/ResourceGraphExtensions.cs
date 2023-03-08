@@ -10,6 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceGraph.Mock;
 using Azure.ResourceManager.ResourceGraph.Models;
 using Azure.ResourceManager.Resources;
 
@@ -18,13 +20,20 @@ namespace Azure.ResourceManager.ResourceGraph
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceGraph. </summary>
     public static partial class ResourceGraphExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
         }
 
         /// <summary>
@@ -48,7 +57,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).GetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).GetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -72,7 +81,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(tenantResource).GetResources(content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetResources(content, cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +105,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).GetResourceHistoryAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).GetResourceHistoryAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -120,7 +129,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(tenantResource).GetResourceHistory(content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetResourceHistory(content, cancellationToken);
         }
     }
 }

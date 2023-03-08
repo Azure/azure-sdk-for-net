@@ -7,11 +7,12 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerRegistry;
 
-namespace Azure.ResourceManager.ContainerRegistry
+namespace Azure.ResourceManager.ContainerRegistry.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()

@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Reservations;
 using Azure.ResourceManager.Reservations.Models;
 
-namespace Azure.ResourceManager.Reservations
+namespace Azure.ResourceManager.Reservations.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _defaultClientDiagnostics;
         private AzureReservationAPIRestOperations _defaultRestClient;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Reservations
         {
         }
 
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AzureReservationAPIRestOperations DefaultRestClient => _defaultRestClient ??= new AzureReservationAPIRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -46,18 +47,26 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Gets a collection of ReservationQuotaResources in the SubscriptionResource. </summary>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
         /// <returns> An object representing collection of ReservationQuotaResources and their operations over a ReservationQuotaResource. </returns>
         public virtual ReservationQuotaCollection GetAllReservationQuota(string providerId, AzureLocation location)
         {
+            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
+
             return new ReservationQuotaCollection(Client, Id, providerId, location);
         }
 
         /// <summary> Gets a collection of QuotaRequestDetailResources in the SubscriptionResource. </summary>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
         /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
         public virtual QuotaRequestDetailCollection GetQuotaRequestDetails(string providerId, AzureLocation location)
         {
+            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
+
             return new QuotaRequestDetailCollection(Client, Id, providerId, location);
         }
 

@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevSpaces;
 using Azure.ResourceManager.DevSpaces.Models;
 
-namespace Azure.ResourceManager.DevSpaces
+namespace Azure.ResourceManager.DevSpaces.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _containerHostMappingsClientDiagnostics;
         private ContainerHostMappingsRestOperations _containerHostMappingsRestClient;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.DevSpaces
         {
         }
 
-        private ClientDiagnostics ContainerHostMappingsClientDiagnostics => _containerHostMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevSpaces", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ContainerHostMappingsClientDiagnostics => _containerHostMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevSpaces.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ContainerHostMappingsRestOperations ContainerHostMappingsRestClient => _containerHostMappingsRestClient ??= new ContainerHostMappingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -66,8 +67,11 @@ namespace Azure.ResourceManager.DevSpaces
         /// <param name="location"> Location of the container host. </param>
         /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public virtual async Task<Response<ContainerHostMapping>> GetContainerHostMappingContainerHostMappingAsync(AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
+
             using var scope = ContainerHostMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetContainerHostMappingContainerHostMapping");
             scope.Start();
             try
@@ -98,8 +102,11 @@ namespace Azure.ResourceManager.DevSpaces
         /// <param name="location"> Location of the container host. </param>
         /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public virtual Response<ContainerHostMapping> GetContainerHostMappingContainerHostMapping(AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
+
             using var scope = ContainerHostMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetContainerHostMappingContainerHostMapping");
             scope.Start();
             try

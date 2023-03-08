@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
 
-namespace Azure.ResourceManager.Authorization
+namespace Azure.ResourceManager.Authorization.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _classicAdministratorsClientDiagnostics;
         private ClassicAdministratorsRestOperations _classicAdministratorsRestClient;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Authorization
         {
         }
 
-        private ClientDiagnostics ClassicAdministratorsClientDiagnostics => _classicAdministratorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ClassicAdministratorsClientDiagnostics => _classicAdministratorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ClassicAdministratorsRestOperations ClassicAdministratorsRestClient => _classicAdministratorsRestClient ??= new ClassicAdministratorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

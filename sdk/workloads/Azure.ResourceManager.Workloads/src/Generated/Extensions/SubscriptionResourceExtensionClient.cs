@@ -12,19 +12,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Workloads;
 using Azure.ResourceManager.Workloads.Models;
 
-namespace Azure.ResourceManager.Workloads
+namespace Azure.ResourceManager.Workloads.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _defaultClientDiagnostics;
         private WorkloadsRestOperations _defaultRestClient;
-        private ClientDiagnostics _sapVirtualInstanceSapVirtualInstancesClientDiagnostics;
-        private SAPVirtualInstancesRestOperations _sapVirtualInstanceSapVirtualInstancesRestClient;
-        private ClientDiagnostics _sapMonitormonitorsClientDiagnostics;
-        private MonitorsRestOperations _sapMonitormonitorsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -38,12 +35,8 @@ namespace Azure.ResourceManager.Workloads
         {
         }
 
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private WorkloadsRestOperations DefaultRestClient => _defaultRestClient ??= new WorkloadsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SapVirtualInstanceSAPVirtualInstancesClientDiagnostics => _sapVirtualInstanceSapVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", SapVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
-        private SAPVirtualInstancesRestOperations SapVirtualInstanceSAPVirtualInstancesRestClient => _sapVirtualInstanceSapVirtualInstancesRestClient ??= new SAPVirtualInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SapVirtualInstanceResource.ResourceType));
-        private ClientDiagnostics SapMonitormonitorsClientDiagnostics => _sapMonitormonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", SapMonitorResource.ResourceType.Namespace, Diagnostics);
-        private MonitorsRestOperations SapMonitormonitorsRestClient => _sapMonitormonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SapMonitorResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -305,94 +298,6 @@ namespace Azure.ResourceManager.Workloads
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapVirtualInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SAPVirtualInstances_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>monitors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SapMonitorResource> GetSapMonitorsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SapMonitormonitorsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapMonitormonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapMonitors", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>monitors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SapMonitorResource> GetSapMonitors(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SapMonitormonitorsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapMonitormonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapMonitors", "value", "nextLink", cancellationToken);
         }
     }
 }

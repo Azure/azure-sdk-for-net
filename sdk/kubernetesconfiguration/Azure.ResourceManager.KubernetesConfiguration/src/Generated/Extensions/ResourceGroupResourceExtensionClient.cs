@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.KubernetesConfiguration;
 
-namespace Azure.ResourceManager.KubernetesConfiguration
+namespace Azure.ResourceManager.KubernetesConfiguration.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
@@ -35,9 +37,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <returns> An object representing collection of KubernetesClusterExtensionResources and their operations over a KubernetesClusterExtensionResource. </returns>
         public virtual KubernetesClusterExtensionCollection GetKubernetesClusterExtensions(string clusterRp, string clusterResourceName, string clusterName)
         {
+            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
+            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return new KubernetesClusterExtensionCollection(Client, Id, clusterRp, clusterResourceName, clusterName);
         }
 
@@ -45,9 +53,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <returns> An object representing collection of KubernetesFluxConfigurationResources and their operations over a KubernetesFluxConfigurationResource. </returns>
         public virtual KubernetesFluxConfigurationCollection GetKubernetesFluxConfigurations(string clusterRp, string clusterResourceName, string clusterName)
         {
+            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
+            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return new KubernetesFluxConfigurationCollection(Client, Id, clusterRp, clusterResourceName, clusterName);
         }
 
@@ -55,9 +69,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <returns> An object representing collection of KubernetesSourceControlConfigurationResources and their operations over a KubernetesSourceControlConfigurationResource. </returns>
         public virtual KubernetesSourceControlConfigurationCollection GetKubernetesSourceControlConfigurations(string clusterRp, string clusterResourceName, string clusterName)
         {
+            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
+            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return new KubernetesSourceControlConfigurationCollection(Client, Id, clusterRp, clusterResourceName, clusterName);
         }
     }

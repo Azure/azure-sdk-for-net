@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Peering;
 using Azure.ResourceManager.Peering.Models;
 
-namespace Azure.ResourceManager.Peering
+namespace Azure.ResourceManager.Peering.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _cdnPeeringPrefixesClientDiagnostics;
         private CdnPeeringPrefixesRestOperations _cdnPeeringPrefixesRestClient;
@@ -29,16 +30,12 @@ namespace Azure.ResourceManager.Peering
         private LookingGlassRestOperations _lookingGlassRestClient;
         private ClientDiagnostics _peeringLocationsClientDiagnostics;
         private PeeringLocationsRestOperations _peeringLocationsRestClient;
-        private ClientDiagnostics _peeringClientDiagnostics;
-        private PeeringsRestOperations _peeringRestClient;
         private ClientDiagnostics _peeringServiceCountriesClientDiagnostics;
         private PeeringServiceCountriesRestOperations _peeringServiceCountriesRestClient;
         private ClientDiagnostics _peeringServiceLocationsClientDiagnostics;
         private PeeringServiceLocationsRestOperations _peeringServiceLocationsRestClient;
         private ClientDiagnostics _peeringServiceProvidersClientDiagnostics;
         private PeeringServiceProvidersRestOperations _peeringServiceProvidersRestClient;
-        private ClientDiagnostics _peeringServiceClientDiagnostics;
-        private PeeringServicesRestOperations _peeringServiceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -52,26 +49,22 @@ namespace Azure.ResourceManager.Peering
         {
         }
 
-        private ClientDiagnostics CdnPeeringPrefixesClientDiagnostics => _cdnPeeringPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics CdnPeeringPrefixesClientDiagnostics => _cdnPeeringPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CdnPeeringPrefixesRestOperations CdnPeeringPrefixesRestClient => _cdnPeeringPrefixesRestClient ??= new CdnPeeringPrefixesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PeeringManagementRestOperations DefaultRestClient => _defaultRestClient ??= new PeeringManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics LegacyPeeringsClientDiagnostics => _legacyPeeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics LegacyPeeringsClientDiagnostics => _legacyPeeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LegacyPeeringsRestOperations LegacyPeeringsRestClient => _legacyPeeringsRestClient ??= new LegacyPeeringsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics LookingGlassClientDiagnostics => _lookingGlassClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics LookingGlassClientDiagnostics => _lookingGlassClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LookingGlassRestOperations LookingGlassRestClient => _lookingGlassRestClient ??= new LookingGlassRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PeeringLocationsClientDiagnostics => _peeringLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics PeeringLocationsClientDiagnostics => _peeringLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PeeringLocationsRestOperations PeeringLocationsRestClient => _peeringLocationsRestClient ??= new PeeringLocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PeeringClientDiagnostics => _peeringClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering", PeeringResource.ResourceType.Namespace, Diagnostics);
-        private PeeringsRestOperations PeeringRestClient => _peeringRestClient ??= new PeeringsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PeeringResource.ResourceType));
-        private ClientDiagnostics PeeringServiceCountriesClientDiagnostics => _peeringServiceCountriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics PeeringServiceCountriesClientDiagnostics => _peeringServiceCountriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PeeringServiceCountriesRestOperations PeeringServiceCountriesRestClient => _peeringServiceCountriesRestClient ??= new PeeringServiceCountriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PeeringServiceLocationsClientDiagnostics => _peeringServiceLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics PeeringServiceLocationsClientDiagnostics => _peeringServiceLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PeeringServiceLocationsRestOperations PeeringServiceLocationsRestClient => _peeringServiceLocationsRestClient ??= new PeeringServiceLocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PeeringServiceProvidersClientDiagnostics => _peeringServiceProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics PeeringServiceProvidersClientDiagnostics => _peeringServiceProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PeeringServiceProvidersRestOperations PeeringServiceProvidersRestClient => _peeringServiceProvidersRestClient ??= new PeeringServiceProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PeeringServiceClientDiagnostics => _peeringServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering", PeeringServiceResource.ResourceType.Namespace, Diagnostics);
-        private PeeringServicesRestOperations PeeringServiceRestClient => _peeringServiceRestClient ??= new PeeringServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PeeringServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -101,9 +94,12 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
         /// <returns> An async collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CdnPeeringPrefix> GetCdnPeeringPrefixesAsync(string peeringLocation, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => CdnPeeringPrefixesRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CdnPeeringPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CdnPeeringPrefix.DeserializeCdnPeeringPrefix, CdnPeeringPrefixesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCdnPeeringPrefixes", "value", "nextLink", cancellationToken);
@@ -124,9 +120,12 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
         /// <returns> A collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CdnPeeringPrefix> GetCdnPeeringPrefixes(string peeringLocation, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => CdnPeeringPrefixesRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CdnPeeringPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CdnPeeringPrefix.DeserializeCdnPeeringPrefix, CdnPeeringPrefixesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCdnPeeringPrefixes", "value", "nextLink", cancellationToken);
@@ -147,8 +146,11 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPeeringServiceProviderAvailability");
             scope.Start();
             try
@@ -178,8 +180,11 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPeeringServiceProviderAvailability");
             scope.Start();
             try
@@ -212,9 +217,12 @@ namespace Azure.ResourceManager.Peering
         /// <param name="asn"> The ASN number associated with a legacy peering. </param>
         /// <param name="directPeeringType"> The direct peering type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
         /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => LegacyPeeringsRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LegacyPeeringsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), LegacyPeeringsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringsByLegacyPeering", "value", "nextLink", cancellationToken);
@@ -238,9 +246,12 @@ namespace Azure.ResourceManager.Peering
         /// <param name="asn"> The ASN number associated with a legacy peering. </param>
         /// <param name="directPeeringType"> The direct peering type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
         /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringResource> GetPeeringsByLegacyPeering(string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => LegacyPeeringsRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LegacyPeeringsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), LegacyPeeringsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringsByLegacyPeering", "value", "nextLink", cancellationToken);
@@ -264,8 +275,12 @@ namespace Azure.ResourceManager.Peering
         /// <param name="sourceLocation"> The location of the source. </param>
         /// <param name="destinationIP"> The IP address of the destination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
         public virtual async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
+            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
+
             using var scope = LookingGlassClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InvokeLookingGlass");
             scope.Start();
             try
@@ -298,8 +313,12 @@ namespace Azure.ResourceManager.Peering
         /// <param name="sourceLocation"> The location of the source. </param>
         /// <param name="destinationIP"> The IP address of the destination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
         public virtual Response<LookingGlassOutput> InvokeLookingGlass(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
+            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
+
             using var scope = LookingGlassClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InvokeLookingGlass");
             scope.Start();
             try
@@ -360,50 +379,6 @@ namespace Azure.ResourceManager.Peering
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringLocationsRestClient.CreateListRequest(Id.SubscriptionId, kind, directPeeringType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, kind, directPeeringType);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringLocation.DeserializePeeringLocation, PeeringLocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringLocations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the peerings under the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Peerings_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeeringResource> GetPeeringsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), PeeringClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeerings", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the peerings under the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Peerings_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeeringResource> GetPeerings(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), PeeringClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeerings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -538,110 +513,6 @@ namespace Azure.ResourceManager.Peering
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceProvidersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringServiceProvider.DeserializePeeringServiceProvider, PeeringServiceProvidersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceProviders", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the peerings under the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServices_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeeringServiceResource> GetPeeringServicesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringServiceResource(Client, PeeringServiceData.DeserializePeeringServiceData(e)), PeeringServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the peerings under the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServices_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeeringServiceResource> GetPeeringServices(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringServiceResource(Client, PeeringServiceData.DeserializePeeringServiceData(e)), PeeringServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Initialize Peering Service for Connection Monitor functionality
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServices_InitializeConnectionMonitor</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> InitializePeeringServiceConnectionMonitorAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = PeeringServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InitializePeeringServiceConnectionMonitor");
-            scope.Start();
-            try
-            {
-                var response = await PeeringServiceRestClient.InitializeConnectionMonitorAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Initialize Peering Service for Connection Monitor functionality
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Peering/initializeConnectionMonitor</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PeeringServices_InitializeConnectionMonitor</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response InitializePeeringServiceConnectionMonitor(CancellationToken cancellationToken = default)
-        {
-            using var scope = PeeringServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InitializePeeringServiceConnectionMonitor");
-            scope.Start();
-            try
-            {
-                var response = PeeringServiceRestClient.InitializeConnectionMonitor(Id.SubscriptionId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridData.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridData
@@ -18,122 +19,37 @@ namespace Azure.ResourceManager.HybridData
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridData. </summary>
     public static partial class HybridDataExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static HybridDataManagerResourceExtensionClient GetHybridDataManagerResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new HybridDataManagerResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Lists all the data manager resources available under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridData/dataManagers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataManagers_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HybridDataManagerResource> GetHybridDataManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        private static HybridDataManagerResourceExtensionClient GetHybridDataManagerResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(subscriptionResource).GetHybridDataManagersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the data manager resources available under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridData/dataManagers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataManagers_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HybridDataManagerResource> GetHybridDataManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetHybridDataManagers(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new HybridDataManagerResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of HybridDataManagerResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of HybridDataManagerResources and their operations over a HybridDataManagerResource. </returns>
-        public static HybridDataManagerCollection GetHybridDataManagers(this ResourceGroupResource resourceGroupResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetHybridDataManagers();
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets information about the specified data manager resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataManagers_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="dataManagerName"> The name of the DataManager Resource within the specified resource group. DataManager names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataManagerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<HybridDataManagerResource>> GetHybridDataManagerAsync(this ResourceGroupResource resourceGroupResource, string dataManagerName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetHybridDataManagers().GetAsync(dataManagerName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Gets information about the specified data manager resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataManagers_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="dataManagerName"> The name of the DataManager Resource within the specified resource group. DataManager names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataManagerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<HybridDataManagerResource> GetHybridDataManager(this ResourceGroupResource resourceGroupResource, string dataManagerName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetHybridDataManagers().Get(dataManagerName, cancellationToken);
-        }
-
         #region HybridDataManagerResource
         /// <summary>
         /// Gets an object representing a <see cref="HybridDataManagerResource" /> along with the instance operations that can be performed on it but with no data.
@@ -266,5 +182,103 @@ namespace Azure.ResourceManager.HybridData
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of HybridDataManagerResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of HybridDataManagerResources and their operations over a HybridDataManagerResource. </returns>
+        public static HybridDataManagerCollection GetHybridDataManagers(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHybridDataManagers();
+        }
+
+        /// <summary>
+        /// Gets information about the specified data manager resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataManagers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="dataManagerName"> The name of the DataManager Resource within the specified resource group. DataManager names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataManagerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HybridDataManagerResource>> GetHybridDataManagerAsync(this ResourceGroupResource resourceGroupResource, string dataManagerName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetHybridDataManagers().GetAsync(dataManagerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified data manager resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataManagers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="dataManagerName"> The name of the DataManager Resource within the specified resource group. DataManager names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataManagerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HybridDataManagerResource> GetHybridDataManager(this ResourceGroupResource resourceGroupResource, string dataManagerName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetHybridDataManagers().Get(dataManagerName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the data manager resources available under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridData/dataManagers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataManagers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HybridDataManagerResource> GetHybridDataManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetHybridDataManagerResourceExtensionClient(subscriptionResource).GetHybridDataManagersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the data manager resources available under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridData/dataManagers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataManagers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HybridDataManagerResource> GetHybridDataManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetHybridDataManagerResourceExtensionClient(subscriptionResource).GetHybridDataManagers(cancellationToken);
+        }
     }
 }

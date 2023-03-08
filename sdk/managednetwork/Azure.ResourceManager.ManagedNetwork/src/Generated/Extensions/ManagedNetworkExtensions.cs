@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetwork.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetwork
@@ -18,203 +19,53 @@ namespace Azure.ResourceManager.ManagedNetwork
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedNetwork. </summary>
     public static partial class ManagedNetworkExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new ArmResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetwork/managedNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNetworks_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedNetworkResource> GetManagedNetworksAsync(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetManagedNetworksAsync(top, skiptoken, cancellationToken);
-        }
-
-        /// <summary>
-        /// The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetwork/managedNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNetworks_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedNetworkResource> GetManagedNetworks(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetManagedNetworks(top, skiptoken, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
-
-        /// <summary> Gets a collection of ManagedNetworkResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ManagedNetworkResources and their operations over a ManagedNetworkResource. </returns>
-        public static ManagedNetworkCollection GetManagedNetworks(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetManagedNetworks();
-        }
-
-        /// <summary>
-        /// The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNetworks_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="managedNetworkName"> The name of the Managed Network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ManagedNetworkResource>> GetManagedNetworkAsync(this ResourceGroupResource resourceGroupResource, string managedNetworkName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetManagedNetworks().GetAsync(managedNetworkName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNetworks_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="managedNetworkName"> The name of the Managed Network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ManagedNetworkResource> GetManagedNetwork(this ResourceGroupResource resourceGroupResource, string managedNetworkName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetManagedNetworks().Get(managedNetworkName, cancellationToken);
-        }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
                 return new ArmResourceExtensionClient(client, scope);
-            }
-            );
+            });
         }
 
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        private static ManagedNetworkResourceExtensionClient GetManagedNetworkResourceExtensionClient(ArmResource resource)
         {
-            return armResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, armResource.Id);
-            }
-            );
+                return new ManagedNetworkResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of ScopeAssignmentResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ScopeAssignmentResources and their operations over a ScopeAssignmentResource. </returns>
-        public static ScopeAssignmentCollection GetScopeAssignments(this ArmClient client, ResourceIdentifier scope)
+        private static ManagedNetworkResourceExtensionClient GetManagedNetworkResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetScopeAssignments();
+            return client.GetResourceClient(() =>
+            {
+                return new ManagedNetworkResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Get the specified scope assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeAssignments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ScopeAssignmentResource>> GetScopeAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return await client.GetScopeAssignments(scope).GetAsync(scopeAssignmentName, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Get the specified scope assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeAssignments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ScopeAssignmentResource> GetScopeAssignment(this ArmClient client, ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return client.GetScopeAssignments(scope).Get(scopeAssignmentName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
-
         #region ManagedNetworkResource
         /// <summary>
         /// Gets an object representing a <see cref="ManagedNetworkResource" /> along with the instance operations that can be performed on it but with no data.
@@ -290,5 +141,166 @@ namespace Azure.ResourceManager.ManagedNetwork
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of ScopeAssignmentResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of ScopeAssignmentResources and their operations over a ScopeAssignmentResource. </returns>
+        public static ScopeAssignmentCollection GetScopeAssignments(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetScopeAssignments();
+        }
+
+        /// <summary>
+        /// Get the specified scope assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopeAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ScopeAssignmentResource>> GetScopeAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetScopeAssignments(scope).GetAsync(scopeAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified scope assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopeAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ScopeAssignmentResource> GetScopeAssignment(this ArmClient client, ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return client.GetScopeAssignments(scope).Get(scopeAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedNetworkResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ManagedNetworkResources and their operations over a ManagedNetworkResource. </returns>
+        public static ManagedNetworkCollection GetManagedNetworks(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedNetworks();
+        }
+
+        /// <summary>
+        /// The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="managedNetworkName"> The name of the Managed Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ManagedNetworkResource>> GetManagedNetworkAsync(this ResourceGroupResource resourceGroupResource, string managedNetworkName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetManagedNetworks().GetAsync(managedNetworkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="managedNetworkName"> The name of the Managed Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ManagedNetworkResource> GetManagedNetwork(this ResourceGroupResource resourceGroupResource, string managedNetworkName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetManagedNetworks().Get(managedNetworkName, cancellationToken);
+        }
+
+        /// <summary>
+        /// The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetwork/managedNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedNetworkResource> GetManagedNetworksAsync(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        {
+            return GetManagedNetworkResourceExtensionClient(subscriptionResource).GetManagedNetworksAsync(top, skiptoken, cancellationToken);
+        }
+
+        /// <summary>
+        /// The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetwork/managedNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedNetworkResource> GetManagedNetworks(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        {
+            return GetManagedNetworkResourceExtensionClient(subscriptionResource).GetManagedNetworks(top, skiptoken, cancellationToken);
+        }
     }
 }

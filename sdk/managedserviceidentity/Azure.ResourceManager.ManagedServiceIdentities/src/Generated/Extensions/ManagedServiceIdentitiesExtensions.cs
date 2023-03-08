@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServiceIdentities.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
@@ -18,157 +19,53 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedServiceIdentities. </summary>
     public static partial class ManagedServiceIdentitiesExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new ArmResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Lists all the userAssignedIdentities available under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserAssignedIdentities_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetUserAssignedIdentitiesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the userAssignedIdentities available under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserAssignedIdentities_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<UserAssignedIdentityResource> GetUserAssignedIdentities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetUserAssignedIdentities(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
-
-        /// <summary> Gets a collection of UserAssignedIdentityResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of UserAssignedIdentityResources and their operations over a UserAssignedIdentityResource. </returns>
-        public static UserAssignedIdentityCollection GetUserAssignedIdentities(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetUserAssignedIdentities();
-        }
-
-        /// <summary>
-        /// Gets the identity.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserAssignedIdentities_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the identity resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<UserAssignedIdentityResource>> GetUserAssignedIdentityAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetUserAssignedIdentities().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the identity.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserAssignedIdentities_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the identity resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<UserAssignedIdentityResource> GetUserAssignedIdentity(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetUserAssignedIdentities().Get(resourceName, cancellationToken);
-        }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
                 return new ArmResourceExtensionClient(client, scope);
-            }
-            );
+            });
         }
 
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return armResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, armResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
-        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmResource armResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetSystemAssignedIdentity();
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
-        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmClient client, ResourceIdentifier scope)
+        private static UserAssignedIdentityResourceExtensionClient GetUserAssignedIdentityResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(client, scope).GetSystemAssignedIdentity();
+            return resource.GetCachedClient(client =>
+            {
+                return new UserAssignedIdentityResourceExtensionClient(client, resource.Id);
+            });
         }
 
+        private static UserAssignedIdentityResourceExtensionClient GetUserAssignedIdentityResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new UserAssignedIdentityResourceExtensionClient(client, scope);
+            });
+        }
         #region SystemAssignedIdentityResource
         /// <summary>
         /// Gets an object representing a <see cref="SystemAssignedIdentityResource" /> along with the instance operations that can be performed on it but with no data.
@@ -225,5 +122,120 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             );
         }
         #endregion
+
+        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
+        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmResource armResource)
+        {
+            return GetArmResourceExtensionClient(armResource).GetSystemAssignedIdentity();
+        }
+
+        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
+        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetSystemAssignedIdentity();
+        }
+
+        /// <summary> Gets a collection of UserAssignedIdentityResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of UserAssignedIdentityResources and their operations over a UserAssignedIdentityResource. </returns>
+        public static UserAssignedIdentityCollection GetUserAssignedIdentities(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUserAssignedIdentities();
+        }
+
+        /// <summary>
+        /// Gets the identity.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the identity resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<UserAssignedIdentityResource>> GetUserAssignedIdentityAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetUserAssignedIdentities().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the identity.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> The name of the identity resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<UserAssignedIdentityResource> GetUserAssignedIdentity(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetUserAssignedIdentities().Get(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the userAssignedIdentities available under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetUserAssignedIdentityResourceExtensionClient(subscriptionResource).GetUserAssignedIdentitiesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the userAssignedIdentities available under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<UserAssignedIdentityResource> GetUserAssignedIdentities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetUserAssignedIdentityResourceExtensionClient(subscriptionResource).GetUserAssignedIdentities(cancellationToken);
+        }
     }
 }

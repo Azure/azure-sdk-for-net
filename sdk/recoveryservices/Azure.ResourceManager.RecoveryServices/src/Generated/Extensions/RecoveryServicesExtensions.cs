@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServices.Mock;
 using Azure.ResourceManager.RecoveryServices.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,122 +20,116 @@ namespace Azure.ResourceManager.RecoveryServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.RecoveryServices. </summary>
     public static partial class RecoveryServicesExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static RecoveryServicesVaultResourceExtensionClient GetRecoveryServicesVaultResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new RecoveryServicesVaultResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static RecoveryServicesVaultResourceExtensionClient GetRecoveryServicesVaultResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new RecoveryServicesVaultResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region RecoveryServicesPrivateLinkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RecoveryServicesPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecoveryServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RecoveryServicesPrivateLinkResource" /> object. </returns>
+        public static RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RecoveryServicesPrivateLinkResource.ValidateResourceId(id);
+                return new RecoveryServicesPrivateLinkResource(client, id);
             }
             );
         }
+        #endregion
 
+        #region RecoveryServicesVaultResource
         /// <summary>
-        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryServices_Capabilities</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="RecoveryServicesVaultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecoveryServicesVaultResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Location of the resource. </param>
-        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public static async Task<Response<CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RecoveryServicesVaultResource" /> object. </returns>
+        public static RecoveryServicesVaultResource GetRecoveryServicesVaultResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(input, nameof(input));
-
-            return await GetExtensionClient(subscriptionResource).GetRecoveryServiceCapabilitiesAsync(location, input, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryServices_Capabilities</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Location of the resource. </param>
-        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public static Response<CapabilitiesResult> GetRecoveryServiceCapabilities(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(input, nameof(input));
-
-            return GetExtensionClient(subscriptionResource).GetRecoveryServiceCapabilities(location, input, cancellationToken);
-        }
-
-        /// <summary>
-        /// Fetches all the resources of the specified type in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_ListBySubscriptionId</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetRecoveryServicesVaultsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Fetches all the resources of the specified type in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_ListBySubscriptionId</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RecoveryServicesVaultResource> GetRecoveryServicesVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetRecoveryServicesVaults(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
+                RecoveryServicesVaultResource.ValidateResourceId(id);
+                return new RecoveryServicesVaultResource(client, id);
             }
             );
         }
+        #endregion
+
+        #region RecoveryServicesVaultExtendedInfoResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RecoveryServicesVaultExtendedInfoResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecoveryServicesVaultExtendedInfoResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesVaultExtendedInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RecoveryServicesVaultExtendedInfoResource" /> object. </returns>
+        public static RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfoResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RecoveryServicesVaultExtendedInfoResource.ValidateResourceId(id);
+                return new RecoveryServicesVaultExtendedInfoResource(client, id);
+            }
+            );
+        }
+        #endregion
 
         /// <summary> Gets a collection of RecoveryServicesVaultResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RecoveryServicesVaultResources and their operations over a RecoveryServicesVaultResource. </returns>
         public static RecoveryServicesVaultCollection GetRecoveryServicesVaults(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetRecoveryServicesVaults();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRecoveryServicesVaults();
         }
 
         /// <summary>
@@ -209,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(resourceGroupResource).CheckRecoveryServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckRecoveryServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,64 +231,99 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).CheckRecoveryServicesNameAvailability(location, content, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckRecoveryServicesNameAvailability(location, content, cancellationToken);
         }
 
-        #region RecoveryServicesPrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="RecoveryServicesPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryServices_Capabilities</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryServicesPrivateLinkResource" /> object. </returns>
-        public static RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Location of the resource. </param>
+        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public static async Task<Response<CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                RecoveryServicesPrivateLinkResource.ValidateResourceId(id);
-                return new RecoveryServicesPrivateLinkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(input, nameof(input));
 
-        #region RecoveryServicesVaultResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RecoveryServicesVaultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryServicesVaultResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryServicesVaultResource" /> object. </returns>
-        public static RecoveryServicesVaultResource GetRecoveryServicesVaultResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RecoveryServicesVaultResource.ValidateResourceId(id);
-                return new RecoveryServicesVaultResource(client, id);
-            }
-            );
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetRecoveryServiceCapabilitiesAsync(location, input, cancellationToken).ConfigureAwait(false);
         }
-        #endregion
 
-        #region RecoveryServicesVaultExtendedInfoResource
         /// <summary>
-        /// Gets an object representing a <see cref="RecoveryServicesVaultExtendedInfoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryServicesVaultExtendedInfoResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesVaultExtendedInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryServices_Capabilities</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryServicesVaultExtendedInfoResource" /> object. </returns>
-        public static RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfoResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Location of the resource. </param>
+        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public static Response<CapabilitiesResult> GetRecoveryServiceCapabilities(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                RecoveryServicesVaultExtendedInfoResource.ValidateResourceId(id);
-                return new RecoveryServicesVaultExtendedInfoResource(client, id);
-            }
-            );
+            Argument.AssertNotNull(input, nameof(input));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRecoveryServiceCapabilities(location, input, cancellationToken);
         }
-        #endregion
+
+        /// <summary>
+        /// Fetches all the resources of the specified type in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Vaults_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetRecoveryServicesVaultResourceExtensionClient(subscriptionResource).GetRecoveryServicesVaultsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Fetches all the resources of the specified type in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Vaults_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RecoveryServicesVaultResource> GetRecoveryServicesVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetRecoveryServicesVaultResourceExtensionClient(subscriptionResource).GetRecoveryServicesVaults(cancellationToken);
+        }
     }
 }

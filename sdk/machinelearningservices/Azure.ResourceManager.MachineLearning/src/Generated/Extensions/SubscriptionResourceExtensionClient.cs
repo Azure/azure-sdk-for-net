@@ -5,20 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.MachineLearning.Models;
 
-namespace Azure.ResourceManager.MachineLearning
+namespace Azure.ResourceManager.MachineLearning.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _machineLearningWorkspaceWorkspacesClientDiagnostics;
-        private WorkspacesRestOperations _machineLearningWorkspaceWorkspacesRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
         private UsagesRestOperations _usagesRestClient;
         private ClientDiagnostics _virtualMachineSizesClientDiagnostics;
@@ -38,65 +38,17 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        private ClientDiagnostics MachineLearningWorkspaceWorkspacesClientDiagnostics => _machineLearningWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private WorkspacesRestOperations MachineLearningWorkspaceWorkspacesRestClient => _machineLearningWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MachineLearningWorkspaceResource.ResourceType));
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics QuotasClientDiagnostics => _quotasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics QuotasClientDiagnostics => _quotasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private QuotasRestOperations QuotasRestClient => _quotasRestClient ??= new QuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Lists all the available machine learning workspaces under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(string skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceResource(Client, MachineLearningWorkspaceData.DeserializeMachineLearningWorkspaceData(e)), MachineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningWorkspaces", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the available machine learning workspaces under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(string skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceResource(Client, MachineLearningWorkspaceData.DeserializeMachineLearningWorkspaceData(e)), MachineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,9 +157,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for update quota is queried. </param>
         /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotasAsync(AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate, QuotasClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.UpdateMachineLearningQuotas", "value", null, cancellationToken);
         }
@@ -228,9 +183,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for update quota is queried. </param>
         /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotas(AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate, QuotasClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.UpdateMachineLearningQuotas", "value", null, cancellationToken);
         }

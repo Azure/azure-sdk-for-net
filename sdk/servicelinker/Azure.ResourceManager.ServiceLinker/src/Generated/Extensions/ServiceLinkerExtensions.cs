@@ -11,36 +11,53 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ServiceLinker.Mock;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.ServiceLinker. </summary>
     public static partial class ServiceLinkerExtensions
     {
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ArmResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
                 return new ArmResourceExtensionClient(client, scope);
-            }
-            );
+            });
         }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        #region LinkerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="LinkerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LinkerResource.CreateResourceIdentifier" /> to create a <see cref="LinkerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LinkerResource" /> object. </returns>
+        public static LinkerResource GetLinkerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return armResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, armResource.Id);
+                LinkerResource.ValidateResourceId(id);
+                return new LinkerResource(client, id);
             }
             );
         }
+        #endregion
 
         /// <summary> Gets a collection of LinkerResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
         public static LinkerResourceCollection GetLinkerResources(this ArmResource armResource)
         {
-            return GetExtensionClient(armResource).GetLinkerResources();
+            return GetArmResourceExtensionClient(armResource).GetLinkerResources();
         }
 
         /// <summary> Gets a collection of LinkerResources in the ArmResource. </summary>
@@ -49,7 +66,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
         public static LinkerResourceCollection GetLinkerResources(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetLinkerResources();
+            return GetArmResourceExtensionClient(client, scope).GetLinkerResources();
         }
 
         /// <summary>
@@ -149,24 +166,5 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             return client.GetLinkerResources(scope).Get(linkerName, cancellationToken);
         }
-
-        #region LinkerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="LinkerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LinkerResource.CreateResourceIdentifier" /> to create a <see cref="LinkerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LinkerResource" /> object. </returns>
-        public static LinkerResource GetLinkerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                LinkerResource.ValidateResourceId(id);
-                return new LinkerResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }

@@ -5,17 +5,19 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
 
-namespace Azure.ResourceManager.Authorization
+namespace Azure.ResourceManager.Authorization.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _azurePermissionsForResourceGroupClientDiagnostics;
         private AzurePermissionsForResourceGroupRestOperations _azurePermissionsForResourceGroupRestClient;
@@ -34,9 +36,9 @@ namespace Azure.ResourceManager.Authorization
         {
         }
 
-        private ClientDiagnostics AzurePermissionsForResourceGroupClientDiagnostics => _azurePermissionsForResourceGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AzurePermissionsForResourceGroupClientDiagnostics => _azurePermissionsForResourceGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AzurePermissionsForResourceGroupRestOperations AzurePermissionsForResourceGroupRestClient => _azurePermissionsForResourceGroupRestClient ??= new AzurePermissionsForResourceGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AzurePermissionsForResourceClientDiagnostics => _azurePermissionsForResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AzurePermissionsForResourceClientDiagnostics => _azurePermissionsForResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AzurePermissionsForResourceRestOperations AzurePermissionsForResourceRestClient => _azurePermissionsForResourceRestClient ??= new AzurePermissionsForResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -107,9 +109,16 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
@@ -133,9 +142,16 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);

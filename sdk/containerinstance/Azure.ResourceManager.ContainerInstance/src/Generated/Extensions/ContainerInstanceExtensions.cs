@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerInstance.Mock;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,204 +20,78 @@ namespace Azure.ResourceManager.ContainerInstance
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerInstance. </summary>
     public static partial class ContainerInstanceExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ContainerGroupResourceExtensionClient GetContainerGroupResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new ContainerGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ContainerGroupResourceExtensionClient GetContainerGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ContainerGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region ContainerGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerGroupResource.CreateResourceIdentifier" /> to create a <see cref="ContainerGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerGroupResource" /> object. </returns>
+        public static ContainerGroupResource GetContainerGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ContainerGroupResource.ValidateResourceId(id);
+                return new ContainerGroupResource(client, id);
             }
             );
         }
-
-        /// <summary>
-        /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainerGroupResource> GetContainerGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetContainerGroupsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainerGroupResource> GetContainerGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetContainerGroups(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the usage for a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Location_ListUsage</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The identifier for the physical azure location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetUsagesWithLocationAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the usage for a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Location_ListUsage</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The identifier for the physical azure location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainerInstanceUsage> GetUsagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetUsagesWithLocation(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the list of cached images on specific OS type for a subscription in a region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Location_ListCachedImages</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The identifier for the physical azure location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetCachedImagesWithLocationAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the list of cached images on specific OS type for a subscription in a region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Location_ListCachedImages</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The identifier for the physical azure location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CachedImages> GetCachedImagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetCachedImagesWithLocation(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the list of CPU/memory/GPU capabilities of a region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Location_ListCapabilities</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The identifier for the physical azure location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetCapabilitiesWithLocationAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the list of CPU/memory/GPU capabilities of a region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Location_ListCapabilities</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The identifier for the physical azure location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetCapabilitiesWithLocation(location, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
+        #endregion
 
         /// <summary> Gets a collection of ContainerGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerGroupResources and their operations over a ContainerGroupResource. </returns>
         public static ContainerGroupCollection GetContainerGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetContainerGroups();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerGroups();
         }
 
         /// <summary>
@@ -292,7 +167,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
             Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            return await GetExtensionClient(resourceGroupResource).DeleteSubnetServiceAssociationLinkAsync(waitUntil, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteSubnetServiceAssociationLinkAsync(waitUntil, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -320,26 +195,181 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
             Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            return GetExtensionClient(resourceGroupResource).DeleteSubnetServiceAssociationLink(waitUntil, virtualNetworkName, subnetName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteSubnetServiceAssociationLink(waitUntil, virtualNetworkName, subnetName, cancellationToken);
         }
 
-        #region ContainerGroupResource
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerGroupResource.CreateResourceIdentifier" /> to create a <see cref="ContainerGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerGroupResource" /> object. </returns>
-        public static ContainerGroupResource GetContainerGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerGroupResource> GetContainerGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerGroupResource.ValidateResourceId(id);
-                return new ContainerGroupResource(client, id);
-            }
-            );
+            return GetContainerGroupResourceExtensionClient(subscriptionResource).GetContainerGroupsAsync(cancellationToken);
         }
-        #endregion
+
+        /// <summary>
+        /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerGroups_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerGroupResource> GetContainerGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetContainerGroupResourceExtensionClient(subscriptionResource).GetContainerGroups(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the usage for a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListUsage</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesWithLocationAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the usage for a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListUsage</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerInstanceUsage> GetUsagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesWithLocation(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the list of cached images on specific OS type for a subscription in a region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListCachedImages</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCachedImagesWithLocationAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the list of cached images on specific OS type for a subscription in a region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListCachedImages</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CachedImages> GetCachedImagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCachedImagesWithLocation(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the list of CPU/memory/GPU capabilities of a region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListCapabilities</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilitiesWithLocationAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the list of CPU/memory/GPU capabilities of a region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListCapabilities</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilitiesWithLocation(location, cancellationToken);
+        }
     }
 }

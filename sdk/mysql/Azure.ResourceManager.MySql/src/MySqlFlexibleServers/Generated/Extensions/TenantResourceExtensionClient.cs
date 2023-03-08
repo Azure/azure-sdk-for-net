@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MySql.FlexibleServers;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers
+namespace Azure.ResourceManager.MySql.FlexibleServers.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _getPrivateDnsZoneSuffixClientDiagnostics;
         private GetPrivateDnsZoneSuffixRestOperations _getPrivateDnsZoneSuffixRestClient;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
         }
 
-        private ClientDiagnostics GetPrivateDnsZoneSuffixClientDiagnostics => _getPrivateDnsZoneSuffixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics GetPrivateDnsZoneSuffixClientDiagnostics => _getPrivateDnsZoneSuffixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private GetPrivateDnsZoneSuffixRestOperations GetPrivateDnsZoneSuffixRestClient => _getPrivateDnsZoneSuffixRestClient ??= new GetPrivateDnsZoneSuffixRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

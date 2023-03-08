@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceGraph;
 using Azure.ResourceManager.ResourceGraph.Models;
 
-namespace Azure.ResourceManager.ResourceGraph
+namespace Azure.ResourceManager.ResourceGraph.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _defaultClientDiagnostics;
         private ResourceGraphRestOperations _defaultRestClient;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
         }
 
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ResourceGraphRestOperations DefaultRestClient => _defaultRestClient ??= new ResourceGraphRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -58,8 +59,11 @@ namespace Azure.ResourceManager.ResourceGraph
         /// </summary>
         /// <param name="content"> Request specifying query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ResourceQueryResult>> GetResourcesAsync(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResources");
             scope.Start();
             try
@@ -89,8 +93,11 @@ namespace Azure.ResourceManager.ResourceGraph
         /// </summary>
         /// <param name="content"> Request specifying query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ResourceQueryResult> GetResources(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResources");
             scope.Start();
             try
@@ -120,8 +127,11 @@ namespace Azure.ResourceManager.ResourceGraph
         /// </summary>
         /// <param name="content"> Request specifying the query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BinaryData>> GetResourceHistoryAsync(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResourceHistory");
             scope.Start();
             try
@@ -151,8 +161,11 @@ namespace Azure.ResourceManager.ResourceGraph
         /// </summary>
         /// <param name="content"> Request specifying the query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BinaryData> GetResourceHistory(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResourceHistory");
             scope.Start();
             try

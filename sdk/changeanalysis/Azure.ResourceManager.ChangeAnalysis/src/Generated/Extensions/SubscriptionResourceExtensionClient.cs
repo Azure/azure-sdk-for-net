@@ -11,12 +11,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ChangeAnalysis;
 using Azure.ResourceManager.ChangeAnalysis.Models;
 
-namespace Azure.ResourceManager.ChangeAnalysis
+namespace Azure.ResourceManager.ChangeAnalysis.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _changesClientDiagnostics;
         private ChangesRestOperations _changesRestClient;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         {
         }
 
-        private ClientDiagnostics ChangesClientDiagnostics => _changesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ChangeAnalysis", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ChangesClientDiagnostics => _changesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ChangeAnalysis.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ChangesRestOperations ChangesRestClient => _changesRestClient ??= new ChangesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

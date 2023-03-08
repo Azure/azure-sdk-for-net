@@ -12,11 +12,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerInstance;
 
-namespace Azure.ResourceManager.ContainerInstance
+namespace Azure.ResourceManager.ContainerInstance.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _subnetServiceAssociationLinkClientDiagnostics;
         private SubnetServiceAssociationLinkRestOperations _subnetServiceAssociationLinkRestClient;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
         }
 
-        private ClientDiagnostics SubnetServiceAssociationLinkClientDiagnostics => _subnetServiceAssociationLinkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SubnetServiceAssociationLinkClientDiagnostics => _subnetServiceAssociationLinkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SubnetServiceAssociationLinkRestOperations SubnetServiceAssociationLinkRestClient => _subnetServiceAssociationLinkRestClient ??= new SubnetServiceAssociationLinkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -66,8 +67,13 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
         public virtual async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
+
             using var scope = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteSubnetServiceAssociationLink");
             scope.Start();
             try
@@ -102,8 +108,13 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
         public virtual ArmOperation DeleteSubnetServiceAssociationLink(WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
+
             using var scope = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteSubnetServiceAssociationLink");
             scope.Start();
             try

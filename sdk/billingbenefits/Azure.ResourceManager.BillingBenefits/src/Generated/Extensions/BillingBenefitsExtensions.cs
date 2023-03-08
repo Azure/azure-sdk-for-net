@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.BillingBenefits.Mock;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,283 +20,37 @@ namespace Azure.ResourceManager.BillingBenefits
     /// <summary> A class to add extension methods to Azure.ResourceManager.BillingBenefits. </summary>
     public static partial class BillingBenefitsExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static BillingBenefitsSavingsPlanResourceExtensionClient GetBillingBenefitsSavingsPlanResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new BillingBenefitsSavingsPlanResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderAliasResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderAliasResources and their operations over a BillingBenefitsSavingsPlanOrderAliasResource. </returns>
-        public static BillingBenefitsSavingsPlanOrderAliasCollection GetBillingBenefitsSavingsPlanOrderAliases(this TenantResource tenantResource)
+        private static BillingBenefitsSavingsPlanResourceExtensionClient GetBillingBenefitsSavingsPlanResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlanOrderAliases();
+            return client.GetResourceClient(() =>
+            {
+                return new BillingBenefitsSavingsPlanResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Get a savings plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderAlias_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<BillingBenefitsSavingsPlanOrderAliasResource>> GetBillingBenefitsSavingsPlanOrderAliasAsync(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
-            return await tenantResource.GetBillingBenefitsSavingsPlanOrderAliases().GetAsync(savingsPlanOrderAliasName, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Get a savings plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderAlias_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<BillingBenefitsSavingsPlanOrderAliasResource> GetBillingBenefitsSavingsPlanOrderAlias(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return tenantResource.GetBillingBenefitsSavingsPlanOrderAliases().Get(savingsPlanOrderAliasName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderResources and their operations over a BillingBenefitsSavingsPlanOrderResource. </returns>
-        public static BillingBenefitsSavingsPlanOrderCollection GetBillingBenefitsSavingsPlanOrders(this TenantResource tenantResource)
-        {
-            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlanOrders();
-        }
-
-        /// <summary>
-        /// Get a savings plan order.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrder_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
-        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<BillingBenefitsSavingsPlanOrderResource>> GetBillingBenefitsSavingsPlanOrderAsync(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetBillingBenefitsSavingsPlanOrders().GetAsync(savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a savings plan order.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrder_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
-        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<BillingBenefitsSavingsPlanOrderResource> GetBillingBenefitsSavingsPlanOrder(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetBillingBenefitsSavingsPlanOrders().Get(savingsPlanOrderId, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BillingBenefitsReservationOrderAliasResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of BillingBenefitsReservationOrderAliasResources and their operations over a BillingBenefitsReservationOrderAliasResource. </returns>
-        public static BillingBenefitsReservationOrderAliasCollection GetBillingBenefitsReservationOrderAliases(this TenantResource tenantResource)
-        {
-            return GetExtensionClient(tenantResource).GetBillingBenefitsReservationOrderAliases();
-        }
-
-        /// <summary>
-        /// Get a reservation order alias.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<BillingBenefitsReservationOrderAliasResource>> GetBillingBenefitsReservationOrderAliasAsync(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetBillingBenefitsReservationOrderAliases().GetAsync(reservationOrderAliasName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a reservation order alias.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<BillingBenefitsReservationOrderAliasResource> GetBillingBenefitsReservationOrderAlias(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetBillingBenefitsReservationOrderAliases().Get(reservationOrderAliasName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List savings plans.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlan_ListAll</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this TenantResource tenantResource, TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
-
-            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlansAsync(options, cancellationToken);
-        }
-
-        /// <summary>
-        /// List savings plans.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlan_ListAll</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this TenantResource tenantResource, TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
-
-            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlans(options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Validate savings plan purchase.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/validate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidatePurchase</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SavingsPlanValidateResult> ValidatePurchaseAsync(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(tenantResource).ValidatePurchaseAsync(content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Validate savings plan purchase.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/validate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidatePurchase</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SavingsPlanValidateResult> ValidatePurchase(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(tenantResource).ValidatePurchase(content, cancellationToken);
-        }
-
         #region BillingBenefitsSavingsPlanOrderAliasResource
         /// <summary>
         /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> along with the instance operations that can be performed on it but with no data.
@@ -371,5 +126,273 @@ namespace Azure.ResourceManager.BillingBenefits
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderAliasResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderAliasResources and their operations over a BillingBenefitsSavingsPlanOrderAliasResource. </returns>
+        public static BillingBenefitsSavingsPlanOrderAliasCollection GetBillingBenefitsSavingsPlanOrderAliases(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlanOrderAliases();
+        }
+
+        /// <summary>
+        /// Get a savings plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlanOrderAlias_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<BillingBenefitsSavingsPlanOrderAliasResource>> GetBillingBenefitsSavingsPlanOrderAliasAsync(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetBillingBenefitsSavingsPlanOrderAliases().GetAsync(savingsPlanOrderAliasName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a savings plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlanOrderAlias_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<BillingBenefitsSavingsPlanOrderAliasResource> GetBillingBenefitsSavingsPlanOrderAlias(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetBillingBenefitsSavingsPlanOrderAliases().Get(savingsPlanOrderAliasName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderResources and their operations over a BillingBenefitsSavingsPlanOrderResource. </returns>
+        public static BillingBenefitsSavingsPlanOrderCollection GetBillingBenefitsSavingsPlanOrders(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlanOrders();
+        }
+
+        /// <summary>
+        /// Get a savings plan order.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlanOrder_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<BillingBenefitsSavingsPlanOrderResource>> GetBillingBenefitsSavingsPlanOrderAsync(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetBillingBenefitsSavingsPlanOrders().GetAsync(savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a savings plan order.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlanOrder_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<BillingBenefitsSavingsPlanOrderResource> GetBillingBenefitsSavingsPlanOrder(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetBillingBenefitsSavingsPlanOrders().Get(savingsPlanOrderId, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BillingBenefitsReservationOrderAliasResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of BillingBenefitsReservationOrderAliasResources and their operations over a BillingBenefitsReservationOrderAliasResource. </returns>
+        public static BillingBenefitsReservationOrderAliasCollection GetBillingBenefitsReservationOrderAliases(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsReservationOrderAliases();
+        }
+
+        /// <summary>
+        /// Get a reservation order alias.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrderAlias_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<BillingBenefitsReservationOrderAliasResource>> GetBillingBenefitsReservationOrderAliasAsync(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetBillingBenefitsReservationOrderAliases().GetAsync(reservationOrderAliasName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a reservation order alias.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrderAlias_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<BillingBenefitsReservationOrderAliasResource> GetBillingBenefitsReservationOrderAlias(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetBillingBenefitsReservationOrderAliases().Get(reservationOrderAliasName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List savings plans.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_ListAll</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this TenantResource tenantResource, TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
+
+            return GetBillingBenefitsSavingsPlanResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlansAsync(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// List savings plans.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_ListAll</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this TenantResource tenantResource, TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
+
+            return GetBillingBenefitsSavingsPlanResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlans(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Validate savings plan purchase.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ValidatePurchase</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SavingsPlanValidateResult> ValidatePurchaseAsync(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetTenantResourceExtensionClient(tenantResource).ValidatePurchaseAsync(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Validate savings plan purchase.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ValidatePurchase</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SavingsPlanValidateResult> ValidatePurchase(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetTenantResourceExtensionClient(tenantResource).ValidatePurchase(content, cancellationToken);
+        }
     }
 }

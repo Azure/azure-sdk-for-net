@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SecurityCenter;
 using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _secureScoreControlDefinitionsClientDiagnostics;
         private SecureScoreControlDefinitionsRestOperations _secureScoreControlDefinitionsRestClient;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        private ClientDiagnostics SecureScoreControlDefinitionsClientDiagnostics => _secureScoreControlDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SecureScoreControlDefinitionsClientDiagnostics => _secureScoreControlDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SecureScoreControlDefinitionsRestOperations SecureScoreControlDefinitionsRestClient => _secureScoreControlDefinitionsRestClient ??= new SecureScoreControlDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

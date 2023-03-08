@@ -12,17 +12,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Confluent.Models;
 
-namespace Azure.ResourceManager.Confluent
+namespace Azure.ResourceManager.Confluent.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _marketplaceAgreementsClientDiagnostics;
         private MarketplaceAgreementsRestOperations _marketplaceAgreementsRestClient;
-        private ClientDiagnostics _confluentOrganizationOrganizationClientDiagnostics;
-        private OrganizationRestOperations _confluentOrganizationOrganizationRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -36,10 +35,8 @@ namespace Azure.ResourceManager.Confluent
         {
         }
 
-        private ClientDiagnostics MarketplaceAgreementsClientDiagnostics => _marketplaceAgreementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics MarketplaceAgreementsClientDiagnostics => _marketplaceAgreementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private MarketplaceAgreementsRestOperations MarketplaceAgreementsRestClient => _marketplaceAgreementsRestClient ??= new MarketplaceAgreementsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ConfluentOrganizationOrganizationClientDiagnostics => _confluentOrganizationOrganizationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentOrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationRestOperations ConfluentOrganizationOrganizationRestClient => _confluentOrganizationOrganizationRestClient ??= new OrganizationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfluentOrganizationResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -151,50 +148,6 @@ namespace Azure.ResourceManager.Confluent
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List all organizations under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organization_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfluentOrganizationResource> GetConfluentOrganizationsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), ConfluentOrganizationOrganizationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfluentOrganizations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all organizations under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organization_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfluentOrganizationResource> GetConfluentOrganizations(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), ConfluentOrganizationOrganizationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfluentOrganizations", "value", "nextLink", cancellationToken);
         }
     }
 }

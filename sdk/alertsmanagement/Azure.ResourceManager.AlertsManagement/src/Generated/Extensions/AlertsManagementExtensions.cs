@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AlertsManagement.Mock;
 using Azure.ResourceManager.AlertsManagement.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,64 +20,180 @@ namespace Azure.ResourceManager.AlertsManagement
     /// <summary> A class to add extension methods to Azure.ResourceManager.AlertsManagement. </summary>
     public static partial class AlertsManagementExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static AlertProcessingRuleResourceExtensionClient GetAlertProcessingRuleResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
+                return new AlertProcessingRuleResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static AlertProcessingRuleResourceExtensionClient GetAlertProcessingRuleResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new AlertProcessingRuleResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ServiceAlertResourceExtensionClient GetServiceAlertResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ServiceAlertResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ServiceAlertResourceExtensionClient GetServiceAlertResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ServiceAlertResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region AlertProcessingRuleResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AlertProcessingRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AlertProcessingRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertProcessingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AlertProcessingRuleResource" /> object. </returns>
+        public static AlertProcessingRuleResource GetAlertProcessingRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AlertProcessingRuleResource.ValidateResourceId(id);
+                return new AlertProcessingRuleResource(client, id);
             }
             );
         }
+        #endregion
 
+        #region ServiceAlertResource
         /// <summary>
-        /// List alerts meta data information based on value of identifier parameter.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AlertsManagement/alertsMetaData</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_MetaData</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="ServiceAlertResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceAlertResource.CreateResourceIdentifier" /> to create a <see cref="ServiceAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<ServiceAlertMetadata>> GetServiceAlertMetadataAsync(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceAlertResource" /> object. </returns>
+        public static ServiceAlertResource GetServiceAlertResource(this ArmClient client, ResourceIdentifier id)
         {
-            return await GetExtensionClient(tenantResource).GetServiceAlertMetadataAsync(identifier, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// List alerts meta data information based on value of identifier parameter.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AlertsManagement/alertsMetaData</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_MetaData</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<ServiceAlertMetadata> GetServiceAlertMetadata(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetServiceAlertMetadata(identifier, cancellationToken);
-        }
-
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                ServiceAlertResource.ValidateResourceId(id);
+                return new ServiceAlertResource(client, id);
             }
             );
+        }
+        #endregion
+
+        #region SmartGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SmartGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SmartGroupResource.CreateResourceIdentifier" /> to create a <see cref="SmartGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SmartGroupResource" /> object. </returns>
+        public static SmartGroupResource GetSmartGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SmartGroupResource.ValidateResourceId(id);
+                return new SmartGroupResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        /// <summary> Gets a collection of AlertProcessingRuleResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AlertProcessingRuleResources and their operations over a AlertProcessingRuleResource. </returns>
+        public static AlertProcessingRuleCollection GetAlertProcessingRules(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAlertProcessingRules();
+        }
+
+        /// <summary>
+        /// Get an alert processing rule by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{alertProcessingRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertProcessingRules_GetByName</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="alertProcessingRuleName"> The name of the alert processing rule that needs to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertProcessingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AlertProcessingRuleResource>> GetAlertProcessingRuleAsync(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetAlertProcessingRules().GetAsync(alertProcessingRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get an alert processing rule by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{alertProcessingRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertProcessingRules_GetByName</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="alertProcessingRuleName"> The name of the alert processing rule that needs to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertProcessingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AlertProcessingRuleResource> GetAlertProcessingRule(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetAlertProcessingRules().Get(alertProcessingRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceAlertResources in the SubscriptionResource. </summary>
@@ -84,7 +201,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An object representing collection of ServiceAlertResources and their operations over a ServiceAlertResource. </returns>
         public static ServiceAlertCollection GetServiceAlerts(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetServiceAlerts();
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceAlerts();
         }
 
         /// <summary>
@@ -136,7 +253,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An object representing collection of SmartGroupResources and their operations over a SmartGroupResource. </returns>
         public static SmartGroupCollection GetSmartGroups(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetSmartGroups();
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSmartGroups();
         }
 
         /// <summary>
@@ -201,7 +318,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An async collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AlertProcessingRuleResource> GetAlertProcessingRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAlertProcessingRulesAsync(cancellationToken);
+            return GetAlertProcessingRuleResourceExtensionClient(subscriptionResource).GetAlertProcessingRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -222,7 +339,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> A collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AlertProcessingRuleResource> GetAlertProcessingRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAlertProcessingRules(cancellationToken);
+            return GetAlertProcessingRuleResourceExtensionClient(subscriptionResource).GetAlertProcessingRules(cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +363,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return await GetExtensionClient(subscriptionResource).GetServiceAlertSummaryAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetServiceAlertResourceExtensionClient(subscriptionResource).GetServiceAlertSummaryAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -270,129 +387,49 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetExtensionClient(subscriptionResource).GetServiceAlertSummary(options, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
-
-        /// <summary> Gets a collection of AlertProcessingRuleResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AlertProcessingRuleResources and their operations over a AlertProcessingRuleResource. </returns>
-        public static AlertProcessingRuleCollection GetAlertProcessingRules(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetAlertProcessingRules();
+            return GetServiceAlertResourceExtensionClient(subscriptionResource).GetServiceAlertSummary(options, cancellationToken);
         }
 
         /// <summary>
-        /// Get an alert processing rule by name.
+        /// List alerts meta data information based on value of identifier parameter.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{alertProcessingRuleName}</description>
+        /// <description>/providers/Microsoft.AlertsManagement/alertsMetaData</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AlertProcessingRules_GetByName</description>
+        /// <description>Alerts_MetaData</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="alertProcessingRuleName"> The name of the alert processing rule that needs to be fetched. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertProcessingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<AlertProcessingRuleResource>> GetAlertProcessingRuleAsync(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceAlertMetadata>> GetServiceAlertMetadataAsync(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAlertProcessingRules().GetAsync(alertProcessingRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceAlertResourceExtensionClient(tenantResource).GetServiceAlertMetadataAsync(identifier, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get an alert processing rule by name.
+        /// List alerts meta data information based on value of identifier parameter.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{alertProcessingRuleName}</description>
+        /// <description>/providers/Microsoft.AlertsManagement/alertsMetaData</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AlertProcessingRules_GetByName</description>
+        /// <description>Alerts_MetaData</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="alertProcessingRuleName"> The name of the alert processing rule that needs to be fetched. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertProcessingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<AlertProcessingRuleResource> GetAlertProcessingRule(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default)
+        public static Response<ServiceAlertMetadata> GetServiceAlertMetadata(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAlertProcessingRules().Get(alertProcessingRuleName, cancellationToken);
+            return GetServiceAlertResourceExtensionClient(tenantResource).GetServiceAlertMetadata(identifier, cancellationToken);
         }
-
-        #region AlertProcessingRuleResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AlertProcessingRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AlertProcessingRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertProcessingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertProcessingRuleResource" /> object. </returns>
-        public static AlertProcessingRuleResource GetAlertProcessingRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AlertProcessingRuleResource.ValidateResourceId(id);
-                return new AlertProcessingRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ServiceAlertResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceAlertResource.CreateResourceIdentifier" /> to create a <see cref="ServiceAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceAlertResource" /> object. </returns>
-        public static ServiceAlertResource GetServiceAlertResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ServiceAlertResource.ValidateResourceId(id);
-                return new ServiceAlertResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SmartGroupResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SmartGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SmartGroupResource.CreateResourceIdentifier" /> to create a <see cref="SmartGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SmartGroupResource" /> object. </returns>
-        public static SmartGroupResource GetSmartGroupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SmartGroupResource.ValidateResourceId(id);
-                return new SmartGroupResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }

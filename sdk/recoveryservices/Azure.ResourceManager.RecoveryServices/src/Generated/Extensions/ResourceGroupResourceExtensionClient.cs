@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServices;
 using Azure.ResourceManager.RecoveryServices.Models;
 
-namespace Azure.ResourceManager.RecoveryServices
+namespace Azure.ResourceManager.RecoveryServices.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _recoveryServicesClientDiagnostics;
         private RecoveryServicesRestOperations _recoveryServicesRestClient;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
         }
 
-        private ClientDiagnostics RecoveryServicesClientDiagnostics => _recoveryServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics RecoveryServicesClientDiagnostics => _recoveryServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private RecoveryServicesRestOperations RecoveryServicesRestClient => _recoveryServicesRestClient ??= new RecoveryServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -68,8 +69,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="location"> Location of the resource. </param>
         /// <param name="content"> Contains information about Resource type and Resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<RecoveryServicesNameAvailabilityResult>> CheckRecoveryServicesNameAvailabilityAsync(AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = RecoveryServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckRecoveryServicesNameAvailability");
             scope.Start();
             try
@@ -102,8 +106,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="location"> Location of the resource. </param>
         /// <param name="content"> Contains information about Resource type and Resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<RecoveryServicesNameAvailabilityResult> CheckRecoveryServicesNameAvailability(AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = RecoveryServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckRecoveryServicesNameAvailability");
             scope.Start();
             try

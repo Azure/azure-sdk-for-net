@@ -5,23 +5,15 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.TrafficManager.Models;
+using Azure.ResourceManager.TrafficManager;
 
-namespace Azure.ResourceManager.TrafficManager
+namespace Azure.ResourceManager.TrafficManager.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _trafficManagerProfileProfilesClientDiagnostics;
-        private ProfilesRestOperations _trafficManagerProfileProfilesRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
         {
@@ -34,9 +26,6 @@ namespace Azure.ResourceManager.TrafficManager
         {
         }
 
-        private ClientDiagnostics TrafficManagerProfileProfilesClientDiagnostics => _trafficManagerProfileProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager", TrafficManagerProfileResource.ResourceType.Namespace, Diagnostics);
-        private ProfilesRestOperations TrafficManagerProfileProfilesRestClient => _trafficManagerProfileProfilesRestClient ??= new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TrafficManagerProfileResource.ResourceType));
-
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
@@ -48,68 +37,6 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy()
         {
             return new TrafficManagerGeographicHierarchyResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerGeographicHierarchies", "default"));
-        }
-
-        /// <summary>
-        /// Checks the availability of a Traffic Manager Relative DNS name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Network/checkTrafficManagerNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckTrafficManagerRelativeDnsNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await TrafficManagerProfileProfilesRestClient.CheckTrafficManagerRelativeDnsNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks the availability of a Traffic Manager Relative DNS name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Network/checkTrafficManagerNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckTrafficManagerRelativeDnsNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = TrafficManagerProfileProfilesRestClient.CheckTrafficManagerRelativeDnsNameAvailability(content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

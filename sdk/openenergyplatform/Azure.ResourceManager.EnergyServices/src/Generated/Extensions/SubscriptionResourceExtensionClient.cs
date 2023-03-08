@@ -12,17 +12,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EnergyServices;
 using Azure.ResourceManager.EnergyServices.Models;
 
-namespace Azure.ResourceManager.EnergyServices
+namespace Azure.ResourceManager.EnergyServices.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _locationsClientDiagnostics;
         private LocationsRestOperations _locationsRestClient;
-        private ClientDiagnostics _energyServiceClientDiagnostics;
-        private EnergyServicesRestOperations _energyServiceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -36,10 +35,8 @@ namespace Azure.ResourceManager.EnergyServices
         {
         }
 
-        private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EnergyServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EnergyServices.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationsRestOperations LocationsRestClient => _locationsRestClient ??= new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics EnergyServiceClientDiagnostics => _energyServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EnergyServices", EnergyServiceResource.ResourceType.Namespace, Diagnostics);
-        private EnergyServicesRestOperations EnergyServiceRestClient => _energyServiceRestClient ??= new EnergyServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EnergyServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -62,8 +59,11 @@ namespace Azure.ResourceManager.EnergyServices
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<EnergyServiceNameAvailabilityResult>> CheckNameAvailabilityLocationAsync(EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
             scope.Start();
             try
@@ -93,8 +93,11 @@ namespace Azure.ResourceManager.EnergyServices
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<EnergyServiceNameAvailabilityResult> CheckNameAvailabilityLocation(EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
             scope.Start();
             try
@@ -107,50 +110,6 @@ namespace Azure.ResourceManager.EnergyServices
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists a collection of oep resources under the given Azure Subscription ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OpenEnergyPlatform/energyServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnergyServices_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EnergyServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnergyServiceResource> GetEnergyServicesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnergyServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnergyServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnergyServiceResource(Client, EnergyServiceData.DeserializeEnergyServiceData(e)), EnergyServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEnergyServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists a collection of oep resources under the given Azure Subscription ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OpenEnergyPlatform/energyServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnergyServices_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnergyServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnergyServiceResource> GetEnergyServices(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnergyServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnergyServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnergyServiceResource(Client, EnergyServiceData.DeserializeEnergyServiceData(e)), EnergyServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEnergyServices", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -12,20 +12,65 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.WorkloadMonitor.Mock;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.WorkloadMonitor. </summary>
     public static partial class WorkloadMonitorExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+        #region HealthMonitorResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HealthMonitorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthMonitorResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HealthMonitorResource" /> object. </returns>
+        public static HealthMonitorResource GetHealthMonitorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HealthMonitorResource.ValidateResourceId(id);
+                return new HealthMonitorResource(client, id);
             }
             );
         }
+        #endregion
+
+        #region HealthMonitorStateChangeResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HealthMonitorStateChangeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthMonitorStateChangeResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorStateChangeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HealthMonitorStateChangeResource" /> object. </returns>
+        public static HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HealthMonitorStateChangeResource.ValidateResourceId(id);
+                return new HealthMonitorStateChangeResource(client, id);
+            }
+            );
+        }
+        #endregion
 
         /// <summary> Gets a collection of HealthMonitorResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -41,7 +86,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             Argument.AssertNotNullOrEmpty(resourceCollectionName, nameof(resourceCollectionName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetHealthMonitors(providerName, resourceCollectionName, resourceName);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthMonitors(providerName, resourceCollectionName, resourceName);
         }
 
         /// <summary>
@@ -99,43 +144,5 @@ namespace Azure.ResourceManager.WorkloadMonitor
         {
             return resourceGroupResource.GetHealthMonitors(providerName, resourceCollectionName, resourceName).Get(monitorId, expand, cancellationToken);
         }
-
-        #region HealthMonitorResource
-        /// <summary>
-        /// Gets an object representing a <see cref="HealthMonitorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthMonitorResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthMonitorResource" /> object. </returns>
-        public static HealthMonitorResource GetHealthMonitorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                HealthMonitorResource.ValidateResourceId(id);
-                return new HealthMonitorResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region HealthMonitorStateChangeResource
-        /// <summary>
-        /// Gets an object representing a <see cref="HealthMonitorStateChangeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthMonitorStateChangeResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorStateChangeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthMonitorStateChangeResource" /> object. </returns>
-        public static HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                HealthMonitorStateChangeResource.ValidateResourceId(id);
-                return new HealthMonitorStateChangeResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }

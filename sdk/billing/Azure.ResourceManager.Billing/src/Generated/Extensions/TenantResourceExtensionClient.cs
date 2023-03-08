@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Billing;
 
-namespace Azure.ResourceManager.Billing
+namespace Azure.ResourceManager.Billing.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
@@ -33,17 +35,25 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> Gets a collection of BillingSubscriptionResources in the TenantResource. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
         /// <returns> An object representing collection of BillingSubscriptionResources and their operations over a BillingSubscriptionResource. </returns>
         public virtual BillingSubscriptionCollection GetBillingSubscriptions(string billingAccountName)
         {
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+
             return new BillingSubscriptionCollection(Client, Id, billingAccountName);
         }
 
         /// <summary> Gets a collection of BillingSubscriptionAliasResources in the TenantResource. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
         /// <returns> An object representing collection of BillingSubscriptionAliasResources and their operations over a BillingSubscriptionAliasResource. </returns>
         public virtual BillingSubscriptionAliasCollection GetBillingSubscriptionAliases(string billingAccountName)
         {
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+
             return new BillingSubscriptionAliasCollection(Client, Id, billingAccountName);
         }
 
@@ -56,18 +66,27 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> Gets a collection of BillingAccountPaymentMethodResources in the TenantResource. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
         /// <returns> An object representing collection of BillingAccountPaymentMethodResources and their operations over a BillingAccountPaymentMethodResource. </returns>
         public virtual BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods(string billingAccountName)
         {
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+
             return new BillingAccountPaymentMethodCollection(Client, Id, billingAccountName);
         }
 
         /// <summary> Gets a collection of BillingPaymentMethodLinkResources in the TenantResource. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         /// <returns> An object representing collection of BillingPaymentMethodLinkResources and their operations over a BillingPaymentMethodLinkResource. </returns>
         public virtual BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks(string billingAccountName, string billingProfileName)
         {
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+
             return new BillingPaymentMethodLinkCollection(Client, Id, billingAccountName, billingProfileName);
         }
     }

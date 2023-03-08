@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityCenter.Mock;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -19,3146 +20,197 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecurityCenter. </summary>
     public static partial class SecurityCenterExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static AdaptiveApplicationControlGroupResourceExtensionClient GetAdaptiveApplicationControlGroupResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new AdaptiveApplicationControlGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of TenantAssessmentMetadataResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of TenantAssessmentMetadataResources and their operations over a TenantAssessmentMetadataResource. </returns>
-        public static TenantAssessmentMetadataCollection GetAllTenantAssessmentMetadata(this TenantResource tenantResource)
+        private static AdaptiveApplicationControlGroupResourceExtensionClient GetAdaptiveApplicationControlGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(tenantResource).GetAllTenantAssessmentMetadata();
-        }
-
-        /// <summary>
-        /// Get metadata information on an assessment type
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TenantAssessmentMetadataResource>> GetTenantAssessmentMetadataAsync(this TenantResource tenantResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetAllTenantAssessmentMetadata().GetAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get metadata information on an assessment type
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<TenantAssessmentMetadataResource> GetTenantAssessmentMetadata(this TenantResource tenantResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetAllTenantAssessmentMetadata().Get(assessmentMetadataName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List the available security controls, their assessments, and the max score
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/secureScoreControlDefinitions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScoreControlDefinitions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetSecureScoreControlDefinitionsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List the available security controls, their assessments, and the max score
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/secureScoreControlDefinitions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScoreControlDefinitions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetSecureScoreControlDefinitions(cancellationToken);
-        }
-
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new AdaptiveApplicationControlGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of SecurityCenterPricingResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SecurityCenterPricingResources and their operations over a SecurityCenterPricingResource. </returns>
-        public static SecurityCenterPricingCollection GetSecurityCenterPricings(this SubscriptionResource subscriptionResource)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(subscriptionResource).GetSecurityCenterPricings();
-        }
-
-        /// <summary>
-        /// Gets a provided Microsoft Defender for Cloud pricing configuration in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="pricingName"> name of the pricing configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(this SubscriptionResource subscriptionResource, string pricingName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSecurityCenterPricings().GetAsync(pricingName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a provided Microsoft Defender for Cloud pricing configuration in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="pricingName"> name of the pricing configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecurityCenterPricingResource> GetSecurityCenterPricing(this SubscriptionResource subscriptionResource, string pricingName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSecurityCenterPricings().Get(pricingName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityCenterLocationResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SecurityCenterLocationResources and their operations over a SecurityCenterLocationResource. </returns>
-        public static SecurityCenterLocationCollection GetSecurityCenterLocations(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecurityCenterLocations();
-        }
-
-        /// <summary>
-        /// Details of a specific location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityCenterLocationResource>> GetSecurityCenterLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation ascLocation, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSecurityCenterLocations().GetAsync(ascLocation, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Details of a specific location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static Response<SecurityCenterLocationResource> GetSecurityCenterLocation(this SubscriptionResource subscriptionResource, AzureLocation ascLocation, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSecurityCenterLocations().Get(ascLocation, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutoProvisioningSettingResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AutoProvisioningSettingResources and their operations over a AutoProvisioningSettingResource. </returns>
-        public static AutoProvisioningSettingCollection GetAutoProvisioningSettings(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetAutoProvisioningSettings();
-        }
-
-        /// <summary>
-        /// Details of a specific setting
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoProvisioningSettings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="settingName"> Auto provisioning setting key. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<AutoProvisioningSettingResource>> GetAutoProvisioningSettingAsync(this SubscriptionResource subscriptionResource, string settingName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetAutoProvisioningSettings().GetAsync(settingName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Details of a specific setting
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoProvisioningSettings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="settingName"> Auto provisioning setting key. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<AutoProvisioningSettingResource> GetAutoProvisioningSetting(this SubscriptionResource subscriptionResource, string settingName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetAutoProvisioningSettings().Get(settingName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityContactResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SecurityContactResources and their operations over a SecurityContactResource. </returns>
-        public static SecurityContactCollection GetSecurityContacts(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecurityContacts();
-        }
-
-        /// <summary>
-        /// Get Default Security contact configurations for the subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityContacts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="securityContactName"> Name of the security contact object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityContactResource>> GetSecurityContactAsync(this SubscriptionResource subscriptionResource, string securityContactName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSecurityContacts().GetAsync(securityContactName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Default Security contact configurations for the subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityContacts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="securityContactName"> Name of the security contact object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecurityContactResource> GetSecurityContact(this SubscriptionResource subscriptionResource, string securityContactName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSecurityContacts().Get(securityContactName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityWorkspaceSettingResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SecurityWorkspaceSettingResources and their operations over a SecurityWorkspaceSettingResource. </returns>
-        public static SecurityWorkspaceSettingCollection GetSecurityWorkspaceSettings(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecurityWorkspaceSettings();
-        }
-
-        /// <summary>
-        /// Settings about where we should store your security data and logs. If the result is empty, it means that no custom-workspace configuration was set
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceSettings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceSettingName"> Name of the security setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityWorkspaceSettingResource>> GetSecurityWorkspaceSettingAsync(this SubscriptionResource subscriptionResource, string workspaceSettingName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSecurityWorkspaceSettings().GetAsync(workspaceSettingName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Settings about where we should store your security data and logs. If the result is empty, it means that no custom-workspace configuration was set
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceSettings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceSettingName"> Name of the security setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecurityWorkspaceSettingResource> GetSecurityWorkspaceSetting(this SubscriptionResource subscriptionResource, string workspaceSettingName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSecurityWorkspaceSettings().Get(workspaceSettingName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RegulatoryComplianceStandardResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RegulatoryComplianceStandardResources and their operations over a RegulatoryComplianceStandardResource. </returns>
-        public static RegulatoryComplianceStandardCollection GetRegulatoryComplianceStandards(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetRegulatoryComplianceStandards();
-        }
-
-        /// <summary>
-        /// Supported regulatory compliance details state for selected standard
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegulatoryComplianceStandards_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RegulatoryComplianceStandardResource>> GetRegulatoryComplianceStandardAsync(this SubscriptionResource subscriptionResource, string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetRegulatoryComplianceStandards().GetAsync(regulatoryComplianceStandardName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Supported regulatory compliance details state for selected standard
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegulatoryComplianceStandards_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RegulatoryComplianceStandardResource> GetRegulatoryComplianceStandard(this SubscriptionResource subscriptionResource, string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetRegulatoryComplianceStandards().Get(regulatoryComplianceStandardName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityAlertsSuppressionRuleResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SecurityAlertsSuppressionRuleResources and their operations over a SecurityAlertsSuppressionRuleResource. </returns>
-        public static SecurityAlertsSuppressionRuleCollection GetSecurityAlertsSuppressionRules(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecurityAlertsSuppressionRules();
-        }
-
-        /// <summary>
-        /// Get dismiss rule, with name: {alertsSuppressionRuleName}, for the given subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertsSuppressionRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityAlertsSuppressionRuleResource>> GetSecurityAlertsSuppressionRuleAsync(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSecurityAlertsSuppressionRules().GetAsync(alertsSuppressionRuleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get dismiss rule, with name: {alertsSuppressionRuleName}, for the given subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertsSuppressionRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecurityAlertsSuppressionRuleResource> GetSecurityAlertsSuppressionRule(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSecurityAlertsSuppressionRules().Get(alertsSuppressionRuleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SubscriptionAssessmentMetadataResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SubscriptionAssessmentMetadataResources and their operations over a SubscriptionAssessmentMetadataResource. </returns>
-        public static SubscriptionAssessmentMetadataCollection GetAllSubscriptionAssessmentMetadata(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetAllSubscriptionAssessmentMetadata();
-        }
-
-        /// <summary>
-        /// Get metadata information on an assessment type in a specific subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_GetInSubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(this SubscriptionResource subscriptionResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetAllSubscriptionAssessmentMetadata().GetAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get metadata information on an assessment type in a specific subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_GetInSubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(this SubscriptionResource subscriptionResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetAllSubscriptionAssessmentMetadata().Get(assessmentMetadataName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecureScoreResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SecureScoreResources and their operations over a SecureScoreResource. </returns>
-        public static SecureScoreCollection GetSecureScores(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecureScores();
-        }
-
-        /// <summary>
-        /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use &apos;ascScore&apos;.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScores_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecureScoreResource>> GetSecureScoreAsync(this SubscriptionResource subscriptionResource, string secureScoreName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSecureScores().GetAsync(secureScoreName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use &apos;ascScore&apos;.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScores_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecureScoreResource> GetSecureScore(this SubscriptionResource subscriptionResource, string secureScoreName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSecureScores().Get(secureScoreName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityCloudConnectorResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SecurityCloudConnectorResources and their operations over a SecurityCloudConnectorResource. </returns>
-        public static SecurityCloudConnectorCollection GetSecurityCloudConnectors(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecurityCloudConnectors();
-        }
-
-        /// <summary>
-        /// Details of a specific cloud account connector
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/connectors/{connectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connectors_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="connectorName"> Name of the cloud account connector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityCloudConnectorResource>> GetSecurityCloudConnectorAsync(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSecurityCloudConnectors().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Details of a specific cloud account connector
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/connectors/{connectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connectors_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="connectorName"> Name of the cloud account connector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecurityCloudConnectorResource> GetSecurityCloudConnector(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSecurityCloudConnectors().Get(connectorName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecuritySettingResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SecuritySettingResources and their operations over a SecuritySettingResource. </returns>
-        public static SecuritySettingCollection GetSecuritySettings(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecuritySettings();
-        }
-
-        /// <summary>
-        /// Settings of different configurations in Microsoft Defender for Cloud
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Settings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="settingName"> The name of the setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecuritySettingResource>> GetSecuritySettingAsync(this SubscriptionResource subscriptionResource, SecuritySettingName settingName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSecuritySettings().GetAsync(settingName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Settings of different configurations in Microsoft Defender for Cloud
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Settings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="settingName"> The name of the setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static Response<SecuritySettingResource> GetSecuritySetting(this SubscriptionResource subscriptionResource, SecuritySettingName settingName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSecuritySettings().Get(settingName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of IngestionSettingResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IngestionSettingResources and their operations over a IngestionSettingResource. </returns>
-        public static IngestionSettingCollection GetIngestionSettings(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetIngestionSettings();
-        }
-
-        /// <summary>
-        /// Settings for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IngestionSettings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ingestionSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ingestionSettingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<IngestionSettingResource>> GetIngestionSettingAsync(this SubscriptionResource subscriptionResource, string ingestionSettingName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetIngestionSettings().GetAsync(ingestionSettingName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Settings for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IngestionSettings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ingestionSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ingestionSettingName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<IngestionSettingResource> GetIngestionSetting(this SubscriptionResource subscriptionResource, string ingestionSettingName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetIngestionSettings().Get(ingestionSettingName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SubscriptionGovernanceRuleResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SubscriptionGovernanceRuleResources and their operations over a SubscriptionGovernanceRuleResource. </returns>
-        public static SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSubscriptionGovernanceRules();
-        }
-
-        /// <summary>
-        /// Get a specific governanceRule for the requested scope by ruleId
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSubscriptionGovernanceRules().GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a specific governanceRule for the requested scope by ruleId
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSubscriptionGovernanceRules().Get(ruleId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SubscriptionSecurityApplicationResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SubscriptionSecurityApplicationResources and their operations over a SubscriptionSecurityApplicationResource. </returns>
-        public static SubscriptionSecurityApplicationCollection GetSubscriptionSecurityApplications(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSubscriptionSecurityApplications();
-        }
-
-        /// <summary>
-        /// Get a specific application for the requested scope by applicationId
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Application_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionSecurityApplicationResource>> GetSubscriptionSecurityApplicationAsync(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSubscriptionSecurityApplications().GetAsync(applicationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a specific application for the requested scope by applicationId
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Application_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SubscriptionSecurityApplicationResource> GetSubscriptionSecurityApplication(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSubscriptionSecurityApplications().Get(applicationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// The configuration or data needed to onboard the machine to MDE
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MdeOnboardings_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MdeOnboarding> GetMdeOnboardingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMdeOnboardingsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// The configuration or data needed to onboard the machine to MDE
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MdeOnboardings_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MdeOnboarding> GetMdeOnboardings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMdeOnboardings(cancellationToken);
-        }
-
-        /// <summary>
-        /// The default configuration or data needed to onboard the machine to MDE
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MdeOnboardings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<MdeOnboarding>> GetMdeOnboardingAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return await GetExtensionClient(subscriptionResource).GetMdeOnboardingAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The default configuration or data needed to onboard the machine to MDE
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MdeOnboardings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<MdeOnboarding> GetMdeOnboarding(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMdeOnboarding(cancellationToken);
-        }
-
-        /// <summary>
-        /// List custom assessment automations by provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customAssessmentAutomations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomAssessmentAutomations_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetCustomAssessmentAutomationsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List custom assessment automations by provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customAssessmentAutomations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomAssessmentAutomations_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetCustomAssessmentAutomations(cancellationToken);
-        }
-
-        /// <summary>
-        /// List custom entity store assignments by provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customEntityStoreAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomEntityStoreAssignments_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetCustomEntityStoreAssignmentsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List custom entity store assignments by provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customEntityStoreAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomEntityStoreAssignments_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetCustomEntityStoreAssignments(cancellationToken);
-        }
-
-        /// <summary>
-        /// Use this method to get the list of IoT Security solutions by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/iotSecuritySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolution_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IotSecuritySolutionResource> GetIotSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetIotSecuritySolutionsAsync(filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Use this method to get the list of IoT Security solutions by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/iotSecuritySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolution_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IotSecuritySolutionResource> GetIotSecuritySolutions(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetIotSecuritySolutions(filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Recommended tasks that will help improve the security of the subscription proactively
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/tasks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Tasks_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> OData filter. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityTaskData> GetTasksAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetTasksAsync(filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Recommended tasks that will help improve the security of the subscription proactively
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/tasks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Tasks_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> OData filter. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityTaskData> GetTasks(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetTasks(filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the security automations in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security automations for the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/automations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityAutomationResource> GetSecurityAutomationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecurityAutomationsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the security automations in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security automations for the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/automations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityAutomationResource> GetSecurityAutomations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecurityAutomations(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of application control machine groups for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdaptiveApplicationControls_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="includePathRecommendations"> Include the policy rules. </param>
-        /// <param name="summary"> Return output in a summarized form. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroupsAsync(this SubscriptionResource subscriptionResource, bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAdaptiveApplicationControlGroupsAsync(includePathRecommendations, summary, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of application control machine groups for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdaptiveApplicationControls_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="includePathRecommendations"> Include the policy rules. </param>
-        /// <param name="summary"> Return output in a summarized form. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroups(this SubscriptionResource subscriptionResource, bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAdaptiveApplicationControlGroups(includePathRecommendations, summary, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of all possible traffic between resources for the subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AllowedConnections_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityCenterAllowedConnection> GetAllowedConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAllowedConnectionsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of all possible traffic between resources for the subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AllowedConnections_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityCenterAllowedConnection> GetAllowedConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAllowedConnections(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list that allows to build a topology view of a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/topologies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topology_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityTopologyResource> GetTopologiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetTopologiesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list that allows to build a topology view of a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/topologies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topology_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityTopologyResource> GetTopologies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetTopologies(cancellationToken);
-        }
-
-        /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JitNetworkAccessPolicies_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JitNetworkAccessPolicies_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetJitNetworkAccessPolicies(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of discovered Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/discoveredSecuritySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiscoveredSecuritySolutions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDiscoveredSecuritySolutionsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of discovered Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/discoveredSecuritySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiscoveredSecuritySolutions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDiscoveredSecuritySolutions(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all supported Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>securitySolutionsReferenceData_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAllSecuritySolutionsReferenceDataAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all supported Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>securitySolutionsReferenceData_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceData(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAllSecuritySolutionsReferenceData(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of external security solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExternalSecuritySolutions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ExternalSecuritySolution> GetExternalSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetExternalSecuritySolutionsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of external security solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExternalSecuritySolutions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ExternalSecuritySolution> GetExternalSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetExternalSecuritySolutions(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all security controls within a scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControls</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScoreControls_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecureScoreControlDetails> GetSecureScoreControlsAsync(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecureScoreControlsAsync(expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all security controls within a scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControls</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScoreControls_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecureScoreControlDetails> GetSecureScoreControls(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecureScoreControls(expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// For a specified subscription, list the available security controls, their assessments, and the max score
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControlDefinitions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScoreControlDefinitions_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecureScoreControlDefinitionsBySubscriptionAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// For a specified subscription, list the available security controls, their assessments, and the max score
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControlDefinitions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScoreControlDefinitions_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecureScoreControlDefinitionsBySubscription(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecuritySolutions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecuritySolution> GetSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecuritySolutionsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecuritySolutions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecuritySolution> GetSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecuritySolutions(cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the alerts that are associated with the subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityAlertData> GetAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAlertsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the alerts that are associated with the subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityAlertData> GetAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAlerts(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the software inventory of all virtual machines in the subscriptions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/softwareInventories</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareInventories_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SoftwareInventoryResource> GetSoftwareInventoriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSoftwareInventoriesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the software inventory of all virtual machines in the subscriptions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/softwareInventories</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareInventories_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SoftwareInventoryResource> GetSoftwareInventories(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSoftwareInventories(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the security connectors in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityConnectors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityConnectorResource> GetSecurityConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecurityConnectorsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the security connectors in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityConnectors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectors_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityConnectorResource> GetSecurityConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSecurityConnectors(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new ArmResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of CustomAssessmentAutomationResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CustomAssessmentAutomationResources and their operations over a CustomAssessmentAutomationResource. </returns>
-        public static CustomAssessmentAutomationCollection GetCustomAssessmentAutomations(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetCustomAssessmentAutomations();
-        }
-
-        /// <summary>
-        /// Gets a single custom assessment automation by name for the provided subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomAssessmentAutomations_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customAssessmentAutomationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<CustomAssessmentAutomationResource>> GetCustomAssessmentAutomationAsync(this ResourceGroupResource resourceGroupResource, string customAssessmentAutomationName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetCustomAssessmentAutomations().GetAsync(customAssessmentAutomationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a single custom assessment automation by name for the provided subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomAssessmentAutomations_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customAssessmentAutomationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<CustomAssessmentAutomationResource> GetCustomAssessmentAutomation(this ResourceGroupResource resourceGroupResource, string customAssessmentAutomationName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetCustomAssessmentAutomations().Get(customAssessmentAutomationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CustomEntityStoreAssignmentResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CustomEntityStoreAssignmentResources and their operations over a CustomEntityStoreAssignmentResource. </returns>
-        public static CustomEntityStoreAssignmentCollection GetCustomEntityStoreAssignments(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetCustomEntityStoreAssignments();
-        }
-
-        /// <summary>
-        /// Gets a single custom entity store assignment by name for the provided subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customEntityStoreAssignments/{customEntityStoreAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomEntityStoreAssignments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="customEntityStoreAssignmentName"> Name of the custom entity store assignment. Generated name is GUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customEntityStoreAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<CustomEntityStoreAssignmentResource>> GetCustomEntityStoreAssignmentAsync(this ResourceGroupResource resourceGroupResource, string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetCustomEntityStoreAssignments().GetAsync(customEntityStoreAssignmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a single custom entity store assignment by name for the provided subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customEntityStoreAssignments/{customEntityStoreAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomEntityStoreAssignments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="customEntityStoreAssignmentName"> Name of the custom entity store assignment. Generated name is GUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customEntityStoreAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignment(this ResourceGroupResource resourceGroupResource, string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetCustomEntityStoreAssignments().Get(customEntityStoreAssignmentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of IotSecuritySolutionResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IotSecuritySolutionResources and their operations over a IotSecuritySolutionResource. </returns>
-        public static IotSecuritySolutionCollection GetIotSecuritySolutions(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetIotSecuritySolutions();
-        }
-
-        /// <summary>
-        /// User this method to get details of a specific IoT Security solution based on solution name
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolution_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="solutionName"> The name of the IoT Security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<IotSecuritySolutionResource>> GetIotSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, string solutionName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetIotSecuritySolutions().GetAsync(solutionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// User this method to get details of a specific IoT Security solution based on solution name
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolution_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="solutionName"> The name of the IoT Security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<IotSecuritySolutionResource> GetIotSecuritySolution(this ResourceGroupResource resourceGroupResource, string solutionName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetIotSecuritySolutions().Get(solutionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ResourceGroupSecurityTaskResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <returns> An object representing collection of ResourceGroupSecurityTaskResources and their operations over a ResourceGroupSecurityTaskResource. </returns>
-        public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
-        {
-            return GetExtensionClient(resourceGroupResource).GetResourceGroupSecurityTasks(ascLocation);
-        }
-
-        /// <summary>
-        /// Recommended tasks that will help improve the security of the subscription proactively
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Tasks_GetResourceGroupLevelTask</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="taskName"> Name of the task object, will be a GUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetResourceGroupSecurityTasks(ascLocation).GetAsync(taskName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Recommended tasks that will help improve the security of the subscription proactively
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Tasks_GetResourceGroupLevelTask</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="taskName"> Name of the task object, will be a GUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetResourceGroupSecurityTasks(ascLocation).Get(taskName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityAutomationResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SecurityAutomationResources and their operations over a SecurityAutomationResource. </returns>
-        public static SecurityAutomationCollection GetSecurityAutomations(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetSecurityAutomations();
-        }
-
-        /// <summary>
-        /// Retrieves information about the model of a security automation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="automationName"> The security automation name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityAutomationResource>> GetSecurityAutomationAsync(this ResourceGroupResource resourceGroupResource, string automationName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSecurityAutomations().GetAsync(automationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves information about the model of a security automation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="automationName"> The security automation name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecurityAutomationResource> GetSecurityAutomation(this ResourceGroupResource resourceGroupResource, string automationName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSecurityAutomations().Get(automationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ServerVulnerabilityAssessmentResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of ServerVulnerabilityAssessmentResources and their operations over a ServerVulnerabilityAssessmentResource. </returns>
-        public static ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName)
-        {
-            Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetServerVulnerabilityAssessments(resourceNamespace, resourceType, resourceName);
-        }
-
-        /// <summary>
-        /// Gets a server vulnerability assessment onboarding statuses on a given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/{serverVulnerabilityAssessment}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerVulnerabilityAssessment_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ServerVulnerabilityAssessmentResource>> GetServerVulnerabilityAssessmentAsync(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetServerVulnerabilityAssessments(resourceNamespace, resourceType, resourceName).GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a server vulnerability assessment onboarding statuses on a given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/{serverVulnerabilityAssessment}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerVulnerabilityAssessment_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ServerVulnerabilityAssessmentResource> GetServerVulnerabilityAssessment(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetServerVulnerabilityAssessments(resourceNamespace, resourceType, resourceName).Get(cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AdaptiveNetworkHardeningResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of AdaptiveNetworkHardeningResources and their operations over a AdaptiveNetworkHardeningResource. </returns>
-        public static AdaptiveNetworkHardeningCollection GetAdaptiveNetworkHardenings(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName)
-        {
-            Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetAdaptiveNetworkHardenings(resourceNamespace, resourceType, resourceName);
-        }
-
-        /// <summary>
-        /// Gets a single Adaptive Network Hardening resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdaptiveNetworkHardenings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
-        /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<AdaptiveNetworkHardeningResource>> GetAdaptiveNetworkHardeningAsync(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetAdaptiveNetworkHardenings(resourceNamespace, resourceType, resourceName).GetAsync(adaptiveNetworkHardeningResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a single Adaptive Network Hardening resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdaptiveNetworkHardenings_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
-        /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<AdaptiveNetworkHardeningResource> GetAdaptiveNetworkHardening(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetAdaptiveNetworkHardenings(resourceNamespace, resourceType, resourceName).Get(adaptiveNetworkHardeningResourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of JitNetworkAccessPolicyResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <returns> An object representing collection of JitNetworkAccessPolicyResources and their operations over a JitNetworkAccessPolicyResource. </returns>
-        public static JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
-        {
-            return GetExtensionClient(resourceGroupResource).GetJitNetworkAccessPolicies(ascLocation);
-        }
-
-        /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies/{jitNetworkAccessPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JitNetworkAccessPolicies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="jitNetworkAccessPolicyName"> Name of a Just-in-Time access configuration policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitNetworkAccessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<JitNetworkAccessPolicyResource>> GetJitNetworkAccessPolicyAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetJitNetworkAccessPolicies(ascLocation).GetAsync(jitNetworkAccessPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies/{jitNetworkAccessPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JitNetworkAccessPolicies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="jitNetworkAccessPolicyName"> Name of a Just-in-Time access configuration policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitNetworkAccessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicy(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetJitNetworkAccessPolicies(ascLocation).Get(jitNetworkAccessPolicyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ResourceGroupSecurityAlertResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <returns> An object representing collection of ResourceGroupSecurityAlertResources and their operations over a ResourceGroupSecurityAlertResource. </returns>
-        public static ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
-        {
-            return GetExtensionClient(resourceGroupResource).GetResourceGroupSecurityAlerts(ascLocation);
-        }
-
-        /// <summary>
-        /// Get an alert that is associated a resource group or a resource in a resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetResourceGroupLevel</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="alertName"> Name of the alert object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetResourceGroupSecurityAlerts(ascLocation).GetAsync(alertName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get an alert that is associated a resource group or a resource in a resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetResourceGroupLevel</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="alertName"> Name of the alert object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetResourceGroupSecurityAlerts(ascLocation).Get(alertName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SoftwareInventoryResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceNamespace"> The namespace of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An object representing collection of SoftwareInventoryResources and their operations over a SoftwareInventoryResource. </returns>
-        public static SoftwareInventoryCollection GetSoftwareInventories(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName)
-        {
-            Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetSoftwareInventories(resourceNamespace, resourceType, resourceName);
-        }
-
-        /// <summary>
-        /// Gets a single software data of the virtual machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareInventories_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceNamespace"> The namespace of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
-        /// <param name="softwareName"> Name of the installed software. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SoftwareInventoryResource>> GetSoftwareInventoryAsync(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSoftwareInventories(resourceNamespace, resourceType, resourceName).GetAsync(softwareName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a single software data of the virtual machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareInventories_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceNamespace"> The namespace of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
-        /// <param name="softwareName"> Name of the installed software. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SoftwareInventoryResource> GetSoftwareInventory(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSoftwareInventories(resourceNamespace, resourceType, resourceName).Get(softwareName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityConnectorResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SecurityConnectorResources and their operations over a SecurityConnectorResource. </returns>
-        public static SecurityConnectorCollection GetSecurityConnectors(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetSecurityConnectors();
-        }
-
-        /// <summary>
-        /// Retrieves details of a specific security connector
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectors_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="securityConnectorName"> The security connector name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityConnectorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityConnectorResource>> GetSecurityConnectorAsync(this ResourceGroupResource resourceGroupResource, string securityConnectorName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetSecurityConnectors().GetAsync(securityConnectorName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves details of a specific security connector
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectors_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="securityConnectorName"> The security connector name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityConnectorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecurityConnectorResource> GetSecurityConnector(this ResourceGroupResource resourceGroupResource, string securityConnectorName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetSecurityConnectors().Get(securityConnectorName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of all possible traffic between resources for the subscription and location, based on connection type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AllowedConnections_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<SecurityCenterAllowedConnection>> GetAllowedConnectionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
-        {
-            return await GetExtensionClient(resourceGroupResource).GetAllowedConnectionAsync(ascLocation, connectionType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the list of all possible traffic between resources for the subscription and location, based on connection type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AllowedConnections_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<SecurityCenterAllowedConnection> GetAllowedConnection(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(resourceGroupResource).GetAllowedConnection(ascLocation, connectionType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a specific topology component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topology_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
-        public static async Task<Response<SecurityTopologyResource>> GetTopologyAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
-
-            return await GetExtensionClient(resourceGroupResource).GetTopologyAsync(ascLocation, topologyResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a specific topology component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topology_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
-        public static Response<SecurityTopologyResource> GetTopology(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetTopology(ascLocation, topologyResourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JitNetworkAccessPolicies_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(resourceGroupResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JitNetworkAccessPolicies_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(resourceGroupResource).GetJitNetworkAccessPolicies(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a specific discovered Security Solution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions/{discoveredSecuritySolutionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiscoveredSecuritySolutions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
-        public static async Task<Response<DiscoveredSecuritySolution>> GetDiscoveredSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
-
-            return await GetExtensionClient(resourceGroupResource).GetDiscoveredSecuritySolutionAsync(ascLocation, discoveredSecuritySolutionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a specific discovered Security Solution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions/{discoveredSecuritySolutionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiscoveredSecuritySolutions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
-        public static Response<DiscoveredSecuritySolution> GetDiscoveredSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
-
-            return GetExtensionClient(resourceGroupResource).GetDiscoveredSecuritySolution(ascLocation, discoveredSecuritySolutionName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a specific external Security Solution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExternalSecuritySolutions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
-        public static async Task<Response<ExternalSecuritySolution>> GetExternalSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
-
-            return await GetExtensionClient(resourceGroupResource).GetExternalSecuritySolutionAsync(ascLocation, externalSecuritySolutionsName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a specific external Security Solution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExternalSecuritySolutions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
-        public static Response<ExternalSecuritySolution> GetExternalSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
-
-            return GetExtensionClient(resourceGroupResource).GetExternalSecuritySolution(ascLocation, externalSecuritySolutionsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a specific Security Solution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/securitySolutions/{securitySolutionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecuritySolutions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="securitySolutionName"> Name of security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
-        public static async Task<Response<SecuritySolution>> GetSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
-
-            return await GetExtensionClient(resourceGroupResource).GetSecuritySolutionAsync(ascLocation, securitySolutionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a specific Security Solution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/securitySolutions/{securitySolutionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecuritySolutions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="securitySolutionName"> Name of security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
-        public static Response<SecuritySolution> GetSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
-
-            return GetExtensionClient(resourceGroupResource).GetSecuritySolution(ascLocation, securitySolutionName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the alerts that are associated with the resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/alerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityAlertData> GetAlertsByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(resourceGroupResource).GetAlertsByResourceGroupAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the alerts that are associated with the resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/alerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityAlertData> GetAlertsByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(resourceGroupResource).GetAlertsByResourceGroup(cancellationToken);
-        }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
                 return new ArmResourceExtensionClient(client, scope);
-            }
-            );
+            });
         }
 
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        private static CustomAssessmentAutomationResourceExtensionClient GetCustomAssessmentAutomationResourceExtensionClient(ArmResource resource)
         {
-            return armResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, armResource.Id);
-            }
-            );
+                return new CustomAssessmentAutomationResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of ComplianceResultResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ComplianceResultResources and their operations over a ComplianceResultResource. </returns>
-        public static ComplianceResultCollection GetComplianceResults(this ArmClient client, ResourceIdentifier scope)
+        private static CustomAssessmentAutomationResourceExtensionClient GetCustomAssessmentAutomationResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetComplianceResults();
+            return client.GetResourceClient(() =>
+            {
+                return new CustomAssessmentAutomationResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Security Compliance Result
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComplianceResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ComplianceResultResource>> GetComplianceResultAsync(this ArmClient client, ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
+        private static CustomEntityStoreAssignmentResourceExtensionClient GetCustomEntityStoreAssignmentResourceExtensionClient(ArmResource resource)
         {
-            return await client.GetComplianceResults(scope).GetAsync(complianceResultName, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new CustomEntityStoreAssignmentResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Security Compliance Result
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComplianceResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ComplianceResultResource> GetComplianceResult(this ArmClient client, ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
+        private static CustomEntityStoreAssignmentResourceExtensionClient GetCustomEntityStoreAssignmentResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return client.GetComplianceResults(scope).Get(complianceResultName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new CustomEntityStoreAssignmentResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets an object representing a AdvancedThreatProtectionSettingResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource" /> object. </returns>
-        public static AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting(this ArmClient client, ResourceIdentifier scope)
+        private static IotSecuritySolutionResourceExtensionClient GetIotSecuritySolutionResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(client, scope).GetAdvancedThreatProtectionSetting();
+            return resource.GetCachedClient(client =>
+            {
+                return new IotSecuritySolutionResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of DeviceSecurityGroupResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of DeviceSecurityGroupResources and their operations over a DeviceSecurityGroupResource. </returns>
-        public static DeviceSecurityGroupCollection GetDeviceSecurityGroups(this ArmClient client, ResourceIdentifier scope)
+        private static IotSecuritySolutionResourceExtensionClient GetIotSecuritySolutionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetDeviceSecurityGroups();
+            return client.GetResourceClient(() =>
+            {
+                return new IotSecuritySolutionResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Use this method to get the device security group for the specified IoT Hub resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceSecurityGroups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="deviceSecurityGroupName"> The name of the device security group. Note that the name of the device security group is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DeviceSecurityGroupResource>> GetDeviceSecurityGroupAsync(this ArmClient client, ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
+        private static JitNetworkAccessPolicyResourceExtensionClient GetJitNetworkAccessPolicyResourceExtensionClient(ArmResource resource)
         {
-            return await client.GetDeviceSecurityGroups(scope).GetAsync(deviceSecurityGroupName, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new JitNetworkAccessPolicyResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Use this method to get the device security group for the specified IoT Hub resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceSecurityGroups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="deviceSecurityGroupName"> The name of the device security group. Note that the name of the device security group is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DeviceSecurityGroupResource> GetDeviceSecurityGroup(this ArmClient client, ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
+        private static JitNetworkAccessPolicyResourceExtensionClient GetJitNetworkAccessPolicyResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return client.GetDeviceSecurityGroups(scope).Get(deviceSecurityGroupName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new JitNetworkAccessPolicyResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of SecurityComplianceResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SecurityComplianceResources and their operations over a SecurityComplianceResource. </returns>
-        public static SecurityComplianceCollection GetSecurityCompliances(this ArmClient client, ResourceIdentifier scope)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(client, scope).GetSecurityCompliances();
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Details of a specific Compliance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="complianceName"> name of the Compliance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityComplianceResource>> GetSecurityComplianceAsync(this ArmClient client, ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await client.GetSecurityCompliances(scope).GetAsync(complianceName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Details of a specific Compliance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="complianceName"> name of the Compliance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecurityComplianceResource> GetSecurityCompliance(this ArmClient client, ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        private static SecurityAutomationResourceExtensionClient GetSecurityAutomationResourceExtensionClient(ArmResource resource)
         {
-            return client.GetSecurityCompliances(scope).Get(complianceName, cancellationToken);
+            return resource.GetCachedClient(client =>
+            {
+                return new SecurityAutomationResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of SecurityAssessmentResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SecurityAssessmentResources and their operations over a SecurityAssessmentResource. </returns>
-        public static SecurityAssessmentCollection GetSecurityAssessments(this ArmClient client, ResourceIdentifier scope)
+        private static SecurityAutomationResourceExtensionClient GetSecurityAutomationResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetSecurityAssessments();
+            return client.GetResourceClient(() =>
+            {
+                return new SecurityAutomationResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Get a security assessment on your scanned resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Assessments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityAssessmentResource>> GetSecurityAssessmentAsync(this ArmClient client, ResourceIdentifier scope, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
+        private static SecurityConnectorResourceExtensionClient GetSecurityConnectorResourceExtensionClient(ArmResource resource)
         {
-            return await client.GetSecurityAssessments(scope).GetAsync(assessmentName, expand, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new SecurityConnectorResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Get a security assessment on your scanned resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Assessments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecurityAssessmentResource> GetSecurityAssessment(this ArmClient client, ResourceIdentifier scope, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
+        private static SecurityConnectorResourceExtensionClient GetSecurityConnectorResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return client.GetSecurityAssessments(scope).Get(assessmentName, expand, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new SecurityConnectorResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of SqlVulnerabilityAssessmentScanResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SqlVulnerabilityAssessmentScanResources and their operations over a SqlVulnerabilityAssessmentScanResource. </returns>
-        public static SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(this ArmClient client, ResourceIdentifier scope)
+        private static SoftwareInventoryResourceExtensionClient GetSoftwareInventoryResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(client, scope).GetSqlVulnerabilityAssessmentScans();
+            return resource.GetCachedClient(client =>
+            {
+                return new SoftwareInventoryResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets the scan details of a single scan record.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentScans_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scanId"> The scan Id. Type &apos;latest&apos; to get the scan record for the latest scan. </param>
-        /// <param name="workspaceId"> The workspace Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
+        private static SoftwareInventoryResourceExtensionClient GetSoftwareInventoryResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await client.GetSqlVulnerabilityAssessmentScans(scope).GetAsync(scanId, workspaceId, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new SoftwareInventoryResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets the scan details of a single scan record.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentScans_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scanId"> The scan Id. Type &apos;latest&apos; to get the scan record for the latest scan. </param>
-        /// <param name="workspaceId"> The workspace Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return client.GetSqlVulnerabilityAssessmentScans(scope).Get(scanId, workspaceId, cancellationToken);
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of SqlVulnerabilityAssessmentBaselineRuleResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SqlVulnerabilityAssessmentBaselineRuleResources and their operations over a SqlVulnerabilityAssessmentBaselineRuleResource. </returns>
-        public static SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules(this ArmClient client, ResourceIdentifier scope)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetSqlVulnerabilityAssessmentBaselineRules();
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Gets the results for a given rule in the Baseline.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="ruleId"> The rule Id. </param>
-        /// <param name="workspaceId"> The workspace Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
-            return await client.GetSqlVulnerabilityAssessmentBaselineRules(scope).GetAsync(ruleId, workspaceId, cancellationToken).ConfigureAwait(false);
+            return resource.GetCachedClient(client =>
+            {
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets the results for a given rule in the Baseline.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="ruleId"> The rule Id. </param>
-        /// <param name="workspaceId"> The workspace Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return client.GetSqlVulnerabilityAssessmentBaselineRules(scope).Get(ruleId, workspaceId, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
         }
-
         #region CustomAssessmentAutomationResource
         /// <summary>
         /// Gets an object representing a <see cref="CustomAssessmentAutomationResource" /> along with the instance operations that can be performed on it but with no data.
@@ -4013,5 +1065,3100 @@ namespace Azure.ResourceManager.SecurityCenter
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of ComplianceResultResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of ComplianceResultResources and their operations over a ComplianceResultResource. </returns>
+        public static ComplianceResultCollection GetComplianceResults(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetComplianceResults();
+        }
+
+        /// <summary>
+        /// Security Compliance Result
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ComplianceResultResource>> GetComplianceResultAsync(this ArmClient client, ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetComplianceResults(scope).GetAsync(complianceResultName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Security Compliance Result
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ComplianceResultResource> GetComplianceResult(this ArmClient client, ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
+        {
+            return client.GetComplianceResults(scope).Get(complianceResultName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a AdvancedThreatProtectionSettingResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource" /> object. </returns>
+        public static AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetAdvancedThreatProtectionSetting();
+        }
+
+        /// <summary> Gets a collection of DeviceSecurityGroupResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of DeviceSecurityGroupResources and their operations over a DeviceSecurityGroupResource. </returns>
+        public static DeviceSecurityGroupCollection GetDeviceSecurityGroups(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetDeviceSecurityGroups();
+        }
+
+        /// <summary>
+        /// Use this method to get the device security group for the specified IoT Hub resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeviceSecurityGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="deviceSecurityGroupName"> The name of the device security group. Note that the name of the device security group is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DeviceSecurityGroupResource>> GetDeviceSecurityGroupAsync(this ArmClient client, ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetDeviceSecurityGroups(scope).GetAsync(deviceSecurityGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Use this method to get the device security group for the specified IoT Hub resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeviceSecurityGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="deviceSecurityGroupName"> The name of the device security group. Note that the name of the device security group is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DeviceSecurityGroupResource> GetDeviceSecurityGroup(this ArmClient client, ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
+        {
+            return client.GetDeviceSecurityGroups(scope).Get(deviceSecurityGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityComplianceResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of SecurityComplianceResources and their operations over a SecurityComplianceResource. </returns>
+        public static SecurityComplianceCollection GetSecurityCompliances(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetSecurityCompliances();
+        }
+
+        /// <summary>
+        /// Details of a specific Compliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="complianceName"> name of the Compliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityComplianceResource>> GetSecurityComplianceAsync(this ArmClient client, ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetSecurityCompliances(scope).GetAsync(complianceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Details of a specific Compliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compliances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="complianceName"> name of the Compliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityComplianceResource> GetSecurityCompliance(this ArmClient client, ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        {
+            return client.GetSecurityCompliances(scope).Get(complianceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityAssessmentResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of SecurityAssessmentResources and their operations over a SecurityAssessmentResource. </returns>
+        public static SecurityAssessmentCollection GetSecurityAssessments(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetSecurityAssessments();
+        }
+
+        /// <summary>
+        /// Get a security assessment on your scanned resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="expand"> OData expand. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityAssessmentResource>> GetSecurityAssessmentAsync(this ArmClient client, ResourceIdentifier scope, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
+        {
+            return await client.GetSecurityAssessments(scope).GetAsync(assessmentName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a security assessment on your scanned resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="expand"> OData expand. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityAssessmentResource> GetSecurityAssessment(this ArmClient client, ResourceIdentifier scope, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
+        {
+            return client.GetSecurityAssessments(scope).Get(assessmentName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlVulnerabilityAssessmentScanResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of SqlVulnerabilityAssessmentScanResources and their operations over a SqlVulnerabilityAssessmentScanResource. </returns>
+        public static SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetSqlVulnerabilityAssessmentScans();
+        }
+
+        /// <summary>
+        /// Gets the scan details of a single scan record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentScans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scanId"> The scan Id. Type &apos;latest&apos; to get the scan record for the latest scan. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return await client.GetSqlVulnerabilityAssessmentScans(scope).GetAsync(scanId, workspaceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the scan details of a single scan record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentScans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scanId"> The scan Id. Type &apos;latest&apos; to get the scan record for the latest scan. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return client.GetSqlVulnerabilityAssessmentScans(scope).Get(scanId, workspaceId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlVulnerabilityAssessmentBaselineRuleResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of SqlVulnerabilityAssessmentBaselineRuleResources and their operations over a SqlVulnerabilityAssessmentBaselineRuleResource. </returns>
+        public static SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetSqlVulnerabilityAssessmentBaselineRules();
+        }
+
+        /// <summary>
+        /// Gets the results for a given rule in the Baseline.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The rule Id. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return await client.GetSqlVulnerabilityAssessmentBaselineRules(scope).GetAsync(ruleId, workspaceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the results for a given rule in the Baseline.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The rule Id. </param>
+        /// <param name="workspaceId"> The workspace Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return client.GetSqlVulnerabilityAssessmentBaselineRules(scope).Get(ruleId, workspaceId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CustomAssessmentAutomationResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of CustomAssessmentAutomationResources and their operations over a CustomAssessmentAutomationResource. </returns>
+        public static CustomAssessmentAutomationCollection GetCustomAssessmentAutomations(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCustomAssessmentAutomations();
+        }
+
+        /// <summary>
+        /// Gets a single custom assessment automation by name for the provided subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="customAssessmentAutomationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<CustomAssessmentAutomationResource>> GetCustomAssessmentAutomationAsync(this ResourceGroupResource resourceGroupResource, string customAssessmentAutomationName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetCustomAssessmentAutomations().GetAsync(customAssessmentAutomationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a single custom assessment automation by name for the provided subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="customAssessmentAutomationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<CustomAssessmentAutomationResource> GetCustomAssessmentAutomation(this ResourceGroupResource resourceGroupResource, string customAssessmentAutomationName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetCustomAssessmentAutomations().Get(customAssessmentAutomationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CustomEntityStoreAssignmentResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of CustomEntityStoreAssignmentResources and their operations over a CustomEntityStoreAssignmentResource. </returns>
+        public static CustomEntityStoreAssignmentCollection GetCustomEntityStoreAssignments(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCustomEntityStoreAssignments();
+        }
+
+        /// <summary>
+        /// Gets a single custom entity store assignment by name for the provided subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customEntityStoreAssignments/{customEntityStoreAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomEntityStoreAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="customEntityStoreAssignmentName"> Name of the custom entity store assignment. Generated name is GUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="customEntityStoreAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<CustomEntityStoreAssignmentResource>> GetCustomEntityStoreAssignmentAsync(this ResourceGroupResource resourceGroupResource, string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetCustomEntityStoreAssignments().GetAsync(customEntityStoreAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a single custom entity store assignment by name for the provided subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customEntityStoreAssignments/{customEntityStoreAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomEntityStoreAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="customEntityStoreAssignmentName"> Name of the custom entity store assignment. Generated name is GUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="customEntityStoreAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignment(this ResourceGroupResource resourceGroupResource, string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetCustomEntityStoreAssignments().Get(customEntityStoreAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of IotSecuritySolutionResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of IotSecuritySolutionResources and their operations over a IotSecuritySolutionResource. </returns>
+        public static IotSecuritySolutionCollection GetIotSecuritySolutions(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIotSecuritySolutions();
+        }
+
+        /// <summary>
+        /// User this method to get details of a specific IoT Security solution based on solution name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="solutionName"> The name of the IoT Security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<IotSecuritySolutionResource>> GetIotSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, string solutionName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetIotSecuritySolutions().GetAsync(solutionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// User this method to get details of a specific IoT Security solution based on solution name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="solutionName"> The name of the IoT Security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<IotSecuritySolutionResource> GetIotSecuritySolution(this ResourceGroupResource resourceGroupResource, string solutionName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetIotSecuritySolutions().Get(solutionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ResourceGroupSecurityTaskResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <returns> An object representing collection of ResourceGroupSecurityTaskResources and their operations over a ResourceGroupSecurityTaskResource. </returns>
+        public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceGroupSecurityTasks(ascLocation);
+        }
+
+        /// <summary>
+        /// Recommended tasks that will help improve the security of the subscription proactively
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="taskName"> Name of the task object, will be a GUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetResourceGroupSecurityTasks(ascLocation).GetAsync(taskName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Recommended tasks that will help improve the security of the subscription proactively
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="taskName"> Name of the task object, will be a GUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetResourceGroupSecurityTasks(ascLocation).Get(taskName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityAutomationResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityAutomationResources and their operations over a SecurityAutomationResource. </returns>
+        public static SecurityAutomationCollection GetSecurityAutomations(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecurityAutomations();
+        }
+
+        /// <summary>
+        /// Retrieves information about the model of a security automation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Automations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="automationName"> The security automation name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityAutomationResource>> GetSecurityAutomationAsync(this ResourceGroupResource resourceGroupResource, string automationName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSecurityAutomations().GetAsync(automationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves information about the model of a security automation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Automations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="automationName"> The security automation name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityAutomationResource> GetSecurityAutomation(this ResourceGroupResource resourceGroupResource, string automationName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSecurityAutomations().Get(automationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServerVulnerabilityAssessmentResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of ServerVulnerabilityAssessmentResources and their operations over a ServerVulnerabilityAssessmentResource. </returns>
+        public static ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetServerVulnerabilityAssessments(resourceNamespace, resourceType, resourceName);
+        }
+
+        /// <summary>
+        /// Gets a server vulnerability assessment onboarding statuses on a given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/{serverVulnerabilityAssessment}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerVulnerabilityAssessment_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ServerVulnerabilityAssessmentResource>> GetServerVulnerabilityAssessmentAsync(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetServerVulnerabilityAssessments(resourceNamespace, resourceType, resourceName).GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server vulnerability assessment onboarding statuses on a given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/{serverVulnerabilityAssessment}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerVulnerabilityAssessment_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ServerVulnerabilityAssessmentResource> GetServerVulnerabilityAssessment(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetServerVulnerabilityAssessments(resourceNamespace, resourceType, resourceName).Get(cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AdaptiveNetworkHardeningResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of AdaptiveNetworkHardeningResources and their operations over a AdaptiveNetworkHardeningResource. </returns>
+        public static AdaptiveNetworkHardeningCollection GetAdaptiveNetworkHardenings(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAdaptiveNetworkHardenings(resourceNamespace, resourceType, resourceName);
+        }
+
+        /// <summary>
+        /// Gets a single Adaptive Network Hardening resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveNetworkHardenings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
+        /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AdaptiveNetworkHardeningResource>> GetAdaptiveNetworkHardeningAsync(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetAdaptiveNetworkHardenings(resourceNamespace, resourceType, resourceName).GetAsync(adaptiveNetworkHardeningResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a single Adaptive Network Hardening resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveNetworkHardenings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceNamespace"> The Namespace of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
+        /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AdaptiveNetworkHardeningResource> GetAdaptiveNetworkHardening(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetAdaptiveNetworkHardenings(resourceNamespace, resourceType, resourceName).Get(adaptiveNetworkHardeningResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of JitNetworkAccessPolicyResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <returns> An object representing collection of JitNetworkAccessPolicyResources and their operations over a JitNetworkAccessPolicyResource. </returns>
+        public static JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetJitNetworkAccessPolicies(ascLocation);
+        }
+
+        /// <summary>
+        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies/{jitNetworkAccessPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JitNetworkAccessPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="jitNetworkAccessPolicyName"> Name of a Just-in-Time access configuration policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jitNetworkAccessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<JitNetworkAccessPolicyResource>> GetJitNetworkAccessPolicyAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetJitNetworkAccessPolicies(ascLocation).GetAsync(jitNetworkAccessPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies/{jitNetworkAccessPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JitNetworkAccessPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="jitNetworkAccessPolicyName"> Name of a Just-in-Time access configuration policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jitNetworkAccessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicy(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetJitNetworkAccessPolicies(ascLocation).Get(jitNetworkAccessPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ResourceGroupSecurityAlertResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <returns> An object representing collection of ResourceGroupSecurityAlertResources and their operations over a ResourceGroupSecurityAlertResource. </returns>
+        public static ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceGroupSecurityAlerts(ascLocation);
+        }
+
+        /// <summary>
+        /// Get an alert that is associated a resource group or a resource in a resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetResourceGroupLevel</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="alertName"> Name of the alert object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetResourceGroupSecurityAlerts(ascLocation).GetAsync(alertName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get an alert that is associated a resource group or a resource in a resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetResourceGroupLevel</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="alertName"> Name of the alert object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetResourceGroupSecurityAlerts(ascLocation).Get(alertName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SoftwareInventoryResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceNamespace"> The namespace of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An object representing collection of SoftwareInventoryResources and their operations over a SoftwareInventoryResource. </returns>
+        public static SoftwareInventoryCollection GetSoftwareInventories(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSoftwareInventories(resourceNamespace, resourceType, resourceName);
+        }
+
+        /// <summary>
+        /// Gets a single software data of the virtual machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceNamespace"> The namespace of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
+        /// <param name="softwareName"> Name of the installed software. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SoftwareInventoryResource>> GetSoftwareInventoryAsync(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSoftwareInventories(resourceNamespace, resourceType, resourceName).GetAsync(softwareName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a single software data of the virtual machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceNamespace"> The namespace of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
+        /// <param name="softwareName"> Name of the installed software. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SoftwareInventoryResource> GetSoftwareInventory(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSoftwareInventories(resourceNamespace, resourceType, resourceName).Get(softwareName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityConnectorResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityConnectorResources and their operations over a SecurityConnectorResource. </returns>
+        public static SecurityConnectorCollection GetSecurityConnectors(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecurityConnectors();
+        }
+
+        /// <summary>
+        /// Retrieves details of a specific security connector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="securityConnectorName"> The security connector name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityConnectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityConnectorResource>> GetSecurityConnectorAsync(this ResourceGroupResource resourceGroupResource, string securityConnectorName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSecurityConnectors().GetAsync(securityConnectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves details of a specific security connector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="securityConnectorName"> The security connector name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityConnectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityConnectorResource> GetSecurityConnector(this ResourceGroupResource resourceGroupResource, string securityConnectorName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSecurityConnectors().Get(securityConnectorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of all possible traffic between resources for the subscription and location, based on connection type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AllowedConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<SecurityCenterAllowedConnection>> GetAllowedConnectionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
+        {
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAllowedConnectionAsync(ascLocation, connectionType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the list of all possible traffic between resources for the subscription and location, based on connection type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AllowedConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<SecurityCenterAllowedConnection> GetAllowedConnection(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAllowedConnection(ascLocation, connectionType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a specific topology component.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topology_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
+        public static async Task<Response<SecurityTopologyResource>> GetTopologyAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTopologyAsync(ascLocation, topologyResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a specific topology component.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topology_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
+        public static Response<SecurityTopologyResource> GetTopology(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTopology(ascLocation, topologyResourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JitNetworkAccessPolicies_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            return GetJitNetworkAccessPolicyResourceExtensionClient(resourceGroupResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JitNetworkAccessPolicies_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            return GetJitNetworkAccessPolicyResourceExtensionClient(resourceGroupResource).GetJitNetworkAccessPolicies(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a specific discovered Security Solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions/{discoveredSecuritySolutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveredSecuritySolutions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
+        public static async Task<Response<DiscoveredSecuritySolution>> GetDiscoveredSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDiscoveredSecuritySolutionAsync(ascLocation, discoveredSecuritySolutionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a specific discovered Security Solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions/{discoveredSecuritySolutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveredSecuritySolutions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
+        public static Response<DiscoveredSecuritySolution> GetDiscoveredSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDiscoveredSecuritySolution(ascLocation, discoveredSecuritySolutionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a specific external Security Solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalSecuritySolutions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
+        public static async Task<Response<ExternalSecuritySolution>> GetExternalSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExternalSecuritySolutionAsync(ascLocation, externalSecuritySolutionsName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a specific external Security Solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalSecuritySolutions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
+        public static Response<ExternalSecuritySolution> GetExternalSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExternalSecuritySolution(ascLocation, externalSecuritySolutionsName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a specific Security Solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/securitySolutions/{securitySolutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySolutions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="securitySolutionName"> Name of security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
+        public static async Task<Response<SecuritySolution>> GetSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecuritySolutionAsync(ascLocation, securitySolutionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a specific Security Solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/securitySolutions/{securitySolutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySolutions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="securitySolutionName"> Name of security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
+        public static Response<SecuritySolution> GetSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecuritySolution(ascLocation, securitySolutionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the alerts that are associated with the resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecurityAlertData> GetAlertsByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAlertsByResourceGroupAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the alerts that are associated with the resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecurityAlertData> GetAlertsByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAlertsByResourceGroup(cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityCenterPricingResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityCenterPricingResources and their operations over a SecurityCenterPricingResource. </returns>
+        public static SecurityCenterPricingCollection GetSecurityCenterPricings(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityCenterPricings();
+        }
+
+        /// <summary>
+        /// Gets a provided Microsoft Defender for Cloud pricing configuration in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pricings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="pricingName"> name of the pricing configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(this SubscriptionResource subscriptionResource, string pricingName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSecurityCenterPricings().GetAsync(pricingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a provided Microsoft Defender for Cloud pricing configuration in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pricings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="pricingName"> name of the pricing configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityCenterPricingResource> GetSecurityCenterPricing(this SubscriptionResource subscriptionResource, string pricingName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSecurityCenterPricings().Get(pricingName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityCenterLocationResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityCenterLocationResources and their operations over a SecurityCenterLocationResource. </returns>
+        public static SecurityCenterLocationCollection GetSecurityCenterLocations(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityCenterLocations();
+        }
+
+        /// <summary>
+        /// Details of a specific location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityCenterLocationResource>> GetSecurityCenterLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSecurityCenterLocations().GetAsync(ascLocation, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Details of a specific location
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static Response<SecurityCenterLocationResource> GetSecurityCenterLocation(this SubscriptionResource subscriptionResource, AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSecurityCenterLocations().Get(ascLocation, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutoProvisioningSettingResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AutoProvisioningSettingResources and their operations over a AutoProvisioningSettingResource. </returns>
+        public static AutoProvisioningSettingCollection GetAutoProvisioningSettings(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoProvisioningSettings();
+        }
+
+        /// <summary>
+        /// Details of a specific setting
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="settingName"> Auto provisioning setting key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AutoProvisioningSettingResource>> GetAutoProvisioningSettingAsync(this SubscriptionResource subscriptionResource, string settingName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetAutoProvisioningSettings().GetAsync(settingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Details of a specific setting
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="settingName"> Auto provisioning setting key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AutoProvisioningSettingResource> GetAutoProvisioningSetting(this SubscriptionResource subscriptionResource, string settingName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetAutoProvisioningSettings().Get(settingName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityContactResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityContactResources and their operations over a SecurityContactResource. </returns>
+        public static SecurityContactCollection GetSecurityContacts(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityContacts();
+        }
+
+        /// <summary>
+        /// Get Default Security contact configurations for the subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityContacts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="securityContactName"> Name of the security contact object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityContactResource>> GetSecurityContactAsync(this SubscriptionResource subscriptionResource, string securityContactName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSecurityContacts().GetAsync(securityContactName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Default Security contact configurations for the subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityContacts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="securityContactName"> Name of the security contact object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityContactResource> GetSecurityContact(this SubscriptionResource subscriptionResource, string securityContactName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSecurityContacts().Get(securityContactName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityWorkspaceSettingResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityWorkspaceSettingResources and their operations over a SecurityWorkspaceSettingResource. </returns>
+        public static SecurityWorkspaceSettingCollection GetSecurityWorkspaceSettings(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityWorkspaceSettings();
+        }
+
+        /// <summary>
+        /// Settings about where we should store your security data and logs. If the result is empty, it means that no custom-workspace configuration was set
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceSettingName"> Name of the security setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityWorkspaceSettingResource>> GetSecurityWorkspaceSettingAsync(this SubscriptionResource subscriptionResource, string workspaceSettingName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSecurityWorkspaceSettings().GetAsync(workspaceSettingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Settings about where we should store your security data and logs. If the result is empty, it means that no custom-workspace configuration was set
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceSettingName"> Name of the security setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityWorkspaceSettingResource> GetSecurityWorkspaceSetting(this SubscriptionResource subscriptionResource, string workspaceSettingName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSecurityWorkspaceSettings().Get(workspaceSettingName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RegulatoryComplianceStandardResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of RegulatoryComplianceStandardResources and their operations over a RegulatoryComplianceStandardResource. </returns>
+        public static RegulatoryComplianceStandardCollection GetRegulatoryComplianceStandards(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegulatoryComplianceStandards();
+        }
+
+        /// <summary>
+        /// Supported regulatory compliance details state for selected standard
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RegulatoryComplianceStandardResource>> GetRegulatoryComplianceStandardAsync(this SubscriptionResource subscriptionResource, string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetRegulatoryComplianceStandards().GetAsync(regulatoryComplianceStandardName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Supported regulatory compliance details state for selected standard
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RegulatoryComplianceStandardResource> GetRegulatoryComplianceStandard(this SubscriptionResource subscriptionResource, string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetRegulatoryComplianceStandards().Get(regulatoryComplianceStandardName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityAlertsSuppressionRuleResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityAlertsSuppressionRuleResources and their operations over a SecurityAlertsSuppressionRuleResource. </returns>
+        public static SecurityAlertsSuppressionRuleCollection GetSecurityAlertsSuppressionRules(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityAlertsSuppressionRules();
+        }
+
+        /// <summary>
+        /// Get dismiss rule, with name: {alertsSuppressionRuleName}, for the given subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityAlertsSuppressionRuleResource>> GetSecurityAlertsSuppressionRuleAsync(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSecurityAlertsSuppressionRules().GetAsync(alertsSuppressionRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get dismiss rule, with name: {alertsSuppressionRuleName}, for the given subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityAlertsSuppressionRuleResource> GetSecurityAlertsSuppressionRule(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSecurityAlertsSuppressionRules().Get(alertsSuppressionRuleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionAssessmentMetadataResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SubscriptionAssessmentMetadataResources and their operations over a SubscriptionAssessmentMetadataResource. </returns>
+        public static SubscriptionAssessmentMetadataCollection GetAllSubscriptionAssessmentMetadata(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllSubscriptionAssessmentMetadata();
+        }
+
+        /// <summary>
+        /// Get metadata information on an assessment type in a specific subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_GetInSubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(this SubscriptionResource subscriptionResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetAllSubscriptionAssessmentMetadata().GetAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get metadata information on an assessment type in a specific subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_GetInSubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(this SubscriptionResource subscriptionResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetAllSubscriptionAssessmentMetadata().Get(assessmentMetadataName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecureScoreResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecureScoreResources and their operations over a SecureScoreResource. </returns>
+        public static SecureScoreCollection GetSecureScores(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecureScores();
+        }
+
+        /// <summary>
+        /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use &apos;ascScore&apos;.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecureScoreResource>> GetSecureScoreAsync(this SubscriptionResource subscriptionResource, string secureScoreName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSecureScores().GetAsync(secureScoreName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use &apos;ascScore&apos;.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecureScoreResource> GetSecureScore(this SubscriptionResource subscriptionResource, string secureScoreName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSecureScores().Get(secureScoreName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityCloudConnectorResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityCloudConnectorResources and their operations over a SecurityCloudConnectorResource. </returns>
+        public static SecurityCloudConnectorCollection GetSecurityCloudConnectors(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityCloudConnectors();
+        }
+
+        /// <summary>
+        /// Details of a specific cloud account connector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="connectorName"> Name of the cloud account connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityCloudConnectorResource>> GetSecurityCloudConnectorAsync(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSecurityCloudConnectors().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Details of a specific cloud account connector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="connectorName"> Name of the cloud account connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityCloudConnectorResource> GetSecurityCloudConnector(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSecurityCloudConnectors().Get(connectorName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecuritySettingResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecuritySettingResources and their operations over a SecuritySettingResource. </returns>
+        public static SecuritySettingCollection GetSecuritySettings(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecuritySettings();
+        }
+
+        /// <summary>
+        /// Settings of different configurations in Microsoft Defender for Cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Settings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="settingName"> The name of the setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecuritySettingResource>> GetSecuritySettingAsync(this SubscriptionResource subscriptionResource, SecuritySettingName settingName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSecuritySettings().GetAsync(settingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Settings of different configurations in Microsoft Defender for Cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Settings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="settingName"> The name of the setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static Response<SecuritySettingResource> GetSecuritySetting(this SubscriptionResource subscriptionResource, SecuritySettingName settingName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSecuritySettings().Get(settingName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of IngestionSettingResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of IngestionSettingResources and their operations over a IngestionSettingResource. </returns>
+        public static IngestionSettingCollection GetIngestionSettings(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIngestionSettings();
+        }
+
+        /// <summary>
+        /// Settings for ingesting security data and logs to correlate with resources associated with the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ingestionSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ingestionSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<IngestionSettingResource>> GetIngestionSettingAsync(this SubscriptionResource subscriptionResource, string ingestionSettingName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetIngestionSettings().GetAsync(ingestionSettingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Settings for ingesting security data and logs to correlate with resources associated with the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ingestionSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ingestionSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<IngestionSettingResource> GetIngestionSetting(this SubscriptionResource subscriptionResource, string ingestionSettingName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetIngestionSettings().Get(ingestionSettingName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionGovernanceRuleResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SubscriptionGovernanceRuleResources and their operations over a SubscriptionGovernanceRuleResource. </returns>
+        public static SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionGovernanceRules();
+        }
+
+        /// <summary>
+        /// Get a specific governanceRule for the requested scope by ruleId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSubscriptionGovernanceRules().GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific governanceRule for the requested scope by ruleId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSubscriptionGovernanceRules().Get(ruleId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionSecurityApplicationResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SubscriptionSecurityApplicationResources and their operations over a SubscriptionSecurityApplicationResource. </returns>
+        public static SubscriptionSecurityApplicationCollection GetSubscriptionSecurityApplications(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionSecurityApplications();
+        }
+
+        /// <summary>
+        /// Get a specific application for the requested scope by applicationId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Application_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionSecurityApplicationResource>> GetSubscriptionSecurityApplicationAsync(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSubscriptionSecurityApplications().GetAsync(applicationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific application for the requested scope by applicationId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Application_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionSecurityApplicationResource> GetSubscriptionSecurityApplication(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSubscriptionSecurityApplications().Get(applicationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// The configuration or data needed to onboard the machine to MDE
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MdeOnboardings_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MdeOnboarding> GetMdeOnboardingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMdeOnboardingsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// The configuration or data needed to onboard the machine to MDE
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MdeOnboardings_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MdeOnboarding> GetMdeOnboardings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMdeOnboardings(cancellationToken);
+        }
+
+        /// <summary>
+        /// The default configuration or data needed to onboard the machine to MDE
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MdeOnboardings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<MdeOnboarding>> GetMdeOnboardingAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetMdeOnboardingAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The default configuration or data needed to onboard the machine to MDE
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MdeOnboardings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<MdeOnboarding> GetMdeOnboarding(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMdeOnboarding(cancellationToken);
+        }
+
+        /// <summary>
+        /// List custom assessment automations by provided subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customAssessmentAutomations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetCustomAssessmentAutomationResourceExtensionClient(subscriptionResource).GetCustomAssessmentAutomationsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List custom assessment automations by provided subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customAssessmentAutomations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetCustomAssessmentAutomationResourceExtensionClient(subscriptionResource).GetCustomAssessmentAutomations(cancellationToken);
+        }
+
+        /// <summary>
+        /// List custom entity store assignments by provided subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customEntityStoreAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomEntityStoreAssignments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetCustomEntityStoreAssignmentResourceExtensionClient(subscriptionResource).GetCustomEntityStoreAssignmentsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List custom entity store assignments by provided subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customEntityStoreAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomEntityStoreAssignments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetCustomEntityStoreAssignmentResourceExtensionClient(subscriptionResource).GetCustomEntityStoreAssignments(cancellationToken);
+        }
+
+        /// <summary>
+        /// Use this method to get the list of IoT Security solutions by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/iotSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IotSecuritySolutionResource> GetIotSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetIotSecuritySolutionResourceExtensionClient(subscriptionResource).GetIotSecuritySolutionsAsync(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Use this method to get the list of IoT Security solutions by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/iotSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IotSecuritySolutionResource> GetIotSecuritySolutions(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetIotSecuritySolutionResourceExtensionClient(subscriptionResource).GetIotSecuritySolutions(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Recommended tasks that will help improve the security of the subscription proactively
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/tasks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> OData filter. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecurityTaskData> GetTasksAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTasksAsync(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Recommended tasks that will help improve the security of the subscription proactively
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/tasks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> OData filter. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecurityTaskData> GetTasks(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTasks(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the security automations in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security automations for the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/automations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Automations_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecurityAutomationResource> GetSecurityAutomationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSecurityAutomationResourceExtensionClient(subscriptionResource).GetSecurityAutomationsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the security automations in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security automations for the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/automations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Automations_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecurityAutomationResource> GetSecurityAutomations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSecurityAutomationResourceExtensionClient(subscriptionResource).GetSecurityAutomations(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of application control machine groups for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveApplicationControls_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="includePathRecommendations"> Include the policy rules. </param>
+        /// <param name="summary"> Return output in a summarized form. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroupsAsync(this SubscriptionResource subscriptionResource, bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
+        {
+            return GetAdaptiveApplicationControlGroupResourceExtensionClient(subscriptionResource).GetAdaptiveApplicationControlGroupsAsync(includePathRecommendations, summary, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of application control machine groups for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveApplicationControls_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="includePathRecommendations"> Include the policy rules. </param>
+        /// <param name="summary"> Return output in a summarized form. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroups(this SubscriptionResource subscriptionResource, bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
+        {
+            return GetAdaptiveApplicationControlGroupResourceExtensionClient(subscriptionResource).GetAdaptiveApplicationControlGroups(includePathRecommendations, summary, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of all possible traffic between resources for the subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AllowedConnections_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecurityCenterAllowedConnection> GetAllowedConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllowedConnectionsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of all possible traffic between resources for the subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AllowedConnections_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecurityCenterAllowedConnection> GetAllowedConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllowedConnections(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list that allows to build a topology view of a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/topologies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topology_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecurityTopologyResource> GetTopologiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTopologiesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list that allows to build a topology view of a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/topologies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topology_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecurityTopologyResource> GetTopologies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTopologies(cancellationToken);
+        }
+
+        /// <summary>
+        /// Policies for protecting resources using Just-in-Time access control.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JitNetworkAccessPolicies_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetJitNetworkAccessPolicyResourceExtensionClient(subscriptionResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Policies for protecting resources using Just-in-Time access control.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JitNetworkAccessPolicies_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetJitNetworkAccessPolicyResourceExtensionClient(subscriptionResource).GetJitNetworkAccessPolicies(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of discovered Security Solutions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/discoveredSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveredSecuritySolutions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDiscoveredSecuritySolutionsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of discovered Security Solutions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/discoveredSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveredSecuritySolutions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDiscoveredSecuritySolutions(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all supported Security Solutions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>securitySolutionsReferenceData_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllSecuritySolutionsReferenceDataAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all supported Security Solutions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>securitySolutionsReferenceData_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceData(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllSecuritySolutionsReferenceData(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of external security solutions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalSecuritySolutions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ExternalSecuritySolution> GetExternalSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExternalSecuritySolutionsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of external security solutions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalSecuritySolutions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ExternalSecuritySolution> GetExternalSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExternalSecuritySolutions(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all security controls within a scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControls_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="expand"> OData expand. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecureScoreControlDetails> GetSecureScoreControlsAsync(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecureScoreControlsAsync(expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all security controls within a scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControls_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="expand"> OData expand. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecureScoreControlDetails> GetSecureScoreControls(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecureScoreControls(expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// For a specified subscription, list the available security controls, their assessments, and the max score
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControlDefinitions_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecureScoreControlDefinitionsBySubscriptionAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// For a specified subscription, list the available security controls, their assessments, and the max score
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControlDefinitions_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecureScoreControlDefinitionsBySubscription(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of Security Solutions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySolutions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecuritySolution> GetSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecuritySolutionsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of Security Solutions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySolutions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecuritySolution> GetSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecuritySolutions(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the alerts that are associated with the subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecurityAlertData> GetAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAlertsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the alerts that are associated with the subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecurityAlertData> GetAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAlerts(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the software inventory of all virtual machines in the subscriptions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/softwareInventories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SoftwareInventoryResource> GetSoftwareInventoriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSoftwareInventoryResourceExtensionClient(subscriptionResource).GetSoftwareInventoriesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the software inventory of all virtual machines in the subscriptions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/softwareInventories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SoftwareInventoryResource> GetSoftwareInventories(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSoftwareInventoryResourceExtensionClient(subscriptionResource).GetSoftwareInventories(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the security connectors in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectors_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecurityConnectorResource> GetSecurityConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSecurityConnectorResourceExtensionClient(subscriptionResource).GetSecurityConnectorsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the security connectors in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectors_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecurityConnectorResource> GetSecurityConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSecurityConnectorResourceExtensionClient(subscriptionResource).GetSecurityConnectors(cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TenantAssessmentMetadataResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of TenantAssessmentMetadataResources and their operations over a TenantAssessmentMetadataResource. </returns>
+        public static TenantAssessmentMetadataCollection GetAllTenantAssessmentMetadata(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetAllTenantAssessmentMetadata();
+        }
+
+        /// <summary>
+        /// Get metadata information on an assessment type
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TenantAssessmentMetadataResource>> GetTenantAssessmentMetadataAsync(this TenantResource tenantResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetAllTenantAssessmentMetadata().GetAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get metadata information on an assessment type
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TenantAssessmentMetadataResource> GetTenantAssessmentMetadata(this TenantResource tenantResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetAllTenantAssessmentMetadata().Get(assessmentMetadataName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the available security controls, their assessments, and the max score
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControlDefinitions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetSecureScoreControlDefinitionsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List the available security controls, their assessments, and the max score
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControlDefinitions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetSecureScoreControlDefinitions(cancellationToken);
+        }
     }
 }

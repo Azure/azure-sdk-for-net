@@ -12,19 +12,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Advisor.Models;
 
-namespace Azure.ResourceManager.Advisor
+namespace Azure.ResourceManager.Advisor.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _configurationsClientDiagnostics;
         private ConfigurationsRestOperations _configurationsRestClient;
-        private ClientDiagnostics _resourceRecommendationBaseRecommendationsClientDiagnostics;
-        private RecommendationsRestOperations _resourceRecommendationBaseRecommendationsRestClient;
-        private ClientDiagnostics _suppressionContractSuppressionsClientDiagnostics;
-        private SuppressionsRestOperations _suppressionContractSuppressionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -38,12 +35,8 @@ namespace Azure.ResourceManager.Advisor
         {
         }
 
-        private ClientDiagnostics ConfigurationsClientDiagnostics => _configurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ConfigurationsClientDiagnostics => _configurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ConfigurationsRestOperations ConfigurationsRestClient => _configurationsRestClient ??= new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ResourceRecommendationBaseRecommendationsClientDiagnostics => _resourceRecommendationBaseRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceRecommendationBaseResource.ResourceType.Namespace, Diagnostics);
-        private RecommendationsRestOperations ResourceRecommendationBaseRecommendationsRestClient => _resourceRecommendationBaseRecommendationsRestClient ??= new RecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ResourceRecommendationBaseResource.ResourceType));
-        private ClientDiagnostics SuppressionContractSuppressionsClientDiagnostics => _suppressionContractSuppressionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor", SuppressionContractResource.ResourceType.Namespace, Diagnostics);
-        private SuppressionsRestOperations SuppressionContractSuppressionsRestClient => _suppressionContractSuppressionsRestClient ??= new SuppressionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SuppressionContractResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -111,8 +104,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ConfigData>> CreateConfigurationAsync(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateConfiguration");
             scope.Start();
             try
@@ -143,8 +139,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ConfigData> CreateConfiguration(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateConfiguration");
             scope.Start();
             try
@@ -157,176 +156,6 @@ namespace Azure.ResourceManager.Advisor
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Initiates the recommendation generation or computation process for a subscription. This operation is asynchronous. The generated recommendations are stored in a cache in the Advisor service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_Generate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GenerateRecommendationAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = ResourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GenerateRecommendation");
-            scope.Start();
-            try
-            {
-                var response = await ResourceRecommendationBaseRecommendationsRestClient.GenerateAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Initiates the recommendation generation or computation process for a subscription. This operation is asynchronous. The generated recommendations are stored in a cache in the Advisor service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_Generate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GenerateRecommendation(CancellationToken cancellationToken = default)
-        {
-            using var scope = ResourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GenerateRecommendation");
-            scope.Start();
-            try
-            {
-                var response = ResourceRecommendationBaseRecommendationsRestClient.Generate(Id.SubscriptionId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the status of the recommendation computation or generation process. Invoke this API after calling the generation recommendation. The URI of this API is returned in the Location field of the response header.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetGenerateStatus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetGenerateStatusRecommendationAsync(Guid operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ResourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGenerateStatusRecommendation");
-            scope.Start();
-            try
-            {
-                var response = await ResourceRecommendationBaseRecommendationsRestClient.GetGenerateStatusAsync(Id.SubscriptionId, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the status of the recommendation computation or generation process. Invoke this API after calling the generation recommendation. The URI of this API is returned in the Location field of the response header.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetGenerateStatus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetGenerateStatusRecommendation(Guid operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ResourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGenerateStatusRecommendation");
-            scope.Start();
-            try
-            {
-                var response = ResourceRecommendationBaseRecommendationsRestClient.GetGenerateStatus(Id.SubscriptionId, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Suppressions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SuppressionContractResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SuppressionContractResource> GetSuppressionContractsAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SuppressionContractSuppressionsRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SuppressionContractSuppressionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SuppressionContractResource(Client, SuppressionContractData.DeserializeSuppressionContractData(e)), SuppressionContractSuppressionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSuppressionContracts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Suppressions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SuppressionContractResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SuppressionContractResource> GetSuppressionContracts(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SuppressionContractSuppressionsRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SuppressionContractSuppressionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SuppressionContractResource(Client, SuppressionContractData.DeserializeSuppressionContractData(e)), SuppressionContractSuppressionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSuppressionContracts", "value", "nextLink", cancellationToken);
         }
     }
 }

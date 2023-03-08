@@ -11,29 +11,46 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridConnectivity.Mock;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridConnectivity. </summary>
     public static partial class HybridConnectivityExtensions
     {
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ArmResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
                 return new ArmResourceExtensionClient(client, scope);
-            }
-            );
+            });
         }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        #region EndpointResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
+        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return armResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, armResource.Id);
+                EndpointResource.ValidateResourceId(id);
+                return new EndpointResource(client, id);
             }
             );
         }
+        #endregion
 
         /// <summary> Gets a collection of EndpointResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -41,7 +58,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
         public static EndpointResourceCollection GetEndpointResources(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetEndpointResources();
+            return GetArmResourceExtensionClient(client, scope).GetEndpointResources();
         }
 
         /// <summary>
@@ -91,24 +108,5 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             return client.GetEndpointResources(scope).Get(endpointName, cancellationToken);
         }
-
-        #region EndpointResource
-        /// <summary>
-        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
-        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                EndpointResource.ValidateResourceId(id);
-                return new EndpointResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }

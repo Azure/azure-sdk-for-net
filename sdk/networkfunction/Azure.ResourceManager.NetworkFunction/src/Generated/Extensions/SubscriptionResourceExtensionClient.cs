@@ -10,11 +10,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetworkFunction;
 
-namespace Azure.ResourceManager.NetworkFunction
+namespace Azure.ResourceManager.NetworkFunction.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _azureTrafficCollectorsBySubscriptionClientDiagnostics;
         private AzureTrafficCollectorsBySubscriptionRestOperations _azureTrafficCollectorsBySubscriptionRestClient;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
         }
 
-        private ClientDiagnostics AzureTrafficCollectorsBySubscriptionClientDiagnostics => _azureTrafficCollectorsBySubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AzureTrafficCollectorsBySubscriptionClientDiagnostics => _azureTrafficCollectorsBySubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkFunction.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AzureTrafficCollectorsBySubscriptionRestOperations AzureTrafficCollectorsBySubscriptionRestClient => _azureTrafficCollectorsBySubscriptionRestClient ??= new AzureTrafficCollectorsBySubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

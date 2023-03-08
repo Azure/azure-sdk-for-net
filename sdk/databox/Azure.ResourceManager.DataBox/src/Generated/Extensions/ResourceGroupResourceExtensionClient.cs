@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataBox;
 using Azure.ResourceManager.DataBox.Models;
 
-namespace Azure.ResourceManager.DataBox
+namespace Azure.ResourceManager.DataBox.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _serviceClientDiagnostics;
         private ServiceRestOperations _serviceRestClient;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.DataBox
         {
         }
 
-        private ClientDiagnostics ServiceClientDiagnostics => _serviceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ServiceClientDiagnostics => _serviceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ServiceRestOperations ServiceRestClient => _serviceRestClient ??= new ServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -66,9 +67,12 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
@@ -90,9 +94,12 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxSkuInformation> GetAvailableSkus(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
@@ -114,8 +121,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateInputs");
             scope.Start();
             try
@@ -146,8 +156,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataBoxValidationResult> ValidateInputs(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateInputs");
             scope.Start();
             try
@@ -178,8 +191,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionConfiguration");
             scope.Start();
             try
@@ -210,8 +226,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<RegionConfigurationResult> GetRegionConfiguration(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionConfiguration");
             scope.Start();
             try

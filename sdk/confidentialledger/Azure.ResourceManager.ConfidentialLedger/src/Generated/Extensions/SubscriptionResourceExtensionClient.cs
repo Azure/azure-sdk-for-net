@@ -12,17 +12,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ConfidentialLedger;
 using Azure.ResourceManager.ConfidentialLedger.Models;
 
-namespace Azure.ResourceManager.ConfidentialLedger
+namespace Azure.ResourceManager.ConfidentialLedger.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _defaultClientDiagnostics;
         private ConfidentialLedgerRestOperations _defaultRestClient;
-        private ClientDiagnostics _confidentialLedgerLedgerClientDiagnostics;
-        private LedgerRestOperations _confidentialLedgerLedgerRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -36,10 +35,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
         }
 
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ConfidentialLedgerRestOperations DefaultRestClient => _defaultRestClient ??= new ConfidentialLedgerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ConfidentialLedgerLedgerClientDiagnostics => _confidentialLedgerLedgerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ConfidentialLedgerResource.ResourceType.Namespace, Diagnostics);
-        private LedgerRestOperations ConfidentialLedgerLedgerRestClient => _confidentialLedgerLedgerRestClient ??= new LedgerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfidentialLedgerResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -62,8 +59,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </summary>
         /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ConfidentialLedgerNameAvailabilityResult>> CheckConfidentialLedgerNameAvailabilityAsync(ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckConfidentialLedgerNameAvailability");
             scope.Start();
             try
@@ -93,8 +93,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </summary>
         /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ConfidentialLedgerNameAvailabilityResult> CheckConfidentialLedgerNameAvailability(ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckConfidentialLedgerNameAvailability");
             scope.Start();
             try
@@ -107,52 +110,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Retrieves the properties of all Confidential Ledgers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Ledger_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfidentialLedgerResource> GetConfidentialLedgersAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), ConfidentialLedgerLedgerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfidentialLedgers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieves the properties of all Confidential Ledgers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Ledger_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfidentialLedgerResource> GetConfidentialLedgers(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), ConfidentialLedgerLedgerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfidentialLedgers", "value", "nextLink", cancellationToken);
         }
     }
 }

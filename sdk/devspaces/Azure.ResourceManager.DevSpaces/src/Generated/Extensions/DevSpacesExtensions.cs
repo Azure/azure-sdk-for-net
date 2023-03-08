@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevSpaces.Mock;
 using Azure.ResourceManager.DevSpaces.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,72 +20,62 @@ namespace Azure.ResourceManager.DevSpaces
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevSpaces. </summary>
     public static partial class DevSpacesExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ControllerResourceExtensionClient GetControllerResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new ControllerResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ControllerResourceExtensionClient GetControllerResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ControllerResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+        #region ControllerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ControllerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ControllerResource.CreateResourceIdentifier" /> to create a <see cref="ControllerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ControllerResource" /> object. </returns>
+        public static ControllerResource GetControllerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ControllerResource.ValidateResourceId(id);
+                return new ControllerResource(client, id);
             }
             );
         }
-
-        /// <summary>
-        /// Lists all the Azure Dev Spaces Controllers with their properties in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevSpaces/controllers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Controllers_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ControllerResource> GetControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetControllersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the Azure Dev Spaces Controllers with their properties in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevSpaces/controllers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Controllers_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ControllerResource> GetControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetControllers(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
+        #endregion
 
         /// <summary> Gets a collection of ControllerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ControllerResources and their operations over a ControllerResource. </returns>
         public static ControllerCollection GetControllers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetControllers();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetControllers();
         }
 
         /// <summary>
@@ -157,7 +148,7 @@ namespace Azure.ResourceManager.DevSpaces
         {
             Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
 
-            return await GetExtensionClient(resourceGroupResource).GetContainerHostMappingContainerHostMappingAsync(location, containerHostMapping, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerHostMappingContainerHostMappingAsync(location, containerHostMapping, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -182,26 +173,49 @@ namespace Azure.ResourceManager.DevSpaces
         {
             Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
 
-            return GetExtensionClient(resourceGroupResource).GetContainerHostMappingContainerHostMapping(location, containerHostMapping, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerHostMappingContainerHostMapping(location, containerHostMapping, cancellationToken);
         }
 
-        #region ControllerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ControllerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ControllerResource.CreateResourceIdentifier" /> to create a <see cref="ControllerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Lists all the Azure Dev Spaces Controllers with their properties in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevSpaces/controllers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Controllers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ControllerResource" /> object. </returns>
-        public static ControllerResource GetControllerResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ControllerResource> GetControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                ControllerResource.ValidateResourceId(id);
-                return new ControllerResource(client, id);
-            }
-            );
+            return GetControllerResourceExtensionClient(subscriptionResource).GetControllersAsync(cancellationToken);
         }
-        #endregion
+
+        /// <summary>
+        /// Lists all the Azure Dev Spaces Controllers with their properties in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevSpaces/controllers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Controllers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ControllerResource> GetControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetControllerResourceExtensionClient(subscriptionResource).GetControllers(cancellationToken);
+        }
     }
 }

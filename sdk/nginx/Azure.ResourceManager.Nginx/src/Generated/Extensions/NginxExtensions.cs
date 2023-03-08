@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Nginx.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Nginx
@@ -18,122 +19,37 @@ namespace Azure.ResourceManager.Nginx
     /// <summary> A class to add extension methods to Azure.ResourceManager.Nginx. </summary>
     public static partial class NginxExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static NginxDeploymentResourceExtensionClient GetNginxDeploymentResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new NginxDeploymentResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// List the Nginx deployments resources
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Nginx.NginxPlus/nginxDeployments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NginxDeploymentResource> GetNginxDeploymentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        private static NginxDeploymentResourceExtensionClient GetNginxDeploymentResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(subscriptionResource).GetNginxDeploymentsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List the Nginx deployments resources
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Nginx.NginxPlus/nginxDeployments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NginxDeploymentResource> GetNginxDeployments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetNginxDeployments(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new NginxDeploymentResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of NginxDeploymentResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NginxDeploymentResources and their operations over a NginxDeploymentResource. </returns>
-        public static NginxDeploymentCollection GetNginxDeployments(this ResourceGroupResource resourceGroupResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetNginxDeployments();
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Get the Nginx deployment
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NginxDeploymentResource>> GetNginxDeploymentAsync(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetNginxDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Get the Nginx deployment
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<NginxDeploymentResource> GetNginxDeployment(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetNginxDeployments().Get(deploymentName, cancellationToken);
-        }
-
         #region NginxCertificateResource
         /// <summary>
         /// Gets an object representing a <see cref="NginxCertificateResource" /> along with the instance operations that can be performed on it but with no data.
@@ -190,5 +106,103 @@ namespace Azure.ResourceManager.Nginx
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of NginxDeploymentResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NginxDeploymentResources and their operations over a NginxDeploymentResource. </returns>
+        public static NginxDeploymentCollection GetNginxDeployments(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNginxDeployments();
+        }
+
+        /// <summary>
+        /// Get the Nginx deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<NginxDeploymentResource>> GetNginxDeploymentAsync(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetNginxDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the Nginx deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<NginxDeploymentResource> GetNginxDeployment(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetNginxDeployments().Get(deploymentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the Nginx deployments resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Nginx.NginxPlus/nginxDeployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NginxDeploymentResource> GetNginxDeploymentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetNginxDeploymentResourceExtensionClient(subscriptionResource).GetNginxDeploymentsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List the Nginx deployments resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Nginx.NginxPlus/nginxDeployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NginxDeploymentResource> GetNginxDeployments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetNginxDeploymentResourceExtensionClient(subscriptionResource).GetNginxDeployments(cancellationToken);
+        }
     }
 }

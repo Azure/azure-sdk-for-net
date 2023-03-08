@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementPartner;
 using Azure.ResourceManager.ManagementPartner.Models;
 
-namespace Azure.ResourceManager.ManagementPartner
+namespace Azure.ResourceManager.ManagementPartner.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _operationClientDiagnostics;
         private OperationRestOperations _operationRestClient;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.ManagementPartner
         {
         }
 
-        private ClientDiagnostics OperationClientDiagnostics => _operationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagementPartner", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics OperationClientDiagnostics => _operationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagementPartner.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OperationRestOperations OperationRestClient => _operationRestClient ??= new OperationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

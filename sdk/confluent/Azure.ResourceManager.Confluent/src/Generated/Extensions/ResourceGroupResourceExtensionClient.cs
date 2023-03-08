@@ -12,11 +12,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Confluent;
 
-namespace Azure.ResourceManager.Confluent
+namespace Azure.ResourceManager.Confluent.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _validationsClientDiagnostics;
         private ValidationsRestOperations _validationsRestClient;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Confluent
         {
         }
 
-        private ClientDiagnostics ValidationsClientDiagnostics => _validationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ValidationsClientDiagnostics => _validationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ValidationsRestOperations ValidationsRestClient => _validationsRestClient ??= new ValidationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -65,8 +66,13 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ConfluentOrganizationResource>> ValidateOrganizationAsync(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = ValidationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateOrganization");
             scope.Start();
             try
@@ -97,8 +103,13 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual Response<ConfluentOrganizationResource> ValidateOrganization(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = ValidationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateOrganization");
             scope.Start();
             try

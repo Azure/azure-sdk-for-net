@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearningCompute;
 using Azure.ResourceManager.MachineLearningCompute.Models;
 
-namespace Azure.ResourceManager.MachineLearningCompute
+namespace Azure.ResourceManager.MachineLearningCompute.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _machineLearningComputeClientDiagnostics;
         private MachineLearningComputeRestOperations _machineLearningComputeRestClient;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         {
         }
 
-        private ClientDiagnostics MachineLearningComputeClientDiagnostics => _machineLearningComputeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningCompute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics MachineLearningComputeClientDiagnostics => _machineLearningComputeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningCompute.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private MachineLearningComputeRestOperations MachineLearningComputeRestClient => _machineLearningComputeRestClient ??= new MachineLearningComputeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)

@@ -10,12 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.StorageCache;
 using Azure.ResourceManager.StorageCache.Models;
 
-namespace Azure.ResourceManager.StorageCache
+namespace Azure.ResourceManager.StorageCache.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _skusClientDiagnostics;
         private SkusRestOperations _skusRestClient;
@@ -23,8 +24,6 @@ namespace Azure.ResourceManager.StorageCache
         private UsageModelsRestOperations _usageModelsRestClient;
         private ClientDiagnostics _ascUsagesClientDiagnostics;
         private AscUsagesRestOperations _ascUsagesRestClient;
-        private ClientDiagnostics _storageCacheCachesClientDiagnostics;
-        private CachesRestOperations _storageCacheCachesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -38,14 +37,12 @@ namespace Azure.ResourceManager.StorageCache
         {
         }
 
-        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics UsageModelsClientDiagnostics => _usageModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics UsageModelsClientDiagnostics => _usageModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsageModelsRestOperations UsageModelsRestClient => _usageModelsRestClient ??= new UsageModelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AscUsagesClientDiagnostics => _ascUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AscUsagesClientDiagnostics => _ascUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AscUsagesRestOperations AscUsagesRestClient => _ascUsagesRestClient ??= new AscUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics StorageCacheCachesClientDiagnostics => _storageCacheCachesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache", StorageCacheResource.ResourceType.Namespace, Diagnostics);
-        private CachesRestOperations StorageCacheCachesRestClient => _storageCacheCachesRestClient ??= new CachesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StorageCacheResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -185,50 +182,6 @@ namespace Azure.ResourceManager.StorageCache
             HttpMessage FirstPageRequest(int? pageSizeHint) => AscUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AscUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheUsage.DeserializeStorageCacheUsage, AscUsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCacheUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all Caches the user has access to under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/caches</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Caches_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageCacheResource> GetStorageCachesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageCacheCachesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCaches", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all Caches the user has access to under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/caches</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Caches_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageCacheResource> GetStorageCaches(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageCacheCachesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCaches", "value", "nextLink", cancellationToken);
         }
     }
 }

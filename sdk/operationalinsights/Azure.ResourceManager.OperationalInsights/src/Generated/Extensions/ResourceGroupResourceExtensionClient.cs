@@ -5,21 +5,18 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.OperationalInsights;
 
-namespace Azure.ResourceManager.OperationalInsights
+namespace Azure.ResourceManager.OperationalInsights.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _logAnalyticsQueryPackQueryPacksClientDiagnostics;
-        private QueryPacksRestOperations _logAnalyticsQueryPackQueryPacksRestClient;
         private ClientDiagnostics _deletedWorkspacesClientDiagnostics;
         private DeletedWorkspacesRestOperations _deletedWorkspacesRestClient;
 
@@ -35,9 +32,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
         }
 
-        private ClientDiagnostics LogAnalyticsQueryPackQueryPacksClientDiagnostics => _logAnalyticsQueryPackQueryPacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", LogAnalyticsQueryPackResource.ResourceType.Namespace, Diagnostics);
-        private QueryPacksRestOperations LogAnalyticsQueryPackQueryPacksRestClient => _logAnalyticsQueryPackQueryPacksRestClient ??= new QueryPacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LogAnalyticsQueryPackResource.ResourceType));
-        private ClientDiagnostics DeletedWorkspacesClientDiagnostics => _deletedWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DeletedWorkspacesClientDiagnostics => _deletedWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DeletedWorkspacesRestOperations DeletedWorkspacesRestClient => _deletedWorkspacesRestClient ??= new DeletedWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -65,68 +60,6 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual OperationalInsightsWorkspaceCollection GetOperationalInsightsWorkspaces()
         {
             return GetCachedClient(Client => new OperationalInsightsWorkspaceCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="data"> Properties that need to be specified to create or update a Log Analytics QueryPack. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameQueryPackAsync(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
-        {
-            using var scope = LogAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateWithoutNameQueryPack");
-            scope.Start();
-            try
-            {
-                var response = await LogAnalyticsQueryPackQueryPacksRestClient.CreateOrUpdateWithoutNameAsync(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LogAnalyticsQueryPackResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="data"> Properties that need to be specified to create or update a Log Analytics QueryPack. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LogAnalyticsQueryPackResource> CreateOrUpdateWithoutNameQueryPack(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
-        {
-            using var scope = LogAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateWithoutNameQueryPack");
-            scope.Start();
-            try
-            {
-                var response = LogAnalyticsQueryPackQueryPacksRestClient.CreateOrUpdateWithoutName(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
-                return Response.FromValue(new LogAnalyticsQueryPackResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>

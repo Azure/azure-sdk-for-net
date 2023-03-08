@@ -11,29 +11,84 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServices.Mock;
 
 namespace Azure.ResourceManager.ManagedServices
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedServices. </summary>
     public static partial class ManagedServicesExtensions
     {
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ArmResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
                 return new ArmResourceExtensionClient(client, scope);
-            }
-            );
+            });
         }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        #region ManagedServicesRegistrationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedServicesRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedServicesRegistrationResource" /> object. </returns>
+        public static ManagedServicesRegistrationResource GetManagedServicesRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return armResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ArmResourceExtensionClient(client, armResource.Id);
+                ManagedServicesRegistrationResource.ValidateResourceId(id);
+                return new ManagedServicesRegistrationResource(client, id);
             }
             );
         }
+        #endregion
+
+        #region ManagedServicesRegistrationAssignmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedServicesRegistrationAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesRegistrationAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedServicesRegistrationAssignmentResource" /> object. </returns>
+        public static ManagedServicesRegistrationAssignmentResource GetManagedServicesRegistrationAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ManagedServicesRegistrationAssignmentResource.ValidateResourceId(id);
+                return new ManagedServicesRegistrationAssignmentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ManagedServicesMarketplaceRegistrationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedServicesMarketplaceRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesMarketplaceRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesMarketplaceRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedServicesMarketplaceRegistrationResource" /> object. </returns>
+        public static ManagedServicesMarketplaceRegistrationResource GetManagedServicesMarketplaceRegistrationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ManagedServicesMarketplaceRegistrationResource.ValidateResourceId(id);
+                return new ManagedServicesMarketplaceRegistrationResource(client, id);
+            }
+            );
+        }
+        #endregion
 
         /// <summary> Gets a collection of ManagedServicesRegistrationResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -41,7 +96,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesRegistrationResources and their operations over a ManagedServicesRegistrationResource. </returns>
         public static ManagedServicesRegistrationCollection GetManagedServicesRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetManagedServicesRegistrations();
+            return GetArmResourceExtensionClient(client, scope).GetManagedServicesRegistrations();
         }
 
         /// <summary>
@@ -100,7 +155,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesRegistrationAssignmentResources and their operations over a ManagedServicesRegistrationAssignmentResource. </returns>
         public static ManagedServicesRegistrationAssignmentCollection GetManagedServicesRegistrationAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetManagedServicesRegistrationAssignments();
+            return GetArmResourceExtensionClient(client, scope).GetManagedServicesRegistrationAssignments();
         }
 
         /// <summary>
@@ -161,7 +216,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesMarketplaceRegistrationResources and their operations over a ManagedServicesMarketplaceRegistrationResource. </returns>
         public static ManagedServicesMarketplaceRegistrationCollection GetManagedServicesMarketplaceRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetManagedServicesMarketplaceRegistrations();
+            return GetArmResourceExtensionClient(client, scope).GetManagedServicesMarketplaceRegistrations();
         }
 
         /// <summary>
@@ -213,62 +268,5 @@ namespace Azure.ResourceManager.ManagedServices
         {
             return client.GetManagedServicesMarketplaceRegistrations(scope).Get(marketplaceIdentifier, cancellationToken);
         }
-
-        #region ManagedServicesRegistrationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesRegistrationResource" /> object. </returns>
-        public static ManagedServicesRegistrationResource GetManagedServicesRegistrationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagedServicesRegistrationResource.ValidateResourceId(id);
-                return new ManagedServicesRegistrationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ManagedServicesRegistrationAssignmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesRegistrationAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesRegistrationAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesRegistrationAssignmentResource" /> object. </returns>
-        public static ManagedServicesRegistrationAssignmentResource GetManagedServicesRegistrationAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagedServicesRegistrationAssignmentResource.ValidateResourceId(id);
-                return new ManagedServicesRegistrationAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ManagedServicesMarketplaceRegistrationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesMarketplaceRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesMarketplaceRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesMarketplaceRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesMarketplaceRegistrationResource" /> object. </returns>
-        public static ManagedServicesMarketplaceRegistrationResource GetManagedServicesMarketplaceRegistrationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagedServicesMarketplaceRegistrationResource.ValidateResourceId(id);
-                return new ManagedServicesMarketplaceRegistrationResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }

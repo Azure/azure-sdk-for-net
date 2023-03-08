@@ -12,17 +12,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.BotService;
 using Azure.ResourceManager.BotService.Models;
 
-namespace Azure.ResourceManager.BotService
+namespace Azure.ResourceManager.BotService.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _botClientDiagnostics;
-        private BotsRestOperations _botRestClient;
-        private ClientDiagnostics _botConnectionSettingBotConnectionClientDiagnostics;
-        private BotConnectionRestOperations _botConnectionSettingBotConnectionRestClient;
         private ClientDiagnostics _qnAMakerEndpointKeysClientDiagnostics;
         private QnAMakerEndpointKeysRestOperations _qnAMakerEndpointKeysRestClient;
         private ClientDiagnostics _hostSettingsClientDiagnostics;
@@ -40,105 +37,15 @@ namespace Azure.ResourceManager.BotService
         {
         }
 
-        private ClientDiagnostics BotClientDiagnostics => _botClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", BotResource.ResourceType.Namespace, Diagnostics);
-        private BotsRestOperations BotRestClient => _botRestClient ??= new BotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BotResource.ResourceType));
-        private ClientDiagnostics BotConnectionSettingBotConnectionClientDiagnostics => _botConnectionSettingBotConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", BotConnectionSettingResource.ResourceType.Namespace, Diagnostics);
-        private BotConnectionRestOperations BotConnectionSettingBotConnectionRestClient => _botConnectionSettingBotConnectionRestClient ??= new BotConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BotConnectionSettingResource.ResourceType));
-        private ClientDiagnostics QnAMakerEndpointKeysClientDiagnostics => _qnAMakerEndpointKeysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics QnAMakerEndpointKeysClientDiagnostics => _qnAMakerEndpointKeysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private QnAMakerEndpointKeysRestOperations QnAMakerEndpointKeysRestClient => _qnAMakerEndpointKeysRestClient ??= new QnAMakerEndpointKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics HostSettingsClientDiagnostics => _hostSettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics HostSettingsClientDiagnostics => _hostSettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private HostSettingsRestOperations HostSettingsRestClient => _hostSettingsRestClient ??= new HostSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/botServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bots_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BotResource> GetBotsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BotRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BotResource(Client, BotData.DeserializeBotData(e)), BotClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBots", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/botServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bots_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BotResource> GetBots(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BotRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BotResource(Client, BotData.DeserializeBotData(e)), BotClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBots", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the available Service Providers for creating Connection Settings
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/listAuthServiceProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_ListServiceProviders</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BotServiceProvider" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BotServiceProvider> GetBotConnectionServiceProvidersAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BotConnectionSettingBotConnectionRestClient.CreateListServiceProvidersRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, BotServiceProvider.DeserializeBotServiceProvider, BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBotConnectionServiceProviders", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the available Service Providers for creating Connection Settings
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/listAuthServiceProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_ListServiceProviders</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BotServiceProvider" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BotServiceProvider> GetBotConnectionServiceProviders(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BotConnectionSettingBotConnectionRestClient.CreateListServiceProvidersRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, BotServiceProvider.DeserializeBotServiceProvider, BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBotConnectionServiceProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -156,8 +63,11 @@ namespace Azure.ResourceManager.BotService
         /// </summary>
         /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<GetBotServiceQnAMakerEndpointKeyResult>> GetBotServiceQnAMakerEndpointKeyAsync(GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = QnAMakerEndpointKeysClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBotServiceQnAMakerEndpointKey");
             scope.Start();
             try
@@ -187,8 +97,11 @@ namespace Azure.ResourceManager.BotService
         /// </summary>
         /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<GetBotServiceQnAMakerEndpointKeyResult> GetBotServiceQnAMakerEndpointKey(GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = QnAMakerEndpointKeysClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBotServiceQnAMakerEndpointKey");
             scope.Start();
             try

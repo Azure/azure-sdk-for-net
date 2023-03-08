@@ -12,15 +12,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Automanage;
 using Azure.ResourceManager.Automanage.Models;
 
-namespace Azure.ResourceManager.Automanage
+namespace Azure.ResourceManager.Automanage.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _automanageConfigurationProfileConfigurationProfilesClientDiagnostics;
-        private ConfigurationProfilesRestOperations _automanageConfigurationProfileConfigurationProfilesRestClient;
         private ClientDiagnostics _servicePrincipalsClientDiagnostics;
         private ServicePrincipalsRestOperations _servicePrincipalsRestClient;
 
@@ -36,57 +35,13 @@ namespace Azure.ResourceManager.Automanage
         {
         }
 
-        private ClientDiagnostics AutomanageConfigurationProfileConfigurationProfilesClientDiagnostics => _automanageConfigurationProfileConfigurationProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automanage", AutomanageConfigurationProfileResource.ResourceType.Namespace, Diagnostics);
-        private ConfigurationProfilesRestOperations AutomanageConfigurationProfileConfigurationProfilesRestClient => _automanageConfigurationProfileConfigurationProfilesRestClient ??= new ConfigurationProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AutomanageConfigurationProfileResource.ResourceType));
-        private ClientDiagnostics ServicePrincipalsClientDiagnostics => _servicePrincipalsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automanage", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ServicePrincipalsClientDiagnostics => _servicePrincipalsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automanage.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ServicePrincipalsRestOperations ServicePrincipalsRestClient => _servicePrincipalsRestClient ??= new ServicePrincipalsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Retrieve a list of configuration profile within a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationProfiles_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AutomanageConfigurationProfileConfigurationProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), AutomanageConfigurationProfileConfigurationProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutomanageConfigurationProfiles", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve a list of configuration profile within a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationProfiles_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AutomanageConfigurationProfileConfigurationProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), AutomanageConfigurationProfileConfigurationProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutomanageConfigurationProfiles", "value", null, cancellationToken);
         }
 
         /// <summary>

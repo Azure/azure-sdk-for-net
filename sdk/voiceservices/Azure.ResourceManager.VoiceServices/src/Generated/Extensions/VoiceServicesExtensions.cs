@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.VoiceServices.Mock;
 using Azure.ResourceManager.VoiceServices.Models;
 
 namespace Azure.ResourceManager.VoiceServices
@@ -19,122 +20,97 @@ namespace Azure.ResourceManager.VoiceServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.VoiceServices. </summary>
     public static partial class VoiceServicesExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static CommunicationsGatewayResourceExtensionClient GetCommunicationsGatewayResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new CommunicationsGatewayResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static CommunicationsGatewayResourceExtensionClient GetCommunicationsGatewayResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new CommunicationsGatewayResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region CommunicationsGatewayResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CommunicationsGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CommunicationsGatewayResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationsGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CommunicationsGatewayResource" /> object. </returns>
+        public static CommunicationsGatewayResource GetCommunicationsGatewayResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CommunicationsGatewayResource.ValidateResourceId(id);
+                return new CommunicationsGatewayResource(client, id);
             }
             );
         }
+        #endregion
 
+        #region TestLineResource
         /// <summary>
-        /// List CommunicationsGateway resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.VoiceServices/communicationsGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunicationsGateways_ListBySubscription</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="TestLineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TestLineResource.CreateResourceIdentifier" /> to create a <see cref="TestLineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CommunicationsGatewayResource> GetCommunicationsGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TestLineResource" /> object. </returns>
+        public static TestLineResource GetTestLineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetExtensionClient(subscriptionResource).GetCommunicationsGatewaysAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List CommunicationsGateway resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.VoiceServices/communicationsGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunicationsGateways_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CommunicationsGatewayResource> GetCommunicationsGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetCommunicationsGateways(cancellationToken);
-        }
-
-        /// <summary>
-        /// Check whether the resource name is available in the given region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.VoiceServices/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NameAvailability_CheckLocal</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
-        /// <param name="content"> The check availability request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckLocalNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).CheckLocalNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check whether the resource name is available in the given region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.VoiceServices/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NameAvailability_CheckLocal</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
-        /// <param name="content"> The check availability request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckLocalNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).CheckLocalNameAvailability(location, content, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
+                TestLineResource.ValidateResourceId(id);
+                return new TestLineResource(client, id);
             }
             );
         }
+        #endregion
 
         /// <summary> Gets a collection of CommunicationsGatewayResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CommunicationsGatewayResources and their operations over a CommunicationsGatewayResource. </returns>
         public static CommunicationsGatewayCollection GetCommunicationsGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetCommunicationsGateways();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCommunicationsGateways();
         }
 
         /// <summary>
@@ -185,42 +161,96 @@ namespace Azure.ResourceManager.VoiceServices
             return resourceGroupResource.GetCommunicationsGateways().Get(communicationsGatewayName, cancellationToken);
         }
 
-        #region CommunicationsGatewayResource
         /// <summary>
-        /// Gets an object representing a <see cref="CommunicationsGatewayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CommunicationsGatewayResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationsGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// List CommunicationsGateway resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.VoiceServices/communicationsGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationsGateways_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CommunicationsGatewayResource" /> object. </returns>
-        public static CommunicationsGatewayResource GetCommunicationsGatewayResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CommunicationsGatewayResource> GetCommunicationsGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                CommunicationsGatewayResource.ValidateResourceId(id);
-                return new CommunicationsGatewayResource(client, id);
-            }
-            );
+            return GetCommunicationsGatewayResourceExtensionClient(subscriptionResource).GetCommunicationsGatewaysAsync(cancellationToken);
         }
-        #endregion
 
-        #region TestLineResource
         /// <summary>
-        /// Gets an object representing a <see cref="TestLineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TestLineResource.CreateResourceIdentifier" /> to create a <see cref="TestLineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// List CommunicationsGateway resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.VoiceServices/communicationsGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationsGateways_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TestLineResource" /> object. </returns>
-        public static TestLineResource GetTestLineResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CommunicationsGatewayResource> GetCommunicationsGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                TestLineResource.ValidateResourceId(id);
-                return new TestLineResource(client, id);
-            }
-            );
+            return GetCommunicationsGatewayResourceExtensionClient(subscriptionResource).GetCommunicationsGateways(cancellationToken);
         }
-        #endregion
+
+        /// <summary>
+        /// Check whether the resource name is available in the given region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.VoiceServices/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NameAvailability_CheckLocal</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="content"> The check availability request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CheckNameAvailabilityResponse>> CheckLocalNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckLocalNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check whether the resource name is available in the given region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.VoiceServices/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NameAvailability_CheckLocal</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="content"> The check availability request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CheckNameAvailabilityResponse> CheckLocalNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckLocalNameAvailability(location, content, cancellationToken);
+        }
     }
 }

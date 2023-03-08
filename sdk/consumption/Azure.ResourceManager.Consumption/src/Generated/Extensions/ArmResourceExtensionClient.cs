@@ -7,11 +7,12 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Consumption;
 
-namespace Azure.ResourceManager.Consumption
+namespace Azure.ResourceManager.Consumption.Mock
 {
     /// <summary> A class to add extension methods to ArmResource. </summary>
-    internal partial class ArmResourceExtensionClient : ArmResource
+    public partial class ArmResourceExtensionClient : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref="ArmResourceExtensionClient"/> class for mocking. </summary>
         protected ArmResourceExtensionClient()
@@ -29,6 +30,13 @@ namespace Azure.ResourceManager.Consumption
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary> Gets a collection of ConsumptionBudgetResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of ConsumptionBudgetResources and their operations over a ConsumptionBudgetResource. </returns>
+        public virtual ConsumptionBudgetCollection GetConsumptionBudgets()
+        {
+            return GetCachedClient(Client => new ConsumptionBudgetCollection(Client, Id));
         }
     }
 }

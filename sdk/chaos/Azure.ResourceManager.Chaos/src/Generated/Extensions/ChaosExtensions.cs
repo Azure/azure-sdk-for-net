@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Chaos.Mock;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos
@@ -18,260 +19,53 @@ namespace Azure.ResourceManager.Chaos
     /// <summary> A class to add extension methods to Azure.ResourceManager.Chaos. </summary>
     public static partial class ChaosExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ExperimentResourceExtensionClient GetExperimentResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new ExperimentResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of TargetTypeResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> String that represents a Location resource name. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An object representing collection of TargetTypeResources and their operations over a TargetTypeResource. </returns>
-        public static TargetTypeCollection GetTargetTypes(this SubscriptionResource subscriptionResource, string locationName)
+        private static ExperimentResourceExtensionClient GetExperimentResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
-            return GetExtensionClient(subscriptionResource).GetTargetTypes(locationName);
-        }
-
-        /// <summary>
-        /// Get a Target Type resources for given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetTypes_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> String that represents a Location resource name. </param>
-        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TargetTypeResource>> GetTargetTypeAsync(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetTargetTypes(locationName).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Target Type resources for given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetTypes_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> String that represents a Location resource name. </param>
-        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<TargetTypeResource> GetTargetType(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetTargetTypes(locationName).Get(targetTypeName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of Experiment resources in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiments_ListAll</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ExperimentResource> GetExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetExperimentsAsync(running, continuationToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of Experiment resources in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiments_ListAll</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ExperimentResource> GetExperiments(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetExperiments(running, continuationToken, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new ExperimentResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of ExperimentResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ExperimentResources and their operations over a ExperimentResource. </returns>
-        public static ExperimentCollection GetExperiments(this ResourceGroupResource resourceGroupResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetExperiments();
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Get a Experiment resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ExperimentResource>> GetExperimentAsync(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetExperiments().GetAsync(experimentName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary>
-        /// Get a Experiment resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ExperimentResource> GetExperiment(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return resourceGroupResource.GetExperiments().Get(experimentName, cancellationToken);
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of TargetResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
-        /// <param name="parentResourceType"> String that represents a resource type. </param>
-        /// <param name="parentResourceName"> String that represents a resource name. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is null. </exception>
-        /// <returns> An object representing collection of TargetResources and their operations over a TargetResource. </returns>
-        public static TargetCollection GetTargets(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
-            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
-            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
-
-            return GetExtensionClient(resourceGroupResource).GetTargets(parentProviderNamespace, parentResourceType, parentResourceName);
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Get a Target resource that extends a tracked regional resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Targets_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
-        /// <param name="parentResourceType"> String that represents a resource type. </param>
-        /// <param name="parentResourceName"> String that represents a resource name. </param>
-        /// <param name="targetName"> String that represents a Target resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TargetResource>> GetTargetAsync(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).GetAsync(targetName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Target resource that extends a tracked regional resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Targets_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
-        /// <param name="parentResourceType"> String that represents a resource type. </param>
-        /// <param name="parentResourceName"> String that represents a resource name. </param>
-        /// <param name="targetName"> String that represents a Target resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<TargetResource> GetTarget(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).Get(targetName, cancellationToken);
-        }
-
         #region CapabilityResource
         /// <summary>
         /// Gets an object representing a <see cref="CapabilityResource" /> along with the instance operations that can be performed on it but with no data.
@@ -404,5 +198,241 @@ namespace Azure.ResourceManager.Chaos
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of ExperimentResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ExperimentResources and their operations over a ExperimentResource. </returns>
+        public static ExperimentCollection GetExperiments(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExperiments();
+        }
+
+        /// <summary>
+        /// Get a Experiment resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ExperimentResource>> GetExperimentAsync(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetExperiments().GetAsync(experimentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Experiment resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ExperimentResource> GetExperiment(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetExperiments().Get(experimentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TargetResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
+        /// <param name="parentResourceType"> String that represents a resource type. </param>
+        /// <param name="parentResourceName"> String that represents a resource name. </param>
+        /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is null. </exception>
+        /// <returns> An object representing collection of TargetResources and their operations over a TargetResource. </returns>
+        public static TargetCollection GetTargets(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName)
+        {
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTargets(parentProviderNamespace, parentResourceType, parentResourceName);
+        }
+
+        /// <summary>
+        /// Get a Target resource that extends a tracked regional resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
+        /// <param name="parentResourceType"> String that represents a resource type. </param>
+        /// <param name="parentResourceName"> String that represents a resource name. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TargetResource>> GetTargetAsync(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).GetAsync(targetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Target resource that extends a tracked regional resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
+        /// <param name="parentResourceType"> String that represents a resource type. </param>
+        /// <param name="parentResourceName"> String that represents a resource name. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TargetResource> GetTarget(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).Get(targetName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TargetTypeResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> String that represents a Location resource name. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        /// <returns> An object representing collection of TargetTypeResources and their operations over a TargetTypeResource. </returns>
+        public static TargetTypeCollection GetTargetTypes(this SubscriptionResource subscriptionResource, string locationName)
+        {
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTargetTypes(locationName);
+        }
+
+        /// <summary>
+        /// Get a Target Type resources for given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> String that represents a Location resource name. </param>
+        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TargetTypeResource>> GetTargetTypeAsync(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetTargetTypes(locationName).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Target Type resources for given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> String that represents a Location resource name. </param>
+        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TargetTypeResource> GetTargetType(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetTargetTypes(locationName).Get(targetTypeName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of Experiment resources in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListAll</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ExperimentResource> GetExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        {
+            return GetExperimentResourceExtensionClient(subscriptionResource).GetExperimentsAsync(running, continuationToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of Experiment resources in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/experiments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListAll</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
+        /// <param name="continuationToken"> String that sets the continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ExperimentResource> GetExperiments(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        {
+            return GetExperimentResourceExtensionClient(subscriptionResource).GetExperiments(running, continuationToken, cancellationToken);
+        }
     }
 }

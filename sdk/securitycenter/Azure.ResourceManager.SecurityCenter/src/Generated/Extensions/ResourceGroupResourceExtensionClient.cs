@@ -12,19 +12,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SecurityCenter;
 using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _allowedConnectionsClientDiagnostics;
         private AllowedConnectionsRestOperations _allowedConnectionsRestClient;
         private ClientDiagnostics _topologyClientDiagnostics;
         private TopologyRestOperations _topologyRestClient;
-        private ClientDiagnostics _jitNetworkAccessPolicyClientDiagnostics;
-        private JitNetworkAccessPoliciesRestOperations _jitNetworkAccessPolicyRestClient;
         private ClientDiagnostics _discoveredSecuritySolutionsClientDiagnostics;
         private DiscoveredSecuritySolutionsRestOperations _discoveredSecuritySolutionsRestClient;
         private ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
@@ -46,19 +45,17 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AllowedConnectionsRestOperations AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private TopologyRestOperations TopologyRestClient => _topologyRestClient ??= new TopologyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics JitNetworkAccessPolicyClientDiagnostics => _jitNetworkAccessPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", JitNetworkAccessPolicyResource.ResourceType.Namespace, Diagnostics);
-        private JitNetworkAccessPoliciesRestOperations JitNetworkAccessPolicyRestClient => _jitNetworkAccessPolicyRestClient ??= new JitNetworkAccessPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JitNetworkAccessPolicyResource.ResourceType));
-        private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DiscoveredSecuritySolutionsRestOperations DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ExternalSecuritySolutionsRestOperations ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SecuritySolutionsClientDiagnostics => _securitySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics SecuritySolutionsClientDiagnostics => _securitySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SecuritySolutionsRestOperations SecuritySolutionsRestClient => _securitySolutionsRestClient ??= new SecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mock", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AlertsRestOperations AlertsRestClient => _alertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -107,9 +104,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An object representing collection of ServerVulnerabilityAssessmentResources and their operations over a ServerVulnerabilityAssessmentResource. </returns>
         public virtual ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments(string resourceNamespace, string resourceType, string resourceName)
         {
+            Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return new ServerVulnerabilityAssessmentCollection(Client, Id, resourceNamespace, resourceType, resourceName);
         }
 
@@ -117,9 +120,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An object representing collection of AdaptiveNetworkHardeningResources and their operations over a AdaptiveNetworkHardeningResource. </returns>
         public virtual AdaptiveNetworkHardeningCollection GetAdaptiveNetworkHardenings(string resourceNamespace, string resourceType, string resourceName)
         {
+            Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return new AdaptiveNetworkHardeningCollection(Client, Id, resourceNamespace, resourceType, resourceName);
         }
 
@@ -143,9 +152,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceNamespace"> The namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An object representing collection of SoftwareInventoryResources and their operations over a SoftwareInventoryResource. </returns>
         public virtual SoftwareInventoryCollection GetSoftwareInventories(string resourceNamespace, string resourceType, string resourceName)
         {
+            Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return new SoftwareInventoryCollection(Client, Id, resourceNamespace, resourceType, resourceName);
         }
 
@@ -236,8 +251,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
         public virtual async Task<Response<SecurityTopologyResource>> GetTopologyAsync(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
+
             using var scope = TopologyClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetTopology");
             scope.Start();
             try
@@ -268,8 +287,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
         public virtual Response<SecurityTopologyResource> GetTopology(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
+
             using var scope = TopologyClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetTopology");
             scope.Start();
             try
@@ -282,50 +305,6 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JitNetworkAccessPolicies_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JitNetworkAccessPolicies_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -344,8 +323,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
         public virtual async Task<Response<DiscoveredSecuritySolution>> GetDiscoveredSecuritySolutionAsync(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
+
             using var scope = DiscoveredSecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDiscoveredSecuritySolution");
             scope.Start();
             try
@@ -376,8 +359,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
         public virtual Response<DiscoveredSecuritySolution> GetDiscoveredSecuritySolution(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
+
             using var scope = DiscoveredSecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDiscoveredSecuritySolution");
             scope.Start();
             try
@@ -408,8 +395,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
         public virtual async Task<Response<ExternalSecuritySolution>> GetExternalSecuritySolutionAsync(AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
+
             using var scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetExternalSecuritySolution");
             scope.Start();
             try
@@ -440,8 +431,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
         public virtual Response<ExternalSecuritySolution> GetExternalSecuritySolution(AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
+
             using var scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetExternalSecuritySolution");
             scope.Start();
             try
@@ -472,8 +467,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="securitySolutionName"> Name of security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
         public virtual async Task<Response<SecuritySolution>> GetSecuritySolutionAsync(AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
+
             using var scope = SecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecuritySolution");
             scope.Start();
             try
@@ -504,8 +503,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="securitySolutionName"> Name of security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
         public virtual Response<SecuritySolution> GetSecuritySolution(AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
+
             using var scope = SecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecuritySolution");
             scope.Start();
             try

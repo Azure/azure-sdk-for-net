@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.WorkloadMonitor;
 
-namespace Azure.ResourceManager.WorkloadMonitor
+namespace Azure.ResourceManager.WorkloadMonitor.Mock
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
@@ -35,9 +37,15 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
         /// <param name="resourceCollectionName"> The resource collection name (ex: virtualMachines for virtual machines). </param>
         /// <param name="resourceName"> The name of the virtual machine. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceCollectionName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceCollectionName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An object representing collection of HealthMonitorResources and their operations over a HealthMonitorResource. </returns>
         public virtual HealthMonitorCollection GetHealthMonitors(string providerName, string resourceCollectionName, string resourceName)
         {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceCollectionName, nameof(resourceCollectionName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return new HealthMonitorCollection(Client, Id, providerName, resourceCollectionName, resourceName);
         }
     }

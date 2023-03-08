@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ConfidentialLedger.Mock;
 using Azure.ResourceManager.ConfidentialLedger.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,122 +20,78 @@ namespace Azure.ResourceManager.ConfidentialLedger
     /// <summary> A class to add extension methods to Azure.ResourceManager.ConfidentialLedger. </summary>
     public static partial class ConfidentialLedgerExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ConfidentialLedgerResourceExtensionClient GetConfidentialLedgerResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new ConfidentialLedgerResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ConfidentialLedgerResourceExtensionClient GetConfidentialLedgerResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ConfidentialLedgerResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region ConfidentialLedgerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ConfidentialLedgerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConfidentialLedgerResource.CreateResourceIdentifier" /> to create a <see cref="ConfidentialLedgerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConfidentialLedgerResource" /> object. </returns>
+        public static ConfidentialLedgerResource GetConfidentialLedgerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ConfidentialLedgerResource.ValidateResourceId(id);
+                return new ConfidentialLedgerResource(client, id);
             }
             );
         }
-
-        /// <summary>
-        /// To check whether a resource name is available.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Name availability request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ConfidentialLedgerNameAvailabilityResult>> CheckConfidentialLedgerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).CheckConfidentialLedgerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// To check whether a resource name is available.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Name availability request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<ConfidentialLedgerNameAvailabilityResult> CheckConfidentialLedgerNameAvailability(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).CheckConfidentialLedgerNameAvailability(content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieves the properties of all Confidential Ledgers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Ledger_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfidentialLedgerResource> GetConfidentialLedgersAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetConfidentialLedgersAsync(filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieves the properties of all Confidential Ledgers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Ledger_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfidentialLedgerResource> GetConfidentialLedgers(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetConfidentialLedgers(filter, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
+        #endregion
 
         /// <summary> Gets a collection of ConfidentialLedgerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ConfidentialLedgerResources and their operations over a ConfidentialLedgerResource. </returns>
         public static ConfidentialLedgerCollection GetConfidentialLedgers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetConfidentialLedgers();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfidentialLedgers();
         }
 
         /// <summary>
@@ -185,23 +142,96 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return resourceGroupResource.GetConfidentialLedgers().Get(ledgerName, cancellationToken);
         }
 
-        #region ConfidentialLedgerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConfidentialLedgerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfidentialLedgerResource.CreateResourceIdentifier" /> to create a <see cref="ConfidentialLedgerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// To check whether a resource name is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfidentialLedgerResource" /> object. </returns>
-        public static ConfidentialLedgerResource GetConfidentialLedgerResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Name availability request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ConfidentialLedgerNameAvailabilityResult>> CheckConfidentialLedgerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                ConfidentialLedgerResource.ValidateResourceId(id);
-                return new ConfidentialLedgerResource(client, id);
-            }
-            );
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckConfidentialLedgerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
-        #endregion
+
+        /// <summary>
+        /// To check whether a resource name is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Name availability request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<ConfidentialLedgerNameAvailabilityResult> CheckConfidentialLedgerNameAvailability(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckConfidentialLedgerNameAvailability(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of all Confidential Ledgers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConfidentialLedgerResource> GetConfidentialLedgersAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetConfidentialLedgerResourceExtensionClient(subscriptionResource).GetConfidentialLedgersAsync(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of all Confidential Ledgers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConfidentialLedgerResource> GetConfidentialLedgers(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetConfidentialLedgerResourceExtensionClient(subscriptionResource).GetConfidentialLedgers(filter, cancellationToken);
+        }
     }
 }
