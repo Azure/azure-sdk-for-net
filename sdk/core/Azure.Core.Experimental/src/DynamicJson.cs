@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -93,12 +94,17 @@ namespace Azure.Core.Dynamic
 
         private IEnumerable GetEnumerable()
         {
-            return _element.ValueKind switch
+            if (_element.TryGetArrayEnumerator(out IEnumerable values))
             {
-                JsonValueKind.Array => new ArrayEnumerator(_element.EnumerateArray()),
-                JsonValueKind.Object => new ObjectEnumerator(_element.EnumerateObject()),
-                _ => throw new InvalidOperationException($"Unable to enumerate JSON element."),
-            };
+                return values;
+            }
+
+            if (_element.TryGetObjectEnumerator(out IEnumerable<(string Name, ObjectElement Value)> properties))
+            {
+                return properties;
+            }
+
+            throw new InvalidOperationException($"Unable to enumerate this element.");
         }
 
         private object? SetProperty(string name, object value)
@@ -158,7 +164,7 @@ namespace Azure.Core.Dynamic
         private T ConvertTo<T>() => _element.As<T>();
 
         /// <inheritdoc/>
-        public override string ToString() => _element.ToString();
+        public override string? ToString() => _element.ToString();
 
         /// <inheritdoc/>
         public void Dispose()

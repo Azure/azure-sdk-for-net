@@ -8,7 +8,6 @@ using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text.Json;
 
 namespace Azure.Core.Dynamic
 {
@@ -28,9 +27,9 @@ namespace Azure.Core.Dynamic
 
             public override IEnumerable<string> GetDynamicMemberNames()
             {
-                if (_value._element.ValueKind == JsonValueKind.Object)
+                if (_value._element.TryGetObjectEnumerator(out IEnumerable<(string Name, ObjectElement Value)>? enumerable))
                 {
-                    return _value._element.EnumerateObject().Select(p => p.Name);
+                    return enumerable.Select(p => p.Name);
                 }
 
                 return Array.Empty<string>();

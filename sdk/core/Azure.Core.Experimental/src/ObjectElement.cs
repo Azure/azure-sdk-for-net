@@ -15,7 +15,7 @@ using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
 {
-    public readonly struct ObjectElement
+    public readonly partial struct ObjectElement
     {
         private readonly ObjectDocument _document;
         private readonly object _element;
@@ -45,12 +45,47 @@ namespace Azure.Core.Dynamic
 
         public IEnumerable EnumerateArray()
         {
-            return _document.EnumerateArray(_element);
+            if (_document.TryGetArrayEnumerator(_element, out IEnumerable value))
+            {
+                return value;
+            }
+
+            throw new InvalidOperationException();
         }
 
-        public IEnumerable EnumerateObject()
+        public bool TryGetArrayEnumerator(out IEnumerable enumerator)
         {
-            return _document.EnumerateObject(_element);
+            return _document.TryGetArrayEnumerator(_element, out enumerator);
+        }
+
+        public int GetArrayLength()
+        {
+            return _document.GetArrayLength(_element);
+        }
+
+        public IEnumerable<(string Name, ObjectElement Value)> EnumerateObject()
+        {
+            if (_document.TryGetObjectEnumerator(_element, out IEnumerable<(string Name, ObjectElement Value)> value))
+            {
+                return value;
+            }
+
+            throw new InvalidOperationException();
+        }
+
+        public bool TryGetObjectEnumerator(out IEnumerable<(string Name, ObjectElement Value)> enumerator)
+        {
+            return _document.TryGetObjectEnumerator(_element, out enumerator);
+        }
+
+        public ObjectElement GetProperty(string name)
+        {
+            if (_document.TryGetProperty(_element, name, out ObjectElement value))
+            {
+                return value;
+            }
+
+            throw new InvalidOperationException();
         }
 
         public bool GetBoolean()

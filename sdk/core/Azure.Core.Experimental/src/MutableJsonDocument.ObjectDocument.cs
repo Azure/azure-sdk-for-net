@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Xml.Linq;
@@ -27,17 +28,12 @@ namespace Azure.Core.Json
 #endif
         }
 
-        public override IEnumerable EnumerateArray(object element)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IEnumerable EnumerateObject(object element)
-        {
-            throw new NotImplementedException();
-        }
-
         public override ObjectElement GetIndexElement(object element, int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetArrayLength(object element)
         {
             throw new NotImplementedException();
         }
@@ -48,6 +44,16 @@ namespace Azure.Core.Json
         }
 
         public override bool TryGetProperty(object element, string name, out ObjectElement value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool TryGetArrayEnumerator(object element, out IEnumerable enumerable)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool TryGetObjectEnumerator(object element, out IEnumerable<(string Name, ObjectElement Value)> enumerable)
         {
             throw new NotImplementedException();
         }
@@ -72,7 +78,7 @@ namespace Azure.Core.Json
             throw new NotImplementedException();
         }
 
-        public override void SetProperty(object element, string name, object value)
+        public override ObjectElement SetProperty(object element, string name, object value)
         {
             throw new NotImplementedException();
         }

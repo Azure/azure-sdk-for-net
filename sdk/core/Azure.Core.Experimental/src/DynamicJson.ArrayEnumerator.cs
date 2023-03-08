@@ -16,9 +16,9 @@ namespace Azure.Core.Dynamic
         [DebuggerDisplay("{Current,nq}")]
         public struct ArrayEnumerator : IEnumerable<DynamicJson>, IEnumerator<DynamicJson>
         {
-            private MutableJsonElement.ArrayEnumerator _enumerator;
+            private ObjectElement.ArrayEnumerator _enumerator;
 
-            internal ArrayEnumerator(MutableJsonElement.ArrayEnumerator enumerator)
+            internal ArrayEnumerator(ObjectElement.ArrayEnumerator enumerator)
             {
                 _enumerator = enumerator;
             }
