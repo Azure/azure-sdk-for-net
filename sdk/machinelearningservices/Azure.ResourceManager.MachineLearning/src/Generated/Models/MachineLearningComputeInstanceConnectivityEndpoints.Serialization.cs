@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeInstanceConnectivityEndpoints DeserializeMachineLearningComputeInstanceConnectivityEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> publicIPAddress = default;
             Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())

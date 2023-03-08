@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     {
         internal static VirtualNetworkListResult DeserializeVirtualNetworkListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ScVmmVirtualNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static RecommendedSecurityRule DeserializeRecommendedSecurityRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<SecurityTrafficDirection> direction = default;
             Optional<int> destinationPort = default;

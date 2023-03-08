@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CopyCompletionError DeserializeCopyCompletionError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CopyCompletionErrorReason errorCode = default;
             string errorMessage = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningAksComputeSecrets DeserializeMachineLearningAksComputeSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userKubeConfig = default;
             Optional<string> adminKubeConfig = default;
             Optional<string> imagePullSecretName = default;

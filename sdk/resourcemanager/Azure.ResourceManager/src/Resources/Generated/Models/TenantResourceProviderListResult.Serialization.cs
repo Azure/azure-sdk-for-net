@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static TenantResourceProviderListResult DeserializeTenantResourceProviderListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TenantResourceProvider>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -1,14 +1,10 @@
 # Release History
 
-## 4.3.0-beta.2 (Unreleased)
-
-### Features Added
+## 4.3.0 (2023-03-07)
 
 ### Breaking Changes
 
 - Service version "7.4-preview.1" is not supported.
-
-### Bugs Fixed
 
 ### Other Changes
 

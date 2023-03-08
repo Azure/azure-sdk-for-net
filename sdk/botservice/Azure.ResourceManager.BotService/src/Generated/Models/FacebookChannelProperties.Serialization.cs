@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static FacebookChannelProperties DeserializeFacebookChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> verifyToken = default;
             Optional<IList<FacebookPage>> pages = default;
             string appId = default;

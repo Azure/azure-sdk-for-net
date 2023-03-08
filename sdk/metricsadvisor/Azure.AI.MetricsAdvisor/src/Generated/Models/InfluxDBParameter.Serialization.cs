@@ -77,6 +77,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static InfluxDBParameter DeserializeInfluxDBParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectionString = default;
             Optional<string> database = default;
             Optional<string> userName = default;

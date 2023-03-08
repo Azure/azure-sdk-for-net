@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static RawReferenceInputDataSource DeserializeRawReferenceInputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<BinaryData> payload = default;
             Optional<Uri> payloadUri = default;

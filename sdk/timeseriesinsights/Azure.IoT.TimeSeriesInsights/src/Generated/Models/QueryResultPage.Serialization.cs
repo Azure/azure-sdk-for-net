@@ -16,6 +16,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static QueryResultPage DeserializeQueryResultPage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DateTimeOffset>> timestamps = default;
             Optional<IReadOnlyList<PropertyValues>> properties = default;
             Optional<double> progress = default;

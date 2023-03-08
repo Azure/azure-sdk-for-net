@@ -48,6 +48,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static TemporalSpanResolution DeserializeTemporalSpanResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> begin = default;
             Optional<string> end = default;
             Optional<string> duration = default;

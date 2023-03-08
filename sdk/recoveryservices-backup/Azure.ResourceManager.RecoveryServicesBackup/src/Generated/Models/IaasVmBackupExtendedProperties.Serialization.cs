@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmBackupExtendedProperties DeserializeIaasVmBackupExtendedProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DiskExclusionProperties> diskExclusionProperties = default;
             Optional<string> linuxVmApplicationName = default;
             foreach (var property in element.EnumerateObject())

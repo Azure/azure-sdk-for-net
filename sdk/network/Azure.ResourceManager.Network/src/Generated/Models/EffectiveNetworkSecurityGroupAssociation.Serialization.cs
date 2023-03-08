@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EffectiveNetworkSecurityGroupAssociation DeserializeEffectiveNetworkSecurityGroupAssociation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> networkManager = default;
             Optional<WritableSubResource> subnet = default;
             Optional<WritableSubResource> networkInterface = default;

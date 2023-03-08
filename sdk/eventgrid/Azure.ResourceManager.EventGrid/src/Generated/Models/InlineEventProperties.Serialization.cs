@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static InlineEventProperties DeserializeInlineEventProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<string> displayName = default;
             Optional<Uri> documentationUri = default;

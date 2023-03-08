@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static ConnectionFromIPNotAllowed DeserializeConnectionFromIPNotAllowed(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> allowlistValues = default;
             Optional<SecurityValueType> valueType = default;
             Optional<string> displayName = default;

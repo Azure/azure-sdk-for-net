@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningBuildContext DeserializeMachineLearningBuildContext(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri contextUri = default;
             Optional<string> dockerfilePath = default;
             foreach (var property in element.EnumerateObject())

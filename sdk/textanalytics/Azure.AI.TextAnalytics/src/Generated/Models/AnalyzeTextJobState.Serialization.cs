@@ -17,6 +17,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static AnalyzeTextJobState DeserializeAnalyzeTextJobState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnalyzeTasks tasks = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             Optional<string> displayName = default;

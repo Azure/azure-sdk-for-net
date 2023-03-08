@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static AuthorizationActionMapping DeserializeAuthorizationActionMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> original = default;
             Optional<string> desired = default;
             foreach (var property in element.EnumerateObject())

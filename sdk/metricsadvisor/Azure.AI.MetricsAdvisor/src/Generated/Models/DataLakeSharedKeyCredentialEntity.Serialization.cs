@@ -32,6 +32,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         internal static DataLakeSharedKeyCredentialEntity DeserializeDataLakeSharedKeyCredentialEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataLakeGen2SharedKeyParam parameters = default;
             DataSourceCredentialKind dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;

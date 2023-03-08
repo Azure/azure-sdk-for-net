@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static PrivateEndpointConnectionForPrivateLinkHubBasic DeserializePrivateEndpointConnectionForPrivateLinkHubBasic(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<SynapsePrivateEndpointConnectionProperties> properties = default;
             foreach (var property in element.EnumerateObject())

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static MachineLearningStudioInputs DeserializeMachineLearningStudioInputs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<MachineLearningStudioInputColumn>> columnNames = default;
             foreach (var property in element.EnumerateObject())

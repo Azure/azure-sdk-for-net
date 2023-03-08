@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
     {
         internal static VirtualNetworkDnsForwardingRulesetListResult DeserializeVirtualNetworkDnsForwardingRulesetListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<VirtualNetworkDnsForwardingRuleset>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

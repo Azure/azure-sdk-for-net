@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudEndpointPostBackupResult DeserializeCloudEndpointPostBackupResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cloudEndpointName = default;
             foreach (var property in element.EnumerateObject())
             {

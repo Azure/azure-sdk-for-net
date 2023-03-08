@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseDataMaskingPolicyData DeserializeSynapseDataMaskingPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;

@@ -22,6 +22,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static ImageFormatBmp DeserializeImageFormatBmp(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             foreach (var property in element.EnumerateObject())
             {

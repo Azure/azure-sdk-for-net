@@ -15,6 +15,10 @@ namespace Azure.Communication.ShortCodes.Models
     {
         internal static ShortCodes DeserializeShortCodes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ShortCode>> shortCodes = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

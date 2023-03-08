@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static BigDataPoolAutoPauseProperties DeserializeBigDataPoolAutoPauseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> delayInMinutes = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static HubBillingInfoFormat DeserializeHubBillingInfoFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> skuName = default;
             Optional<int> minUnits = default;
             Optional<int> maxUnits = default;

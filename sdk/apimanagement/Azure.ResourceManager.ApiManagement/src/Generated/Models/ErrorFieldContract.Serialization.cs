@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ErrorFieldContract DeserializeErrorFieldContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;

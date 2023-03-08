@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForServersAwsOfferingArcAutoProvisioning DeserializeDefenderForServersAwsOfferingArcAutoProvisioning(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<string> cloudRoleArn = default;
             foreach (var property in element.EnumerateObject())

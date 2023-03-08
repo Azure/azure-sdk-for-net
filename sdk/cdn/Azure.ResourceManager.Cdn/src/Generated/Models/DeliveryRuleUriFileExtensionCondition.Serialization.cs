@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleUriFileExtensionCondition DeserializeDeliveryRuleUriFileExtensionCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             UriFileExtensionMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())

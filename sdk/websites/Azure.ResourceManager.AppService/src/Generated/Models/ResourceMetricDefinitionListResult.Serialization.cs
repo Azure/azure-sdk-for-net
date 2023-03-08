@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static ResourceMetricDefinitionListResult DeserializeResourceMetricDefinitionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ResourceMetricDefinition> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

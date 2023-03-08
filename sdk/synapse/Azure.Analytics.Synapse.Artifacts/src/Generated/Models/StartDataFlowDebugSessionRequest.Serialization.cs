@@ -79,6 +79,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static StartDataFlowDebugSessionRequest DeserializeStartDataFlowDebugSessionRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sessionId = default;
             Optional<DataFlowResource> dataFlow = default;
             Optional<IList<DataFlowResource>> dataFlows = default;

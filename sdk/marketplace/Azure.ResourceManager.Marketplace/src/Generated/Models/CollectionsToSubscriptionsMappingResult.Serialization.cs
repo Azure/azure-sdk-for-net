@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static CollectionsToSubscriptionsMappingResult DeserializeCollectionsToSubscriptionsMappingResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails>> details = default;
             foreach (var property in element.EnumerateObject())
             {

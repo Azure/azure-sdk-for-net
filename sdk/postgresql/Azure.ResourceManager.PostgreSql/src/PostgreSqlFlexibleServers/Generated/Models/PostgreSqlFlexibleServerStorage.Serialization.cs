@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerStorage DeserializePostgreSqlFlexibleServerStorage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> storageSizeGB = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumeGroupMetadata DeserializeNetAppVolumeGroupMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupDescription = default;
             Optional<NetAppApplicationType> applicationType = default;
             Optional<string> applicationIdentifier = default;

@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetCompression DeserializeDatasetCompression(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData type = default;
             Optional<BinaryData> level = default;
             IDictionary<string, BinaryData> additionalProperties = default;

@@ -17,6 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkBatchJobState DeserializeSparkBatchJobState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> notStartedAt = default;
             Optional<DateTimeOffset?> startingAt = default;
             Optional<DateTimeOffset?> runningAt = default;

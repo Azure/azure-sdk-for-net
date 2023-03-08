@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static AdditionalLocation DeserializeAdditionalLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureLocation location = default;
             ApiManagementServiceSkuProperties sku = default;
             Optional<IList<string>> zones = default;
@@ -99,7 +103,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.Parse(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     publicIPAddresses = array;
                     continue;
@@ -114,7 +125,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.Parse(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     privateIPAddresses = array;
                     continue;

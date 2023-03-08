@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeSsisPackageStore DeserializeIntegrationRuntimeSsisPackageStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             EntityReference packageStoreLinkedService = default;
             foreach (var property in element.EnumerateObject())

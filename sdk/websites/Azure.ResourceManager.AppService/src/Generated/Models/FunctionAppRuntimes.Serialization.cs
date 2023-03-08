@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static FunctionAppRuntimes DeserializeFunctionAppRuntimes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FunctionAppRuntimeSettings> linuxRuntimeSettings = default;
             Optional<FunctionAppRuntimeSettings> windowsRuntimeSettings = default;
             foreach (var property in element.EnumerateObject())

@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static SavingsPlanOrderPaymentDetail DeserializeSavingsPlanOrderPaymentDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dueDate = default;
             Optional<DateTimeOffset> paymentDate = default;
             Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;

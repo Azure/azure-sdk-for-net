@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static PrimingJob DeserializePrimingJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string primingJobName = default;
             Uri primingManifestUrl = default;
             Optional<string> primingJobId = default;

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static SystemAssignedIdentityAuthInfo DeserializeSystemAssignedIdentityAuthInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkerAuthType authType = default;
             foreach (var property in element.EnumerateObject())
             {

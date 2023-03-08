@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static HopLink DeserializeHopLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextHopId = default;
             Optional<string> linkType = default;
             Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static AppConfigurationPrivateLinkServiceConnectionState DeserializeAppConfigurationPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppConfigurationPrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<AppConfigurationActionsRequired> actionsRequired = default;

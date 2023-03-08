@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     {
         internal static ConfidentialLedgerList DeserializeConfidentialLedgerList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConfidentialLedgerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

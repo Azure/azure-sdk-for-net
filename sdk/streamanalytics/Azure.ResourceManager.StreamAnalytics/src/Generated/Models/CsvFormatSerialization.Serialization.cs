@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static CsvFormatSerialization DeserializeCsvFormatSerialization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EventSerializationType type = default;
             Optional<string> fieldDelimiter = default;
             Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;

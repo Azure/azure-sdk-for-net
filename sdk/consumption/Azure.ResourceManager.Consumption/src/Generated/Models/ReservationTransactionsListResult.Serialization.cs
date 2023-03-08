@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ReservationTransactionsListResult DeserializeReservationTransactionsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConsumptionReservationTransaction>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationRefundPolicyError DeserializeReservationRefundPolicyError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReservationErrorResponseCode> code = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())

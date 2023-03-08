@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         internal static PostgreSqlServerAdministratorListResult DeserializePostgreSqlServerAdministratorListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PostgreSqlServerAdministratorData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

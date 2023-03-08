@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static UpdatePrerequisite DeserializeUpdatePrerequisite(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> updateType = default;
             Optional<string> version = default;
             Optional<string> packageName = default;

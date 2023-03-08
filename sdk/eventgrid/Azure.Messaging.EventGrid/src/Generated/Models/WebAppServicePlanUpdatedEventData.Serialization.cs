@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static WebAppServicePlanUpdatedEventData DeserializeWebAppServicePlanUpdatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppServicePlanEventTypeDetail> appServicePlanEventTypeDetail = default;
             Optional<WebAppServicePlanUpdatedEventDataSku> sku = default;
             Optional<string> name = default;

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static ServicePrincipalProperties DeserializeServicePrincipalProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string clientId = default;
             string secret = default;
             foreach (var property in element.EnumerateObject())

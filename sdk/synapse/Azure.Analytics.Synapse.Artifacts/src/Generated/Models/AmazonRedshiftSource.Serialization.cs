@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AmazonRedshiftSource DeserializeAmazonRedshiftSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> query = default;
             Optional<RedshiftUnloadSettings> redshiftUnloadSettings = default;
             Optional<object> queryTimeout = default;

@@ -90,6 +90,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static StaticSiteData DeserializeStaticSiteData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppServiceSkuDescription> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;

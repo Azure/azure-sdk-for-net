@@ -15,6 +15,10 @@ namespace Azure.Communication.NetworkTraversal
     {
         internal static CommunicationError DeserializeCommunicationError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
             Optional<string> target = default;

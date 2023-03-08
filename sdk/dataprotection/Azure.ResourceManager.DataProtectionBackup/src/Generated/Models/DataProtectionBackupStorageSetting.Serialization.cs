@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupStorageSetting DeserializeDataProtectionBackupStorageSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageSettingStoreType> datastoreType = default;
             Optional<StorageSettingType> type = default;
             foreach (var property in element.EnumerateObject())

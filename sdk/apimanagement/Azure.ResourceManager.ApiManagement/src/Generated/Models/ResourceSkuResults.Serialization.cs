@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ResourceSkuResults DeserializeResourceSkuResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AvailableApiManagementServiceSkuResult> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

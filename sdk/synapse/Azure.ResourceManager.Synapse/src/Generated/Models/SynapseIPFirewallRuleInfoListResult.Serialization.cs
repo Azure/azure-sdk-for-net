@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseIPFirewallRuleInfoListResult DeserializeSynapseIPFirewallRuleInfoListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<SynapseIPFirewallRuleInfoData>> value = default;
             foreach (var property in element.EnumerateObject())

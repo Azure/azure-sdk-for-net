@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HyperVSiteDetails DeserializeHyperVSiteDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HyperVHostDetails>> hyperVHosts = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())

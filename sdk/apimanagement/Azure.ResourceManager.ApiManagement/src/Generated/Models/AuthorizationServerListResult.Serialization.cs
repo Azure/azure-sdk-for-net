@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static AuthorizationServerListResult DeserializeAuthorizationServerListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiManagementAuthorizationServerData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

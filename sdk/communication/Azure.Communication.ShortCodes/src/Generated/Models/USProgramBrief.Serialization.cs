@@ -84,6 +84,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static USProgramBrief DeserializeUSProgramBrief(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid id = default;
             Optional<ProgramBriefStatus> status = default;
             Optional<string> number = default;
