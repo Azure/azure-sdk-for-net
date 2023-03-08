@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -166,14 +166,12 @@ namespace Azure.Monitor.Query.Tests
                 $"order by Name asc",
                 _logsTestData.DataTimeRange);
 
-            //Assert.IsTrue(results.Value.Contains(new Dictionary<string, object>() { { "Name", "a" }, { "Age", 1 } }));
-            //Assert.IsTrue(results.Value.Contains(new Dictionary<string, object>() { { "Name", "b" }, { "Age", 3 } }));
-            //Assert.IsTrue(results.Value.Contains(new Dictionary<string, object>() { { "Name", "c" }, { "Age", 1 } }));
-            foreach (var x in results.Value)
+            CollectionAssert.AreEqual(new[]
             {
-                if (x.Equals(new Dictionary<string, object>() { { "Name", "a" }, { "Age", 1 } }))
-                    break;
-            }
+                new Dictionary<string, object>() {{"Age", 1}, {"Name", "a"}},
+                new Dictionary<string, object>() {{"Age", 3}, {"Name", "b"}},
+                new Dictionary<string, object>() {{"Age", 1}, {"Name", "c"}}
+            }, results.Value);
         }
 
         [RecordedTest]
