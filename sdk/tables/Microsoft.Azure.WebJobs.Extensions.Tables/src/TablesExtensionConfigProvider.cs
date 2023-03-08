@@ -48,6 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             binding
                 .AddConverter<JObject, TableEntity>(CreateTableEntityFromJObject)
+                // when using isolated .NET worker (and other language workers), the output attribute data will come in as a byte array
                 .AddConverter<byte[], TableEntity>(CreateTableEntityFromJsonBytes)
                 .AddConverter<TableEntity, JObject>(ConvertEntityToJObject)
                 .AddConverter<ITableEntity, TableEntity>(entity =>
