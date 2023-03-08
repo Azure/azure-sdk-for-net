@@ -18,15 +18,14 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// Abstraction layer over a document element used by DynamicData.
     /// </summary>
-    public abstract class ObjectDocument
+    public abstract class ObjectDocument : IDisposable
     {
-        public abstract ObjectElement GetIndexElement(object element, int index);
-
         // Enumerables
         public abstract IEnumerable EnumerateArray(object element);
         public abstract IEnumerable EnumerateObject(object element);
 
-        // Properties
+        // Getters
+        public abstract ObjectElement GetIndexElement(object element, int index);
         public abstract bool TryGetProperty(object element, string name, out ObjectElement value);
 
         // Primitives
@@ -38,94 +37,13 @@ namespace Azure.Core.Dynamic
         // Setters
         public abstract void SetProperty(object element, string name, object value);
         public abstract void Set(object element, object value);
-    }
 
-    public struct ObjectElement
-    {
-        private ObjectDocument _document;
-        private object _element;
+        // Serialization
+        public abstract void WriteTo(object element, Stream stream);
 
-        public ObjectElement(ObjectDocument document, object element)
-        {
-            _document = document;
-            _element = element;
-        }
+        // Conversion
+        public abstract T As<T>(object element);
 
-        public bool TryGetProperty(string name, out ObjectElement value)
-        {
-            return _document.TryGetProperty(_element, name, out value);
-        }
-
-        public ObjectElement GetIndexElement(int index)
-        {
-            return _document.GetIndexElement(_element, index);
-        }
-
-        public IEnumerable EnumerateArray()
-        {
-            return _document.EnumerateArray(_element);
-        }
-
-        public IEnumerable EnumerateObject()
-        {
-            return _document.EnumerateObject(_element);
-        }
-
-        public bool GetBoolean()
-        {
-            if (_document.TryGetBoolean(_element, out bool value))
-            {
-                return value;
-            }
-
-            throw new InvalidOperationException();
-        }
-
-        public int GetInt32()
-        {
-            if (_document.TryGetInt64(_element, out long value))
-            {
-                // TODO: check range
-                return (int)value;
-            }
-
-            throw new InvalidOperationException();
-        }
-
-        public long GetInt64()
-        {
-            if (_document.TryGetInt64(_element, out long value))
-            {
-                return value;
-            }
-
-            throw new InvalidOperationException();
-        }
-
-        public float GetSingle()
-        {
-            if (_document.TryGetDouble(_element, out double value))
-            {
-                // TODO: check range
-                return (float)value;
-            }
-
-            throw new InvalidOperationException();
-        }
-
-        public double GetDouble()
-        {
-            if (_document.TryGetDouble(_element, out double value))
-            {
-                return value;
-            }
-
-            throw new InvalidOperationException();
-        }
-
-        public void SetProperty(string name, object value)
-        {
-            _document.SetProperty(_element, name, value);
-        }
+        public abstract void Dispose();
     }
 }

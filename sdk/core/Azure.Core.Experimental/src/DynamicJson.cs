@@ -25,27 +25,22 @@ namespace Azure.Core.Dynamic
         private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
-        private MutableJsonElement _element;
+        private ObjectElement _element;
         private DynamicJsonOptions _options;
 
-        internal DynamicJson(MutableJsonElement element, DynamicJsonOptions options = default)
+        internal DynamicJson(ObjectElement element, DynamicJsonOptions options = default)
         {
             _element = element;
             _options = options;
         }
 
-        internal override void WriteTo(Stream stream)
-        {
-            Utf8JsonWriter writer = new(stream);
-            _element.WriteTo(writer);
-            writer.Flush();
-        }
+        internal override void WriteTo(Stream stream) => _element.WriteTo(stream);
 
         private object? GetProperty(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            if (_element.TryGetProperty(name, out MutableJsonElement element))
+            if (_element.TryGetProperty(name, out ObjectElement element))
             {
                 return new DynamicJson(element, _options);
             }
@@ -152,7 +147,7 @@ namespace Azure.Core.Dynamic
                 case string propertyName:
                     return SetProperty(propertyName, value);
                 case int arrayIndex:
-                    MutableJsonElement element = _element.GetIndexElement(arrayIndex);
+                    ObjectElement element = _element.GetIndexElement(arrayIndex);
                     element.Set(value);
                     return new DynamicJson(element, _options);
             }
@@ -160,21 +155,10 @@ namespace Azure.Core.Dynamic
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
         }
 
-        private T ConvertTo<T>()
-        {
-#if NET6_0_OR_GREATER
-            return JsonSerializer.Deserialize<T>(_element.GetJsonElement(), MutableJsonDocument.DefaultJsonSerializerOptions)!;
-#else
-            Utf8JsonReader reader = MutableJsonElement.GetReaderForElement(_element.GetJsonElement());
-            return JsonSerializer.Deserialize<T>(ref reader, MutableJsonDocument.DefaultJsonSerializerOptions);
-#endif
-        }
+        private T ConvertTo<T>() => _element.As<T>();
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return _element.ToString();
-        }
+        public override string ToString() => _element.ToString();
 
         /// <inheritdoc/>
         public void Dispose()
@@ -182,21 +166,21 @@ namespace Azure.Core.Dynamic
             _element.DisposeRoot();
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string DebuggerDisplay => _element.DebuggerDisplay;
+        //[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        //private string DebuggerDisplay => _element.DebuggerDisplay;
 
-        private class JsonConverter : JsonConverter<DynamicJson>
-        {
-            public override DynamicJson Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new DynamicJson(new MutableJsonDocument(document).RootElement);
-            }
+        //private class JsonConverter : JsonConverter<DynamicJson>
+        //{
+        //    public override DynamicJson Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        //    {
+        //        using JsonDocument document = JsonDocument.ParseValue(ref reader);
+        //        return new DynamicJson(new MutableJsonDocument(document).RootElement);
+        //    }
 
-            public override void Write(Utf8JsonWriter writer, DynamicJson value, JsonSerializerOptions options)
-            {
-                value._element.WriteTo(writer);
-            }
-        }
+        //    public override void Write(Utf8JsonWriter writer, DynamicJson value, JsonSerializerOptions options)
+        //    {
+        //        value._element.WriteTo(writer);
+        //    }
+        //}
     }
 }

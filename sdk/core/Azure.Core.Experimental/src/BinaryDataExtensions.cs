@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
@@ -16,7 +17,9 @@ namespace Azure.Core.Dynamic
         /// </summary>
         public static dynamic ToDynamic(this BinaryData data)
         {
-            return new DynamicJson(MutableJsonDocument.Parse(data).RootElement, new DynamicJsonOptions());
+            MutableJsonDocument doc = MutableJsonDocument.Parse(data);
+            ObjectElement element = new ObjectElement(doc, doc.RootElement);
+            return new DynamicJson(element, new DynamicJsonOptions());
         }
 
         /// <summary>
@@ -24,7 +27,9 @@ namespace Azure.Core.Dynamic
         /// </summary>
         public static dynamic ToDynamic(this BinaryData data, DynamicJsonNameMapping propertyNameCasing)
         {
-            return new DynamicJson(MutableJsonDocument.Parse(data).RootElement, new DynamicJsonOptions() {  PropertyNameCasing = propertyNameCasing });
+            MutableJsonDocument doc = MutableJsonDocument.Parse(data);
+            ObjectElement element = new ObjectElement(doc, doc.RootElement);
+            return new DynamicJson(element, new DynamicJsonOptions() {  PropertyNameCasing = propertyNameCasing });
         }
 
         /// <summary>
@@ -32,7 +37,9 @@ namespace Azure.Core.Dynamic
         /// </summary>
         public static dynamic ToDynamic(this BinaryData data, DynamicJsonOptions options)
         {
-            return new DynamicJson(MutableJsonDocument.Parse(data).RootElement, options);
+            MutableJsonDocument doc = MutableJsonDocument.Parse(data);
+            ObjectElement element = new ObjectElement(doc, doc.RootElement);
+            return new DynamicJson(element, options);
         }
     }
 }
