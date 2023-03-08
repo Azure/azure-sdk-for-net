@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -436,7 +437,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
                     index: DataMovementConstants.PlanFile.SourcePathIndex,
                     count: DataMovementConstants.PlanFile.PathStrMaxSizeInBytes);
 
-                // SourceExtraQuery
+                // SourceExtraQueryLength
                 writer.Write(
                     buffer: SourceExtraQueryLength.ToByteArray(DataMovementConstants.PlanFile.LongSizeInBytes),
                     index: DataMovementConstants.PlanFile.SourceExtraQueryLengthIndex,
@@ -474,25 +475,25 @@ namespace Azure.Storage.DataMovement.JobPlanModels
 
                 // IsFinalPart
                 writer.Write(
-                    buffer: new byte[] { IsFinalPart == true ? (byte)1 : (byte)0 },
+                    buffer: new byte[] { Convert.ToByte(IsFinalPart) },
                     index: DataMovementConstants.PlanFile.IsFinalPartIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
                 // ForceWrite
                 writer.Write(
-                    buffer: new byte[] { ForceWrite == true ? (byte)1 : (byte)0 },
+                    buffer: new byte[] { Convert.ToByte(ForceWrite) },
                     index: DataMovementConstants.PlanFile.ForceWriteIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
                 // ForceIfReadOnly
                 writer.Write(
-                    buffer: new byte[] { ForceIfReadOnly == true ? (byte)1 : (byte)0 },
+                    buffer: new byte[] { Convert.ToByte(ForceIfReadOnly) },
                     index: DataMovementConstants.PlanFile.ForceIfReadOnlyIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
                 // AutoDecompress
                 writer.Write(
-                    buffer: new byte[] { AutoDecompress == true ? (byte)1 : (byte)0 },
+                    buffer: new byte[] { Convert.ToByte(AutoDecompress) },
                     index: DataMovementConstants.PlanFile.AutoDecompressIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
@@ -508,28 +509,32 @@ namespace Azure.Storage.DataMovement.JobPlanModels
                     index: DataMovementConstants.PlanFile.TTLAfterCompletionIndex,
                     count: DataMovementConstants.PlanFile.LongSizeInBytes);
 
+                // FromTo
                 writer.Write(
                     buffer: new byte[] { (byte)FromTo },
                     index: DataMovementConstants.PlanFile.FromToIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
+                // FolderPropertyOption
                 writer.Write(
                     buffer: new byte[] { (byte)FolderPropertyOption },
                     index: DataMovementConstants.PlanFile.FolderPropertyOptionIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
+                // NumberChunks
                 writer.Write(
                     buffer: NumberChunks.ToByteArray(DataMovementConstants.PlanFile.LongSizeInBytes),
                     index: DataMovementConstants.PlanFile.NumberChunksIndex,
                     count: DataMovementConstants.PlanFile.ExtraQueryMaxSizeInBytes);
 
+                // DstBlobData.BlobType
                 writer.Write(
                     buffer: new byte[] { (byte)DstBlobData.BlobType },
                     index: DataMovementConstants.PlanFile.DstBlobTypeIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
                 writer.Write(
-                    buffer: new byte[] { DstBlobData.NoGuessMimeType == true ? (byte)1 : (byte)0 },
+                    buffer: new byte[] { Convert.ToByte(DstBlobData.NoGuessMimeType) },
                     index: DataMovementConstants.PlanFile.DstBlobNoGuessMimeTypeIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
@@ -594,7 +599,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
                     count: DataMovementConstants.PlanFile.OneByte);
 
                 writer.Write(
-                    buffer: new byte[] { DstBlobData.PutMd5 == true ? (byte)1 : (byte)0 },
+                    buffer: new byte[] { Convert.ToByte(DstBlobData.PutMd5) },
                     index: DataMovementConstants.PlanFile.DstBlobPutMd5Index,
                     count: DataMovementConstants.PlanFile.OneByte);
 
@@ -644,7 +649,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
                     count: DataMovementConstants.PlanFile.LongSizeInBytes);
 
                 writer.Write(
-                    buffer: new byte[] { DstLocalData.PreserveLastModifiedTime == true ? (byte)1 : (byte)0 },
+                    buffer: new byte[] { Convert.ToByte(DstLocalData.PreserveLastModifiedTime) },
                     index: DataMovementConstants.PlanFile.DstLocalPreserveLastModifiedTimeIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
@@ -654,17 +659,17 @@ namespace Azure.Storage.DataMovement.JobPlanModels
                     count: DataMovementConstants.PlanFile.OneByte);
 
                 writer.Write(
-                    buffer: new byte[] { PreserveSMBPermissions == true ? (byte)1 : (byte)0 },
+                    buffer: new byte[] { Convert.ToByte(PreserveSMBPermissions) },
                     index: DataMovementConstants.PlanFile.PreserveSMBPermissionsIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
                 writer.Write(
-                    buffer: new byte[] { PreserveSMBInfo == true ? (byte)1 : (byte)0 },
+                    buffer: new byte[] { Convert.ToByte(PreserveSMBInfo) },
                     index: DataMovementConstants.PlanFile.PreserveSMBInfoIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
                 writer.Write(
-                    buffer: new byte[] { S2SGetPropertiesInBackend == true ? (byte)1 : (byte)0 },
+                    buffer: new byte[] { Convert.ToByte(S2SGetPropertiesInBackend) },
                     index: DataMovementConstants.PlanFile.S2SGetPropertiesInBackendIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
@@ -674,7 +679,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
                     count: DataMovementConstants.PlanFile.OneByte);
 
                 writer.Write(
-                    buffer: new byte[] { DestLengthValidation == true ? (byte)1 : (byte)0 },
+                    buffer: new byte[] { Convert.ToByte(DestLengthValidation) },
                     index: DataMovementConstants.PlanFile.DestLengthValidationIndex,
                     count: DataMovementConstants.PlanFile.OneByte);
 
@@ -715,53 +720,100 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
 
             var header = new JobPartPlanHeader();
-
-            /*
-            using writerDocument doc = async ? await writerDocument.ParseAsync(stream, cancellationToken: cancellationToken).ConfigureAwait(false) : writerDocument.Parse(stream);
-
-            foreach (writerProperty prop in doc.RootElement.EnumerateObject())
+            using (var reader = new BinaryReader(stream))
             {
-                switch (prop.Name)
-                {
-                    case currentVersion:
-                        header.Version = prop.Value.GetString();
-                        break;
-                    case startTimeName:
-                        if (prop.Value.TryGetInt64(out long value))
-                        {
-                            header.StartTime = value;
-                        }
-                        else
-                        {
-                            throw Errors.InvalidPlanFilewriter(nameof(StartTime));
-                        }
-                        break;
-                    case transferIdName:
-                        header.TransferId = BuildAccountIdFromString(prop.Value.GetString());
-                        break;
-                    case partNumberName:
-                        if (prop.Value.TryGetInt64(out long value))
-                        {
-                            header.PartNumber = value;
-                        }
-                        else
-                        {
-                            throw Errors.InvalidPlanFilewriter(nameof(PartNumber));
-                        }
-                        break;
-                    case ClientIdPropertyName:
-                        header.ClientId = prop.Value.GetString();
-                        break;
-                    case VersionPropertyName:
-                        header.Version = prop.Value.GetString();
-                        if (header.Version != CurrentVersion)
-                        {
-                            throw new InvalidOperationException($"Attempted to deserialize an {nameof(AuthenticationRecord)} with a version that is not the current version. Expected: '{CurrentVersion}', Actual: '{header.Version}'");
-                        }
-                        break;
-                }
+                reader.BaseStream.Position = 0;
+
+                // Version
+                byte[] versionBuffer = new byte[DataMovementConstants.PlanFile.VersionMaxSizeInBytes];
+                versionBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.VersionMaxSizeInBytes);
+                header.Version = versionBuffer.ByteArrayToString();
+
+                // Start Time
+                byte[] startTimeBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+                startTimeBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+                header.StartTime = new DateTimeOffset(startTimeBuffer.ByteArrayToLong(), new TimeSpan(1,0,0));
+
+                // Transfer Id
+                byte[] transferIdBuffer = new byte[DataMovementConstants.PlanFile.TransferIdMaxSizeInBytes];
+                transferIdBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.TransferIdMaxSizeInBytes);
+                header.TransferId = transferIdBuffer.ByteArrayToString();
+
+                // Job Part Number
+                byte[] partNumberBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+                partNumberBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+                header.PartNumber = partNumberBuffer.ByteArrayToLong();
+
+                // SourcePathLength
+                byte[] sourcePathLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+                sourcePathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+                header.SourcePathLength = sourcePathLengthBuffer.ByteArrayToLong();
+
+                // SourcePath
+                byte[] sourcePathBuffer = new byte[DataMovementConstants.PlanFile.PathStrMaxSizeInBytes];
+                sourcePathBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.PathStrMaxSizeInBytes);
+                header.SourcePath = sourcePathBuffer.ByteArrayToString();
+
+                // SourceExtraQueryLength
+                byte[] sourceExtraQueryLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+                sourceExtraQueryLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+                header.SourceExtraQueryLength = sourceExtraQueryLengthBuffer.ByteArrayToLong();
+
+                // SourceExtraQuery
+                byte[] sourceExtraQueryBuffer = new byte[DataMovementConstants.PlanFile.ExtraQueryMaxSizeInBytes];
+                sourceExtraQueryBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ExtraQueryMaxSizeInBytes);
+                header.SourceExtraQuery = sourceExtraQueryBuffer.ByteArrayToString();
+
+                // DestinationPathLength
+                byte[] destinationPathLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+                destinationPathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+                header.DestinationPathLength = destinationPathLengthBuffer.ByteArrayToLong();
+
+                // DestinationPath
+                byte[] destinationPathBuffer = new byte[DataMovementConstants.PlanFile.PathStrMaxSizeInBytes];
+                destinationPathBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.PathStrMaxSizeInBytes);
+                header.DestinationPath = destinationPathBuffer.ByteArrayToString();
+
+                // DestinationExtraQueryLength
+                byte[] destinationExtraQueryLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+                destinationExtraQueryLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+                header.DestinationExtraQueryLength = destinationExtraQueryLengthBuffer.ByteArrayToLong();
+
+                // DestinationExtraQuery
+                byte[] destinationExtraQueryBuffer = new byte[DataMovementConstants.PlanFile.ExtraQueryMaxSizeInBytes];
+                destinationExtraQueryBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ExtraQueryMaxSizeInBytes);
+                header.DestinationExtraQuery = destinationExtraQueryBuffer.ByteArrayToString();
+
+                // IsFinalPart
+                byte isFinalPartByte = reader.ReadByte();
+                header.IsFinalPart = Convert.ToBoolean(isFinalPartByte);
+
+                // ForceWrite
+                byte forceWriteByte = reader.ReadByte();
+                header.ForceWrite = Convert.ToBoolean(forceWriteByte);
+
+                // ForceIfReadOnly
+                byte ForceIfReadOnlyByte = reader.ReadByte();
+                header.ForceIfReadOnly = Convert.ToBoolean(ForceIfReadOnlyByte);
+
+                // AutoDecompress
+                byte autoDecompressByte = reader.ReadByte();
+                header.AutoDecompress = Convert.ToBoolean(autoDecompressByte);
+
+                // Priority
+                header.Priority = reader.ReadByte();
+
+                // TTLAfterCompletion
+                byte[] ttlAfterCompletionBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+                ttlAfterCompletionBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+                header.TTLAfterCompletion = new DateTimeOffset(ttlAfterCompletionBuffer.ByteArrayToLong(), new TimeSpan(1, 0, 0));
+
+                // FromTo
+                byte fromToByte = reader.ReadByte();
+                header.FromTo = (JobPlanFromTo) fromToByte;
+
+                // TODO: the rest down from FromTo
             }
-            */
 
             return header;
         }

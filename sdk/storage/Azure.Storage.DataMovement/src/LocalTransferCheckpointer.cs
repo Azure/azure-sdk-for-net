@@ -98,7 +98,7 @@ namespace Azure.Storage.DataMovement
             Stream headerStream,
             CancellationToken cancellationToken = default)
         {
-            JobPartPlanFile mappedFile = await JobPartPlanFile.CreateJobPartPlanFile(
+            JobPartPlanFile mappedFile = await JobPartPlanFile.CreateJobPartPlanFileAsync(
                 _pathToCheckpointer,
                 transferId,
                 partNumber,
@@ -125,7 +125,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task AddExistingJobAsync(
+        public override async Task AddExistingJobAsync(
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -174,14 +174,20 @@ namespace Azure.Storage.DataMovement
                     CheckInputWithHeader(transferId, header);
 
                     // Add to list of job parts
-                    JobPartPlanFile jobFile = new JobPartPlanFile(partFileName);
+                    JobPartPlanFile jobFile;
+                    using (Stream stream = new MemoryStream())
+                    {
+                        header.Serialize(stream);
+                        jobFile = await JobPartPlanFile.CreateJobPartPlanFileAsync(
+                            fileName: partFileName,
+                            headerStream: stream).ConfigureAwait(false);
+                    }
                     jobParts.Add(jobFile);
                 }
 
                 // Add new transfer id to the list of memory mapped files
                 _transferStates.Add(transferId, jobParts);
             }
-            return Task.CompletedTask;
         }
 
         /// <summary>

@@ -5,10 +5,8 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.JobPlanModels;
@@ -379,8 +377,9 @@ namespace Azure.Storage.DataMovement
         public async virtual Task AddJobPartToCheckpointer(int chunksTotal)
         {
             JobPartPlanHeader header = this.ToJobPartPlanHeader(StorageTransferStatus.InProgress);
-            using (Stream stream = header.ToStream())
+            using (Stream stream = new MemoryStream())
             {
+                header.Serialize(stream);
                 await _checkpointer.AddNewJobPartAsync(
                         transferId: _dataTransfer.Id,
                         partNumber: PartNumber,

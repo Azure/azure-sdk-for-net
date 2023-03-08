@@ -30,11 +30,6 @@ namespace Azure.Storage.DataMovement
         public string FilePath { get => _jobPlanFileName.ToString(); }
 
         /// <summary>
-        /// Length of the file.
-        /// </summary>
-        public int Length { get; internal set; }
-
-        /// <summary>
         /// Lock for the memory mapped file to allow only one writer.
         /// </summary>
         public readonly object writeLock = new object();
@@ -42,18 +37,7 @@ namespace Azure.Storage.DataMovement
         private JobPartPlanFile()
         { }
 
-        /// <summary>
-        /// Constructor if the plan file already exists
-        /// </summary>
-        /// <param name="existingFile"></param>
-        public JobPartPlanFile(JobPartPlanFileName existingFile)
-        {
-            string mapName = String.Join(existingFile.Id, existingFile.JobPartNumber);
-            MemoryMappedFileReference = MemoryMappedFile.CreateFromFile(existingFile.ToString(), FileMode.Open, mapName);
-            _jobPlanFileName = existingFile;
-        }
-
-        public static async Task<JobPartPlanFile> CreateJobPartPlanFile(
+        public static async Task<JobPartPlanFile> CreateJobPartPlanFileAsync(
             string checkpointerPath,
             string id,
             int jobPart,
@@ -64,6 +48,23 @@ namespace Azure.Storage.DataMovement
 
             string mapName = string.Concat(id, jobPart);
             result._jobPlanFileName = new JobPartPlanFileName(checkpointerPath: checkpointerPath, id: id, jobPartNumber: jobPart);
+            using (FileStream fileStream = File.Create(result._jobPlanFileName.ToString()))
+            {
+                await headerStream.CopyToAsync(fileStream).ConfigureAwait(false);
+            }
+            result.MemoryMappedFileReference = MemoryMappedFile.CreateFromFile(result._jobPlanFileName.ToString(), FileMode.Open, mapName, size);
+            return result;
+        }
+
+        public static async Task<JobPartPlanFile> CreateJobPartPlanFileAsync(
+            JobPartPlanFileName fileName,
+            Stream headerStream)
+        {
+            long size = headerStream.Length;
+            JobPartPlanFile result = new JobPartPlanFile();
+
+            string mapName = string.Concat(fileName.Id, fileName.JobPartNumber);
+            result._jobPlanFileName = fileName;
             using (FileStream fileStream = File.Create(result._jobPlanFileName.ToString()))
             {
                 await headerStream.CopyToAsync(fileStream).ConfigureAwait(false);

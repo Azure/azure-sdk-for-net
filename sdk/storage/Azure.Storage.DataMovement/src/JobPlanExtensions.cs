@@ -18,21 +18,6 @@ namespace Azure.Storage.DataMovement
 {
     internal static partial class JobPlanExtensions
     {
-        public static Stream ToStream(this JobPartPlanHeader header)
-        {
-            // Convert the header to a struct
-            int structSize = Unsafe.SizeOf<JobPartPlanHeader>();
-            byte[] buffer = new byte[structSize];
-            GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-            Marshal.StructureToPtr(header, handle.AddrOfPinnedObject(), false);
-            Marshal.Copy(handle.AddrOfPinnedObject(), buffer, 0, structSize);
-            handle.Free();
-
-            // Convert byte array to stream
-            Stream result = new MemoryStream(buffer, 0, structSize);
-            return result;
-        }
-
         public static JobPartPlanHeader ToJobStruct(this Stream stream)
         {
             BinaryReader reader = new BinaryReader(stream);

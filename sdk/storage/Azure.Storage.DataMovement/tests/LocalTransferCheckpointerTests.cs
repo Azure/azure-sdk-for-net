@@ -106,11 +106,14 @@ namespace Azure.Storage.DataMovement.Tests
                     destinationPaths.ElementAt(i));
 
                 JobPartPlanFileName fileName = new JobPartPlanFileName(checkpointerPath, transferId, i);
-                using (Stream fileStream = File.Create(fileName.ToString()))
+
+                JobPartPlanFile jobFile;
+                using (Stream stream = new MemoryStream())
                 {
-                    using Stream stream = header.ToStream();
-                    await stream.CopyToAsync(fileStream).ConfigureAwait(false);
-                    fileStream.Close();
+                    header.Serialize(stream);
+                    jobFile = await JobPartPlanFile.CreateJobPartPlanFileAsync(
+                        fileName: fileName,
+                        headerStream: stream).ConfigureAwait(false);
                 }
             }
         }
@@ -252,10 +255,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        // The test does contain async, it's just inside the Assert.CatchAsync method
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task AddExistingJobAsync_InvalidHeaderError()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -271,11 +271,13 @@ namespace Azure.Storage.DataMovement.Tests
                     "badV");
 
             JobPartPlanFileName fileName = new JobPartPlanFileName(test.DirectoryPath, transferId, partNumber);
-            using (Stream fileStream = File.Create(fileName.ToString()))
+            JobPartPlanFile jobFile;
+            using (Stream stream = new MemoryStream())
             {
-                using Stream stream = header.ToStream();
-                await stream.CopyToAsync(fileStream).ConfigureAwait(false);
-                fileStream.Close();
+                header.Serialize(stream);
+                jobFile = await JobPartPlanFile.CreateJobPartPlanFileAsync(
+                    fileName: fileName,
+                    headerStream: stream).ConfigureAwait(false);
             }
 
             // Add job with bad schema version in header
