@@ -22,9 +22,9 @@ try
     Response<GetLanguagesResult> response = await client.GetLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
     GetLanguagesResult languages = response.Value;
 
-    Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
-    Console.WriteLine($"Number of supported languages for translate operations: {languages.Transliteration.Count}.");
-    Console.WriteLine($"Number of supported languages for translate operations: {languages.Dictionary.Count}.");
+    Console.WriteLine($"Number of supported languages for translate operation: {languages.Translation.Count}.");
+    Console.WriteLine($"Number of supported languages for transliterate operation: {languages.Transliteration.Count}.");
+    Console.WriteLine($"Number of supported languages for dictionary operations: {languages.Dictionary.Count}.");
 
     Console.WriteLine("Translation Languages:");
     foreach (var translationLanguage in languages.Translation)

@@ -12,6 +12,32 @@ TranslatorClient client = new(endpoint, credential, "<region>");
 
 The values of the `endpoint`, `apiKey` and `region` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
+### Translate text
+Translate text from known source language to target language.
+```C# Snippet:Sample2_Translate
+try
+{
+    string from = "en";
+    IEnumerable<string> targetLanguages = new[] { "cs" };
+    IEnumerable<InputText> inputTextElements = new []
+    {
+        new InputText { Text = "This is a test." }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, from: from).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    TranslatedTextElement translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
 ### Translate with auto-detection
 You can ommit source languge of the input text. In this case, API will try to auto-detect the language.
 
@@ -147,6 +173,64 @@ try
     };
 
     Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: textType).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    TranslatedTextElement translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+### Don’t translate specific entity name in a text
+It's sometimes useful to exclude specific content from translation. You can use the attribute class=notranslate to specify content that should remain in its original language. In the following example, the content inside the first div element won't be translated, while the content in the second div element will be translated.
+
+```C# Snippet:Sample2_TranslateTextType
+try
+{
+    TextTypes textType = TextTypes.Html;
+
+    string from = "en";
+    IEnumerable<string> targetLanguages = new[] { "cs" };
+    IEnumerable<InputText> inputTextElements = new[]
+    {
+        new InputText { Text = "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>" }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: textType, from: from).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    TranslatedTextElement translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+### Translate specific entity name in a text applying a dictionary
+If you already know the translation you want to apply to a word or a phrase, you can supply it as markup within the request. The dynamic dictionary is safe only for compound nouns like proper names and product names.
+
+> Note You must include the From parameter in your API translation request instead of using the autodetect feature.
+
+```C# Snippet:Sample2_TranslateTextType
+try
+{
+    string from = "en";
+    IEnumerable<string> targetLanguages = new[] { "cs" };
+    IEnumerable<InputText> inputTextElements = new[]
+    {
+        new InputText { Text = "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry." }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, from: from).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextElement> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
