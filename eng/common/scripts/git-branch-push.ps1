@@ -83,7 +83,7 @@ if (!$SkipCommit) {
         $amendOption = "--amend"
     }
     else {
-        # Explicitly set this to null so that PS command line parser doesn't try to parse pass it as ""
+        # Explicitly set this to null so that PS command line parser doesn't try to parse and pass it as ""
         $amendOption = $null
     }
     Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit $amendOption -am `"$CommitMsg`""
@@ -96,6 +96,11 @@ if (!$SkipCommit) {
 }
 else {
     Write-Host "Skipped applying commit"
+}
+
+# Explicitly set this to null so that PS command line parser doesn't try to parse and pass it as ""
+if ($PushArgs -eq "") {
+    $PushArgs = $null
 }
 
 # The number of retries can be increased if necessary. In theory, the number of retries
