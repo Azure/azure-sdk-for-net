@@ -110,6 +110,26 @@ namespace Azure.ResourceManager.VoiceServices
         public static Azure.ResourceManager.VoiceServices.TestLineResource GetTestLineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
 }
+namespace Azure.ResourceManager.VoiceServices.Mock
+{
+    public partial class CommunicationsGatewayResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected CommunicationsGatewayResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> GetCommunicationsGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.VoiceServices.CommunicationsGatewayResource> GetCommunicationsGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.VoiceServices.CommunicationsGatewayCollection GetCommunicationsGateways() { throw null; }
+    }
+    public partial class SubscriptionResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtensionClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityResponse> CheckLocalNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityResponse>> CheckLocalNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.VoiceServices.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.VoiceServices.Models
 {
     public static partial class ArmVoiceServicesModelFactory

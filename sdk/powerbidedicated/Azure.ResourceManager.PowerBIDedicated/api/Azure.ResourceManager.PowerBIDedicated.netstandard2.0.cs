@@ -115,6 +115,31 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public static Azure.AsyncPageable<Azure.ResourceManager.PowerBIDedicated.Models.CapacitySku> GetSkusCapacitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.PowerBIDedicated.Mock
+{
+    public partial class AutoScaleVCoreResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected AutoScaleVCoreResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource> GetAutoScaleVCores(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource> GetAutoScaleVCoresAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DedicatedCapacityResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected DedicatedCapacityResourceExtensionClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.PowerBIDedicated.Models.CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(Azure.Core.AzureLocation location, Azure.ResourceManager.PowerBIDedicated.Models.CheckCapacityNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PowerBIDedicated.Models.CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.PowerBIDedicated.Models.CheckCapacityNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource> GetDedicatedCapacities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource> GetDedicatedCapacitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.PowerBIDedicated.Models.CapacitySku> GetSkusCapacities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.PowerBIDedicated.Models.CapacitySku> GetSkusCapacitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreCollection GetAutoScaleVCores() { throw null; }
+        public virtual Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityCollection GetDedicatedCapacities() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     public partial class AutoScaleVCorePatch

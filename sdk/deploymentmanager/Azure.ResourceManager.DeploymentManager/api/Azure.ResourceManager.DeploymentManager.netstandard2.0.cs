@@ -285,6 +285,17 @@ namespace Azure.ResourceManager.DeploymentManager
         public Azure.ResourceManager.DeploymentManager.Models.StepProperties Properties { get { throw null; } set { } }
     }
 }
+namespace Azure.ResourceManager.DeploymentManager.Mock
+{
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.DeploymentManager.ArtifactSourceCollection GetArtifactSources() { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.RolloutCollection GetRollouts() { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.ServiceTopologyResourceCollection GetServiceTopologyResources() { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.StepResourceCollection GetStepResources() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     public partial class ApiKeyAuthentication : Azure.ResourceManager.DeploymentManager.Models.RestRequestAuthentication

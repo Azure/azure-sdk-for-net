@@ -114,6 +114,16 @@ namespace Azure.ResourceManager.ManagedServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ManagedServices.Mock
+{
+    public partial class ArmResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ArmResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationCollection GetManagedServicesMarketplaceRegistrations() { throw null; }
+        public virtual Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentCollection GetManagedServicesRegistrationAssignments() { throw null; }
+        public virtual Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationCollection GetManagedServicesRegistrations() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ManagedServices.Models
 {
     public partial class ManagedServicesAuthorization

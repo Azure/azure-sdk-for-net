@@ -296,6 +296,20 @@ namespace Azure.ResourceManager.HybridData
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridData.HybridDataStoreTypeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.HybridData.Mock
+{
+    public partial class HybridDataManagerResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected HybridDataManagerResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridData.HybridDataManagerResource> GetHybridDataManagers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridData.HybridDataManagerResource> GetHybridDataManagersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.HybridData.HybridDataManagerCollection GetHybridDataManagers() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.HybridData.Models
 {
     public partial class HybridDataCustomerSecret

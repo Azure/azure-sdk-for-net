@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="OSOptionProfileResource" /> object. </returns>
         public static OSOptionProfileResource GetOSOptionProfile(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            return GetExtensionClient(subscriptionResource).GetOSOptionProfile(location);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOSOptionProfile(location);
         }
     }
 }

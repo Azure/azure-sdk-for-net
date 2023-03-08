@@ -242,6 +242,15 @@ namespace Azure.ResourceManager.Blueprint
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Blueprint.PublishedBlueprintResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Blueprint.PublishedBlueprintData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Blueprint.Mock
+{
+    public partial class ArmResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ArmResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.Blueprint.AssignmentCollection GetAssignments() { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.BlueprintCollection GetBlueprints() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Blueprint.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

@@ -21,7 +21,7 @@ request-path-to-singleton-resource:
   /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default: osOptions/default
 
 rename-mapping:
-  ManagedClusterPodIdentityProvisioningError.error: 'ErrorDetail'
+  ManagedClusterPodIdentityProvisioningError.error: ErrorDetail
   Code: ContainerServiceStateCode
   Format: KubeConfigFormat
   Expander: AutoScaleExpander

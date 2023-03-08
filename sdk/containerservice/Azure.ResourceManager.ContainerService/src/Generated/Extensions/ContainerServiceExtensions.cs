@@ -100,19 +100,19 @@ namespace Azure.ResourceManager.ContainerService
             });
         }
 
-        private static Mock.SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new Mock.SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
             });
         }
 
-        private static Mock.SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new Mock.SubscriptionResourceExtensionClient(client, scope);
+                return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
         #region OSOptionProfileResource

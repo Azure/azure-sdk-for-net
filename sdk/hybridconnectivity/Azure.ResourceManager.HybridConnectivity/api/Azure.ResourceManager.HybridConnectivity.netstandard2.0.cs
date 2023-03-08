@@ -52,6 +52,14 @@ namespace Azure.ResourceManager.HybridConnectivity
         public static Azure.ResourceManager.HybridConnectivity.EndpointResourceCollection GetEndpointResources(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
     }
 }
+namespace Azure.ResourceManager.HybridConnectivity.Mock
+{
+    public partial class ArmResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ArmResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.HybridConnectivity.EndpointResourceCollection GetEndpointResources() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

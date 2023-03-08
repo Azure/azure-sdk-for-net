@@ -37,6 +37,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.ComponentLinkedStorageAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ApplicationInsights.Mock
+{
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountCollection GetComponentLinkedStorageAccounts() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ComponentLinkedStorageAccountPatch

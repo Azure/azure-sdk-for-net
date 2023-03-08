@@ -167,6 +167,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SqlVirtualMachine.SqlVmResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.SqlVirtualMachine.Mock
+{
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.SqlVirtualMachine.SqlVmGroupCollection GetSqlVmGroups() { throw null; }
+        public virtual Azure.ResourceManager.SqlVirtualMachine.SqlVmCollection GetSqlVms() { throw null; }
+    }
+    public partial class SqlVmGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected SqlVmGroupResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.SqlVirtualMachine.SqlVmGroupResource> GetSqlVmGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SqlVirtualMachine.SqlVmGroupResource> GetSqlVmGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlVmResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected SqlVmResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.SqlVirtualMachine.SqlVmResource> GetSqlVms(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SqlVirtualMachine.SqlVmResource> GetSqlVmsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     public partial class AvailabilityGroupListenerLoadBalancerConfiguration

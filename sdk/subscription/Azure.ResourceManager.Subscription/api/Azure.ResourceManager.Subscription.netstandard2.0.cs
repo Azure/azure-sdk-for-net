@@ -98,6 +98,30 @@ namespace Azure.ResourceManager.Subscription
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.TenantPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Subscription.Mock
+{
+    public partial class SubscriptionResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtensionClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId> CancelSubscription(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId>> CancelSubscriptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId> EnableSubscription(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId>> EnableSubscriptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId> RenameSubscription(Azure.ResourceManager.Subscription.Models.SubscriptionName body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId>> RenameSubscriptionAsync(Azure.ResourceManager.Subscription.Models.SubscriptionName body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TenantResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.ArmOperation AcceptSubscriptionOwnership(Azure.WaitUntil waitUntil, string subscriptionId, Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> AcceptSubscriptionOwnershipAsync(Azure.WaitUntil waitUntil, string subscriptionId, Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus> GetAcceptOwnershipStatus(string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus>> GetAcceptOwnershipStatusAsync(string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Subscription.BillingAccountPolicyCollection GetBillingAccountPolicies() { throw null; }
+        public virtual Azure.ResourceManager.Subscription.SubscriptionAliasCollection GetSubscriptionAliases() { throw null; }
+        public virtual Azure.ResourceManager.Subscription.TenantPolicyResource GetTenantPolicy() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class AcceptOwnershipContent

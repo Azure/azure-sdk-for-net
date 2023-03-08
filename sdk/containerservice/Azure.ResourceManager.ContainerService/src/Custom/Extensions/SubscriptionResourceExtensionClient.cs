@@ -14,11 +14,11 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.ContainerService
+namespace Azure.ResourceManager.ContainerService.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     [CodeGenSuppress("GetOSOptionProfile")]
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         /// <summary> Gets an object representing a OSOptionProfileResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
         /// <param name="location"> The name of Azure region. </param>

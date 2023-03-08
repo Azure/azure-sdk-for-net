@@ -727,6 +727,20 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.CustomerInsights.Mock
+{
+    public partial class HubResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected HubResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.HubResource> GetHubs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.HubResource> GetHubsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.CustomerInsights.HubCollection GetHubs() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class AssignmentPrincipal

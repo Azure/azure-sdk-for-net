@@ -273,6 +273,14 @@ namespace Azure.ResourceManager.Marketplace
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Marketplace.Mock
+{
+    public partial class TenantResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.Marketplace.PrivateStoreCollection GetPrivateStores() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class AcknowledgeOfferNotificationContent

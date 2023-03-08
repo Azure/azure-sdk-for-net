@@ -339,6 +339,14 @@ namespace Azure.ResourceManager.ProviderHub
         public Azure.ResourceManager.ProviderHub.Models.SkuResourceProperties Properties { get { throw null; } set { } }
     }
 }
+namespace Azure.ResourceManager.ProviderHub.Mock
+{
+    public partial class SubscriptionResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.ProviderHub.ProviderRegistrationCollection GetProviderRegistrations() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class AuthorizationActionMapping

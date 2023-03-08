@@ -284,6 +284,27 @@ namespace Azure.ResourceManager.SecurityDevOps
         public static Azure.ResourceManager.SecurityDevOps.GitHubRepoResource GetGitHubRepoResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
 }
+namespace Azure.ResourceManager.SecurityDevOps.Mock
+{
+    public partial class AzureDevOpsConnectorResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected AzureDevOpsConnectorResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> GetAzureDevOpsConnectors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> GetAzureDevOpsConnectorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class GitHubConnectorResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected GitHubConnectorResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetGitHubConnectors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetGitHubConnectorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorCollection GetAzureDevOpsConnectors() { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.GitHubConnectorCollection GetGitHubConnectors() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     public partial class ActionableRemediation

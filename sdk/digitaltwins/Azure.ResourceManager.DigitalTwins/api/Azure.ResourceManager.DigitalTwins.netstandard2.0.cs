@@ -206,6 +206,22 @@ namespace Azure.ResourceManager.DigitalTwins
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.DigitalTwins.Mock
+{
+    public partial class DigitalTwinsDescriptionResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected DigitalTwinsDescriptionResourceExtensionClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult> CheckDigitalTwinsNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult>> CheckDigitalTwinsNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionCollection GetDigitalTwinsDescriptions() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

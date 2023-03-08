@@ -86,6 +86,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         public static Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
 }
+namespace Azure.ResourceManager.WorkloadMonitor.Mock
+{
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.WorkloadMonitor.HealthMonitorCollection GetHealthMonitors(string providerName, string resourceCollectionName, string resourceName) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.WorkloadMonitor.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

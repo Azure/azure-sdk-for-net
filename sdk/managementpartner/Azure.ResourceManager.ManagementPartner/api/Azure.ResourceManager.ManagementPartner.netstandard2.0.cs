@@ -47,6 +47,16 @@ namespace Azure.ResourceManager.ManagementPartner
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagementPartner.PartnerResponseResource>> UpdateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ManagementPartner.Mock
+{
+    public partial class TenantResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagementPartner.Models.OperationResponse> GetOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagementPartner.Models.OperationResponse> GetOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagementPartner.PartnerResponseCollection GetPartnerResponses() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ManagementPartner.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

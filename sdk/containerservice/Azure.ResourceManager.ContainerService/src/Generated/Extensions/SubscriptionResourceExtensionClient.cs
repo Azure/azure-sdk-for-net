@@ -42,13 +42,6 @@ namespace Azure.ResourceManager.ContainerService.Mock
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a OSOptionProfileResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <returns> Returns a <see cref="OSOptionProfileResource" /> object. </returns>
-        public virtual OSOptionProfileResource GetOSOptionProfile()
-        {
-            return new OSOptionProfileResource(Client, Id.AppendChildResource("osOptions", "default"));
-        }
-
         /// <summary>
         /// List supported trusted access roles.
         /// <list type="bullet">
