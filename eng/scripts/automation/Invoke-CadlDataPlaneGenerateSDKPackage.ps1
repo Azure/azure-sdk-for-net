@@ -9,9 +9,6 @@ The address of the sdk folder in azure-sdk-for-net repo. e.g. /home/azure-sdk-fo
 .PARAMETER cadlSpecDirectory
 The relative path of the cadl project folder in spec repo. e.g. `specification/cognitiveservices/AnomalyDetector`
 
- .PARAMETER specRoot
-The file system path of the spec repo. e.g. `/home/azure-rest-api-specs`
-
  .PARAMETER repo
 The `<owner>/<repo>` of the spec repo. e.g. `Azure/azure-rest-api-specs`
 
@@ -41,7 +38,6 @@ Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace A
 param (
   [string]$sdkFolder,
   [string]$cadlSpecDirectory,
-  [string]$specRoot = "",
   [string]$repo = "Azure/azure-rest-api-specs",
   [string]$commit = "",
   [string]$additionalSubDirectories="", #additional directories needed, separated by semicolon if more than one
@@ -57,9 +53,6 @@ Options:
 -additionalSubDirectories [Optional] takes the relative paths of the additional directories needed by the cadl project
 -commit takes the git commit hash  (e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90)
 -repo [Optional] takes the `<owner>/<repo>` of the REST API specification repository. (e.g. Azure/azure-rest-api-specs). The default is Azure/azure-rest-api-specs
--specRoot takes the file system path of the spec repo. e.g. /home/azure-rest-api-specs
-
-hint: You need to provide the cadl project path either (`-commit`, `-repo`) pair to refer to an URL path of the cadl project or `-specRoot` to refer to local file system path. If you provide both, `-specRoot` will be ignored.
 "
 )
   exit 0;
@@ -90,7 +83,6 @@ New-CADLPackageFolder `
   -namespace $namespace `
   -sdkPath $sdkPath `
   -relatedCadlProjectFolder $cadlSpecDirectory `
-  -specRoot $specRoot `
   -commit $commit `
   -repo $repo `
   -additionalSubDirectories $additionalSubDirectories `
