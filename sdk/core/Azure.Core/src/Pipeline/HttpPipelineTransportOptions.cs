@@ -17,7 +17,9 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public HttpPipelineTransportOptions()
         {
+#pragma warning disable CA1416
             ClientCertificates = new List<X509Certificate2>();
+#pragma warning restore CA1416
         }
 
         /// <summary>
@@ -29,6 +31,6 @@ namespace Azure.Core.Pipeline
         /// The client certificate collection that will be configured for the transport.
         /// </summary>
         /// <value></value>
-        public IList<X509Certificate2> ClientCertificates {get;}
+        public IList<X509Certificate2> ClientCertificates { get; }
     }
 }
