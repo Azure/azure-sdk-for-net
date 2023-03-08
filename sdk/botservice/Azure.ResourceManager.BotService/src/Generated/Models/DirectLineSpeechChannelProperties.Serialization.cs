@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> cognitiveServiceResourceId = default;
+            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
             Optional<string> cognitiveServiceRegion = default;
             Optional<string> cognitiveServiceSubscriptionKey = default;
             Optional<bool> isEnabled = default;
@@ -84,7 +84,12 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 if (property.NameEquals("cognitiveServiceResourceId"u8))
                 {
-                    cognitiveServiceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    cognitiveServiceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cognitiveServiceRegion"u8))

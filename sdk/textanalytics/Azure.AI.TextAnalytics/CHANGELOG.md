@@ -1,6 +1,6 @@
 # Release History
 
-## 5.3.0-beta.2 (Unreleased)
+## 5.3.0-beta.2 (2023-03-07)
 
 ### Features Added
 
@@ -10,18 +10,26 @@
 
 > Note: The following breaking changes only apply when upgrading from the previous beta version (5.3.0-beta.1) and do not impact stable versions.
 
-- Renamed the `WellKnownFhirVersion` enum to `FhirVersion`.
-- Changed the type of the `AnalyzeHealthcareEntitiesResult.FhirBundle` property from `IReadOnlyDictionary<string, object>` to `BinaryData`.
-- Removed the `options` parameter from the following methods for consistency: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
-- Removed the `DynamicClassifyOptions` class.
-- Added the `classificationType` parameter to the following methods: `TextAnalyticsClient.DynamicClassify`, `TextAnalyticsClient.DynamicClassifyAsync`, `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
-- Removed the `BooleanResolution` class; boolean resolutions are not supported in Text Analytics.
-- Renamed `AbstractSummaryAction.MaxSentenceCount` to `AbstractSummaryAction.SentenceCount`.
-- Renamed `AbstractSummaryOptions.MaxSentenceCount` to `AbstractSummaryOptions.SentenceCount`.
-
-### Bugs Fixed
-
-### Other Changes
+- Changes to dynamic classification:
+  - Added the `classificationType` parameter to the following methods: `TextAnalyticsClient.DynamicClassify`, `TextAnalyticsClient.DynamicClassifyAsync`, `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
+  - Removed the `options` parameter from the following methods for consistency: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
+  - Removed the `DynamicClassifyOptions` class for consistency.
+- Changes to abstractive summarization:
+  - Renamed `AbstractSummaryAction.MaxSentenceCount` to `AbstractSummaryAction.SentenceCount`.
+  - Renamed `AbstractSummaryOptions.MaxSentenceCount` to `AbstractSummaryOptions.SentenceCount`.
+- Changes to Fast Healthcare Interoperability Resources (FHIR) bundles as part of healthcare text analysis.
+  - Renamed the `WellKnownFhirVersion` enum to `FhirVersion`.
+  - Changed the type of the `AnalyzeHealthcareEntitiesResult.FhirBundle` property from `IReadOnlyDictionary<string, object>` to `BinaryData`.
+- Changes to named entity recognition (NER) resolutions:
+  - Removed the `BooleanResolution` class; boolean resolutions are not supported by the service.
+- Changes to automatic language detection:
+  - Removed the `AbstractSummaryOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `AnalyzeActionsOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `AnalyzeHealthcareEntitiesOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `ExtractSummaryOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `MultiLabelClassifyOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `RecognizeCustomEntitiesOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
+  - Removed the `SingleLabelClassifyOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
 
 ## 5.3.0-beta.1 (2022-12-01)
 
