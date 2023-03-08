@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static VolumeRelocationProperties DeserializeVolumeRelocationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> relocationRequested = default;
             Optional<bool> readyToBeFinalized = default;
             foreach (var property in element.EnumerateObject())
