@@ -20,7 +20,7 @@ namespace Azure.ResourceManager
             {
                 throw new InvalidOperationException("Invalid type");
             }
-            ISerializable serializable = (ISerializable)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance);
+            ISerializable serializable = (ISerializable)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null, null, null);
             var memoryStream = new MemoryStream();
             response.ContentStream.CopyTo(memoryStream);
             serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager
             {
                 throw new InvalidOperationException("Invalid type");
             }
-            ISerializable serializable = (ISerializable)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance);
+            ISerializable serializable = (ISerializable)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null, null, null);
             var memoryStream = new MemoryStream();
             response.ContentStream.CopyTo(memoryStream);
             serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);

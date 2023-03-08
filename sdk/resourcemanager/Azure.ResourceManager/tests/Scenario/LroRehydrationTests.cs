@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2, tags).CreateOrUpdateAsync(rgName);
             var rgOpId = rgOp.Id;
             var rg = rgOp.Value;
-            Assert.Throws<ArgumentException>(() => ArmOperation<ResourceGroupData>.Rehydrate<ResourceGroupData>(Client, rgOpId));
+            Assert.Throws<ArgumentException>(() => new ArmOperation<ResourceGroupData>(Client, rgOpId));
             var response = rgOp.GetRawResponse();
 
             // Template exportation is a real LRO with generic type
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Tests
             }
             var expOp = await Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, rgName)).ExportTemplateAsync(WaitUntil.Started, parameters);
             var expOpId = expOp.Id;
-            var expRehydratedLro = ArmOperation<ResourceGroupExportResult>.Rehydrate<ResourceGroupExportResult>(Client, expOpId);
+            var expRehydratedLro = new ArmOperation<ResourceGroupExportResult>(Client, expOpId);
             await expRehydratedLro.WaitForCompletionResponseAsync();
             Assert.AreEqual(expRehydratedLro.HasValue, true);
             var rehydratedResult = expRehydratedLro.Value;
