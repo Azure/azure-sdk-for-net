@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServiceObjectiveListResult DeserializeServiceObjectiveListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ServiceObjectiveData> value = default;
             foreach (var property in element.EnumerateObject())
             {

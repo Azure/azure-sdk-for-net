@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static IngressSettingsClientAuth DeserializeIngressSettingsClientAuth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> certificates = default;
             foreach (var property in element.EnumerateObject())
             {

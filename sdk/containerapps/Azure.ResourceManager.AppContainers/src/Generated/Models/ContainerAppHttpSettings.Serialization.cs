@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppHttpSettings DeserializeContainerAppHttpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> requireHttps = default;
             Optional<HttpSettingsRoutes> routes = default;
             Optional<ContainerAppForwardProxy> forwardProxy = default;

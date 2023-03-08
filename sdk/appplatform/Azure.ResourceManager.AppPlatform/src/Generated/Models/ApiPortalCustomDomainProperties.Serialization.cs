@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ApiPortalCustomDomainProperties DeserializeApiPortalCustomDomainProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {

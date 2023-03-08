@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownDatastoreCredentials DeserializeUnknownDatastoreCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CredentialsType credentialsType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

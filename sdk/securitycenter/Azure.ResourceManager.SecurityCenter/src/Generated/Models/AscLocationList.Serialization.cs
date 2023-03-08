@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AscLocationList DeserializeAscLocationList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SecurityCenterLocationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

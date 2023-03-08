@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static AadBasedSecurityPrincipal DeserializeAadBasedSecurityPrincipal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
             Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;

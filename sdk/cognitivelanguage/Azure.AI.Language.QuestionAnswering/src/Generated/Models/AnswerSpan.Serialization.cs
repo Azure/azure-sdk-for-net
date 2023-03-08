@@ -14,6 +14,10 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static AnswerSpan DeserializeAnswerSpan(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> text = default;
             Optional<double> confidenceScore = default;
             Optional<int> offset = default;

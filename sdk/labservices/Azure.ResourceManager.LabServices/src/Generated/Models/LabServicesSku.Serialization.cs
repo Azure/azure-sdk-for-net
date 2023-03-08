@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabServicesSku DeserializeLabServicesSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<LabServicesSkuTier> tier = default;
             Optional<string> size = default;

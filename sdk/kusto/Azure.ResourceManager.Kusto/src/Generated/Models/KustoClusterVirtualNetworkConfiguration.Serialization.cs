@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoClusterVirtualNetworkConfiguration DeserializeKustoClusterVirtualNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string subnetId = default;
             string enginePublicIPId = default;
             string dataManagementPublicIPId = default;

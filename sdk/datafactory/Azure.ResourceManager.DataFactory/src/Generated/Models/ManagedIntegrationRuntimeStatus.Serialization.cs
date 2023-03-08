@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static ManagedIntegrationRuntimeStatus DeserializeManagedIntegrationRuntimeStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = default;
             Optional<string> dataFactoryName = default;
             Optional<IntegrationRuntimeState> state = default;

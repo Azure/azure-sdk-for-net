@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ManagedVirtualNetwork DeserializeManagedVirtualNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> vNetId = default;
             Optional<string> @alias = default;
             IDictionary<string, BinaryData> additionalProperties = default;

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceAadValidation DeserializeAppServiceAadValidation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JwtClaimChecks> jwtClaimChecks = default;
             Optional<IList<string>> allowedAudiences = default;
             Optional<DefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;

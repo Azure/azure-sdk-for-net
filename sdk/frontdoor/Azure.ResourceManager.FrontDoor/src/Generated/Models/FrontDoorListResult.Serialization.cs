@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static FrontDoorListResult DeserializeFrontDoorListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FrontDoorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

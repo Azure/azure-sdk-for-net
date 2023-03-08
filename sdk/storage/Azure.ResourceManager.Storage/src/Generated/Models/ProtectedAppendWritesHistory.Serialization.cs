@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static ProtectedAppendWritesHistory DeserializeProtectedAppendWritesHistory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> allowProtectedAppendWritesAll = default;
             Optional<DateTimeOffset> timestamp = default;
             foreach (var property in element.EnumerateObject())

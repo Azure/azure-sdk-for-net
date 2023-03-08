@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static VirtualNetworksPropertiesInfraVnetProfileVmware DeserializeVirtualNetworksPropertiesInfraVnetProfileVmware(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> segmentName = default;
             foreach (var property in element.EnumerateObject())
             {

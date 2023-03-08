@@ -29,6 +29,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static ServicePrincipalParam DeserializeServicePrincipalParam(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string clientId = default;
             Optional<string> clientSecret = default;
             string tenantId = default;

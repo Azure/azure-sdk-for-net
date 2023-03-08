@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static QueryApprovalRequestResult DeserializeQueryApprovalRequestResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> uniqueOfferId = default;
             Optional<IReadOnlyDictionary<string, PrivateStorePlanDetails>> plansDetails = default;
             Optional<ETag> etag = default;

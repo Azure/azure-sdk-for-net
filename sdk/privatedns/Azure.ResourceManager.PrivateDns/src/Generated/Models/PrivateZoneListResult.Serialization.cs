@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
     {
         internal static PrivateZoneListResult DeserializePrivateZoneListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PrivateDnsZoneData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

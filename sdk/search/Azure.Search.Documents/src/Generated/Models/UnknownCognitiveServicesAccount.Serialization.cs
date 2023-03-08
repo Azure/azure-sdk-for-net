@@ -27,6 +27,10 @@ namespace Azure.Search.Documents.Models
 
         internal static UnknownCognitiveServicesAccount DeserializeUnknownCognitiveServicesAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())

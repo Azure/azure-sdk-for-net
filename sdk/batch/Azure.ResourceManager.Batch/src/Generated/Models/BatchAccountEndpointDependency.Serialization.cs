@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static BatchAccountEndpointDependency DeserializeBatchAccountEndpointDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainName = default;
             Optional<string> description = default;
             Optional<IReadOnlyList<BatchEndpointDetail>> endpointDetails = default;

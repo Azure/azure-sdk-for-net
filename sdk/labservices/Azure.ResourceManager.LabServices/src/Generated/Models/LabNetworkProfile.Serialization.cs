@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabNetworkProfile DeserializeLabNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> subnetId = default;
             Optional<ResourceIdentifier> loadBalancerId = default;
             Optional<ResourceIdentifier> publicIPId = default;

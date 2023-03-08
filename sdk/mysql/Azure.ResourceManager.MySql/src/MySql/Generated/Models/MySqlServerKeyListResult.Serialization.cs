@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlServerKeyListResult DeserializeMySqlServerKeyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MySqlServerKeyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

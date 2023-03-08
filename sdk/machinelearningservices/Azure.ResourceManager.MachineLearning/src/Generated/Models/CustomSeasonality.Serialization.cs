@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CustomSeasonality DeserializeCustomSeasonality(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int value = default;
             SeasonalityMode mode = default;
             foreach (var property in element.EnumerateObject())

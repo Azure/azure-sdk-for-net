@@ -33,6 +33,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SpatialAnalysisPersonZoneCrossingZoneEvents DeserializeSpatialAnalysisPersonZoneCrossingZoneEvents(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NamedPolygonBase zone = default;
             Optional<IList<SpatialAnalysisPersonZoneCrossingEvent>> events = default;
             foreach (var property in element.EnumerateObject())

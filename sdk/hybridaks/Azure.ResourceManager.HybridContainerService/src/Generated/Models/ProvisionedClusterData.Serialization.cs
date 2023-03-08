@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.HybridContainerService
 
         internal static ProvisionedClusterData DeserializeProvisionedClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ProvisionedClustersResponseProperties> properties = default;
             Optional<ProvisionedClustersResponseExtendedLocation> extendedLocation = default;

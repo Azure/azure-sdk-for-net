@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static ManagedDiskDetails DeserializeManagedDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier resourceGroupId = default;
             ResourceIdentifier stagingStorageAccountId = default;
             DataAccountType dataAccountType = default;

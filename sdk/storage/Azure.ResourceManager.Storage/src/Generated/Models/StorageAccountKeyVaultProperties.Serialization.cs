@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountKeyVaultProperties DeserializeStorageAccountKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyname = default;
             Optional<string> keyversion = default;
             Optional<Uri> keyvaulturi = default;

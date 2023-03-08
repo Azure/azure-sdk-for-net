@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static DiskEncryptionConfiguration DeserializeDiskEncryptionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<BatchDiskEncryptionTarget>> targets = default;
             foreach (var property in element.EnumerateObject())
             {

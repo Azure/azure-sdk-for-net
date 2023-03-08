@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBCollectionSettings DeserializeMongoDBCollectionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> canDelete = default;
             Optional<MongoDBShardKeySetting> shardKey = default;
             Optional<int> targetRUs = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     {
         internal static PrivateEndpointConnectionListResultDescription DeserializePrivateEndpointConnectionListResultDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

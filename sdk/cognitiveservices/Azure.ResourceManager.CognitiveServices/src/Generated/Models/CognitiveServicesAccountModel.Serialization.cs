@@ -79,6 +79,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesAccountModel DeserializeCognitiveServicesAccountModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesAccountDeploymentModel> baseModel = default;
             Optional<int> maxCapacity = default;
             Optional<IDictionary<string, string>> capabilities = default;

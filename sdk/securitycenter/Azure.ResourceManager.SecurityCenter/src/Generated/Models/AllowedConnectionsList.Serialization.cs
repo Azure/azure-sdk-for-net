@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AllowedConnectionsList DeserializeAllowedConnectionsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SecurityCenterAllowedConnection>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

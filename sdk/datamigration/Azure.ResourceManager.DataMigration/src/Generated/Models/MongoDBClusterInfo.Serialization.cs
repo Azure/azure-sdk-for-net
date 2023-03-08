@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MongoDBClusterInfo DeserializeMongoDBClusterInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<MongoDBDatabaseInfo> databases = default;
             bool supportsSharding = default;
             MongoDBClusterType type = default;

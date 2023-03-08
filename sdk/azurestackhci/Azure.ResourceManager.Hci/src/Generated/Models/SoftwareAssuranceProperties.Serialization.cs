@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static SoftwareAssuranceProperties DeserializeSoftwareAssuranceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SoftwareAssuranceStatus> softwareAssuranceStatus = default;
             Optional<SoftwareAssuranceIntent> softwareAssuranceIntent = default;
             Optional<DateTimeOffset> lastUpdated = default;

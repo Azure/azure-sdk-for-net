@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PeerRoute DeserializePeerRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> localAddress = default;
             Optional<string> network = default;
             Optional<string> nextHop = default;

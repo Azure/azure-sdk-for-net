@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningTriggerBase DeserializeMachineLearningTriggerBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("triggerType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

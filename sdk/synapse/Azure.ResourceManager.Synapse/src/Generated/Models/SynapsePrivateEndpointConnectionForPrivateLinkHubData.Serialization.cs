@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse
     {
         internal static SynapsePrivateEndpointConnectionForPrivateLinkHubData DeserializeSynapsePrivateEndpointConnectionForPrivateLinkHubData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapsePrivateEndpointConnectionProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaPrivateLinkResourceListResult DeserializeMediaPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MediaServicesPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

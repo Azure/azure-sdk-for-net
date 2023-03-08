@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayRewriteRuleActionSet DeserializeApplicationGatewayRewriteRuleActionSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ApplicationGatewayHeaderConfiguration>> requestHeaderConfigurations = default;
             Optional<IList<ApplicationGatewayHeaderConfiguration>> responseHeaderConfigurations = default;
             Optional<ApplicationGatewayUrlConfiguration> urlConfiguration = default;

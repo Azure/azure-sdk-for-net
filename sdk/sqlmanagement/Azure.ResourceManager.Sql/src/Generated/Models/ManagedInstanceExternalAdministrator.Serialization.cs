@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstanceExternalAdministrator DeserializeManagedInstanceExternalAdministrator(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlAdministratorType> administratorType = default;
             Optional<SqlServerPrincipalType> principalType = default;
             Optional<string> login = default;

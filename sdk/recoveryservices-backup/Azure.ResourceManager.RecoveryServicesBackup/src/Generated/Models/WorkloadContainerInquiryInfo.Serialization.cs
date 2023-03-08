@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadContainerInquiryInfo DeserializeWorkloadContainerInquiryInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<BackupErrorDetail> errorDetail = default;
             Optional<IList<WorkloadInquiryDetails>> inquiryDetails = default;

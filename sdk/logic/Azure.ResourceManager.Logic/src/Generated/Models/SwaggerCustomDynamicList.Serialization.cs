@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerCustomDynamicList DeserializeSwaggerCustomDynamicList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationId = default;
             Optional<string> builtInOperation = default;
             Optional<string> itemsPath = default;

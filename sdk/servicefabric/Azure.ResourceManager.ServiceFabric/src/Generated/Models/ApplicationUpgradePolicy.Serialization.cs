@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ApplicationUpgradePolicy DeserializeApplicationUpgradePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> upgradeReplicaSetCheckTimeout = default;
             Optional<bool> forceRestart = default;
             Optional<ArmRollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;

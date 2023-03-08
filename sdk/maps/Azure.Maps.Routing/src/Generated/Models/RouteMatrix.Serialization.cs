@@ -14,6 +14,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteMatrix DeserializeRouteMatrix(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> statusCode = default;
             Optional<RouteMatrixResultResponse> response = default;
             foreach (var property in element.EnumerateObject())

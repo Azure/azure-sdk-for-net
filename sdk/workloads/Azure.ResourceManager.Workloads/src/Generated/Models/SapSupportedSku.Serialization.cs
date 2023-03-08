@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapSupportedSku DeserializeSapSupportedSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmSku = default;
             Optional<bool> isAppServerCertified = default;
             Optional<bool> isDatabaseCertified = default;

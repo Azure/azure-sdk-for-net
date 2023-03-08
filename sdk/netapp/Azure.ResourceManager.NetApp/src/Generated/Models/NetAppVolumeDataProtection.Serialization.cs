@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumeDataProtection DeserializeNetAppVolumeDataProtection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetAppVolumeBackupConfiguration> backup = default;
             Optional<NetAppReplicationObject> replication = default;
             Optional<VolumeSnapshotProperties> snapshot = default;

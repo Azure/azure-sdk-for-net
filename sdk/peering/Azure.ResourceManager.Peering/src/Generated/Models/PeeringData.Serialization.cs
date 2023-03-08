@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Peering
 
         internal static PeeringData DeserializePeeringData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PeeringSku sku = default;
             PeeringKind kind = default;
             Optional<IDictionary<string, string>> tags = default;

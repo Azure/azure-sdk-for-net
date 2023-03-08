@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static RoleDefinitionListResult DeserializeRoleDefinitionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AuthorizationRoleDefinitionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

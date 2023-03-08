@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static IscsiTargetInfo DeserializeIscsiTargetInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> targetIqn = default;
             Optional<string> targetPortalHostname = default;
             Optional<int> targetPortalPort = default;

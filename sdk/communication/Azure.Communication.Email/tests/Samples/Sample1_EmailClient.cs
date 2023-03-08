@@ -188,7 +188,7 @@ namespace Azure.Communication.Email.Tests.Samples
 #endif
 
 #if SNIPPET
-            string content = new BinaryData(File.ReadAllBytes(filePath));
+            var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
 #else
             string attachmentName = "Attachment.txt";
             string contentType = MediaTypeNames.Text.Plain;

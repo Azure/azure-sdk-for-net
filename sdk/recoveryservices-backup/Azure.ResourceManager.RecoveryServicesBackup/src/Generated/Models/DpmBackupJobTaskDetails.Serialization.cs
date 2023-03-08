@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DpmBackupJobTaskDetails DeserializeDpmBackupJobTaskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> taskId = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;

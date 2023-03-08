@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static ProvisionedClustersCommonPropertiesStatusProvisioningStatus DeserializeProvisionedClustersCommonPropertiesStatusProvisioningStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisionedClustersCommonPropertiesStatusProvisioningStatusError> error = default;
             Optional<string> operationId = default;
             Optional<string> phase = default;

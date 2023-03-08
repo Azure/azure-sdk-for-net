@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         private static AzureLocation Location = AzureLocation.WestEurope;
 
         public AdvancedThreatProtectionSettingsTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

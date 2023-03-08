@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     {
         internal static ExtensionsList DeserializeExtensionsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KubernetesClusterExtensionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

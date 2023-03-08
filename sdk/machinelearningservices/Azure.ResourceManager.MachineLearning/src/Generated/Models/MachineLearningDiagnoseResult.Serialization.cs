@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningDiagnoseResult DeserializeMachineLearningDiagnoseResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<MachineLearningDiagnoseResultLevel> level = default;
             Optional<string> message = default;

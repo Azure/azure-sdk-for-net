@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ResponseContract DeserializeResponseContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int statusCode = default;
             Optional<string> description = default;
             Optional<IList<RepresentationContract>> representations = default;

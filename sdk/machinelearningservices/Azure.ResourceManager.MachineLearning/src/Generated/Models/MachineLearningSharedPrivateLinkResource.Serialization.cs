@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSharedPrivateLinkResource DeserializeMachineLearningSharedPrivateLinkResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<string> groupId = default;

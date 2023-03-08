@@ -15,6 +15,10 @@ namespace Azure.AI.Translation.Document.Models
     {
         internal static SupportedStorageSources DeserializeSupportedStorageSources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<StorageSource> value = default;
             foreach (var property in element.EnumerateObject())
             {

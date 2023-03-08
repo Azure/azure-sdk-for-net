@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static ShareCredentialDetails DeserializeShareCredentialDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> shareName = default;
             Optional<ShareDestinationFormatType> shareType = default;
             Optional<string> userName = default;

@@ -34,6 +34,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static DocumentRequestStatistics DeserializeDocumentRequestStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int documentsCount = default;
             int validDocumentsCount = default;
             int erroneousDocumentsCount = default;

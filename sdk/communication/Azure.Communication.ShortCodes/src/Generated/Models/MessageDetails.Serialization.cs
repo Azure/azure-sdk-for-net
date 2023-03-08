@@ -76,6 +76,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static MessageDetails DeserializeMessageDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MessageProtocol>> supportedProtocols = default;
             Optional<MessageRecurrence> recurrence = default;
             Optional<string> helpMessage = default;

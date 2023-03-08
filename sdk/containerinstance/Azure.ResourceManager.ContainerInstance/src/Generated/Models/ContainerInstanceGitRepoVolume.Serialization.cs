@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerInstanceGitRepoVolume DeserializeContainerInstanceGitRepoVolume(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> directory = default;
             string repository = default;
             Optional<string> revision = default;

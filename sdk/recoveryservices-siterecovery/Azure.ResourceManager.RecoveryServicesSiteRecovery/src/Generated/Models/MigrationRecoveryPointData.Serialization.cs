@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static MigrationRecoveryPointData DeserializeMigrationRecoveryPointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrationRecoveryPointProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

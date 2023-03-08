@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointRecallStatus DeserializeServerEndpointRecallStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<long> totalRecallErrorsCount = default;
             Optional<IReadOnlyList<ServerEndpointRecallError>> recallErrors = default;

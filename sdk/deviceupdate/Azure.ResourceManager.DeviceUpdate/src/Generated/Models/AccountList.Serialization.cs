@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     {
         internal static AccountList DeserializeAccountList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<DeviceUpdateAccountData>> value = default;
             foreach (var property in element.EnumerateObject())
