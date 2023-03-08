@@ -86,7 +86,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             var size = Constants.KB;
-            DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
             string path = await CreateRandomFileAsync(test.DirectoryPath, size:0);
             var data = GetRandomBuffer(size);
             File.WriteAllBytes(path, data);
@@ -105,7 +105,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ReadStreamAsync_Position()
         {
             // Arrange
-            DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
             string path = await CreateRandomFileAsync(test.DirectoryPath, size: 0);
 
             var length = Constants.KB;
@@ -147,7 +147,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task WriteStreamAsync()
         {
             // Arrange
-            DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
             string path = Path.Combine(test.DirectoryPath, Recording.Random.NewGuid().ToString());
 
             var length = Constants.KB;
@@ -176,7 +176,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             var writePosition = 5;
-            DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
             string path = await CreateRandomFileAsync(test.DirectoryPath, size: writePosition);
 
             var length = Constants.KB;
@@ -207,7 +207,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             var length = Constants.KB;
-            DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
             string path = await CreateRandomFileAsync(test.DirectoryPath, size: length);
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
             var data = GetRandomBuffer(length);
@@ -229,7 +229,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             int size = Constants.KB;
-            DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
             string path = await CreateRandomFileAsync(test.DirectoryPath, size: size);
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
@@ -264,7 +264,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task CompleteTransferAsync()
         {
             // Arrange
-            DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
             string path = await CreateRandomFileAsync(test.DirectoryPath, size: 0);
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 

@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         public void Ctor()
         {
-            DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
             JobPartPlanFileName file = CreateTempPartPlanFileName(test.DirectoryPath);
 
             Assert.NotNull(file);
