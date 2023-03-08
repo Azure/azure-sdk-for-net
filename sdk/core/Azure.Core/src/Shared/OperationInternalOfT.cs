@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -53,7 +54,7 @@ namespace Azure.Core
     {
         private readonly IOperation<T> _operation;
         private readonly AsyncLockWithValue<OperationState<T>> _stateLock;
-        private Response _rawResponse;
+        private Response? _rawResponse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
@@ -95,7 +96,7 @@ namespace Azure.Core
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation<T> operation,
-            Response rawResponse,
+            Response? rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null)
@@ -116,7 +117,7 @@ namespace Azure.Core
             _stateLock = new AsyncLockWithValue<OperationState<T>>(finalState);
         }
 
-        public override Response RawResponse => _stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse;
+        public override Response RawResponse => (_stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse) ?? throw new InvalidOperationException("The operation does not have a response yet. Please call UpdateStatus or WaitForCompletion first.");
 
         public override bool HasCompleted => _stateLock.HasValue;
 
@@ -279,6 +280,11 @@ namespace Azure.Core
             }
         }
 
+        public virtual string GetOperationId()
+        {
+            return _operation.GetOperationId();
+        }
+
         private static Response GetResponseFromState(OperationState<T> state)
         {
             if (state.HasSucceeded)
@@ -293,6 +299,8 @@ namespace Azure.Core
         {
             public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
                 => throw new NotSupportedException("The operation has already completed");
+
+            public string GetOperationId() => string.Empty;
         }
     }
 
@@ -333,6 +341,11 @@ namespace Azure.Core
         /// </list>
         /// </returns>
         ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// To get the Id of the operation for rehydration purpose.
+        /// </summary>
+        string GetOperationId();
     }
 
     /// <summary>

@@ -59,7 +59,7 @@ namespace Azure.Core.TestFramework
             };
         }
 
-        public override string Id => "testId";
+        public override string Id => GetOperationId();
 
         public override bool HasCompleted => MockOperationInternal.HasCompleted;
 
@@ -122,5 +122,7 @@ namespace Azure.Core.TestFramework
         public MockOperationInternal MockOperationInternal { get; }
 
         public Func<CancellationToken, OperationState> OnUpdateState { get; set; }
+
+        public string GetOperationId() => MockOperationInternal.GetOperationId();
     }
 }

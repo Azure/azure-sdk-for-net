@@ -5,11 +5,110 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager
 {
     /// <inheritdoc/>
-    public abstract class ArmOperation<T> : Operation<T>
+    public class ArmOperation<T> : Operation<T>
     {
+        private readonly OperationInternal<T> _operation;
+
+        /// <summary> Initializes a new instance of ArmOperation. </summary>
+        public ArmOperation(ArmClient client, string id)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (typeof(T).GetInterface(nameof(ISerializable)) is null)
+            {
+                throw new InvalidOperationException("Invalid type");
+            }
+            IOperationSource<T> source = new GenericOperationSource<T>();
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
+            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
+            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+        }
+
+        /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
+        protected ArmOperation()
+        {
+        }
+
+        internal ArmOperation(OperationInternal<T> operation)
+        {
+            _operation = operation;
+        }
+
+        internal ArmOperation(Response<T> response)
+        {
+            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
+        }
+
+        internal ArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string resourceTypeName)
+        {
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, resourceTypeName, fallbackStrategy: new ExponentialDelayStrategy());
+        }
+
+        /// <summary> Initializes a new instance of ArmOperation. </summary>
+        public static ArmOperation<TData> Rehydrate<TData>(ArmClient client, string id) where TData: ISerializable, new()
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            IOperationSource<TData> source = new GenericOperationSource<TData>();
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
+            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
+            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
+            var operation = new OperationInternal<TData>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+            return new ArmOperation<TData>(operation);
+        }
+
+        /// <summary> Initializes a new instance of ArmOperation. </summary>
+        public static ArmOperation<TResource> Rehydrate<TResource, TData>(ArmClient client, string id) where TData : ISerializable, new()
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            IOperationSource<TResource> resource = new GenericResourceOperationSource<TResource, TData>(client);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(resource, client.Pipeline, id);
+            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
+            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
+            var operation = new OperationInternal<TResource>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+            return new ArmOperation<TResource>(operation);
+        }
+
+        /// <inheritdoc />
+        public override string Id => HasCompleted ? string.Empty : _operation.GetOperationId();
+
+        /// <inheritdoc />
+        public override T Value => _operation.Value;
+
+        /// <inheritdoc />
+        public override bool HasValue => _operation.HasValue;
+
+        /// <inheritdoc />
+        public override bool HasCompleted => _operation.HasCompleted;
+
+        /// <inheritdoc />
+        public override Response GetRawResponse() => _operation.RawResponse;
+
+        /// <inheritdoc />
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<T> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<T> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

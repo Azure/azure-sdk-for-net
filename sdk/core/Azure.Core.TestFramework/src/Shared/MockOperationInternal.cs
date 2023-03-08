@@ -26,5 +26,10 @@ namespace Azure.Core.TestFramework
 
         public int UpdateStatusCallCount { get; set; }
         public int? CallsToComplete { get; set; }
+
+        public override string GetOperationId()
+        {
+            return "testId";
+        }
     }
 }
