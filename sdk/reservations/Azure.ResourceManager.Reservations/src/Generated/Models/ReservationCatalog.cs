@@ -64,13 +64,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Gets the sku properties. </summary>
         public IReadOnlyList<SkuProperty> SkuProperties { get; }
         /// <summary> Pricing information about the sku. </summary>
-        internal CatalogMsrp Msrp { get; }
-        /// <summary> Amount in pricing currency. Tax not included. </summary>
-        public PurchasePrice MsrpP1Y
-        {
-            get => Msrp?.P1Y;
-        }
-
+        public CatalogMsrp Msrp { get; }
         /// <summary> Gets the restrictions. </summary>
         public IReadOnlyList<SkuRestriction> Restrictions { get; }
         /// <summary> The tier of this sku. </summary>

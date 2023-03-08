@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReservationRefundResult>> ReturnAsync(WaitUntil waitUntil, ReservationRefundContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReservationOrderResource>> ReturnAsync(WaitUntil waitUntil, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _returnRestClient.PostAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationRefundResult>(new ReservationRefundResultOperationSource(), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReservationRefundResult> Return(WaitUntil waitUntil, ReservationRefundContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReservationOrderResource> Return(WaitUntil waitUntil, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _returnRestClient.Post(Guid.Parse(Id.Name), content, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationRefundResult>(new ReservationRefundResultOperationSource(), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

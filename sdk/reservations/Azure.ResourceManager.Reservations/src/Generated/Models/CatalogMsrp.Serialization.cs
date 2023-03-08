@@ -10,11 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    internal partial class CatalogMsrp
+    public partial class CatalogMsrp
     {
         internal static CatalogMsrp DeserializeCatalogMsrp(JsonElement element)
         {
             Optional<PurchasePrice> p1Y = default;
+            Optional<PurchasePrice> p3Y = default;
+            Optional<PurchasePrice> p5Y = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("p1Y"u8))
@@ -27,8 +29,28 @@ namespace Azure.ResourceManager.Reservations.Models
                     p1Y = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
+                if (property.NameEquals("p3Y"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    p3Y = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("p5Y"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    p5Y = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    continue;
+                }
             }
-            return new CatalogMsrp(p1Y.Value);
+            return new CatalogMsrp(p1Y.Value, p3Y.Value, p5Y.Value);
         }
     }
 }
