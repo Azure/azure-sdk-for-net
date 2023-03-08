@@ -514,7 +514,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-
         /// <summary>
         /// Retrieve an existing <see cref="ConfigurationSetting"/>, uniquely identified by key and label, from the configuration store.
         /// </summary>
@@ -905,7 +904,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the configuration setting snapshot to create. </param>
         /// <param name="snapshot"> The configuration setting snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> CreateSnapshotAsync(string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
+        public virtual async Task<CreateSnapshotOperation> CreateSnapshotAsync(string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(snapshot, nameof(snapshot));
@@ -952,7 +951,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the configuration setting snapshot to create. </param>
         /// <param name="snapshot"> The configuration setting snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> CreateSnapshot(string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
+        public virtual CreateSnapshotOperation CreateSnapshot(string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(snapshot, nameof(snapshot));
