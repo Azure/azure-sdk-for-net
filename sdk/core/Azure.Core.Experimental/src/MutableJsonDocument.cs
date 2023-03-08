@@ -116,7 +116,7 @@ namespace Azure.Core.Json
         }
 
         /// <inheritdoc/>
-        public void Dispose()
+        public override void Dispose()
         {
             _originalDocument.Dispose();
         }

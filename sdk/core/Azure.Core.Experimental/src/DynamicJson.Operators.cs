@@ -57,30 +57,30 @@ namespace Azure.Core.Dynamic
         /// Converts the value to a <see cref="bool"/> or null.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator bool?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetBoolean();
+        public static implicit operator bool?(DynamicJson value) => value._element.HasValue ? value._element.GetBoolean() : null;
 
         /// <summary>
         /// Converts the value to a <see cref="int"/> or null.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator int?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetInt32();
+        public static implicit operator int?(DynamicJson value) => value._element.HasValue ? value._element.GetInt32() : null;
 
         /// <summary>
         /// Converts the value to a <see cref="long"/> or null.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator long?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetInt64();
+        public static implicit operator long?(DynamicJson value) => value._element.HasValue ? value._element.GetInt64() : null;
 
         /// <summary>
         /// Converts the value to a <see cref="float"/> or null.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator float?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetSingle();
+        public static implicit operator float?(DynamicJson value) => value._element.HasValue ? value._element.GetSingle() : null;
 
         /// <summary>
         /// Converts the value to a <see cref="double"/> or null.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator double?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetDouble();
+        public static implicit operator double?(DynamicJson value) => value._element.HasValue ? value._element.GetDouble() : null;
     }
 }

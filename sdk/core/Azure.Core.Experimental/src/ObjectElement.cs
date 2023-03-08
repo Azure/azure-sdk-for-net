@@ -15,10 +15,12 @@ using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
 {
-    public struct ObjectElement
+    public readonly struct ObjectElement
     {
-        private ObjectDocument _document;
-        private object _element;
+        private readonly ObjectDocument _document;
+        private readonly object _element;
+
+        public bool HasValue { get => _document.HasValue(_element); }
 
         public ObjectElement(ObjectDocument document, object element)
         {
@@ -120,9 +122,9 @@ namespace Azure.Core.Dynamic
 
         // TODO: add setters for primitives
 
-        public void SetProperty(string name, object value)
+        public ObjectElement SetProperty(string name, object value)
         {
-            _document.SetProperty(_element, name, value);
+            return _document.SetProperty(_element, name, value);
         }
 
         public void WriteTo(Stream stream)

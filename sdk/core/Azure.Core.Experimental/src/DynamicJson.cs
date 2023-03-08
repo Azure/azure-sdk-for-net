@@ -120,7 +120,7 @@ namespace Azure.Core.Dynamic
 
             // Other mappings have PascalCase getters, and lookup name is PascalCase.
             // So, if it exists in either form, we'll set it in that form.
-            if (_element.TryGetProperty(name, out MutableJsonElement element))
+            if (_element.TryGetProperty(name, out ObjectElement element))
             {
                 element.Set(value);
                 return null;

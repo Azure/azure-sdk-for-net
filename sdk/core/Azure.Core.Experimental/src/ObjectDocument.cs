@@ -33,9 +33,10 @@ namespace Azure.Core.Dynamic
         public abstract bool TryGetDouble(object element, out double value);
         public abstract bool TryGetInt64(object element, out long value);
         public abstract bool TryGetString(object element, out string value);
+        public abstract bool HasValue(object element);
 
         // Setters
-        public abstract void SetProperty(object element, string name, object value);
+        public abstract ObjectElement SetProperty(object element, string name, object value);
         public abstract void Set(object element, object value);
 
         // Serialization

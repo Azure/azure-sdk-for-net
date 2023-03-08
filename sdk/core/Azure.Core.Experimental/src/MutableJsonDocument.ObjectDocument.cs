@@ -42,6 +42,11 @@ namespace Azure.Core.Json
             throw new NotImplementedException();
         }
 
+        public override bool HasValue(object element)
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool TryGetProperty(object element, string name, out ObjectElement value)
         {
             throw new NotImplementedException();
