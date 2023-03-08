@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,6 +15,7 @@ using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.Protocols;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             binding
                 .AddConverter<JObject, TableEntity>(CreateTableEntityFromJObject)
+                .AddConverter<byte[], TableEntity>(CreateTableEntityFromJsonBytes)
                 .AddConverter<TableEntity, JObject>(ConvertEntityToJObject)
                 .AddConverter<ITableEntity, TableEntity>(entity =>
                 {
@@ -176,6 +179,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 jsonObject.Add(entityProperty.Key, new JValue(entityProperty.Value));
             }
             return jsonObject;
+        }
+
+        private static TableEntity CreateTableEntityFromJsonBytes(byte[] bytes)
+        {
+            JObject jObject = JsonConvert.DeserializeObject<JObject>(
+                Encoding.UTF8.GetString(bytes),
+                new JsonSerializerSettings
+                {
+                    DateParseHandling = DateParseHandling.None
+                });
+
+            return CreateTableEntityFromJObject(jObject);
         }
 
         private static TableEntity CreateTableEntityFromJObject(JObject entity)
