@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -20,12 +21,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public string ConvertToString()
         {
-            string initial = "";
-            foreach (DtmfTone atone in Tones)
-            {
-                initial += atone.ToChar();
-            }
-            return initial;
+            return string.Join("", Tones.Select(x => x.ToChar()));
         }
     }
 }
