@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Type of the Applied Scope. </summary>
         public AppliedScopeType? AppliedScopeType { get; set; }
-        /// <summary> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </summary>
+        /// <summary> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType. </summary>
         public IList<string> AppliedScopes { get; }
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
         public AppliedScopeProperties AppliedScopeProperties { get; set; }

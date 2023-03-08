@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="quantity"> Quantity of the skus that are part of the reservation. </param>
         /// <param name="displayName"> Friendly name of the reservation. </param>
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
-        /// <param name="appliedScopes"> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </param>
+        /// <param name="appliedScopes"> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
         /// <param name="isRenewEnabled"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
         /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string DisplayName { get; set; }
         /// <summary> Type of the Applied Scope. </summary>
         public AppliedScopeType? AppliedScopeType { get; set; }
-        /// <summary> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </summary>
+        /// <summary> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType. </summary>
         public IList<string> AppliedScopes { get; set; }
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
         public AppliedScopeProperties AppliedScopeProperties { get; set; }
