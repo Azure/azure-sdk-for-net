@@ -1,6 +1,6 @@
 # Release History
 
-## 5.3.0-beta.2 (Unreleased)
+## 5.3.0-beta.2 (2023-03-07)
 
 ### Features Added
 
@@ -30,10 +30,6 @@
   - Removed the `MultiLabelClassifyOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
   - Removed the `RecognizeCustomEntitiesOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
   - Removed the `SingleLabelClassifyOptions.AutoDetectionDefaultLanguage` property; the property is not supported by the service.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 5.3.0-beta.1 (2022-12-01)
 
