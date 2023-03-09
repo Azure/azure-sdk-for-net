@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Web Chat channel definition. </summary>
-    public partial class WebChatChannel : Channel
+    public partial class WebChatChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of WebChatChannel. </summary>
         public WebChatChannel()

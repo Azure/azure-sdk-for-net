@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
         public ManagedInstanceLicenseType? LicenseType { get; set; }
         /// <summary> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </summary>
         public int? VCores { get; set; }
-        /// <summary> Storage size in GB. Minimum value: 32. Maximum value: 8192. Increments of 32 GB allowed only. </summary>
+        /// <summary> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </summary>
         public int? StorageSizeInGB { get; set; }
         /// <summary> Collation of the managed instance. </summary>
         public string Collation { get; set; }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
         public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
         /// <summary> A CMK URI of the key to use for encryption. </summary>
         public Uri KeyId { get; set; }
-        /// <summary> The Azure Active Directory administrator of the server. </summary>
+        /// <summary> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </summary>
         public ManagedInstanceExternalAdministrator Administrators { get; set; }
         /// <summary> The managed instance&apos;s service principal. </summary>
         public SqlServicePrincipal ServicePrincipal { get; set; }
