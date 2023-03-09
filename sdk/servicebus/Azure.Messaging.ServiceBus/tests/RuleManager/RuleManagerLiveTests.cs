@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Administration;
+using Microsoft.Azure.Management.ServiceBus;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.RuleManager
@@ -98,6 +100,27 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
             }
 
             return rules;
+        }
+
+        [Test]
+        public async Task GetRulesFromEntityWithForwarding()
+        {
+            await using var topicScope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
+            await using var queueScope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+            var serviceBusAdministrationClient = new ServiceBusAdministrationClient(TestEnvironment.ServiceBusConnectionString);
+            await serviceBusAdministrationClient.UpdateSubscriptionAsync(
+                new SubscriptionProperties(topicScope.TopicName, topicScope.SubscriptionNames[0])
+                {
+                    ForwardTo = queueScope.QueueName
+                });
+
+            await using ServiceBusRuleManager ruleManager = client.CreateRuleManager(topicScope.TopicName, topicScope.SubscriptionNames[0]);
+
+            var rules = await GetAllRulesAsync(ruleManager);
+
+            Assert.AreEqual(1, rules.Count);
         }
 
         [Test]
