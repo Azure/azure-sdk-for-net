@@ -1,0 +1,374 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/trialmatcher/jobs?api-version=2023-03-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "2328",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b5753b3715abc1be5cd6d493821ac8c8-3bdeeb7d0a7d4cea-00",
+        "User-Agent": "azsdk-net-Health.Insights.ClinicalMatching/1.0.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "03d0f2729283dd282b7a20a125af49f1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "configuration": {
+          "clinicalTrials": {
+            "registryFilters": [
+              {
+                "conditions": [
+                  "non small cell lung cancer (nsclc)"
+                ],
+                "sources": [
+                  "clinicaltrials_gov"
+                ],
+                "recruitmentStatuses": [
+                  "recruiting"
+                ],
+                "facilityLocations": [
+                  {
+                    "city": "gilbert",
+                    "state": "arizona",
+                    "country": "United States"
+                  }
+                ]
+              }
+            ]
+          },
+          "includeEvidence": true
+        },
+        "patients": [
+          {
+            "id": "patient1",
+            "info": {
+              "sex": "male",
+              "birthDate": "1961-04-25",
+              "clinicalInfo": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls",
+                  "code": "C0032181",
+                  "name": "Platelet count",
+                  "value": "250000"
+                },
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls",
+                  "code": "C0002965",
+                  "name": "Unstable Angina",
+                  "value": "true"
+                },
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls",
+                  "code": "C1522449",
+                  "name": "Radiotherapy",
+                  "value": "false"
+                },
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls",
+                  "code": "C0242957",
+                  "name": "GeneOrProtein-Expression",
+                  "value": "Negative;EntityType:GENEORPROTEIN-EXPRESSION"
+                },
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls",
+                  "code": "C1300072",
+                  "name": "cancer stage",
+                  "value": "2"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "0e5092fb-964e-4c91-96a8-f131e6299252",
+        "Content-Length": "0",
+        "Date": "Mon, 06 Mar 2023 09:41:21 GMT",
+        "Operation-Location": "https://sanitized.azure-api.net/healthinsights/trialmatcher/jobs/f91a9b0f-f6db-4f7d-af96-76ef29c951c1?api-version=2023-03-01-preview",
+        "Retry-After": "1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/trialmatcher/jobs/f91a9b0f-f6db-4f7d-af96-76ef29c951c1?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b5753b3715abc1be5cd6d493821ac8c8-6ef98d69d4be270b-00",
+        "User-Agent": "azsdk-net-Health.Insights.ClinicalMatching/1.0.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "69bca8efc1e7b48e32fdefdadda70174",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "96ad52e7-1401-417c-8203-797af0fee2a2",
+        "Content-Length": "196",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Mar 2023 09:41:21 GMT",
+        "Retry-After": "1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "jobId": "f91a9b0f-f6db-4f7d-af96-76ef29c951c1",
+        "createdDateTime": "2023-03-06T09:41:21Z",
+        "expirationDateTime": "2023-03-06T10:41:21Z",
+        "lastUpdateDateTime": "2023-03-06T09:41:21Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/trialmatcher/jobs/f91a9b0f-f6db-4f7d-af96-76ef29c951c1?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b5753b3715abc1be5cd6d493821ac8c8-d7d1e7255d1f4d9f-00",
+        "User-Agent": "azsdk-net-Health.Insights.ClinicalMatching/1.0.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1563dc5f8652fc6003be299073b5fdf1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "335850dd-7faf-493e-9d4a-823b84a53394",
+        "Content-Length": "196",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Mar 2023 09:41:23 GMT",
+        "Retry-After": "1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "jobId": "f91a9b0f-f6db-4f7d-af96-76ef29c951c1",
+        "createdDateTime": "2023-03-06T09:41:21Z",
+        "expirationDateTime": "2023-03-06T10:41:21Z",
+        "lastUpdateDateTime": "2023-03-06T09:41:21Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/trialmatcher/jobs/f91a9b0f-f6db-4f7d-af96-76ef29c951c1?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b5753b3715abc1be5cd6d493821ac8c8-299212fc45af51ce-00",
+        "User-Agent": "azsdk-net-Health.Insights.ClinicalMatching/1.0.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9f87e1d8c6f5b09d641bd086a24dff83",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4b13402d-10dd-48b6-86ea-9bf003a59869",
+        "Content-Length": "196",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Mar 2023 09:41:24 GMT",
+        "Retry-After": "1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "jobId": "f91a9b0f-f6db-4f7d-af96-76ef29c951c1",
+        "createdDateTime": "2023-03-06T09:41:21Z",
+        "expirationDateTime": "2023-03-06T10:41:21Z",
+        "lastUpdateDateTime": "2023-03-06T09:41:21Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/trialmatcher/jobs/f91a9b0f-f6db-4f7d-af96-76ef29c951c1?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b5753b3715abc1be5cd6d493821ac8c8-67f86904c7f7a342-00",
+        "User-Agent": "azsdk-net-Health.Insights.ClinicalMatching/1.0.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4841ac78334b689e47bf652898fd417d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "7bda5f52-8e4c-4865-9112-f9f5b9481df2",
+        "Content-Length": "196",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Mar 2023 09:41:25 GMT",
+        "Retry-After": "1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "jobId": "f91a9b0f-f6db-4f7d-af96-76ef29c951c1",
+        "createdDateTime": "2023-03-06T09:41:21Z",
+        "expirationDateTime": "2023-03-06T10:41:21Z",
+        "lastUpdateDateTime": "2023-03-06T09:41:21Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/trialmatcher/jobs/f91a9b0f-f6db-4f7d-af96-76ef29c951c1?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b5753b3715abc1be5cd6d493821ac8c8-95bc5d819115e224-00",
+        "User-Agent": "azsdk-net-Health.Insights.ClinicalMatching/1.0.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fb02feff6220997e3fb2b137b5da5ab6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2495bf2a-29ab-4c68-bac7-4a152f9f5c93",
+        "Content-Length": "196",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Mar 2023 09:41:27 GMT",
+        "Retry-After": "1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "jobId": "f91a9b0f-f6db-4f7d-af96-76ef29c951c1",
+        "createdDateTime": "2023-03-06T09:41:21Z",
+        "expirationDateTime": "2023-03-06T10:41:21Z",
+        "lastUpdateDateTime": "2023-03-06T09:41:21Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/trialmatcher/jobs/f91a9b0f-f6db-4f7d-af96-76ef29c951c1?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b5753b3715abc1be5cd6d493821ac8c8-798f97e79d9e2320-00",
+        "User-Agent": "azsdk-net-Health.Insights.ClinicalMatching/1.0.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c618a5beb473a4a5431e573660741767",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2e493738-9f7c-468f-b689-b2a051013556",
+        "Content-Length": "196",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Mar 2023 09:41:28 GMT",
+        "Retry-After": "1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "jobId": "f91a9b0f-f6db-4f7d-af96-76ef29c951c1",
+        "createdDateTime": "2023-03-06T09:41:21Z",
+        "expirationDateTime": "2023-03-06T10:41:21Z",
+        "lastUpdateDateTime": "2023-03-06T09:41:21Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/trialmatcher/jobs/f91a9b0f-f6db-4f7d-af96-76ef29c951c1?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b5753b3715abc1be5cd6d493821ac8c8-2247a9f48e26b75a-00",
+        "User-Agent": "azsdk-net-Health.Insights.ClinicalMatching/1.0.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a38652da044b15632ea809988267b26d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "aefa6d6e-2f15-458a-b346-597a69a6cd90",
+        "Content-Length": "196",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Mar 2023 09:41:29 GMT",
+        "Retry-After": "1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "jobId": "f91a9b0f-f6db-4f7d-af96-76ef29c951c1",
+        "createdDateTime": "2023-03-06T09:41:21Z",
+        "expirationDateTime": "2023-03-06T10:41:21Z",
+        "lastUpdateDateTime": "2023-03-06T09:41:21Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.azure-api.net/healthinsights/trialmatcher/jobs/f91a9b0f-f6db-4f7d-af96-76ef29c951c1?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b5753b3715abc1be5cd6d493821ac8c8-a94aae3aec7548a4-00",
+        "User-Agent": "azsdk-net-Health.Insights.ClinicalMatching/1.0.0-alpha.20230302.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f26aaf657ae44a0a595db8010b4838cb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "dcb1a529-22fd-4968-b255-624fc898ce90",
+        "Content-Length": "1029",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 06 Mar 2023 09:41:31 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "results": {
+          "patients": [
+            {
+              "id": "patient1",
+              "inferences": [
+                {
+                  "type": "trialEligibility",
+                  "evidence": [
+                    {
+                      "eligibilityCriteriaEvidence": "Inclusion: Has a radiation therapy plan approved by the central radiation therapy quality assurance vendor",
+                      "patientInfoEvidence": {
+                        "system": "http://www.nlm.nih.gov/research/umls",
+                        "code": "C1522449",
+                        "name": "Radiotherapy",
+                        "value": "false"
+                      },
+                      "importance": 0.0
+                    },
+                    {
+                      "eligibilityCriteriaEvidence": "Inclusion: Is able to receive SBRT and does not have an ultra-centrally located tumor",
+                      "patientInfoEvidence": {
+                        "system": "http://www.nlm.nih.gov/research/umls",
+                        "code": "C1522449",
+                        "name": "Radiotherapy",
+                        "value": "false"
+                      },
+                      "importance": 0.0
+                    }
+                  ],
+                  "id": "NCT03924869",
+                  "source": "Sanitized",
+                  "value": "Ineligible",
+                  "confidenceScore": 0.0
+                }
+              ],
+              "neededClinicalInfo": []
+            }
+          ],
+          "modelVersion": "2023.130.1.0",
+          "knowledgeGraphLastUpdateDate": "01/11/2023"
+        },
+        "jobId": "f91a9b0f-f6db-4f7d-af96-76ef29c951c1",
+        "createdDateTime": "2023-03-06T09:41:21Z",
+        "expirationDateTime": "2023-03-06T10:41:21Z",
+        "lastUpdateDateTime": "2023-03-06T09:41:30Z",
+        "status": "succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_HEALTH_INSIGHTS_API_KEY": "Sanitized",
+    "AZURE_HEALTH_INSIGHTS_ENDPOINT": "https://sanitized.azure-api.net/",
+    "RandomSeed": "1727651881"
+  }
+}
