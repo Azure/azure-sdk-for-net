@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -66,7 +67,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="zones"> Target zone where the VM and its disks should be restored. </param>
         /// <param name="identityInfo"> Managed Identity information required to access customer storage account. </param>
         /// <param name="identityBasedRestoreDetails"> IaaS VM workload specific restore details for restores using managed identity. </param>
-        internal IaasVmRestoreContent(string objectType, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails) : base(objectType)
+        /// <param name="extendedLocation">
+        /// Target extended location where the VM should be restored,
+        /// should be null if restore is to be done in public cloud
+        /// </param>
+        /// <param name="securedVmDetails"> Stores Secured VM Details. </param>
+        /// <param name="targetDiskNetworkAccessSettings"> Specifies target network access settings for disks of VM to be restored,. </param>
+        internal IaasVmRestoreContent(string objectType, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVmDetails securedVmDetails, TargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings) : base(objectType)
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -88,6 +95,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Zones = zones;
             IdentityInfo = identityInfo;
             IdentityBasedRestoreDetails = identityBasedRestoreDetails;
+            ExtendedLocation = extendedLocation;
+            SecuredVmDetails = securedVmDetails;
+            TargetDiskNetworkAccessSettings = targetDiskNetworkAccessSettings;
             ObjectType = objectType ?? "IaasVMRestoreRequest";
         }
 
@@ -150,5 +160,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public BackupIdentityInfo IdentityInfo { get; set; }
         /// <summary> IaaS VM workload specific restore details for restores using managed identity. </summary>
         public IdentityBasedRestoreDetails IdentityBasedRestoreDetails { get; set; }
+        /// <summary>
+        /// Target extended location where the VM should be restored,
+        /// should be null if restore is to be done in public cloud
+        /// </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> Stores Secured VM Details. </summary>
+        internal SecuredVmDetails SecuredVmDetails { get; set; }
+        /// <summary> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </summary>
+        public string SecuredVmOSDiskEncryptionSetId
+        {
+            get => SecuredVmDetails is null ? default : SecuredVmDetails.SecuredVmOSDiskEncryptionSetId;
+            set
+            {
+                if (SecuredVmDetails is null)
+                    SecuredVmDetails = new SecuredVmDetails();
+                SecuredVmDetails.SecuredVmOSDiskEncryptionSetId = value;
+            }
+        }
+
+        /// <summary> Specifies target network access settings for disks of VM to be restored,. </summary>
+        public TargetDiskNetworkAccessSettings TargetDiskNetworkAccessSettings { get; set; }
     }
 }
