@@ -612,7 +612,7 @@ namespace Azure.Communication.CallAutomation
 
             if (externalStorage is BlobStorage blobStorage)
             {
-                result = new ExternalStorageInternal(externalStorage.StorageType)
+                result = new ExternalStorageInternal(blobStorage.StorageType)
                 {
                     BlobStorage = new BlobStorageInternal(blobStorage.ContainerUri.AbsoluteUri),
                 };
