@@ -270,8 +270,11 @@ namespace Azure.Core
 
         internal void Dispose()
         {
-            CheckDisposed();
 #if DEBUG
+            if (_disposed)
+            {
+                return;
+            }
             _disposed = true;
 #endif
             _count = 0;

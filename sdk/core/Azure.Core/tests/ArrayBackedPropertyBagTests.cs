@@ -192,30 +192,27 @@ namespace Azure.Core.Tests
         [TestCase(10)]
         public void DisposeCreateDispose(int count)
         {
-            var target = new ArrayBackedPropertyBag<int, int>();
+            var first = new ArrayBackedPropertyBag<int, int>();
             for (var key = 0; key < count; key++)
             {
-                target.Set(key, key);
+                first.Set(key, key);
             }
-            target.Dispose();
+            first.Dispose();
 
-            var target2 = new ArrayBackedPropertyBag<int, int>();
+            var second = new ArrayBackedPropertyBag<int, int>();
             for (var key = 0; key < count; key++)
             {
-                target2.Set(key, key);
+                second.Set(key, key);
             }
-#if DEBUG
-            Assert.Throws<InvalidOperationException>(() => target.Dispose());
-#else
-            target.Dispose();
 
-            Assert.AreEqual(count, target2.Count);
+            first.Dispose();
+
+            Assert.AreEqual(count, second.Count);
             for (var key = 0; key < count; key++)
             {
-                Assert.IsTrue(target2.TryGetValue(key, out var value));
+                Assert.IsTrue(second.TryGetValue(key, out var value));
                 Assert.AreEqual(key, value);
             }
-#endif
         }
     }
 }
