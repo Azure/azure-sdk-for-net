@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -142,6 +143,79 @@ namespace Azure.Core.Tests
                 target.GetAt(index, out var key, out var value);
                 Assert.AreEqual(expected[key], value);
             }
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(5)]
+        [TestCase(10)]
+        public void Dispose(int count)
+        {
+            var target = new ArrayBackedPropertyBag<int, int>();
+            for (var key = 0; key < count; key++)
+            {
+                target.Set(key, key);
+            }
+
+            Assert.AreEqual(count, target.Count);
+            for (var key = 0; key < count; key++)
+            {
+                Assert.IsTrue(target.TryGetValue(key, out var value));
+                Assert.AreEqual(key, value);
+            }
+
+            target.Dispose();
+#if DEBUG
+            Assert.Throws<InvalidOperationException>(() => { _ = target.Count; });
+            Assert.Throws<InvalidOperationException>(() => { _ = target.IsEmpty; });
+            for (var key = 0; key < count; key++)
+            {
+                Assert.Throws<InvalidOperationException>(() => { _ = target.TryGetValue(key, out _); });
+            }
+#else
+            Assert.IsTrue(target.IsEmpty);
+            Assert.AreEqual(0, target.Count);
+            for (var key = 0; key < count; key++)
+            {
+                Assert.IsFalse(target.TryGetValue(key, out _));
+            }
+#endif
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(5)]
+        [TestCase(10)]
+        public void DisposeCreateDispose(int count)
+        {
+            var target = new ArrayBackedPropertyBag<int, int>();
+            for (var key = 0; key < count; key++)
+            {
+                target.Set(key, key);
+            }
+            target.Dispose();
+
+            var target2 = new ArrayBackedPropertyBag<int, int>();
+            for (var key = 0; key < count; key++)
+            {
+                target2.Set(key, key);
+            }
+#if DEBUG
+            Assert.Throws<InvalidOperationException>(() => target.Dispose());
+#else
+            target.Dispose();
+
+            Assert.AreEqual(count, target2.Count);
+            for (var key = 0; key < count; key++)
+            {
+                Assert.IsTrue(target2.TryGetValue(key, out var value));
+                Assert.AreEqual(key, value);
+            }
+#endif
         }
     }
 }

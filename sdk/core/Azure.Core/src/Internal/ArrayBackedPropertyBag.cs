@@ -18,7 +18,7 @@ namespace Azure.Core
     {
         private Kvp _first;
         private Kvp _second;
-        private Kvp[] _rest;
+        private Kvp[]? _rest;
         private int _count;
 #if DEBUG
         private bool _disposed;
@@ -68,7 +68,7 @@ namespace Azure.Core
             {
                 0 => _first,
                 1 => _second,
-                _ => _rest[index - 2]
+                _ => _rest![index - 2] // Must throw if _rest is null
             };
         }
 
@@ -146,32 +146,33 @@ namespace Azure.Core
 
                     return false;
                 default:
+                    Kvp[] rest = _rest!; // _rest can't be null when _count >= 2
                     if (IsFirst(key))
                     {
                         _first = _second;
-                        _second = _rest[0];
+                        _second = rest[0];
                         _count--;
-                        Array.Copy(_rest, 1, _rest, 0, _count - 2);
-                        _rest[_count - 2] = default;
+                        Array.Copy(rest, 1, rest, 0, _count - 2);
+                        rest[_count - 2] = default;
                         return true;
                     }
 
                     if (IsSecond(key))
                     {
-                        _second = _rest[0];
+                        _second = rest[0];
                         _count--;
-                        Array.Copy(_rest, 1, _rest, 0, _count - 2);
-                        _rest[_count - 2] = default;
+                        Array.Copy(rest, 1, rest, 0, _count - 2);
+                        rest[_count - 2] = default;
                         return true;
                     }
 
                     for (var i = 0; i < _count - 2; i++)
                     {
-                        if (IsRest(i, key))
+                        if (rest[i].Key.Equals(key))
                         {
                             _count--;
-                            Array.Copy(_rest, i + 1, _rest, i, _count - 2 - i);
-                            _rest[_count - 2] = default;
+                            Array.Copy(rest, i + 1, rest, i, _count - 2 - i);
+                            rest[_count - 2] = default;
                             return true;
                         }
                     }
@@ -185,9 +186,6 @@ namespace Azure.Core
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool IsSecond(TKey key) => _second.Key.Equals(key);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool IsRest(int index, TKey key) => _rest[index].Key.Equals(key);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void AddInternal(TKey key, TValue value)
@@ -239,7 +237,7 @@ namespace Azure.Core
             else if (index == 1)
                 _second = value;
             else
-                _rest[index - 2] = value;
+                _rest![index - 2] = value; // _rest can't be null when _count >= 2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -247,7 +245,7 @@ namespace Azure.Core
         {
             0 => _first.Value,
             1 => _second.Value,
-            _ => _rest[index - 2].Value
+            _ => _rest![index - 2].Value // _rest can't be null when _count >= 2
         };
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -260,10 +258,11 @@ namespace Azure.Core
             if (_count > 1 && _second.Key.Equals(key))
                 return 1;
 
+            Kvp[] rest = _rest!; // _rest can't be null when _count >= 2
             int max = _count - 2;
             for (var i = 0; i < max; i++)
             {
-                if (_rest[i].Key.Equals(key))
+                if (rest[i].Key.Equals(key))
                     return i + 2;
             }
             return -1;
@@ -275,10 +274,17 @@ namespace Azure.Core
 #if DEBUG
             _disposed = true;
 #endif
-            if (_rest != null)
+            _count = 0;
+            _first = default;
+            _second = default;
+            if (_rest == default)
             {
-                ArrayPool<Kvp>.Shared.Return(_rest, true);
+                return;
             }
+
+            var rest = _rest;
+            _rest = default;
+            ArrayPool<Kvp>.Shared.Return(rest, true);
         }
 
 #pragma warning disable CA1822

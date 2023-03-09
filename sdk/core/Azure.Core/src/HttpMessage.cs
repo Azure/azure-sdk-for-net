@@ -198,9 +198,15 @@ namespace Azure.Core
         /// </summary>
         public void Dispose()
         {
-            Request?.Dispose();
-            _response?.Dispose();
+            Request.Dispose();
             _propertyBag.Dispose();
+
+            var response = _response;
+            if (response != null)
+            {
+                _response = null;
+                response.Dispose();
+            }
         }
 
         private class ResponseShouldNotBeUsedStream : Stream
