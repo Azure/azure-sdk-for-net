@@ -121,6 +121,7 @@ namespace Azure.Core.Dynamic
         public static void WriteTo(System.IO.Stream stream, Azure.Core.Dynamic.DynamicData data) { }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonConverter))]
     public sealed partial class DynamicJson : Azure.Core.Dynamic.DynamicData, System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
         internal DynamicJson() { }
@@ -137,7 +138,7 @@ namespace Azure.Core.Dynamic
         public static implicit operator float (Azure.Core.Dynamic.DynamicJson value) { throw null; }
         public static implicit operator string (Azure.Core.Dynamic.DynamicJson value) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
-        public override string ToString() { throw null; }
+        public override string? ToString() { throw null; }
         [System.Diagnostics.DebuggerDisplayAttribute("{Current,nq}")]
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct ArrayEnumerator : System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicJson>, System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicJson>, System.Collections.IEnumerable, System.Collections.IEnumerator, System.IDisposable
@@ -191,17 +192,77 @@ namespace Azure.Core.Dynamic
         public string Name { get { throw null; } }
         public Azure.Core.Dynamic.DynamicJson Value { get { throw null; } }
     }
+    public abstract partial class ObjectDocument : System.IDisposable
+    {
+        protected ObjectDocument() { }
+        public abstract T As<T>(object element);
+        public abstract void Dispose();
+        public abstract Azure.Core.Dynamic.ObjectElement GetIndexElement(object element, int index);
+        public abstract bool HasValue(object element);
+        public abstract void Set(object element, object value);
+        public abstract Azure.Core.Dynamic.ObjectElement SetProperty(object element, string name, object value);
+        public abstract string? ToString(object element);
+        public abstract bool TryGetArrayLength(object element, out int length);
+        public abstract bool TryGetBoolean(object element, out bool value);
+        public abstract bool TryGetDouble(object element, out double value);
+        public abstract bool TryGetInt64(object element, out long value);
+        public abstract bool TryGetProperty(object element, string name, out Azure.Core.Dynamic.ObjectElement value);
+        public abstract bool TryGetPropertyNames(object element, out System.Collections.Generic.IEnumerable<string> enumerator);
+        public abstract bool TryGetString(object element, out string? value);
+        public abstract void WriteTo(object element, System.IO.Stream stream);
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ObjectElement
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ObjectElement(Azure.Core.Dynamic.ObjectDocument document, object element) { throw null; }
+        public bool HasValue { get { throw null; } }
+        public T As<T>() { throw null; }
+        public void DisposeRoot() { }
+        public int GetArrayLength() { throw null; }
+        public bool GetBoolean() { throw null; }
+        public double GetDouble() { throw null; }
+        public Azure.Core.Dynamic.ObjectElement GetIndexElement(int index) { throw null; }
+        public int GetInt32() { throw null; }
+        public long GetInt64() { throw null; }
+        public Azure.Core.Dynamic.ObjectElement GetProperty(string name) { throw null; }
+        public System.Collections.Generic.IEnumerable<string> GetPropertyNames() { throw null; }
+        public float GetSingle() { throw null; }
+        public string? GetString() { throw null; }
+        public void Set(object value) { }
+        public Azure.Core.Dynamic.ObjectElement SetProperty(string name, object value) { throw null; }
+        public override string? ToString() { throw null; }
+        public bool TryGetArrayLength(out int length) { throw null; }
+        public bool TryGetProperty(string name, out Azure.Core.Dynamic.ObjectElement value) { throw null; }
+        public bool TryGetPropertyNames(out System.Collections.Generic.IEnumerable<string> enumerator) { throw null; }
+        public void WriteTo(System.IO.Stream stream) { }
+    }
 }
 namespace Azure.Core.Json
 {
-    public sealed partial class MutableJsonDocument : System.IDisposable
+    public sealed partial class MutableJsonDocument : Azure.Core.Dynamic.ObjectDocument, System.IDisposable
     {
         internal MutableJsonDocument() { }
         public Azure.Core.Json.MutableJsonElement RootElement { get { throw null; } }
-        public void Dispose() { }
+        public override T As<T>(object element) { throw null; }
+        public override void Dispose() { }
+        public override Azure.Core.Dynamic.ObjectElement GetIndexElement(object element, int index) { throw null; }
+        public override bool HasValue(object element) { throw null; }
         public static Azure.Core.Json.MutableJsonDocument Parse(System.BinaryData utf8Json) { throw null; }
         public static Azure.Core.Json.MutableJsonDocument Parse(string json) { throw null; }
+        public override void Set(object element, object value) { }
+        public override Azure.Core.Dynamic.ObjectElement SetProperty(object element, string name, object value) { throw null; }
+        public override string? ToString(object element) { throw null; }
+        public override bool TryGetArrayLength(object element, out int length) { throw null; }
+        public override bool TryGetBoolean(object element, out bool value) { throw null; }
+        public override bool TryGetDouble(object element, out double value) { throw null; }
+        public override bool TryGetInt64(object element, out long value) { throw null; }
+        public override bool TryGetProperty(object element, string name, out Azure.Core.Dynamic.ObjectElement value) { throw null; }
+        public override bool TryGetPropertyNames(object element, out System.Collections.Generic.IEnumerable<string> enumerable) { throw null; }
+        public override bool TryGetString(object element, out string? value) { throw null; }
         public void WriteTo(System.IO.Stream stream, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
+        public override void WriteTo(object element, System.IO.Stream stream) { }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
