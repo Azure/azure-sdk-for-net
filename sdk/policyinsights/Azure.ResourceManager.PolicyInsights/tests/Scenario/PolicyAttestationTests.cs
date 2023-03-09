@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             {
                 Comments = ".NET SDK Test",
                 ComplianceState = "Compliant",
-                ExpireOn = new DateTime(2030, 12, 10),
-                AssessOn = new DateTime(2022, 12, 5),
                 Owner = "Test Owner",
                 PolicyAssignmentId = new ResourceIdentifier(_policyAssignment.Id),
                 Evidence =
@@ -82,7 +80,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             // GetAll
             var list = await policyAttestationCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateAttestation(list.FirstOrDefault(item  => attestationName == item.Data.Name).Data, attestationName);
+            ValidateAttestation(list.FirstOrDefault(item => attestationName == item.Data.Name).Data, attestationName);
 
             // Delete
             await attestation.DeleteAsync(WaitUntil.Completed);
