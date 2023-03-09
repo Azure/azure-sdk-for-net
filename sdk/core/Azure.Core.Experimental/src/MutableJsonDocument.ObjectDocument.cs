@@ -62,32 +62,38 @@ namespace Azure.Core.Json
             return false;
         }
 
-        public override bool TryGetArrayEnumerator(object element, out IEnumerable enumerable)
+        public override bool TryGetArrayEnumerator(object element, out ObjectElement.ArrayEnumerator enumerable)
         {
             MutableJsonElement value = (MutableJsonElement)element;
 
             if (value.ValueKind != JsonValueKind.Array)
             {
-                enumerable = Array.Empty<ObjectElement>();
+                enumerable = default;
                 return false;
             }
 
-            enumerable = value.EnumerateArray();
+            enumerable = new ObjectElement.ArrayEnumerator(new ObjectElement(this, element));
             return true;
         }
 
-        public override bool TryGetObjectEnumerator(object element, out IEnumerable<(string Name, ObjectElement Value)> enumerable)
+        public override bool TryGetObjectEnumerator(object element, out ObjectElement.ObjectEnumerator enumerable)
         {
             MutableJsonElement value = (MutableJsonElement)element;
 
             if (value.ValueKind != JsonValueKind.Object)
             {
-                enumerable = Array.Empty<(string Name, ObjectElement Value)>();
+                enumerable = default;
                 return false;
             }
 
-            throw new NotImplementedException();
-            //return true;
+            enumerable = new ObjectElement.ObjectEnumerator(new ObjectElement(this, element));
+            return true;
+        }
+
+        public override IEnumerable<(string Name, object Value)> EnumerateObject(object element)
+        {
+            MutableJsonElement value = (MutableJsonElement)element;
+            return value.EnumerateObject();
         }
 
         public override bool TryGetBoolean(object element, out bool value)

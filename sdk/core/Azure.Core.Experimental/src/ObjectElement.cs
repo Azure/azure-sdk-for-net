@@ -2,13 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Azure.Core.Json;
 
 // TODO: Remove when prototyping complete
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -43,9 +37,9 @@ namespace Azure.Core.Dynamic
             return _document.GetIndexElement(_element, index);
         }
 
-        public IEnumerable EnumerateArray()
+        public ArrayEnumerator EnumerateArray()
         {
-            if (_document.TryGetArrayEnumerator(_element, out IEnumerable value))
+            if (TryGetArrayEnumerator(out ArrayEnumerator value))
             {
                 return value;
             }
@@ -53,7 +47,7 @@ namespace Azure.Core.Dynamic
             throw new InvalidOperationException();
         }
 
-        public bool TryGetArrayEnumerator(out IEnumerable enumerator)
+        public bool TryGetArrayEnumerator(out ArrayEnumerator enumerator)
         {
             return _document.TryGetArrayEnumerator(_element, out enumerator);
         }
@@ -63,9 +57,9 @@ namespace Azure.Core.Dynamic
             return _document.GetArrayLength(_element);
         }
 
-        public IEnumerable<(string Name, ObjectElement Value)> EnumerateObject()
+        public ObjectEnumerator EnumerateObject()
         {
-            if (_document.TryGetObjectEnumerator(_element, out IEnumerable<(string Name, ObjectElement Value)> value))
+            if (TryGetObjectEnumerator(out ObjectEnumerator value))
             {
                 return value;
             }
@@ -73,7 +67,7 @@ namespace Azure.Core.Dynamic
             throw new InvalidOperationException();
         }
 
-        public bool TryGetObjectEnumerator(out IEnumerable<(string Name, ObjectElement Value)> enumerator)
+        public bool TryGetObjectEnumerator(out ObjectEnumerator enumerator)
         {
             return _document.TryGetObjectEnumerator(_element, out enumerator);
         }

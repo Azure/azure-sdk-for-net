@@ -94,14 +94,14 @@ namespace Azure.Core.Dynamic
 
         private IEnumerable GetEnumerable()
         {
-            if (_element.TryGetArrayEnumerator(out IEnumerable values))
+            if (_element.TryGetArrayEnumerator(out var values))
             {
-                return values;
+                return new ArrayEnumerator(values);
             }
 
-            if (_element.TryGetObjectEnumerator(out IEnumerable<(string Name, ObjectElement Value)> properties))
+            if (_element.TryGetObjectEnumerator(out var properties))
             {
-                return properties;
+                return new ObjectEnumerator(properties);
             }
 
             throw new InvalidOperationException($"Unable to enumerate this element.");
