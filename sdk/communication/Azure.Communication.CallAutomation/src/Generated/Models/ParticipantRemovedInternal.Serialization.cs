@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class AddParticipantSucceededInternal
+    internal partial class ParticipantRemovedInternal
     {
-        internal static AddParticipantSucceededInternal DeserializeAddParticipantSucceededInternal(JsonElement element)
+        internal static ParticipantRemovedInternal DeserializeParticipantRemovedInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -68,7 +68,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new AddParticipantSucceededInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, participant.Value);
+            return new ParticipantRemovedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, participant.Value);
         }
     }
 }
