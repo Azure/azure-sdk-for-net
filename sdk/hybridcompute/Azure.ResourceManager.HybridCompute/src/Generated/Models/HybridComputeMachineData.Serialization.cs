@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.HybridCompute
 
         internal static HybridComputeMachineData DeserializeHybridComputeMachineData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineProperties> properties = default;
             Optional<IReadOnlyList<HybridComputeMachineExtensionData>> resources = default;
             Optional<ManagedServiceIdentity> identity = default;

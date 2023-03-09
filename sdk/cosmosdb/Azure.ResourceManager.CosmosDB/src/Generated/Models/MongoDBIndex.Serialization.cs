@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBIndex DeserializeMongoDBIndex(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MongoIndexKeys> key = default;
             Optional<MongoDBIndexConfig> options = default;
             foreach (var property in element.EnumerateObject())

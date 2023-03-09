@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAksComputeProperties DeserializeMachineLearningAksComputeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clusterFqdn = default;
             Optional<IReadOnlyList<MachineLearningComputeSystemService>> systemServices = default;
             Optional<int?> agentCount = default;

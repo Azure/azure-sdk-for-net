@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Compute
 
         internal static CapacityReservationData DeserializeCapacityReservationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ComputeSku sku = default;
             Optional<IList<string>> zones = default;
             Optional<IDictionary<string, string>> tags = default;

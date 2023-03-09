@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     {
         internal static ManagementGroupInfo DeserializeManagementGroupInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> version = default;
             Optional<DateTimeOffset> updatedTime = default;
             Optional<string> updatedBy = default;

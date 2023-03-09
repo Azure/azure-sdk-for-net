@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewaySslPolicy DeserializeApplicationGatewaySslPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ApplicationGatewaySslProtocol>> disabledSslProtocols = default;
             Optional<ApplicationGatewaySslPolicyType> policyType = default;
             Optional<ApplicationGatewaySslPolicyName> policyName = default;

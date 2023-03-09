@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsBookmarkIncidentInfo DeserializeSecurityInsightsBookmarkIncidentInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> incidentId = default;
             Optional<SecurityInsightsIncidentSeverity> severity = default;
             Optional<string> title = default;

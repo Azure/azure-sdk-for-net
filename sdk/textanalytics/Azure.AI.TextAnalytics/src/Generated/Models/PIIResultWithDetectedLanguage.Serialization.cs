@@ -50,6 +50,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static PIIResultWithDetectedLanguage DeserializePIIResultWithDetectedLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectedLanguageInternal> detectedLanguage = default;
             string redactedText = default;
             IList<Entity> entities = default;

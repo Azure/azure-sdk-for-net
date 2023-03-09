@@ -46,6 +46,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OnvifDevice DeserializeOnvifDevice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OnvifHostName> hostname = default;
             Optional<OnvifSystemDateTime> systemDateTime = default;
             Optional<OnvifDns> dns = default;

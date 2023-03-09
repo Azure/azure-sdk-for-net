@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static RecoveryPointProperties DeserializeRecoveryPointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> expiryTime = default;
             Optional<string> ruleName = default;
             foreach (var property in element.EnumerateObject())

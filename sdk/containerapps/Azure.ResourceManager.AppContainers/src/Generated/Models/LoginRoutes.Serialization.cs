@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static LoginRoutes DeserializeLoginRoutes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> logoutEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {

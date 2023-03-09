@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ApplicationUserAssignedIdentity DeserializeApplicationUserAssignedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Guid principalId = default;
             foreach (var property in element.EnumerateObject())

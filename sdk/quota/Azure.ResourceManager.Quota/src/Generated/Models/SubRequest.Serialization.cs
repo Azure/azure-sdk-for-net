@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         internal static SubRequest DeserializeSubRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceName> name = default;
             Optional<string> resourceType = default;
             Optional<string> unit = default;

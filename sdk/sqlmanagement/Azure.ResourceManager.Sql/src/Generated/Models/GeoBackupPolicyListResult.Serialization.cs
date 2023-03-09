@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static GeoBackupPolicyListResult DeserializeGeoBackupPolicyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<GeoBackupPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

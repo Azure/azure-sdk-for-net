@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static RemotePrivateEndpointConnectionListResult DeserializeRemotePrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<RemotePrivateEndpointConnectionARMResourceData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

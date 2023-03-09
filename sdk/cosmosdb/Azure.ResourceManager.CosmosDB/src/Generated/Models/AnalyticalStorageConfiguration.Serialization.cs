@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static AnalyticalStorageConfiguration DeserializeAnalyticalStorageConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AnalyticalStorageSchemaType> schemaType = default;
             foreach (var property in element.EnumerateObject())
             {

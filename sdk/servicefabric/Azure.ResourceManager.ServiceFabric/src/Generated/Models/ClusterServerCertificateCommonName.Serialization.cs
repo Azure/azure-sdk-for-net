@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterServerCertificateCommonName DeserializeClusterServerCertificateCommonName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string certificateCommonName = default;
             BinaryData certificateIssuerThumbprint = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Search.Models
     {
         internal static SearchServiceNameAvailabilityResult DeserializeSearchServiceNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<SearchServiceNameUnavailableReason> reason = default;
             Optional<string> message = default;

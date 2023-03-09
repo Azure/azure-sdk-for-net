@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.DataBox
 
         internal static DataBoxJobData DeserializeDataBoxJobData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxSku sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

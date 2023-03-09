@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsDataSourceData DeserializeOperationalInsightsDataSourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData properties = default;
             Optional<ETag> etag = default;
             OperationalInsightsDataSourceKind kind = default;

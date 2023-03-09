@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRUpstreamAuthSettings DeserializeSignalRUpstreamAuthSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SignalRUpstreamAuthType> type = default;
             Optional<ManagedIdentitySettings> managedIdentity = default;
             foreach (var property in element.EnumerateObject())

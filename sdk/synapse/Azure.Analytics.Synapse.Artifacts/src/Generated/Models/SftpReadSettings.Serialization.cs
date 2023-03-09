@@ -86,6 +86,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SftpReadSettings DeserializeSftpReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> recursive = default;
             Optional<object> wildcardFolderPath = default;
             Optional<object> wildcardFileName = default;

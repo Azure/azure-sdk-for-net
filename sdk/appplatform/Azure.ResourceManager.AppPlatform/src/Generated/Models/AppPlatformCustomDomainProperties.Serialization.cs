@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformCustomDomainProperties DeserializeAppPlatformCustomDomainProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> thumbprint = default;
             Optional<string> appName = default;
             Optional<string> certName = default;

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.EdgeOrder
 
         internal static EdgeOrderData DeserializeEdgeOrderData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +83,14 @@ namespace Azure.ResourceManager.EdgeOrder
                             List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new ResourceIdentifier(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             orderItemIds = array;
                             continue;

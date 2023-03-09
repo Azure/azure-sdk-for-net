@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AutomaticOSUpgradePolicy DeserializeAutomaticOSUpgradePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableAutomaticOSUpgrade = default;
             Optional<bool> disableAutomaticRollback = default;
             Optional<bool> useRollingUpgradePolicy = default;

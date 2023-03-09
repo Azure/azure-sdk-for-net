@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static IndexerState DeserializeIndexerState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IndexingMode> mode = default;
             Optional<string> allDocsInitialChangeTrackingState = default;
             Optional<string> allDocsFinalChangeTrackingState = default;

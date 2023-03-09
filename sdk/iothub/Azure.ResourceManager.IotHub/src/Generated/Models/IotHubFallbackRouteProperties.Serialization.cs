@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubFallbackRouteProperties DeserializeIotHubFallbackRouteProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             IotHubRoutingSource source = default;
             Optional<string> condition = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppRegionInfo DeserializeNetAppRegionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RegionStorageToNetworkProximity> storageToNetworkProximity = default;
             Optional<IReadOnlyList<AvailabilityZoneMapping>> availabilityZoneMappings = default;
             foreach (var property in element.EnumerateObject())

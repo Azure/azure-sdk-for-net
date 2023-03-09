@@ -40,6 +40,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static SentimentAnalysisTaskParameters DeserializeSentimentAnalysisTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> opinionMining = default;
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput DeserializeConnectToTargetAzureDBForPostgreSqlSyncTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> targetServerVersion = default;
             Optional<IReadOnlyList<string>> databases = default;

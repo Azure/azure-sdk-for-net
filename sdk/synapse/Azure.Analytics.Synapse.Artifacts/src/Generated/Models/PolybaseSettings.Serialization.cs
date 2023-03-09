@@ -49,6 +49,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static PolybaseSettings DeserializePolybaseSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolybaseSettingsRejectType> rejectType = default;
             Optional<object> rejectValue = default;
             Optional<object> rejectSampleValue = default;

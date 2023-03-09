@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RedirectConfiguration DeserializeRedirectConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FrontDoorRedirectType> redirectType = default;
             Optional<FrontDoorRedirectProtocol> redirectProtocol = default;
             Optional<string> customHost = default;

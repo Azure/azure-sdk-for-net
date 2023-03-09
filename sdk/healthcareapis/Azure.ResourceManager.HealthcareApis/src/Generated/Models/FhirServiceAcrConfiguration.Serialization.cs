@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static FhirServiceAcrConfiguration DeserializeFhirServiceAcrConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> loginServers = default;
             Optional<IList<HealthcareApisServiceOciArtifactEntry>> ociArtifacts = default;
             foreach (var property in element.EnumerateObject())

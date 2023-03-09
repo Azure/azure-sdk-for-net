@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformConfigurationServiceGitReposValidationMessages DeserializeAppPlatformConfigurationServiceGitReposValidationMessages(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<string>> messages = default;
             foreach (var property in element.EnumerateObject())

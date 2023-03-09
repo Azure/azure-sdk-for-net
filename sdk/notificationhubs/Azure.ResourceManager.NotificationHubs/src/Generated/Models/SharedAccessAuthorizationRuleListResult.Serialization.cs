@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     {
         internal static SharedAccessAuthorizationRuleListResult DeserializeSharedAccessAuthorizationRuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NotificationHubAuthorizationRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

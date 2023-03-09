@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryNameAvailableResult DeserializeContainerRegistryNameAvailableResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
             Optional<string> message = default;

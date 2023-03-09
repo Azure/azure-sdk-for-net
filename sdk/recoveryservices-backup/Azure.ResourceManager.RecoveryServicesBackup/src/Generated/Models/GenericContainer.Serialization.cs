@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static GenericContainer DeserializeGenericContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fabricName = default;
             Optional<GenericContainerExtendedInfo> extendedInformation = default;
             Optional<string> friendlyName = default;

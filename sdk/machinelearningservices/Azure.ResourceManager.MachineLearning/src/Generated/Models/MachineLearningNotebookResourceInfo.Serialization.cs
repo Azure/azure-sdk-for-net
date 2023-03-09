@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningNotebookResourceInfo DeserializeMachineLearningNotebookResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fqdn = default;
             Optional<string> resourceId = default;
             Optional<MachineLearningNotebookPreparationError> notebookPreparationError = default;

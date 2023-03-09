@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         internal static BackupEngineData DeserializeBackupEngineData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupGenericEngine> properties = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SiteExtensionInfoListResult DeserializeSiteExtensionInfoListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SiteExtensionInfoData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -46,6 +46,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static InnerErrorModel DeserializeInnerErrorModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             InnerErrorCode code = default;
             string message = default;
             Optional<IDictionary<string, string>> details = default;

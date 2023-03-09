@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static BackupFileInfo DeserializeBackupFileInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fileLocation = default;
             Optional<int> familySequenceNumber = default;
             Optional<BackupFileStatus> status = default;

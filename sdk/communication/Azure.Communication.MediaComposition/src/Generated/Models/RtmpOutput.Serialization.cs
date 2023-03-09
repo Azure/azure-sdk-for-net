@@ -34,6 +34,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static RtmpOutput DeserializeRtmpOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string streamKey = default;
             LayoutResolution resolution = default;
             string streamUrl = default;

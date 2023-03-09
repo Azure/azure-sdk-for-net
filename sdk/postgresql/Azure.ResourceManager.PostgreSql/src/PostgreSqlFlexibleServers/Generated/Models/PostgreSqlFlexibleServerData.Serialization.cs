@@ -130,6 +130,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         internal static PostgreSqlFlexibleServerData DeserializePostgreSqlFlexibleServerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PostgreSqlFlexibleServerSku> sku = default;
             Optional<PostgreSqlFlexibleServerUserAssignedIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

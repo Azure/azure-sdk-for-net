@@ -15,6 +15,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobError DeserializeMediaJobError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaJobErrorCode> code = default;
             Optional<string> message = default;
             Optional<MediaJobErrorCategory> category = default;

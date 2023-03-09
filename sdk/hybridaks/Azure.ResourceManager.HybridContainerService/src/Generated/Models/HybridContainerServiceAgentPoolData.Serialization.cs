@@ -125,6 +125,10 @@ namespace Azure.ResourceManager.HybridContainerService
 
         internal static HybridContainerServiceAgentPoolData DeserializeHybridContainerServiceAgentPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AgentPoolExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

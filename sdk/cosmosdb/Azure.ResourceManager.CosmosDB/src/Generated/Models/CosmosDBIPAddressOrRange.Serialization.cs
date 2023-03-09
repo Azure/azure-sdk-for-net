@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBIPAddressOrRange DeserializeCosmosDBIPAddressOrRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipAddressOrRange = default;
             foreach (var property in element.EnumerateObject())
             {

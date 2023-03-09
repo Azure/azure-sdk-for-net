@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static JitNetworkAccessPortRule DeserializeJitNetworkAccessPortRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int number = default;
             JitNetworkAccessPortProtocol protocol = default;
             Optional<string> allowedSourceAddressPrefix = default;

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricDimension DeserializeMetricDimension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string @operator = default;
             IList<string> values = default;

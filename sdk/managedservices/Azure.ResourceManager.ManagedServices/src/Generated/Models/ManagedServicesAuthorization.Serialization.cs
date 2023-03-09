@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
         internal static ManagedServicesAuthorization DeserializeManagedServicesAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid principalId = default;
             Optional<string> principalIdDisplayName = default;
             string roleDefinitionId = default;

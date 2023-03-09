@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static NetworkProfile DeserializeNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LoadBalancerProfile> loadBalancerProfile = default;
             Optional<LoadBalancerSku> loadBalancerSku = default;
             Optional<string> dnsServiceIP = default;

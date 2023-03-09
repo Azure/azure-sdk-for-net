@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static DataFlowDebugSessionInfo DeserializeDataFlowDebugSessionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataFlowName = default;
             Optional<string> computeType = default;
             Optional<int> coreCount = default;

@@ -38,6 +38,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TeradataPartitionSettings DeserializeTeradataPartitionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> partitionColumnName = default;
             Optional<object> partitionUpperBound = default;
             Optional<object> partitionLowerBound = default;

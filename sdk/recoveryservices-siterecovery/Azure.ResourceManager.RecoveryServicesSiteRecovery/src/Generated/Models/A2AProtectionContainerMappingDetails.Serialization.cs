@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AProtectionContainerMappingDetails DeserializeA2AProtectionContainerMappingDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AgentAutoUpdateStatus> agentAutoUpdateStatus = default;
             Optional<string> automationAccountArmId = default;
             Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;

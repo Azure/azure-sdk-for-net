@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         internal static GitHubConnectorData DeserializeGitHubConnectorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GitHubConnectorProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

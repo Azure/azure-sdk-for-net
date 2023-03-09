@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static EmailTemplateParametersContractProperties DeserializeEmailTemplateParametersContractProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> title = default;
             Optional<string> description = default;

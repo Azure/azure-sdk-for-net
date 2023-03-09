@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ConfigServerGitPatternRepository DeserializeConfigServerGitPatternRepository(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<IList<string>> pattern = default;
             Uri uri = default;

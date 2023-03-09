@@ -54,6 +54,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MetricAlertConfiguration DeserializeMetricAlertConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string anomalyDetectionConfigurationId = default;
             MetricAnomalyAlertScopeType anomalyScopeType = default;
             Optional<bool> negationOperation = default;

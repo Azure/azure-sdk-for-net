@@ -50,6 +50,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SpatialAnalysisPersonDistanceEvent DeserializeSpatialAnalysisPersonDistanceEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SpatialAnalysisPersonDistanceEventTrigger> trigger = default;
             Optional<string> outputFrequency = default;
             Optional<string> minimumDistanceThreshold = default;

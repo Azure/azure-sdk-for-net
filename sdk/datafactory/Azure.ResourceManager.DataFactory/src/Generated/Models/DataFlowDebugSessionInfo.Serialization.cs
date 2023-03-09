@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static DataFlowDebugSessionInfo DeserializeDataFlowDebugSessionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataFlowName = default;
             Optional<string> computeType = default;
             Optional<int> coreCount = default;

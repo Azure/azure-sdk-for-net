@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static TypedErrorInfo DeserializeTypedErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<BinaryData> info = default;
             foreach (var property in element.EnumerateObject())

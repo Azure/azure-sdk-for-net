@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerHeatMapQueryExperience DeserializeTrafficManagerHeatMapQueryExperience(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int endpointId = default;
             int queryCount = default;
             Optional<double> latency = default;

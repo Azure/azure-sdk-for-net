@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentPlanProperties DeserializeCommitmentPlanProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CommitmentPlanProvisioningState> provisioningState = default;
             Optional<Guid> commitmentPlanGuid = default;
             Optional<ServiceAccountHostingModel> hostingModel = default;

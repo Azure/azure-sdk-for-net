@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static CertBasedSecurityPrincipal DeserializeCertBasedSecurityPrincipal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cert = default;
             Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
             foreach (var property in element.EnumerateObject())

@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightApplicationHttpsEndpoint DeserializeHDInsightApplicationHttpsEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> accessModes = default;
             Optional<string> location = default;
             Optional<int> destinationPort = default;

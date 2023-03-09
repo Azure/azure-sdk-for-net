@@ -14,6 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static AddressValue DeserializeAddressValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> houseNumber = default;
             Optional<string> poBox = default;
             Optional<string> road = default;

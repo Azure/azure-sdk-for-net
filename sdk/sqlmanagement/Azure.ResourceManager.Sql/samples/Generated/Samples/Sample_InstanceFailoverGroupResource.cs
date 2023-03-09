@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/InstanceFailoverGroupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupGet.json
             // this example is just showing the usage of "InstanceFailoverGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/InstanceFailoverGroupCreateOrUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupCreateOrUpdate.json
             // this example is just showing the usage of "InstanceFailoverGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,6 +75,7 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation
             InstanceFailoverGroupData data = new InstanceFailoverGroupData()
             {
+                SecondaryType = GeoSecondaryInstanceType.Geo,
                 ReadWriteEndpoint = new InstanceFailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy.Automatic)
                 {
                     FailoverWithDataLossGracePeriodMinutes = 480,
@@ -111,7 +112,7 @@ PartnerManagedInstanceId = new ResourceIdentifier("/subscriptions/00000000-1111-
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/InstanceFailoverGroupDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupDelete.json
             // this example is just showing the usage of "InstanceFailoverGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +140,7 @@ PartnerManagedInstanceId = new ResourceIdentifier("/subscriptions/00000000-1111-
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Failover_PlannedFailoverOfAFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/InstanceFailoverGroupFailover.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupFailover.json
             // this example is just showing the usage of "InstanceFailoverGroups_Failover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -172,7 +173,7 @@ PartnerManagedInstanceId = new ResourceIdentifier("/subscriptions/00000000-1111-
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ForceFailoverAllowDataLoss_ForcedFailoverOfAFailoverGroupAllowingDataLoss()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/InstanceFailoverGroupForceFailoverAllowDataLoss.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupForceFailoverAllowDataLoss.json
             // this example is just showing the usage of "InstanceFailoverGroups_ForceFailoverAllowDataLoss" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

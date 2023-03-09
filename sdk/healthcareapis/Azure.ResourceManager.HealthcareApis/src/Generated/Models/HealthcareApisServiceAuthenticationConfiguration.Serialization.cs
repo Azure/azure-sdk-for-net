@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceAuthenticationConfiguration DeserializeHealthcareApisServiceAuthenticationConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> authority = default;
             Optional<string> audience = default;
             Optional<bool> smartProxyEnabled = default;

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
@@ -39,6 +40,10 @@ namespace Azure.ResourceManager.Workloads
 
         internal static SapApplicationServerInstanceData DeserializeSapApplicationServerInstanceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -54,7 +59,8 @@ namespace Azure.ResourceManager.Workloads
             Optional<long?> gatewayPort = default;
             Optional<long?> icmHttpPort = default;
             Optional<long?> icmHttpsPort = default;
-            Optional<ResourceIdentifier> virtualMachineId = default;
+            Optional<SubResource> loadBalancerDetails = default;
+            Optional<IReadOnlyList<ApplicationServerVmDetails>> vmDetails = default;
             Optional<SapVirtualInstanceStatus> status = default;
             Optional<SapHealthState> health = default;
             Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
@@ -180,14 +186,29 @@ namespace Azure.ResourceManager.Workloads
                             icmHttpsPort = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("virtualMachineId"u8))
+                        if (property0.NameEquals("loadBalancerDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualMachineId = new ResourceIdentifier(property0.Value.GetString());
+                            loadBalancerDetails = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("vmDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ApplicationServerVmDetails> array = new List<ApplicationServerVmDetails>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ApplicationServerVmDetails.DeserializeApplicationServerVmDetails(item));
+                            }
+                            vmDetails = array;
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -234,7 +255,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapApplicationServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(gatewayPort), Optional.ToNullable(icmHttpPort), Optional.ToNullable(icmHttpsPort), virtualMachineId.Value, Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value);
+            return new SapApplicationServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(gatewayPort), Optional.ToNullable(icmHttpPort), Optional.ToNullable(icmHttpsPort), loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value);
         }
     }
 }

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningUserAccountCredentials DeserializeMachineLearningUserAccountCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string adminUserName = default;
             Optional<string> adminUserSshPublicKey = default;
             Optional<string> adminUserPassword = default;

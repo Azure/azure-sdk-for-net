@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SecurityContactList DeserializeSecurityContactList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SecurityContactData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

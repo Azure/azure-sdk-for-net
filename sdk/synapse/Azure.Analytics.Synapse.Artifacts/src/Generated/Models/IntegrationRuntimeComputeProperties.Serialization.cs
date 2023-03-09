@@ -59,6 +59,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static IntegrationRuntimeComputeProperties DeserializeIntegrationRuntimeComputeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> location = default;
             Optional<string> nodeSize = default;
             Optional<int> numberOfNodes = default;

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static ArtifactProperties DeserializeArtifactProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> metadata = default;

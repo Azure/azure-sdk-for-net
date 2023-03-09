@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaJobListResult DeserializeMediaJobListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MediaJobData>> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())

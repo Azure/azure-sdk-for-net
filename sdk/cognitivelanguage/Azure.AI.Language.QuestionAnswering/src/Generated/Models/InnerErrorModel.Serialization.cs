@@ -15,6 +15,10 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static InnerErrorModel DeserializeInnerErrorModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             InnerErrorCode code = default;
             string message = default;
             Optional<IReadOnlyDictionary<string, string>> details = default;

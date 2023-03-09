@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteGatewayPropertiesAutoScaleConfiguration DeserializeExpressRouteGatewayPropertiesAutoScaleConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds> bounds = default;
             foreach (var property in element.EnumerateObject())
             {

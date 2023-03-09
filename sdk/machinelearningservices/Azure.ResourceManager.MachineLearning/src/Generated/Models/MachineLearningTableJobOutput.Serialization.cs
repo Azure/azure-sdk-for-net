@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningTableJobOutput DeserializeMachineLearningTableJobOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningOutputDeliveryMode> mode = default;
             Optional<Uri> uri = default;
             Optional<string> description = default;

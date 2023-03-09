@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapSizingRecommendationResult DeserializeSapSizingRecommendationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("deploymentType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

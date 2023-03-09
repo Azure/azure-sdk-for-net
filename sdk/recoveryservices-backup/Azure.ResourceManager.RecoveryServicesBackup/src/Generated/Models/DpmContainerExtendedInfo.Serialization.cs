@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DpmContainerExtendedInfo DeserializeDpmContainerExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastRefreshedAt = default;
             foreach (var property in element.EnumerateObject())
             {

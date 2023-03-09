@@ -14,6 +14,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static PagedResponse DeserializePagedResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {

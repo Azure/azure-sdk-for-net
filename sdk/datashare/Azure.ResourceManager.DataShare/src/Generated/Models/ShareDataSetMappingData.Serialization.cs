@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataShare
 
         internal static ShareDataSetMappingData DeserializeShareDataSetMappingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

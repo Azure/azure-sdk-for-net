@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapInstallWithoutOSConfigSoftwareConfiguration DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri bomUrl = default;
             string sapBitsStorageAccountId = default;
             string softwareVersion = default;

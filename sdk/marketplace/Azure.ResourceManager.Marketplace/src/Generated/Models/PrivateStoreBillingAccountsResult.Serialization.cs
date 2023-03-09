@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static PrivateStoreBillingAccountsResult DeserializePrivateStoreBillingAccountsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> billingAccounts = default;
             foreach (var property in element.EnumerateObject())
             {

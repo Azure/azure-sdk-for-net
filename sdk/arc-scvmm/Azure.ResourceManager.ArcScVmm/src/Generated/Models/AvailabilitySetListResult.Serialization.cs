@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     {
         internal static AvailabilitySetListResult DeserializeAvailabilitySetListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ScVmmAvailabilitySetData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static CloudProviderProfileInfraNetworkProfile DeserializeCloudProviderProfileInfraNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> vnetSubnetIds = default;
             foreach (var property in element.EnumerateObject())
             {

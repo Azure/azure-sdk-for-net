@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static DatadogInstallMethod DeserializeDatadogInstallMethod(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tool = default;
             Optional<string> toolVersion = default;
             Optional<string> installerVersion = default;

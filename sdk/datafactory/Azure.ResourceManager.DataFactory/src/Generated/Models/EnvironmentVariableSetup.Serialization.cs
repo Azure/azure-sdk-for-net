@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static EnvironmentVariableSetup DeserializeEnvironmentVariableSetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             string variableName = default;
             string variableValue = default;

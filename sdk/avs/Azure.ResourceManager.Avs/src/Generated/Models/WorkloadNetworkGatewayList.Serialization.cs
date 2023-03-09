@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static WorkloadNetworkGatewayList DeserializeWorkloadNetworkGatewayList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<WorkloadNetworkGatewayData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

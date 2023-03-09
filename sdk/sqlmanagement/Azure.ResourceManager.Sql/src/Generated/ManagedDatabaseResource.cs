@@ -502,6 +502,55 @@ namespace Azure.ResourceManager.Sql
             return GetManagedDatabaseRestoreDetails().Get(restoreDetailsName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ManagedLedgerDigestUploadResources in the ManagedDatabase. </summary>
+        /// <returns> An object representing collection of ManagedLedgerDigestUploadResources and their operations over a ManagedLedgerDigestUploadResource. </returns>
+        public virtual ManagedLedgerDigestUploadCollection GetManagedLedgerDigestUploads()
+        {
+            return GetCachedClient(Client => new ManagedLedgerDigestUploadCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the current ledger digest upload configuration for a database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedLedgerDigestUploads_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ledgerDigestUploads"> The ManagedLedgerDigestUploadsName to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedLedgerDigestUploadResource>> GetManagedLedgerDigestUploadAsync(ManagedLedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedLedgerDigestUploads().GetAsync(ledgerDigestUploads, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the current ledger digest upload configuration for a database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedLedgerDigestUploads_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ledgerDigestUploads"> The ManagedLedgerDigestUploadsName to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedLedgerDigestUploadResource> GetManagedLedgerDigestUpload(ManagedLedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
+        {
+            return GetManagedLedgerDigestUploads().Get(ledgerDigestUploads, cancellationToken);
+        }
+
         /// <summary>
         /// Gets a managed database.
         /// <list type="bullet">

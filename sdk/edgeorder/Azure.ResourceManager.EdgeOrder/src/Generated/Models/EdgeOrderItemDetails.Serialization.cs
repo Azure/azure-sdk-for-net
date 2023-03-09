@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderItemDetails DeserializeEdgeOrderItemDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ProductDetails productDetails = default;
             OrderItemType orderItemType = default;
             Optional<EdgeOrderStageDetails> currentStage = default;
