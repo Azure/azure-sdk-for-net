@@ -1,14 +1,10 @@
 # Release History
 
-## 5.9.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.8.1 (2023-03-09)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix null reference exception when using the `EventProcessorClient`.
 
 ## 5.8.0 (2023-03-07)
 
