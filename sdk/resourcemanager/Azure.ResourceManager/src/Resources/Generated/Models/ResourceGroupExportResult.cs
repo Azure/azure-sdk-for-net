@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ResourceGroupExportResult
     {
         /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
-        internal ResourceGroupExportResult()
+        public ResourceGroupExportResult()
         {
         }
 

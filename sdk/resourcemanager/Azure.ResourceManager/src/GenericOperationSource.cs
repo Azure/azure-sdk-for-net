@@ -5,22 +5,17 @@
 
 using System;
 using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.ResourceManager
 {
-    internal class GenericOperationSource<T> : IOperationSource<T>
+    internal class GenericOperationSource<T> : IOperationSource<T> where T : ISerializable, new()
     {
         T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            if (typeof(T).GetInterface(nameof(ISerializable)) is null)
-            {
-                throw new InvalidOperationException("Invalid type");
-            }
-            ISerializable serializable = (ISerializable)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null, null, null);
+            ISerializable serializable = new T();
             var memoryStream = new MemoryStream();
             response.ContentStream.CopyTo(memoryStream);
             serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
@@ -29,11 +24,7 @@ namespace Azure.ResourceManager
 
         ValueTask<T> IOperationSource<T>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            if (typeof(T).GetInterface(nameof(ISerializable)) is null)
-            {
-                throw new InvalidOperationException("Invalid type");
-            }
-            ISerializable serializable = (ISerializable)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null, null, null);
+            ISerializable serializable = new T();
             var memoryStream = new MemoryStream();
             response.ContentStream.CopyTo(memoryStream);
             serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);

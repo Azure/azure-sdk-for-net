@@ -3,11 +3,11 @@
 
 namespace Azure.ResourceManager.Shared
 {
-    internal interface IData
+    /// <summary> An interface for representing resource of data. </summary>
+    /// <typeparam name="T">The data of the resource. </typeparam>
+    public interface IData<T> where T : ISerializable, new()
     {
-        /// <summary>
-        /// xxx
-        /// </summary>
-        object Data { get; }
+        /// <summary> Gets the data representing this Feature. </summary>
+        T Data { get; }
     }
 }

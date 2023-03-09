@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2, tags).CreateOrUpdateAsync(rgName);
             var rgOpId = rgOp.Id;
             var rg = rgOp.Value;
-            Assert.Throws<ArgumentException>(() => new ArmOperation<ResourceGroupData>(Client, rgOpId));
+            Assert.Throws<ArgumentException>(() => ArmOperation<ResourceGroupData>.Rehydrate<ResourceGroupData>(Client, rgOpId));
             var response = rgOp.GetRawResponse();
 
             // Template exportation is a real LRO with generic type
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Tests
             }
             var expOp = await Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, rgName)).ExportTemplateAsync(WaitUntil.Started, parameters);
             var expOpId = expOp.Id;
-            var expRehydratedLro = new ArmOperation<ResourceGroupExportResult>(Client, expOpId);
+            var expRehydratedLro = ArmOperation<ResourceGroupExportResult>.Rehydrate<ResourceGroupExportResult>(Client, expOpId);
             await expRehydratedLro.WaitForCompletionResponseAsync();
             Assert.AreEqual(expRehydratedLro.HasValue, true);
             var rehydratedResult = expRehydratedLro.Value;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Tests
             ArmOperation<ManagementLockResource> lro = await rg.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, mgmtLockObjectName, input);
             var lroId = lro.Id;
             var mgmtLock = lro.Value;
-            var rehydratedLro = new ArmOperation<ManagementLockData>(Client, lroId);
+            var rehydratedLro = ArmOperation<ManagementLockData>.Rehydrate<ManagementLockData>(Client, lroId);
             await rehydratedLro.WaitForCompletionResponseAsync();
             ManagementLockData rehydratedLock = rehydratedLro.Value;
             Assert.AreEqual(mgmtLock.Data.Id, rehydratedLock.Id);
