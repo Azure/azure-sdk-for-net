@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> and their operations.
-    /// Each <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotTriggeredWebJobResource" />.
-    /// To get a <see cref="WebSiteSlotTriggeredWebJobHistoryCollection" /> instance call the GetWebSiteSlotTriggeredWebJobHistories method from an instance of <see cref="WebSiteSlotTriggeredWebJobResource" />.
+    /// Each <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> in the collection will belong to the same instance of <see cref="WebSiteTriggeredWebJobResource" />.
+    /// To get a <see cref="WebSiteSlotTriggeredWebJobHistoryCollection" /> instance call the GetWebSiteSlotTriggeredWebJobHistories method from an instance of <see cref="WebSiteTriggeredWebJobResource" />.
     /// </summary>
     public partial class WebSiteSlotTriggeredWebJobHistoryCollection : ArmCollection, IEnumerable<WebSiteSlotTriggeredWebJobHistoryResource>, IAsyncEnumerable<WebSiteSlotTriggeredWebJobHistoryResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSiteSlotTriggeredWebJobResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteSlotTriggeredWebJobResource.ResourceType), nameof(id));
+            if (id.ResourceType != WebSiteTriggeredWebJobResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteTriggeredWebJobResource.ResourceType), nameof(id));
         }
 
         /// <summary>

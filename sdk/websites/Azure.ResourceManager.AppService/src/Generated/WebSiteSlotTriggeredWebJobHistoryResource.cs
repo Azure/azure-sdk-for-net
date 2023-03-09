@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a WebSiteSlotTriggeredWebJobHistory along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteSlotTriggeredWebJobHistoryResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotTriggeredWebJobHistoryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotTriggeredWebJobResource" /> using the GetWebSiteSlotTriggeredWebJobHistory method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteTriggeredWebJobResource" /> using the GetWebSiteSlotTriggeredWebJobHistory method.
     /// </summary>
     public partial class WebSiteSlotTriggeredWebJobHistoryResource : ArmResource
     {

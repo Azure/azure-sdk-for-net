@@ -4315,25 +4315,6 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region WebSiteTriggeredwebJobResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WebSiteTriggeredwebJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteTriggeredwebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteTriggeredwebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteTriggeredwebJobResource" /> object. </returns>
-        public static WebSiteTriggeredwebJobResource GetWebSiteTriggeredwebJobResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WebSiteTriggeredwebJobResource.ValidateResourceId(id);
-                return new WebSiteTriggeredwebJobResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region WebSiteSlotTriggeredWebJobResource
         /// <summary>
         /// Gets an object representing a <see cref="WebSiteSlotTriggeredWebJobResource" /> along with the instance operations that can be performed on it but with no data.
@@ -4348,6 +4329,25 @@ namespace Azure.ResourceManager.AppService
             {
                 WebSiteSlotTriggeredWebJobResource.ValidateResourceId(id);
                 return new WebSiteSlotTriggeredWebJobResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WebSiteTriggeredWebJobResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WebSiteTriggeredWebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteTriggeredWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteTriggeredWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WebSiteTriggeredWebJobResource" /> object. </returns>
+        public static WebSiteTriggeredWebJobResource GetWebSiteTriggeredWebJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WebSiteTriggeredWebJobResource.ValidateResourceId(id);
+                return new WebSiteTriggeredWebJobResource(client, id);
             }
             );
         }
