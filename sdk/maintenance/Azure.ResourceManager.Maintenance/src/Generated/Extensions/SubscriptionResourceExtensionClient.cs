@@ -51,6 +51,20 @@ namespace Azure.ResourceManager.Maintenance
             return GetCachedClient(Client => new MaintenancePublicConfigurationCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of MaintenanceSubscriptionConfigurationAssignmentResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of MaintenanceSubscriptionConfigurationAssignmentResources and their operations over a MaintenanceSubscriptionConfigurationAssignmentResource. </returns>
+        public virtual MaintenanceSubscriptionConfigurationAssignmentCollection GetMaintenanceSubscriptionConfigurationAssignments()
+        {
+            return GetCachedClient(Client => new MaintenanceSubscriptionConfigurationAssignmentCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of MaintenanceResourceGroupConfigurationAssignmentResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of MaintenanceResourceGroupConfigurationAssignmentResources and their operations over a MaintenanceResourceGroupConfigurationAssignmentResource. </returns>
+        public virtual MaintenanceResourceGroupConfigurationAssignmentCollection GetMaintenanceResourceGroupConfigurationAssignments()
+        {
+            return GetCachedClient(Client => new MaintenanceResourceGroupConfigurationAssignmentCollection(Client, Id));
+        }
+
         /// <summary>
         /// Get Configuration records within a subscription
         /// <list type="bullet">

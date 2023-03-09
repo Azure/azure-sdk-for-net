@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Maintenance
             Optional<IDictionary<string, string>> extensionProperties = default;
             Optional<MaintenanceScope> maintenanceScope = default;
             Optional<MaintenanceConfigurationVisibility> visibility = default;
+            Optional<InputPatchConfiguration> installPatches = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             Optional<TimeSpan> duration = default;
@@ -134,6 +135,16 @@ namespace Azure.ResourceManager.Maintenance
                             visibility = new MaintenanceConfigurationVisibility(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("installPatches"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            installPatches = InputPatchConfiguration.DeserializeInputPatchConfiguration(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("maintenanceWindow"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -190,7 +201,7 @@ namespace Azure.ResourceManager.Maintenance
                     continue;
                 }
             }
-            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value);
+            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), installPatches.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value);
         }
     }
 }
