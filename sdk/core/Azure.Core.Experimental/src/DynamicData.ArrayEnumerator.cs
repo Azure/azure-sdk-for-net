@@ -8,20 +8,20 @@ using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class DynamicJson
+    public partial class DynamicData
     {
         /// <summary>
         /// An enumerable and enumerator for the contents of a mutable JSON array.
         /// </summary>
         [DebuggerDisplay("{Current,nq}")]
-        public struct ArrayEnumerator : IEnumerable<DynamicJson>, IEnumerator<DynamicJson>
+        public struct ArrayEnumerator : IEnumerable<DynamicData>, IEnumerator<DynamicData>
         {
             private ObjectElement _element;
             private readonly int _length;
             private int _index;
-            private DynamicJsonOptions _options;
+            private DynamicDataOptions _options;
 
-            internal ArrayEnumerator(ObjectElement element, DynamicJsonOptions options)
+            internal ArrayEnumerator(ObjectElement element, DynamicDataOptions options)
             {
                 _element = element;
                 _length = element.GetArrayLength();
@@ -30,16 +30,16 @@ namespace Azure.Core.Dynamic
             }
 
             /// <inheritdoc />
-            public DynamicJson Current
+            public DynamicData Current
             {
                 get
                 {
                     if (_index < 0)
                     {
-                        return new DynamicJson(default);
+                        return new DynamicData(default);
                     }
 
-                    return new DynamicJson(_element.GetIndexElement(_index), _options);
+                    return new DynamicData(_element.GetIndexElement(_index), _options);
                 }
             }
 
@@ -61,7 +61,7 @@ namespace Azure.Core.Dynamic
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
-            IEnumerator<DynamicJson> IEnumerable<DynamicJson>.GetEnumerator() => GetEnumerator();
+            IEnumerator<DynamicData> IEnumerable<DynamicData>.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
             public void Reset()

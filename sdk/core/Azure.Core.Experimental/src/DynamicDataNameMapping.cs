@@ -6,7 +6,7 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// Options for setting new DynamicJson properties.
     /// </summary>
-    public enum DynamicJsonNameMapping
+    public enum DynamicDataNameMapping
     {
         /// <summary>
         /// Properties are accessed and written in the JSON buffer with the same casing as the DynamicJson property.

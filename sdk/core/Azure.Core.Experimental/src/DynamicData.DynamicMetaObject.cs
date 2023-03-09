@@ -11,18 +11,18 @@ using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class DynamicJson : IDynamicMetaObjectProvider
+    public partial class DynamicData : IDynamicMetaObjectProvider
     {
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
         private class MetaObject : DynamicMetaObject
         {
-            private DynamicJson _value;
+            private DynamicData _value;
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
-                _value = (DynamicJson)value;
+                _value = (DynamicData)value;
             }
 
             public override IEnumerable<string> GetDynamicMemberNames()

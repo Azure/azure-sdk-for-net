@@ -8,19 +8,19 @@ using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class DynamicJson
+    public partial class DynamicData
     {
         /// <summary>
         /// An enumerable and enumerator for the properties of a mutable JSON object.
         /// </summary>
         [DebuggerDisplay("{Current,nq}")]
-        public struct ObjectEnumerator : IEnumerable<DynamicJsonProperty>, IEnumerator<DynamicJsonProperty>
+        public struct ObjectEnumerator : IEnumerable<DynamicDataProperty>, IEnumerator<DynamicDataProperty>
         {
             private readonly ObjectElement _element;
-            private readonly DynamicJsonOptions _options;
+            private readonly DynamicDataOptions _options;
             private readonly IEnumerator<string> _names;
 
-            internal ObjectEnumerator(ObjectElement element, DynamicJsonOptions options)
+            internal ObjectEnumerator(ObjectElement element, DynamicDataOptions options)
             {
                 _element = element;
                 _options = options;
@@ -43,13 +43,13 @@ namespace Azure.Core.Dynamic
             public ObjectEnumerator GetEnumerator() => new(_element, _options);
 
             /// <inheritdoc />
-            public DynamicJsonProperty Current => new(_names.Current, new(_element.GetProperty(_names.Current)));
+            public DynamicDataProperty Current => new(_names.Current, new(_element.GetProperty(_names.Current)));
 
             /// <inheritdoc />
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
-            IEnumerator<DynamicJsonProperty> IEnumerable<DynamicJsonProperty>.GetEnumerator() => GetEnumerator();
+            IEnumerator<DynamicDataProperty> IEnumerable<DynamicDataProperty>.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
             public void Reset() => _names.Reset();

@@ -377,8 +377,8 @@ namespace Azure.Core.Tests.Public
             long max = long.MaxValue;
             long min = long.MinValue;
 
-            dynamic maxJson = new BinaryData($"{{ \"value\": { max } }}").ToDynamic().value;
-            dynamic minJson = new BinaryData($"{{ \"value\": { min } }}").ToDynamic().value;
+            dynamic maxJson = new BinaryData($"{{ \"value\": {max} }}").ToDynamic().value;
+            dynamic minJson = new BinaryData($"{{ \"value\": {min} }}").ToDynamic().value;
 
             Assert.IsTrue(maxJson == max);
             Assert.IsTrue(max == maxJson);
@@ -467,10 +467,7 @@ namespace Azure.Core.Tests.Public
 
             // Act
             using var stream = new MemoryStream();
-            using (var writer = new Utf8JsonWriter(stream))
-            {
-                DynamicData.WriteTo(stream, json);
-            }
+            json.WriteTo(stream);
 
             // Assert
 

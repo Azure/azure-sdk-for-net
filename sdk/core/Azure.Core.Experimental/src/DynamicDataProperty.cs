@@ -6,9 +6,9 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// Represents a single property on a dynamic JSON object.
     /// </summary>
-    public readonly struct DynamicJsonProperty
+    public readonly struct DynamicDataProperty
     {
-        internal DynamicJsonProperty(string name, DynamicJson value)
+        internal DynamicDataProperty(string name, DynamicData value)
         {
             Name = name;
             Value = value;
@@ -22,6 +22,6 @@ namespace Azure.Core.Dynamic
         /// <summary>
         /// Gets the value of this property.
         /// </summary>
-        public DynamicJson Value { get; }
+        public DynamicData Value { get; }
     }
 }
