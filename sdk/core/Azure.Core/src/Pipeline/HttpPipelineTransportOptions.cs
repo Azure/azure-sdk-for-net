@@ -17,6 +17,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public HttpPipelineTransportOptions()
         {
+            // suppress false postive of NetAnalyzers: error CA1416: This call site is reachable on all platforms. 'X509Certificate2' is unsupported on: 'browser'.
 #pragma warning disable CA1416
             ClientCertificates = new List<X509Certificate2>();
 #pragma warning restore CA1416
