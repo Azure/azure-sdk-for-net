@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Tests
             ArmOperation<ManagementLockResource> lro = await rg.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, mgmtLockObjectName, input);
             var lroId = lro.Id;
             var mgmtLock = lro.Value;
-            var rehydratedLro = ArmOperation<ManagementLockData>.Rehydrate<ManagementLockData>(Client, lroId);
+            var rehydratedLro = new ArmOperation<ManagementLockData>(Client, lroId);
             await rehydratedLro.WaitForCompletionResponseAsync();
             ManagementLockData rehydratedLock = rehydratedLro.Value;
             Assert.AreEqual(mgmtLock.Data.Id, rehydratedLock.Id);

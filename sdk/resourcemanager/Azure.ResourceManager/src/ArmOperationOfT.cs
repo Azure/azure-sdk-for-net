@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Shared;
 
 namespace Azure.ResourceManager
 {
@@ -22,15 +23,24 @@ namespace Azure.ResourceManager
         public ArmOperation(ArmClient client, string id)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            if (typeof(T).GetInterface(nameof(ISerializable)) is null)
+            if (typeof(T).GetInterface(nameof(ISerializable)) is not null)
             {
-                throw new InvalidOperationException("Invalid type");
+                IOperationSource<T> source = new GenericOperationSource<T>();
+                var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
+                // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
+                var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
+                _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
             }
-            IOperationSource<T> source = new GenericOperationSource<T>();
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
-            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+            else if (typeof(T).GetInterface(nameof(IData)) is null)
+            {
+                IOperationSource<T> source = new GenericResourceOperationSource<T>();
+                var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
+                // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
+                var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
+                _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+            }
+
+            throw new InvalidOperationException("The generic type should be model or resource");
         }
 
         /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
@@ -54,29 +64,31 @@ namespace Azure.ResourceManager
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, resourceTypeName, fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public static ArmOperation<TData> Rehydrate<TData>(ArmClient client, string id) where TData: ISerializable, new()
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            IOperationSource<TData> source = new GenericOperationSource<TData>();
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
-            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            var operation = new OperationInternal<TData>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
-            return new ArmOperation<TData>(operation);
-        }
+        ///// <summary> Initializes a new instance of ArmOperation. </summary>
+        //public static ArmOperation<TData> Rehydrate<TData>(ArmClient client, string id) where TData: ISerializable, new()
+        //{
+        //    Argument.AssertNotNullOrEmpty(id, nameof(id));
+        //    IOperationSource<TData> source = new GenericOperationSource<TData>();
+        //    var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
+        //    // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
+        //    var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
+        //    var operation = new OperationInternal<TData>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+        //    return new ArmOperation<TData>(operation);
+        //}
 
-        /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public static ArmOperation<TResource> Rehydrate<TResource, TData>(ArmClient client, string id) where TData : ISerializable, new()
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            IOperationSource<TResource> resource = new GenericResourceOperationSource<TResource, TData>(client);
-            var nextLinkOperation = NextLinkOperationImplementation.Create(resource, client.Pipeline, id);
-            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            var operation = new OperationInternal<TResource>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
-            return new ArmOperation<TResource>(operation);
-        }
+        ///// <summary> Initializes a new instance of ArmOperation. </summary>
+        //public static ArmOperation<TResource> Rehydrate<TResource, TData>(ArmClient client, string id)
+        //    where TResource : IData<TData>
+        //    where TData : ISerializable, new()
+        //{
+        //    Argument.AssertNotNullOrEmpty(id, nameof(id));
+        //    IOperationSource<TResource> resource = new GenericResourceOperationSource<TResource, TData>(client);
+        //    var nextLinkOperation = NextLinkOperationImplementation.Create(resource, client.Pipeline, id);
+        //    // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
+        //    var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
+        //    var operation = new OperationInternal<TResource>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+        //    return new ArmOperation<TResource>(operation);
+        //}
 
         /// <inheritdoc />
         public override string Id => HasCompleted ? string.Empty : _operation.GetOperationId();

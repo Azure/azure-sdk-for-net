@@ -3,7 +3,11 @@
 
 namespace Azure.ResourceManager.Shared
 {
-    internal class IData
+    internal interface IData
     {
+        /// <summary>
+        /// xxx
+        /// </summary>
+        object Data { get; }
     }
 }
