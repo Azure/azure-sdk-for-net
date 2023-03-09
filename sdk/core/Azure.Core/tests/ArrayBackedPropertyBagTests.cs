@@ -168,11 +168,11 @@ namespace Azure.Core.Tests
 
             target.Dispose();
 #if DEBUG
-            Assert.Throws<InvalidOperationException>(() => { _ = target.Count; });
-            Assert.Throws<InvalidOperationException>(() => { _ = target.IsEmpty; });
+            Assert.Throws<ObjectDisposedException>(() => { _ = target.Count; });
+            Assert.Throws<ObjectDisposedException>(() => { _ = target.IsEmpty; });
             for (var key = 0; key < count; key++)
             {
-                Assert.Throws<InvalidOperationException>(() => { _ = target.TryGetValue(key, out _); });
+                Assert.Throws<ObjectDisposedException>(() => { _ = target.TryGetValue(key, out _); });
             }
 #else
             Assert.IsTrue(target.IsEmpty);

@@ -297,7 +297,7 @@ namespace Azure.Core
 #if DEBUG
             if (_disposed)
             {
-                throw new InvalidOperationException($"{nameof(ArrayBackedPropertyBag<TKey, TValue>)} instance is already disposed");
+                throw new ObjectDisposedException($"{nameof(ArrayBackedPropertyBag<TKey, TValue>)} instance is already disposed");
             }
 #endif
         }
