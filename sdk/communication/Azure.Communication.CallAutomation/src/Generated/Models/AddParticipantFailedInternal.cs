@@ -9,7 +9,7 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The failed to add participant event. </summary>
+    /// <summary> The failed to add participants event. </summary>
     internal partial class AddParticipantFailedInternal
     {
         /// <summary> Initializes a new instance of AddParticipantFailedInternal. </summary>

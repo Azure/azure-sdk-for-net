@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The add participant event internal.
+    /// The add participants succeeded event internal.
     /// </summary>
     [CodeGenModel("ParticipantAdded", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     internal partial class ParticipantAddedInternal
