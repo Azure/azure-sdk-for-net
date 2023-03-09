@@ -235,7 +235,7 @@ namespace Azure.Communication.Email
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate
         /// notification that the operation should be cancelled.</param>
         /// <returns></returns>
-        public virtual async Task<Response<EmailSendResult>> GetSendResultAsync(
+        internal virtual async Task<Response<EmailSendResult>> GetSendResultAsync(
             string id,
             CancellationToken cancellationToken = default)
         {
@@ -260,7 +260,7 @@ namespace Azure.Communication.Email
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate
         /// notification that the operation should be cancelled.</param>
         /// <returns></returns>
-        public virtual Response<EmailSendResult> GetSendResult(
+        internal virtual Response<EmailSendResult> GetSendResult(
             string id,
             CancellationToken cancellationToken = default)
         {
