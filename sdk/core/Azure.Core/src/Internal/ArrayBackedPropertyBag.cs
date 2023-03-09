@@ -68,7 +68,7 @@ namespace Azure.Core
             {
                 0 => _first,
                 1 => _second,
-                _ => _rest![index - 2] // Must throw if _rest is null
+                _ => GetRest()[index - 2]
             };
         }
 
@@ -146,7 +146,7 @@ namespace Azure.Core
 
                     return false;
                 default:
-                    Kvp[] rest = _rest!; // _rest can't be null when _count >= 2
+                    Kvp[] rest = GetRest();
                     if (IsFirst(key))
                     {
                         _first = _second;
@@ -237,7 +237,7 @@ namespace Azure.Core
             else if (index == 1)
                 _second = value;
             else
-                _rest![index - 2] = value; // _rest can't be null when _count >= 2
+                GetRest()[index - 2] = value;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -245,7 +245,7 @@ namespace Azure.Core
         {
             0 => _first.Value,
             1 => _second.Value,
-            _ => _rest![index - 2].Value // _rest can't be null when _count >= 2
+            _ => GetRest()[index - 2].Value
         };
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -258,7 +258,10 @@ namespace Azure.Core
             if (_count > 1 && _second.Key.Equals(key))
                 return 1;
 
-            Kvp[] rest = _rest!; // _rest can't be null when _count >= 2
+            if (_count <= 2)
+                return -1;
+
+            Kvp[] rest = GetRest();
             int max = _count - 2;
             for (var i = 0; i < max; i++)
             {
@@ -289,6 +292,8 @@ namespace Azure.Core
             _rest = default;
             ArrayPool<Kvp>.Shared.Return(rest, true);
         }
+
+        private Kvp[] GetRest() => _rest ?? throw new InvalidOperationException($"{nameof(_rest)} field is null while {nameof(_count)} == {_count}");
 
 #pragma warning disable CA1822
         [Conditional("DEBUG")]
