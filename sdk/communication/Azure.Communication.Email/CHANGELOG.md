@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- Changed: Renamed parameter names in EmailMessage constructor
 
 ### Bugs Fixed
 

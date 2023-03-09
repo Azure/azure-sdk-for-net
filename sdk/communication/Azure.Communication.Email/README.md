@@ -104,8 +104,8 @@ var emailContent = new EmailContent("This is the subject")
 
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    fromAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    toAddress: "<recipient email address>"
+    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>"
     content: emailContent);
 
 var emailSendOperation = emailClient.Send(
@@ -183,8 +183,8 @@ Azure Communication Services support sending emails with attachments.
 ```C# Snippet:Azure_Communication_Email_Send_With_Attachments
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    fromAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    toAddress: "<recipient email address>"
+    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>"
     content: emailContent);
 
 var filePath = "<path to your file>";

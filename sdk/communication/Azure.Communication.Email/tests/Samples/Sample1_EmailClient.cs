@@ -61,10 +61,10 @@ namespace Azure.Communication.Email.Tests.Samples
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ fromAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ toAddress: "<recipient email address>"
-                /*@@*/ fromAddress: TestEnvironment.SenderAddress,
-                /*@@*/ toAddress: TestEnvironment.RecipientAddress,
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 content: emailContent);
 
             var emailSendOperation = emailClient.Send(
@@ -175,10 +175,10 @@ namespace Azure.Communication.Email.Tests.Samples
             #region Snippet:Azure_Communication_Email_Send_With_Attachments
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ fromAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ toAddress: "<recipient email address>"
-                /*@@*/ fromAddress: TestEnvironment.SenderAddress,
-                /*@@*/ toAddress: TestEnvironment.RecipientAddress,
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 content: emailContent);
 
 #if SNIPPET
