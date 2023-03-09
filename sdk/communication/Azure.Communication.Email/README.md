@@ -9,7 +9,7 @@ This package contains a C# SDK for Azure Communication Services for Email.
 Install the Azure Communication Email client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.Email --prerelease
+dotnet add package Azure.Communication.Email
 ``` 
 
 ### Prerequisites
