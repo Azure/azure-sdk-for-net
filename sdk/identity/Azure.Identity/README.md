@@ -188,40 +188,40 @@ Not all credentials require this configuration. Credentials which authenticate t
 
 ### Authenticate Azure-hosted applications
 
-|Credential | Usage
-|-|-
-|[`DefaultAzureCredential`][ref_DefaultAzureCredential]|Provides a simplified authentication experience to quickly start developing applications run in Azure.
-|[`ChainedTokenCredential`][ref_ChainedTokenCredential]|Allows users to define custom authentication flows composing multiple credentials.
-|[`ManagedIdentityCredential`][ref_ManagedIdentityCredential]|Authenticates the managed identity of an Azure resource.
-|[`EnvironmentCredential`][ref_EnvironmentCredential]|Authenticates a service principal or user via credential information specified in environment variables.
+| Credential                                                   | Usage                                                                                                    | Built-in token caching? |
+|--------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|-------------------------|
+| [`DefaultAzureCredential`][ref_DefaultAzureCredential]       | Provides a simplified authentication experience to quickly start developing applications run in Azure.   | N/A                     |
+| [`ChainedTokenCredential`][ref_ChainedTokenCredential]       | Allows users to define custom authentication flows composing multiple credentials.                       | N/A                     |
+| [`ManagedIdentityCredential`][ref_ManagedIdentityCredential] | Authenticates the managed identity of an Azure resource.                                                 | Yes                     |
+| [`EnvironmentCredential`][ref_EnvironmentCredential]         | Authenticates a service principal or user via credential information specified in environment variables. | Yes                     |
 
 ### Authenticate service principals
 
-|Credential | Usage | Reference
-|-|-|-
-|[`ClientAssertionCredential`][ref_ClientAssertionCredential]|Authenticates a service principal using a signed client assertion. |
-|[`ClientCertificateCredential`][ref_ClientCertificateCredential]|Authenticates a service principal using a certificate. | [Service principal authentication](https://learn.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals)
-|[`ClientSecretCredential`][ref_ClientSecretCredential]|Authenticates a service principal using a secret. | [Service principal authentication](https://learn.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals)
+| Credential                                                       | Usage                                                              | Built-in token caching? | Reference                                                                                                                         |
+|------------------------------------------------------------------|--------------------------------------------------------------------|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| [`ClientAssertionCredential`][ref_ClientAssertionCredential]     | Authenticates a service principal using a signed client assertion. | Yes                     |                                                                                                                                   |
+| [`ClientCertificateCredential`][ref_ClientCertificateCredential] | Authenticates a service principal using a certificate.             | Yes                     | [Service principal authentication](https://learn.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals) |
+| [`ClientSecretCredential`][ref_ClientSecretCredential]           | Authenticates a service principal using a secret.                  | Yes                     | [Service principal authentication](https://learn.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals) |
 
 ### Authenticate users
 
-|Credential | Usage | Reference
-|-|-|-
-|[`AuthorizationCodeCredential`][ref_AuthorizationCodeCredential]|Authenticates a user with a previously obtained authorization code. | [OAuth2 authentication code](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow)
-|[`DeviceCodeCredential`][ref_DeviceCodeCredential]|Interactively authenticates a user on devices with limited UI. | [Device code authentication](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code)
-|[`InteractiveBrowserCredential`][ref_InteractiveBrowserCredential]|Interactively authenticates a user with the default system browser. | [OAuth2 authentication code](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow)
-|[`OnBehalfOfCredential`][ref_OnBehalfOfCredential]|Propagates the delegated user identity and permissions through the request chain. | [On-behalf-of authentication](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow)
-|[`UsernamePasswordCredential`][ref_UsernamePasswordCredential]|Authenticates a user with a username and password. | [Username + password authentication](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth-ropc)
+| Credential                                                         | Usage                                                                             | Built-in token caching? | Reference                                                                                                             |
+|--------------------------------------------------------------------|-----------------------------------------------------------------------------------|-------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| [`AuthorizationCodeCredential`][ref_AuthorizationCodeCredential]   | Authenticates a user with a previously obtained authorization code.               | Yes                     | [OAuth2 authentication code](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow)     |
+| [`DeviceCodeCredential`][ref_DeviceCodeCredential]                 | Interactively authenticates a user on devices with limited UI.                    | Yes                     | [Device code authentication](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code)        |
+| [`InteractiveBrowserCredential`][ref_InteractiveBrowserCredential] | Interactively authenticates a user with the default system browser.               | Yes                     | [OAuth2 authentication code](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow)     |
+| [`OnBehalfOfCredential`][ref_OnBehalfOfCredential]                 | Propagates the delegated user identity and permissions through the request chain. | Yes                     | [On-behalf-of authentication](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) |
+| [`UsernamePasswordCredential`][ref_UsernamePasswordCredential]     | Authenticates a user with a username and password.                                | Yes                     | [Username + password authentication](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth-ropc)        |
 
 ### Authenticate via development tools
 
-|Credential | Usage | Reference
-|-|-|-
-|[`AzureCliCredential`][ref_AzureCliCredential]|Authenticates in a development environment with the Azure CLI. | [Azure CLI authentication](https://learn.microsoft.com/cli/azure/authenticate-azure-cli)
-|`AzureDeveloperCliCredential`|Authenticates in a development environment with the Azure Developer CLI. | [Azure Developer CLI Reference](https://learn.microsoft.com/azure/developer/azure-developer-cli/reference)
-|[`AzurePowerShellCredential`][ref_AzurePowerShellCredential]|Authenticates in a development environment with the Azure PowerShell. | [Azure PowerShell authentication](https://learn.microsoft.com/powershell/azure/authenticate-azureps)
-|[`VisualStudioCredential`][ref_VisualStudioCredential]|Authenticates in a development environment with Visual Studio. | [Visual Studio configuration](https://learn.microsoft.com/dotnet/azure/configure-visual-studio)
-|[`VisualStudioCodeCredential`][ref_VisualStudioCodeCredential]| Authenticates as the user signed in to the Visual Studio Code Azure Account extension. | [VS Code Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account)
+| Credential                                                       | Usage                                                                                  | Built-in token caching? | Reference                                                                                                      |
+|------------------------------------------------------------------|----------------------------------------------------------------------------------------|-------------------------|----------------------------------------------------------------------------------------------------------------|
+| [`AzureCliCredential`][ref_AzureCliCredential]                   | Authenticates in a development environment with the Azure CLI.                         | No                      | [Azure CLI authentication](https://learn.microsoft.com/cli/azure/authenticate-azure-cli)                       |
+| [`AzureDeveloperCliCredential`][ref_AzureDeveloperCliCredential] | Authenticates in a development environment with the Azure Developer CLI.               | No                      | [Azure Developer CLI Reference](https://learn.microsoft.com/azure/developer/azure-developer-cli/reference)     |
+| [`AzurePowerShellCredential`][ref_AzurePowerShellCredential]     | Authenticates in a development environment with the Azure PowerShell.                  | No                      | [Azure PowerShell authentication](https://learn.microsoft.com/powershell/azure/authenticate-azureps)           |
+| [`VisualStudioCredential`][ref_VisualStudioCredential]           | Authenticates in a development environment with Visual Studio.                         | No                      | [Visual Studio configuration](https://learn.microsoft.com/dotnet/azure/configure-visual-studio)                |
+| [`VisualStudioCodeCredential`][ref_VisualStudioCodeCredential]   | Authenticates as the user signed in to the Visual Studio Code Azure Account extension. | No                      | [VS Code Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) |
 
 > __Note:__ All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used by multiple service clients.
 
@@ -391,6 +391,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ref_AuthorizationCodeCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.authorizationcodecredential?view=azure-dotnet
 [ref_OnBehalfOfCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.onbehalfofcredential?view=azure-dotnet
 [ref_AzureCliCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet
+[ref_AzureDeveloperCliCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azuredeveloperclicredential?view=azure-dotnet-preview
 [ref_AzurePowerShellCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azurepowershellcredential?view=azure-dotnet
 [ref_VisualStudioCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocredential?view=azure-dotnet
 [ref_VisualStudioCodeCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocodecredential?view=azure-dotnet
