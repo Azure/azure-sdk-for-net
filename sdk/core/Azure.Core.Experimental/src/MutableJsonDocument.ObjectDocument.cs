@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core.Dynamic;
 
@@ -34,11 +34,18 @@ namespace Azure.Core.Json
             return new ObjectElement(this, value.GetIndexElement(index));
         }
 
-        public override int GetArrayLength(object element)
+        public override bool TryGetArrayLength(object element, out int length)
         {
             MutableJsonElement value = (MutableJsonElement)element;
 
-            return value.GetJsonElement().GetArrayLength();
+            if (value.ValueKind != JsonValueKind.Array)
+            {
+                length = -1;
+                return false;
+            }
+
+            length = value.GetJsonElement().GetArrayLength();
+            return true;
         }
 
         public override bool HasValue(object element)
@@ -62,38 +69,18 @@ namespace Azure.Core.Json
             return false;
         }
 
-        public override bool TryGetArrayEnumerator(object element, out ObjectElement.ArrayEnumerator enumerable)
+        public override bool TryGetPropertyNames(object element, out IEnumerable<string> enumerable)
         {
-            MutableJsonElement value = (MutableJsonElement)element;
+            MutableJsonElement mje = (MutableJsonElement)element;
 
-            if (value.ValueKind != JsonValueKind.Array)
+            if (mje.ValueKind != JsonValueKind.Object)
             {
-                enumerable = default;
+                enumerable = Array.Empty<string>();
                 return false;
             }
 
-            enumerable = new ObjectElement.ArrayEnumerator(new ObjectElement(this, element));
+            enumerable = mje.EnumerateObject().Select(p => p.Name);
             return true;
-        }
-
-        public override bool TryGetObjectEnumerator(object element, out ObjectElement.ObjectEnumerator enumerable)
-        {
-            MutableJsonElement value = (MutableJsonElement)element;
-
-            if (value.ValueKind != JsonValueKind.Object)
-            {
-                enumerable = default;
-                return false;
-            }
-
-            enumerable = new ObjectElement.ObjectEnumerator(new ObjectElement(this, element));
-            return true;
-        }
-
-        public override IEnumerable<(string Name, object Value)> EnumerateObject(object element)
-        {
-            MutableJsonElement value = (MutableJsonElement)element;
-            return value.EnumerateObject();
         }
 
         public override bool TryGetBoolean(object element, out bool value)

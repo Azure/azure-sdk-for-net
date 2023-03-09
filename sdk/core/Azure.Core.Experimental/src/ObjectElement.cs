@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 // TODO: Remove when prototyping complete
@@ -37,39 +38,34 @@ namespace Azure.Core.Dynamic
             return _document.GetIndexElement(_element, index);
         }
 
-        public ArrayEnumerator EnumerateArray()
-        {
-            if (TryGetArrayEnumerator(out ArrayEnumerator value))
-            {
-                return value;
-            }
-
-            throw new InvalidOperationException();
-        }
-
-        public bool TryGetArrayEnumerator(out ArrayEnumerator enumerator)
-        {
-            return _document.TryGetArrayEnumerator(_element, out enumerator);
-        }
-
         public int GetArrayLength()
         {
-            return _document.GetArrayLength(_element);
-        }
-
-        public ObjectEnumerator EnumerateObject()
-        {
-            if (TryGetObjectEnumerator(out ObjectEnumerator value))
+            if (_document.TryGetArrayLength(_element, out int length))
             {
-                return value;
+                return length;
             }
 
             throw new InvalidOperationException();
         }
 
-        public bool TryGetObjectEnumerator(out ObjectEnumerator enumerator)
+        public bool TryGetArrayLength(out int length)
         {
-            return _document.TryGetObjectEnumerator(_element, out enumerator);
+            return _document.TryGetArrayLength(_element, out length);
+        }
+
+        public IEnumerable<string> GetPropertyNames()
+        {
+            if (_document.TryGetPropertyNames(_element, out var names))
+            {
+                return names;
+            }
+
+            throw new InvalidOperationException();
+        }
+
+        public bool TryGetPropertyNames(out IEnumerable<string> enumerator)
+        {
+            return _document.TryGetPropertyNames(_element, out enumerator);
         }
 
         public ObjectElement GetProperty(string name)

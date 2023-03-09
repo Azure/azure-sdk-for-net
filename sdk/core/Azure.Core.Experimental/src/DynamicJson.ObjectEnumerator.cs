@@ -16,11 +16,15 @@ namespace Azure.Core.Dynamic
         [DebuggerDisplay("{Current,nq}")]
         public struct ObjectEnumerator : IEnumerable<DynamicJsonProperty>, IEnumerator<DynamicJsonProperty>
         {
-            private ObjectElement.ObjectEnumerator _enumerator;
+            private readonly ObjectElement _element;
+            private readonly DynamicJsonOptions _options;
+            private readonly IEnumerator<string> _names;
 
-            internal ObjectEnumerator(ObjectElement.ObjectEnumerator enumerator)
+            internal ObjectEnumerator(ObjectElement element, DynamicJsonOptions options)
             {
-                _enumerator = enumerator;
+                _element = element;
+                _options = options;
+                _names = _element.GetPropertyNames().GetEnumerator();
             }
 
             /// <summary>
@@ -36,10 +40,10 @@ namespace Azure.Core.Dynamic
             ///   property they will all individually be returned (each in the order
             ///   they appear in the content).
             /// </remarks>
-            public ObjectEnumerator GetEnumerator() => new(_enumerator.GetEnumerator());
+            public ObjectEnumerator GetEnumerator() => new(_element, _options);
 
             /// <inheritdoc />
-            public DynamicJsonProperty Current => new(_enumerator.Current.Name, new(_enumerator.Current.Value));
+            public DynamicJsonProperty Current => new(_names.Current, new(_element.GetProperty(_names.Current)));
 
             /// <inheritdoc />
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -48,16 +52,16 @@ namespace Azure.Core.Dynamic
             IEnumerator<DynamicJsonProperty> IEnumerable<DynamicJsonProperty>.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
-            public void Reset() => _enumerator.Reset();
+            public void Reset() => _names.Reset();
 
             /// <inheritdoc />
             object IEnumerator.Current => Current;
 
             /// <inheritdoc />
-            public bool MoveNext() => _enumerator.MoveNext();
+            public bool MoveNext() => _names.MoveNext();
 
             /// <inheritdoc />
-            public void Dispose() => _enumerator.Dispose();
+            public void Dispose() => _names.Dispose();
         }
     }
 }

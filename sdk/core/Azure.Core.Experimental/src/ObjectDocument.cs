@@ -20,16 +20,15 @@ namespace Azure.Core.Dynamic
     /// </summary>
     public abstract class ObjectDocument : IDisposable
     {
-        // Enumerables
-        public abstract IEnumerable<(string Name, object Value)> EnumerateObject(object element);
-
-        public abstract bool TryGetArrayEnumerator(object element, out ObjectElement.ArrayEnumerator enumerator);
-        public abstract bool TryGetObjectEnumerator(object element, out ObjectElement.ObjectEnumerator enumerator);
-
         // Getters
-        public abstract ObjectElement GetIndexElement(object element, int index);
-        public abstract int GetArrayLength(object element);
+
+        // Objects
+        public abstract bool TryGetPropertyNames(object element, out IEnumerable<string> enumerator);
         public abstract bool TryGetProperty(object element, string name, out ObjectElement value);
+
+        // Arrays
+        public abstract bool TryGetArrayLength(object element, out int length);
+        public abstract ObjectElement GetIndexElement(object element, int index);
 
         // Primitives
         public abstract bool TryGetBoolean(object element, out bool value);

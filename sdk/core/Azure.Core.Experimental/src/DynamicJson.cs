@@ -3,13 +3,10 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
 {
@@ -94,14 +91,14 @@ namespace Azure.Core.Dynamic
 
         private IEnumerable GetEnumerable()
         {
-            if (_element.TryGetArrayEnumerator(out var values))
+            if (_element.TryGetArrayLength(out int _))
             {
-                return new ArrayEnumerator(values);
+                return new ArrayEnumerator(_element, _options);
             }
 
-            if (_element.TryGetObjectEnumerator(out var properties))
+            if (_element.TryGetPropertyNames(out var _))
             {
-                return new ObjectEnumerator(properties);
+                return new ObjectEnumerator(_element, _options);
             }
 
             throw new InvalidOperationException($"Unable to enumerate this element.");

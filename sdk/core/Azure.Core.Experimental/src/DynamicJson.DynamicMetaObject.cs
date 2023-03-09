@@ -27,9 +27,9 @@ namespace Azure.Core.Dynamic
 
             public override IEnumerable<string> GetDynamicMemberNames()
             {
-                if (_value._element.TryGetObjectEnumerator(out ObjectElement.ObjectEnumerator enumerable))
+                if (_value._element.TryGetPropertyNames(out IEnumerable<string> properties))
                 {
-                    return enumerable.Select(p => p.Name);
+                    return properties;
                 }
 
                 return Array.Empty<string>();
