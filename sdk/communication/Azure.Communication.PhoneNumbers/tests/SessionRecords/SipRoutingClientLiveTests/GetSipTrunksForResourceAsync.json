@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "13",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-2057ee926bd8c642e5686c421d15746d-8e5105a4ea4a290e-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "45674185dd492d1fedf0ffa5c221f111",
+        "traceparent": "00-2b0eb3f480228544aa2e8c63542bd47c-b1a251b896857248-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "756f2b14a62062c25f32fb843eaeba0a",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 07 Mar 2023 14:23:36 GMT",
+        "x-ms-date": "Thu, 09 Mar 2023 07:14:01 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,12 +23,12 @@
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview, 2023-01-01-preview, 2023-03-01",
         "Content-Length": "25",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Mar 2023 14:23:35 GMT",
-        "MS-CV": "QL7Hk2r2O0G469Sa1kuQ2A.0",
+        "Date": "Thu, 09 Mar 2023 07:14:00 GMT",
+        "MS-CV": "9ccQD3TZR0SP9dFKbYySSA.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "050gHZAAAAAA7QE5NiBQ7TZmyotlF9LOQTE9OMjFFREdFMTcxMwBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0OIcJZAAAAAC2VnR\u002BhHKfQo43wawyctzIUFJHMDFFREdFMDkwOQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "204ms"
+        "X-Processing-Time": "283ms"
       },
       "ResponseBody": {
         "trunks": {},
@@ -41,11 +41,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-cfcaede813299ac0139be3541a96796c-229ef6a72bb9c2b3-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "fffc5e999b4ac841af485801bd10bcb0",
+        "traceparent": "00-c662b40da3819e4184613c6a685705e8-2d1260ca3ee2014e-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "25011149c307e6cfebfbfb9dc74f0382",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 07 Mar 2023 14:23:36 GMT",
+        "x-ms-date": "Thu, 09 Mar 2023 07:14:01 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -54,12 +54,12 @@
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview, 2023-01-01-preview, 2023-03-01",
         "Content-Length": "25",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Mar 2023 14:23:35 GMT",
-        "MS-CV": "3Sqh2F8GVkyyOrpiJgSuaw.0",
+        "Date": "Thu, 09 Mar 2023 07:14:00 GMT",
+        "MS-CV": "dptnkRUeEkCTtTASuRdrLg.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "06EgHZAAAAABlrXa07osVQof/bCCLS1miTE9OMjFFREdFMTcxMwBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0OIcJZAAAAADV6Z6v7WJtR6uGbkvCYkMIUFJHMDFFREdFMDkwOQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "112ms"
+        "X-Processing-Time": "176ms"
       },
       "ResponseBody": {
         "trunks": {},
@@ -74,19 +74,19 @@
         "Authorization": "Sanitized",
         "Content-Length": "182",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-cfcaede813299ac0139be3541a96796c-73fc923c3adca134-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "40b7628bc1bf29349693627daea76f47",
+        "traceparent": "00-c662b40da3819e4184613c6a685705e8-ebd9229bac272e48-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b227adce9dab1365e407b5681da4388e",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 07 Mar 2023 14:23:37 GMT",
+        "x-ms-date": "Thu, 09 Mar 2023 07:14:02 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "trunks": {
-          "sbs1-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs1-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1122
           },
-          "sbs2-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs2-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1123
           }
         }
@@ -96,19 +96,19 @@
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview, 2023-01-01-preview, 2023-03-01",
         "Content-Length": "194",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Mar 2023 14:23:37 GMT",
-        "MS-CV": "K5YxKJBTlE2gCGZ4UEZKsw.0",
+        "Date": "Thu, 09 Mar 2023 07:14:01 GMT",
+        "MS-CV": "5HINoWuzB0yMdZ3omONWag.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "06EgHZAAAAABQfs1AU3Q1QLl9aMoA//4NTE9OMjFFREdFMTcxMwBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0OIcJZAAAAABvYiMFv2OuTLO5bPnDsiRmUFJHMDFFREdFMDkwOQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "896ms"
+        "X-Processing-Time": "1050ms"
       },
       "ResponseBody": {
         "trunks": {
-          "sbs1-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs1-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1122
           },
-          "sbs2-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs2-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1123
           }
         },
@@ -121,56 +121,52 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "212",
+        "Content-Length": "139",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-dd506f35951ae6ac2b2ba41e6495d7fa-72f878f224f10e91-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "47eb7c3765dbe986ff9f9601841d6fdd",
+        "traceparent": "00-2e4fc672f5b850448625dfd46ec4e893-628c3d8ce1f0d043-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "59e3bb81110d507b5b898a24aa249a0f",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 07 Mar 2023 14:23:38 GMT",
+        "x-ms-date": "Thu, 09 Mar 2023 07:14:03 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "routes": [
           {
-            "description": "Handle numbers starting with \u0027\u002B123\u0027",
-            "name": "First rule",
-            "numberPattern": "\\\u002B123[0-9]\u002B",
-            "trunks": [
-              "sbs1-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com"
-            ]
+            "description": "Handle all numbers\u0027",
+            "name": "Rule without trunks",
+            "numberPattern": "\\\u002B[1-9][0-9]{3,23}",
+            "trunks": []
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview, 2023-01-01-preview, 2023-03-01",
-        "Content-Length": "368",
+        "Content-Length": "310",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Mar 2023 14:23:37 GMT",
-        "MS-CV": "8zaiAyMYzEKDSyJ8YlECtA.0",
+        "Date": "Thu, 09 Mar 2023 07:14:02 GMT",
+        "MS-CV": "IDhBOyHJBE\u002B39jP8bMnVxQ.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "06UgHZAAAAAAGk8ObsqLfSLqKSz5x2iqoTE9OMjFFREdFMTcxMwBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0OocJZAAAAAA0jSOhTsKaQrYNikAXCKG2UFJHMDFFREdFMDkwOQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "195ms"
+        "X-Processing-Time": "291ms"
       },
       "ResponseBody": {
         "trunks": {
-          "sbs1-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs1-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1122
           },
-          "sbs2-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs2-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1123
           }
         },
         "routes": [
           {
-            "description": "Handle numbers starting with \u0027\u002B123\u0027",
-            "name": "First rule",
-            "numberPattern": "\\\u002B123[0-9]\u002B",
-            "trunks": [
-              "sbs1-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com"
-            ]
+            "description": "Handle all numbers\u0027",
+            "name": "Rule without trunks",
+            "numberPattern": "\\\u002B[1-9][0-9]{3,23}",
+            "trunks": []
           }
         ]
       }
@@ -181,43 +177,41 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d4bafab7ac1e1703e985bfdf03a7b94b-692db08c9ed9ab22-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "60194f34b069d8512ad368b639c41a08",
+        "traceparent": "00-2790679e78d64444a262d19fab0d965b-04f124e6612e4346-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "91b5792f0787ab5eaced40000d67c946",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 07 Mar 2023 14:23:38 GMT",
+        "x-ms-date": "Thu, 09 Mar 2023 07:14:03 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview, 2023-01-01-preview, 2023-03-01",
-        "Content-Length": "368",
+        "Content-Length": "310",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Mar 2023 14:23:37 GMT",
-        "MS-CV": "Y1T7hxQgw0mBeMT\u002B2J0BRg.0",
+        "Date": "Thu, 09 Mar 2023 07:14:02 GMT",
+        "MS-CV": "Qg2p7Iwf6UO8mookoU0A/g.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "06UgHZAAAAADo6vLSOt1uSbvT8eb97Xw1TE9OMjFFREdFMTcxMwBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0OocJZAAAAACM5QAqeju3Rr0M4pEH7XqLUFJHMDFFREdFMDkwOQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "110ms"
+        "X-Processing-Time": "167ms"
       },
       "ResponseBody": {
         "trunks": {
-          "sbs1-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs1-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1122
           },
-          "sbs2-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs2-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1123
           }
         },
         "routes": [
           {
-            "description": "Handle numbers starting with \u0027\u002B123\u0027",
-            "name": "First rule",
-            "numberPattern": "\\\u002B123[0-9]\u002B",
-            "trunks": [
-              "sbs1-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com"
-            ]
+            "description": "Handle all numbers\u0027",
+            "name": "Rule without trunks",
+            "numberPattern": "\\\u002B[1-9][0-9]{3,23}",
+            "trunks": []
           }
         ]
       }
@@ -230,11 +224,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "13",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-f5f94f8fe72b5a62967898e72babbd56-53010ef4dbf42149-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "41c911d8742525d5dbce41202a33a478",
+        "traceparent": "00-684cab40fbc28d41bcd6c304cff9e56e-15f0c90c83039345-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "0c1c6dc3a96cbd7532d65622134069c0",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 07 Mar 2023 14:23:38 GMT",
+        "x-ms-date": "Thu, 09 Mar 2023 07:14:04 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -245,19 +239,19 @@
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview, 2023-01-01-preview, 2023-03-01",
         "Content-Length": "194",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Mar 2023 14:23:38 GMT",
-        "MS-CV": "KKfQ2zdwBEShyTMsiol37A.0",
+        "Date": "Thu, 09 Mar 2023 07:14:02 GMT",
+        "MS-CV": "0v8cJg2y5kWYWwHya2MPtQ.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "06kgHZAAAAAC7eSt3yexLTYcH0/HWvdBqTE9OMjFFREdFMTcxMwBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0OocJZAAAAAD4LdxnQjMUT6ES9vEy9vWfUFJHMDFFREdFMDkwOQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "207ms"
+        "X-Processing-Time": "308ms"
       },
       "ResponseBody": {
         "trunks": {
-          "sbs1-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs1-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1122
           },
-          "sbs2-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs2-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1123
           }
         },
@@ -270,11 +264,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-dcf6a3fa9df9b758c1ec65b651465d32-dfecdf73214e15a3-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5f4884240f8d87dd2a121c08fcd0b03b",
+        "traceparent": "00-280d89015a5ef541bda483948deb1c7e-189f192819ddef4e-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a439a66ca7ee79065c37ad20d07a43f4",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 07 Mar 2023 14:23:39 GMT",
+        "x-ms-date": "Thu, 09 Mar 2023 07:14:04 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -283,19 +277,19 @@
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview, 2023-01-01-preview, 2023-03-01",
         "Content-Length": "194",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Mar 2023 14:23:38 GMT",
-        "MS-CV": "cDRm43RsXEOVbkur5Jb28w.0",
+        "Date": "Thu, 09 Mar 2023 07:14:03 GMT",
+        "MS-CV": "93Rv5/A\u002B60CFGCrZBvLSDg.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "06kgHZAAAAABey/Nsw4BXQqi1SA6L4v\u002B8TE9OMjFFREdFMTcxMwBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0O4cJZAAAAACw3mO89IboQaMyky2kE\u002BVUUFJHMDFFREdFMDkwOQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "111ms"
+        "X-Processing-Time": "169ms"
       },
       "ResponseBody": {
         "trunks": {
-          "sbs1-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs1-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1122
           },
-          "sbs2-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": {
+          "sbs2-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": {
             "sipSignalingPort": 1123
           }
         },
@@ -310,17 +304,17 @@
         "Authorization": "Sanitized",
         "Content-Length": "140",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-dcf6a3fa9df9b758c1ec65b651465d32-2bc2a5ecd2aab28f-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "72288e852d54c0b779f3849a6f31adf7",
+        "traceparent": "00-280d89015a5ef541bda483948deb1c7e-27c5b9488ac3744d-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3c6143bf8e0785a203f85eb1b13c976b",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 07 Mar 2023 14:23:39 GMT",
+        "x-ms-date": "Thu, 09 Mar 2023 07:14:05 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "trunks": {
-          "sbs1-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": null,
-          "sbs2-50c0b506-ae6e-324c-6829-8d84a5d864d0.testdomain.com": null
+          "sbs1-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": null,
+          "sbs2-1569a6b9-199a-7629-3d3b-c52c6b0e3682.testdomain.com": null
         }
       },
       "StatusCode": 200,
@@ -328,12 +322,12 @@
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview, 2023-01-01-preview, 2023-03-01",
         "Content-Length": "25",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Mar 2023 14:23:38 GMT",
-        "MS-CV": "8vkVBCui3EGnX\u002B/GsuJ0aw.0",
+        "Date": "Thu, 09 Mar 2023 07:14:03 GMT",
+        "MS-CV": "FwY\u002Bs/HudEeaSg9M52VIVw.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "06kgHZAAAAACSA27EKqfMSrX8zW1vXy95TE9OMjFFREdFMTcxMwBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Azure-Ref": "0O4cJZAAAAAB9OBgQoz\u002BZRatjlIFzX0YNUFJHMDFFREdFMDkwOQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "308ms"
+        "X-Processing-Time": "411ms"
       },
       "ResponseBody": {
         "trunks": {},
@@ -342,7 +336,6 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1725345260"
+    "RandomSeed": "1471907582"
   }
 }

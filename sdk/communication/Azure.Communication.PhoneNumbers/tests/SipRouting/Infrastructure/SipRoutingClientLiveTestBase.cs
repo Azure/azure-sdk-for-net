@@ -19,7 +19,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 
         public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
         {
-            testDomain = TestEnvironment.Mode != RecordedTestMode.Playback ? Environment.GetEnvironmentVariable("AZURE_TEST_DOMAIN") ?? DummyTestDomain : DummyTestDomain;
+            testDomain = TestEnvironment.Mode != RecordedTestMode.Playback ? TestEnvironment.GetTestDomain() ?? DummyTestDomain : DummyTestDomain;
 
             JsonPathSanitizers.Add("$..credential");
             SanitizedHeaders.Add("x-ms-content-sha256");
@@ -35,6 +35,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             TestData = new TestData(testDomain, randomGuid.ToString());
         }
 
+        public bool SkipTrunksLiveTest
+            => TestEnvironment.Mode != RecordedTestMode.Playback && string.Equals(Environment.GetEnvironmentVariable("SKIP_TRUNKS_LIVE_TESTS"), "True", StringComparison.OrdinalIgnoreCase);
+
         public bool SkipSipRoutingLiveTests
             => TestEnvironment.Mode != RecordedTestMode.Playback &&
             string.Equals(Environment.GetEnvironmentVariable("SKIP_SIPROUTING_LIVE_TESTS"), "True", StringComparison.OrdinalIgnoreCase);
@@ -46,8 +49,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         /// <returns>The instrumented <see cref="SipRoutingClient" />.</returns>
         protected SipRoutingClient CreateClient(bool isInstrumented = true)
         {
-            var client = new SipRoutingClient(
-                    TestEnvironment.LiveTestDynamicConnectionString,
+            var client = new SipRoutingClient(TestEnvironment.GetLiveTestConnectionString(),
                     InstrumentClientOptions(new SipRoutingClientOptions()));
 
             // We always create the instrumented client to suppress the instrumentation check
@@ -63,7 +65,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         protected SipRoutingClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new SipRoutingClient(
-                    new Uri(ConnectionString.Parse(TestEnvironment.LiveTestDynamicConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
+                    new Uri(ConnectionString.Parse(TestEnvironment.GetLiveTestConnectionString(), allowEmptyValues: true).GetRequired("endpoint")),
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     InstrumentClientOptions(new SipRoutingClientOptions()));
 
