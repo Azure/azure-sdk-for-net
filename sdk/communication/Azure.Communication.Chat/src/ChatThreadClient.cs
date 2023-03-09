@@ -55,15 +55,16 @@ namespace Azure.Communication.Chat
         #region Thread Operations
         /// <summary> Updates the thread's topic asynchronously. </summary>
         /// <param name="topic"> Chat thread topic. </param>
+        /// <param name="retentionPolicy"> Retention policy</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> UpdateTopicAsync(string topic, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateTopicAsync(string topic, RetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateTopic)}");
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, topic, cancellationToken).ConfigureAwait(false);
+                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, topic, retentionPolicy, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -74,15 +75,16 @@ namespace Azure.Communication.Chat
 
         /// <summary> Updates the thread's topic. </summary>
         /// <param name="topic"> Chat thread topic. </param>
+        /// <param name="retentionPolicy"> Retention policy</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response UpdateTopic(string topic, CancellationToken cancellationToken = default)
+        public virtual Response UpdateTopic(string topic, RetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateTopic)}");
             scope.Start();
             try
             {
-                return _chatThreadRestClient.UpdateChatThreadProperties(Id, topic, cancellationToken);
+                return _chatThreadRestClient.UpdateChatThreadProperties(Id, topic, retentionPolicy, cancellationToken);
             }
             catch (Exception ex)
             {

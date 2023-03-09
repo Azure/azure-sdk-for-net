@@ -23,6 +23,7 @@ namespace Azure.Communication.Chat
             string topic = default;
             Optional<DateTimeOffset> deletedOn = default;
             Optional<DateTimeOffset> lastMessageReceivedOn = default;
+            Optional<RetentionPolicy> retentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -55,8 +56,18 @@ namespace Azure.Communication.Chat
                     lastMessageReceivedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("retentionPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);
+                    continue;
+                }
             }
-            return new ChatThreadItem(id, topic, Optional.ToNullable(deletedOn), Optional.ToNullable(lastMessageReceivedOn));
+            return new ChatThreadItem(id, topic, Optional.ToNullable(deletedOn), Optional.ToNullable(lastMessageReceivedOn), retentionPolicy.Value);
         }
     }
 }

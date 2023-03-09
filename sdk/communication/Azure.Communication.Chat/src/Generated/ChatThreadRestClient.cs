@@ -33,7 +33,7 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-09-07")
+        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-07-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -872,7 +872,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateUpdateChatThreadPropertiesRequest(string chatThreadId, string topic)
+        internal HttpMessage CreateUpdateChatThreadPropertiesRequest(string chatThreadId, string topic, RetentionPolicy retentionPolicy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -887,7 +887,8 @@ namespace Azure.Communication.Chat
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             var model = new UpdateChatThreadRequest()
             {
-                Topic = topic
+                Topic = topic,
+                RetentionPolicy = retentionPolicy
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -898,16 +899,17 @@ namespace Azure.Communication.Chat
         /// <summary> Updates a thread&apos;s properties. </summary>
         /// <param name="chatThreadId"> The id of the thread to update. </param>
         /// <param name="topic"> Chat thread topic. </param>
+        /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response> UpdateChatThreadPropertiesAsync(string chatThreadId, string topic = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateChatThreadPropertiesAsync(string chatThreadId, string topic = null, RetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic);
+            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic, retentionPolicy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -921,16 +923,17 @@ namespace Azure.Communication.Chat
         /// <summary> Updates a thread&apos;s properties. </summary>
         /// <param name="chatThreadId"> The id of the thread to update. </param>
         /// <param name="topic"> Chat thread topic. </param>
+        /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, CancellationToken cancellationToken = default)
+        public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, RetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic);
+            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic, retentionPolicy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
