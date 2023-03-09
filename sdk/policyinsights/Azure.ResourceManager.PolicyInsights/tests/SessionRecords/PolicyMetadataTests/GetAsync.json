@@ -1,0 +1,146 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "292bbcf73d28b60a9a690b4c7f37e896",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 09 Mar 2023 02:36:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "64800770-67f4-413c-88b0-a515403de578",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "64800770-67f4-413c-88b0-a515403de578",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230309T023627Z:64800770-67f4-413c-88b0-a515403de578"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5fdeb38bd035dc79949368394164dbc9-2b198d54589429e2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6601f1a1d7f76fcdaca68d7f51a893c1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 09 Mar 2023 02:36:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7a5a404e-1437-4485-8eda-ab25753e98a0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "7a5a404e-1437-4485-8eda-ab25753e98a0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230309T023627Z:7a5a404e-1437-4485-8eda-ab25753e98a0"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.PolicyInsights/policyMetadata/CIS_Azure_1.3.0_7.1?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-700060a369cf133f63c917403113d56c-20cf22d72cbcfbe8-00",
+        "User-Agent": "azsdk-net-ResourceManager.PolicyInsights/1.2.0-alpha.20230309.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "36da3bba632096174398205c9e7ae4a3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "863",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 09 Mar 2023 02:36:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cc4493dc-8a27-40d4-b63f-32a02192dd7a",
+        "x-ms-ratelimit-remaining-policy-insights-requests": "148",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "cc4493dc-8a27-40d4-b63f-32a02192dd7a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230309T023628Z:cc4493dc-8a27-40d4-b63f-32a02192dd7a"
+      },
+      "ResponseBody": {
+        "properties": {
+          "metadataId": "CIS Microsoft Azure Foundations Benchmark recommendation 7.1",
+          "category": "7 Virtual Machines",
+          "title": "Ensure Virtual Machines are utilizing Managed Disks",
+          "owner": "Shared",
+          "description": "Migrate BLOB based VHD\u0027s to Managed Disks on Virtual Machines to exploit the default features of this configuration.\nThe features include \n1) Default Disk Encryption\n2) Resilience as Microsoft will managed the disk storage and move around if underlying hardware goes faulty\n3) Reduction of costs over storage accounts",
+          "requirements": "The customer is responsible for implementing this recommendation.",
+          "additionalContentUrl": "https://www.cisecurity.org/benchmark/azure/",
+          "metadata": {}
+        },
+        "id": "/providers/Microsoft.PolicyInsights/policyMetadata/CIS_Azure_1.3.0_7.1",
+        "name": "CIS_Azure_1.3.0_7.1",
+        "type": "Microsoft.PolicyInsights/policyMetadata"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "255024387",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
