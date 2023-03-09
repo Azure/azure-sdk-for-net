@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Monitor;
+using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Monitor.Tests;
 using NUnit.Framework;
 
@@ -14,9 +15,21 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class MetricAlertCollectionTests : MonitorTestBase
     {
         public MetricAlertCollectionTests(bool isAsync)
-           : base(isAsync)
+           : base(isAsync)//, RecordedTestMode.Record)
         {
         }
+
+        #region storage account
+        public async Task<string> GetStorageAccountId()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            var storageCeollection = resourceGroup.GetStorageAccounts();
+            string accountName = Recording.GenerateAssetName("metrictests");
+            var storageContent = ResourceDataHelper.GetContent();
+            var storageAccount = await storageCeollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageContent);
+            return storageAccount.Value.Data.Id;
+        }
+        #endregion
 
         [TestCase]
         [RecordedTest]
@@ -30,7 +43,8 @@ namespace Azure.ResourceManager.Monitor.Tests
             var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
             var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
 
-            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
+            var storageAccountId = await GetStorageAccountId();
+            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup, storageAccountId);
             var metricAlertName = Recording.GenerateAssetName("testMetricAlert");
             var metricAlert = (await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, metricAlertName, metricAlertData)).Value;
             Assert.AreEqual(metricAlertName, metricAlert.Data.Name);
@@ -48,7 +62,8 @@ namespace Azure.ResourceManager.Monitor.Tests
             var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
             var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
 
-            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
+            var storageAccountId = await GetStorageAccountId();
+            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup, storageAccountId);
             var metricAlertName = Recording.GenerateAssetName("testMetricAlert");
             var alert1 = (await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, metricAlertName, metricAlertData)).Value;
             MetricAlertResource alert2 = await metricAlertCollection.GetAsync(metricAlertName);
@@ -67,7 +82,8 @@ namespace Azure.ResourceManager.Monitor.Tests
             var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
             var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
 
-            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
+            var storageAccountId = await GetStorageAccountId();
+            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup, storageAccountId);
             _ = await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testMetricAlert-"), metricAlertData);
             _ = await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testMetricAlert-"), metricAlertData);
 

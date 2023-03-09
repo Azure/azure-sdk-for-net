@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Monitor.Tests;
+using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Tests
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class MetricAlertOperationsTests : MonitorTestBase
     {
         public MetricAlertOperationsTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
+        #region storage account
+        public async Task<string> GetStorageAccountId()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            var storageCeollection = resourceGroup.GetStorageAccounts();
+            string accountName = Recording.GenerateAssetName("metrictests");
+            var storageContent = ResourceDataHelper.GetContent();
+            var storageAccount = await storageCeollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageContent);
+            return storageAccount.Value.Data.Id;
+        }
+        #endregion
         private async Task<MetricAlertResource> CreateMetricAlertAsync(string alertName)
         {
             var resourceGroup = await CreateResourceGroupAsync().ConfigureAwait(false);
@@ -26,7 +38,8 @@ namespace Azure.ResourceManager.Monitor.Tests
             var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
             var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
             var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
-            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
+            var storageAccountId = await GetStorageAccountId();
+            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup, storageAccountId);
             var metricAlert = await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, alertName, metricAlertData);
             return metricAlert.Value;
         }
