@@ -535,6 +535,66 @@ namespace Azure.ResourceManager.NetApp.Tests
         [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
+        public async Task RestoreFilesNoFiles()
+        {
+            //Update volume to enable backups
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, true);
+            NetAppVolumePatchDataProtection dataProtectionProperties = new()
+            {
+                Backup = backupPolicyProperties
+            };
+            NetAppVolumePatch volumePatch = new(_defaultLocation)
+            {
+                DataProtection = dataProtectionProperties
+            };
+            NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(5000);
+            }
+            //Validate volume is backup enabled
+            NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
+            Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
+            Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
+            Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
+            Assert.AreEqual(backupPolicyProperties.VaultId, backupVolumeResource.Data.DataProtection.Backup.VaultId);
+            Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
+
+            //create Backup
+            var backupName = Recording.GenerateAssetName("backup-");
+            NetAppBackupData backupData = new(_defaultLocation)
+            {
+                Label = "adHocBackup"
+            };
+            NetAppVolumeBackupResource backupResource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName, backupData)).Value;
+            Assert.IsNotNull(backupResource1);
+            Assert.AreEqual(backupName, backupResource1.Id.Name);
+            await WaitForBackupSucceeded(_volumeBackupCollection, backupName);
+            //Validate
+            NetAppVolumeBackupResource backupResource2 = await _volumeBackupCollection.GetAsync(backupName);
+            Assert.IsNotNull(backupResource2);
+            Assert.AreEqual(backupName, backupResource2.Id.Name);
+            //check if exists
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _volumeBackupCollection.GetAsync(backupName + "1"); });
+            Assert.AreEqual(404, exception.Status);
+            Assert.IsTrue(await _volumeBackupCollection.ExistsAsync(backupName));
+            Assert.IsFalse(await _volumeBackupCollection.ExistsAsync(backupName + "1"));
+
+            //Restore Files
+            BackupRestoreFiles body = new BackupRestoreFiles(
+                fileList: new string[]
+                {
+                    "/dir1/customer1.db","/dir1/customer2.db"
+                },
+                destinationVolumeId: volumeResource1.Id.ToString()
+            );
+            InvalidOperationException restoreException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await backupResource1.RestoreFilesAsync(WaitUntil.Completed, body); });
+            //StringAssert.Contains("SingleFileSnapshotRestoreInvalidStatusForOperation", restoreException.Message);
+        }
+
+        [Test]
+        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
+        [RecordedTest]
         public async Task CreateVolumeFromBackupCheckRestoreStatus()
         {
             await WaitForVolumeSucceeded(_volumeCollection, _volumeResource);
