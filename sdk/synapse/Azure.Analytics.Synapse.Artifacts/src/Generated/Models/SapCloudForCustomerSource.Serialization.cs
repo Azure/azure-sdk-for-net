@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SapCloudForCustomerSource DeserializeSapCloudForCustomerSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> query = default;
             Optional<object> httpRequestTimeout = default;
             Optional<object> queryTimeout = default;

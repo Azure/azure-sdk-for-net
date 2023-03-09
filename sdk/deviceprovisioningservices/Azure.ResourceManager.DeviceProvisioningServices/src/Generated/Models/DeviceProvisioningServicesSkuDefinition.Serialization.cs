@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static DeviceProvisioningServicesSkuDefinition DeserializeDeviceProvisioningServicesSkuDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeviceProvisioningServicesSku> name = default;
             foreach (var property in element.EnumerateObject())
             {

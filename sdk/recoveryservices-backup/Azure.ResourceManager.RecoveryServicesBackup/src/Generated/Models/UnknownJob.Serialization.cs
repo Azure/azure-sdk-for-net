@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownJob DeserializeUnknownJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> entityFriendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
             Optional<string> operation = default;

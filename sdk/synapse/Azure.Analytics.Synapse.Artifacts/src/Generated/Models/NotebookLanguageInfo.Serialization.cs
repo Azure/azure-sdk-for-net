@@ -36,6 +36,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookLanguageInfo DeserializeNotebookLanguageInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> codemirrorMode = default;
             IDictionary<string, object> additionalProperties = default;

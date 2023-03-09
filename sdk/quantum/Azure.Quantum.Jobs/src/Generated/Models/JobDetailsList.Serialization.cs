@@ -15,6 +15,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static JobDetailsList DeserializeJobDetailsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<JobDetails>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

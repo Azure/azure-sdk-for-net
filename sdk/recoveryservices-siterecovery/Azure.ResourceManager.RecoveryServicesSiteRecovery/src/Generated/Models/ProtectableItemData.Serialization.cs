@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static ProtectableItemData DeserializeProtectableItemData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProtectableItemProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

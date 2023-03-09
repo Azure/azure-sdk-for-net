@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static UnknownRestRequestAuthentication DeserializeUnknownRestRequestAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RestAuthType type = default;
             foreach (var property in element.EnumerateObject())
             {

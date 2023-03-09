@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageAlternativeOption DeserializeImageAlternativeOption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImageAlternativeType> type = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

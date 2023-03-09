@@ -16,84 +16,13 @@ namespace Azure.ResourceManager.Maintenance
 {
     public partial class MaintenanceConfigurationData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Namespace))
-            {
-                writer.WritePropertyName("namespace"u8);
-                writer.WriteStringValue(Namespace);
-            }
-            if (Optional.IsCollectionDefined(ExtensionProperties))
-            {
-                writer.WritePropertyName("extensionProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in ExtensionProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(MaintenanceScope))
-            {
-                writer.WritePropertyName("maintenanceScope"u8);
-                writer.WriteStringValue(MaintenanceScope.Value.ToString());
-            }
-            if (Optional.IsDefined(Visibility))
-            {
-                writer.WritePropertyName("visibility"u8);
-                writer.WriteStringValue(Visibility.Value.ToString());
-            }
-            writer.WritePropertyName("maintenanceWindow"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (Optional.IsDefined(ExpireOn))
-            {
-                writer.WritePropertyName("expirationDateTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
-            }
-            if (Optional.IsDefined(Duration))
-            {
-                writer.WritePropertyName("duration"u8);
-                writer.WriteStringValue(Duration.Value, "c");
-            }
-            if (Optional.IsDefined(TimeZone))
-            {
-                writer.WritePropertyName("timeZone"u8);
-                writer.WriteStringValue(TimeZone);
-            }
-            if (Optional.IsDefined(RecurEvery))
-            {
-                writer.WritePropertyName("recurEvery"u8);
-                writer.WriteStringValue(RecurEvery);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
 
         internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

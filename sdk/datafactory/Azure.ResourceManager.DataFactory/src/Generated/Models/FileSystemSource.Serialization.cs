@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FileSystemSource DeserializeFileSystemSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> recursive = default;
             Optional<BinaryData> additionalColumns = default;
             string type = default;

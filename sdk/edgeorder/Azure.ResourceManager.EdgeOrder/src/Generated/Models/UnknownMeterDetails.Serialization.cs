@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BillingType billingType = "Unknown";
             Optional<double> multiplier = default;
             Optional<EdgeOrderProductChargingType> chargingType = default;

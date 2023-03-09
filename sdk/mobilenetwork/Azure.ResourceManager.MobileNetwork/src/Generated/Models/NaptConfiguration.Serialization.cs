@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static NaptConfiguration DeserializeNaptConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NaptEnabled> enabled = default;
             Optional<PortRange> portRange = default;
             Optional<PortReuseHoldTimes> portReuseHoldTime = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryListResult DeserializeFactoryListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DataFactoryData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

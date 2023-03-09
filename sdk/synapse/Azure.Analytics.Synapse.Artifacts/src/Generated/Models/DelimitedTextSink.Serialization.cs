@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DelimitedTextSink DeserializeDelimitedTextSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreWriteSettings> storeSettings = default;
             Optional<DelimitedTextWriteSettings> formatSettings = default;
             string type = default;

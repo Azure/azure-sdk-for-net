@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiOperationListResult DeserializeLogicApiOperationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LogicApiOperationInfo>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

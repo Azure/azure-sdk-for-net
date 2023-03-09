@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static RoleManagementExpandedProperties DeserializeRoleManagementExpandedProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<string> displayName = default;
             Optional<string> email = default;

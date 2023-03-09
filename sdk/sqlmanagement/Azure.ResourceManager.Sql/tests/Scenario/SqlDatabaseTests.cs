@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-        private static AzureLocation Location = new AzureLocation("eastus2euap", "East US 2 EUAP");
+        private static AzureLocation Location = new AzureLocation("eastus2", "East US 2");
 
         public SqlDatabaseTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)

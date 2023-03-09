@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.MySql
 
         internal static MySqlAdvisorData DeserializeMySqlAdvisorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> properties = default;
             ResourceIdentifier id = default;
             string name = default;

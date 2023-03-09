@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceProviderManifestProperties DeserializeResourceProviderManifestProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceProviderManifestPropertiesProviderAuthentication> providerAuthentication = default;
             Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
             Optional<string> @namespace = default;

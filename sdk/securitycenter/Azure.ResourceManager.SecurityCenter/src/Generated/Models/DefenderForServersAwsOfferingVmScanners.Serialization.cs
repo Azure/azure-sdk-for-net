@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForServersAwsOfferingVmScanners DeserializeDefenderForServersAwsOfferingVmScanners(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<DefenderForServersAwsOfferingVmScannersConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         internal static ConfidentialLedgerData DeserializeConfidentialLedgerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConfidentialLedgerProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

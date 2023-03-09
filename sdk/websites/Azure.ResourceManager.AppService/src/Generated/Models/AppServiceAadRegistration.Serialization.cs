@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceAadRegistration DeserializeAppServiceAadRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> openIdIssuer = default;
             Optional<string> clientId = default;
             Optional<string> clientSecretSettingName = default;

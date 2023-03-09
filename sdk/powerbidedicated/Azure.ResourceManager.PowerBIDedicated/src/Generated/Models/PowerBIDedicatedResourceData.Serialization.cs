@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         internal static PowerBIDedicatedResourceData DeserializePowerBIDedicatedResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;

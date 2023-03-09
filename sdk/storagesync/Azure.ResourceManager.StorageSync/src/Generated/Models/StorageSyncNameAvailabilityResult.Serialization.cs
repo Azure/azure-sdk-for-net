@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static StorageSyncNameAvailabilityResult DeserializeStorageSyncNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<StorageSyncNameUnavailableReason> reason = default;
             Optional<string> message = default;

@@ -14,6 +14,10 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal static AclFailedEntry DeserializeAclFailedEntry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> errorMessage = default;

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12SchemaReference DeserializeX12SchemaReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string messageId = default;
             Optional<string> senderApplicationId = default;
             string schemaVersion = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static MetricAvailability DeserializeMetricAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timeGrain = default;
             Optional<TimeSpan> blobDuration = default;
             foreach (var property in element.EnumerateObject())

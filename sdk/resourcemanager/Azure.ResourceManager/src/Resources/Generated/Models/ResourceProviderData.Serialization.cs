@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources
     {
         internal static ResourceProviderData DeserializeResourceProviderData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> @namespace = default;
             Optional<string> registrationState = default;

@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerMonitorConfig DeserializeTrafficManagerMonitorConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TrafficManagerProfileMonitorStatus> profileMonitorStatus = default;
             Optional<TrafficManagerMonitorProtocol> protocol = default;
             Optional<long> port = default;

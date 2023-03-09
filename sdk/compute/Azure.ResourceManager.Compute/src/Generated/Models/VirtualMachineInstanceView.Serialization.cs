@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineInstanceView DeserializeVirtualMachineInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> platformUpdateDomain = default;
             Optional<int> platformFaultDomain = default;
             Optional<string> computerName = default;

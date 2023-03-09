@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static DiagnosticsStorageAccountConfig DeserializeDiagnosticsStorageAccountConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string storageAccountName = default;
             string protectedAccountKeyName = default;
             Optional<string> protectedAccountKeyName2 = default;

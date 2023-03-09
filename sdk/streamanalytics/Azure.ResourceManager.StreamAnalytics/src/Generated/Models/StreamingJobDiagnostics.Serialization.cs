@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamingJobDiagnostics DeserializeStreamingJobDiagnostics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StreamingJobDiagnosticCondition>> conditions = default;
             foreach (var property in element.EnumerateObject())
             {

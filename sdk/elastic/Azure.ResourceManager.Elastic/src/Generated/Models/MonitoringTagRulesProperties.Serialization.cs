@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static MonitoringTagRulesProperties DeserializeMonitoringTagRulesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<LogRules> logRules = default;
             foreach (var property in element.EnumerateObject())

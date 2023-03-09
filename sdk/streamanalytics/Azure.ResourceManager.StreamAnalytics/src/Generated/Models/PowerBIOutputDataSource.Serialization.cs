@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static PowerBIOutputDataSource DeserializePowerBIOutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> refreshToken = default;
             Optional<string> tokenUserPrincipalName = default;

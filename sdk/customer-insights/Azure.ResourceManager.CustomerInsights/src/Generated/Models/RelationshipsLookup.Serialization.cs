@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static RelationshipsLookup DeserializeRelationshipsLookup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> profileName = default;
             Optional<IReadOnlyList<ParticipantProfilePropertyReference>> profilePropertyReferences = default;
             Optional<string> relatedProfileName = default;

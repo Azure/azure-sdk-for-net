@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static AvailabilitySetListResult DeserializeAvailabilitySetListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AvailabilitySetData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

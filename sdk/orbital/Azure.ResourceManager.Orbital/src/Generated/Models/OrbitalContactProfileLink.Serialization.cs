@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Orbital.Models
 
         internal static OrbitalContactProfileLink DeserializeOrbitalContactProfileLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             OrbitalLinkPolarization polarization = default;
             OrbitalLinkDirection direction = default;

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static NumberGreaterThanOrEqualsAdvancedFilter DeserializeNumberGreaterThanOrEqualsAdvancedFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> value = default;
             AdvancedFilterOperatorType operatorType = default;
             Optional<string> key = default;

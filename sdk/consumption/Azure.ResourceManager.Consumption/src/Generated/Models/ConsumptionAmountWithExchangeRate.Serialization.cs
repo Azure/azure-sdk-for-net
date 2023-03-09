@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionAmountWithExchangeRate DeserializeConsumptionAmountWithExchangeRate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<decimal> exchangeRate = default;
             Optional<int> exchangeRateMonth = default;
             Optional<string> currency = default;

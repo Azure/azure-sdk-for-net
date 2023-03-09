@@ -14,6 +14,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         internal static TelemetryErrorDetails DeserializeTelemetryErrorDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> index = default;
             Optional<int> statusCode = default;
             Optional<string> message = default;

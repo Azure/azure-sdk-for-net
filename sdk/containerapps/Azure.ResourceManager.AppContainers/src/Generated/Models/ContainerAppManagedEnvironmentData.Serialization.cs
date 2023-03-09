@@ -90,6 +90,10 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppManagedEnvironmentData DeserializeContainerAppManagedEnvironmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<EnvironmentSkuProperties> sku = default;
             Optional<IDictionary<string, string>> tags = default;

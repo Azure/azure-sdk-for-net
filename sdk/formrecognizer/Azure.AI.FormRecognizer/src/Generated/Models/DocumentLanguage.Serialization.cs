@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentLanguage DeserializeDocumentLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string locale = default;
             IReadOnlyList<DocumentSpan> spans = default;
             float confidence = default;

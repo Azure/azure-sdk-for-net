@@ -89,6 +89,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorBackend DeserializeFrontDoorBackend(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> address = default;
             Optional<string> privateLinkAlias = default;
             Optional<ResourceIdentifier> privateLinkResourceId = default;

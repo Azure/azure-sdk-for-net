@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingProperties DeserializeConnectorMappingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> folderPath = default;
             Optional<string> fileFilter = default;
             Optional<bool> hasHeader = default;

@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CopyActivityLogSettings DeserializeCopyActivityLogSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> logLevel = default;
             Optional<BinaryData> enableReliableLogging = default;
             foreach (var property in element.EnumerateObject())

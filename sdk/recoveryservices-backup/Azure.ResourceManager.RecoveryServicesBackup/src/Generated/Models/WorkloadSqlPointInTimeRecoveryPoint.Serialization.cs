@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadSqlPointInTimeRecoveryPoint DeserializeWorkloadSqlPointInTimeRecoveryPoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PointInTimeRange>> timeRanges = default;
             Optional<WorkloadSqlRecoveryPointExtendedInfo> extendedInfo = default;
             Optional<DateTimeOffset> recoveryPointTimeInUTC = default;

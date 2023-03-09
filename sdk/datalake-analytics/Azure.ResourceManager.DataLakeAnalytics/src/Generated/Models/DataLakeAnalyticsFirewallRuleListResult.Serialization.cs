@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal static DataLakeAnalyticsFirewallRuleListResult DeserializeDataLakeAnalyticsFirewallRuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataLakeAnalyticsFirewallRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

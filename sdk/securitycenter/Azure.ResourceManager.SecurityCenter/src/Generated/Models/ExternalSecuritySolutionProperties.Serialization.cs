@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static ExternalSecuritySolutionProperties DeserializeExternalSecuritySolutionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceVendor = default;
             Optional<string> deviceType = default;
             Optional<WritableSubResource> workspace = default;

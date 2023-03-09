@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static RouteErrorRange DeserializeRouteErrorRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RouteErrorPosition> start = default;
             Optional<RouteErrorPosition> end = default;
             foreach (var property in element.EnumerateObject())

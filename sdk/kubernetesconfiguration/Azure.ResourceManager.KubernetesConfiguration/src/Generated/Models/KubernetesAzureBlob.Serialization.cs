@@ -129,6 +129,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesAzureBlob DeserializeKubernetesAzureBlob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> url = default;
             Optional<string> containerName = default;
             Optional<long?> timeoutInSeconds = default;

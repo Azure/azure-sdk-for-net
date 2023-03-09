@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MISqlConnectionInfo DeserializeMISqlConnectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string managedInstanceResourceId = default;
             string type = default;
             Optional<string> userName = default;

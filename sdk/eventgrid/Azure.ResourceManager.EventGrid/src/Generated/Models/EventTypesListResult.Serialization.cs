@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal static EventTypesListResult DeserializeEventTypesListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EventTypeUnderTopic>> value = default;
             foreach (var property in element.EnumerateObject())
             {

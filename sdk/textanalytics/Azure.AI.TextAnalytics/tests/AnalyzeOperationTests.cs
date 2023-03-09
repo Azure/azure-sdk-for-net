@@ -862,7 +862,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() { MaxSentenceCount = 2 } },
+                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() { SentenceCount = 2 } },
                 DisplayName = "AnalyzeOperationAbstractSummary",
             };
 
@@ -985,32 +985,6 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
-            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void AnalyzeOperationWithDefaultLanguageThrows()
-        {
-            TestDiagnostics = false;
-
-            TextAnalyticsClient client = GetClient();
-            List<string> documents = new()
-            {
-                "The park was clean and pretty. The bathrooms and restaurant were not clean.",
-            };
-            AnalyzeActionsOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
-            TextAnalyticsActions actions = new()
-            {
-                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() }
-            };
-
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
-                async () => await client.StartAnalyzeActionsAsync(documents, actions, "auto", options));
-
             Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 

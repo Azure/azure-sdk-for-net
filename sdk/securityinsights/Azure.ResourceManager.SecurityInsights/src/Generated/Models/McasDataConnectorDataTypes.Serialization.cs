@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static McasDataConnectorDataTypes DeserializeMcasDataConnectorDataTypes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataConnectorDataTypeCommon> discoveryLogs = default;
             Optional<DataConnectorDataTypeCommon> alerts = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DtlEnvironmentList DeserializeDtlEnvironmentList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DevTestLabEnvironmentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

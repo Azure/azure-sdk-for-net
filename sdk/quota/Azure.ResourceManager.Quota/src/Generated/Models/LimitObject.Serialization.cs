@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Quota.Models
 
         internal static LimitObject DeserializeLimitObject(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int value = default;
             Optional<QuotaLimitType> limitType = default;
             LimitType limitObjectType = default;

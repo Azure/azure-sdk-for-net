@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Advisor
 
         internal static SuppressionContractData DeserializeSuppressionContractData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

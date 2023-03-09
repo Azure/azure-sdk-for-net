@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaLayerBase DeserializeMediaLayerBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> width = default;
             Optional<string> height = default;
             Optional<string> label = default;

@@ -25,6 +25,10 @@ namespace Azure.Data.Tables.Models
 
         internal static TableServiceError DeserializeTableServiceError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryPolicies DeserializeContainerRegistryPolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerRegistryQuarantinePolicy> quarantinePolicy = default;
             Optional<ContainerRegistryTrustPolicy> trustPolicy = default;
             Optional<ContainerRegistryRetentionPolicy> retentionPolicy = default;

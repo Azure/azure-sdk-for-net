@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static ArtifactContentProperties DeserializeArtifactContentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> content = default;
             Optional<ContentType> contentType = default;
             Optional<LogicContentLink> contentLink = default;

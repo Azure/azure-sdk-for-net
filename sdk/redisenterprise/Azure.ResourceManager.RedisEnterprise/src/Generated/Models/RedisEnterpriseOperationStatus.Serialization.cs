@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         internal static RedisEnterpriseOperationStatus DeserializeRedisEnterpriseOperationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<DateTimeOffset> startTime = default;

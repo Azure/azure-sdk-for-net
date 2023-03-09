@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static WebApplicationRuleMatchCondition DeserializeWebApplicationRuleMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WebApplicationRuleMatchVariable matchVariable = default;
             Optional<string> selector = default;
             WebApplicationRuleMatchOperator @operator = default;

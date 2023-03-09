@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallRCAction DeserializeAzureFirewallRCAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureFirewallRCActionType> type = default;
             foreach (var property in element.EnumerateObject())
             {

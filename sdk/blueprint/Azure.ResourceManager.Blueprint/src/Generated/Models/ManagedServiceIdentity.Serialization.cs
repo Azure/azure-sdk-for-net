@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedServiceIdentityType type = default;
             Optional<string> principalId = default;
             Optional<Guid> tenantId = default;

@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static HttpProxyConfigResponse DeserializeHttpProxyConfigResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> httpProxy = default;
             Optional<string> httpsProxy = default;
             Optional<IList<string>> noProxy = default;

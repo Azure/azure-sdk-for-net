@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlMISyncTaskProperties DeserializeMigrateSqlServerSqlMISyncTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrateSqlServerSqlMISyncTaskInput> input = default;
             Optional<IReadOnlyList<MigrateSqlServerSqlMISyncTaskOutput>> output = default;
             Optional<string> createdOn = default;

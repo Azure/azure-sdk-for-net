@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsProjectProperties DeserializeAzureDevOpsProjectProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> projectId = default;
             Optional<string> orgName = default;

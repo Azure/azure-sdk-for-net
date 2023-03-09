@@ -89,6 +89,10 @@ namespace Azure.ResourceManager.Network
 
         internal static NatGatewayData DeserializeNatGatewayData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NatGatewaySku> sku = default;
             Optional<IList<string>> zones = default;
             Optional<ETag> etag = default;

@@ -81,6 +81,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static OcrSkill DeserializeOcrSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OcrSkillLanguage?> defaultLanguageCode = default;
             Optional<bool?> detectOrientation = default;
             Optional<LineEnding> lineEnding = default;

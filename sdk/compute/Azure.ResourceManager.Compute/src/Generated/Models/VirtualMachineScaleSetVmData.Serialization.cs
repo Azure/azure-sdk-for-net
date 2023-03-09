@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.Compute
 
         internal static VirtualMachineScaleSetVmData DeserializeVirtualMachineScaleSetVmData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> instanceId = default;
             Optional<ComputeSku> sku = default;
             Optional<ComputePlan> plan = default;

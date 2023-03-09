@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static SqlDBOfflineConfiguration DeserializeSqlDBOfflineConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> offline = default;
             foreach (var property in element.EnumerateObject())
             {

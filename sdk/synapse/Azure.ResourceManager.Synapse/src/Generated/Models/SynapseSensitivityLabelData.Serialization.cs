@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseSensitivityLabelData DeserializeSynapseSensitivityLabelData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> managedBy = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightVmSizeCompatibilityFilterV2 DeserializeHDInsightVmSizeCompatibilityFilterV2(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HDInsightFilterMode> filterMode = default;
             Optional<IReadOnlyList<string>> regions = default;
             Optional<IReadOnlyList<string>> clusterFlavors = default;

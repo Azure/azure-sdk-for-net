@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeComputeResourceInfo DeserializeEdgeComputeResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int processorCount = default;
             long memoryInGB = default;
             foreach (var property in element.EnumerateObject())

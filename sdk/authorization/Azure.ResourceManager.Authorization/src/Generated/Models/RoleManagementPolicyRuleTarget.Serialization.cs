@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyRuleTarget DeserializeRoleManagementPolicyRuleTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> caller = default;
             Optional<IList<string>> operations = default;
             Optional<RoleManagementAssignmentLevel> level = default;

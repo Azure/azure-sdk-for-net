@@ -14,6 +14,10 @@ namespace Azure.Security.KeyVault.Administration
     {
         internal static KeyVaultSetting DeserializeKeyVaultSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string value = default;
             Optional<SettingType> type = default;

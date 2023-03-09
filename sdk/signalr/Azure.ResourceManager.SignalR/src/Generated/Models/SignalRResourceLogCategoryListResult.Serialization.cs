@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRResourceLogCategoryListResult DeserializeSignalRResourceLogCategoryListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SignalRResourceLogCategory>> categories = default;
             foreach (var property in element.EnumerateObject())
             {

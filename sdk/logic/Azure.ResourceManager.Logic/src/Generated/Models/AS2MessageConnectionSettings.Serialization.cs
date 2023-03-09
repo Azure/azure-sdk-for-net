@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2MessageConnectionSettings DeserializeAS2MessageConnectionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool ignoreCertificateNameMismatch = default;
             bool supportHttpStatusCodeContinue = default;
             bool keepHttpConnectionAlive = default;

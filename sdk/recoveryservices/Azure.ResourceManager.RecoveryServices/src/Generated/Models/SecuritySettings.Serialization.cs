@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static SecuritySettings DeserializeSecuritySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImmutabilitySettings> immutabilitySettings = default;
             foreach (var property in element.EnumerateObject())
             {

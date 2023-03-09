@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static SkypeChannel DeserializeSkypeChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SkypeChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

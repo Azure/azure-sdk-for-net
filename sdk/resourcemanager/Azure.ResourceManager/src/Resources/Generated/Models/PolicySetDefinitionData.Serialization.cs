@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static PolicySetDefinitionData DeserializePolicySetDefinitionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

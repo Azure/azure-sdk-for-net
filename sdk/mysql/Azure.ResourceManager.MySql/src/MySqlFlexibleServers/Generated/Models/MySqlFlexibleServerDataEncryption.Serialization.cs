@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerDataEncryption DeserializeMySqlFlexibleServerDataEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<Uri> primaryKeyUri = default;
             Optional<ResourceIdentifier> geoBackupUserAssignedIdentityId = default;

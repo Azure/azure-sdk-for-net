@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsRecordingChunkInfoProperties DeserializeAcsRecordingChunkInfoProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> documentId = default;
             Optional<long> index = default;
             Optional<string> endReason = default;

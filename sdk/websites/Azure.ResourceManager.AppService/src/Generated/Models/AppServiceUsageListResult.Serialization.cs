@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceUsageListResult DeserializeAppServiceUsageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AppServiceUsage> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
