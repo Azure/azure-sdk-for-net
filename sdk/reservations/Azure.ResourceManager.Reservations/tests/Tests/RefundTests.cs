@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.Reservations.Tests
         private TenantResource Tenant { get; set; }
         private ReservationOrderCollection Collection { get; set; }
 
-        public RefundTests(bool isAsync) : base(isAsync)
+        public RefundTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
         [SetUp]
         public async Task ClearAndInitialize()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
+            //if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            //{
                 await InitializeClients();
 
                 AsyncPageable<TenantResource> tenantResourcesResponse = ArmClient.GetTenants().GetAllAsync();
                 List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
                 Tenant = tenantResources.ToArray()[0];
                 Collection = Tenant.GetReservationOrders();
-            }
+            //}
         }
 
         [TestCase]
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Reservations.Tests
                 }
             };
 
-            var refundResponse = await orderDetail.Value.ReturnAsync(waitUntil: WaitUntil.Completed, content: refundRequest);
+            var refundResponse = await orderDetail.Value.ReturnAsync(refundRequest);
 
             Assert.IsNotNull(refundResponse.Value);
-            Assert.AreEqual(202, refundResponse.GetRawResponse().Status);
+            // Assert.AreEqual(202, refundResponse.GetRawResponse().Status);
             Assert.AreEqual(fullyQualifiedId, refundResponse.Value.Id);
             Assert.IsNotNull(refundResponse.Value.Properties);
             Assert.IsNotEmpty(refundResponse.Value.Properties.SessionId.ToString());

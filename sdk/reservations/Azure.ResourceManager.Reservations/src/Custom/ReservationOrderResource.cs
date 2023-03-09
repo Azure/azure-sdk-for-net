@@ -5,6 +5,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -37,13 +38,27 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release. Please use ReturnAsync(WaitUntil waitUntil, ReservationRefundContent content, CancellationToken cancellationToken = default) instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual async Task<Response<ReservationRefundResult>> ReturnAsync(ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
-            var operation = await ReturnAsync(WaitUntil.Started, content, cancellationToken).ConfigureAwait(false);
-            return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.Return");
+            scope.Start();
+            try
+            {
+                ReservationRefundResult value = default;
+                var response = await _returnRestClient.PostAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                value = ReservationRefundResult.DeserializeReservationRefundResult(document.RootElement);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -62,13 +77,27 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release. Please use Return(WaitUntil waitUntil, ReservationRefundContent content, CancellationToken cancellationToken = default) instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Response<ReservationRefundResult> Return(ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
-            var operation = Return(WaitUntil.Started, content, cancellationToken);
-            return operation.WaitForCompletion(cancellationToken);
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.Return");
+            scope.Start();
+            try
+            {
+                ReservationRefundResult value = default;
+                var response = _returnRestClient.Post(Guid.Parse(Id.Name), content, cancellationToken);
+                using var document = JsonDocument.Parse(response.ContentStream);
+                value = ReservationRefundResult.DeserializeReservationRefundResult(document.RootElement);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
