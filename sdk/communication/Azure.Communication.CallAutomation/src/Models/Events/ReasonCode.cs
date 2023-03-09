@@ -96,5 +96,23 @@ namespace Azure.Communication.CallAutomation
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
         /// <inheritdoc />
         public override string ToString() => _value;
+
+        /// <summary>
+        /// Cast ReasonCode string value to an integer subcode.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public int GetReasonCodeValue()
+        {
+            int result;
+            if (int.TryParse(_value, out result))
+            {
+                return result;
+            }
+            else
+            {
+                throw new Exception("Unable to parse ReasonCode value.");
+            }
+        }
     }
 }
