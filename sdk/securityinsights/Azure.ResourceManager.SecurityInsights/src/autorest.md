@@ -214,6 +214,10 @@ override-operation-name:
   ThreatIntelligenceIndicatorMetrics_List: GetAllThreatIntelligenceIndicatorMetrics
   ThreatIntelligenceIndicator_QueryIndicators: QueryThreatIntelligenceIndicators
 
+parameter-rename-mapping:
+  ThreatIntelligenceIndicators_Update:
+    ThreatIntelligenceProperties: data
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
