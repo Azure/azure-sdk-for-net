@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,51 +13,61 @@ using Azure.Core.Pipeline;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// TODO
+    /// A long-running operation for <see cref="ConfigurationClient.CreateSnapshot(WaitUntil, string, ConfigurationSettingsSnapshot, CancellationToken)"/>
+    /// or <see cref="ConfigurationClient.CreateSnapshotAsync(WaitUntil, string, ConfigurationSettingsSnapshot, CancellationToken)"/>.
     /// </summary>
-    public class CreateSnapshotOperation : Operation<ConfigurationSettingsSnapshot>
+    public class CreateSnapshotOperation : Operation<ConfigurationSettingsSnapshot>, IOperation
     {
-        //private HttpPipeline _httpPipeline;
+        private HttpPipeline _httpPipeline;
+        private ConfigurationSettingsSnapshot _snapshot;
+        private OperationInternal _operationInternal;
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public override ConfigurationSettingsSnapshot Value { get; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public override bool HasValue { get; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public override string Id { get; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public override bool HasCompleted { get; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override Response GetRawResponse()
+        internal CreateSnapshotOperation(HttpPipeline httpPipeline, Response<ConfigurationSettingsSnapshot> response)
         {
-            throw new NotImplementedException();
+            _httpPipeline = httpPipeline;
+            _snapshot = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
+
+            if (_snapshot.Status == SnapshotStatus.Ready)
+            {
+                _operationInternal = OperationInternal.Succeeded(response.GetRawResponse());
+            }
+            else
+            {
+                // TODO
+            }
         }
 
         /// <summary>
-        /// TODO
+        /// Initializes a new instance of <see cref="CreateSnapshotOperation"/> for mocking.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        protected CreateSnapshotOperation() { }
+
+        /// <inheritdoc/>
+        public override ConfigurationSettingsSnapshot Value => _snapshot;
+
+        /// <inheritdoc/>
+        public override bool HasValue => true;
+
+        /// <inheritdoc/>
+        public override string Id => _snapshot.Etag.ToString(); // TODO
+
+        /// <inheritdoc/>
+        public override bool HasCompleted => _operationInternal.HasCompleted;
+
+        /// <inheritdoc/>
+        public override Response GetRawResponse()
+        {
+            return _operationInternal.RawResponse;
+        }
+
+        /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            if (!HasCompleted)
+            {
+                return _operationInternal.UpdateStatus(cancellationToken);
+            }
+            return GetRawResponse();
         }
 
         /// <summary>
@@ -66,6 +77,11 @@ namespace Azure.Data.AppConfiguration
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

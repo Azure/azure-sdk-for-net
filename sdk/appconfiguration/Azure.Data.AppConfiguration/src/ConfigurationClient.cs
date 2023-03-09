@@ -900,10 +900,11 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Creates a configuration setting snapshot. </summary>
+        /// <param name="wait">TODO</param>
         /// <param name="name"> The name of the configuration setting snapshot to create. </param>
         /// <param name="snapshot"> The configuration setting snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<CreateSnapshotOperation> CreateSnapshotAsync(string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
+        public virtual async Task<CreateSnapshotOperation> CreateSnapshotAsync(WaitUntil wait, string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(snapshot, nameof(snapshot));
@@ -933,10 +934,11 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Creates a configuration setting snapshot. </summary>
+        /// <param name="wait">TODO</param>
         /// <param name="name"> The name of the configuration setting snapshot to create. </param>
         /// <param name="snapshot"> The configuration setting snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CreateSnapshotOperation CreateSnapshot(string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
+        public virtual CreateSnapshotOperation CreateSnapshot(WaitUntil wait, string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(snapshot, nameof(snapshot));
