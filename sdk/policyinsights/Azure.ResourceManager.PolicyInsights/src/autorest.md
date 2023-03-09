@@ -20,12 +20,6 @@ modelerfour:
 request-path-to-parent:
   /providers/Microsoft.PolicyInsights/policyMetadata: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
 
-partial-resources:
-  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}: SubscriptionPolicySetDefinition
-  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}: SubscriptionPolicyDefinition
-  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: SubscriptionPolicyAssignment
-  /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: ResourceGroupPolicyAssignment
-
 override-operation-name:
   PolicyMetadata_List: GetAll
   PolicyRestrictions_CheckAtManagementGroupScope: CheckPolicyRestrictions
