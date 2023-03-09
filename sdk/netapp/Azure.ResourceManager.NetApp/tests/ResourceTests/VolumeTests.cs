@@ -595,6 +595,25 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
+        [Test]
+        [RecordedTest]
+        public async Task BreakFileLocksVolumeNoFiles()
+        {
+            //create volume
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold);
+            VerifyVolumeProperties(volumeResource1, true);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            //validate if created successfully
+            NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
+            VerifyVolumeProperties(volumeResource2, true);
+
+            //Call break file locks
+            BreakFileLocksContent parameters = new();
+            parameters.ConfirmRunningDisruptiveOperation = true;
+
+            await volumeResource1.BreakFileLocksAsync(WaitUntil.Completed, parameters);
+        }
+
         private async Task WaitForReplicationStatus(NetAppVolumeResource volumeResource, NetAppMirrorState mirrorState)
         {
             var maxDelay = TimeSpan.FromSeconds(240);
