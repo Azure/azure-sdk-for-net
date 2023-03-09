@@ -123,6 +123,8 @@ namespace Azure.Core.Json
             {
                 switch (change.Value)
                 {
+                    case float f:
+                        return f;
                     case double d:
                         return d;
                     case JsonElement element:

@@ -131,7 +131,7 @@ namespace Azure.Core.Tests.Public
             int i = 0;
             foreach (var pair in data)
             {
-                Assert.AreEqual(expectedKeys[i], pair.Key);
+                Assert.AreEqual(expectedKeys[i], pair.Name);
                 Assert.AreEqual(expectedValues[i], (int)pair.Value);
                 i++;
             }
