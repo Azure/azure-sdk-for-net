@@ -400,11 +400,9 @@ try {
         Get-ChildItem -Path $root -Filter "$_" -Recurse | ForEach-Object {
             Write-Verbose "Found template '$($_.FullName)'"
             if ($_.Extension -eq '.bicep') {
-                $templateFile = @{originalFilePath = $_.FullName; jsonFilePath = (BuildBicepFile $_)}
-                $templateFiles += $templateFile
+                $templateFiles += @{originalFilePath = $_.FullName; jsonFilePath = (BuildBicepFile $_)}
             } else {
-                $templateFile = @{originalFilePath = $_.FullName; jsonFilePath = $_.FullName}
-                $templateFiles += $templateFile
+                $templateFiles += @{originalFilePath = $_.FullName; jsonFilePath = $_.FullName}
             }
         }
     }
@@ -413,6 +411,19 @@ try {
         Write-Warning -Message "No template files found under '$root'"
         exit
     }
+
+    $templateFile = ""
+    foreach ($file in $templateFiles) {
+        $templateFileDepth = ($templateFile.OriginalFilePath -split "[\\/]").Length
+        $fileDepth = ($file.OriginalFilePath -split "[\\/]").Length
+        if ($templateFileDepth -lt $fileDepth) {
+            $templateFile = $file
+        } elseif ($templateFileDepth -eq $fileDepth) {
+            throw ("Found multiple deploy template matches '$($templateFile.OriginalFilePath)' and '$($file.OriginalFilePath)'. " + `
+                  "Remove all but one file or pass a more specific -ServiceDirectory parameter.")
+        }
+    }
+
 
     $serviceName = GetServiceLeafDirectoryName $ServiceDirectory
     $BaseName, $ResourceGroupName = GetBaseAndResourceGroupNames `
@@ -735,76 +746,73 @@ try {
         'PowerShell', '${{env:{0}}} = ''{1}'''
     }
 
-    # Deploy the templates
-    foreach ($templateFile in $templateFiles) {
-        # Deployment fails if we pass in more parameters than are defined.
-        Write-Verbose "Removing unnecessary parameters from template '$($templateFile.jsonFilePath)'"
-        $templateJson = Get-Content -LiteralPath $templateFile.jsonFilePath | ConvertFrom-Json
-        $templateParameterNames = $templateJson.parameters.PSObject.Properties.Name
+    # Deploy the template
+    # Deployment fails if we pass in more parameters than are defined.
+    Write-Verbose "Removing unnecessary parameters from template '$($templateFile.jsonFilePath)'"
+    $templateJson = Get-Content -LiteralPath $templateFile.jsonFilePath | ConvertFrom-Json
+    $templateParameterNames = $templateJson.parameters.PSObject.Properties.Name
 
-        $templateFileParameters = $templateParameters.Clone()
-        foreach ($key in $templateParameters.Keys) {
-            if ($templateParameterNames -notcontains $key) {
-                Write-Verbose "Removing unnecessary parameter '$key'"
-                $templateFileParameters.Remove($key)
-            }
+    $templateFileParameters = $templateParameters.Clone()
+    foreach ($key in $templateParameters.Keys) {
+        if ($templateParameterNames -notcontains $key) {
+            Write-Verbose "Removing unnecessary parameter '$key'"
+            $templateFileParameters.Remove($key)
         }
+    }
 
-        $preDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-pre.ps1"
-        if (Test-Path $preDeploymentScript) {
-            Log "Invoking pre-deployment script '$preDeploymentScript'"
-            &$preDeploymentScript -ResourceGroupName $ResourceGroupName @PSBoundParameters
-        }
+    $preDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-pre.ps1"
+    if (Test-Path $preDeploymentScript) {
+        Log "Invoking pre-deployment script '$preDeploymentScript'"
+        &$preDeploymentScript -ResourceGroupName $ResourceGroupName @PSBoundParameters
+    }
 
-        $msg = if ($templateFile.jsonFilePath -ne $templateFile.originalFilePath) {
-            "Deployment template $($templateFile.jsonFilePath) from $($templateFile.originalFilePath) to resource group $($resourceGroup.ResourceGroupName)"
-        } else {
-            "Deployment template $($templateFile.jsonFilePath) to resource group $($resourceGroup.ResourceGroupName)"
-        }
-        Log $msg
+    $msg = if ($templateFile.jsonFilePath -ne $templateFile.originalFilePath) {
+        "Deployment template $($templateFile.jsonFilePath) from $($templateFile.originalFilePath) to resource group $($resourceGroup.ResourceGroupName)"
+    } else {
+        "Deployment template $($templateFile.jsonFilePath) to resource group $($resourceGroup.ResourceGroupName)"
+    }
+    Log $msg
 
-        $deployment = Retry {
-            New-AzResourceGroupDeployment `
-                    -Name $BaseName `
-                    -ResourceGroupName $resourceGroup.ResourceGroupName `
-                    -TemplateFile $templateFile.jsonFilePath `
-                    -TemplateParameterObject $templateFileParameters `
-                    -Force:$Force
-        }
+    $deployment = Retry {
+        New-AzResourceGroupDeployment `
+                -Name $BaseName `
+                -ResourceGroupName $resourceGroup.ResourceGroupName `
+                -TemplateFile $templateFile.jsonFilePath `
+                -TemplateParameterObject $templateFileParameters `
+                -Force:$Force
+    }
 
-        if ($deployment.ProvisioningState -ne 'Succeeded') {
-            Write-Host "Deployment '$($deployment.DeploymentName)' has state '$($deployment.ProvisioningState)' with CorrelationId '$($deployment.CorrelationId)'. Exiting..."
-            Write-Host @'
+    if ($deployment.ProvisioningState -ne 'Succeeded') {
+        Write-Host "Deployment '$($deployment.DeploymentName)' has state '$($deployment.ProvisioningState)' with CorrelationId '$($deployment.CorrelationId)'. Exiting..."
+        Write-Host @'
 #####################################################
 # For help debugging live test provisioning issues, #
 # see http://aka.ms/azsdk/engsys/live-test-help     #
 #####################################################
 '@
-            exit 1
-        }
-
-        Write-Host "Deployment '$($deployment.DeploymentName)' has CorrelationId '$($deployment.CorrelationId)'"
-        Write-Host "Successfully deployed template '$($templateFile.jsonFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
-
-        $deploymentEnvironmentVariables, $deploymentOutputs = SetDeploymentOutputs `
-                                                                -serviceName $serviceName `
-                                                                -azContext $context `
-                                                                -deployment $deployment `
-                                                                -templateFile $templateFile `
-                                                                -environmentVariables $EnvironmentVariables
-
-        $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-post.ps1"
-        if (Test-Path $postDeploymentScript) {
-            Log "Invoking post-deployment script '$postDeploymentScript'"
-            &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
-        }
-
-        if ($templateFile.jsonFilePath.EndsWith('.compiled.json')) {
-            Write-Verbose "Removing compiled bicep file $($templateFile.jsonFilePath)"
-            Remove-Item $templateFile.jsonFilePath
-        }
+        exit 1
     }
 
+    Write-Host "Deployment '$($deployment.DeploymentName)' has CorrelationId '$($deployment.CorrelationId)'"
+    Write-Host "Successfully deployed template '$($templateFile.jsonFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
+
+    $deploymentEnvironmentVariables, $deploymentOutputs = SetDeploymentOutputs `
+                                                            -serviceName $serviceName `
+                                                            -azContext $context `
+                                                            -deployment $deployment `
+                                                            -templateFile $templateFile `
+                                                            -environmentVariables $EnvironmentVariables
+
+    $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-post.ps1"
+    if (Test-Path $postDeploymentScript) {
+        Log "Invoking post-deployment script '$postDeploymentScript'"
+        &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
+    }
+
+    if ($templateFile.jsonFilePath.EndsWith('.compiled.json')) {
+        Write-Verbose "Removing compiled bicep file $($templateFile.jsonFilePath)"
+        Remove-Item $templateFile.jsonFilePath
+    }
 } finally {
     $exitActions.Invoke()
 }
