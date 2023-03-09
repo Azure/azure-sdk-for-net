@@ -2,14 +2,8 @@
 
 ## 1.0.0 (2023-03-31)
 
-### Features Added
-
 ### Breaking Changes
 - Changed: Renamed parameter names in EmailMessage constructor
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.2 (2023-03-01)
 
