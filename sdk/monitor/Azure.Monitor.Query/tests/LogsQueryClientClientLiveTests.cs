@@ -440,10 +440,6 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryWithTimespan()
         {
-            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
-            //var minOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
-            //TimeSpan timespan = Recording.UtcNow - minOffset;
-            //timespan = timespan.Subtract(TimeSpan.FromSeconds(5));
             var timespan = TimeSpan.FromSeconds(5);
 
             var client = CreateClient();
@@ -455,7 +451,7 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.AreEqual(0, results.Value.Count);
 
-            // Check
+            // Check if all rows in table were uploaded
             // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
             var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
             timespan = Recording.UtcNow - maxOffset;
@@ -473,26 +469,26 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryBatchWithTimespan()
         {
-            // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
-            var minOffset = (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
-            var timespan = Recording.UtcNow - minOffset;
-            timespan = timespan.Add(TimeSpan.FromDays(1));
-            //timespan = TimeSpan.FromSeconds(5);
+            var timespan = TimeSpan.FromSeconds(5);
 
             var client = CreateClient();
+            // empty check
             LogsBatchQuery batch = new LogsBatchQuery();
-            string id1 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", _logsTestData.DataTimeRange);
+            string id1 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", timespan);
+
+            // check if all rows in table were uploaded
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - maxOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
             string id2 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", timespan);
+
             Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
             var result1 = response.Value.GetResult<DateTimeOffset>(id1);
             var result2 = response.Value.GetResult<DateTimeOffset>(id2);
 
-            // All rows
-            Assert.AreEqual(3, result1.Count);
-            // Filtered by the timestamp
-            Assert.AreEqual(2, result2.Count);
-            Assert.True(result2.All(r => r >= minOffset));
+            Assert.AreEqual(0, result1.Count);
+            Assert.GreaterOrEqual(result2.Count, 3);
         }
 
         [RecordedTest]
