@@ -119,11 +119,14 @@ directive:
   transform: >
     $["x-csharp-usage"] = "model,input,output,converter";
     $["x-csharp-formats"] = "json";
+    $["x-ms-client-name"] = "OciImageManifest";
+    $["required"] = ["schemaVersion"];
     delete $["x-accessibility"];
     delete $["allOf"];
     $.properties["schemaVersion"] = {
           "type": "integer",
-          "description": "Schema version"
+          "description": "Schema version",
+          "x-ms-client-default": 2
         };
 ```
 

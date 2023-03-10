@@ -165,7 +165,7 @@ namespace Azure.Containers.ContainerRegistry
         public static Azure.Containers.ContainerRegistry.ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = null, string name = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), int manifestCount = 0, int tagCount = 0, bool? canDelete = default(bool?), bool? canWrite = default(bool?), bool? canList = default(bool?), bool? canRead = default(bool?)) { throw null; }
         public static Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult DownloadBlobResult(string digest = null, System.BinaryData content = null) { throw null; }
         public static Azure.Containers.ContainerRegistry.Specialized.DownloadManifestResult DownloadManifestResult(string digest = null, string mediaType = null, System.BinaryData content = null) { throw null; }
-        public static Azure.Containers.ContainerRegistry.Specialized.UploadBlobResult UploadBlobResult(string digest) { throw null; }
+        public static Azure.Containers.ContainerRegistry.Specialized.UploadBlobResult UploadBlobResult(string digest, long sizeInBytes) { throw null; }
         public static Azure.Containers.ContainerRegistry.Specialized.UploadManifestResult UploadManifestResult(string digest = null) { throw null; }
     }
     public partial class ContainerRepository
@@ -317,16 +317,17 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     }
     public partial class OciImageManifest
     {
-        public OciImageManifest() { }
+        public OciImageManifest(int schemaVersion = 2) { }
         public Azure.Containers.ContainerRegistry.Specialized.OciAnnotations Annotations { get { throw null; } set { } }
         public Azure.Containers.ContainerRegistry.Specialized.OciDescriptor Config { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.Specialized.OciDescriptor> Layers { get { throw null; } }
-        public int? SchemaVersion { get { throw null; } set { } }
+        public int SchemaVersion { get { throw null; } set { } }
     }
     public partial class UploadBlobResult
     {
         internal UploadBlobResult() { }
         public string Digest { get { throw null; } }
+        public long SizeInBytes { get { throw null; } }
     }
     public partial class UploadManifestResult
     {

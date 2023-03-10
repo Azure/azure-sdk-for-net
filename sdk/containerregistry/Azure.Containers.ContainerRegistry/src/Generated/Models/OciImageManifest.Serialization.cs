@@ -46,11 +46,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     writer.WriteNull("annotations");
                 }
             }
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion"u8);
-                writer.WriteNumberValue(SchemaVersion.Value);
-            }
+            writer.WritePropertyName("schemaVersion"u8);
+            writer.WriteNumberValue(SchemaVersion);
             writer.WriteEndObject();
         }
 
@@ -63,7 +60,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Optional<OciDescriptor> config = default;
             Optional<IList<OciDescriptor>> layers = default;
             Optional<OciAnnotations> annotations = default;
-            Optional<int> schemaVersion = default;
+            int schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("config"u8))
@@ -103,16 +100,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 }
                 if (property.NameEquals("schemaVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new OciImageManifest(config.Value, Optional.ToList(layers), annotations.Value, Optional.ToNullable(schemaVersion));
+            return new OciImageManifest(config.Value, Optional.ToList(layers), annotations.Value, schemaVersion);
         }
 
         internal partial class OciImageManifestConverter : JsonConverter<OciImageManifest>
