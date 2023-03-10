@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Gets or sets the file share configuration for externally mounted cases. </summary>
+    /// <summary> Gets or sets the file share configuration where the transport directory fileshare already exists, and user wishes to mount the fileshare as a part of the create infra flow. </summary>
     public partial class MountFileShareConfiguration : FileShareConfiguration
     {
         /// <summary> Initializes a new instance of MountFileShareConfiguration. </summary>

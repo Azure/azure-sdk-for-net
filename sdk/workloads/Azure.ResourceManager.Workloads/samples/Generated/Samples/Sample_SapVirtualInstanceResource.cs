@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SAPVirtualInstancesGet()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Get.json
             // this example is just showing the usage of "SAPVirtualInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_SAPVirtualInstancesDelete()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Delete.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Delete.json
             // this example is just showing the usage of "SAPVirtualInstances_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSapVirtualInstances_SAPVirtualInstancesListBySubscription()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_ListBySubscription.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_ListBySubscription.json
             // this example is just showing the usage of "SAPVirtualInstances_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Start_SAPVirtualInstancesStart()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Start.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Start.json
             // this example is just showing the usage of "SAPVirtualInstances_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Stop_SAPVirtualInstancesStop()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Stop.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Stop.json
             // this example is just showing the usage of "SAPVirtualInstances_Stop" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

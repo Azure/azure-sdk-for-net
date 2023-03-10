@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationWithCustomResourceNamesForDistributedSystem()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_Distributed.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_Distributed.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Workloads.Samples
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Workloads.Samples
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Workloads.Samples
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -250,7 +250,7 @@ DataDiskNames =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationWithCustomResourceNamesForHASystemWithAvailabilitySet()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_HA_AvSet.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_HA_AvSet.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -277,8 +277,8 @@ DataDiskNames =
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -295,8 +295,8 @@ DataDiskNames =
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -313,8 +313,8 @@ DataDiskNames =
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -547,7 +547,7 @@ DataDiskNames =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationWithCustomResourceNamesForHASystemWithAvailabilityZone()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_HA_AvZone.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_HA_AvZone.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -574,8 +574,8 @@ DataDiskNames =
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -592,8 +592,8 @@ DataDiskNames =
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -610,8 +610,8 @@ DataDiskNames =
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -841,7 +841,7 @@ DataDiskNames =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationWithCustomResourceNamesForSingleServerSystem()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_SingleServer.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_SingleServer.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -868,8 +868,8 @@ DataDiskNames =
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -912,7 +912,7 @@ DataDiskNames =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureOnlyForDistributedSystem()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -939,8 +939,8 @@ DataDiskNames =
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -959,8 +959,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -979,8 +979,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1020,7 +1020,7 @@ KeyData = "ssh-rsa public key",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureOnlyForHASystemWithAvailabilitySet()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_HA_AvSet.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_HA_AvSet.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1047,8 +1047,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1067,8 +1067,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1087,8 +1087,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1131,7 +1131,7 @@ KeyData = "ssh-rsa public key",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureOnlyForHASystemWithAvailabilityZone()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_HA_AvZone.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_HA_AvZone.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1158,8 +1158,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1178,8 +1178,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1198,8 +1198,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1242,7 +1242,7 @@ KeyData = "ssh-rsa public key",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureOnlyForSingleServerSystem()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_SingleServer.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_SingleServer.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1269,8 +1269,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1311,7 +1311,7 @@ KeyData = "ssh-rsa public key",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithDiskAndOSConfigurationForDistributedSystemRecommended()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_Distributed.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_Distributed.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1338,8 +1338,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1356,8 +1356,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1374,8 +1374,8 @@ KeyData = "ssh-rsa public key",
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1456,7 +1456,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithDiskAndOSConfigurationForHASystemWithAvailabilitySetRecommended()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_HA_AvSet.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_HA_AvSet.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1483,8 +1483,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1501,8 +1501,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1519,8 +1519,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1604,7 +1604,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithDiskAndOSConfigurationForHASystemWithAvailabilityZoneRecommended()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_HA_AvZone.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_HA_AvZone.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1631,8 +1631,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1649,8 +1649,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1667,8 +1667,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1752,7 +1752,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithDiskAndOSConfigurationsForSingleServerSystemRecommended()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_SingleServer.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_SingleServer.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1779,8 +1779,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1862,7 +1862,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationForDistributedSystemRecommended()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_Distributed.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_Distributed.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1889,8 +1889,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1907,8 +1907,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1925,8 +1925,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -1968,7 +1968,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationForHASystemWithAvailabilitySetRecommended()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_HA_AvSet.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_HA_AvSet.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1995,8 +1995,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2013,8 +2013,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2031,8 +2031,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2077,7 +2077,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationForHASystemWithAvailabilityZoneRecommended()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_HA_AvZone.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_HA_AvZone.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2104,8 +2104,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2122,8 +2122,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2140,8 +2140,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2186,7 +2186,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationForSingleServerSystemRecommended()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_SingleServer.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_SingleServer.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2213,8 +2213,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2252,12 +2252,12 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with a new SAP Trans Fileshare
+        // Create Infrastructure with a new SAP Transport Directory Fileshare
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateInfrastructureWithANewSAPTransFileshare()
+        public async Task CreateOrUpdate_CreateInfrastructureWithANewSAPTransportDirectoryFileshare()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed_CreateTrans.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed_CreateTransport.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2284,8 +2284,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2302,8 +2302,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2320,8 +2320,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2341,8 +2341,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     StorageTransportFileShareConfiguration = new CreateAndMountFileShareConfiguration()
                     {
-                        ResourceGroup = "test-rg",
-                        StorageAccountName = "input-sa-name",
+                        ResourceGroup = "rgName",
+                        StorageAccountName = "storageName",
                     },
                 },
                 OSSapConfiguration = new OSSapConfiguration()
@@ -2365,12 +2365,12 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with an existing SAP Trans Fileshare
+        // Create Infrastructure with an existing SAP Transport Directory Fileshare
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateInfrastructureWithAnExistingSAPTransFileshare()
+        public async Task CreateOrUpdate_CreateInfrastructureWithAnExistingSAPTransportDirectoryFileshare()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed_MountTrans.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed_MountTransport.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2397,8 +2397,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2415,8 +2415,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2433,8 +2433,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2452,7 +2452,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                     DatabaseType = SapDatabaseType.Hana,
                 })
                 {
-                    StorageTransportFileShareConfiguration = new MountFileShareConfiguration("fileshareID", "pe-arm-id"),
+                    StorageTransportFileShareConfiguration = new MountFileShareConfiguration("/subscriptions/49d64d54-e888-4c46-a868-1936802b762c/resourceGroups/testrg/providers/Microsoft.Network/privateEndpoints/endpoint", "/subscriptions/49d64d54-e888-4c46-a868-1936802b762c/resourceGroups/testrg/providers/Microsoft.Network/privateEndpoints/endpoint"),
                 },
                 OSSapConfiguration = new OSSapConfiguration()
                 {
@@ -2474,12 +2474,12 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure without SAP Trans Fileshare
+        // Create Infrastructure without a SAP Transport Directory Fileshare
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateInfrastructureWithoutSAPTransFileshare()
+        public async Task CreateOrUpdate_CreateInfrastructureWithoutASAPTransportDirectoryFileshare()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed_SkipTransMount.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed_SkipTransport.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2506,8 +2506,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2524,8 +2524,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2542,8 +2542,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
-                    Sku = "7.4",
-                    Version = "7.4.2019062505",
+                    Sku = "84sapha-gen2",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2588,7 +2588,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_DetectSAPSoftwareInstallationOnADistributedSystem()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_Distributed.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_Distributed.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2616,7 +2616,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
                     Sku = "84sapha-gen2",
-                    Version = "8.4.2021091202",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "azureuser",
@@ -2634,7 +2634,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
                     Sku = "84sapha-gen2",
-                    Version = "8.4.2021091202",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "azureuser",
@@ -2652,7 +2652,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
                     Sku = "84sapha-gen2",
-                    Version = "8.4.2021091202",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "azureuser",
@@ -2699,7 +2699,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_DetectSAPSoftwareInstallationOnASingleServerSystem()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_SingleServer.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_SingleServer.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2727,7 +2727,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
                     Sku = "84sapha-gen2",
-                    Version = "8.4.2021091202",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2774,7 +2774,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_DetectSAPSoftwareInstallationOnAnHASystemWithAvailabilitySet()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_HA_AvSet.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_HA_AvSet.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2802,7 +2802,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
                     Sku = "84sapha-gen2",
-                    Version = "8.4.2021091202",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2820,7 +2820,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
                     Sku = "84sapha-gen2",
-                    Version = "8.4.2021091202",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2838,7 +2838,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
                     Sku = "84sapha-gen2",
-                    Version = "8.4.2021091202",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2887,7 +2887,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_DetectSAPSoftwareInstallationOnAnHASystemWithAvailabilityZone()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_HA_AvZone.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_HA_AvZone.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2915,7 +2915,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
                     Sku = "84sapha-gen2",
-                    Version = "8.4.2021091202",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2933,7 +2933,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
                     Sku = "84sapha-gen2",
-                    Version = "8.4.2021091202",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -2951,7 +2951,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
                     Sku = "84sapha-gen2",
-                    Version = "8.4.2021091202",
+                    Version = "latest",
                 }, new OSProfile()
                 {
                     AdminUsername = "{your-username}",
@@ -3000,7 +3000,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_InstallSAPSoftwareOnDistributedSystem()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Install_Distributed.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Install_Distributed.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3108,7 +3108,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_InstallSAPSoftwareOnSingleServerSystem()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Install_SingleServer.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Install_SingleServer.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3176,7 +3176,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_RegisterExistingSAPSystemAsVirtualInstanceForSAPSolutionsWithOptionalCustomizations()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_Discover_CustomMrgStorageAccountName.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Discover_CustomMrgStorageAccountName.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3223,7 +3223,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_RegisterExistingSAPSystemAsVirtualInstanceForSAPSolutions()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Create_Discover.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Discover.json
             // this example is just showing the usage of "SAPVirtualInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3269,7 +3269,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SAPVirtualInstancesGet()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Get.json
             // this example is just showing the usage of "SAPVirtualInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3303,7 +3303,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_SAPVirtualInstancesGet()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Get.json
             // this example is just showing the usage of "SAPVirtualInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3333,7 +3333,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_SAPVirtualInstancesListByResourceGroup()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPVirtualInstances_ListByResourceGroup.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_ListByResourceGroup.json
             // this example is just showing the usage of "SAPVirtualInstances_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

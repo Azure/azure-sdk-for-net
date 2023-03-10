@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The disk sku. </summary>
+    /// <summary> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </summary>
     internal partial class DiskSku
     {
         /// <summary> Initializes a new instance of DiskSku. </summary>
