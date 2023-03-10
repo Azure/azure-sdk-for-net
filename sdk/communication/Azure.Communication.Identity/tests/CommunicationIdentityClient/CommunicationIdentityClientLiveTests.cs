@@ -217,7 +217,7 @@ namespace Azure.Communication.Identity.Tests
 
             CommunicationIdentityClient client = CreateClient();
             CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
-            Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
+            Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.VoIP }, tokenExpiresIn: tokenExpiresIn);
 
             Assert.IsNotNull(accessToken.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(accessToken.Value.Token));
@@ -242,7 +242,7 @@ namespace Azure.Communication.Identity.Tests
                 TimeSpan tokenExpiresIn = TokenCustomExpirationTimes[expiresIn];
                 CommunicationIdentityClient client = CreateClient();
                 CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
-                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
+                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.VoIP }, tokenExpiresIn: tokenExpiresIn);
             }
             catch (RequestFailedException ex)
             {
@@ -262,7 +262,7 @@ namespace Azure.Communication.Identity.Tests
                 TimeSpan tokenExpiresIn = new TimeSpan(int.MaxValue / 20, 0, 0);
                 CommunicationIdentityClient client = CreateClient();
                 CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
-                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
+                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.VoIP }, tokenExpiresIn: tokenExpiresIn);
             }
             catch (ArgumentOutOfRangeException ex)
             {
