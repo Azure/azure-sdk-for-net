@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.cognitive.microsofttranslator.com/translate?to=cs\u0026from=es\u0026api-version=3.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "23",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "Ocp-Apim-Subscription-Region": "westus",
+        "traceparent": "00-8528cbe1afd0401aa7be18937ce6a99b-d2f887fb6ee4992d-00",
+        "User-Agent": "azsdk-net-AI.TextTranslator/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.19042)",
+        "x-ms-client-request-id": "c320590e1076add742addba68bbf1a7c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022Text\u0022:\u0022Hola mundo\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "X-RequestId",
+          "X-Metered-Usage"
+        ],
+        "Content-Length": "53",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 10 Mar 2023 00:13:54 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Metered-Usage": "10",
+        "X-MT-System": "Microsoft",
+        "X-RequestId": "TRAN.MW1P.99BE.0310T0013.524512D"
+      },
+      "ResponseBody": "[{\u0022translations\u0022:[{\u0022text\u0022:\u0022Ahoj sv\u011Bte\u0022,\u0022to\u0022:\u0022cs\u0022}]}]"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2111907147",
+    "TEXT_TRANSLATION_API_KEY": "Sanitized",
+    "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
+    "TEXT_TRANSLATION_REGION": "westus"
+  }
+}

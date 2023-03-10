@@ -1,0 +1,41 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.cognitive.microsofttranslator.com/transliterate?language=hi\u0026fromScript=Deva\u0026toScript=Latn\u0026api-version=3.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "223",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "Ocp-Apim-Subscription-Region": "westus",
+        "traceparent": "00-2f3c425dd19dfb17ff3b1d4e583aa638-645c795a16fe4c10-00",
+        "User-Agent": "azsdk-net-AI.TextTranslator/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.19042)",
+        "x-ms-client-request-id": "fb585bb421a6387ef52b7c4b1508f0fb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022Text\u0022:\u0022\\u092F\\u0939\\u090F\\u0915\\u0915\\u0938\\u094C\\u091F\\u0940\\u0939\\u0948\\u092F\\u0939\\u090F\\u0915\\u0915\\u0938\\u094C\\u091F\\u0940\\u0939\\u0948\u0022},{\u0022Text\u0022:\u0022\\u092F\\u0939\\u090F\\u0915\\u0915\\u0938\\u094C\\u091F\\u0940\\u0939\\u0948\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "X-RequestId",
+          "X-Metered-Usage"
+        ],
+        "Content-Length": "96",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 10 Mar 2023 00:13:55 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Metered-Usage": "33",
+        "X-RequestId": "TLIT.MW1P.99BE.0310T0013.5245291"
+      },
+      "ResponseBody": "[{\u0022text\u0022:\u0022yhekakasautihekasautihai\u0022,\u0022script\u0022:\u0022Latn\u0022},{\u0022text\u0022:\u0022yhekakasoutihai\u0022,\u0022script\u0022:\u0022Latn\u0022}]"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1882930282",
+    "TEXT_TRANSLATION_API_KEY": "Sanitized",
+    "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
+    "TEXT_TRANSLATION_REGION": "westus"
+  }
+}

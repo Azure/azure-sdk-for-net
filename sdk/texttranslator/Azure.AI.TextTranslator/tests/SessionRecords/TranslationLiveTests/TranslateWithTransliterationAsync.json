@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.cognitive.microsofttranslator.com/translate?to=zh-Hans\u0026from=ar\u0026fromScript=Latn\u0026toScript=Latn\u0026api-version=3.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "28",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "Ocp-Apim-Subscription-Region": "westus",
+        "traceparent": "00-46bd69f0132468fffbfdf9bc96e25302-7b732c05d18a679b-00",
+        "User-Agent": "azsdk-net-AI.TextTranslator/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.19042)",
+        "x-ms-client-request-id": "9cc1e4857e83cd975494b669b0587f81",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022Text\u0022:\u0022hudha akhtabar.\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "X-RequestId",
+          "X-Metered-Usage"
+        ],
+        "Content-Length": "181",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 10 Mar 2023 00:13:55 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Metered-Usage": "15",
+        "X-MT-System": "Microsoft",
+        "X-RequestId": "TRAN.MW1P.99BE.0310T0013.5245223"
+      },
+      "ResponseBody": "[{\u0022sourceText\u0022:{\u0022text\u0022:\u0022\u0647\u0630\u0627 \u0627\u062E\u062A\u0628\u0627\u0631.\u0022},\u0022translations\u0022:[{\u0022text\u0022:\u0022\u8FD9\u662F\u4E2A\u6D4B\u8BD5\u3002\u0022,\u0022transliteration\u0022:{\u0022text\u0022:\u0022zh\u00E8 sh\u00EC g\u00E8 c\u00E8 sh\u00EC\u3002\u0022,\u0022script\u0022:\u0022Latn\u0022},\u0022to\u0022:\u0022zh-Hans\u0022}]}]"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1958467736",
+    "TEXT_TRANSLATION_API_KEY": "Sanitized",
+    "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
+    "TEXT_TRANSLATION_REGION": "westus"
+  }
+}

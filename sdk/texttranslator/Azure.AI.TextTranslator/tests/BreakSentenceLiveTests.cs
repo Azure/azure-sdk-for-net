@@ -1,0 +1,92 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+
+namespace Azure.AI.TextTranslator.Tests
+{
+    public partial class BreakSentenceLiveTests : TextTranslatorLiveTestBase
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TranslationLiveTests"/> class.
+        /// </summary>
+        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
+        public BreakSentenceLiveTests(bool isAsync)
+            : base(isAsync)
+        {
+        }
+
+        [RecordedTest]
+        public async Task BreakSentenceWithAutoDetect()
+        {
+            TranslatorClient client = GetClient();
+            IEnumerable<InputText> inputText = new[]
+            {
+                new InputText { Text = "hello world" }
+            };
+            Response<IReadOnlyList<Models.BreakSentenceElement>> response =
+                await client.BreakSentenceAsync(inputText).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual("en", response.Value[0].DetectedLanguage.Language);
+            Assert.AreEqual(1.0, response.Value[0].DetectedLanguage.Score);
+            Assert.AreEqual(11, response.Value[0].SentLen[0]);
+        }
+
+        [RecordedTest]
+        public async Task BreakSentenceWithLanguage()
+        {
+            TranslatorClient client = GetClient();
+            IEnumerable<InputText> inputText = new[]
+            {
+                new InputText { Text = "รวบรวมแผ่นคำตอบ ระยะเวลาของโครงการ วิธีเลือกชายในฝัน หมายเลขซีเรียลของระเบียน วันที่สิ้นสุดของโครงการเมื่อเสร็จสมบูรณ์ ปีที่มีการรวบรวม ทุกคนมีวัฒนธรรมและวิธีคิดเหมือนกัน ได้รับโทษจำคุกตลอดชีวิตใน ฉันลดได้ถึง 55 ปอนด์ได้อย่างไร  ฉันคิดว่าใครๆ ก็ต้องการกำหนดเมนูอาหารส่วนบุคคล" }
+            };
+            Response<IReadOnlyList<Models.BreakSentenceElement>> response =
+                await client.BreakSentenceAsync(inputText, language: "th").ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            int[] expectedLengths = new[] { 78, 41, 110, 46 };
+            for (int i = 0; i < expectedLengths.Length; i++)
+            {
+                Assert.AreEqual(expectedLengths[i], response.Value[0].SentLen[i]);
+            }
+        }
+
+        [RecordedTest]
+        public async Task BreakSentenceWithLanguageAndScript()
+        {
+            TranslatorClient client = GetClient();
+            IEnumerable<InputText> inputText = new[]
+            {
+                new InputText { Text = "zhè shì gè cè shì。" }
+            };
+            Response<IReadOnlyList<Models.BreakSentenceElement>> response = await client.BreakSentenceAsync(inputText, language: "zh-Hans", script: "Latn").ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(18, response.Value[0].SentLen[0]);
+        }
+
+        [RecordedTest]
+        public async Task BreakSentenceWithMultipleLanguages()
+        {
+            TranslatorClient client = GetClient();
+            IEnumerable<InputText> inputText = new[]
+            {
+                new InputText { Text = "hello world" },
+                new InputText { Text = "العالم هو مكان مثير جدا للاهتمام" }
+            };
+            Response<IReadOnlyList<Models.BreakSentenceElement>> response = await client.BreakSentenceAsync(inputText).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual("en", response.Value[0].DetectedLanguage.Language);
+            Assert.AreEqual("ar", response.Value[1].DetectedLanguage.Language);
+            Assert.AreEqual(11, response.Value[0].SentLen[0]);
+            Assert.AreEqual(32, response.Value[1].SentLen[0]);
+        }
+    }
+}

@@ -1,0 +1,2807 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.cognitive.microsofttranslator.com/languages?api-version=3.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "Ocp-Apim-Subscription-Region": "westus",
+        "traceparent": "00-f6bb625725dd206d3c72df5d959f802e-6e3f1c5ffd110aae-00",
+        "User-Agent": "azsdk-net-AI.TextTranslator/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.19042)",
+        "x-ms-client-request-id": "7cd364997341e725bf174b9611ad8095",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "X-RequestId",
+        "Content-Length": "33050",
+        "Content-Type": "application/json",
+        "Date": "Fri, 10 Mar 2023 00:13:52 GMT",
+        "ETag": "\u0022E9kr19NI7myV5cMR0slywl7KhNj9otulW0prhqt43w8=\u0022",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-RequestId": "LANG.MW1P.99BE.0310T0013.5244D94"
+      },
+      "ResponseBody": {
+        "translation": {
+          "af": {
+            "name": "Afrikaans",
+            "nativeName": "Afrikaans",
+            "dir": "ltr"
+          },
+          "am": {
+            "name": "Amharic",
+            "nativeName": "\u12A0\u121B\u122D\u129B",
+            "dir": "ltr"
+          },
+          "ar": {
+            "name": "Arabic",
+            "nativeName": "\u0627\u0644\u0639\u0631\u0628\u064A\u0629",
+            "dir": "rtl"
+          },
+          "as": {
+            "name": "Assamese",
+            "nativeName": "\u0985\u09B8\u09AE\u09C0\u09AF\u09BC\u09BE",
+            "dir": "ltr"
+          },
+          "az": {
+            "name": "Azerbaijani",
+            "nativeName": "Az\u0259rbaycan",
+            "dir": "ltr"
+          },
+          "ba": {
+            "name": "Bashkir",
+            "nativeName": "Bashkir",
+            "dir": "ltr"
+          },
+          "bg": {
+            "name": "Bulgarian",
+            "nativeName": "\u0411\u044A\u043B\u0433\u0430\u0440\u0441\u043A\u0438",
+            "dir": "ltr"
+          },
+          "bn": {
+            "name": "Bangla",
+            "nativeName": "\u09AC\u09BE\u0982\u09B2\u09BE",
+            "dir": "ltr"
+          },
+          "bo": {
+            "name": "Tibetan",
+            "nativeName": "\u0F56\u0F7C\u0F51\u0F0B\u0F66\u0F90\u0F51\u0F0B",
+            "dir": "ltr"
+          },
+          "bs": {
+            "name": "Bosnian",
+            "nativeName": "Bosnian",
+            "dir": "ltr"
+          },
+          "ca": {
+            "name": "Catalan",
+            "nativeName": "Catal\u00E0",
+            "dir": "ltr"
+          },
+          "cs": {
+            "name": "Czech",
+            "nativeName": "\u010Ce\u0161tina",
+            "dir": "ltr"
+          },
+          "cy": {
+            "name": "Welsh",
+            "nativeName": "Cymraeg",
+            "dir": "ltr"
+          },
+          "da": {
+            "name": "Danish",
+            "nativeName": "Dansk",
+            "dir": "ltr"
+          },
+          "de": {
+            "name": "German",
+            "nativeName": "Deutsch",
+            "dir": "ltr"
+          },
+          "dv": {
+            "name": "Divehi",
+            "nativeName": "\u078B\u07A8\u0788\u07AC\u0780\u07A8\u0784\u07A6\u0790\u07B0",
+            "dir": "rtl"
+          },
+          "el": {
+            "name": "Greek",
+            "nativeName": "\u0395\u03BB\u03BB\u03B7\u03BD\u03B9\u03BA\u03AC",
+            "dir": "ltr"
+          },
+          "en": {
+            "name": "English",
+            "nativeName": "English",
+            "dir": "ltr"
+          },
+          "es": {
+            "name": "Spanish",
+            "nativeName": "Espa\u00F1ol",
+            "dir": "ltr"
+          },
+          "et": {
+            "name": "Estonian",
+            "nativeName": "Eesti",
+            "dir": "ltr"
+          },
+          "eu": {
+            "name": "Basque",
+            "nativeName": "Euskara",
+            "dir": "ltr"
+          },
+          "fa": {
+            "name": "Persian",
+            "nativeName": "\u0641\u0627\u0631\u0633\u06CC",
+            "dir": "rtl"
+          },
+          "fi": {
+            "name": "Finnish",
+            "nativeName": "Suomi",
+            "dir": "ltr"
+          },
+          "fil": {
+            "name": "Filipino",
+            "nativeName": "Filipino",
+            "dir": "ltr"
+          },
+          "fj": {
+            "name": "Fijian",
+            "nativeName": "Na Vosa Vakaviti",
+            "dir": "ltr"
+          },
+          "fo": {
+            "name": "Faroese",
+            "nativeName": "F\u00F8royskt",
+            "dir": "ltr"
+          },
+          "fr": {
+            "name": "French",
+            "nativeName": "Fran\u00E7ais",
+            "dir": "ltr"
+          },
+          "fr-CA": {
+            "name": "French (Canada)",
+            "nativeName": "Fran\u00E7ais (Canada)",
+            "dir": "ltr"
+          },
+          "ga": {
+            "name": "Irish",
+            "nativeName": "Gaeilge",
+            "dir": "ltr"
+          },
+          "gl": {
+            "name": "Galician",
+            "nativeName": "Galego",
+            "dir": "ltr"
+          },
+          "gu": {
+            "name": "Gujarati",
+            "nativeName": "\u0A97\u0AC1\u0A9C\u0AB0\u0ABE\u0AA4\u0AC0",
+            "dir": "ltr"
+          },
+          "ha": {
+            "name": "Hausa",
+            "nativeName": "Hausa",
+            "dir": "ltr"
+          },
+          "he": {
+            "name": "Hebrew",
+            "nativeName": "\u05E2\u05D1\u05E8\u05D9\u05EA",
+            "dir": "rtl"
+          },
+          "hi": {
+            "name": "Hindi",
+            "nativeName": "\u0939\u093F\u0928\u094D\u0926\u0940",
+            "dir": "ltr"
+          },
+          "hr": {
+            "name": "Croatian",
+            "nativeName": "Hrvatski",
+            "dir": "ltr"
+          },
+          "hsb": {
+            "name": "Upper Sorbian",
+            "nativeName": "Hornjoserb\u0161\u0107ina",
+            "dir": "ltr"
+          },
+          "ht": {
+            "name": "Haitian Creole",
+            "nativeName": "Haitian Creole",
+            "dir": "ltr"
+          },
+          "hu": {
+            "name": "Hungarian",
+            "nativeName": "Magyar",
+            "dir": "ltr"
+          },
+          "hy": {
+            "name": "Armenian",
+            "nativeName": "\u0540\u0561\u0575\u0565\u0580\u0565\u0576",
+            "dir": "ltr"
+          },
+          "id": {
+            "name": "Indonesian",
+            "nativeName": "Indonesia",
+            "dir": "ltr"
+          },
+          "ig": {
+            "name": "Igbo",
+            "nativeName": "\u00C1s\u1EE5\u0300s\u1EE5\u0301 \u00CCgb\u00F2",
+            "dir": "ltr"
+          },
+          "ikt": {
+            "name": "Inuinnaqtun",
+            "nativeName": "Inuinnaqtun",
+            "dir": "ltr"
+          },
+          "is": {
+            "name": "Icelandic",
+            "nativeName": "\u00CDslenska",
+            "dir": "ltr"
+          },
+          "it": {
+            "name": "Italian",
+            "nativeName": "Italiano",
+            "dir": "ltr"
+          },
+          "iu": {
+            "name": "Inuktitut",
+            "nativeName": "\u1403\u14C4\u1483\u144E\u1450\u1466",
+            "dir": "ltr"
+          },
+          "iu-Latn": {
+            "name": "Inuktitut (Latin)",
+            "nativeName": "Inuktitut (Latin)",
+            "dir": "ltr"
+          },
+          "ja": {
+            "name": "Japanese",
+            "nativeName": "\u65E5\u672C\u8A9E",
+            "dir": "ltr"
+          },
+          "ka": {
+            "name": "Georgian",
+            "nativeName": "\u10E5\u10D0\u10E0\u10D7\u10E3\u10DA\u10D8",
+            "dir": "ltr"
+          },
+          "kk": {
+            "name": "Kazakh",
+            "nativeName": "\u049A\u0430\u0437\u0430\u049B \u0422\u0456\u043B\u0456",
+            "dir": "ltr"
+          },
+          "km": {
+            "name": "Khmer",
+            "nativeName": "\u1781\u17D2\u1798\u17C2\u179A",
+            "dir": "ltr"
+          },
+          "kmr": {
+            "name": "Kurdish (Northern)",
+            "nativeName": "Kurd\u00EE (Bakur)",
+            "dir": "ltr"
+          },
+          "kn": {
+            "name": "Kannada",
+            "nativeName": "\u0C95\u0CA8\u0CCD\u0CA8\u0CA1",
+            "dir": "ltr"
+          },
+          "ko": {
+            "name": "Korean",
+            "nativeName": "\uD55C\uAD6D\uC5B4",
+            "dir": "ltr"
+          },
+          "ku": {
+            "name": "Kurdish (Central)",
+            "nativeName": "Kurd\u00EE (Nav\u00EEn)",
+            "dir": "rtl"
+          },
+          "ky": {
+            "name": "Kyrgyz",
+            "nativeName": "\u041A\u044B\u0440\u0433\u044B\u0437\u0447\u0430",
+            "dir": "ltr"
+          },
+          "ln": {
+            "name": "Lingala",
+            "nativeName": "Ling\u00E1la",
+            "dir": "ltr"
+          },
+          "lo": {
+            "name": "Lao",
+            "nativeName": "\u0EA5\u0EB2\u0EA7",
+            "dir": "ltr"
+          },
+          "lt": {
+            "name": "Lithuanian",
+            "nativeName": "Lietuvi\u0173",
+            "dir": "ltr"
+          },
+          "lug": {
+            "name": "Ganda",
+            "nativeName": "Ganda",
+            "dir": "ltr"
+          },
+          "lv": {
+            "name": "Latvian",
+            "nativeName": "Latvie\u0161u",
+            "dir": "ltr"
+          },
+          "lzh": {
+            "name": "Chinese (Literary)",
+            "nativeName": "\u4E2D\u6587 (\u6587\u8A00\u6587)",
+            "dir": "ltr"
+          },
+          "mg": {
+            "name": "Malagasy",
+            "nativeName": "Malagasy",
+            "dir": "ltr"
+          },
+          "mi": {
+            "name": "M\u0101ori",
+            "nativeName": "Te Reo M\u0101ori",
+            "dir": "ltr"
+          },
+          "mk": {
+            "name": "Macedonian",
+            "nativeName": "\u041C\u0430\u043A\u0435\u0434\u043E\u043D\u0441\u043A\u0438",
+            "dir": "ltr"
+          },
+          "ml": {
+            "name": "Malayalam",
+            "nativeName": "\u0D2E\u0D32\u0D2F\u0D3E\u0D33\u0D02",
+            "dir": "ltr"
+          },
+          "mn-Cyrl": {
+            "name": "Mongolian (Cyrillic)",
+            "nativeName": "Mongolian (Cyrillic)",
+            "dir": "ltr"
+          },
+          "mn-Mong": {
+            "name": "Mongolian (Traditional)",
+            "nativeName": "\u182E\u1823\u1829\u182D\u1823\u182F \u182C\u1821\u182F\u1821",
+            "dir": "ltr"
+          },
+          "mr": {
+            "name": "Marathi",
+            "nativeName": "\u092E\u0930\u093E\u0920\u0940",
+            "dir": "ltr"
+          },
+          "ms": {
+            "name": "Malay",
+            "nativeName": "Melayu",
+            "dir": "ltr"
+          },
+          "mt": {
+            "name": "Maltese",
+            "nativeName": "Malti",
+            "dir": "ltr"
+          },
+          "mww": {
+            "name": "Hmong Daw",
+            "nativeName": "Hmong Daw",
+            "dir": "ltr"
+          },
+          "my": {
+            "name": "Myanmar (Burmese)",
+            "nativeName": "\u1019\u103C\u1014\u103A\u1019\u102C",
+            "dir": "ltr"
+          },
+          "nb": {
+            "name": "Norwegian",
+            "nativeName": "Norsk Bokm\u00E5l",
+            "dir": "ltr"
+          },
+          "ne": {
+            "name": "Nepali",
+            "nativeName": "\u0928\u0947\u092A\u093E\u0932\u0940",
+            "dir": "ltr"
+          },
+          "nl": {
+            "name": "Dutch",
+            "nativeName": "Nederlands",
+            "dir": "ltr"
+          },
+          "nso": {
+            "name": "Sesotho sa Leboa",
+            "nativeName": "Sesotho sa Leboa",
+            "dir": "ltr"
+          },
+          "nya": {
+            "name": "Nyanja",
+            "nativeName": "Nyanja",
+            "dir": "ltr"
+          },
+          "or": {
+            "name": "Odia",
+            "nativeName": "\u0B13\u0B21\u0B3C\u0B3F\u0B06",
+            "dir": "ltr"
+          },
+          "otq": {
+            "name": "Quer\u00E9taro Otomi",
+            "nativeName": "H\u00F1\u00E4h\u00F1u",
+            "dir": "ltr"
+          },
+          "pa": {
+            "name": "Punjabi",
+            "nativeName": "\u0A2A\u0A70\u0A1C\u0A3E\u0A2C\u0A40",
+            "dir": "ltr"
+          },
+          "pl": {
+            "name": "Polish",
+            "nativeName": "Polski",
+            "dir": "ltr"
+          },
+          "prs": {
+            "name": "Dari",
+            "nativeName": "\u062F\u0631\u06CC",
+            "dir": "rtl"
+          },
+          "ps": {
+            "name": "Pashto",
+            "nativeName": "\u067E\u069A\u062A\u0648",
+            "dir": "rtl"
+          },
+          "pt": {
+            "name": "Portuguese (Brazil)",
+            "nativeName": "Portugu\u00EAs (Brasil)",
+            "dir": "ltr"
+          },
+          "pt-PT": {
+            "name": "Portuguese (Portugal)",
+            "nativeName": "Portugu\u00EAs (Portugal)",
+            "dir": "ltr"
+          },
+          "ro": {
+            "name": "Romanian",
+            "nativeName": "Rom\u00E2n\u0103",
+            "dir": "ltr"
+          },
+          "ru": {
+            "name": "Russian",
+            "nativeName": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
+            "dir": "ltr"
+          },
+          "run": {
+            "name": "Rundi",
+            "nativeName": "Rundi",
+            "dir": "ltr"
+          },
+          "rw": {
+            "name": "Kinyarwanda",
+            "nativeName": "Kinyarwanda",
+            "dir": "ltr"
+          },
+          "sk": {
+            "name": "Slovak",
+            "nativeName": "Sloven\u010Dina",
+            "dir": "ltr"
+          },
+          "sl": {
+            "name": "Slovenian",
+            "nativeName": "Sloven\u0161\u010Dina",
+            "dir": "ltr"
+          },
+          "sm": {
+            "name": "Samoan",
+            "nativeName": "Gagana S\u0101moa",
+            "dir": "ltr"
+          },
+          "sn": {
+            "name": "Shona",
+            "nativeName": "chiShona",
+            "dir": "ltr"
+          },
+          "so": {
+            "name": "Somali",
+            "nativeName": "Soomaali",
+            "dir": "ltr"
+          },
+          "sq": {
+            "name": "Albanian",
+            "nativeName": "Shqip",
+            "dir": "ltr"
+          },
+          "sr-Cyrl": {
+            "name": "Serbian (Cyrillic)",
+            "nativeName": "\u0421\u0440\u043F\u0441\u043A\u0438 (\u045B\u0438\u0440\u0438\u043B\u0438\u0446\u0430)",
+            "dir": "ltr"
+          },
+          "sr-Latn": {
+            "name": "Serbian (Latin)",
+            "nativeName": "Srpski (latinica)",
+            "dir": "ltr"
+          },
+          "st": {
+            "name": "Sesotho",
+            "nativeName": "Sesotho",
+            "dir": "ltr"
+          },
+          "sv": {
+            "name": "Swedish",
+            "nativeName": "Svenska",
+            "dir": "ltr"
+          },
+          "sw": {
+            "name": "Swahili",
+            "nativeName": "Kiswahili",
+            "dir": "ltr"
+          },
+          "ta": {
+            "name": "Tamil",
+            "nativeName": "\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD",
+            "dir": "ltr"
+          },
+          "te": {
+            "name": "Telugu",
+            "nativeName": "\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41",
+            "dir": "ltr"
+          },
+          "th": {
+            "name": "Thai",
+            "nativeName": "\u0E44\u0E17\u0E22",
+            "dir": "ltr"
+          },
+          "ti": {
+            "name": "Tigrinya",
+            "nativeName": "\u1275\u130D\u122D",
+            "dir": "ltr"
+          },
+          "tk": {
+            "name": "Turkmen",
+            "nativeName": "T\u00FCrkmen Dili",
+            "dir": "ltr"
+          },
+          "tlh-Latn": {
+            "name": "Klingon (Latin)",
+            "nativeName": "Klingon (Latin)",
+            "dir": "ltr"
+          },
+          "tlh-Piqd": {
+            "name": "Klingon (pIqaD)",
+            "nativeName": "Klingon (pIqaD)",
+            "dir": "ltr"
+          },
+          "tn": {
+            "name": "Setswana",
+            "nativeName": "Setswana",
+            "dir": "ltr"
+          },
+          "to": {
+            "name": "Tongan",
+            "nativeName": "Lea Fakatonga",
+            "dir": "ltr"
+          },
+          "tr": {
+            "name": "Turkish",
+            "nativeName": "T\u00FCrk\u00E7e",
+            "dir": "ltr"
+          },
+          "tt": {
+            "name": "Tatar",
+            "nativeName": "\u0422\u0430\u0442\u0430\u0440",
+            "dir": "ltr"
+          },
+          "ty": {
+            "name": "Tahitian",
+            "nativeName": "Reo Tahiti",
+            "dir": "ltr"
+          },
+          "ug": {
+            "name": "Uyghur",
+            "nativeName": "\u0626\u06C7\u064A\u063A\u06C7\u0631\u0686\u06D5",
+            "dir": "rtl"
+          },
+          "uk": {
+            "name": "Ukrainian",
+            "nativeName": "\u0423\u043A\u0440\u0430\u0457\u043D\u0441\u044C\u043A\u0430",
+            "dir": "ltr"
+          },
+          "ur": {
+            "name": "Urdu",
+            "nativeName": "\u0627\u0631\u062F\u0648",
+            "dir": "rtl"
+          },
+          "uz": {
+            "name": "Uzbek (Latin)",
+            "nativeName": "Uzbek (Latin)",
+            "dir": "ltr"
+          },
+          "vi": {
+            "name": "Vietnamese",
+            "nativeName": "Ti\u1EBFng Vi\u1EC7t",
+            "dir": "ltr"
+          },
+          "xh": {
+            "name": "Xhosa",
+            "nativeName": "isiXhosa",
+            "dir": "ltr"
+          },
+          "yo": {
+            "name": "Yoruba",
+            "nativeName": "\u00C8d\u00E8 Yor\u00F9b\u00E1",
+            "dir": "ltr"
+          },
+          "yua": {
+            "name": "Yucatec Maya",
+            "nativeName": "Yucatec Maya",
+            "dir": "ltr"
+          },
+          "yue": {
+            "name": "Cantonese (Traditional)",
+            "nativeName": "\u7CB5\u8A9E (\u7E41\u9AD4)",
+            "dir": "ltr"
+          },
+          "zh-Hans": {
+            "name": "Chinese Simplified",
+            "nativeName": "\u4E2D\u6587 (\u7B80\u4F53)",
+            "dir": "ltr"
+          },
+          "zh-Hant": {
+            "name": "Chinese Traditional",
+            "nativeName": "\u7E41\u9AD4\u4E2D\u6587 (\u7E41\u9AD4)",
+            "dir": "ltr"
+          },
+          "zu": {
+            "name": "Zulu",
+            "nativeName": "Isi-Zulu",
+            "dir": "ltr"
+          }
+        },
+        "transliteration": {
+          "ar": {
+            "name": "Arabic",
+            "nativeName": "\u0627\u0644\u0639\u0631\u0628\u064A\u0629",
+            "scripts": [
+              {
+                "code": "Arab",
+                "name": "Arabic",
+                "nativeName": "\u0627\u0644\u0639\u0631\u0628\u064A\u0629",
+                "dir": "rtl",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0627\u0644\u0644\u0627\u062A\u064A\u0646\u064A\u0629",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0627\u0644\u0644\u0627\u062A\u064A\u0646\u064A\u0629",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Arab",
+                    "name": "Arabic",
+                    "nativeName": "\u0627\u0644\u0639\u0631\u0628\u064A\u0629",
+                    "dir": "rtl"
+                  }
+                ]
+              }
+            ]
+          },
+          "as": {
+            "name": "Assamese",
+            "nativeName": "\u0985\u09B8\u09AE\u09C0\u09AF\u09BC\u09BE",
+            "scripts": [
+              {
+                "code": "Beng",
+                "name": "Bengali",
+                "nativeName": "\u09AC\u09BE\u0982\u09B2\u09BE",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u09B2\u09C7\u099F\u09BF\u09A8",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u09B2\u09C7\u099F\u09BF\u09A8",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Beng",
+                    "name": "Bangla",
+                    "nativeName": "\u09AC\u09BE\u0982\u09B2\u09BE",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "be": {
+            "name": "Belarusian",
+            "nativeName": "Belarusian",
+            "scripts": [
+              {
+                "code": "Cyrl",
+                "name": "Cyrillic",
+                "nativeName": "Cyrillic",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "Latin",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "Latin",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Cyrl",
+                    "name": "Cyrillic",
+                    "nativeName": "Cyrillic",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "bg": {
+            "name": "Bulgarian",
+            "nativeName": "\u0411\u044A\u043B\u0433\u0430\u0440\u0441\u043A\u0438",
+            "scripts": [
+              {
+                "code": "Cyrl",
+                "name": "Cyrillic",
+                "nativeName": "\u043A\u0438\u0440\u0438\u043B\u0438\u0446\u0430",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u043B\u0430\u0442\u0438\u043D\u0438\u0446\u0430",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u043B\u0430\u0442\u0438\u043D\u0438\u0446\u0430",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Cyrl",
+                    "name": "Cyrillic",
+                    "nativeName": "\u043A\u0438\u0440\u0438\u043B\u0438\u0446\u0430",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "bn": {
+            "name": "Bangla",
+            "nativeName": "\u09AC\u09BE\u0982\u09B2\u09BE",
+            "scripts": [
+              {
+                "code": "Beng",
+                "name": "Bengali",
+                "nativeName": "\u09AC\u09BE\u0982\u09B2\u09BE",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u09B2\u09CD\u09AF\u09BE\u099F\u09BF\u09A8",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u09B2\u09CD\u09AF\u09BE\u099F\u09BF\u09A8",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Beng",
+                    "name": "Bangla",
+                    "nativeName": "\u09AC\u09BE\u0982\u09B2\u09BE",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "el": {
+            "name": "Greek",
+            "nativeName": "\u0395\u03BB\u03BB\u03B7\u03BD\u03B9\u03BA\u03AC",
+            "scripts": [
+              {
+                "code": "Grek",
+                "name": "Greek",
+                "nativeName": "\u03B5\u03BB\u03BB\u03B7\u03BD\u03B9\u03BA\u03CC",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u03BB\u03B1\u03C4\u03B9\u03BD\u03B9\u03BA\u03CC",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u03BB\u03B1\u03C4\u03B9\u03BD\u03B9\u03BA\u03CC",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Grek",
+                    "name": "Greek",
+                    "nativeName": "\u03B5\u03BB\u03BB\u03B7\u03BD\u03B9\u03BA\u03CC",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "fa": {
+            "name": "Persian",
+            "nativeName": "\u0641\u0627\u0631\u0633\u06CC",
+            "scripts": [
+              {
+                "code": "Arab",
+                "name": "Arabic",
+                "nativeName": "\u0639\u0631\u0628\u06CC",
+                "dir": "rtl",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0644\u0627\u062A\u06CC\u0646",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0644\u0627\u062A\u06CC\u0646",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Arab",
+                    "name": "Arabic",
+                    "nativeName": "\u0639\u0631\u0628\u06CC",
+                    "dir": "rtl"
+                  }
+                ]
+              }
+            ]
+          },
+          "gu": {
+            "name": "Gujarati",
+            "nativeName": "\u0A97\u0AC1\u0A9C\u0AB0\u0ABE\u0AA4\u0AC0",
+            "scripts": [
+              {
+                "code": "Gujr",
+                "name": "Gujarati",
+                "nativeName": "\u0A97\u0AC1\u0A9C\u0AB0\u0ABE\u0AA4\u0AC0",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0AB2\u0AC7\u0A9F\u0ABF\u0AA8",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0AB2\u0AC7\u0A9F\u0ABF\u0AA8",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Gujr",
+                    "name": "Gujarati",
+                    "nativeName": "\u0A97\u0AC1\u0A9C\u0AB0\u0ABE\u0AA4\u0AC0",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "he": {
+            "name": "Hebrew",
+            "nativeName": "\u05E2\u05D1\u05E8\u05D9\u05EA",
+            "scripts": [
+              {
+                "code": "Hebr",
+                "name": "Hebrew",
+                "nativeName": "\u05E2\u05D1\u05E8\u05D9",
+                "dir": "rtl",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u05DC\u05D8\u05D9\u05E0\u05D9",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u05DC\u05D8\u05D9\u05E0\u05D9",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Hebr",
+                    "name": "Hebrew",
+                    "nativeName": "\u05E2\u05D1\u05E8\u05D9",
+                    "dir": "rtl"
+                  }
+                ]
+              }
+            ]
+          },
+          "hi": {
+            "name": "Hindi",
+            "nativeName": "\u0939\u093F\u0928\u094D\u0926\u0940",
+            "scripts": [
+              {
+                "code": "Deva",
+                "name": "Devanagari",
+                "nativeName": "\u0926\u0947\u0935\u0928\u093E\u0917\u0930\u0940",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0932\u0948\u091F\u093F\u0928",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0932\u0948\u091F\u093F\u0928",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Deva",
+                    "name": "Devanagari",
+                    "nativeName": "\u0926\u0947\u0935\u0928\u093E\u0917\u0930\u0940",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "ja": {
+            "name": "Japanese",
+            "nativeName": "\u65E5\u672C\u8A9E",
+            "scripts": [
+              {
+                "code": "Jpan",
+                "name": "Japanese",
+                "nativeName": "\u65E5\u672C\u8A9E\u306E\u6587\u5B57",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u30E9\u30C6\u30F3\u6587\u5B57",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u30E9\u30C6\u30F3\u6587\u5B57",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Jpan",
+                    "name": "Japanese",
+                    "nativeName": "\u65E5\u672C\u8A9E\u306E\u6587\u5B57",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "kk": {
+            "name": "Kazakh",
+            "nativeName": "\u049A\u0430\u0437\u0430\u049B \u0422\u0456\u043B\u0456",
+            "scripts": [
+              {
+                "code": "Cyrl",
+                "name": "Cyrillic",
+                "nativeName": "\u043A\u0438\u0440\u0438\u043B\u043B \u0436\u0430\u0437\u0443\u044B",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u043B\u0430\u0442\u044B\u043D \u0436\u0430\u0437\u0443\u044B",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u043B\u0430\u0442\u044B\u043D \u0436\u0430\u0437\u0443\u044B",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Cyrl",
+                    "name": "Cyrillic",
+                    "nativeName": "\u043A\u0438\u0440\u0438\u043B\u043B \u0436\u0430\u0437\u0443\u044B",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "kn": {
+            "name": "Kannada",
+            "nativeName": "\u0C95\u0CA8\u0CCD\u0CA8\u0CA1",
+            "scripts": [
+              {
+                "code": "Knda",
+                "name": "Kannada",
+                "nativeName": "\u0C95\u0CA8\u0CCD\u0CA8\u0CA1",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0CB2\u0CCD\u0CAF\u0CBE\u0C9F\u0CBF\u0CA8\u0CCD",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0CB2\u0CCD\u0CAF\u0CBE\u0C9F\u0CBF\u0CA8\u0CCD",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Knda",
+                    "name": "Kannada",
+                    "nativeName": "\u0C95\u0CA8\u0CCD\u0CA8\u0CA1",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "ko": {
+            "name": "Korean",
+            "nativeName": "\uD55C\uAD6D\uC5B4",
+            "scripts": [
+              {
+                "code": "Kore",
+                "name": "Korean",
+                "nativeName": "\uD55C\uAD6D \uBB38\uC790",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\uB85C\uB9C8\uC790",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\uB85C\uB9C8\uC790",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Kore",
+                    "name": "Korean",
+                    "nativeName": "\uD55C\uAD6D \uBB38\uC790",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "ky": {
+            "name": "Kyrgyz",
+            "nativeName": "\u041A\u044B\u0440\u0433\u044B\u0437\u0447\u0430",
+            "scripts": [
+              {
+                "code": "Cyrl",
+                "name": "Cyrillic",
+                "nativeName": "\u043A\u0438\u0440\u0438\u043B\u043B",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u043B\u0430\u0442\u044B\u043D",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u043B\u0430\u0442\u044B\u043D",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Cyrl",
+                    "name": "Cyrillic",
+                    "nativeName": "\u043A\u0438\u0440\u0438\u043B\u043B",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "mk": {
+            "name": "Macedonian",
+            "nativeName": "\u041C\u0430\u043A\u0435\u0434\u043E\u043D\u0441\u043A\u0438",
+            "scripts": [
+              {
+                "code": "Cyrl",
+                "name": "Cyrillic",
+                "nativeName": "\u043A\u0438\u0440\u0438\u043B\u0441\u043A\u043E \u043F\u0438\u0441\u043C\u043E",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u043B\u0430\u0442\u0438\u043D\u0438\u0447\u043D\u043E \u043F\u0438\u0441\u043C\u043E",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u043B\u0430\u0442\u0438\u043D\u0438\u0447\u043D\u043E \u043F\u0438\u0441\u043C\u043E",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Cyrl",
+                    "name": "Cyrillic",
+                    "nativeName": "\u043A\u0438\u0440\u0438\u043B\u0441\u043A\u043E \u043F\u0438\u0441\u043C\u043E",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "ml": {
+            "name": "Malayalam",
+            "nativeName": "\u0D2E\u0D32\u0D2F\u0D3E\u0D33\u0D02",
+            "scripts": [
+              {
+                "code": "Mlym",
+                "name": "Malayalam",
+                "nativeName": "\u0D2E\u0D32\u0D2F\u0D3E\u0D33\u0D02",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0D32\u0D3E\u0D31\u0D4D\u0D31\u0D3F\u0D7B",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0D32\u0D3E\u0D31\u0D4D\u0D31\u0D3F\u0D7B",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Mlym",
+                    "name": "Malayalam",
+                    "nativeName": "\u0D2E\u0D32\u0D2F\u0D3E\u0D33\u0D02",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "mn-Cyrl": {
+            "name": "Mongolian (Cyrillic)",
+            "nativeName": "Mongolian (Cyrillic)",
+            "scripts": [
+              {
+                "code": "Cyrl",
+                "name": "Cyrillic",
+                "nativeName": "\u043A\u0438\u0440\u0438\u043B\u043B",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u043B\u0430\u0442\u0438\u043D",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u043B\u0430\u0442\u0438\u043D",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Cyrl",
+                    "name": "Cyrillic",
+                    "nativeName": "\u043A\u0438\u0440\u0438\u043B\u043B",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "mr": {
+            "name": "Marathi",
+            "nativeName": "\u092E\u0930\u093E\u0920\u0940",
+            "scripts": [
+              {
+                "code": "Deva",
+                "name": "Devanagari",
+                "nativeName": "\u0926\u0947\u0935\u0928\u093E\u0917\u0930\u0940",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0932\u0945\u091F\u093F\u0928",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0932\u0945\u091F\u093F\u0928",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Deva",
+                    "name": "Devanagari",
+                    "nativeName": "\u0926\u0947\u0935\u0928\u093E\u0917\u0930\u0940",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "ne": {
+            "name": "Nepali",
+            "nativeName": "\u0928\u0947\u092A\u093E\u0932\u0940",
+            "scripts": [
+              {
+                "code": "Deva",
+                "name": "Devanagari",
+                "nativeName": "\u0926\u0947\u0935\u093E\u0928\u093E\u0917\u0930\u0940",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0932\u094D\u092F\u093E\u091F\u093F\u0928",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0932\u094D\u092F\u093E\u091F\u093F\u0928",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Deva",
+                    "name": "Devanagari",
+                    "nativeName": "\u0926\u0947\u0935\u093E\u0928\u093E\u0917\u0930\u0940",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "or": {
+            "name": "Odia",
+            "nativeName": "\u0B13\u0B21\u0B3C\u0B3F\u0B06",
+            "scripts": [
+              {
+                "code": "Orya",
+                "name": "Odia",
+                "nativeName": "\u0B13\u0B21\u0B3C\u0B3F\u0B06",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0B32\u0B3E\u0B1F\u0B3F\u0B28\u0B4D",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0B32\u0B3E\u0B1F\u0B3F\u0B28\u0B4D",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Orya",
+                    "name": "Odia",
+                    "nativeName": "\u0B13\u0B21\u0B3C\u0B3F\u0B06",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "pa": {
+            "name": "Punjabi",
+            "nativeName": "\u0A2A\u0A70\u0A1C\u0A3E\u0A2C\u0A40",
+            "scripts": [
+              {
+                "code": "Guru",
+                "name": "Gurmukhi",
+                "nativeName": "\u0A17\u0A41\u0A30\u0A2E\u0A41\u0A16\u0A40",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0A32\u0A3E\u0A24\u0A40\u0A28\u0A40",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0A32\u0A3E\u0A24\u0A40\u0A28\u0A40",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Guru",
+                    "name": "Gurmukhi",
+                    "nativeName": "\u0A17\u0A41\u0A30\u0A2E\u0A41\u0A16\u0A40",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "ru": {
+            "name": "Russian",
+            "nativeName": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
+            "scripts": [
+              {
+                "code": "Cyrl",
+                "name": "Cyrillic",
+                "nativeName": "\u043A\u0438\u0440\u0438\u043B\u043B\u0438\u0446\u0430",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u043B\u0430\u0442\u0438\u043D\u0438\u0446\u0430",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u043B\u0430\u0442\u0438\u043D\u0438\u0446\u0430",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Cyrl",
+                    "name": "Cyrillic",
+                    "nativeName": "\u043A\u0438\u0440\u0438\u043B\u043B\u0438\u0446\u0430",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "sd": {
+            "name": "Sindhi",
+            "nativeName": "\u0633\u0646\u068C\u064A",
+            "scripts": [
+              {
+                "code": "Arab",
+                "name": "Arabic",
+                "nativeName": "Arabic",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "Latin",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "Latin",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Arab",
+                    "name": "Arabic",
+                    "nativeName": "Arabic",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "si": {
+            "name": "Sinhala",
+            "nativeName": "\u0DC3\u0DD2\u0D82\u0DC4\u0DBD",
+            "scripts": [
+              {
+                "code": "Sinh",
+                "name": "Sinhala",
+                "nativeName": "Sinhala",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "Latin",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "Latin",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Sinh",
+                    "name": "Sinhala",
+                    "nativeName": "Sinhala",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "sr-Cyrl": {
+            "name": "Serbian (Cyrillic)",
+            "nativeName": "\u0421\u0440\u043F\u0441\u043A\u0438 (\u045B\u0438\u0440\u0438\u043B\u0438\u0446\u0430)",
+            "scripts": [
+              {
+                "code": "Cyrl",
+                "name": "Cyrillic",
+                "nativeName": "\u045B\u0438\u0440\u0438\u043B\u0438\u0446\u0430",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "latinica",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "sr-Latn": {
+            "name": "Serbian (Latin)",
+            "nativeName": "Srpski (latinica)",
+            "scripts": [
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "latinica",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Cyrl",
+                    "name": "Cyrillic",
+                    "nativeName": "\u0107irilica",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "ta": {
+            "name": "Tamil",
+            "nativeName": "\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD",
+            "scripts": [
+              {
+                "code": "Taml",
+                "name": "Tamil",
+                "nativeName": "\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0BB2\u0BA4\u0BCD\u0BA4\u0BBF\u0BA9\u0BCD",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0BB2\u0BA4\u0BCD\u0BA4\u0BBF\u0BA9\u0BCD",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Taml",
+                    "name": "Tamil",
+                    "nativeName": "\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "te": {
+            "name": "Telugu",
+            "nativeName": "\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41",
+            "scripts": [
+              {
+                "code": "Telu",
+                "name": "Telugu",
+                "nativeName": "\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0C32\u0C3E\u0C1F\u0C3F\u0C28\u0C4D",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0C32\u0C3E\u0C1F\u0C3F\u0C28\u0C4D",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Telu",
+                    "name": "Telugu",
+                    "nativeName": "\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "tg": {
+            "name": "Tajik",
+            "nativeName": "Tajik (Cyrillic)",
+            "scripts": [
+              {
+                "code": "Cyrl",
+                "name": "Cyrillic",
+                "nativeName": "Cyrillic",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "Latin",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "Latin",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Cyrl",
+                    "name": "Cyrillic",
+                    "nativeName": "Cyrillic",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "th": {
+            "name": "Thai",
+            "nativeName": "\u0E44\u0E17\u0E22",
+            "scripts": [
+              {
+                "code": "Thai",
+                "name": "Thai",
+                "nativeName": "\u0E44\u0E17\u0E22",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0E25\u0E30\u0E15\u0E34\u0E19",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "tt": {
+            "name": "Tatar",
+            "nativeName": "\u0422\u0430\u0442\u0430\u0440",
+            "scripts": [
+              {
+                "code": "Cyrl",
+                "name": "Cyrillic",
+                "nativeName": "\u043A\u0438\u0440\u0438\u043B\u043B",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u043B\u0430\u0442\u0438\u043D",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u043B\u0430\u0442\u0438\u043D",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Cyrl",
+                    "name": "Cyrillic",
+                    "nativeName": "\u043A\u0438\u0440\u0438\u043B\u043B",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "uk": {
+            "name": "Ukrainian",
+            "nativeName": "\u0423\u043A\u0440\u0430\u0457\u043D\u0441\u044C\u043A\u0430",
+            "scripts": [
+              {
+                "code": "Cyrl",
+                "name": "Cyrillic",
+                "nativeName": "\u043A\u0438\u0440\u0438\u043B\u0438\u0446\u044F",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u043B\u0430\u0442\u0438\u043D\u0438\u0446\u044F",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u043B\u0430\u0442\u0438\u043D\u0438\u0446\u044F",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Cyrl",
+                    "name": "Cyrillic",
+                    "nativeName": "\u043A\u0438\u0440\u0438\u043B\u0438\u0446\u044F",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "ur": {
+            "name": "Urdu",
+            "nativeName": "\u0627\u0631\u062F\u0648",
+            "scripts": [
+              {
+                "code": "Arab",
+                "name": "Arabic",
+                "nativeName": "\u0639\u0631\u0628\u06CC",
+                "dir": "rtl",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u0644\u0627\u0637\u06CC\u0646\u06CC",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u0644\u0627\u0637\u06CC\u0646\u06CC",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Arab",
+                    "name": "Arabic",
+                    "nativeName": "\u0639\u0631\u0628\u06CC",
+                    "dir": "rtl"
+                  }
+                ]
+              }
+            ]
+          },
+          "zh-Hans": {
+            "name": "Chinese Simplified",
+            "nativeName": "\u4E2D\u6587 (\u7B80\u4F53)",
+            "scripts": [
+              {
+                "code": "Hans",
+                "name": "Simplified",
+                "nativeName": "\u7B80\u4F53\u6C49\u8BED",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u62C9\u4E01\u8BED",
+                    "dir": "ltr"
+                  },
+                  {
+                    "code": "Hant",
+                    "name": "Hat",
+                    "nativeName": "\u4F20\u7EDF",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u62C9\u4E01\u8BED",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Hans",
+                    "name": "Han",
+                    "nativeName": "\u7B80\u4F53\u6C49\u8BED",
+                    "dir": "ltr"
+                  },
+                  {
+                    "code": "Hant",
+                    "name": "Hat",
+                    "nativeName": "\u4F20\u7EDF",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          },
+          "zh-Hant": {
+            "name": "Chinese Traditional",
+            "nativeName": "\u7E41\u9AD4\u4E2D\u6587 (\u7E41\u9AD4)",
+            "scripts": [
+              {
+                "code": "Hant",
+                "name": "Traditional",
+                "nativeName": "\u50B3\u7D71",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Latn",
+                    "name": "Latin",
+                    "nativeName": "\u62C9\u4E01\u8BED",
+                    "dir": "ltr"
+                  },
+                  {
+                    "code": "Hans",
+                    "name": "Han",
+                    "nativeName": "\u7B80\u4F53\u6C49\u8BED",
+                    "dir": "ltr"
+                  }
+                ]
+              },
+              {
+                "code": "Latn",
+                "name": "Latin",
+                "nativeName": "\u62C9\u4E01\u6587",
+                "dir": "ltr",
+                "toScripts": [
+                  {
+                    "code": "Hans",
+                    "name": "Han",
+                    "nativeName": "\u7B80\u4F53\u6C49\u8BED",
+                    "dir": "ltr"
+                  },
+                  {
+                    "code": "Hant",
+                    "name": "Hat",
+                    "nativeName": "\u4F20\u7EDF",
+                    "dir": "ltr"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "dictionary": {
+          "af": {
+            "name": "Afrikaans",
+            "nativeName": "Afrikaans",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "ar": {
+            "name": "Arabic",
+            "nativeName": "\u0627\u0644\u0639\u0631\u0628\u064A\u0629",
+            "dir": "rtl",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "bg": {
+            "name": "Bulgarian",
+            "nativeName": "\u0411\u044A\u043B\u0433\u0430\u0440\u0441\u043A\u0438",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "bn": {
+            "name": "Bangla",
+            "nativeName": "\u09AC\u09BE\u0982\u09B2\u09BE",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "bs": {
+            "name": "Bosnian",
+            "nativeName": "Bosnian",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "ca": {
+            "name": "Catalan",
+            "nativeName": "Catal\u00E0",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "cs": {
+            "name": "Czech",
+            "nativeName": "\u010Ce\u0161tina",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "cy": {
+            "name": "Welsh",
+            "nativeName": "Cymraeg",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "da": {
+            "name": "Danish",
+            "nativeName": "Dansk",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "de": {
+            "name": "German",
+            "nativeName": "Deutsch",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "el": {
+            "name": "Greek",
+            "nativeName": "\u0395\u03BB\u03BB\u03B7\u03BD\u03B9\u03BA\u03AC",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "en": {
+            "name": "English",
+            "nativeName": "English",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "Afrikaans",
+                "nativeName": "Afrikaans",
+                "dir": "ltr",
+                "code": "af"
+              },
+              {
+                "name": "Arabic",
+                "nativeName": "\u0627\u0644\u0639\u0631\u0628\u064A\u0629",
+                "dir": "rtl",
+                "code": "ar"
+              },
+              {
+                "name": "Bulgarian",
+                "nativeName": "\u0411\u044A\u043B\u0433\u0430\u0440\u0441\u043A\u0438",
+                "dir": "ltr",
+                "code": "bg"
+              },
+              {
+                "name": "Bangla",
+                "nativeName": "\u09AC\u09BE\u0982\u09B2\u09BE",
+                "dir": "ltr",
+                "code": "bn"
+              },
+              {
+                "name": "Bosnian",
+                "nativeName": "Bosnian",
+                "dir": "ltr",
+                "code": "bs"
+              },
+              {
+                "name": "Catalan",
+                "nativeName": "Catal\u00E0",
+                "dir": "ltr",
+                "code": "ca"
+              },
+              {
+                "name": "Chinese Simplified",
+                "nativeName": "\u4E2D\u6587 (\u7B80\u4F53)",
+                "dir": "ltr",
+                "code": "zh-Hans"
+              },
+              {
+                "name": "Czech",
+                "nativeName": "\u010Ce\u0161tina",
+                "dir": "ltr",
+                "code": "cs"
+              },
+              {
+                "name": "Welsh",
+                "nativeName": "Cymraeg",
+                "dir": "ltr",
+                "code": "cy"
+              },
+              {
+                "name": "Danish",
+                "nativeName": "Dansk",
+                "dir": "ltr",
+                "code": "da"
+              },
+              {
+                "name": "German",
+                "nativeName": "Deutsch",
+                "dir": "ltr",
+                "code": "de"
+              },
+              {
+                "name": "Greek",
+                "nativeName": "\u0395\u03BB\u03BB\u03B7\u03BD\u03B9\u03BA\u03AC",
+                "dir": "ltr",
+                "code": "el"
+              },
+              {
+                "name": "Spanish",
+                "nativeName": "Espa\u00F1ol",
+                "dir": "ltr",
+                "code": "es"
+              },
+              {
+                "name": "Estonian",
+                "nativeName": "Eesti",
+                "dir": "ltr",
+                "code": "et"
+              },
+              {
+                "name": "Persian",
+                "nativeName": "\u0641\u0627\u0631\u0633\u06CC",
+                "dir": "rtl",
+                "code": "fa"
+              },
+              {
+                "name": "Finnish",
+                "nativeName": "Suomi",
+                "dir": "ltr",
+                "code": "fi"
+              },
+              {
+                "name": "French",
+                "nativeName": "Fran\u00E7ais",
+                "dir": "ltr",
+                "code": "fr"
+              },
+              {
+                "name": "Hebrew",
+                "nativeName": "\u05E2\u05D1\u05E8\u05D9\u05EA",
+                "dir": "rtl",
+                "code": "he"
+              },
+              {
+                "name": "Hindi",
+                "nativeName": "\u0939\u093F\u0928\u094D\u0926\u0940",
+                "dir": "ltr",
+                "code": "hi"
+              },
+              {
+                "name": "Croatian",
+                "nativeName": "Hrvatski",
+                "dir": "ltr",
+                "code": "hr"
+              },
+              {
+                "name": "Hungarian",
+                "nativeName": "Magyar",
+                "dir": "ltr",
+                "code": "hu"
+              },
+              {
+                "name": "Indonesian",
+                "nativeName": "Indonesia",
+                "dir": "ltr",
+                "code": "id"
+              },
+              {
+                "name": "Icelandic",
+                "nativeName": "\u00CDslenska",
+                "dir": "ltr",
+                "code": "is"
+              },
+              {
+                "name": "Italian",
+                "nativeName": "Italiano",
+                "dir": "ltr",
+                "code": "it"
+              },
+              {
+                "name": "Japanese",
+                "nativeName": "\u65E5\u672C\u8A9E",
+                "dir": "ltr",
+                "code": "ja"
+              },
+              {
+                "name": "Korean",
+                "nativeName": "\uD55C\uAD6D\uC5B4",
+                "dir": "ltr",
+                "code": "ko"
+              },
+              {
+                "name": "Lithuanian",
+                "nativeName": "Lietuvi\u0173",
+                "dir": "ltr",
+                "code": "lt"
+              },
+              {
+                "name": "Latvian",
+                "nativeName": "Latvie\u0161u",
+                "dir": "ltr",
+                "code": "lv"
+              },
+              {
+                "name": "Maltese",
+                "nativeName": "Malti",
+                "dir": "ltr",
+                "code": "mt"
+              },
+              {
+                "name": "Malay",
+                "nativeName": "Melayu",
+                "dir": "ltr",
+                "code": "ms"
+              },
+              {
+                "name": "Hmong Daw",
+                "nativeName": "Hmong Daw",
+                "dir": "ltr",
+                "code": "mww"
+              },
+              {
+                "name": "Dutch",
+                "nativeName": "Nederlands",
+                "dir": "ltr",
+                "code": "nl"
+              },
+              {
+                "name": "Norwegian",
+                "nativeName": "Norsk Bokm\u00E5l",
+                "dir": "ltr",
+                "code": "nb"
+              },
+              {
+                "name": "Polish",
+                "nativeName": "Polski",
+                "dir": "ltr",
+                "code": "pl"
+              },
+              {
+                "name": "Portuguese (Brazil)",
+                "nativeName": "Portugu\u00EAs (Brasil)",
+                "dir": "ltr",
+                "code": "pt"
+              },
+              {
+                "name": "Romanian",
+                "nativeName": "Rom\u00E2n\u0103",
+                "dir": "ltr",
+                "code": "ro"
+              },
+              {
+                "name": "Russian",
+                "nativeName": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
+                "dir": "ltr",
+                "code": "ru"
+              },
+              {
+                "name": "Slovak",
+                "nativeName": "Sloven\u010Dina",
+                "dir": "ltr",
+                "code": "sk"
+              },
+              {
+                "name": "Slovenian",
+                "nativeName": "Sloven\u0161\u010Dina",
+                "dir": "ltr",
+                "code": "sl"
+              },
+              {
+                "name": "Serbian (Latin)",
+                "nativeName": "Srpski (latinica)",
+                "dir": "ltr",
+                "code": "sr-Latn"
+              },
+              {
+                "name": "Swedish",
+                "nativeName": "Svenska",
+                "dir": "ltr",
+                "code": "sv"
+              },
+              {
+                "name": "Swahili",
+                "nativeName": "Kiswahili",
+                "dir": "ltr",
+                "code": "sw"
+              },
+              {
+                "name": "Tamil",
+                "nativeName": "\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD",
+                "dir": "ltr",
+                "code": "ta"
+              },
+              {
+                "name": "Thai",
+                "nativeName": "\u0E44\u0E17\u0E22",
+                "dir": "ltr",
+                "code": "th"
+              },
+              {
+                "name": "Klingon (Latin)",
+                "nativeName": "Klingon (Latin)",
+                "dir": "ltr",
+                "code": "tlh-Latn"
+              },
+              {
+                "name": "Turkish",
+                "nativeName": "T\u00FCrk\u00E7e",
+                "dir": "ltr",
+                "code": "tr"
+              },
+              {
+                "name": "Ukrainian",
+                "nativeName": "\u0423\u043A\u0440\u0430\u0457\u043D\u0441\u044C\u043A\u0430",
+                "dir": "ltr",
+                "code": "uk"
+              },
+              {
+                "name": "Urdu",
+                "nativeName": "\u0627\u0631\u062F\u0648",
+                "dir": "rtl",
+                "code": "ur"
+              },
+              {
+                "name": "Vietnamese",
+                "nativeName": "Ti\u1EBFng Vi\u1EC7t",
+                "dir": "ltr",
+                "code": "vi"
+              }
+            ]
+          },
+          "es": {
+            "name": "Spanish",
+            "nativeName": "Espa\u00F1ol",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "et": {
+            "name": "Estonian",
+            "nativeName": "Eesti",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "fa": {
+            "name": "Persian",
+            "nativeName": "\u0641\u0627\u0631\u0633\u06CC",
+            "dir": "rtl",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "fi": {
+            "name": "Finnish",
+            "nativeName": "Suomi",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "fr": {
+            "name": "French",
+            "nativeName": "Fran\u00E7ais",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "he": {
+            "name": "Hebrew",
+            "nativeName": "\u05E2\u05D1\u05E8\u05D9\u05EA",
+            "dir": "rtl",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "hi": {
+            "name": "Hindi",
+            "nativeName": "\u0939\u093F\u0928\u094D\u0926\u0940",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "hr": {
+            "name": "Croatian",
+            "nativeName": "Hrvatski",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "hu": {
+            "name": "Hungarian",
+            "nativeName": "Magyar",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "id": {
+            "name": "Indonesian",
+            "nativeName": "Indonesia",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "is": {
+            "name": "Icelandic",
+            "nativeName": "\u00CDslenska",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "it": {
+            "name": "Italian",
+            "nativeName": "Italiano",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "ja": {
+            "name": "Japanese",
+            "nativeName": "\u65E5\u672C\u8A9E",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "ko": {
+            "name": "Korean",
+            "nativeName": "\uD55C\uAD6D\uC5B4",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "lt": {
+            "name": "Lithuanian",
+            "nativeName": "Lietuvi\u0173",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "lv": {
+            "name": "Latvian",
+            "nativeName": "Latvie\u0161u",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "ms": {
+            "name": "Malay",
+            "nativeName": "Melayu",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "mt": {
+            "name": "Maltese",
+            "nativeName": "Malti",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "mww": {
+            "name": "Hmong Daw",
+            "nativeName": "Hmong Daw",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "nb": {
+            "name": "Norwegian",
+            "nativeName": "Norsk Bokm\u00E5l",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "nl": {
+            "name": "Dutch",
+            "nativeName": "Nederlands",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "pl": {
+            "name": "Polish",
+            "nativeName": "Polski",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "pt": {
+            "name": "Portuguese (Brazil)",
+            "nativeName": "Portugu\u00EAs (Brasil)",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "ro": {
+            "name": "Romanian",
+            "nativeName": "Rom\u00E2n\u0103",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "ru": {
+            "name": "Russian",
+            "nativeName": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "sk": {
+            "name": "Slovak",
+            "nativeName": "Sloven\u010Dina",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "sl": {
+            "name": "Slovenian",
+            "nativeName": "Sloven\u0161\u010Dina",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "sr-Latn": {
+            "name": "Serbian (Latin)",
+            "nativeName": "Srpski (latinica)",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "sv": {
+            "name": "Swedish",
+            "nativeName": "Svenska",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "sw": {
+            "name": "Swahili",
+            "nativeName": "Kiswahili",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "ta": {
+            "name": "Tamil",
+            "nativeName": "\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "th": {
+            "name": "Thai",
+            "nativeName": "\u0E44\u0E17\u0E22",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "tlh-Latn": {
+            "name": "Klingon (Latin)",
+            "nativeName": "Klingon (Latin)",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "tr": {
+            "name": "Turkish",
+            "nativeName": "T\u00FCrk\u00E7e",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "uk": {
+            "name": "Ukrainian",
+            "nativeName": "\u0423\u043A\u0440\u0430\u0457\u043D\u0441\u044C\u043A\u0430",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "ur": {
+            "name": "Urdu",
+            "nativeName": "\u0627\u0631\u062F\u0648",
+            "dir": "rtl",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "vi": {
+            "name": "Vietnamese",
+            "nativeName": "Ti\u1EBFng Vi\u1EC7t",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          },
+          "zh-Hans": {
+            "name": "Chinese Simplified",
+            "nativeName": "\u4E2D\u6587 (\u7B80\u4F53)",
+            "dir": "ltr",
+            "translations": [
+              {
+                "name": "English",
+                "nativeName": "English",
+                "dir": "ltr",
+                "code": "en"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1589125890",
+    "TEXT_TRANSLATION_API_KEY": "Sanitized",
+    "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
+    "TEXT_TRANSLATION_REGION": "westus"
+  }
+}

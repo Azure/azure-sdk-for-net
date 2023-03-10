@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.cognitive.microsofttranslator.com/translate?to=ta\u0026from=hi\u0026fromScript=Latn\u0026toScript=Latn\u0026api-version=3.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "24",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "Ocp-Apim-Subscription-Region": "westus",
+        "traceparent": "00-548c70e544108256495aeff464ef66a1-a1eb1dd043982216-00",
+        "User-Agent": "azsdk-net-AI.TextTranslator/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.19042)",
+        "x-ms-client-request-id": "507a3688b1f3ffd4d3780a4ff0123a8a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022Text\u0022:\u0022ap kaise ho\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "X-RequestId",
+          "X-Metered-Usage"
+        ],
+        "Content-Length": "213",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 10 Mar 2023 00:13:54 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Metered-Usage": "11",
+        "X-MT-System": "Microsoft",
+        "X-RequestId": "TRAN.MW1P.99BE.0310T0013.524514D"
+      },
+      "ResponseBody": "[{\u0022sourceText\u0022:{\u0022text\u0022:\u0022\u090F\u092A\u0940 \u0915\u0948\u0938\u0947 \u0939\u094B\u0022},\u0022translations\u0022:[{\u0022text\u0022:\u0022\u0B8E\u0BAA\u0BCD\u0BAA\u0B9F\u0BBF \u0B87\u0BB0\u0BC1\u0B95\u0BCD\u0B95\u0BBF\u0BB1\u0BBE\u0BAF\u0BCD?\u0022,\u0022transliteration\u0022:{\u0022text\u0022:\u0022eppadi irukkiraai?\u0022,\u0022script\u0022:\u0022Latn\u0022},\u0022to\u0022:\u0022ta\u0022}]}]"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1722454977",
+    "TEXT_TRANSLATION_API_KEY": "Sanitized",
+    "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
+    "TEXT_TRANSLATION_REGION": "westus"
+  }
+}
