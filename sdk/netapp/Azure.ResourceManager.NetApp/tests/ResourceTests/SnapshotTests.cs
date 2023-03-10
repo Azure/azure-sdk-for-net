@@ -252,8 +252,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 DestinationPath = "/dataStore"
             };
-            //RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await snapshotResource2.RestoreFilesAsync(WaitUntil.Completed, body); });
-            InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(async () => { await snapshotResource2.RestoreFilesAsync(WaitUntil.Completed, body); });
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await snapshotResource2.RestoreFilesAsync(WaitUntil.Completed, body); });
+            //InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(async () => { await snapshotResource2.RestoreFilesAsync(WaitUntil.Completed, body); });
             //StringAssert.Contains("SingleFileSnapshotRestoreInvalidStatusForOperation", exception.Message);
         }
     }
