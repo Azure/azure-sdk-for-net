@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,30 +12,38 @@ using Azure.Core;
 
 namespace Azure.ResourceManager
 {
-    internal class GenericResourceOperationSource<TResource, TModel> : IOperationSource<TResource>
-        where TResource : IData<TModel>
-        where TModel: ISerializable, new()
+    internal class GenericResourceOperationSource<T> : IOperationSource<T>
     {
         private readonly ArmClient _client;
-        private readonly IOperationSource<TModel> _dataOperation;
+        private readonly Type _modelType;
 
-        public GenericResourceOperationSource(ArmClient client)
+        public GenericResourceOperationSource(ArmClient client, Type modelType)
         {
             _client = client;
-            _dataOperation = new GenericOperationSource<TModel>();
+            _modelType = modelType;
         }
 
-        TResource IOperationSource<TResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            TModel data = _dataOperation.CreateResult(response, cancellationToken);
-            return (TResource)Activator.CreateInstance(typeof(TResource), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
+            return CreateResult(response);
         }
 
-        ValueTask<TResource> IOperationSource<TResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        ValueTask<T> IOperationSource<T>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            object data = _dataOperation.CreateResult(response, cancellationToken);
-            var resource = (TResource)Activator.CreateInstance(typeof(TResource), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
-            return new ValueTask<TResource>(resource);
+            return new ValueTask<T>(CreateResult(response));
+        }
+
+        private T CreateResult(Response response)
+        {
+            if (_modelType.GetInterface(nameof(ISerializable)) is null)
+            {
+                throw new InvalidOperationException($"The model type {_modelType.Name} should implement ISerializable. ");
+            }
+            var model = Activator.CreateInstance(_modelType);
+            var memoryStream = new MemoryStream();
+            response.ContentStream.CopyTo(memoryStream);
+            ((ISerializable)model).TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+            return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, model }, null);
         }
     }
 }

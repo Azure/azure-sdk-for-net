@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Tests.Scenario
 
             ArmOperation<VirtualMachineScaleSetResource> originalLro = await collection.CreateOrUpdateAsync(WaitUntil.Started, vmssName, input);
             var id = originalLro.Id;
-            var resourceRehydratedLro = ArmOperation<VirtualMachineScaleSetResource>.Rehydrate<VirtualMachineScaleSetResource, VirtualMachineScaleSetData>(Client, id);
+            var resourceRehydratedLro = new ArmOperation<VirtualMachineScaleSetResource>(Client, id, typeof(VirtualMachineScaleSetData));
             await resourceRehydratedLro.WaitForCompletionAsync();
             Assert.True(resourceRehydratedLro.HasValue);
             VirtualMachineScaleSetResource rehydratedResult = resourceRehydratedLro.Value;

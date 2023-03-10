@@ -11,24 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager
 {
-    internal class GenericOperationSource<T> : IOperationSource<T> where T : ISerializable, new()
+    internal class GenericOperationSource<T> : IOperationSource<T>
     {
         T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
-        {
-            ISerializable serializable = new T();
-            var memoryStream = new MemoryStream();
-            response.ContentStream.CopyTo(memoryStream);
-            serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
-            return (T)serializable;
-        }
+            => CreateResult(response);
 
         ValueTask<T> IOperationSource<T>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+            => new ValueTask<T>(CreateResult(response));
+
+        private static T CreateResult(Response response)
         {
-            ISerializable serializable = new T();
+            if (typeof(T).GetInterface(nameof(ISerializable)) is null)
+            {
+                throw new InvalidOperationException("Type T should implement ISerializable. ");
+            }
+            var model = Activator.CreateInstance(typeof(T));
             var memoryStream = new MemoryStream();
             response.ContentStream.CopyTo(memoryStream);
-            serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
-            return new ValueTask<T>((T)serializable);
+            ((ISerializable)model).TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+            return (T)model;
         }
     }
 }
