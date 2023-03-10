@@ -47,16 +47,16 @@ namespace Azure.ResourceManager.Tests
             }
             var expOp = await Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, rgName)).ExportTemplateAsync(WaitUntil.Started, parameters);
             var expOpId = expOp.Id;
-            var expRehydratedLro = ArmOperation<ResourceGroupExportResult>.Rehydrate<ResourceGroupExportResult>(Client, expOpId);
-            await expRehydratedLro.WaitForCompletionResponseAsync();
-            Assert.AreEqual(expRehydratedLro.HasValue, true);
-            var rehydratedResult = expRehydratedLro.Value;
+            var modelRehydratedLro = ArmOperation<ResourceGroupExportResult>.Rehydrate<ResourceGroupExportResult>(Client, expOpId);
+            await modelRehydratedLro.WaitForCompletionResponseAsync();
+            Assert.AreEqual(modelRehydratedLro.HasValue, true);
+            var rehydratedResult = modelRehydratedLro.Value;
             await expOp.UpdateStatusAsync();
             var result = expOp.Value;
             Assert.AreEqual(JsonSerializer.Serialize(result.Template), JsonSerializer.Serialize(rehydratedResult.Template));
             Assert.AreEqual(result.Error, rehydratedResult.Error);
             var expResponse = expOp.GetRawResponse();
-            var rehydratedExpResponse = expRehydratedLro.GetRawResponse();
+            var rehydratedExpResponse = modelRehydratedLro.GetRawResponse();
             Assert.AreEqual(expResponse.Status, rehydratedExpResponse.Status);
             Assert.AreEqual(expResponse.ReasonPhrase, rehydratedExpResponse.ReasonPhrase);
             //Assert.AreEqual(expResponse.ClientRequestId, rehydratedExpResponse.ClientRequestId);

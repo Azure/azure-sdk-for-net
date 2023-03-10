@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.ResourceManager.Shared
+namespace Azure.ResourceManager
 {
     /// <summary> An interface for representing resource of data. </summary>
     /// <typeparam name="T">The data of the resource. </typeparam>

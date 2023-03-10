@@ -38,10 +38,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <inheritdoc />
-#pragma warning disable CA1822
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
-#pragma warning restore CA1822
+        public override string Id => HasCompleted ? string.Empty : _operation.GetOperationId();
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

@@ -8,13 +8,12 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Shared;
 
 namespace Azure.ResourceManager
 {
     internal class GenericResourceOperationSource<TResource, TModel> : IOperationSource<TResource>
-        where TModel: ISerializable, new()
         where TResource : IData<TModel>
+        where TModel: ISerializable, new()
     {
         private readonly ArmClient _client;
         private readonly IOperationSource<TModel> _dataOperation;
@@ -28,13 +27,13 @@ namespace Azure.ResourceManager
         TResource IOperationSource<TResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             TModel data = _dataOperation.CreateResult(response, cancellationToken);
-            return (TResource)Activator.CreateInstance(typeof(TResource), BindingFlags.NonPublic | BindingFlags.Instance, _client, data);
+            return (TResource)Activator.CreateInstance(typeof(TResource), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
         }
 
         ValueTask<TResource> IOperationSource<TResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             object data = _dataOperation.CreateResult(response, cancellationToken);
-            var resource = (TResource)Activator.CreateInstance(typeof(TResource), BindingFlags.NonPublic | BindingFlags.Instance, _client, data);
+            var resource = (TResource)Activator.CreateInstance(typeof(TResource), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
             return new ValueTask<TResource>(resource);
         }
     }

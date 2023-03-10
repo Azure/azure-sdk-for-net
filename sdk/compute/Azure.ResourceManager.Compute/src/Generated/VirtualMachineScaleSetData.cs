@@ -20,6 +20,13 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class VirtualMachineScaleSetData : TrackedResourceData
     {
+        /// <summary>
+        /// Initializes an instance of VirtualMachineScaleSetData
+        /// </summary>
+        public VirtualMachineScaleSetData()
+        {
+        }
+
         /// <summary> Initializes a new instance of VirtualMachineScaleSetData. </summary>
         /// <param name="location"> The location. </param>
         public VirtualMachineScaleSetData(AzureLocation location) : base(location)
@@ -93,7 +100,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The identity of the virtual machine scale set, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The virtual machine scale set zones. NOTE: Availability zones can only be set when you create the scale set. </summary>
-        public IList<string> Zones { get; }
+        public IList<string> Zones { get; private set; }
         /// <summary> The extended location of the Virtual Machine Scale Set. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The upgrade policy. </summary>
@@ -103,13 +110,13 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The virtual machine profile. </summary>
         public VirtualMachineScaleSetVmProfile VirtualMachineProfile { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState { get; private set; }
         /// <summary> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </summary>
         public bool? Overprovision { get; set; }
         /// <summary> When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that the extensions do not run on the extra overprovisioned VMs. </summary>
         public bool? DoNotRunExtensionsOnOverprovisionedVms { get; set; }
         /// <summary> Specifies the ID which uniquely identifies a Virtual Machine Scale Set. </summary>
-        public string UniqueId { get; }
+        public string UniqueId { get; private set; }
         /// <summary> When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup is true, it may be modified to false. However, if singlePlacementGroup is false, it may not be modified to true. </summary>
         public bool? SinglePlacementGroup { get; set; }
         /// <summary> Whether to force strictly even Virtual Machine distribution cross x-zones in case there is zone outage. zoneBalance property can only be set if the zones property of the scale set contains more than one zone. If there are no zones or only one zone specified, then zoneBalance property should not be set. </summary>
@@ -155,7 +162,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </summary>
         public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get; set; }
         /// <summary> Specifies the time at which the Virtual Machine Scale Set resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </summary>
-        public DateTimeOffset? TimeCreated { get; }
+        public DateTimeOffset? TimeCreated { get; private set; }
         /// <summary> Optional property which must either be set to True or omitted. </summary>
         public bool? IsMaximumCapacityConstrained { get; set; }
     }
