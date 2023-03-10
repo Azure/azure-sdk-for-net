@@ -45,7 +45,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             UploadBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
 
             // Update manifest with config info
-            manifest.Config = new OciBlobDescriptor()
+            manifest.Config = new OciDescriptor()
             {
                 Digest = uploadConfigResult.Digest,
                 SizeInBytes = config.ToMemory().Length,
@@ -57,7 +57,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             UploadBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
 
             // Update manifest with layer info
-            manifest.Layers.Add(new OciBlobDescriptor()
+            manifest.Layers.Add(new OciDescriptor()
             {
                 Digest = uploadLayerResult.Digest,
                 SizeInBytes = layer.ToMemory().Length,
@@ -112,7 +112,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             }
 
             // Download and write out the layers
-            foreach (OciBlobDescriptor layer in manifest.Layers)
+            foreach (OciDescriptor layer in manifest.Layers)
             {
                 string layerFile = Path.Combine(path, TrimSha(layer.Digest));
                 using (FileStream stream = File.Create(layerFile))

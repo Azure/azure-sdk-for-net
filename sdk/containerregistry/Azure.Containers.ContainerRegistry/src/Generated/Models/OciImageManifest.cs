@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal OciImageManifest(OciBlobDescriptor config, IList<OciBlobDescriptor> layers, OciAnnotations annotations, int? schemaVersion)
+        internal OciImageManifest(OciDescriptor config, IList<OciDescriptor> layers, OciAnnotations annotations, int? schemaVersion)
         {
             Config = config;
             Layers = layers;
@@ -28,9 +28,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> V2 image config descriptor. </summary>
-        public OciBlobDescriptor Config { get; set; }
+        public OciDescriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
-        public IList<OciBlobDescriptor> Layers { get; }
+        public IList<OciDescriptor> Layers { get; }
         /// <summary> Additional information provided through arbitrary metadata. </summary>
         public OciAnnotations Annotations { get; set; }
         /// <summary> Schema version. </summary>

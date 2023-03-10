@@ -307,9 +307,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string Vendor { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
-    public partial class OciBlobDescriptor
+    public partial class OciDescriptor
     {
-        public OciBlobDescriptor() { }
+        public OciDescriptor() { }
         public Azure.Containers.ContainerRegistry.Specialized.OciAnnotations Annotations { get { throw null; } set { } }
         public string Digest { get { throw null; } set { } }
         public string MediaType { get { throw null; } set { } }
@@ -319,8 +319,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     {
         public OciImageManifest() { }
         public Azure.Containers.ContainerRegistry.Specialized.OciAnnotations Annotations { get { throw null; } set { } }
-        public Azure.Containers.ContainerRegistry.Specialized.OciBlobDescriptor Config { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.Specialized.OciBlobDescriptor> Layers { get { throw null; } }
+        public Azure.Containers.ContainerRegistry.Specialized.OciDescriptor Config { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.Specialized.OciDescriptor> Layers { get { throw null; } }
         public int? SchemaVersion { get { throw null; } set { } }
     }
     public partial class UploadBlobResult

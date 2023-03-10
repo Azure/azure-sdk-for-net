@@ -60,8 +60,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 return null;
             }
-            Optional<OciBlobDescriptor> config = default;
-            Optional<IList<OciBlobDescriptor>> layers = default;
+            Optional<OciDescriptor> config = default;
+            Optional<IList<OciDescriptor>> layers = default;
             Optional<OciAnnotations> annotations = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +73,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = OciBlobDescriptor.DeserializeOciBlobDescriptor(property.Value);
+                    config = OciDescriptor.DeserializeOciDescriptor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"u8))
@@ -83,10 +83,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OciBlobDescriptor> array = new List<OciBlobDescriptor>();
+                    List<OciDescriptor> array = new List<OciDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OciBlobDescriptor.DeserializeOciBlobDescriptor(item));
+                        array.Add(OciDescriptor.DeserializeOciDescriptor(item));
                     }
                     layers = array;
                     continue;

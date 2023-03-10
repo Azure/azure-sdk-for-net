@@ -26,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             BinaryData config = BinaryData.FromString("Sample config");
             var uploadConfigResult = await client.UploadBlobAsync(config);
 
-            manifest.Config = new OciBlobDescriptor()
+            manifest.Config = new OciDescriptor()
             {
                 Digest = uploadConfigResult.Value.Digest,
                 SizeInBytes = config.ToMemory().Length,
@@ -37,7 +37,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             BinaryData layer = BinaryData.FromString($"Sample layer {_random.Next()}");
             var uploadLayerResult = await client.UploadBlobAsync(layer);
 
-            manifest.Layers.Add(new OciBlobDescriptor()
+            manifest.Layers.Add(new OciDescriptor()
             {
                 Digest = uploadLayerResult.Value.Digest,
                 SizeInBytes = layer.ToMemory().Length,

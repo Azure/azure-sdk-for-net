@@ -773,7 +773,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     var uploadResult = await client.UploadBlobAsync(fs);
 
                     // Update manifest
-                    OciBlobDescriptor descriptor = new OciBlobDescriptor();
+                    OciDescriptor descriptor = new OciDescriptor();
                     descriptor.Digest = uploadResult.Value.Digest;
                     descriptor.SizeInBytes = fs.Length;
                     descriptor.MediaType = "application/vnd.acme.rocket.config";
@@ -793,7 +793,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                         var uploadResult = await client.UploadBlobAsync(fs);
 
                         // Update manifest
-                        OciBlobDescriptor descriptor = new OciBlobDescriptor();
+                        OciDescriptor descriptor = new OciDescriptor();
                         descriptor.Digest = uploadResult.Value.Digest;
                         descriptor.SizeInBytes = fs.Length;
                         descriptor.MediaType = "application/vnd.oci.image.layer.v1.tar";

@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary> Initializes a new instance of OciImageManifest. </summary>
         public OciImageManifest()
         {
-            Layers = new ChangeTrackingList<OciBlobDescriptor>();
+            Layers = new ChangeTrackingList<OciDescriptor>();
             SchemaVersion = 2;
         }
     }
