@@ -65,6 +65,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SparkJobDefinition DeserializeSparkJobDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             BigDataPoolReference targetBigDataPool = default;
             Optional<SparkConfigurationReference> targetSparkConfiguration = default;

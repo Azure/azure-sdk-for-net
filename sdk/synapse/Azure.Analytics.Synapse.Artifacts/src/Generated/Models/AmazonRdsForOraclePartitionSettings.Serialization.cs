@@ -43,6 +43,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AmazonRdsForOraclePartitionSettings DeserializeAmazonRdsForOraclePartitionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> partitionNames = default;
             Optional<object> partitionColumnName = default;
             Optional<object> partitionUpperBound = default;

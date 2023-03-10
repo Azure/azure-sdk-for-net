@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineSizeProperties DeserializeVirtualMachineSizeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> vCpusAvailable = default;
             Optional<int> vCpusPerCore = default;
             foreach (var property in element.EnumerateObject())

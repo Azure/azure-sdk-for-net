@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Avs
 
         internal static GlobalReachConnectionData DeserializeGlobalReachConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

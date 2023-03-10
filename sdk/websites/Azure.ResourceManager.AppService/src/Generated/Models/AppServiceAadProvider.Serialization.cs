@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceAadProvider DeserializeAppServiceAadProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<AppServiceAadRegistration> registration = default;
             Optional<AppServiceAadLoginFlow> login = default;

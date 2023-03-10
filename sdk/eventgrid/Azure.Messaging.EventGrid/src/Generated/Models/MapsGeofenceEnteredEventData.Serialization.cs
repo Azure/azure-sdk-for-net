@@ -18,6 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MapsGeofenceEnteredEventData DeserializeMapsGeofenceEnteredEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> expiredGeofenceGeometryId = default;
             Optional<IReadOnlyList<MapsGeofenceGeometry>> geometries = default;
             Optional<IReadOnlyList<string>> invalidPeriodGeofenceGeometryId = default;

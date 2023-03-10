@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static ComplianceDetail DeserializeComplianceDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> complianceState = default;
             Optional<int> count = default;
             foreach (var property in element.EnumerateObject())

@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionRuleData DeserializeDataCollectionRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataCollectionRuleResourceKind> kind = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;

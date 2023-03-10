@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerAutomaticTuningResource" /> object. </returns>
         public virtual SqlServerAutomaticTuningResource GetSqlServerAutomaticTuning()
         {
-            return new SqlServerAutomaticTuningResource(Client, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
+            return new SqlServerAutomaticTuningResource(Client, Id.AppendChildResource("automaticTuning", "current"));
         }
 
         /// <summary> Gets a collection of SqlServerAzureADAdministratorResources in the SqlServer. </summary>
@@ -1179,13 +1179,15 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RestorableDroppedDatabaseResource>> GetRestorableDroppedDatabaseAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorableDroppedDatabaseResource>> GetRestorableDroppedDatabaseAsync(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return await GetRestorableDroppedDatabases().GetAsync(restorableDroppedDatabaseId, cancellationToken).ConfigureAwait(false);
+            return await GetRestorableDroppedDatabases().GetAsync(restorableDroppedDatabaseId, expand, filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1202,13 +1204,15 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RestorableDroppedDatabaseResource> GetRestorableDroppedDatabase(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
+        public virtual Response<RestorableDroppedDatabaseResource> GetRestorableDroppedDatabase(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetRestorableDroppedDatabases().Get(restorableDroppedDatabaseId, cancellationToken);
+            return GetRestorableDroppedDatabases().Get(restorableDroppedDatabaseId, expand, filter, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerConnectionPolicyResources in the SqlServer. </summary>
@@ -1583,13 +1587,15 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlDatabaseResource>> GetSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDatabaseResource>> GetSqlDatabaseAsync(string databaseName, string expand = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return await GetSqlDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlDatabases().GetAsync(databaseName, expand, filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1606,13 +1612,15 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlDatabaseResource> GetSqlDatabase(string databaseName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlDatabaseResource> GetSqlDatabase(string databaseName, string expand = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSqlDatabases().Get(databaseName, cancellationToken);
+            return GetSqlDatabases().Get(databaseName, expand, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1988,82 +1996,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Imports a bacpac into a new database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/import</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Servers_ImportDatabase</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="databaseImportDefinition"> The database import request parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseImportDefinition"/> is null. </exception>
-        public virtual async Task<ArmOperation<ImportExportOperationResult>> ImportDatabaseAsync(WaitUntil waitUntil, DatabaseImportDefinition databaseImportDefinition, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(databaseImportDefinition, nameof(databaseImportDefinition));
-
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.ImportDatabase");
-            scope.Start();
-            try
-            {
-                var response = await _sqlServerServersRestClient.ImportDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Imports a bacpac into a new database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/import</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Servers_ImportDatabase</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="databaseImportDefinition"> The database import request parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseImportDefinition"/> is null. </exception>
-        public virtual ArmOperation<ImportExportOperationResult> ImportDatabase(WaitUntil waitUntil, DatabaseImportDefinition databaseImportDefinition, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(databaseImportDefinition, nameof(databaseImportDefinition));
-
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.ImportDatabase");
-            scope.Start();
-            try
-            {
-                var response = _sqlServerServersRestClient.ImportDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition, cancellationToken);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gets a list of replication links.
         /// <list type="bullet">
         /// <item>
@@ -2149,6 +2081,150 @@ namespace Azure.ResourceManager.Sql
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseDatabasesRestClient.CreateListInaccessibleByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseDatabasesRestClient.CreateListInaccessibleByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseResource(Client, SqlDatabaseData.DeserializeSqlDatabaseData(e)), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, "SqlServerResource.GetInaccessibleDatabases", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Imports a bacpac into a new database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/import</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_ImportDatabase</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="databaseImportDefinition"> The database import request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseImportDefinition"/> is null. </exception>
+        public virtual async Task<ArmOperation<ImportExportOperationResult>> ImportDatabaseAsync(WaitUntil waitUntil, DatabaseImportDefinition databaseImportDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(databaseImportDefinition, nameof(databaseImportDefinition));
+
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.ImportDatabase");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerServersRestClient.ImportDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Imports a bacpac into a new database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/import</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_ImportDatabase</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="databaseImportDefinition"> The database import request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseImportDefinition"/> is null. </exception>
+        public virtual ArmOperation<ImportExportOperationResult> ImportDatabase(WaitUntil waitUntil, DatabaseImportDefinition databaseImportDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(databaseImportDefinition, nameof(databaseImportDefinition));
+
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.ImportDatabase");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerServersRestClient.ImportDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition, cancellationToken);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh external governance enablement status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/refreshExternalGovernanceStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_RefreshStatus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<RefreshExternalGovernanceStatusOperationResult>> RefreshStatusAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.RefreshStatus");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerServersRestClient.RefreshStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<RefreshExternalGovernanceStatusOperationResult>(new RefreshExternalGovernanceStatusOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateRefreshStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh external governance enablement status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/refreshExternalGovernanceStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_RefreshStatus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<RefreshExternalGovernanceStatusOperationResult> RefreshStatus(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.RefreshStatus");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerServersRestClient.RefreshStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new SqlArmOperation<RefreshExternalGovernanceStatusOperationResult>(new RefreshExternalGovernanceStatusOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateRefreshStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

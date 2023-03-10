@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeIotRole DeserializeEdgeIotRole(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxEdgeRoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;

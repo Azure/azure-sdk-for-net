@@ -27,6 +27,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookResource DeserializeNotebookResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             string name = default;
             Optional<string> type = default;

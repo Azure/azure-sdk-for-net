@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceApiDefinitionInfo DeserializeAppServiceApiDefinitionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
             {

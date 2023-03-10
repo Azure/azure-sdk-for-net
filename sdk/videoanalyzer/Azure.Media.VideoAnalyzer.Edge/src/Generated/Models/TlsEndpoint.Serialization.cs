@@ -39,6 +39,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static TlsEndpoint DeserializeTlsEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CertificateSource> trustedCertificates = default;
             Optional<TlsValidationOptions> validationOptions = default;
             string type = default;

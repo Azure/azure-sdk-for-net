@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static AppliedReservationList DeserializeAppliedReservationList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static CallRecordingStateChanged DeserializeCallRecordingStateChanged(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventSource = default;
             Optional<string> recordingId = default;
             Optional<RecordingState> state = default;

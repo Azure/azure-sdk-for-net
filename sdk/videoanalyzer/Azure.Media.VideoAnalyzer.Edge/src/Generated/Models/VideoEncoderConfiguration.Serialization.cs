@@ -50,6 +50,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static VideoEncoderConfiguration DeserializeVideoEncoderConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VideoEncoding> encoding = default;
             Optional<float> quality = default;
             Optional<VideoResolution> resolution = default;

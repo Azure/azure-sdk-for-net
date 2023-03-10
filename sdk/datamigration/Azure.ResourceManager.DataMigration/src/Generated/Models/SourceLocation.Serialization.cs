@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SourceLocation DeserializeSourceLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlFileShare> fileShare = default;
             Optional<AzureBlob> azureBlob = default;
             Optional<string> fileStorageType = default;

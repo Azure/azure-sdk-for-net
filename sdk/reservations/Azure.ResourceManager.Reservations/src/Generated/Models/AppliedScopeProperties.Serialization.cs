@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static AppliedScopeProperties DeserializeAppliedScopeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<string> managementGroupId = default;
             Optional<string> subscriptionId = default;

@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleSchedule DeserializeAlertProcessingRuleSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> effectiveFrom = default;
             Optional<DateTimeOffset> effectiveUntil = default;
             Optional<string> timeZone = default;

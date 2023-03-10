@@ -28,6 +28,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static IndexingSchedule DeserializeIndexingSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSpan interval = default;
             Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())

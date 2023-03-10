@@ -438,6 +438,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageModelSettingsClassification DeserializeImageModelSettingsClassification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> trainingCropSize = default;
             Optional<int?> validationCropSize = default;
             Optional<int?> validationResizeSize = default;

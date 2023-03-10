@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2023-03-07)
+
+### Features Added
+
+- Added support for API version 2023-01-31.
+- Added support for configuring "Graph History", enabling recording of twin and relationship lifecycle events.
+- Added support for cleaning up artifacts created by the service to establish a connection between ADX and EventHub when setting up a Data History connection.
 
 ## 1.1.1 (2023-02-20)
 

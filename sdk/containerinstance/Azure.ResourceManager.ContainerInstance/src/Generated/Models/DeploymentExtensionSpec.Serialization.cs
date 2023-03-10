@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static DeploymentExtensionSpec DeserializeDeploymentExtensionSpec(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> extensionType = default;
             Optional<string> version = default;

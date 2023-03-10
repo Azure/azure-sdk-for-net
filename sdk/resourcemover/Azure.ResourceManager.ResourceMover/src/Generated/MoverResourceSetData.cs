@@ -13,7 +13,10 @@ using Azure.ResourceManager.ResourceMover.Models;
 
 namespace Azure.ResourceManager.ResourceMover
 {
-    /// <summary> A class representing the MoverResourceSet data model. </summary>
+    /// <summary>
+    /// A class representing the MoverResourceSet data model.
+    /// Define the move collection.
+    /// </summary>
     public partial class MoverResourceSetData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MoverResourceSetData. </summary>

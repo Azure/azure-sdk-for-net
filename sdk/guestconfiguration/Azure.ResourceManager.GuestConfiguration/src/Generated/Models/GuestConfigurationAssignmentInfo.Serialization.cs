@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationAssignmentInfo DeserializeGuestConfigurationAssignmentInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<GuestConfigurationInfo> configuration = default;
             foreach (var property in element.EnumerateObject())

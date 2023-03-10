@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationSummary DeserializeReservationSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> succeededCount = default;
             Optional<float> failedCount = default;
             Optional<float> expiringCount = default;

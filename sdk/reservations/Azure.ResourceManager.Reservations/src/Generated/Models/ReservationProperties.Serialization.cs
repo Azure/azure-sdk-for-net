@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationProperties DeserializeReservationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReservedResourceType> reservedResourceType = default;
             Optional<InstanceFlexibility> instanceFlexibility = default;
             Optional<string> displayName = default;

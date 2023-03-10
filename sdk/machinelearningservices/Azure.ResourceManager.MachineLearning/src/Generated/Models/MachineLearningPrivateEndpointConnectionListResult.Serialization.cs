@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningPrivateEndpointConnectionListResult DeserializeMachineLearningPrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MachineLearningPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

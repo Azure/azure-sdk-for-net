@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlWorkloadTypeUpdateSettings DeserializeSqlWorkloadTypeUpdateSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlWorkloadType> sqlWorkloadType = default;
             foreach (var property in element.EnumerateObject())
             {

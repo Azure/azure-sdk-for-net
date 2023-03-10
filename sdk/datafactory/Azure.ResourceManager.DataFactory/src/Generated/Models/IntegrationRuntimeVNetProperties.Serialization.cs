@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeVNetProperties DeserializeIntegrationRuntimeVNetProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> vNetId = default;
             Optional<string> subnet = default;
             Optional<IList<string>> publicIPs = default;

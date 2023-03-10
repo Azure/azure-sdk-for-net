@@ -18,8 +18,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly string _instrumentationKey;
         private readonly AzureMonitorPersistentStorage? _persistentStorage;
         private AzureMonitorResource? _resource;
+        private bool _disposed;
 
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options, TokenCredential? credential = null) : this(new AzureMonitorTransmitter(options, credential))
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options, TokenCredential? credential = null) : this(TransmitterFactory.Instance.Get(options, credential))
         {
         }
 
@@ -44,19 +45,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
+            ExportResult exportResult = ExportResult.Failure;
+
             try
             {
                 var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
-                var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
+                if (telemetryItems.Count > 0)
+                {
+                    exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                }
 
-                return exportResult;
+                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
             }
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
-                return ExportResult.Failure;
             }
+
+            return exportResult;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _transmitter?.Dispose();
+                }
+
+                _disposed = true;
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

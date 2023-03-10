@@ -13,7 +13,10 @@ using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
-    /// <summary> A class representing the ReservationOrder data model. </summary>
+    /// <summary>
+    /// A class representing the ReservationOrder data model.
+    /// Details of a reservation order being returned.
+    /// </summary>
     public partial class ReservationOrderData : ResourceData
     {
         /// <summary> Initializes a new instance of ReservationOrderData. </summary>

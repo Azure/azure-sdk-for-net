@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteCircuitPeeringConfig DeserializeExpressRouteCircuitPeeringConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> advertisedPublicPrefixes = default;
             Optional<IList<string>> advertisedCommunities = default;
             Optional<ExpressRouteCircuitPeeringAdvertisedPublicPrefixState> advertisedPublicPrefixesState = default;

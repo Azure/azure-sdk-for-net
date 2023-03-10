@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CommitmentTier DeserializeCommitmentTier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<string> skuName = default;
             Optional<ServiceAccountHostingModel> hostingModel = default;

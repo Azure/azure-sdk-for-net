@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContainerCpuUsage DeserializeContainerCpuUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> totalUsage = default;
             Optional<IList<long>> perCpuUsage = default;
             Optional<long> kernelModeUsage = default;

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static WinRMConfiguration DeserializeWinRMConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WinRMListener>> listeners = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static AvailabilityGroupListenerPrivateIPAddress DeserializeAvailabilityGroupListenerPrivateIPAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> ipAddress = default;
             Optional<ResourceIdentifier> subnetResourceId = default;
             foreach (var property in element.EnumerateObject())

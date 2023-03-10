@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Models
 
         public static FilterBlobsIncludeItem ToFilterBlobsIncludeItem(this string value)
         {
-            if (string.Equals(value, "none", StringComparison.InvariantCultureIgnoreCase)) return FilterBlobsIncludeItem.None;
-            if (string.Equals(value, "versions", StringComparison.InvariantCultureIgnoreCase)) return FilterBlobsIncludeItem.Versions;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none")) return FilterBlobsIncludeItem.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "versions")) return FilterBlobsIncludeItem.Versions;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FilterBlobsIncludeItem value.");
         }
     }

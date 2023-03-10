@@ -31,6 +31,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static RtspSource DeserializeRtspSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RtspTransport> transport = default;
             EndpointBase endpoint = default;
             string type = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static PolicyDescriptionListResult DeserializePolicyDescriptionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PolicyDescriptionContractData>> value = default;
             Optional<long> count = default;
             foreach (var property in element.EnumerateObject())

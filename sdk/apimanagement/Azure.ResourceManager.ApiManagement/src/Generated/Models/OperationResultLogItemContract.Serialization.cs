@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static OperationResultLogItemContract DeserializeOperationResultLogItemContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> objectType = default;
             Optional<string> action = default;
             Optional<string> objectKey = default;

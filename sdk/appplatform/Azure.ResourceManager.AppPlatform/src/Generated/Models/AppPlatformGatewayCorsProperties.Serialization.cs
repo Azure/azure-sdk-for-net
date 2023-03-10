@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformGatewayCorsProperties DeserializeAppPlatformGatewayCorsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> allowedOrigins = default;
             Optional<IList<string>> allowedMethods = default;
             Optional<IList<string>> allowedHeaders = default;

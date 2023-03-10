@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MySql
 
         internal static MySqlPrivateLinkResourceData DeserializeMySqlPrivateLinkResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MySqlPrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

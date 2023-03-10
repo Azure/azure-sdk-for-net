@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationCatalog DeserializeReservationCatalog(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<string> name = default;
             Optional<IReadOnlyDictionary<string, IList<ReservationBillingPlan>>> billingPlans = default;
@@ -48,12 +52,19 @@ namespace Azure.ResourceManager.Reservations.Models
                     Dictionary<string, IList<ReservationBillingPlan>> dictionary = new Dictionary<string, IList<ReservationBillingPlan>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        List<ReservationBillingPlan> array = new List<ReservationBillingPlan>();
-                        foreach (var item in property0.Value.EnumerateArray())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(new ReservationBillingPlan(item.GetString()));
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, array);
+                        else
+                        {
+                            List<ReservationBillingPlan> array = new List<ReservationBillingPlan>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ReservationBillingPlan(item.GetString()));
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
                     }
                     billingPlans = dictionary;
                     continue;

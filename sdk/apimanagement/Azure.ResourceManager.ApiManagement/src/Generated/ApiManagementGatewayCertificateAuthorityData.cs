@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementGatewayCertificateAuthority data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementGatewayCertificateAuthority data model.
+    /// Gateway certificate authority details.
+    /// </summary>
     public partial class ApiManagementGatewayCertificateAuthorityData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementGatewayCertificateAuthorityData. </summary>

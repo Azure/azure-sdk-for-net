@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static BuildpackBindingResourceList DeserializeBuildpackBindingResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AppPlatformBuildpackBindingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

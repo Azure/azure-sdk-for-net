@@ -45,6 +45,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DWCopyCommandSettings DeserializeDWCopyCommandSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DWCopyCommandDefaultValue>> defaultValues = default;
             Optional<IDictionary<string, string>> additionalOptions = default;
             foreach (var property in element.EnumerateObject())

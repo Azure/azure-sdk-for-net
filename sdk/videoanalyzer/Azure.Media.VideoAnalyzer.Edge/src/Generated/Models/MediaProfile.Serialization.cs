@@ -35,6 +35,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static MediaProfile DeserializeMediaProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<object> mediaUri = default;
             Optional<VideoEncoderConfiguration> videoEncoderConfiguration = default;

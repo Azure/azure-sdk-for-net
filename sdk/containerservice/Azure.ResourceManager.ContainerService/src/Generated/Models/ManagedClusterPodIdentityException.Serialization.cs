@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterPodIdentityException DeserializeManagedClusterPodIdentityException(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string @namespace = default;
             IDictionary<string, string> podLabels = default;

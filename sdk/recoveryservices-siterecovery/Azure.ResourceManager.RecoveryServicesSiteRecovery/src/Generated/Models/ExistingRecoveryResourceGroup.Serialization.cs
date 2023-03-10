@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static ExistingRecoveryResourceGroup DeserializeExistingRecoveryResourceGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryResourceGroupId = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())

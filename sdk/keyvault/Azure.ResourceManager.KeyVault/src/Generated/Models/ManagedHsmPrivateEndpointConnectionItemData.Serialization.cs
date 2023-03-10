@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static ManagedHsmPrivateEndpointConnectionItemData DeserializeManagedHsmPrivateEndpointConnectionItemData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SubResource> privateEndpoint = default;
             Optional<ManagedHsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<ManagedHsmPrivateEndpointConnectionProvisioningState> provisioningState = default;

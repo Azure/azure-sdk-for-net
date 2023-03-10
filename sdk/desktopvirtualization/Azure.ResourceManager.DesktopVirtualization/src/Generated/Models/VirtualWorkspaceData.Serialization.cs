@@ -85,6 +85,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static VirtualWorkspaceData DeserializeVirtualWorkspaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> managedBy = default;
             Optional<string> kind = default;
             Optional<ETag> etag = default;

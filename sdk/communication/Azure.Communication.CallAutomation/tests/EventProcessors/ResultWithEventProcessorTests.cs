@@ -19,10 +19,13 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             int successCode = (int)HttpStatusCode.Created;
 
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(successCode, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
+                responseCode: successCode,
+                responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
+                options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
-            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMoakCallSource(), CreateMoakTargets(), new Uri(CallBackUri)));
+            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -44,10 +47,13 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Failed with operation mismatch
             int successCode = (int)HttpStatusCode.Created;
 
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(successCode, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
+                responseCode: successCode,
+                responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
+                options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
-            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMoakCallSource(), CreateMoakTargets(), new Uri(CallBackUri)));
+            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -69,7 +75,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             int successCode = (int)HttpStatusCode.OK;
 
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(successCode, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
+                responseCode: successCode,
+                responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
+                options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.AnswerCall("incomingCallContext", new Uri(CallBackUri));
@@ -94,7 +103,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.OK;
 
             // Failed with operation mismatch
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(successCode, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
+                responseCode: successCode,
+                responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
+                options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.AnswerCall("incomingCallContext", new Uri(CallBackUri));
@@ -122,7 +134,8 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, TransferCallOrRemoveParticipantsPayload);
             EventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(new CommunicationUserIdentifier(TargetUser)));
+            var callInvite = new CallInvite(new CommunicationUserIdentifier(TargetUser));
+            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -148,7 +161,8 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, TransferCallOrRemoveParticipantsPayload);
             EventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(new CommunicationUserIdentifier(TargetUser)));
+            var callInvite = new CallInvite(new CommunicationUserIdentifier(TargetUser));
+            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -173,12 +187,13 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             EventProcessor handler = callConnection.EventProcessor;
+            var callInvite = CreateMockInvite();
 
-            var response = callConnection.AddParticipants(new AddParticipantsOptions(CreateMoakTargets()));
+            var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantsSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
+            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
             AddParticipantsEventResult returnedResult = await response.Value.WaitForEvent();
 
@@ -187,7 +202,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(true, returnedResult.IsSuccessEvent);
             Assert.NotNull(returnedResult.SuccessEvent);
             Assert.IsNull(returnedResult.FailureEvent);
-            Assert.AreEqual(typeof(AddParticipantsSucceeded), returnedResult.SuccessEvent.GetType());
+            Assert.AreEqual(typeof(AddParticipantSucceeded), returnedResult.SuccessEvent.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.SuccessEvent.CallConnectionId);
             Assert.AreEqual(response.Value.OperationContext, returnedResult.SuccessEvent.OperationContext);
         }
@@ -197,14 +212,15 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             int successCode = (int)HttpStatusCode.Accepted;
 
-            var callConnection = CreateMockCallConnection(successCode, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             EventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.AddParticipants(new AddParticipantsOptions(CreateMoakTargets()));
+            var callInvite = CreateMockInvite();
+            var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantsFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
+            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
             AddParticipantsEventResult returnedResult = await response.Value.WaitForEvent();
 
@@ -213,7 +229,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(false, returnedResult.IsSuccessEvent);
             Assert.IsNull(returnedResult.SuccessEvent);
             Assert.NotNull(returnedResult.FailureEvent);
-            Assert.AreEqual(typeof(AddParticipantsFailed), returnedResult.FailureEvent.GetType());
+            Assert.AreEqual(typeof(AddParticipantFailed), returnedResult.FailureEvent.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.FailureEvent.CallConnectionId);
             Assert.AreEqual(response.Value.OperationContext, returnedResult.FailureEvent.OperationContext);
         }

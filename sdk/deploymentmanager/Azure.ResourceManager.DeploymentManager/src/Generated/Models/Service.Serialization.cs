@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static Service DeserializeService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<ServiceUnit>> serviceUnits = default;
             string targetLocation = default;

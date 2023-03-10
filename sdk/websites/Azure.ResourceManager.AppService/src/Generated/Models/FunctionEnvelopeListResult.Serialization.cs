@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static FunctionEnvelopeListResult DeserializeFunctionEnvelopeListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<FunctionEnvelopeData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

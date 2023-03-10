@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static Commitment DeserializeCommitment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CommitmentGrain> grain = default;
             Optional<string> currencyCode = default;
             Optional<double> amount = default;

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static Identity DeserializeIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             IList<string> identityIds = default;
             foreach (var property in element.EnumerateObject())

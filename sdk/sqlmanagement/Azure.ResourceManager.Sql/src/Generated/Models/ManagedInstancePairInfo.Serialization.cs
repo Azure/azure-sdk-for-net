@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstancePairInfo DeserializeManagedInstancePairInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> primaryManagedInstanceId = default;
             Optional<ResourceIdentifier> partnerManagedInstanceId = default;
             foreach (var property in element.EnumerateObject())

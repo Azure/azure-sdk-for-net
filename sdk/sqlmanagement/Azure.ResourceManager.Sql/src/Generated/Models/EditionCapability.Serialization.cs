@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static EditionCapability DeserializeEditionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<ServiceObjectiveCapability>> supportedServiceLevelObjectives = default;
             Optional<bool> zoneRedundant = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiManagementSkuRestrictions DeserializeApiManagementSkuRestrictions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ApiManagementSkuRestrictionsType> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<ApiManagementSkuRestrictionInfo> restrictionInfo = default;

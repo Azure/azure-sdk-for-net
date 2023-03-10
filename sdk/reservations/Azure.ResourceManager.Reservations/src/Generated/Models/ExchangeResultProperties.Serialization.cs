@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ExchangeResultProperties DeserializeExchangeResultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> sessionId = default;
             Optional<PurchasePrice> netPayable = default;
             Optional<PurchasePrice> refundsTotal = default;

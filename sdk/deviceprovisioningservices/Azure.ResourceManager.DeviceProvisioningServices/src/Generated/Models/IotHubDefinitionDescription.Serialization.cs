@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static IotHubDefinitionDescription DeserializeIotHubDefinitionDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> applyAllocationPolicy = default;
             Optional<int> allocationWeight = default;
             Optional<string> name = default;

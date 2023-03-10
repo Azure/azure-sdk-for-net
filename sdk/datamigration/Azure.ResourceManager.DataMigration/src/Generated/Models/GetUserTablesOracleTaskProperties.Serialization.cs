@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetUserTablesOracleTaskProperties DeserializeGetUserTablesOracleTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GetUserTablesOracleTaskInput> input = default;
             Optional<IReadOnlyList<GetUserTablesOracleTaskOutput>> output = default;
             TaskType taskType = default;

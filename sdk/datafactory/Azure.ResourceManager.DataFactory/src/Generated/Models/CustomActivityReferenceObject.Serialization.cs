@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CustomActivityReferenceObject DeserializeCustomActivityReferenceObject(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FactoryLinkedServiceReference>> linkedServices = default;
             Optional<IList<DatasetReference>> datasets = default;
             foreach (var property in element.EnumerateObject())

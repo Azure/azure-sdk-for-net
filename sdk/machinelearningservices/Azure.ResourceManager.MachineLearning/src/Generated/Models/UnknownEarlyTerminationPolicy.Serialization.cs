@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownEarlyTerminationPolicy DeserializeUnknownEarlyTerminationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> delayEvaluation = default;
             Optional<int> evaluationInterval = default;
             EarlyTerminationPolicyType policyType = "Unknown";

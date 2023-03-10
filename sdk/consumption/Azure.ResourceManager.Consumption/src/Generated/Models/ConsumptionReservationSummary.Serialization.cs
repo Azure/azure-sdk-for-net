@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionReservationSummary DeserializeConsumptionReservationSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;

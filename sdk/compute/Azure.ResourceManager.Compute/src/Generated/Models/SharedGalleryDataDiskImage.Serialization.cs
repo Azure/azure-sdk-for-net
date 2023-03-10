@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static SharedGalleryDataDiskImage DeserializeSharedGalleryDataDiskImage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int lun = default;
             Optional<int> diskSizeGB = default;
             Optional<SharedGalleryHostCaching> hostCaching = default;

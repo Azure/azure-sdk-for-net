@@ -45,6 +45,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomEntitiesResult DeserializeCustomEntitiesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<CustomEntitiesResultDocumentsItem> documents = default;
             IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;

@@ -24,6 +24,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static ImageFormatRaw DeserializeImageFormatRaw(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ImageFormatRawPixelFormat pixelFormat = default;
             string type = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static CatalogsResult DeserializeCatalogsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ReservationCatalog>> value = default;
             Optional<string> nextLink = default;
             Optional<long> totalItems = default;

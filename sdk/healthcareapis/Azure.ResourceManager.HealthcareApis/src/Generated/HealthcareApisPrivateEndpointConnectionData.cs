@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary> A class representing the HealthcareApisPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the HealthcareApisPrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class HealthcareApisPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of HealthcareApisPrivateEndpointConnectionData. </summary>

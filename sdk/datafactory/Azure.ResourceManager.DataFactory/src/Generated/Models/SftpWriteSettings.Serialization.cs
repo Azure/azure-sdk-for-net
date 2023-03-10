@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SftpWriteSettings DeserializeSftpWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> operationTimeout = default;
             Optional<BinaryData> useTempFileRename = default;
             string type = default;

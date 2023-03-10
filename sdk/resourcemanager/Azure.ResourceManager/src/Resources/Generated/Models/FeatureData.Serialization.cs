@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources
     {
         internal static FeatureData DeserializeFeatureData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FeatureProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

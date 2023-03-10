@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static DocumentKeyPhrases DeserializeDocumentKeyPhrases(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             IReadOnlyList<string> keyPhrases = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;

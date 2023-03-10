@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAddonProfile DeserializeManagedClusterAddonProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             Optional<IDictionary<string, string>> config = default;
             Optional<ManagedClusterAddonProfileIdentity> identity = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationSwapProperties DeserializeReservationSwapProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> swapSource = default;
             Optional<string> swapDestination = default;
             foreach (var property in element.EnumerateObject())

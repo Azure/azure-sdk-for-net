@@ -29,6 +29,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static DocumentWarning DeserializeDocumentWarning(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WarningCodeValue code = default;
             string message = default;
             Optional<string> targetRef = default;

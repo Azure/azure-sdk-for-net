@@ -4,7 +4,7 @@ This sample demonstrates how to detect the language of one or more documents.
 
 ## Create a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create simply with an API key.
+To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
 Uri endpoint = new("<endpoint>");
@@ -210,7 +210,7 @@ Console.WriteLine($"  Invalid document count: {documentsLanguage.Statistics.Inva
 Console.WriteLine($"  Transaction count: {documentsLanguage.Statistics.TransactionCount}");
 ```
 
-See the [README][README] of the Text Analytics client library for more information, including useful links and instructions.
+See the [README] of the Text Analytics client library for more information, including useful links and instructions.
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

@@ -46,6 +46,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static CognitiveServicesVisionProcessor DeserializeCognitiveServicesVisionProcessor(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointBase endpoint = default;
             Optional<ImageProperties> image = default;
             Optional<SamplingOptions> samplingOptions = default;

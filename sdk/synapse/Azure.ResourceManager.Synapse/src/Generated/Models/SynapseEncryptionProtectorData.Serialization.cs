@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseEncryptionProtectorData DeserializeSynapseEncryptionProtectorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static CsmUsageQuota DeserializeCsmUsageQuota(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> unit = default;
             Optional<DateTimeOffset> nextResetTime = default;
             Optional<long> currentValue = default;

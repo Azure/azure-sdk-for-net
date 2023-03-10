@@ -33,6 +33,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static FreshnessScoringFunction DeserializeFreshnessScoringFunction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FreshnessScoringParameters freshness = default;
             string type = default;
             string fieldName = default;

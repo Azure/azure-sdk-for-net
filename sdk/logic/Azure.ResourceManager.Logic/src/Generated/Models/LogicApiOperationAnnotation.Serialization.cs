@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiOperationAnnotation DeserializeLogicApiOperationAnnotation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicApiOperationAnnotationStatus> status = default;
             Optional<string> family = default;
             Optional<int> revision = default;

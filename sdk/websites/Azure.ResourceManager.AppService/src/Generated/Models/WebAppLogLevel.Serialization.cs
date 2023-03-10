@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static WebAppLogLevel ToWebAppLogLevel(this string value)
         {
-            if (string.Equals(value, "Off", StringComparison.InvariantCultureIgnoreCase)) return WebAppLogLevel.Off;
-            if (string.Equals(value, "Verbose", StringComparison.InvariantCultureIgnoreCase)) return WebAppLogLevel.Verbose;
-            if (string.Equals(value, "Information", StringComparison.InvariantCultureIgnoreCase)) return WebAppLogLevel.Information;
-            if (string.Equals(value, "Warning", StringComparison.InvariantCultureIgnoreCase)) return WebAppLogLevel.Warning;
-            if (string.Equals(value, "Error", StringComparison.InvariantCultureIgnoreCase)) return WebAppLogLevel.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Off")) return WebAppLogLevel.Off;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verbose")) return WebAppLogLevel.Verbose;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Information")) return WebAppLogLevel.Information;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return WebAppLogLevel.Warning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return WebAppLogLevel.Error;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebAppLogLevel value.");
         }
     }

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.StorageMover
 
         internal static StorageMoverEndpointData DeserializeStorageMoverEndpointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointBaseProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

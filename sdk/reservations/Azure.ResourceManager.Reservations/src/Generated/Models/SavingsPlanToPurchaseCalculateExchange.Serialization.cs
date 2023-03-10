@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static SavingsPlanToPurchaseCalculateExchange DeserializeSavingsPlanToPurchaseCalculateExchange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SavingsPlanPurchaseRequest> properties = default;
             Optional<PurchasePrice> billingCurrencyTotal = default;
             foreach (var property in element.EnumerateObject())

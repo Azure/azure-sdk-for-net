@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static SavingsPlanPurchaseRequest DeserializeSavingsPlanPurchaseRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReservationsSkuName> sku = default;
             Optional<string> displayName = default;
             Optional<ResourceIdentifier> billingScopeId = default;

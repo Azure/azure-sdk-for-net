@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.HealthBot
 
         internal static HealthBotData DeserializeHealthBotData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HealthBotSku sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<HealthBotProperties> properties = default;

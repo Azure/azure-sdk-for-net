@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFlowStagingInfo DeserializeDataFlowStagingInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryLinkedServiceReference> linkedService = default;
             Optional<BinaryData> folderPath = default;
             foreach (var property in element.EnumerateObject())

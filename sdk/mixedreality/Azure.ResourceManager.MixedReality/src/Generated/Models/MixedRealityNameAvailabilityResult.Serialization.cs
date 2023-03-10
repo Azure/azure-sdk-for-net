@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MixedReality.Models
     {
         internal static MixedRealityNameAvailabilityResult DeserializeMixedRealityNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool nameAvailable = default;
             Optional<MixedRealityNameUnavailableReason> reason = default;
             Optional<string> message = default;

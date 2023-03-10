@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsKeyVaultProperties DeserializeEventHubsKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyName = default;
             Optional<Uri> keyVaultUri = default;
             Optional<string> keyVersion = default;

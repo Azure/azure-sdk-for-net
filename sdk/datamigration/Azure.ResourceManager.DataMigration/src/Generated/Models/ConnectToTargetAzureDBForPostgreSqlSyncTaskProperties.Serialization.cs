@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties DeserializeConnectToTargetAzureDBForPostgreSqlSyncTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectToTargetAzureDBForPostgreSqlSyncTaskInput> input = default;
             Optional<IReadOnlyList<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput>> output = default;
             TaskType taskType = default;

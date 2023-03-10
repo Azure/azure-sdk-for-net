@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static UnknownSsisObjectMetadata DeserializeUnknownSsisObjectMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SynapseSsisObjectMetadataType type = "Unknown";
             Optional<long> id = default;
             Optional<string> name = default;

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
 {
-    /// <summary> A class representing the SearchService data model. </summary>
+    /// <summary>
+    /// A class representing the SearchService data model.
+    /// Describes an Azure Cognitive Search service and its current state.
+    /// </summary>
     public partial class SearchServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SearchServiceData. </summary>

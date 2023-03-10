@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningDatastoreData DeserializeMachineLearningDatastoreData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningDatastoreProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

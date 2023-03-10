@@ -120,6 +120,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmRecoveryPoint DeserializeIaasVmRecoveryPoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryPointType = default;
             Optional<DateTimeOffset> recoveryPointTime = default;
             Optional<string> recoveryPointAdditionalInfo = default;

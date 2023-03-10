@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static FactoryDataFlowData DeserializeFactoryDataFlowData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactoryDataFlowDefinition properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

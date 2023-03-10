@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationKeyVaultProperties DeserializeAutomationKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> keyvaultUri = default;
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;

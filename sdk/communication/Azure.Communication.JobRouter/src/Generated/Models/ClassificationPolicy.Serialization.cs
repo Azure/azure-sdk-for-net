@@ -57,6 +57,10 @@ namespace Azure.Communication.JobRouter.Models
 
         internal static ClassificationPolicy DeserializeClassificationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> fallbackQueueId = default;

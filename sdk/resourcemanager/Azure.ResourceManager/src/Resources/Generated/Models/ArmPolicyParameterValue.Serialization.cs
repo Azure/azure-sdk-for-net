@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmPolicyParameterValue DeserializeArmPolicyParameterValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> value = default;
             foreach (var property in element.EnumerateObject())
             {

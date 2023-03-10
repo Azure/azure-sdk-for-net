@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static RequestReportListResult DeserializeRequestReportListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RequestReportRecordContract>> value = default;
             Optional<long> count = default;
             foreach (var property in element.EnumerateObject())

@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static RoleAssignmentArtifact DeserializeRoleAssignmentArtifact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ArtifactKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
