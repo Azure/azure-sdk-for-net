@@ -41,7 +41,7 @@ UploadBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
 manifest.Config = new OciDescriptor()
 {
     Digest = uploadConfigResult.Digest,
-    SizeInBytes = config.ToMemory().Length,
+    SizeInBytes = uploadConfigResult.SizeInBytes,
     MediaType = "application/vnd.oci.image.config.v1+json"
 };
 
@@ -53,7 +53,7 @@ UploadBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
 manifest.Layers.Add(new OciDescriptor()
 {
     Digest = uploadLayerResult.Digest,
-    SizeInBytes = layer.ToMemory().Length,
+    SizeInBytes = uploadLayerResult.SizeInBytes,
     MediaType = "application/vnd.oci.image.layer.v1.tar"
 });
 
