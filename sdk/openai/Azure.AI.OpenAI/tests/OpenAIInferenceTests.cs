@@ -41,7 +41,7 @@ namespace Azure.AI.OpenAI.Tests
                 Model = "text-embedding-ada-002"
             };
             Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsOptions>());
-            Response<Embeddings> response = await client.GetEmbeddingsAsync(EmbeddingsDeploymentId, embeddingsRequest);
+            Response<Embeddings> response = await client.GetEmbeddingsAsync(embeddingsRequest);
             Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
         }
 
@@ -61,7 +61,7 @@ namespace Azure.AI.OpenAI.Tests
                 Model = "text-ada-003",
             };
             Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
-            Response<Completions> response = await client.GetCompletionsAsync("random_string", requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
             Assert.That(response.Value, Is.Not.Null);
@@ -86,9 +86,7 @@ namespace Azure.AI.OpenAI.Tests
                 },
             };
             Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
-            Response<Completions> response = await client.GetCompletionsAsync(
-                CompletionsDeploymentId,
-                requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
             Assert.That(response.Value, Is.Not.Null);
@@ -108,7 +106,7 @@ namespace Azure.AI.OpenAI.Tests
             requestOptions.Prompt.Add("Hello, world!");
             requestOptions.Prompt.Add("I can have multiple prompts");
             Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
-            Response<Completions> response = await client.GetCompletionsAsync(CompletionsDeploymentId, requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Choices.Count, Is.EqualTo(2));
@@ -121,7 +119,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task SimpleCompletionTest()
         {
             OpenAIClient client = GetClientWithCredential();
-            Response<Completions> response = await client.GetCompletionsAsync(CompletionsDeploymentId, "Hello World!");
+            Response<Completions> response = await client.GetCompletionsAsync("Hello World!");
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
         }
 
@@ -131,10 +129,10 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task EmbeddingTest()
         {
-            OpenAIClient client = GetClient();
+            OpenAIClient client = GetEmbeddingsClient();
             EmbeddingsOptions embeddingsRequest = new EmbeddingsOptions("Your text string goes here");
             Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsOptions>());
-            Response<Embeddings> response = await client.GetEmbeddingsAsync(EmbeddingsDeploymentId, embeddingsRequest);
+            Response<Embeddings> response = await client.GetEmbeddingsAsync(embeddingsRequest);
             Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
         }
 
@@ -158,7 +156,7 @@ namespace Azure.AI.OpenAI.Tests
                 LogProbability = 1,
             };
             int expectedChoiceCount = (requestOptions.SnippetCount ?? 1) * requestOptions.Prompt.Count;
-            Response<Completions> response = await client.GetCompletionsAsync(CompletionsDeploymentId, requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response.GetRawResponse(), Is.Not.Null.Or.Empty);
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
@@ -192,9 +190,7 @@ namespace Azure.AI.OpenAI.Tests
                 Echo = true,
                 LogProbability = 1,
             };
-            Response<Completions> response = await client.GetCompletionsAsync(
-                CompletionsDeploymentId,
-                requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
         }
 
         [RecordedTest]
@@ -213,9 +209,7 @@ namespace Azure.AI.OpenAI.Tests
                 Model = "this is a bogus model parameter in the body",
                 LogProbability = 1,
             };
-            Response<Completions> response = await client.GetCompletionsAsync(
-                CompletionsDeploymentId,
-                requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
             string rawResponse = response.GetRawResponse().Content.ToString();
             Assert.That(rawResponse, Is.Not.Null.Or.Empty);
@@ -236,12 +230,12 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public void RequestFailedExceptionTest()
         {
-            OpenAIClient client = GetClient();
+            OpenAIClient client = GetBadDeploymentClient();
             CompletionsOptions completionsRequest = new CompletionsOptions();
             completionsRequest.Prompt.Add("Hello world");
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest);
+                await client.GetCompletionsAsync(completionsRequest);
             });
             Assert.AreEqual(404, exception.Status);
             Assert.That(exception.ErrorCode, Is.EqualTo("DeploymentNotFound"));
@@ -260,9 +254,7 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 3,
             };
-            Response<Completions> response = await client.GetCompletionsAsync(
-                CompletionsDeploymentId,
-                requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
@@ -284,9 +276,7 @@ namespace Azure.AI.OpenAI.Tests
                 LogProbability = 1,
             };
 
-            Response<StreamingCompletions> response = await client.GetCompletionsStreamingAsync(
-                    CompletionsDeploymentId,
-                    requestOptions);
+            Response<StreamingCompletions> response = await client.GetCompletionsStreamingAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
 
             // StreamingCompletions implements IDisposable; capturing the .Value field of `response` with a `using`

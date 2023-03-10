@@ -46,10 +46,16 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         protected OpenAIClient GetClient() => InstrumentClient(
-            new OpenAIClient(_endpoint, _apiKey, GetInstrumentedClientOptions()));
+            new OpenAIClient(_endpoint, _completionsDeploymentId, _apiKey, GetInstrumentedClientOptions()));
+
+        protected OpenAIClient GetEmbeddingsClient() => InstrumentClient(
+            new OpenAIClient(_endpoint, _embeddingsDeploymentId, _apiKey, GetInstrumentedClientOptions()));
+
+        protected OpenAIClient GetBadDeploymentClient() => InstrumentClient(
+            new OpenAIClient(_endpoint, "BAD_DEPLOYMENT_ID", _apiKey, GetInstrumentedClientOptions()));
 
         protected OpenAIClient GetClientWithCredential() => InstrumentClient(
-            new OpenAIClient(_endpoint, TestEnvironment.Credential, GetInstrumentedClientOptions()));
+            new OpenAIClient(_endpoint, _completionsDeploymentId, TestEnvironment.Credential, GetInstrumentedClientOptions()));
 
         protected OpenAIClient GetPublicOpenAIClient() => InstrumentClient(
             new OpenAIClient(_openAIAuthToken, InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01))) );
