@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_StorageTargetsList()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2022-05-01/examples/StorageTargets_ListByCache.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-01-01/examples/StorageTargets_ListByCache.json
             // this example is just showing the usage of "StorageTargets_ListByCache" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_StorageTargetsGet()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2022-05-01/examples/StorageTargets_Get.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-01-01/examples/StorageTargets_Get.json
             // this example is just showing the usage of "StorageTargets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_StorageTargetsGet()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2022-05-01/examples/StorageTargets_Get.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-01-01/examples/StorageTargets_Get.json
             // this example is just showing the usage of "StorageTargets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_StorageTargetsCreateOrUpdate()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2022-05-01/examples/StorageTargets_CreateOrUpdate.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-01-01/examples/StorageTargets_CreateOrUpdate.json
             // this example is just showing the usage of "StorageTargets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +169,8 @@ NfsAccessPolicy = "rootSquash",
                 Nfs3 = new Nfs3Target()
                 {
                     Target = "10.0.44.44",
-                    UsageModel = "READ_HEAVY_INFREQ",
+                    UsageModel = "READ_ONLY",
+                    VerificationTimer = 30,
                 },
             };
             ArmOperation<StorageTargetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, storageTargetName, data);
@@ -187,7 +188,7 @@ NfsAccessPolicy = "rootSquash",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_StorageTargetsCreateOrUpdateBlobNfs()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2022-05-01/examples/StorageTargets_CreateOrUpdate_BlobNfs.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-01-01/examples/StorageTargets_CreateOrUpdate_BlobNfs.json
             // this example is just showing the usage of "StorageTargets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -221,7 +222,9 @@ NamespacePath = "/blobnfs",
                 BlobNfs = new BlobNfsTarget()
                 {
                     Target = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scgroup/providers/Microsoft.Storage/storageAccounts/blofnfs/blobServices/default/containers/blobnfs"),
-                    UsageModel = "WRITE_WORKLOAD_15",
+                    UsageModel = "READ_WRITE",
+                    VerificationTimer = 28800,
+                    WriteBackTimer = 3600,
                 },
             };
             ArmOperation<StorageTargetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, storageTargetName, data);
@@ -239,7 +242,7 @@ NamespacePath = "/blobnfs",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_StorageTargetsCreateOrUpdateNoJunctions()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2022-05-01/examples/StorageTargets_CreateOrUpdate_NoJunctions.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-01-01/examples/StorageTargets_CreateOrUpdate_NoJunctions.json
             // this example is just showing the usage of "StorageTargets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -266,7 +269,8 @@ NamespacePath = "/blobnfs",
                 Nfs3 = new Nfs3Target()
                 {
                     Target = "10.0.44.44",
-                    UsageModel = "READ_HEAVY_INFREQ",
+                    UsageModel = "READ_ONLY",
+                    VerificationTimer = 30,
                 },
             };
             ArmOperation<StorageTargetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, storageTargetName, data);
