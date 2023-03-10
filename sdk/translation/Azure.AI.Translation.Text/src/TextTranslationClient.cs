@@ -6,7 +6,6 @@ using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.AI.Translation.Text.Models;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Threading;

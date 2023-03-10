@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "这里怎么一回事?" }
             };
-            Response<IReadOnlyList<Models.TransliteratedText>> response =
+            Response<IReadOnlyList<TransliteratedText>> response =
                 await client.TransliterateAsync("zh-Hans", "Hans", "Latn", inputText).ConfigureAwait(false);
             Assert.AreEqual(200, response.GetRawResponse().Status);
         }
@@ -44,7 +44,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "यहएककसौटीहैयहएककसौटीहै" },
                 new InputText { Text = "यहएककसौटीहै" }
             };
-            Response<IReadOnlyList<Models.TransliteratedText>> response = await client.TransliterateAsync("hi", "Deva", "Latn", inputText).ConfigureAwait(false);
+            Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync("hi", "Deva", "Latn", inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsFalse(string.IsNullOrEmpty(response.Value[0].Text));
@@ -61,7 +61,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "hadman" },
                 new InputText { Text = "hukkabar" }
             };
-            Response<IReadOnlyList<Models.TransliteratedText>> response = await client.TransliterateAsync("gu", "latn", "gujr", inputText).ConfigureAwait(false);
+            Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync("gu", "latn", "gujr", inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsFalse(string.IsNullOrEmpty(response.Value[0].Text));

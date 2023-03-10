@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.Translation.Text.Models;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -34,7 +33,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "Hola mundo" }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -53,7 +52,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "This is a test." }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -74,7 +73,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "<span class=notranslate>今天是怎么回事是</span>非常可怕的" }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage, textType: TextTypes.Html).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -93,7 +92,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "The word < mstrans:dictionary translation =\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry." }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -112,7 +111,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "hudha akhtabar." }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: "ar", fromScript: "Latn", toScript: "Latn").ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -132,7 +131,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "ap kaise ho" }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: "hi", fromScript: "Latn", toScript: "Latn").ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -151,7 +150,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "Dies ist ein Test." }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -179,7 +178,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "This is a test." }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -203,7 +202,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "<html><body>This <b>is</b> a test.</body></html>" }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, textType: TextTypes.Html).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -225,7 +224,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "shit this is fucking crazy" }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, profanityAction: profanityAction, profanityMarker: profanityMarkers).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -245,7 +244,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "It is a beautiful morning" }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, includeAlignment: includeAlignment).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -266,7 +265,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "La réponse se trouve dans la traduction automatique. La meilleure technologie de traduction automatique ne peut pas toujours fournir des traductions adaptées à un site ou des utilisateurs comme un être humain. Il suffit de copier et coller un extrait de code n'importe où." }
             };
             TextTranslationClient client = GetClient();
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, includeSentenceLength: includeSentenceLength).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -287,7 +286,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "It is a beautiful morning" }
             };
             TextTranslationClient client = GetClient(endpoint: new Uri(TestEnvironment.CustomEndpoint));
-            Response<IReadOnlyList<Models.TranslatedTextElement>> response =
+            Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -309,7 +308,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "This is a test." }
             };
-            Response<IReadOnlyList<Models.TranslatedTextElement>> translate =
+            Response<IReadOnlyList<TranslatedTextElement>> translate =
                 await client.TranslateAsync(new[] { "cs" }, inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, translate.GetRawResponse().Status);

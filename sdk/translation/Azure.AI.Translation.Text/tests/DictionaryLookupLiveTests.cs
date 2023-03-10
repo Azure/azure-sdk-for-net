@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "fly" }
             };
-            Response<IReadOnlyList<Models.DictionaryLookupElement>> response =
+            Response<IReadOnlyList<DictionaryLookupElement>> response =
                 await client.LookupDictionaryEntriesAsync("en", "es", inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -47,7 +47,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "fly" },
                 new InputText { Text = "fox" }
             };
-            Response<IReadOnlyList<Models.DictionaryLookupElement>> response =
+            Response<IReadOnlyList<DictionaryLookupElement>> response =
                 await client.LookupDictionaryEntriesAsync("en", "es", inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
