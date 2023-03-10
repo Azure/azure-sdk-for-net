@@ -6,37 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f9143d3d3ba0852ac814efb64870dccd-0bf937e7d546d19c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e01ae6b146c1ae583451cf55464e7b76",
+        "traceparent": "00-e10fb6881ee53630edac7042dfdc153f-58e455700c443795-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "44fe6141ed3300be99cab7bc07a5b9f7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "429",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:41 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:23 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "79c672ce-d16c-4a81-8be6-969846a0fb23",
-        "x-ms-ratelimit-remaining-subscription-reads": "11961",
-        "x-ms-request-id": "79c672ce-d16c-4a81-8be6-969846a0fb23",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013442Z:79c672ce-d16c-4a81-8be6-969846a0fb23"
+        "x-ms-correlation-request-id": "d1958ea8-22ff-4e61-91ee-3a9a853a76b7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11915",
+        "x-ms-request-id": "d1958ea8-22ff-4e61-91ee-3a9a853a76b7",
+        "x-ms-routing-request-id": "WESTUS:20230310T063223Z:d1958ea8-22ff-4e61-91ee-3a9a853a76b7"
       },
       "ResponseBody": {
         "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "costcenter": "1000"
-        },
         "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
-        "displayName": "Azure subscription 1",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -46,13 +43,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=Databricks",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=Databricks",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "9f37852907e5b2217d9d5bd856696219",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "5ffc10b1f8e94bed25fedb2c19371d89",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -61,23 +58,23 @@
         "Cache-Control": "no-cache",
         "Content-Length": "17935",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:41 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:23 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ae5163f8-59f1-4478-8ebe-11a459c7dc13",
-        "x-ms-ratelimit-remaining-subscription-reads": "11960",
-        "x-ms-request-id": "9f37852907e5b2217d9d5bd856696219",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013442Z:ae5163f8-59f1-4478-8ebe-11a459c7dc13",
-        "x-ms-version": "1.0.2257.119"
+        "x-ms-correlation-request-id": "b1dc25e9-100d-4fee-b72d-92ed5bae3b23",
+        "x-ms-ratelimit-remaining-subscription-reads": "11914",
+        "x-ms-request-id": "5ffc10b1f8e94bed25fedb2c19371d89",
+        "x-ms-routing-request-id": "WESTUS:20230310T063223Z:b1dc25e9-100d-4fee-b72d-92ed5bae3b23",
+        "x-ms-version": "1.0.2251.115"
       },
       "ResponseBody": {
         "value": [
           {
             "resourceType": "Databricks",
-            "name": "azure_databricks_200000_dbu_hours",
+            "name": "azure_databricks_1million_dbu_hours",
             "terms": [
               "P1Y",
               "P3Y",
@@ -97,13 +94,13 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 172000.0
+                "amount": 730000.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "200000"
+                "value": "1000000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -123,7 +120,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "200,000 DBCUs"
+                "value": "1 Million DBCUs"
               },
               {
                 "name": "MeterId",
@@ -135,7 +132,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "200,000 DBCUs"
+                "value": "1 Million DBCUs"
               },
               {
                 "name": "billingPlans",
@@ -161,7 +158,7 @@
           },
           {
             "resourceType": "Databricks",
-            "name": "azure_databricks_75000_dbu_hours",
+            "name": "azure_databricks_350000_dbu_hours",
             "terms": [
               "P1Y",
               "P3Y",
@@ -179,15 +176,15 @@
               ]
             },
             "msrp": {
-              "p3Y": {
+              "p1Y": {
                 "currencyCode": "USD",
-                "amount": 69000.0
+                "amount": 287000.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "75000"
+                "value": "350000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -207,7 +204,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "75,000 DBCUs"
+                "value": "350,000 DBCUs"
               },
               {
                 "name": "MeterId",
@@ -219,7 +216,340 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "75,000 DBCUs"
+                "value": "350,000 DBCUs"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "Databricks",
+            "name": "azure_databricks_3million_dbu_hours",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2070000.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "3000000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Azure Databricks, Reservation"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Databricks"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Databricks"
+              },
+              {
+                "name": "SkuName",
+                "value": "3 Million DBCUs"
+              },
+              {
+                "name": "MeterId",
+                "value": "b8f04bc8-3a4f-4b3a-9c37-a8f8b92da5d0"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 DBU Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "3 Million DBCUs"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P1Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "Databricks",
+            "name": "azure_databricks_1.5million_dbu_hours",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1050000.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1140000.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1500000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Azure Databricks, Reservation"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Databricks"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Databricks"
+              },
+              {
+                "name": "SkuName",
+                "value": "1.5 Million DBCUs"
+              },
+              {
+                "name": "MeterId",
+                "value": "b8f04bc8-3a4f-4b3a-9c37-a8f8b92da5d0"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 DBU Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "1.5 Million DBCUs"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "Databricks",
+            "name": "azure_databricks_500000_dbu_hours",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 400000.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "500000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Azure Databricks, Reservation"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Databricks"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Databricks"
+              },
+              {
+                "name": "SkuName",
+                "value": "500,000 DBCUs"
+              },
+              {
+                "name": "MeterId",
+                "value": "b8f04bc8-3a4f-4b3a-9c37-a8f8b92da5d0"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 DBU Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "500,000 DBCUs"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "Databricks",
+            "name": "azure_databricks_4.5million_dbu_hours",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2970000.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "4500000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Azure Databricks, Reservation"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Databricks"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Databricks"
+              },
+              {
+                "name": "SkuName",
+                "value": "4.5 Million DBCUs"
+              },
+              {
+                "name": "MeterId",
+                "value": "b8f04bc8-3a4f-4b3a-9c37-a8f8b92da5d0"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 DBU Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "4.5 Million DBCUs"
               },
               {
                 "name": "billingPlans",
@@ -329,7 +659,7 @@
           },
           {
             "resourceType": "Databricks",
-            "name": "azure_databricks_4.5million_dbu_hours",
+            "name": "azure_databricks_2.25million_dbu_hours",
             "terms": [
               "P1Y",
               "P3Y",
@@ -349,13 +679,13 @@
             "msrp": {
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 2970000.0
+                "amount": 1642500.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "4500000"
+                "value": "2250000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -375,7 +705,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "4.5 Million DBCUs"
+                "value": "2.25 Million DBCUs"
               },
               {
                 "name": "MeterId",
@@ -387,7 +717,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "4.5 Million DBCUs"
+                "value": "2.25 Million DBCUs"
               },
               {
                 "name": "billingPlans",
@@ -413,7 +743,7 @@
           },
           {
             "resourceType": "Databricks",
-            "name": "azure_databricks_300000_dbu_hours",
+            "name": "azure_databricks_1.05million_dbu_hours",
             "terms": [
               "P1Y",
               "P3Y",
@@ -433,13 +763,13 @@
             "msrp": {
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 261000.0
+                "amount": 819000.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "300000"
+                "value": "1050000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -459,7 +789,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "300,000 DBCUs"
+                "value": "1.05 Million DBCUs"
               },
               {
                 "name": "MeterId",
@@ -471,7 +801,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "300,000 DBCUs"
+                "value": "1.05 Million DBCUs"
               },
               {
                 "name": "billingPlans",
@@ -497,7 +827,7 @@
           },
           {
             "resourceType": "Databricks",
-            "name": "azure_databricks_1.5million_dbu_hours",
+            "name": "azure_databricks_25000_dbu_hours",
             "terms": [
               "P1Y",
               "P3Y",
@@ -517,17 +847,13 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 1050000.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1140000.0
+                "amount": 23500.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "1500000"
+                "value": "25000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -547,7 +873,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "1.5 Million DBCUs"
+                "value": "25,000 DBCUs"
               },
               {
                 "name": "MeterId",
@@ -559,7 +885,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "1.5 Million DBCUs"
+                "value": "25,000 DBCUs"
               },
               {
                 "name": "billingPlans",
@@ -570,84 +896,7 @@
               {
                 "type": "Term",
                 "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "Databricks",
-            "name": "azure_databricks_3million_dbu_hours",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 2070000.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "3000000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Azure Databricks, Reservation"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Databricks"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Databricks"
-              },
-              {
-                "name": "SkuName",
-                "value": "3 Million DBCUs"
-              },
-              {
-                "name": "MeterId",
-                "value": "b8f04bc8-3a4f-4b3a-9c37-a8f8b92da5d0"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 DBU Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "3 Million DBCUs"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P1Y"
+                  "P3Y"
                 ],
                 "reasonCode": "NotAvailableForSubscription"
               },
@@ -746,7 +995,7 @@
           },
           {
             "resourceType": "Databricks",
-            "name": "azure_databricks_1million_dbu_hours",
+            "name": "azure_databricks_2million_dbu_hours",
             "terms": [
               "P1Y",
               "P3Y",
@@ -766,13 +1015,13 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 730000.0
+                "amount": 1340000.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "1000000"
+                "value": "2000000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -792,7 +1041,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "1 Million DBCUs"
+                "value": "2 Million DBCUs"
               },
               {
                 "name": "MeterId",
@@ -804,7 +1053,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "1 Million DBCUs"
+                "value": "2 Million DBCUs"
               },
               {
                 "name": "billingPlans",
@@ -830,91 +1079,7 @@
           },
           {
             "resourceType": "Databricks",
-            "name": "azure_databricks_500000_dbu_hours",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 400000.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "500000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Azure Databricks, Reservation"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Databricks"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Databricks"
-              },
-              {
-                "name": "SkuName",
-                "value": "500,000 DBCUs"
-              },
-              {
-                "name": "MeterId",
-                "value": "b8f04bc8-3a4f-4b3a-9c37-a8f8b92da5d0"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 DBU Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "500,000 DBCUs"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P3Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              },
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "Databricks",
-            "name": "azure_databricks_1.05million_dbu_hours",
+            "name": "azure_databricks_75000_dbu_hours",
             "terms": [
               "P1Y",
               "P3Y",
@@ -934,13 +1099,13 @@
             "msrp": {
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 819000.0
+                "amount": 69000.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "1050000"
+                "value": "75000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -960,7 +1125,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "1.05 Million DBCUs"
+                "value": "75,000 DBCUs"
               },
               {
                 "name": "MeterId",
@@ -972,7 +1137,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "1.05 Million DBCUs"
+                "value": "75,000 DBCUs"
               },
               {
                 "name": "billingPlans",
@@ -1082,174 +1247,6 @@
           },
           {
             "resourceType": "Databricks",
-            "name": "azure_databricks_100000_dbu_hours",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 89000.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "100000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Azure Databricks, Reservation"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Databricks"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Databricks"
-              },
-              {
-                "name": "SkuName",
-                "value": "100,000 DBCUs"
-              },
-              {
-                "name": "MeterId",
-                "value": "b8f04bc8-3a4f-4b3a-9c37-a8f8b92da5d0"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 DBU Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "100,000 DBCUs"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P3Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              },
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "Databricks",
-            "name": "azure_databricks_2.25million_dbu_hours",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1642500.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "2250000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Azure Databricks, Reservation"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Databricks"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Databricks"
-              },
-              {
-                "name": "SkuName",
-                "value": "2.25 Million DBCUs"
-              },
-              {
-                "name": "MeterId",
-                "value": "b8f04bc8-3a4f-4b3a-9c37-a8f8b92da5d0"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 DBU Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "2.25 Million DBCUs"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P1Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              },
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "Databricks",
             "name": "azure_databricks_150000_dbu_hours",
             "terms": [
               "P1Y",
@@ -1334,7 +1331,7 @@
           },
           {
             "resourceType": "Databricks",
-            "name": "azure_databricks_350000_dbu_hours",
+            "name": "azure_databricks_300000_dbu_hours",
             "terms": [
               "P1Y",
               "P3Y",
@@ -1352,15 +1349,15 @@
               ]
             },
             "msrp": {
-              "p1Y": {
+              "p3Y": {
                 "currencyCode": "USD",
-                "amount": 287000.0
+                "amount": 261000.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "350000"
+                "value": "300000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -1380,7 +1377,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "350,000 DBCUs"
+                "value": "300,000 DBCUs"
               },
               {
                 "name": "MeterId",
@@ -1392,7 +1389,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "350,000 DBCUs"
+                "value": "300,000 DBCUs"
               },
               {
                 "name": "billingPlans",
@@ -1403,7 +1400,7 @@
               {
                 "type": "Term",
                 "values": [
-                  "P3Y"
+                  "P1Y"
                 ],
                 "reasonCode": "NotAvailableForSubscription"
               },
@@ -1418,7 +1415,7 @@
           },
           {
             "resourceType": "Databricks",
-            "name": "azure_databricks_25000_dbu_hours",
+            "name": "azure_databricks_200000_dbu_hours",
             "terms": [
               "P1Y",
               "P3Y",
@@ -1438,13 +1435,13 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 23500.0
+                "amount": 172000.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "25000"
+                "value": "200000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -1464,7 +1461,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "25,000 DBCUs"
+                "value": "200,000 DBCUs"
               },
               {
                 "name": "MeterId",
@@ -1476,7 +1473,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "25,000 DBCUs"
+                "value": "200,000 DBCUs"
               },
               {
                 "name": "billingPlans",
@@ -1586,7 +1583,7 @@
           },
           {
             "resourceType": "Databricks",
-            "name": "azure_databricks_2million_dbu_hours",
+            "name": "azure_databricks_100000_dbu_hours",
             "terms": [
               "P1Y",
               "P3Y",
@@ -1606,13 +1603,13 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 1340000.0
+                "amount": 89000.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "2000000"
+                "value": "100000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -1632,7 +1629,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "2 Million DBCUs"
+                "value": "100,000 DBCUs"
               },
               {
                 "name": "MeterId",
@@ -1644,7 +1641,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "2 Million DBCUs"
+                "value": "100,000 DBCUs"
               },
               {
                 "name": "billingPlans",
@@ -1675,7 +1672,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "738894467",
+    "RandomSeed": "1522546716",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }

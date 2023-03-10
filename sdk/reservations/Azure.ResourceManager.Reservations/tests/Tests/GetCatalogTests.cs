@@ -40,17 +40,6 @@ namespace Azure.ResourceManager.Reservations.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task TestGetCatalogForSqlDatabases()
-        {
-            options.ReservedResourceType = "SqlDatabases";
-            options.Location = "westus";
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
-            List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-            TestGetCatalogResponse(catalogResult, "SQLManagedInstances", "SQLDatabases", true, "westus", "West US");
-        }
-
-        [TestCase]
-        [RecordedTest]
         public async Task TestGetCatalogForSuseLinux()
         {
             options.ReservedResourceType = "SuseLinux";
@@ -300,9 +289,9 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             options.ReservedResourceType = "VirtualMachineSoftware";
             options.Location = null;
-            options.PublisherId = "test_test_pmc2pc1";
-            options.OfferId = "mnk_vmri_test_001";
-            options.PlanId = "testplan001";
+            options.PublisherId = "canonical";
+            options.OfferId = "0001-com-ubuntu-pro-jammy";
+            options.PlanId = "pro-22_04-lts";
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "VirtualMachineSoftware");

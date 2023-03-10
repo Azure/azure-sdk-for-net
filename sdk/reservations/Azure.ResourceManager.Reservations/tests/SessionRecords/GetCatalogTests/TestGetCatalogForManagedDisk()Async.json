@@ -6,37 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ad1de9f30501443a8996ff7a6aa935ca-a914925bc285d7b8-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "0f8328a38e290ca5d6225b7067ea8bda",
+        "traceparent": "00-1e3e4bc1485b26b759de64558eeb39ae-99b97bcb50615447-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "78e440abd61637edb264a53dc902969e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "429",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:43 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:24 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "27e0d640-27f0-4e62-8025-9406ba1b1d63",
-        "x-ms-ratelimit-remaining-subscription-reads": "11955",
-        "x-ms-request-id": "27e0d640-27f0-4e62-8025-9406ba1b1d63",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013443Z:27e0d640-27f0-4e62-8025-9406ba1b1d63"
+        "x-ms-correlation-request-id": "53ad673b-a0ff-4d66-ba56-247caa48bab1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11909",
+        "x-ms-request-id": "53ad673b-a0ff-4d66-ba56-247caa48bab1",
+        "x-ms-routing-request-id": "WESTUS:20230310T063224Z:53ad673b-a0ff-4d66-ba56-247caa48bab1"
       },
       "ResponseBody": {
         "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "costcenter": "1000"
-        },
         "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
-        "displayName": "Azure subscription 1",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -46,13 +43,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=ManagedDisk\u0026location=westeurope",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=ManagedDisk\u0026location=westeurope",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "63b8455ecd915cc3f8f64adf204e731d",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "252d6a8eb51fc53cb6052b6a676bb885",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -61,254 +58,20 @@
         "Cache-Control": "no-cache",
         "Content-Length": "5033",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:43 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "09cae04c-5fb7-46fa-a8b7-15761ad24a13",
-        "x-ms-ratelimit-remaining-subscription-reads": "11954",
-        "x-ms-request-id": "63b8455ecd915cc3f8f64adf204e731d",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013444Z:09cae04c-5fb7-46fa-a8b7-15761ad24a13",
-        "x-ms-version": "1.0.2257.119"
+        "x-ms-correlation-request-id": "25d474f8-f435-41b0-af5f-3ca19756734f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11908",
+        "x-ms-request-id": "252d6a8eb51fc53cb6052b6a676bb885",
+        "x-ms-routing-request-id": "WESTUS:20230310T063225Z:25d474f8-f435-41b0-af5f-3ca19756734f",
+        "x-ms-version": "1.0.2251.115"
       },
       "ResponseBody": {
         "value": [
-          {
-            "resourceType": "ManagedDisk",
-            "name": "premium_ssd_managed_disks_p70",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 22596.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Premium SSD Managed Disks"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Premium SSD Managed Disks"
-              },
-              {
-                "name": "SkuName",
-                "value": "P70"
-              },
-              {
-                "name": "MeterId",
-                "value": "867b9d68-98cf-43d6-b5a7-89777b45aa1a"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Disk/Month"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "P70"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P3Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              },
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "ManagedDisk",
-            "name": "premium_ssd_managed_disks_p30",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1695.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Premium SSD Managed Disks"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Premium SSD Managed Disks"
-              },
-              {
-                "name": "SkuName",
-                "value": "P30"
-              },
-              {
-                "name": "MeterId",
-                "value": "68b524ab-0f59-43d2-b8a4-6da7575ada4e"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Disk/Month"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "P30"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P3Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              },
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "ManagedDisk",
-            "name": "premium_ssd_managed_disks_p50",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 6214.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Premium SSD Managed Disks"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Premium SSD Managed Disks"
-              },
-              {
-                "name": "SkuName",
-                "value": "P50"
-              },
-              {
-                "name": "MeterId",
-                "value": "b79b30e8-7f85-4411-9c06-161c7a10c419"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Disk/Month"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "P50"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P3Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              },
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
           {
             "resourceType": "ManagedDisk",
             "name": "premium_ssd_managed_disks_p80",
@@ -467,6 +230,84 @@
           },
           {
             "resourceType": "ManagedDisk",
+            "name": "premium_ssd_managed_disks_p50",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 6214.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Premium SSD Managed Disks"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Premium SSD Managed Disks"
+              },
+              {
+                "name": "SkuName",
+                "value": "P50"
+              },
+              {
+                "name": "MeterId",
+                "value": "b79b30e8-7f85-4411-9c06-161c7a10c419"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Disk/Month"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P50"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "ManagedDisk",
             "name": "premium_ssd_managed_disks_p40",
             "terms": [
               "P1Y",
@@ -542,6 +383,162 @@
                 "reasonCode": "NotAvailableForSubscription"
               }
             ]
+          },
+          {
+            "resourceType": "ManagedDisk",
+            "name": "premium_ssd_managed_disks_p30",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1695.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Premium SSD Managed Disks"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Premium SSD Managed Disks"
+              },
+              {
+                "name": "SkuName",
+                "value": "P30"
+              },
+              {
+                "name": "MeterId",
+                "value": "68b524ab-0f59-43d2-b8a4-6da7575ada4e"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Disk/Month"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P30"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "ManagedDisk",
+            "name": "premium_ssd_managed_disks_p70",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 22596.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Premium SSD Managed Disks"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Premium SSD Managed Disks"
+              },
+              {
+                "name": "SkuName",
+                "value": "P70"
+              },
+              {
+                "name": "MeterId",
+                "value": "867b9d68-98cf-43d6-b5a7-89777b45aa1a"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Disk/Month"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P70"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
           }
         ],
         "totalItems": 6
@@ -550,7 +547,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1833779656",
+    "RandomSeed": "88455215",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }

@@ -6,34 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-008d58c12d95a4b9ee101a67340e6d08-c98f9afc31a96b1c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "cb12007f2aa70babcda2400810724ff9",
+        "traceparent": "00-54884d8b8a6c39cb447e2760c6989b91-169d968186b068fe-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "93b0355f48e2bb46651f91ee69a9f28a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:14:22 GMT",
+        "Date": "Fri, 10 Mar 2023 06:38:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d0ee021e-aab5-415b-8e70-475caa51e282",
+        "x-ms-correlation-request-id": "0335d81d-9fe6-40ec-a4e0-cef0e6d2d3a2",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "d0ee021e-aab5-415b-8e70-475caa51e282",
-        "x-ms-routing-request-id": "WESTCENTRALUS:20220516T231423Z:d0ee021e-aab5-415b-8e70-475caa51e282"
+        "x-ms-request-id": "0335d81d-9fe6-40ec-a4e0-cef0e6d2d3a2",
+        "x-ms-routing-request-id": "WESTUS:20230310T063830Z:0335d81d-9fe6-40ec-a4e0-cef0e6d2d3a2"
       },
       "ResponseBody": {
         "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
-        "displayName": "Azure subscription 1",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -43,40 +43,3907 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=VirtualMachineSoftware\u0026publisherId=test_test_pmc2pc1\u0026offerId=mnk_vmri_test_001\u0026planId=testplan001",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=VirtualMachineSoftware\u0026publisherId=canonical\u0026offerId=0001-com-ubuntu-pro-jammy\u0026planId=pro-22_04-lts",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-cf5887920b97ef71a1ab7243c27f27f8-ab54b12105a36d0d-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "cc0d152e72edafcd299a4a1eb7e88e4c",
+        "traceparent": "00-736794dcfca5df979e229ce20b6a55b8-0568a3392d587bb4-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "95b4691939d85167cb15226ec4b3db9b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "28873",
+        "Content-Length": "56079",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:14:26 GMT",
+        "Date": "Fri, 10 Mar 2023 06:38:32 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "8264b57a-1272-4d66-9a39-b4e0ac77a4b4",
+        "x-ms-correlation-request-id": "d92aaed5-40f0-4816-9c80-724a69c2fd59",
         "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "cc0d152e72edafcd299a4a1eb7e88e4c",
-        "x-ms-routing-request-id": "WESTCENTRALUS:20220516T231427Z:8264b57a-1272-4d66-9a39-b4e0ac77a4b4",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-request-id": "95b4691939d85167cb15226ec4b3db9b",
+        "x-ms-routing-request-id": "WESTUS:20230310T063833Z:d92aaed5-40f0-4816-9c80-724a69c2fd59",
+        "x-ms-version": "1.0.2251.115"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.10core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002210core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002210\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.1core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00221core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.72core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002272core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002272\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.2core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00222core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u00222\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.4core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00224core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u00224\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.sharedcore\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022sharedcore\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u0022shared\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.36core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002236core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002236\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.416core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022416core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u0022416\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.44core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002244core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002244\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.80core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002280core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002280\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.208core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022208core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u0022208\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.120core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022120core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u0022120\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.48core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002248core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002248\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.20core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002220core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002220\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.6core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00226core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u00226\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.12core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002212core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002212\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.192core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022192core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u0022192\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.128core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022128core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u0022128\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.96core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002296core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002296\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.64core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002264core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002264\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.8core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00228core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u00228\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.60core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002260core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002260\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.24core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002224core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002224\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.16core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002216core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002216\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.32core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002232core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002232\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]},{\u0022resourceType\u0022:\u0022VirtualMachineSoftware\u0022,\u0022name\u0022:\u0022test_test_pmc2pc1.mnk_vmri_test_001.testplan001.40core\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022p5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002240core\u0022},{\u0022name\u0022:\u0022vCpu\u0022,\u0022value\u0022:\u002240\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022MNK VMRI Test 001 - Test Plan 001\u0022},{\u0022name\u0022:\u0022PublisherId\u0022,\u0022value\u0022:\u0022test_test_pmc2pc1\u0022},{\u0022name\u0022:\u0022OfferId\u0022,\u0022value\u0022:\u0022mnk_vmri_test_001\u0022},{\u0022name\u0022:\u0022PlanId\u0022,\u0022value\u0022:\u0022testplan001\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022{\\\u0022P1Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P3Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022],\\\u0022P5Y\\\u0022:[\\\u0022Monthly\\\u0022,\\\u0022Upfront\\\u0022]}\u0022},{\u0022name\u0022:\u0022LegalTermsUri\u0022,\u0022value\u0022:\u0022https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4SoJT\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForOffer\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.1core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "1core"
+              },
+              {
+                "name": "vCpu",
+                "value": "1"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.208core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "208core"
+              },
+              {
+                "name": "vCpu",
+                "value": "208"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.12core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "12core"
+              },
+              {
+                "name": "vCpu",
+                "value": "12"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.6core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "6core"
+              },
+              {
+                "name": "vCpu",
+                "value": "6"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.96core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "96core"
+              },
+              {
+                "name": "vCpu",
+                "value": "96"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.128core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "128core"
+              },
+              {
+                "name": "vCpu",
+                "value": "128"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.176core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "176core"
+              },
+              {
+                "name": "vCpu",
+                "value": "176"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.192core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "192core"
+              },
+              {
+                "name": "vCpu",
+                "value": "192"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.4core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "4core"
+              },
+              {
+                "name": "vCpu",
+                "value": "4"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.30core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "30core"
+              },
+              {
+                "name": "vCpu",
+                "value": "30"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.56core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "56core"
+              },
+              {
+                "name": "vCpu",
+                "value": "56"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.40core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "40core"
+              },
+              {
+                "name": "vCpu",
+                "value": "40"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.152core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "152core"
+              },
+              {
+                "name": "vCpu",
+                "value": "152"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.20core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "20core"
+              },
+              {
+                "name": "vCpu",
+                "value": "20"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.sharedcore",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "sharedcore"
+              },
+              {
+                "name": "vCpu",
+                "value": "shared"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.72core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "72core"
+              },
+              {
+                "name": "vCpu",
+                "value": "72"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.28core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "28core"
+              },
+              {
+                "name": "vCpu",
+                "value": "28"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.288core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "288core"
+              },
+              {
+                "name": "vCpu",
+                "value": "288"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.80core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "80core"
+              },
+              {
+                "name": "vCpu",
+                "value": "80"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.36core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "36core"
+              },
+              {
+                "name": "vCpu",
+                "value": "36"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.52core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "52core"
+              },
+              {
+                "name": "vCpu",
+                "value": "52"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.2core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "2core"
+              },
+              {
+                "name": "vCpu",
+                "value": "2"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.416core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "416core"
+              },
+              {
+                "name": "vCpu",
+                "value": "416"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.420core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "420core"
+              },
+              {
+                "name": "vCpu",
+                "value": "420"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.76core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "76core"
+              },
+              {
+                "name": "vCpu",
+                "value": "76"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.112core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "112core"
+              },
+              {
+                "name": "vCpu",
+                "value": "112"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.48core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "48core"
+              },
+              {
+                "name": "vCpu",
+                "value": "48"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.120core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "120core"
+              },
+              {
+                "name": "vCpu",
+                "value": "120"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.FreeTrial",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "FreeTrial"
+              },
+              {
+                "name": "vCpu",
+                "value": "FreeTrial"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P1Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.64core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "64core"
+              },
+              {
+                "name": "vCpu",
+                "value": "64"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.240core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "240core"
+              },
+              {
+                "name": "vCpu",
+                "value": "240"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.352core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "352core"
+              },
+              {
+                "name": "vCpu",
+                "value": "352"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.92core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "92core"
+              },
+              {
+                "name": "vCpu",
+                "value": "92"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.384core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "384core"
+              },
+              {
+                "name": "vCpu",
+                "value": "384"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.124core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "124core"
+              },
+              {
+                "name": "vCpu",
+                "value": "124"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.100core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "100core"
+              },
+              {
+                "name": "vCpu",
+                "value": "100"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.104core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "104core"
+              },
+              {
+                "name": "vCpu",
+                "value": "104"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.10core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "10core"
+              },
+              {
+                "name": "vCpu",
+                "value": "10"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.32core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "32core"
+              },
+              {
+                "name": "vCpu",
+                "value": "32"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.180core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "180core"
+              },
+              {
+                "name": "vCpu",
+                "value": "180"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.68core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "68core"
+              },
+              {
+                "name": "vCpu",
+                "value": "68"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.144core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "144core"
+              },
+              {
+                "name": "vCpu",
+                "value": "144"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.58core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "58core"
+              },
+              {
+                "name": "vCpu",
+                "value": "58"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.16core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "16core"
+              },
+              {
+                "name": "vCpu",
+                "value": "16"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.44core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "44core"
+              },
+              {
+                "name": "vCpu",
+                "value": "44"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.90core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "90core"
+              },
+              {
+                "name": "vCpu",
+                "value": "90"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.24core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "24core"
+              },
+              {
+                "name": "vCpu",
+                "value": "24"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.160core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "160core"
+              },
+              {
+                "name": "vCpu",
+                "value": "160"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.60core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "60core"
+              },
+              {
+                "name": "vCpu",
+                "value": "60"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.8core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "8core"
+              },
+              {
+                "name": "vCpu",
+                "value": "8"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.84core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "84core"
+              },
+              {
+                "name": "vCpu",
+                "value": "84"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          },
+          {
+            "resourceType": "VirtualMachineSoftware",
+            "name": "canonical.0001-com-ubuntu-pro-jammy.pro-22_04-lts.88core",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p3Y": [
+                "Monthly",
+                "Upfront"
+              ],
+              "p5Y": [
+                "Monthly",
+                "Upfront"
+              ]
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "VirtualMachineSoftware - Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "MeterId",
+                "value": "88core"
+              },
+              {
+                "name": "vCpu",
+                "value": "88"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ubuntu Pro 22.04 LTS - Ubuntu Pro 22.04 LTS"
+              },
+              {
+                "name": "PublisherId",
+                "value": "canonical"
+              },
+              {
+                "name": "OfferId",
+                "value": "0001-com-ubuntu-pro-jammy"
+              },
+              {
+                "name": "PlanId",
+                "value": "pro-22_04-lts"
+              },
+              {
+                "name": "billingPlans",
+                "value": "{\u0022P1Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P3Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022],\u0022P5Y\u0022:[\u0022Monthly\u0022,\u0022Upfront\u0022]}"
+              },
+              {
+                "name": "LegalTermsUri",
+                "value": "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWWRdd"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForOffer"
+              }
+            ]
+          }
+        ],
+        "totalItems": 0
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "1922542385",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1264805445",
+    "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }

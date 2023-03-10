@@ -6,37 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-05b5b6b682d5ae364fe75c9276958ee0-6f5c63027ec4b296-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "2172280e13eb38476534d2ccd45ea174",
+        "traceparent": "00-a3b4a78b33ff4e4ed9ab75347999b558-5759cb2f86781c6b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "85b66cbe3216ddc1ba0c1554571f7240",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "429",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:19 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "36836526-d82c-4569-8767-a0877fddc008",
-        "x-ms-ratelimit-remaining-subscription-reads": "11982",
-        "x-ms-request-id": "36836526-d82c-4569-8767-a0877fddc008",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013419Z:36836526-d82c-4569-8767-a0877fddc008"
+        "x-ms-correlation-request-id": "579ca395-b69a-47a8-ba75-863566471f1e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11974",
+        "x-ms-request-id": "579ca395-b69a-47a8-ba75-863566471f1e",
+        "x-ms-routing-request-id": "WESTUS:20230310T063201Z:579ca395-b69a-47a8-ba75-863566471f1e"
       },
       "ResponseBody": {
         "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "costcenter": "1000"
-        },
         "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
-        "displayName": "Azure subscription 1",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -46,14 +43,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=DedicatedHost\u0026location=westeurope",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=DedicatedHost\u0026location=westeurope",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f66411a10cdea42cab3f242c5fa34ab2-249293834d4b68d0-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "95a7003b58ebbea37103f03de286e1a0",
+        "traceparent": "00-7390f30c1ca27fd7498067df16a77c51-f722b19a18828c52-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "d482fbfbbd2435335e9fb1be18912229",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -62,2110 +59,20 @@
         "Cache-Control": "no-cache",
         "Content-Length": "36914",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:19 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1d86d346-7ba3-4e00-939d-a9a31b440ba0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11981",
-        "x-ms-request-id": "95a7003b58ebbea37103f03de286e1a0",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013419Z:1d86d346-7ba3-4e00-939d-a9a31b440ba0",
-        "x-ms-version": "1.0.2257.119"
+        "x-ms-correlation-request-id": "c931f793-4daa-4e20-a1f8-71a70714c293",
+        "x-ms-ratelimit-remaining-subscription-reads": "11973",
+        "x-ms-request-id": "d482fbfbbd2435335e9fb1be18912229",
+        "x-ms-routing-request-id": "WESTUS:20230310T063201Z:c931f793-4daa-4e20-a1f8-71a70714c293",
+        "x-ms-version": "1.0.2251.115"
       },
       "ResponseBody": {
         "value": [
-          {
-            "resourceType": "DedicatedHost",
-            "name": "nvsv3_type1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 35152.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 72501.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "48"
-              },
-              {
-                "name": "RAM",
-                "value": "448"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "NVSv3 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "48"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "48"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "NVSv3 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "NVSv3 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "NVsv3 Type1"
-              },
-              {
-                "name": "MeterId",
-                "value": "6126df12-3ffe-52e4-a90e-6e60e53e4f6b"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "NVsv3 Type1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "easv4_type1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 41239.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 81877.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "96"
-              },
-              {
-                "name": "RAM",
-                "value": "672"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Easv4 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "96"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "96"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Easv4 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Easv4 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Easv4 Type1"
-              },
-              {
-                "name": "MeterId",
-                "value": "70d9757c-b9ea-50f9-b46f-f9c9cd392d10"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Easv4 Type1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "easv4_type2",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 41239.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 81877.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "96"
-              },
-              {
-                "name": "RAM",
-                "value": "768"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Easv4 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "96"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "96"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Easv4 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Easv4 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Easv4 Type2"
-              },
-              {
-                "name": "MeterId",
-                "value": "921826a3-9989-5f61-852b-34b588e3e5b7"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Easv4 Type2"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "lsv2_type1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 45667.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 90976.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "80"
-              },
-              {
-                "name": "RAM",
-                "value": "640"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "LSv2 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "80"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "80"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "LSv2 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "LSv2 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Lsv2 Type1"
-              },
-              {
-                "name": "MeterId",
-                "value": "30a9653f-74d9-5d41-8ddf-afe7f0706422"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Lsv2 Type1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "nvasv4_type1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 50292.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 103728.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "112"
-              },
-              {
-                "name": "RAM",
-                "value": "448"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "NVasv4 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "112"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "112"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "NVasv4 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "NVasv4 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "NVasv4 Type1"
-              },
-              {
-                "name": "MeterId",
-                "value": "951823ca-50d5-5e91-b0da-d758104bdaaa"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "NVasv4 Type1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "ddsv4_type 1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 27678.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 56613.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "64"
-              },
-              {
-                "name": "RAM",
-                "value": "504"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Ddsv4 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "64"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "64"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Ddsv4 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Ddsv4 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Ddsv4 Type 1"
-              },
-              {
-                "name": "MeterId",
-                "value": "3cc38f4f-d439-53e6-9c15-07e98398f8a7"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Ddsv4 Type 1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "ddsv4_type2",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 32867.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 67228.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "76"
-              },
-              {
-                "name": "RAM",
-                "value": "768"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Ddsv4 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "76"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "76"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Ddsv4 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Ddsv4 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Ddsv4 Type 2"
-              },
-              {
-                "name": "MeterId",
-                "value": "b0b5fab7-08f9-5bc8-bb8b-4fe81d265deb"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Ddsv4 Type 2"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "msv2_type1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 360226.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 521706.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "416"
-              },
-              {
-                "name": "RAM",
-                "value": "5700"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "MSv2 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "416"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "416"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "MSv2 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "MSv2 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Msv2 Type1"
-              },
-              {
-                "name": "MeterId",
-                "value": "fd6710fb-f227-5c90-8dd2-aca2e2df9f75"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Msv2 Type1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "msmv2_type1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 720379.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1043307.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "416"
-              },
-              {
-                "name": "RAM",
-                "value": "11400"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "MSv2 Series HM Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "416"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "416"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "MSv2 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "MSv2 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Msmv2 Type1"
-              },
-              {
-                "name": "MeterId",
-                "value": "401564d5-9706-5363-acf2-5672836bc5f8"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Msmv2 Type1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "msv2medmem type1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 101085.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 146399.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "128"
-              },
-              {
-                "name": "RAM",
-                "value": "2048"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "MSv2 Series MedMem Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "128"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "128"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "MSv2 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "MSv2 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Msv2MedMem Type1"
-              },
-              {
-                "name": "MeterId",
-                "value": "544c8678-67b9-56e0-b6a4-06f3c98ed11f"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Msv2MedMem Type1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "msmv2medmem type1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 205542.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 297681.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "128"
-              },
-              {
-                "name": "RAM",
-                "value": "4096"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "MSv2 Series MedMem HM Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "128"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "128"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "MSv2 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "MSv2 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Msmv2MedMem Type1"
-              },
-              {
-                "name": "MeterId",
-                "value": "1a160f23-3056-5f52-a0eb-9da20bca5c6b"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Msmv2MedMem Type1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "dasv4_type1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 35452.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 72795.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "96"
-              },
-              {
-                "name": "RAM",
-                "value": "384"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Dasv4 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "96"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "96"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Dasv4 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Dasv4 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Dasv4 Type1"
-              },
-              {
-                "name": "MeterId",
-                "value": "d46ff7a2-9b8a-5628-b5e6-0990d81f28c1"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Dasv4 Type1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "dasv4_type2",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 31764.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 61074.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "96"
-              },
-              {
-                "name": "RAM",
-                "value": "768"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Dasv4 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "96"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "96"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Dasv4 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Dasv4 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Dasv4 Type2"
-              },
-              {
-                "name": "MeterId",
-                "value": "5a6013da-95f2-51dd-9636-98b115cb6482"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Dasv4 Type2"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "fsv2_type2",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 21720.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 43562.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "72"
-              },
-              {
-                "name": "RAM",
-                "value": "144"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "FSv2 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "72"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "72"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "FSv2 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "FSv2 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Fsv2 Type2"
-              },
-              {
-                "name": "MeterId",
-                "value": "264596ce-4232-4cc0-bcc5-acecbea314c6"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Fsv2 Type2"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "fsv2 type3",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 25368.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 47725.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "92"
-              },
-              {
-                "name": "RAM",
-                "value": "504"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "FSv2 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "92"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "92"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "FSv2 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "FSv2 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Fsv2 Type3"
-              },
-              {
-                "name": "MeterId",
-                "value": "7ef95137-d2c8-5fd7-a332-f0237d1ab746"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Fsv2 Type3"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "fsv2_type4",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 27504.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 51223.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "100"
-              },
-              {
-                "name": "RAM",
-                "value": "768"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "FSv2 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "100"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "100"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "FSv2 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "FSv2 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Fsv2 Type4"
-              },
-              {
-                "name": "MeterId",
-                "value": "3580a129-065d-5759-8684-05a67942471b"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Fsv2 Type4"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "esv3_type3",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 34369.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 68237.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "80"
-              },
-              {
-                "name": "RAM",
-                "value": "504"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "ESv3 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "80"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "80"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "ESv3 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "ESv3 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Esv3 Type3"
-              },
-              {
-                "name": "MeterId",
-                "value": "c70c6585-acbe-59e0-9c35-7ecf707c8432"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Esv3 Type3"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "esv3_type4",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 36088.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 71649.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "84"
-              },
-              {
-                "name": "RAM",
-                "value": "768"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "ESv3 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "84"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "84"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "ESv3 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "ESv3 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Esv3 Type4"
-              },
-              {
-                "name": "MeterId",
-                "value": "584380e1-8fdb-58ad-972a-aa818b5201fa"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Esv3 Type4"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "edsv4_type 1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 35208.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 72016.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "64"
-              },
-              {
-                "name": "RAM",
-                "value": "504"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Edsv4 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "64"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "64"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Edsv4 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Edsv4 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Edsv4 Type 1"
-              },
-              {
-                "name": "MeterId",
-                "value": "cf999c52-9dd3-56cf-8cb5-9fe872866821"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Edsv4 Type 1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "edsv4_type2",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 41809.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 85519.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "76"
-              },
-              {
-                "name": "RAM",
-                "value": "768"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Edsv4 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "76"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "76"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Edsv4 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Edsv4 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Edsv4 Type 2"
-              },
-              {
-                "name": "MeterId",
-                "value": "b8cfa9d7-1555-5615-bce5-e8b2b61e4227"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Edsv4 Type 2"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "dsv4_type1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 26152.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 50530.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "80"
-              },
-              {
-                "name": "RAM",
-                "value": "504"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "DSv4 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "80"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "80"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "DSv4 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "DSv4 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Dsv4 Type1"
-              },
-              {
-                "name": "MeterId",
-                "value": "96f8aa19-9ef8-5ba1-bdd0-55a2cfd67111"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Dsv4 Type1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
-            "name": "dsv4_type2",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 32690.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 63163.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "100"
-              },
-              {
-                "name": "RAM",
-                "value": "768"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "DSv4 Series Dedicated Host"
-              },
-              {
-                "name": "vCpu",
-                "value": "100"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "100"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "DSv4 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "DSv4 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Dsv4 Type2"
-              },
-              {
-                "name": "MeterId",
-                "value": "c8ba037d-c408-58de-8ad3-47d9d5e04e43"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Dsv4 Type2"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
           {
             "resourceType": "DedicatedHost",
             "name": "dsv3_type3",
@@ -2358,7 +265,7 @@
           },
           {
             "resourceType": "DedicatedHost",
-            "name": "ms_type1",
+            "name": "fsv2 type3",
             "terms": [
               "P1Y",
               "P3Y",
@@ -2384,49 +291,49 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 104341.0
+                "amount": 25368.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 151114.0
+                "amount": 47725.0
               }
             },
             "skuProperties": [
               {
                 "name": "Cores",
-                "value": "128"
+                "value": "92"
               },
               {
                 "name": "RAM",
-                "value": "2048"
+                "value": "504"
               },
               {
                 "name": "ReservationsAutofitGroup",
-                "value": "MS Series Dedicated Host"
+                "value": "FSv2 Series Dedicated Host"
               },
               {
                 "name": "vCpu",
-                "value": "128"
+                "value": "92"
               },
               {
                 "name": "ReservationsAutofitRatio",
-                "value": "128"
+                "value": "92"
               },
               {
                 "name": "ProductShortName",
-                "value": "MS Series Dedicated Host"
+                "value": "FSv2 Series Dedicated Host"
               },
               {
                 "name": "ProductTitle",
-                "value": "MS Series Dedicated Host"
+                "value": "FSv2 Series Dedicated Host"
               },
               {
                 "name": "SkuName",
-                "value": "Ms Type1"
+                "value": "Fsv2 Type3"
               },
               {
                 "name": "MeterId",
-                "value": "73dc0918-463c-54ce-a4f4-087d8ba4eac8"
+                "value": "7ef95137-d2c8-5fd7-a332-f0237d1ab746"
               },
               {
                 "name": "MeterType",
@@ -2434,7 +341,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "Ms Type1"
+                "value": "Fsv2 Type3"
               },
               {
                 "name": "billingPlans",
@@ -2453,7 +360,7 @@
           },
           {
             "resourceType": "DedicatedHost",
-            "name": "msm_type1",
+            "name": "fsv2_type2",
             "terms": [
               "P1Y",
               "P3Y",
@@ -2479,49 +386,49 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 208864.0
+                "amount": 21720.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 302493.0
+                "amount": 43562.0
               }
             },
             "skuProperties": [
               {
                 "name": "Cores",
-                "value": "128"
+                "value": "72"
               },
               {
                 "name": "RAM",
-                "value": "3892"
+                "value": "144"
               },
               {
                 "name": "ReservationsAutofitGroup",
-                "value": "MS Series HM Dedicated Host"
+                "value": "FSv2 Series Dedicated Host"
               },
               {
                 "name": "vCpu",
-                "value": "128"
+                "value": "72"
               },
               {
                 "name": "ReservationsAutofitRatio",
-                "value": "128"
+                "value": "72"
               },
               {
                 "name": "ProductShortName",
-                "value": "MS Series Dedicated Host"
+                "value": "FSv2 Series Dedicated Host"
               },
               {
                 "name": "ProductTitle",
-                "value": "MS Series Dedicated Host"
+                "value": "FSv2 Series Dedicated Host"
               },
               {
                 "name": "SkuName",
-                "value": "Msm Type1"
+                "value": "Fsv2 Type2"
               },
               {
                 "name": "MeterId",
-                "value": "a7908b97-6f85-5d14-945a-25d069861ebb"
+                "value": "264596ce-4232-4cc0-bcc5-acecbea314c6"
               },
               {
                 "name": "MeterType",
@@ -2529,7 +436,292 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "Msm Type1"
+                "value": "Fsv2 Type2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "fsv2_type4",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 27504.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 51223.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "100"
+              },
+              {
+                "name": "RAM",
+                "value": "768"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "FSv2 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "100"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "100"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "FSv2 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "FSv2 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Fsv2 Type4"
+              },
+              {
+                "name": "MeterId",
+                "value": "3580a129-065d-5759-8684-05a67942471b"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Fsv2 Type4"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "dasv4_type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 35452.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 72795.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "96"
+              },
+              {
+                "name": "RAM",
+                "value": "384"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Dasv4 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "96"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "96"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Dasv4 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Dasv4 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Dasv4 Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "d46ff7a2-9b8a-5628-b5e6-0990d81f28c1"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Dasv4 Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "dasv4_type2",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 31764.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 61074.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "96"
+              },
+              {
+                "name": "RAM",
+                "value": "768"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Dasv4 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "96"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "96"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Dasv4 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Dasv4 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Dasv4 Type2"
+              },
+              {
+                "name": "MeterId",
+                "value": "5a6013da-95f2-51dd-9636-98b115cb6482"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Dasv4 Type2"
               },
               {
                 "name": "billingPlans",
@@ -2833,6 +1025,1811 @@
           },
           {
             "resourceType": "DedicatedHost",
+            "name": "edsv4_type 1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 35208.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 72016.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "64"
+              },
+              {
+                "name": "RAM",
+                "value": "504"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Edsv4 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "64"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "64"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Edsv4 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Edsv4 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Edsv4 Type 1"
+              },
+              {
+                "name": "MeterId",
+                "value": "cf999c52-9dd3-56cf-8cb5-9fe872866821"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Edsv4 Type 1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "edsv4_type2",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 41809.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 85519.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "76"
+              },
+              {
+                "name": "RAM",
+                "value": "768"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Edsv4 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "76"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "76"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Edsv4 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Edsv4 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Edsv4 Type 2"
+              },
+              {
+                "name": "MeterId",
+                "value": "b8cfa9d7-1555-5615-bce5-e8b2b61e4227"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Edsv4 Type 2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "nvsv3_type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 35152.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 72501.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "48"
+              },
+              {
+                "name": "RAM",
+                "value": "448"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "NVSv3 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "48"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "48"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "NVSv3 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "NVSv3 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "NVsv3 Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "6126df12-3ffe-52e4-a90e-6e60e53e4f6b"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "NVsv3 Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "lsv2_type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 45667.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 90976.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "80"
+              },
+              {
+                "name": "RAM",
+                "value": "640"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "LSv2 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "80"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "80"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "LSv2 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "LSv2 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Lsv2 Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "30a9653f-74d9-5d41-8ddf-afe7f0706422"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Lsv2 Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "dsv4_type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 26152.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 50530.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "80"
+              },
+              {
+                "name": "RAM",
+                "value": "504"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "DSv4 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "80"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "80"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "DSv4 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "DSv4 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Dsv4 Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "96f8aa19-9ef8-5ba1-bdd0-55a2cfd67111"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Dsv4 Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "dsv4_type2",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 32690.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 63163.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "100"
+              },
+              {
+                "name": "RAM",
+                "value": "768"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "DSv4 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "100"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "100"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "DSv4 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "DSv4 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Dsv4 Type2"
+              },
+              {
+                "name": "MeterId",
+                "value": "c8ba037d-c408-58de-8ad3-47d9d5e04e43"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Dsv4 Type2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "ddsv4_type 1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 27678.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 56613.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "64"
+              },
+              {
+                "name": "RAM",
+                "value": "504"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Ddsv4 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "64"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "64"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Ddsv4 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Ddsv4 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Ddsv4 Type 1"
+              },
+              {
+                "name": "MeterId",
+                "value": "3cc38f4f-d439-53e6-9c15-07e98398f8a7"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ddsv4 Type 1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "ddsv4_type2",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 32867.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 67228.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "76"
+              },
+              {
+                "name": "RAM",
+                "value": "768"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Ddsv4 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "76"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "76"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Ddsv4 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Ddsv4 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Ddsv4 Type 2"
+              },
+              {
+                "name": "MeterId",
+                "value": "b0b5fab7-08f9-5bc8-bb8b-4fe81d265deb"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ddsv4 Type 2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "msmv2_type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 720379.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1043307.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "416"
+              },
+              {
+                "name": "RAM",
+                "value": "11400"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "MSv2 Series HM Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "416"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "416"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "MSv2 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "MSv2 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Msmv2 Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "401564d5-9706-5363-acf2-5672836bc5f8"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Msmv2 Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "msv2_type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 360226.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 521706.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "416"
+              },
+              {
+                "name": "RAM",
+                "value": "5700"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "MSv2 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "416"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "416"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "MSv2 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "MSv2 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Msv2 Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "fd6710fb-f227-5c90-8dd2-aca2e2df9f75"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Msv2 Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "msmv2medmem type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 205542.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 297681.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "128"
+              },
+              {
+                "name": "RAM",
+                "value": "4096"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "MSv2 Series MedMem HM Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "128"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "128"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "MSv2 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "MSv2 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Msmv2MedMem Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "1a160f23-3056-5f52-a0eb-9da20bca5c6b"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Msmv2MedMem Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "msv2medmem type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 101085.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 146399.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "128"
+              },
+              {
+                "name": "RAM",
+                "value": "2048"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "MSv2 Series MedMem Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "128"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "128"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "MSv2 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "MSv2 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Msv2MedMem Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "544c8678-67b9-56e0-b6a4-06f3c98ed11f"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Msv2MedMem Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "nvasv4_type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 50292.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 103728.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "112"
+              },
+              {
+                "name": "RAM",
+                "value": "448"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "NVasv4 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "112"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "112"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "NVasv4 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "NVasv4 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "NVasv4 Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "951823ca-50d5-5e91-b0da-d758104bdaaa"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "NVasv4 Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "easv4_type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 41239.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 81877.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "96"
+              },
+              {
+                "name": "RAM",
+                "value": "672"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Easv4 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "96"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "96"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Easv4 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Easv4 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Easv4 Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "70d9757c-b9ea-50f9-b46f-f9c9cd392d10"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Easv4 Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "easv4_type2",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 41239.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 81877.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "96"
+              },
+              {
+                "name": "RAM",
+                "value": "768"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Easv4 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "96"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "96"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Easv4 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Easv4 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Easv4 Type2"
+              },
+              {
+                "name": "MeterId",
+                "value": "921826a3-9989-5f61-852b-34b588e3e5b7"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Easv4 Type2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "msm_type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 208864.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 302493.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "128"
+              },
+              {
+                "name": "RAM",
+                "value": "3892"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "MS Series HM Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "128"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "128"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "MS Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "MS Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Msm Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "a7908b97-6f85-5d14-945a-25d069861ebb"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Msm Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "ms_type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 104341.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 151114.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "128"
+              },
+              {
+                "name": "RAM",
+                "value": "2048"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "MS Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "128"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "128"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "MS Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "MS Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Ms Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "73dc0918-463c-54ce-a4f4-087d8ba4eac8"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ms Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "esv3_type3",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 34369.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 68237.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "80"
+              },
+              {
+                "name": "RAM",
+                "value": "504"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "ESv3 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "80"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "80"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "ESv3 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "ESv3 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Esv3 Type3"
+              },
+              {
+                "name": "MeterId",
+                "value": "c70c6585-acbe-59e0-9c35-7ecf707c8432"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Esv3 Type3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "esv3_type4",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 36088.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 71649.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "84"
+              },
+              {
+                "name": "RAM",
+                "value": "768"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "ESv3 Series Dedicated Host"
+              },
+              {
+                "name": "vCpu",
+                "value": "84"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "84"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "ESv3 Series Dedicated Host"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "ESv3 Series Dedicated Host"
+              },
+              {
+                "name": "SkuName",
+                "value": "Esv3 Type4"
+              },
+              {
+                "name": "MeterId",
+                "value": "584380e1-8fdb-58ad-972a-aa818b5201fa"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Esv3 Type4"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
             "name": "mdsv2medmem_type1",
             "terms": [
               "P1Y",
@@ -3023,101 +3020,6 @@
           },
           {
             "resourceType": "DedicatedHost",
-            "name": "dasv5_type1",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westeurope"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 33111.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 63977.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "Cores",
-                "value": "112"
-              },
-              {
-                "name": "RAM",
-                "value": "768"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Dasv5 Series DedicatedHost"
-              },
-              {
-                "name": "vCpu",
-                "value": "112"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "112"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Dasv5 Series Dedicated Host"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Dasv5 Series Dedicated Host"
-              },
-              {
-                "name": "SkuName",
-                "value": "Dasv5 Type1"
-              },
-              {
-                "name": "MeterId",
-                "value": "8bc39b42-f835-5354-b84c-ce82d252c9c7"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Dasv5 Type1"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "DedicatedHost",
             "name": "edsv5_type1",
             "terms": [
               "P1Y",
@@ -3195,6 +3097,101 @@
               {
                 "name": "SkuDisplayName",
                 "value": "Edsv5 Type1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DedicatedHost",
+            "name": "dsv5_type1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westeurope"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 32690.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 63164.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Cores",
+                "value": "119"
+              },
+              {
+                "name": "RAM",
+                "value": "768"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Dsv5 Series DedicatedHost"
+              },
+              {
+                "name": "vCpu",
+                "value": "119"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "119"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Dsv5 Series DedicatedHost"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Dsv5 Series DedicatedHost"
+              },
+              {
+                "name": "SkuName",
+                "value": "Dsv5 Type1"
+              },
+              {
+                "name": "MeterId",
+                "value": "793b57c3-bd01-5d3d-a620-43800b5bc632"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Dsv5 Type1"
               },
               {
                 "name": "billingPlans",
@@ -3308,7 +3305,7 @@
           },
           {
             "resourceType": "DedicatedHost",
-            "name": "dsv5_type1",
+            "name": "dasv5_type1",
             "terms": [
               "P1Y",
               "P3Y",
@@ -3334,17 +3331,17 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 32690.0
+                "amount": 33111.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 63164.0
+                "amount": 63977.0
               }
             },
             "skuProperties": [
               {
                 "name": "Cores",
-                "value": "119"
+                "value": "112"
               },
               {
                 "name": "RAM",
@@ -3352,31 +3349,31 @@
               },
               {
                 "name": "ReservationsAutofitGroup",
-                "value": "Dsv5 Series DedicatedHost"
+                "value": "Dasv5 Series DedicatedHost"
               },
               {
                 "name": "vCpu",
-                "value": "119"
+                "value": "112"
               },
               {
                 "name": "ReservationsAutofitRatio",
-                "value": "119"
+                "value": "112"
               },
               {
                 "name": "ProductShortName",
-                "value": "Dsv5 Series DedicatedHost"
+                "value": "Dasv5 Series Dedicated Host"
               },
               {
                 "name": "ProductTitle",
-                "value": "Dsv5 Series DedicatedHost"
+                "value": "Dasv5 Series Dedicated Host"
               },
               {
                 "name": "SkuName",
-                "value": "Dsv5 Type1"
+                "value": "Dasv5 Type1"
               },
               {
                 "name": "MeterId",
-                "value": "793b57c3-bd01-5d3d-a620-43800b5bc632"
+                "value": "8bc39b42-f835-5354-b84c-ce82d252c9c7"
               },
               {
                 "name": "MeterType",
@@ -3384,7 +3381,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "Dsv5 Type1"
+                "value": "Dasv5 Type1"
               },
               {
                 "name": "billingPlans",
@@ -3503,7 +3500,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "77052141",
+    "RandomSeed": "843568681",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }

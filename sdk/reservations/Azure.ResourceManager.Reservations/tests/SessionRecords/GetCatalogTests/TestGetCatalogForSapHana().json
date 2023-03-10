@@ -6,37 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-78ed5c6a277c66067c2fd8d3300506b9-ff8cc07e0ee735cb-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "66fe299108c5200b496c025df242274a",
+        "traceparent": "00-d50498772f61ac3e83d10c271bb1c171-0eab485eb09bf3bc-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "27c46b0b4eaa571541f804710bb704c8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "429",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:23 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "20aebc0e-f125-4686-ba29-61f5a9b2754e",
-        "x-ms-ratelimit-remaining-subscription-reads": "11964",
-        "x-ms-request-id": "20aebc0e-f125-4686-ba29-61f5a9b2754e",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013423Z:20aebc0e-f125-4686-ba29-61f5a9b2754e"
+        "x-ms-correlation-request-id": "d605928e-d11a-4265-919e-e582692e45e3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11956",
+        "x-ms-request-id": "d605928e-d11a-4265-919e-e582692e45e3",
+        "x-ms-routing-request-id": "WESTUS:20230310T063206Z:d605928e-d11a-4265-919e-e582692e45e3"
       },
       "ResponseBody": {
         "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "costcenter": "1000"
-        },
         "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
-        "displayName": "Azure subscription 1",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -46,14 +43,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=SapHana\u0026location=westus",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=SapHana\u0026location=westus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-15b58a04720291d1dbcabc56503b67a0-b3cde2277f468768-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "799b1410b2294fd918d9c7fea089f6d1",
+        "traceparent": "00-934f5854c0ab8970ef835a74d81ced85-02de9950d89f266b-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "c2bbbca5dfaa0ff98ef2c12306295d66",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -62,23 +59,23 @@
         "Cache-Control": "no-cache",
         "Content-Length": "37070",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:23 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b44ea2ab-68a8-41e0-9e35-3bd67168736b",
-        "x-ms-ratelimit-remaining-subscription-reads": "11963",
-        "x-ms-request-id": "799b1410b2294fd918d9c7fea089f6d1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013423Z:b44ea2ab-68a8-41e0-9e35-3bd67168736b",
-        "x-ms-version": "1.0.2257.119"
+        "x-ms-correlation-request-id": "9dc6fb0d-ad44-4d77-844c-62651015d6b4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11955",
+        "x-ms-request-id": "c2bbbca5dfaa0ff98ef2c12306295d66",
+        "x-ms-routing-request-id": "WESTUS:20230310T063206Z:9dc6fb0d-ad44-4d77-844c-62651015d6b4",
+        "x-ms-version": "1.0.2251.115"
       },
       "ResponseBody": {
         "value": [
           {
             "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s192m",
+            "name": "sap_hana_on_azure_s96",
             "terms": [
               "P1Y",
               "P3Y",
@@ -104,11 +101,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 180204.0
+                "amount": 35748.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 274536.0
+                "amount": 54432.0
               }
             },
             "skuProperties": [
@@ -122,11 +119,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "S192m"
+                "value": "S96"
               },
               {
                 "name": "MeterId",
-                "value": "bb1ce828-af10-40f6-9c8d-2c158d28e22b"
+                "value": "8db7b427-339a-42de-a21d-2f6e08046838"
               },
               {
                 "name": "MeterType",
@@ -134,910 +131,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "S192m"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s672ooo",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 911940.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1367909.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S672ooo"
-              },
-              {
-                "name": "MeterId",
-                "value": "6b88d171-c8f5-4de6-920b-0110cbba21e2"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S672ooo"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s1792",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 2429200.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 3643800.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S1792"
-              },
-              {
-                "name": "MeterId",
-                "value": "f5e26e23-33ee-590e-ab75-5dabd6b2f931"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S1792"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s896ooo",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1337512.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 2006267.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S896ooo"
-              },
-              {
-                "name": "MeterId",
-                "value": "67e45960-d070-44be-8faa-9a41fff53e03"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S896ooo"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s576xm",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1837423.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S576xm"
-              },
-              {
-                "name": "MeterId",
-                "value": "04903484-caf2-4a30-baad-1f5f0b862ffc"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S576xm"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P1Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              },
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s672oom",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1094327.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1641491.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S672oom"
-              },
-              {
-                "name": "MeterId",
-                "value": "4fc88bdc-c23b-4f1f-bd6f-aa6350e2ceae"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S672oom"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s896om",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1171438.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1757157.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S896om"
-              },
-              {
-                "name": "MeterId",
-                "value": "8e382e52-dbb3-4623-a0a9-3d06f7e8bef8"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S896om"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s192xm",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 270312.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 411768.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S192xm"
-              },
-              {
-                "name": "MeterId",
-                "value": "ff45df77-4f64-4feb-8814-9e6b45b6df55"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S192xm"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s72m",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 65172.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 99252.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S72m"
-              },
-              {
-                "name": "MeterId",
-                "value": "6d17fa9b-a39d-4483-8c7c-f3daeedfbe6c"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S72m"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s224m",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 348021.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 522031.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S224m"
-              },
-              {
-                "name": "MeterId",
-                "value": "5c8efd4e-b0c1-4991-888f-b39224ca031b"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S224m"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s448oom",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 729552.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1094327.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S448oom"
-              },
-              {
-                "name": "MeterId",
-                "value": "d7b3ab31-4ff1-4046-a0c3-829923158793"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S448oom"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s896oom",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1605013.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 2407520.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S896oom"
-              },
-              {
-                "name": "MeterId",
-                "value": "e7b2fc13-317e-4ce0-be10-3c2a81e52a54"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S896oom"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s224om",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 266236.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 399354.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S224om"
-              },
-              {
-                "name": "MeterId",
-                "value": "61cca8f0-3dfc-4fe0-8c7d-61ee14bac528"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S224om"
+                "value": "S96"
               },
               {
                 "name": "billingPlans",
@@ -1131,7 +225,7 @@
           },
           {
             "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s896m",
+            "name": "sap_hana_on_azure_s448oo",
             "terms": [
               "P1Y",
               "P3Y",
@@ -1157,11 +251,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 1531291.0
+                "amount": 479225.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 2296936.0
+                "amount": 718837.0
               }
             },
             "skuProperties": [
@@ -1175,11 +269,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "S896m"
+                "value": "S448oo"
               },
               {
                 "name": "MeterId",
-                "value": "d62db680-74ba-40be-9fcc-3da8396a4736"
+                "value": "99ca0987-28d7-4501-83ee-f957b1421691"
               },
               {
                 "name": "MeterType",
@@ -1187,7 +281,1282 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "S896m"
+                "value": "S448oo"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s224oo",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 239612.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 359418.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S224oo"
+              },
+              {
+                "name": "MeterId",
+                "value": "3c2c35bc-7050-4804-a5ea-d65341659854"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S224oo"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s1568",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2041133.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 3061700.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S1568"
+              },
+              {
+                "name": "MeterId",
+                "value": "e008d927-cbe9-59b8-830c-e513f58e6ea8"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S1568"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s896ooo",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1337512.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2006267.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S896ooo"
+              },
+              {
+                "name": "MeterId",
+                "value": "67e45960-d070-44be-8faa-9a41fff53e03"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S896ooo"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s192",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 93084.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 141804.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S192"
+              },
+              {
+                "name": "MeterId",
+                "value": "edefcba6-1503-433e-93d4-5600ea448cc6"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S192"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s1120",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1343136.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2014704.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S1120"
+              },
+              {
+                "name": "MeterId",
+                "value": "4439b561-4f7c-5ace-8bb1-ff76e10b76cf"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S1120"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s192m",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 180204.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 274536.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S192m"
+              },
+              {
+                "name": "MeterId",
+                "value": "bb1ce828-af10-40f6-9c8d-2c158d28e22b"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S192m"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s672oom",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1094327.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1641491.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S672oom"
+              },
+              {
+                "name": "MeterId",
+                "value": "4fc88bdc-c23b-4f1f-bd6f-aa6350e2ceae"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S672oom"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s32m",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 103788.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 155683.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S32m"
+              },
+              {
+                "name": "MeterId",
+                "value": "7c81b855-ad28-5fd5-97e9-7080b6979efb"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S32m"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s448",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 469828.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 704742.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S448"
+              },
+              {
+                "name": "MeterId",
+                "value": "46640cb3-4b57-4a33-8fe0-28adf8778e67"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S448"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s896oo",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1054294.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1581441.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S896oo"
+              },
+              {
+                "name": "MeterId",
+                "value": "2f6d98de-3fd1-47c4-9ff9-c65c94b3974e"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S896oo"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s1792",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2429200.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 3643800.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S1792"
+              },
+              {
+                "name": "MeterId",
+                "value": "f5e26e23-33ee-590e-ab75-5dabd6b2f931"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S1792"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s672oo",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 718837.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1078256.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S672oo"
+              },
+              {
+                "name": "MeterId",
+                "value": "5b2b6f42-b031-429a-837e-094af6b1df15"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S672oo"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s672ooo",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 911940.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1367909.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S672ooo"
+              },
+              {
+                "name": "MeterId",
+                "value": "6b88d171-c8f5-4de6-920b-0110cbba21e2"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S672ooo"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s896oom",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1605013.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2407520.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S896oom"
+              },
+              {
+                "name": "MeterId",
+                "value": "e7b2fc13-317e-4ce0-be10-3c2a81e52a54"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S896oom"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s448m",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 696041.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1044062.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S448m"
+              },
+              {
+                "name": "MeterId",
+                "value": "554c1d7e-a597-4fee-9261-cd5ab8983bbc"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S448m"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s224",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 234914.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 352371.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S224"
+              },
+              {
+                "name": "MeterId",
+                "value": "5db91ec6-b22d-4401-b909-102b2bcde6fe"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S224"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s192xm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 270312.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 411768.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S192xm"
+              },
+              {
+                "name": "MeterId",
+                "value": "ff45df77-4f64-4feb-8814-9e6b45b6df55"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S192xm"
               },
               {
                 "name": "billingPlans",
@@ -1356,7 +1725,7 @@
           },
           {
             "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s224oo",
+            "name": "sap_hana_on_azure_s72m",
             "terms": [
               "P1Y",
               "P3Y",
@@ -1382,11 +1751,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 239612.0
+                "amount": 65172.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 359418.0
+                "amount": 99252.0
               }
             },
             "skuProperties": [
@@ -1400,11 +1769,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "S224oo"
+                "value": "S72m"
               },
               {
                 "name": "MeterId",
-                "value": "3c2c35bc-7050-4804-a5ea-d65341659854"
+                "value": "6d17fa9b-a39d-4483-8c7c-f3daeedfbe6c"
               },
               {
                 "name": "MeterType",
@@ -1412,7 +1781,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "S224oo"
+                "value": "S72m"
               },
               {
                 "name": "billingPlans",
@@ -1431,7 +1800,7 @@
           },
           {
             "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s64m",
+            "name": "sap_hana_on_azure_s896",
             "terms": [
               "P1Y",
               "P3Y",
@@ -1457,11 +1826,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 207542.0
+                "amount": 1033622.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 311313.0
+                "amount": 1550433.0
               }
             },
             "skuProperties": [
@@ -1475,11 +1844,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "S64m"
+                "value": "S896"
               },
               {
                 "name": "MeterId",
-                "value": "ad4a940f-8fb7-5790-8963-afdcf741972e"
+                "value": "ba2cb097-e429-4c11-9318-399c40bd7781"
               },
               {
                 "name": "MeterType",
@@ -1487,7 +1856,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "S64m"
+                "value": "S896"
               },
               {
                 "name": "billingPlans",
@@ -1563,6 +1932,306 @@
               {
                 "name": "SkuDisplayName",
                 "value": "S72"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s96m",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 86896.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 132336.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S96m"
+              },
+              {
+                "name": "MeterId",
+                "value": "cd738dc0-d6ae-4269-8e8a-bb967638c4c6"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S96m"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s224m",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 348021.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 522031.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S224m"
+              },
+              {
+                "name": "MeterId",
+                "value": "5c8efd4e-b0c1-4991-888f-b39224ca031b"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S224m"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s896m",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1531291.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2296936.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S896m"
+              },
+              {
+                "name": "MeterId",
+                "value": "d62db680-74ba-40be-9fcc-3da8396a4736"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S896m"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s224om",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 266236.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 399354.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S224om"
+              },
+              {
+                "name": "MeterId",
+                "value": "61cca8f0-3dfc-4fe0-8c7d-61ee14bac528"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S224om"
               },
               {
                 "name": "billingPlans",
@@ -1659,306 +2328,6 @@
           },
           {
             "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s896oo",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1054294.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1581441.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S896oo"
-              },
-              {
-                "name": "MeterId",
-                "value": "2f6d98de-3fd1-47c4-9ff9-c65c94b3974e"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S896oo"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s1568",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 2041133.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 3061700.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S1568"
-              },
-              {
-                "name": "MeterId",
-                "value": "e008d927-cbe9-59b8-830c-e513f58e6ea8"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S1568"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s672om",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 798708.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1198061.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S672om"
-              },
-              {
-                "name": "MeterId",
-                "value": "ade56ba0-8b11-421b-aa59-8aeb5ac20e9c"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S672om"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s192",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 93084.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 141804.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S192"
-              },
-              {
-                "name": "MeterId",
-                "value": "edefcba6-1503-433e-93d4-5600ea448cc6"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S192"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
             "name": "sap_hana_on_azure_s672",
             "terms": [
               "P1Y",
@@ -2016,687 +2385,6 @@
               {
                 "name": "SkuDisplayName",
                 "value": "S672"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s896",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1033622.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1550433.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S896"
-              },
-              {
-                "name": "MeterId",
-                "value": "ba2cb097-e429-4c11-9318-399c40bd7781"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S896"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s96m",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 86896.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 132336.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S96m"
-              },
-              {
-                "name": "MeterId",
-                "value": "cd738dc0-d6ae-4269-8e8a-bb967638c4c6"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S96m"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s448oo",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 479225.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 718837.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S448oo"
-              },
-              {
-                "name": "MeterId",
-                "value": "99ca0987-28d7-4501-83ee-f957b1421691"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S448oo"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s768xm",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 2449908.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S768xm"
-              },
-              {
-                "name": "MeterId",
-                "value": "230d8da8-7826-4ee5-9f0d-f983dd17f65a"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S768xm"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P1Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              },
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s1120",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1343136.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 2014704.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S1120"
-              },
-              {
-                "name": "MeterId",
-                "value": "4439b561-4f7c-5ace-8bb1-ff76e10b76cf"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S1120"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s1344",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1676963.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 2515444.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S1344"
-              },
-              {
-                "name": "MeterId",
-                "value": "9544f53c-3178-572f-b5cf-aca727532014"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S1344"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s448",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 469828.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 704742.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S448"
-              },
-              {
-                "name": "MeterId",
-                "value": "46640cb3-4b57-4a33-8fe0-28adf8778e67"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S448"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s384",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 469828.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S384"
-              },
-              {
-                "name": "MeterId",
-                "value": "b2ed094e-102c-4f75-9168-95b843ac4839"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S384"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P1Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              },
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s672oo",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 718837.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1078256.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S672oo"
-              },
-              {
-                "name": "MeterId",
-                "value": "5b2b6f42-b031-429a-837e-094af6b1df15"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S672oo"
               },
               {
                 "name": "billingPlans",
@@ -2790,7 +2478,7 @@
           },
           {
             "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s448m",
+            "name": "sap_hana_on_azure_s672om",
             "terms": [
               "P1Y",
               "P3Y",
@@ -2816,11 +2504,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 696041.0
+                "amount": 798708.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 1044062.0
+                "amount": 1198061.0
               }
             },
             "skuProperties": [
@@ -2834,11 +2522,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "S448m"
+                "value": "S672om"
               },
               {
                 "name": "MeterId",
-                "value": "554c1d7e-a597-4fee-9261-cd5ab8983bbc"
+                "value": "ade56ba0-8b11-421b-aa59-8aeb5ac20e9c"
               },
               {
                 "name": "MeterType",
@@ -2846,7 +2534,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "S448m"
+                "value": "S672om"
               },
               {
                 "name": "billingPlans",
@@ -2865,7 +2553,7 @@
           },
           {
             "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s32m",
+            "name": "sap_hana_on_azure_s448ooo",
             "terms": [
               "P1Y",
               "P3Y",
@@ -2891,11 +2579,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 103788.0
+                "amount": 607960.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 155683.0
+                "amount": 911940.0
               }
             },
             "skuProperties": [
@@ -2909,11 +2597,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "S32m"
+                "value": "S448ooo"
               },
               {
                 "name": "MeterId",
-                "value": "7c81b855-ad28-5fd5-97e9-7080b6979efb"
+                "value": "05b152c5-6cd8-42f6-b62d-8acced08b42f"
               },
               {
                 "name": "MeterType",
@@ -2921,7 +2609,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "S32m"
+                "value": "S448ooo"
               },
               {
                 "name": "billingPlans",
@@ -2940,85 +2628,7 @@
           },
           {
             "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s768m",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1921500.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S768m"
-              },
-              {
-                "name": "MeterId",
-                "value": "b2827377-6387-463c-9646-71b9f11f3ed9"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S768m"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P1Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              },
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s96",
+            "name": "sap_hana_on_azure_s64m",
             "terms": [
               "P1Y",
               "P3Y",
@@ -3044,11 +2654,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 35748.0
+                "amount": 207542.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 54432.0
+                "amount": 311313.0
               }
             },
             "skuProperties": [
@@ -3062,11 +2672,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "S96"
+                "value": "S64m"
               },
               {
                 "name": "MeterId",
-                "value": "8db7b427-339a-42de-a21d-2f6e08046838"
+                "value": "ad4a940f-8fb7-5790-8963-afdcf741972e"
               },
               {
                 "name": "MeterType",
@@ -3074,82 +2684,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "S96"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s224",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 234914.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 352371.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "BareMetal Infrastructure"
-              },
-              {
-                "name": "SkuName",
-                "value": "S224"
-              },
-              {
-                "name": "MeterId",
-                "value": "5db91ec6-b22d-4401-b909-102b2bcde6fe"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Instance Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "S224"
+                "value": "S64m"
               },
               {
                 "name": "billingPlans",
@@ -3246,7 +2781,7 @@
           },
           {
             "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s448ooo",
+            "name": "sap_hana_on_azure_s896om",
             "terms": [
               "P1Y",
               "P3Y",
@@ -3272,11 +2807,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 607960.0
+                "amount": 1171438.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 911940.0
+                "amount": 1757157.0
               }
             },
             "skuProperties": [
@@ -3290,11 +2825,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "S448ooo"
+                "value": "S896om"
               },
               {
                 "name": "MeterId",
-                "value": "05b152c5-6cd8-42f6-b62d-8acced08b42f"
+                "value": "8e382e52-dbb3-4623-a0a9-3d06f7e8bef8"
               },
               {
                 "name": "MeterType",
@@ -3302,7 +2837,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "S448ooo"
+                "value": "S896om"
               },
               {
                 "name": "billingPlans",
@@ -3321,7 +2856,7 @@
           },
           {
             "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s384xxm",
+            "name": "sap_hana_on_azure_s384",
             "terms": [
               "P1Y",
               "P3Y",
@@ -3347,7 +2882,7 @@
             "msrp": {
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 876736.0
+                "amount": 469828.0
               }
             },
             "skuProperties": [
@@ -3361,11 +2896,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "S384xxm"
+                "value": "S384"
               },
               {
                 "name": "MeterId",
-                "value": "51e0eb87-1daf-4003-8b7c-3d4edca362b6"
+                "value": "b2ed094e-102c-4f75-9168-95b843ac4839"
               },
               {
                 "name": "MeterType",
@@ -3373,7 +2908,160 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "S384xxm"
+                "value": "S384"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P1Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s1344",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1676963.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2515444.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S1344"
+              },
+              {
+                "name": "MeterId",
+                "value": "9544f53c-3178-572f-b5cf-aca727532014"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S1344"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s960m",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2401875.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S960m"
+              },
+              {
+                "name": "MeterId",
+                "value": "0fabc792-7516-4631-8170-5c65ad2ead22"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S960m"
               },
               {
                 "name": "billingPlans",
@@ -3477,7 +3165,7 @@
           },
           {
             "resourceType": "SapHana",
-            "name": "sap_hana_on_azure_s960m",
+            "name": "sap_hana_on_azure_s768m",
             "terms": [
               "P1Y",
               "P3Y",
@@ -3503,7 +3191,7 @@
             "msrp": {
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 2401875.0
+                "amount": 1921500.0
               }
             },
             "skuProperties": [
@@ -3517,11 +3205,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "S960m"
+                "value": "S768m"
               },
               {
                 "name": "MeterId",
-                "value": "0fabc792-7516-4631-8170-5c65ad2ead22"
+                "value": "b2827377-6387-463c-9646-71b9f11f3ed9"
               },
               {
                 "name": "MeterType",
@@ -3529,7 +3217,316 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "S960m"
+                "value": "S768m"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P1Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s384xxm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 876736.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S384xxm"
+              },
+              {
+                "name": "MeterId",
+                "value": "51e0eb87-1daf-4003-8b7c-3d4edca362b6"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S384xxm"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P1Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s448oom",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 729552.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1094327.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S448oom"
+              },
+              {
+                "name": "MeterId",
+                "value": "d7b3ab31-4ff1-4046-a0c3-829923158793"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S448oom"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s768xm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2449908.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S768xm"
+              },
+              {
+                "name": "MeterId",
+                "value": "230d8da8-7826-4ee5-9f0d-f983dd17f65a"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S768xm"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P1Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SapHana",
+            "name": "sap_hana_on_azure_s576xm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1837423.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "BareMetal Infrastructure"
+              },
+              {
+                "name": "SkuName",
+                "value": "S576xm"
+              },
+              {
+                "name": "MeterId",
+                "value": "04903484-caf2-4a30-baad-1f5f0b862ffc"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "S576xm"
               },
               {
                 "name": "billingPlans",
@@ -3560,7 +3557,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1912814604",
+    "RandomSeed": "498700643",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }

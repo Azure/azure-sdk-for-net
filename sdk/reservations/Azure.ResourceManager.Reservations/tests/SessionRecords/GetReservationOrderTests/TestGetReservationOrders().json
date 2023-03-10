@@ -83,7 +83,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders?api-version=2022-11-01-beta",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders?api-version=2022-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1361,11 +1361,11 @@
             }
           }
         ],
-        "nextLink": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders?api-version=2022-11-01-beta\u0026%24skiptoken=50"
+        "nextLink": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders?api-version=2022-11-01\u0026%24skiptoken=50"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders?api-version=2022-11-01-beta\u0026%24skiptoken=50",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders?api-version=2022-11-01\u0026%24skiptoken=50",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

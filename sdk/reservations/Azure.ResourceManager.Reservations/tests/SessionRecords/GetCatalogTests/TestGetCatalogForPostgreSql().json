@@ -6,37 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-912ca59bb3667743c30f5a4a7230be54-0ee0d514171aabf6-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e633c3a2bc35d8311d6ec6986f1066ce",
+        "traceparent": "00-7c0e0fdfd8e5d6323d6e3710643734de-03d84c05e404eb78-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "98354673a6f50ec5d39f712694f8f29f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "429",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:21 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9af08eae-4a30-4aad-85d7-96a617fce175",
-        "x-ms-ratelimit-remaining-subscription-reads": "11972",
-        "x-ms-request-id": "9af08eae-4a30-4aad-85d7-96a617fce175",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013421Z:9af08eae-4a30-4aad-85d7-96a617fce175"
+        "x-ms-correlation-request-id": "b1107abb-bd17-493e-aabf-21c8383e0c5c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "b1107abb-bd17-493e-aabf-21c8383e0c5c",
+        "x-ms-routing-request-id": "WESTUS:20230310T063204Z:b1107abb-bd17-493e-aabf-21c8383e0c5c"
       },
       "ResponseBody": {
         "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "costcenter": "1000"
-        },
         "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
-        "displayName": "Azure subscription 1",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -46,14 +43,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=PostgreSql\u0026location=eastus",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=PostgreSql\u0026location=eastus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-95c7b895eec9c5e81fe27b12d9a7999e-cdc402fd4279ef66-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "3c7d2fe206a2d8b08dfd4a344c74a99f",
+        "traceparent": "00-99a6962336a9ea72304f79f123016130-b2cf10d9585dd941-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "d16af3030f50b54afead34ee3ef11fc6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -62,20 +59,181 @@
         "Cache-Control": "no-cache",
         "Content-Length": "7707",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:21 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "35eb637a-21db-4ceb-bffc-25c7207984f7",
-        "x-ms-ratelimit-remaining-subscription-reads": "11971",
-        "x-ms-request-id": "3c7d2fe206a2d8b08dfd4a344c74a99f",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013421Z:35eb637a-21db-4ceb-bffc-25c7207984f7",
-        "x-ms-version": "1.0.2257.119"
+        "x-ms-correlation-request-id": "25eebf14-53d1-4efe-8c05-1f605d242359",
+        "x-ms-ratelimit-remaining-subscription-reads": "11963",
+        "x-ms-request-id": "d16af3030f50b54afead34ee3ef11fc6",
+        "x-ms-routing-request-id": "WESTUS:20230310T063204Z:25eebf14-53d1-4efe-8c05-1f605d242359",
+        "x-ms-version": "1.0.2251.115"
       },
       "ResponseBody": {
         "value": [
+          {
+            "resourceType": "PostgreSql",
+            "name": "azuredb_postgresql_general_purpose_compute_gen5",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "eastus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 466.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure DB for PSQL SingGenPur-Compute G5"
+              },
+              {
+                "name": "DeploymentType",
+                "value": "Azure Database for PostgreSQL"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Database for PostgreSQL Single Server General Purpose - Compute Gen5"
+              },
+              {
+                "name": "SkuName",
+                "value": "vCore"
+              },
+              {
+                "name": "MeterId",
+                "value": "6c0a1d3f-5f92-449a-bb0e-ebded18c0e03"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 vCore Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "vCore"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "PostgreSql",
+            "name": "azuredb_postgresql_hyperscale_coordinator_node_vcore",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "eastus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 625.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1208.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az Cosmos DB for Postgres Comp- Coord Node"
+              },
+              {
+                "name": "DeploymentType",
+                "value": "Azure Database for PostgreSQL Hyperscale (Citus)"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB for PostgreSQL Compute- Coordinator Node"
+              },
+              {
+                "name": "SkuName",
+                "value": "vCore"
+              },
+              {
+                "name": "MeterId",
+                "value": "934353d1-67c8-47b2-930f-7be5bea04e7d"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 vCore Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "vCore"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
           {
             "resourceType": "PostgreSql",
             "name": "azuredb_postgresql_hyperscale_worker_node_vcore",
@@ -239,167 +397,6 @@
           },
           {
             "resourceType": "PostgreSql",
-            "name": "azuredb_postgresql_hyperscale_coordinator_node_vcore",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "eastus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 625.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1208.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Az Cosmos DB for Postgres Comp- Coord Node"
-              },
-              {
-                "name": "DeploymentType",
-                "value": "Azure Database for PostgreSQL Hyperscale (Citus)"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB for PostgreSQL Compute- Coordinator Node"
-              },
-              {
-                "name": "SkuName",
-                "value": "vCore"
-              },
-              {
-                "name": "MeterId",
-                "value": "934353d1-67c8-47b2-930f-7be5bea04e7d"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 vCore Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "vCore"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "PostgreSql",
-            "name": "azuredb_postgresql_general_purpose_compute_gen5",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "eastus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 466.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure DB for PSQL SingGenPur-Compute G5"
-              },
-              {
-                "name": "DeploymentType",
-                "value": "Azure Database for PostgreSQL"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Database for PostgreSQL Single Server General Purpose - Compute Gen5"
-              },
-              {
-                "name": "SkuName",
-                "value": "vCore"
-              },
-              {
-                "name": "MeterId",
-                "value": "6c0a1d3f-5f92-449a-bb0e-ebded18c0e03"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 vCore Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "vCore"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P3Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              },
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "PostgreSql",
             "name": "azuredb_postgresql_flexible_server_general_purpose_dsv3series_compute",
             "terms": [
               "P1Y",
@@ -479,85 +476,6 @@
           },
           {
             "resourceType": "PostgreSql",
-            "name": "azuredb_postgresql_flexible_server_general_purpose_ddsv4series_compute",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "eastus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 468.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 936.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Az DB for PostgreSQL FLEX Ddsv4 Comp"
-              },
-              {
-                "name": "DeploymentType",
-                "value": ""
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Database for PostgreSQL Flexible Server General Purpose\u00A0Ddsv4\u00A0Series Compute"
-              },
-              {
-                "name": "SkuName",
-                "value": "vCore"
-              },
-              {
-                "name": "MeterId",
-                "value": "aeb6d7f9-dd16-59ed-9bba-4292c4cad597"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 vCore Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "vCore"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "PostgreSql",
             "name": "azuredb_postgresql_flexible_server_memory_optimized_esv3series_compute",
             "terms": [
               "P1Y",
@@ -611,6 +529,85 @@
               {
                 "name": "MeterId",
                 "value": "4739d147-8b2b-5450-9f5d-68f3483d101f"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 vCore Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "vCore"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "PostgreSql",
+            "name": "azuredb_postgresql_flexible_server_general_purpose_ddsv4series_compute",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "eastus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 468.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 936.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az DB for PostgreSQL FLEX Ddsv4 Comp"
+              },
+              {
+                "name": "DeploymentType",
+                "value": ""
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Database for PostgreSQL Flexible Server General Purpose\u00A0Ddsv4\u00A0Series Compute"
+              },
+              {
+                "name": "SkuName",
+                "value": "vCore"
+              },
+              {
+                "name": "MeterId",
+                "value": "aeb6d7f9-dd16-59ed-9bba-4292c4cad597"
               },
               {
                 "name": "MeterType",
@@ -721,7 +718,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1681591249",
+    "RandomSeed": "1699239635",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }

@@ -6,37 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ef0fe01522d5ff9820784f173c0c7b9d-906c2fb711d6c9e2-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8e2548d8413cc09e34be946c0aff3b6f",
+        "traceparent": "00-bc284d0326643364bcf5233fea019228-efaf93cb3e818a5c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "96bc34df4e5838a6e16ec4821ed56733",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "429",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:38 GMT",
+        "Date": "Fri, 10 Mar 2023 06:43:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "27d83f64-0a0d-4422-a0a2-a32912e95eea",
-        "x-ms-ratelimit-remaining-subscription-reads": "11976",
-        "x-ms-request-id": "27d83f64-0a0d-4422-a0a2-a32912e95eea",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013438Z:27d83f64-0a0d-4422-a0a2-a32912e95eea"
+        "x-ms-correlation-request-id": "6f82c55a-1ea5-4419-bd3e-1d256bc1f47b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "6f82c55a-1ea5-4419-bd3e-1d256bc1f47b",
+        "x-ms-routing-request-id": "WESTUS:20230310T064327Z:6f82c55a-1ea5-4419-bd3e-1d256bc1f47b"
       },
       "ResponseBody": {
         "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "costcenter": "1000"
-        },
         "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
-        "displayName": "Azure subscription 1",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -46,14 +43,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=VMwareCloudSimple\u0026location=eastus",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=VMwareCloudSimple\u0026location=eastus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2b8473afe96d2a076628824e60abc4f4-3e93ba7ff21de635-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "1177a9ced0939b03dfdebd0b87628aa1",
+        "traceparent": "00-80dd45bea3ba28cf3ee32dbbb304ecbc-7f9ca129d5ab150b-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "0b407645decc80c637c050e285291f20",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -62,95 +59,20 @@
         "Cache-Control": "no-cache",
         "Content-Length": "2503",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:38 GMT",
+        "Date": "Fri, 10 Mar 2023 06:43:27 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e9202542-dad2-48cc-876d-d6812ec7d263",
-        "x-ms-ratelimit-remaining-subscription-reads": "11975",
-        "x-ms-request-id": "1177a9ced0939b03dfdebd0b87628aa1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013438Z:e9202542-dad2-48cc-876d-d6812ec7d263",
-        "x-ms-version": "1.0.2257.119"
+        "x-ms-correlation-request-id": "7fce7243-0e6b-4eda-bbc1-470145c96b3d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "0b407645decc80c637c050e285291f20",
+        "x-ms-routing-request-id": "WESTUS:20230310T064327Z:7fce7243-0e6b-4eda-bbc1-470145c96b3d",
+        "x-ms-version": "1.0.2251.115"
       },
       "ResponseBody": {
         "value": [
-          {
-            "resourceType": "VMwareCloudSimple",
-            "name": "vmware_cloudsimple_cs36m",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "eastus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 56444.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 120952.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure VMware Solution by CloudSimple"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure VMware Solution by CloudSimple"
-              },
-              {
-                "name": "SkuName",
-                "value": "CS36m"
-              },
-              {
-                "name": "MeterId",
-                "value": "26b3b0c1-5a98-4cbc-97e7-e49cd8cf3041"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Node Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "CS36m"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
           {
             "resourceType": "VMwareCloudSimple",
             "name": "vmware_cloudsimple_cs28",
@@ -210,6 +132,81 @@
               {
                 "name": "SkuDisplayName",
                 "value": "CS28"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "VMwareCloudSimple",
+            "name": "vmware_cloudsimple_cs36m",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "eastus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 56444.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 120952.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure VMware Solution by CloudSimple"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure VMware Solution by CloudSimple"
+              },
+              {
+                "name": "SkuName",
+                "value": "CS36m"
+              },
+              {
+                "name": "MeterId",
+                "value": "26b3b0c1-5a98-4cbc-97e7-e49cd8cf3041"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Node Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "CS36m"
               },
               {
                 "name": "billingPlans",
@@ -308,7 +305,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1388258662",
+    "RandomSeed": "1110804989",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }

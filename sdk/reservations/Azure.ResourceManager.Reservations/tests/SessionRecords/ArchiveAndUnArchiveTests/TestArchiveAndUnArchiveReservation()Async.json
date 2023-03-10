@@ -82,7 +82,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservations?api-version=2022-11-01-beta",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservations?api-version=2022-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2481,11 +2481,11 @@
             }
           }
         ],
-        "nextLink": "https://management.azure.com/providers/Microsoft.Capacity/reservations?api-version=2022-11-01-beta\u0026%24skiptoken=50"
+        "nextLink": "https://management.azure.com/providers/Microsoft.Capacity/reservations?api-version=2022-11-01\u0026%24skiptoken=50"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservations?api-version=2022-11-01-beta\u0026%24skiptoken=50",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservations?api-version=2022-11-01\u0026%24skiptoken=50",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2632,7 +2632,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/5e500b18-4fb6-4a63-b6d8-8469a09c5e60/reservations/48f6eeec-cf66-4a23-a4be-81d4d7000beb/archive?api-version=2022-11-01-beta",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/5e500b18-4fb6-4a63-b6d8-8469a09c5e60/reservations/48f6eeec-cf66-4a23-a4be-81d4d7000beb/archive?api-version=2022-11-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2662,7 +2662,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/5e500b18-4fb6-4a63-b6d8-8469a09c5e60/reservations/48f6eeec-cf66-4a23-a4be-81d4d7000beb/unarchive?api-version=2022-11-01-beta",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/5e500b18-4fb6-4a63-b6d8-8469a09c5e60/reservations/48f6eeec-cf66-4a23-a4be-81d4d7000beb/unarchive?api-version=2022-11-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2692,7 +2692,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/5e500b18-4fb6-4a63-b6d8-8469a09c5e60/reservations/48f6eeec-cf66-4a23-a4be-81d4d7000beb/archive?api-version=2022-11-01-beta",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/5e500b18-4fb6-4a63-b6d8-8469a09c5e60/reservations/48f6eeec-cf66-4a23-a4be-81d4d7000beb/archive?api-version=2022-11-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2722,7 +2722,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/5e500b18-4fb6-4a63-b6d8-8469a09c5e60/reservations/48f6eeec-cf66-4a23-a4be-81d4d7000beb/unarchive?api-version=2022-11-01-beta",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/5e500b18-4fb6-4a63-b6d8-8469a09c5e60/reservations/48f6eeec-cf66-4a23-a4be-81d4d7000beb/unarchive?api-version=2022-11-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",

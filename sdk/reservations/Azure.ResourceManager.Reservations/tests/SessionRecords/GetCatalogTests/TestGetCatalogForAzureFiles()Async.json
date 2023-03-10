@@ -6,37 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2c4c279e963e6a35c0c4fd894f46300c-04eb2286fbff872b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "2fdb6f5c9b64728de890559424d67cf1",
+        "traceparent": "00-ac7986b658b9ac0609b44a15b3ded07b-38ba4fedd3378229-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "77e7f7efbbc7ca1f7c2cab6cd58d92fe",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "429",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:39 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:22 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b29021c5-5328-494d-b567-181e17a10150",
-        "x-ms-ratelimit-remaining-subscription-reads": "11968",
-        "x-ms-request-id": "b29021c5-5328-494d-b567-181e17a10150",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013440Z:b29021c5-5328-494d-b567-181e17a10150"
+        "x-ms-correlation-request-id": "c6bc84e6-0c30-4e94-a23d-a4043094d159",
+        "x-ms-ratelimit-remaining-subscription-reads": "11922",
+        "x-ms-request-id": "c6bc84e6-0c30-4e94-a23d-a4043094d159",
+        "x-ms-routing-request-id": "WESTUS:20230310T063222Z:c6bc84e6-0c30-4e94-a23d-a4043094d159"
       },
       "ResponseBody": {
         "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "costcenter": "1000"
-        },
         "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
-        "displayName": "Azure subscription 1",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -46,13 +43,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=AzureFiles\u0026location=westus",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=AzureFiles\u0026location=westus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "54b2e7534b6f945e5a515abd7990e192",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "c8010fead5b35111df038b870bdacc57",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -61,23 +58,23 @@
         "Cache-Control": "no-cache",
         "Content-Length": "9880",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:40 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:22 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "811d85f3-af16-4e87-a7e2-b7933f66d030",
-        "x-ms-ratelimit-remaining-subscription-reads": "11967",
-        "x-ms-request-id": "54b2e7534b6f945e5a515abd7990e192",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013440Z:811d85f3-af16-4e87-a7e2-b7933f66d030",
-        "x-ms-version": "1.0.2257.119"
+        "x-ms-correlation-request-id": "5a383108-6702-4b2c-88a0-53c4edf25c40",
+        "x-ms-ratelimit-remaining-subscription-reads": "11921",
+        "x-ms-request-id": "c8010fead5b35111df038b870bdacc57",
+        "x-ms-routing-request-id": "WESTUS:20230310T063222Z:5a383108-6702-4b2c-88a0-53c4edf25c40",
+        "x-ms-version": "1.0.2251.115"
       },
       "ResponseBody": {
         "value": [
           {
             "resourceType": "AzureFiles",
-            "name": "cool_grs_data_stored_10 tb",
+            "name": "cool_grs_data_stored_100 tb",
             "terms": [
               "P1Y",
               "P3Y",
@@ -103,11 +100,102 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 5048.0
+                "amount": 48019.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 12189.0
+                "amount": 118201.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Redundancy",
+                "value": "GRS"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Files Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Files Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool GRS - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "705a5c19-d4ea-4fa3-8c82-e9fa3f96739b"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool GRS - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AzureFiles",
+            "name": "hot_grs_data_stored_10 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 6368.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 15377.0
               }
             },
             "skuProperties": [
@@ -117,7 +205,7 @@
               },
               {
                 "name": "AccessTier",
-                "value": "Cool"
+                "value": "Hot"
               },
               {
                 "name": "Redundancy",
@@ -137,11 +225,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "Cool GRS - 10 TB"
+                "value": "Hot GRS - 10 TB"
               },
               {
                 "name": "MeterId",
-                "value": "705a5c19-d4ea-4fa3-8c82-e9fa3f96739b"
+                "value": "a7f2168e-a0b6-4b8f-8c64-235fc0208811"
               },
               {
                 "name": "MeterType",
@@ -149,7 +237,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "Cool GRS - 10 TB"
+                "value": "Hot GRS - 10 TB"
               },
               {
                 "name": "billingPlans",
@@ -441,7 +529,7 @@
           },
           {
             "resourceType": "AzureFiles",
-            "name": "hot_grs_data_stored_10 tb",
+            "name": "cool_grs_data_stored_10 tb",
             "terms": [
               "P1Y",
               "P3Y",
@@ -467,108 +555,17 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 6368.0
+                "amount": 5048.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 15377.0
+                "amount": 12189.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
                 "value": "10240"
-              },
-              {
-                "name": "AccessTier",
-                "value": "Hot"
-              },
-              {
-                "name": "Redundancy",
-                "value": "GRS"
-              },
-              {
-                "name": "Size",
-                "value": "10 TB"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Files Reserved Capacity"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Files Reserved Capacity"
-              },
-              {
-                "name": "SkuName",
-                "value": "Hot GRS - 10 TB"
-              },
-              {
-                "name": "MeterId",
-                "value": "a7f2168e-a0b6-4b8f-8c64-235fc0208811"
-              },
-              {
-                "name": "MeterType",
-                "value": "Data Stored (GB/Month)"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Hot GRS - 10 TB"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "AzureFiles",
-            "name": "cool_grs_data_stored_100 tb",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 48019.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 118201.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "102400"
               },
               {
                 "name": "AccessTier",
@@ -580,97 +577,6 @@
               },
               {
                 "name": "Size",
-                "value": "100 TB"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Files Reserved Capacity"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Files Reserved Capacity"
-              },
-              {
-                "name": "SkuName",
-                "value": "Cool GRS - 100 TB"
-              },
-              {
-                "name": "MeterId",
-                "value": "705a5c19-d4ea-4fa3-8c82-e9fa3f96739b"
-              },
-              {
-                "name": "MeterType",
-                "value": "Data Stored (GB/Month)"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "Cool GRS - 100 TB"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "AzureFiles",
-            "name": "hot_lrs_data_stored_10 tb",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "locations": [
-              "westus"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 2892.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 6983.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "10240"
-              },
-              {
-                "name": "AccessTier",
-                "value": "Hot"
-              },
-              {
-                "name": "Redundancy",
-                "value": "LRS"
-              },
-              {
-                "name": "Size",
                 "value": "10 TB"
               },
               {
@@ -683,11 +589,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "Hot LRS - 10 TB"
+                "value": "Cool GRS - 10 TB"
               },
               {
                 "name": "MeterId",
-                "value": "361023e4-7f86-4ee1-bc81-7ac5002b3787"
+                "value": "705a5c19-d4ea-4fa3-8c82-e9fa3f96739b"
               },
               {
                 "name": "MeterType",
@@ -695,7 +601,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "Hot LRS - 10 TB"
+                "value": "Cool GRS - 10 TB"
               },
               {
                 "name": "billingPlans",
@@ -787,6 +693,97 @@
               {
                 "name": "SkuDisplayName",
                 "value": "Cool LRS - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AzureFiles",
+            "name": "hot_lrs_data_stored_10 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2892.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 6983.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10240"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Redundancy",
+                "value": "LRS"
+              },
+              {
+                "name": "Size",
+                "value": "10 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Files Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Files Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot LRS - 10 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "361023e4-7f86-4ee1-bc81-7ac5002b3787"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot LRS - 10 TB"
               },
               {
                 "name": "billingPlans",
@@ -992,7 +989,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "893554199",
+    "RandomSeed": "676498828",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }

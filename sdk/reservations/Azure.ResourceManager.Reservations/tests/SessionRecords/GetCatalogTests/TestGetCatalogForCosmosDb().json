@@ -6,37 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9f22ec12a8596bcf876c03e41aacde32-4d9ee8c994355bc3-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "cf23021e7f3c5e98cce89e1110efc7b6",
+        "traceparent": "00-a88dbce3ebefd162361bec10633c97d0-c2898a60fc154aec-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "0adb09f4a4598865e8c9ef3b088d08ea",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "429",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:18 GMT",
+        "Date": "Fri, 10 Mar 2023 06:31:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4cf67a63-13ca-4c0d-92cd-d4480e9582c1",
-        "x-ms-ratelimit-remaining-subscription-reads": "11989",
-        "x-ms-request-id": "4cf67a63-13ca-4c0d-92cd-d4480e9582c1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013418Z:4cf67a63-13ca-4c0d-92cd-d4480e9582c1"
+        "x-ms-correlation-request-id": "c9b16a18-ed24-4e23-8351-91aaddb10b17",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "c9b16a18-ed24-4e23-8351-91aaddb10b17",
+        "x-ms-routing-request-id": "WESTUS:20230310T063159Z:c9b16a18-ed24-4e23-8351-91aaddb10b17"
       },
       "ResponseBody": {
         "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "costcenter": "1000"
-        },
         "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
-        "displayName": "Azure subscription 1",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -46,39 +43,39 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=CosmosDb",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=CosmosDb",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-53c00a8dafeedbac2f449ffdeef3d945-52beb2be0e24ebef-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "2c8f7c9700bc1299d74960526bdb2d99",
+        "traceparent": "00-1d5dffde603653f9504b25a705eba63b-cf510c1c359ce786-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "4d70cdfa7e06a253e89afa34a8d894f0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "48031",
+        "Content-Length": "48026",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:18 GMT",
+        "Date": "Fri, 10 Mar 2023 06:31:59 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "06c1e117-eb8f-4821-b26f-8443dbbcab5a",
-        "x-ms-ratelimit-remaining-subscription-reads": "11988",
-        "x-ms-request-id": "2c8f7c9700bc1299d74960526bdb2d99",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013418Z:06c1e117-eb8f-4821-b26f-8443dbbcab5a",
-        "x-ms-version": "1.0.2257.119"
+        "x-ms-correlation-request-id": "bb215c57-e777-4575-a196-c87accc09ea2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "4d70cdfa7e06a253e89afa34a8d894f0",
+        "x-ms-routing-request-id": "WESTUS:20230310T063159Z:bb215c57-e777-4575-a196-c87accc09ea2",
+        "x-ms-version": "1.0.2251.115"
       },
       "ResponseBody": {
         "value": [
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_400000_mrus",
+            "name": "cosmos_db_20_million_rus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -101,185 +98,17 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 399176.0
+                "amount": 8045184.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 1029335.0
+                "amount": 17878810.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "4000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "400,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "400,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_5000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 5606.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 14717.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "50"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "5,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "5,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_80000_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 45524.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 119753.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "800"
+                "value": "200000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -299,7 +128,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "80,000 RU/s"
+                "value": "20 Million RU/s"
               },
               {
                 "name": "MeterId",
@@ -311,7 +140,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "80,000 RU/s"
+                "value": "20 Million RU/s"
               },
               {
                 "name": "billingPlans",
@@ -330,7 +159,7 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_130000_mrus",
+            "name": "cosmos_db_40000_rus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -353,17 +182,101 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 134470.0
+                "amount": 23827.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 348746.0
+                "amount": 63072.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "1300"
+                "value": "400"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "40,000 RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "40,000 RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_3_million_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2775168.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 6538044.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "30000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -383,7 +296,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "130,000 Multi-master RU/s"
+                "value": "3 Million Multi-master RU/s"
               },
               {
                 "name": "MeterId",
@@ -395,7 +308,175 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "130,000 Multi-master RU/s"
+                "value": "3 Million Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_2_million_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1002144.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2428272.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "20000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "2 Million RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "2 Million RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_30000_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 17870.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 47304.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "300"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "30,000 RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "30,000 RU/s"
               },
               {
                 "name": "billingPlans",
@@ -480,6 +561,1686 @@
               {
                 "name": "SkuDisplayName",
                 "value": "3 Million RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_2_million_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1864128.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 4436064.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "20000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "2 Million Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "2 Million Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_50000_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 29784.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 78840.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "500"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "50,000 RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "50,000 RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_80000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 85442.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 222686.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "800"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "80,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "80,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_500000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 497568.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1282464.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "5000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "500,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "500,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_140000_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 77116.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 201914.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1400"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "140,000 RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "140,000 RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_50000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 56064.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 147168.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "500"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "50,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "50,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_70000_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 40275.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 106108.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "700"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "70,000 RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "70,000 RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_30000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 33638.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 88301.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "300"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "30,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "30,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_200000_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 108624.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 283824.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "2000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "200,000 RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "200,000 RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_10_million_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 4190784.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 9471312.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "100000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "10 Million RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "10 Million RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_30_million_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 11899584.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 26288410.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "300000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "30 Million RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "30 Million RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_10000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 11213.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 29434.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "100"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "10,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "10,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_70000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 75644.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 197499.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "700"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "70,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "70,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_300000_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 161254.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 420690.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "3000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "300,000 RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "300,000 RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_200000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 203232.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 525600.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "2000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "200,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "200,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_10_million_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 7680768.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 16840224.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "100000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "10 Million Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "10 Million Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_20000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 22426.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 58867.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "200"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "20,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "20,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_10000_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 5957.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 15768.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "100"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "10,000 RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "10,000 RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_90000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 95365.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 248251.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "900"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "90,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "90,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_60000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 65847.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 172313.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "600"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "60,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "60,000 Multi-master RU/s"
               },
               {
                 "name": "billingPlans",
@@ -666,846 +2427,6 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_40000_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 23827.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 63072.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "400"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "40,000 RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "40,000 RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_5000_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 2978.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 7884.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "50"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "5,000 RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "5,000 RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_20_million_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 8045184.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 17878810.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "200000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "20 Million RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "20 Million RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_200000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 203232.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 525600.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "2000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "200,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "200,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_5_million_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 2263584.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 5266512.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "50000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "5 Million RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "5 Million RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_5_million_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 4176768.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 9481824.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "50000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "5 Million Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "5 Million Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_30_million_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 11899584.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 26288410.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "300000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "30 Million RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "30 Million RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_70000_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 40275.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 106108.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "700"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "70,000 RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "70,000 RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_50000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 56064.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 147168.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "500"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "50,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "50,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_30000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 33638.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 88301.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "300"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "30,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "30,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
             "name": "cosmos_db_30_million_mrus",
             "terms": [
               "P1Y",
@@ -1572,6 +2493,90 @@
               {
                 "name": "SkuDisplayName",
                 "value": "30 Million Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_130000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 134470.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 348746.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1300"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "130,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "130,000 Multi-master RU/s"
               },
               {
                 "name": "billingPlans",
@@ -1674,7 +2679,7 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_120000_rus",
+            "name": "cosmos_db_60000_rus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -1697,17 +2702,17 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 66604.0
+                "amount": 35026.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 174583.0
+                "amount": 92464.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "1200"
+                "value": "600"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -1727,7 +2732,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "120,000 RU/s"
+                "value": "60,000 RU/s"
               },
               {
                 "name": "MeterId",
@@ -1739,343 +2744,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "120,000 RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_100000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 105120.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 273312.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "1000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "100,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "100,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_1_million_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 953088.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 2333664.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "10000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "1 Million Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "1 Million Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_70000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 75644.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 197499.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "700"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "70,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "70,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_20000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 22426.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 58867.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "200"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "20,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "20,000 Multi-master RU/s"
+                "value": "60,000 RU/s"
               },
               {
                 "name": "billingPlans",
@@ -2178,7 +2847,7 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_300000_mrus",
+            "name": "cosmos_db_500000_rus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -2201,185 +2870,17 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 301484.0
+                "amount": 266304.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 778308.0
+                "amount": 693792.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "3000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "300,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "300,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_80000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 85442.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 222686.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "800"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "80,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "80,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_140000_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 77116.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 201914.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "1400"
+                "value": "5000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -2399,7 +2900,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "140,000 RU/s"
+                "value": "500,000 RU/s"
               },
               {
                 "name": "MeterId",
@@ -2411,7 +2912,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "140,000 RU/s"
+                "value": "500,000 RU/s"
               },
               {
                 "name": "billingPlans",
@@ -2430,7 +2931,7 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_3_million_mrus",
+            "name": "cosmos_db_130000_rus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -2453,101 +2954,17 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 2775168.0
+                "amount": 71790.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 6538044.0
+                "amount": 188039.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "30000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "3 Million Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "3 Million Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_10_million_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 4190784.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 9471312.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "100000"
+                "value": "1300"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -2567,7 +2984,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "10 Million RU/s"
+                "value": "130,000 RU/s"
               },
               {
                 "name": "MeterId",
@@ -2579,7 +2996,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "10 Million RU/s"
+                "value": "130,000 RU/s"
               },
               {
                 "name": "billingPlans",
@@ -2598,7 +3015,7 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_60000_mrus",
+            "name": "cosmos_db_400000_mrus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -2621,17 +3038,17 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 65847.0
+                "amount": 399176.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 172313.0
+                "amount": 1029335.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "600"
+                "value": "4000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -2651,7 +3068,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "60,000 Multi-master RU/s"
+                "value": "400,000 Multi-master RU/s"
               },
               {
                 "name": "MeterId",
@@ -2663,259 +3080,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "60,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_90000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 95365.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 248251.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "900"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "90,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "90,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_50000_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 29784.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 78840.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "500"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "50,000 RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "50,000 RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_10000_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 5957.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 15768.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "100"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "10,000 RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "10,000 RU/s"
+                "value": "400,000 Multi-master RU/s"
               },
               {
                 "name": "billingPlans",
@@ -3018,174 +3183,6 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_10000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 11213.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 29434.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "100"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "10,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "10,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_60000_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 35026.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 92464.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "600"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "60,000 RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "60,000 RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
             "name": "cosmos_db_100000_rus",
             "terms": [
               "P1Y",
@@ -3270,7 +3267,7 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_20000_rus",
+            "name": "cosmos_db_300000_mrus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -3293,95 +3290,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 11914.0
+                "amount": 301484.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 31536.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "200"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "20,000 RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "20,000 RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_300000_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 161254.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 420690.0
+                "amount": 778308.0
               }
             },
             "skuProperties": [
@@ -3391,7 +3304,7 @@
               },
               {
                 "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
+                "value": "Multi-master RUs Reservation, Global"
               },
               {
                 "name": "ReservationsAutofitRatio",
@@ -3407,19 +3320,19 @@
               },
               {
                 "name": "SkuName",
-                "value": "300,000 RU/s"
+                "value": "300,000 Multi-master RU/s"
               },
               {
                 "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
               },
               {
                 "name": "MeterType",
-                "value": "100 RU/s/Hour"
+                "value": "100 Multi-master RU/s/Hour"
               },
               {
                 "name": "SkuDisplayName",
-                "value": "300,000 RU/s"
+                "value": "300,000 Multi-master RU/s"
               },
               {
                 "name": "billingPlans",
@@ -3438,7 +3351,7 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_150000_rus",
+            "name": "cosmos_db_1_million_mrus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -3461,185 +3374,17 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 82309.0
+                "amount": 953088.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 215391.0
+                "amount": 2333664.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "1500"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "150,000 RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "150,000 RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_500000_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 266304.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 693792.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "5000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "500,000 RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "500,000 RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_500000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 497568.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1282464.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "5000"
+                "value": "10000"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -3659,7 +3404,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "500,000 Multi-master RU/s"
+                "value": "1 Million Multi-master RU/s"
               },
               {
                 "name": "MeterId",
@@ -3671,7 +3416,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "500,000 Multi-master RU/s"
+                "value": "1 Million Multi-master RU/s"
               },
               {
                 "name": "billingPlans",
@@ -3690,7 +3435,7 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_10_million_mrus",
+            "name": "cosmos_db_5000_rus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -3713,101 +3458,17 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 7680768.0
+                "amount": 2978.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 16840224.0
+                "amount": 7884.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "100000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "10 Million Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "10 Million Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_2_million_rus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1002144.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 2428272.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "20000"
+                "value": "50"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -3827,7 +3488,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "2 Million RU/s"
+                "value": "5,000 RU/s"
               },
               {
                 "name": "MeterId",
@@ -3839,7 +3500,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "2 Million RU/s"
+                "value": "5,000 RU/s"
               },
               {
                 "name": "billingPlans",
@@ -3858,7 +3519,7 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_200000_rus",
+            "name": "cosmos_db_100000_mrus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -3881,17 +3542,101 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 108624.0
+                "amount": 105120.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 283824.0
+                "amount": 273312.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "2000"
+                "value": "1000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "100,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "100,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_80000_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 45524.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 119753.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "800"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -3911,7 +3656,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "200,000 RU/s"
+                "value": "80,000 RU/s"
               },
               {
                 "name": "MeterId",
@@ -3923,175 +3668,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "200,000 RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_40000_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 44851.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 117734.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "400"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "40,000 Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "40,000 Multi-master RU/s"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "CosmosDb",
-            "name": "cosmos_db_2_million_mrus",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p3Y": [
-                "Upfront",
-                "Monthly"
-              ],
-              "p5Y": [
-                "Upfront",
-                "Monthly"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1864128.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 4436064.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ReservedUnitCount",
-                "value": "20000"
-              },
-              {
-                "name": "ReservationsAutofitGroup",
-                "value": "Multi-master RUs Reservation, Global"
-              },
-              {
-                "name": "ReservationsAutofitRatio",
-                "value": "1"
-              },
-              {
-                "name": "ProductShortName",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Cosmos DB"
-              },
-              {
-                "name": "SkuName",
-                "value": "2 Million Multi-master RU/s"
-              },
-              {
-                "name": "MeterId",
-                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
-              },
-              {
-                "name": "MeterType",
-                "value": "100 Multi-master RU/s/Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "2 Million Multi-master RU/s"
+                "value": "80,000 RU/s"
               },
               {
                 "name": "billingPlans",
@@ -4194,7 +3771,7 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_30000_rus",
+            "name": "cosmos_db_5_million_mrus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -4217,17 +3794,185 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 17870.0
+                "amount": 4176768.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 47304.0
+                "amount": 9481824.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "300"
+                "value": "50000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "5 Million Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "5 Million Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_40000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 44851.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 117734.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "400"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "40,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "40,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_120000_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 66604.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 174583.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1200"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -4247,7 +3992,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "30,000 RU/s"
+                "value": "120,000 RU/s"
               },
               {
                 "name": "MeterId",
@@ -4259,7 +4004,259 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "30,000 RU/s"
+                "value": "120,000 RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_5000_mrus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 5606.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 14717.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "50"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Multi-master RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "5,000 Multi-master RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "d205cfb6-affc-469b-8d59-aaf017a21011"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 Multi-master RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "5,000 Multi-master RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_20000_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 11914.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 31536.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "200"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "20,000 RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "20,000 RU/s"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "CosmosDb",
+            "name": "cosmos_db_5_million_rus",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2263584.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 5266512.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "50000"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "RUs Reservation, Global"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Cosmos DB"
+              },
+              {
+                "name": "SkuName",
+                "value": "5 Million RU/s"
+              },
+              {
+                "name": "MeterId",
+                "value": "65d4ded2-41ae-43a8-bb68-3c200e1ba864"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 RU/s/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "5 Million RU/s"
               },
               {
                 "name": "billingPlans",
@@ -4277,19 +4274,19 @@
             ]
           }
         ],
-        "nextLink": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=CosmosDb\u0026%24skip=50",
+        "nextLink": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=CosmosDb\u0026%24skip=50",
         "totalItems": 52
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=CosmosDb\u0026%24skip=50",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=CosmosDb\u0026%24skip=50",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b6bf1abccf361a251a1b2384ad90bcf0-46c4a2d2e1c34ae3-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "dd8678a94feb0f68da9806238d2304e1",
+        "traceparent": "00-62af2d199c36de726983b1fabeb25848-5200c4aa25db5f30-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "a5482dc9f63d9dc8502ccd40d188f913",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -4298,17 +4295,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1953",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:18 GMT",
+        "Date": "Fri, 10 Mar 2023 06:31:59 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d1aee666-b014-4f7d-a62d-c697444cc3bd",
-        "x-ms-ratelimit-remaining-subscription-reads": "11987",
-        "x-ms-request-id": "dd8678a94feb0f68da9806238d2304e1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013418Z:d1aee666-b014-4f7d-a62d-c697444cc3bd",
-        "x-ms-version": "1.0.2257.119"
+        "x-ms-correlation-request-id": "27b468fe-3c35-44a0-a8f7-f7b2bd00544e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "a5482dc9f63d9dc8502ccd40d188f913",
+        "x-ms-routing-request-id": "WESTUS:20230310T063200Z:27b468fe-3c35-44a0-a8f7-f7b2bd00544e",
+        "x-ms-version": "1.0.2251.115"
       },
       "ResponseBody": {
         "value": [
@@ -4398,7 +4395,7 @@
           },
           {
             "resourceType": "CosmosDb",
-            "name": "cosmos_db_130000_rus",
+            "name": "cosmos_db_150000_rus",
             "terms": [
               "P1Y",
               "P3Y",
@@ -4421,17 +4418,17 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 71790.0
+                "amount": 82309.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 188039.0
+                "amount": 215391.0
               }
             },
             "skuProperties": [
               {
                 "name": "ReservedUnitCount",
-                "value": "1300"
+                "value": "1500"
               },
               {
                 "name": "ReservationsAutofitGroup",
@@ -4451,7 +4448,7 @@
               },
               {
                 "name": "SkuName",
-                "value": "130,000 RU/s"
+                "value": "150,000 RU/s"
               },
               {
                 "name": "MeterId",
@@ -4463,7 +4460,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "130,000 RU/s"
+                "value": "150,000 RU/s"
               },
               {
                 "name": "billingPlans",
@@ -4487,7 +4484,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "985652218",
+    "RandomSeed": "2038150445",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }

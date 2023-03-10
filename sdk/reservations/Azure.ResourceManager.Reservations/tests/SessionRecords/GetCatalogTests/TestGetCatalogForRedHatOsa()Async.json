@@ -6,37 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8dd60de1fdca5ddb3ed5321b91e4a314-72bf547587fa7080-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "eb3efb28f5d278d3ac28cf30571e36cb",
+        "traceparent": "00-a92e0a46de3fe20213c498ff6e16af59-ec9f34c3a3f309a2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "9ea3f7e3d985e946561d318ed6100735",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "429",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:46 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:27 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c4d091c9-0dd5-4c70-9779-99efc3f8775c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11943",
-        "x-ms-request-id": "c4d091c9-0dd5-4c70-9779-99efc3f8775c",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013447Z:c4d091c9-0dd5-4c70-9779-99efc3f8775c"
+        "x-ms-correlation-request-id": "1812647b-13e8-47e6-bdba-1858d0b41b10",
+        "x-ms-ratelimit-remaining-subscription-reads": "11897",
+        "x-ms-request-id": "1812647b-13e8-47e6-bdba-1858d0b41b10",
+        "x-ms-routing-request-id": "WESTUS:20230310T063227Z:1812647b-13e8-47e6-bdba-1858d0b41b10"
       },
       "ResponseBody": {
         "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "tags": {
-          "costcenter": "1000"
-        },
         "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
-        "displayName": "Azure subscription 1",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -46,13 +43,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=RedHatOsa",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=RedHatOsa",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "46de69e8c29ee9149b73da8c134ecdd2",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "3a21c977a57ca7e8461e832413213378",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -61,368 +58,23 @@
         "Cache-Control": "no-cache",
         "Content-Length": "24559",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 01:34:47 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:28 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a876ac23-21f3-4fbc-ab60-d7b2fa520a8d",
-        "x-ms-ratelimit-remaining-subscription-reads": "11942",
-        "x-ms-request-id": "46de69e8c29ee9149b73da8c134ecdd2",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013447Z:a876ac23-21f3-4fbc-ab60-d7b2fa520a8d",
-        "x-ms-version": "1.0.2257.119"
+        "x-ms-correlation-request-id": "061fd132-0260-4fef-bf98-f89f8571657e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11896",
+        "x-ms-request-id": "3a21c977a57ca7e8461e832413213378",
+        "x-ms-routing-request-id": "WESTUS:20230310T063228Z:061fd132-0260-4fef-bf98-f89f8571657e",
+        "x-ms-version": "1.0.2251.115"
       },
       "ResponseBody": {
         "value": [
           {
             "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_general_purpose_v3_32_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 8029.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 15818.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift General Purpose v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift General Purpose"
-              },
-              {
-                "name": "SkuName",
-                "value": "32 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "04747909-677b-46ce-be41-06f92d65e1c4"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "32 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_general_purpose_v3_48_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 12044.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 23728.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift General Purpose v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift General Purpose"
-              },
-              {
-                "name": "SkuName",
-                "value": "48 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "69262892-0ade-5159-b323-93a8c02bef7c"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "48 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_general_purpose_v3_64_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 16058.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 31637.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift General Purpose v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift General Purpose"
-              },
-              {
-                "name": "SkuName",
-                "value": "64 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "7352fd09-c7cc-5ccf-8889-f9bfefb35982"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "64 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_general_purpose_v3_4_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 1004.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 1977.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift General Purpose v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift General Purpose"
-              },
-              {
-                "name": "SkuName",
-                "value": "4 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "c54bdb2d-d6dd-42a2-893c-a29f4e5220c4"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "4 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_general_purpose_v3_8_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 2007.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 3955.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift General Purpose v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift General Purpose"
-              },
-              {
-                "name": "SkuName",
-                "value": "8 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "0cf72fdb-8e27-4e40-881c-edc6d4f5d944"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "8 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_general_purpose_v3_16_vcpu",
+            "name": "red_hat_openshift_memory_optimized_v3_16_vcpu",
             "terms": [
               "P1Y",
               "P3Y",
@@ -452,420 +104,6 @@
             "skuProperties": [
               {
                 "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift General Purpose v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift General Purpose"
-              },
-              {
-                "name": "SkuName",
-                "value": "16 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "990e1842-dbfe-4a5c-8f7a-3bc021f667b2"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "16 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "azure_red_hat_openshift_general_purpose_20_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 5018.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 9887.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift General Purpose v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift General Purpose"
-              },
-              {
-                "name": "SkuName",
-                "value": "20 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "bb0083fe-6981-5cdc-8b2b-2a2277658719"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "20 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "azure_red_hat_openshift_general_purpose_96_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 24087.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 47455.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift General Purpose v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift General Purpose"
-              },
-              {
-                "name": "SkuName",
-                "value": "96 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "1ca819b9-7aba-56f3-8593-7e922c23e731"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "96 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "azure_red_hat_openshift_general_purpose_2_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 502.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 989.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift General Purpose v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift General Purpose"
-              },
-              {
-                "name": "SkuName",
-                "value": "2 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "9cf2b697-30a5-508a-9b2c-de068354c760"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "2 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "azure_red_hat_openshift_general_purpose_1_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 251.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 494.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift General Purpose v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift General Purpose"
-              },
-              {
-                "name": "SkuName",
-                "value": "1 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "24afb236-f7f8-5fb2-8390-912a9afeac5c"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "1 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "azure_red_hat_openshift_general_purpose_24_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 6029.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 11878.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift General Purpose v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift General Purpose"
-              },
-              {
-                "name": "SkuName",
-                "value": "24 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "0b8976a6-463d-5d20-836e-aaadc11f9b3f"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "24 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_memory_optimized_v3_8_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 2007.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 3955.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
                 "value": "Azure Red Hat OpenShift Memory Optimized v3"
               },
               {
@@ -874,11 +112,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "8 vCPU"
+                "value": "16 vCPU"
               },
               {
                 "name": "MeterId",
-                "value": "28576259-2f76-44a4-9076-f61f2ad41e93"
+                "value": "a7059f69-9291-45df-8308-4b13942a1794"
               },
               {
                 "name": "MeterType",
@@ -886,76 +124,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "8 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_memory_optimized_v3_96_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 24087.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 47455.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift Memory Optimized v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift Memory Optimized"
-              },
-              {
-                "name": "SkuName",
-                "value": "96 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "6157845f-0f14-528f-b3e0-276f69d1f172"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "96 vCPU"
+                "value": "16 vCPU"
               },
               {
                 "name": "billingPlans",
@@ -1043,75 +212,6 @@
           },
           {
             "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_memory_optimized_v3_32_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 8029.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 15818.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift Memory Optimized v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift Memory Optimized"
-              },
-              {
-                "name": "SkuName",
-                "value": "32 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "dd9d8d30-99d0-4955-b1f6-5a0c7780b37b"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "32 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
             "name": "red_hat_openshift_memory_optimized_v3_48_vcpu",
             "terms": [
               "P1Y",
@@ -1181,7 +281,7 @@
           },
           {
             "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_memory_optimized_v3_16_vcpu",
+            "name": "red_hat_openshift_memory_optimized_v3_96_vcpu",
             "terms": [
               "P1Y",
               "P3Y",
@@ -1201,11 +301,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 4015.0
+                "amount": 24087.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 7909.0
+                "amount": 47455.0
               }
             },
             "skuProperties": [
@@ -1219,11 +319,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "16 vCPU"
+                "value": "96 vCPU"
               },
               {
                 "name": "MeterId",
-                "value": "a7059f69-9291-45df-8308-4b13942a1794"
+                "value": "6157845f-0f14-528f-b3e0-276f69d1f172"
               },
               {
                 "name": "MeterType",
@@ -1231,7 +331,76 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "16 vCPU"
+                "value": "96 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "red_hat_openshift_memory_optimized_v3_32_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 8029.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 15818.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift Memory Optimized v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift Memory Optimized"
+              },
+              {
+                "name": "SkuName",
+                "value": "32 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "dd9d8d30-99d0-4955-b1f6-5a0c7780b37b"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "32 vCPU"
               },
               {
                 "name": "billingPlans",
@@ -1319,7 +488,7 @@
           },
           {
             "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_memory_optimized_v3_104_vcpu",
+            "name": "red_hat_openshift_memory_optimized_v3_8_vcpu",
             "terms": [
               "P1Y",
               "P3Y",
@@ -1339,11 +508,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 26094.0
+                "amount": 2007.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 51410.0
+                "amount": 3955.0
               }
             },
             "skuProperties": [
@@ -1357,11 +526,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "104 vCPU"
+                "value": "8 vCPU"
               },
               {
                 "name": "MeterId",
-                "value": "625f8b7f-ecb3-5987-af19-c537e22bcaab"
+                "value": "28576259-2f76-44a4-9076-f61f2ad41e93"
               },
               {
                 "name": "MeterType",
@@ -1369,145 +538,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "104 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_memory_optimized_v3_2_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 502.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 989.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift Memory Optimized v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift Memory Optimized"
-              },
-              {
-                "name": "SkuName",
-                "value": "2 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "7012f662-8f3d-509f-b25c-9182e2f24325"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "2 vCPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_memory_optimized_v3_20_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 5018.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 9887.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift Memory Optimized v3"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift Memory Optimized"
-              },
-              {
-                "name": "SkuName",
-                "value": "20 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "131e0c87-0a64-5aa4-b0c6-09bcbb5a9048"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "20 vCPU"
+                "value": "8 vCPU"
               },
               {
                 "name": "billingPlans",
@@ -1664,6 +695,213 @@
           },
           {
             "resourceType": "RedHatOsa",
+            "name": "red_hat_openshift_memory_optimized_v3_20_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 5018.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 9887.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift Memory Optimized v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift Memory Optimized"
+              },
+              {
+                "name": "SkuName",
+                "value": "20 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "131e0c87-0a64-5aa4-b0c6-09bcbb5a9048"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "20 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "red_hat_openshift_memory_optimized_v3_104_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 26094.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 51410.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift Memory Optimized v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift Memory Optimized"
+              },
+              {
+                "name": "SkuName",
+                "value": "104 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "625f8b7f-ecb3-5987-af19-c537e22bcaab"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "104 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "red_hat_openshift_memory_optimized_v3_2_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 502.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 989.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift Memory Optimized v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift Memory Optimized"
+              },
+              {
+                "name": "SkuName",
+                "value": "2 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "7012f662-8f3d-509f-b25c-9182e2f24325"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "2 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
             "name": "red_hat_openshift_memory_optimized_v3_192_vcpu",
             "terms": [
               "P1Y",
@@ -1715,75 +953,6 @@
               {
                 "name": "SkuDisplayName",
                 "value": "192 v CPU"
-              },
-              {
-                "name": "billingPlans",
-                "value": "[\u0022Upfront\u0022]"
-              }
-            ],
-            "restrictions": [
-              {
-                "type": "Term",
-                "values": [
-                  "P5Y"
-                ],
-                "reasonCode": "NotAvailableForSubscription"
-              }
-            ]
-          },
-          {
-            "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_compute_optimized_v2_72_vcpu",
-            "terms": [
-              "P1Y",
-              "P3Y",
-              "P5Y"
-            ],
-            "billingPlans": {
-              "p1Y": [
-                "Upfront"
-              ],
-              "p3Y": [
-                "Upfront"
-              ],
-              "p5Y": [
-                "Upfront"
-              ]
-            },
-            "msrp": {
-              "p1Y": {
-                "currencyCode": "USD",
-                "amount": 18065.0
-              },
-              "p3Y": {
-                "currencyCode": "USD",
-                "amount": 35592.0
-              }
-            },
-            "skuProperties": [
-              {
-                "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift Compute Optimized v2"
-              },
-              {
-                "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift Compute Optimized"
-              },
-              {
-                "name": "SkuName",
-                "value": "72 vCPU"
-              },
-              {
-                "name": "MeterId",
-                "value": "356cde4e-699b-5802-91e9-9d05d4d00f86"
-              },
-              {
-                "name": "MeterType",
-                "value": "1 Compute Hour"
-              },
-              {
-                "name": "SkuDisplayName",
-                "value": "72 vCPU"
               },
               {
                 "name": "billingPlans",
@@ -1940,7 +1109,7 @@
           },
           {
             "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_compute_optimized_v2_48_vcpu",
+            "name": "red_hat_openshift_compute_optimized_v2_4_vcpu",
             "terms": [
               "P1Y",
               "P3Y",
@@ -1960,11 +1129,11 @@
             "msrp": {
               "p1Y": {
                 "currencyCode": "USD",
-                "amount": 12044.0
+                "amount": 1004.0
               },
               "p3Y": {
                 "currencyCode": "USD",
-                "amount": 23728.0
+                "amount": 1977.0
               }
             },
             "skuProperties": [
@@ -1978,11 +1147,11 @@
               },
               {
                 "name": "SkuName",
-                "value": "48 vCPU"
+                "value": "4 vCPU"
               },
               {
                 "name": "MeterId",
-                "value": "385cc0a3-8d66-5c79-ac9b-16baba63bbc4"
+                "value": "f6be36df-12c0-4438-b686-6837a702bf32"
               },
               {
                 "name": "MeterType",
@@ -1990,7 +1159,7 @@
               },
               {
                 "name": "SkuDisplayName",
-                "value": "48 vCPU"
+                "value": "4 vCPU"
               },
               {
                 "name": "billingPlans",
@@ -2147,7 +1316,421 @@
           },
           {
             "resourceType": "RedHatOsa",
-            "name": "red_hat_openshift_compute_optimized_v2_4_vcpu",
+            "name": "red_hat_openshift_compute_optimized_v2_48_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 12044.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 23728.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift Compute Optimized v2"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift Compute Optimized"
+              },
+              {
+                "name": "SkuName",
+                "value": "48 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "385cc0a3-8d66-5c79-ac9b-16baba63bbc4"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "48 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "red_hat_openshift_compute_optimized_v2_72_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 18065.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 35592.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift Compute Optimized v2"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift Compute Optimized"
+              },
+              {
+                "name": "SkuName",
+                "value": "72 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "356cde4e-699b-5802-91e9-9d05d4d00f86"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "72 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "red_hat_openshift_general_purpose_v3_48_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 12044.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 23728.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift General Purpose v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift General Purpose"
+              },
+              {
+                "name": "SkuName",
+                "value": "48 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "69262892-0ade-5159-b323-93a8c02bef7c"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "48 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "red_hat_openshift_general_purpose_v3_32_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 8029.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 15818.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift General Purpose v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift General Purpose"
+              },
+              {
+                "name": "SkuName",
+                "value": "32 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "04747909-677b-46ce-be41-06f92d65e1c4"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "32 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "red_hat_openshift_general_purpose_v3_16_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 4015.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 7909.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift General Purpose v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift General Purpose"
+              },
+              {
+                "name": "SkuName",
+                "value": "16 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "990e1842-dbfe-4a5c-8f7a-3bc021f667b2"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "16 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "red_hat_openshift_general_purpose_v3_8_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2007.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 3955.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift General Purpose v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift General Purpose"
+              },
+              {
+                "name": "SkuName",
+                "value": "8 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "0cf72fdb-8e27-4e40-881c-edc6d4f5d944"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "8 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "red_hat_openshift_general_purpose_v3_4_vcpu",
             "terms": [
               "P1Y",
               "P3Y",
@@ -2177,11 +1760,11 @@
             "skuProperties": [
               {
                 "name": "ProductShortName",
-                "value": "Azure Red Hat OpenShift Compute Optimized v2"
+                "value": "Azure Red Hat OpenShift General Purpose v3"
               },
               {
                 "name": "ProductTitle",
-                "value": "Azure Red Hat OpenShift Compute Optimized"
+                "value": "Azure Red Hat OpenShift General Purpose"
               },
               {
                 "name": "SkuName",
@@ -2189,7 +1772,7 @@
               },
               {
                 "name": "MeterId",
-                "value": "f6be36df-12c0-4438-b686-6837a702bf32"
+                "value": "c54bdb2d-d6dd-42a2-893c-a29f4e5220c4"
               },
               {
                 "name": "MeterType",
@@ -2213,6 +1796,420 @@
                 "reasonCode": "NotAvailableForSubscription"
               }
             ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "red_hat_openshift_general_purpose_v3_64_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 16058.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 31637.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift General Purpose v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift General Purpose"
+              },
+              {
+                "name": "SkuName",
+                "value": "64 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "7352fd09-c7cc-5ccf-8889-f9bfefb35982"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "64 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "azure_red_hat_openshift_general_purpose_2_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 502.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 989.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift General Purpose v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift General Purpose"
+              },
+              {
+                "name": "SkuName",
+                "value": "2 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "9cf2b697-30a5-508a-9b2c-de068354c760"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "2 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "azure_red_hat_openshift_general_purpose_1_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 251.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 494.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift General Purpose v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift General Purpose"
+              },
+              {
+                "name": "SkuName",
+                "value": "1 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "24afb236-f7f8-5fb2-8390-912a9afeac5c"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "1 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "azure_red_hat_openshift_general_purpose_20_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 5018.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 9887.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift General Purpose v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift General Purpose"
+              },
+              {
+                "name": "SkuName",
+                "value": "20 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "bb0083fe-6981-5cdc-8b2b-2a2277658719"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "20 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "azure_red_hat_openshift_general_purpose_96_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 24087.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 47455.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift General Purpose v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift General Purpose"
+              },
+              {
+                "name": "SkuName",
+                "value": "96 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "1ca819b9-7aba-56f3-8593-7e922c23e731"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "96 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHatOsa",
+            "name": "azure_red_hat_openshift_general_purpose_24_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 6029.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 11878.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Red Hat OpenShift General Purpose v3"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Red Hat OpenShift General Purpose"
+              },
+              {
+                "name": "SkuName",
+                "value": "24 vCPU"
+              },
+              {
+                "name": "MeterId",
+                "value": "0b8976a6-463d-5d20-836e-aaadc11f9b3f"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "24 vCPU"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
           }
         ],
         "totalItems": 31
@@ -2221,7 +2218,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "435423770",
+    "RandomSeed": "581625709",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }

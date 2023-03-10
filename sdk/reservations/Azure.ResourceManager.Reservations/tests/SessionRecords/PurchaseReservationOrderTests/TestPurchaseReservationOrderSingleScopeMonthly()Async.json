@@ -82,7 +82,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/calculatePrice?api-version=2022-11-01-beta",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/calculatePrice?api-version=2022-11-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -257,7 +257,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/67639a8e-d458-408a-8004-9ba4ac57ab73?api-version=2022-11-01-beta",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/67639a8e-d458-408a-8004-9ba4ac57ab73?api-version=2022-11-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -298,7 +298,7 @@
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 07 Mar 2023 20:50:20 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/67639a8e-d458-408a-8004-9ba4ac57ab73?api-version=2022-11-01-beta",
+        "Location": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/67639a8e-d458-408a-8004-9ba4ac57ab73?api-version=2022-11-01",
         "Pragma": "no-cache",
         "Retry-After": "120",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -332,7 +332,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/67639a8e-d458-408a-8004-9ba4ac57ab73?api-version=2022-11-01-beta",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/67639a8e-d458-408a-8004-9ba4ac57ab73?api-version=2022-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
