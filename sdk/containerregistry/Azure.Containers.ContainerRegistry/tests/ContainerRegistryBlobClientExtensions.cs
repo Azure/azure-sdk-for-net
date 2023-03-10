@@ -29,7 +29,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             manifest.Config = new OciDescriptor()
             {
                 Digest = uploadConfigResult.Value.Digest,
-                SizeInBytes = config.ToMemory().Length,
+                SizeInBytes = uploadConfigResult.Value.SizeInBytes,
                 MediaType = "application/vnd.oci.image.config.v1+json"
             };
 
@@ -40,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             manifest.Layers.Add(new OciDescriptor()
             {
                 Digest = uploadLayerResult.Value.Digest,
-                SizeInBytes = layer.ToMemory().Length,
+                SizeInBytes = uploadLayerResult.Value.SizeInBytes,
                 MediaType = "application/vnd.oci.image.layer.v1.tar"
             });
 
