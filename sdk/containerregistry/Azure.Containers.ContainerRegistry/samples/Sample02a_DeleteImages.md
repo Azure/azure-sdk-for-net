@@ -7,11 +7,7 @@ A common use case for Azure Container Registries is to scan the repositories in 
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
-    new ContainerRegistryClientOptions()
-    {
-        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-    });
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
 // Iterate through repositories
 Pageable<string> repositoryNames = client.GetRepositoryNames();

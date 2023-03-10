@@ -17,11 +17,7 @@ Create a `ContainerRegistryClient` and send a request.
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
-    new ContainerRegistryClientOptions()
-    {
-        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-    });
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
 // Get the collection of repository names from the registry
 AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
@@ -40,11 +36,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a ContainerRepository class for an invalid repository
 string fakeRepositoryName = "doesnotexist";
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
-    new ContainerRegistryClientOptions()
-    {
-        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-    });
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
 try

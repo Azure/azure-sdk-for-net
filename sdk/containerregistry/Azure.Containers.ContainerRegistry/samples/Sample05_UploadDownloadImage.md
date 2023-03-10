@@ -18,10 +18,7 @@ string repository = "sample-oci-image";
 string tag = "demo";
 
 // Create a new ContainerRegistryBlobClient
-ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-{
-    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-});
+ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
 ```
 
 ## Upload an OCI Image

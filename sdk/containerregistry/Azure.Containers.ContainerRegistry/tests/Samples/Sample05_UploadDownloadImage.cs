@@ -28,10 +28,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string tag = "demo";
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-            {
-                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-            });
+            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
 
             #endregion
 
@@ -85,10 +82,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Directory.CreateDirectory(path);
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-            {
-                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-            });
+            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential());
 
             #region Snippet:ContainerRegistry_Samples_DownloadOciImageAsync
 
@@ -147,10 +141,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string repository = "library/hello-world";
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-            {
-                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-            });
+            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential());
 
             #region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
 
@@ -194,10 +185,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Directory.CreateDirectory(path);
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-            {
-                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-            });
+            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
 
             #region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
 
