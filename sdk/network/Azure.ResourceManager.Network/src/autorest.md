@@ -176,13 +176,6 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName} # this is get something out of from VirtualMachineScaleSetVM, itself is not a resource
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIPAddressName}
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
-
-partial-resources:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}: VirtualMachineScaleSet
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}: VirtualMachineScaleSetVm
 
 override-operation-name:
   ApplicationGateways_ListAvailableWafRuleSets: GetApplicationGatewayAvailableWafRuleSetsAsync
@@ -194,37 +187,11 @@ override-operation-name:
   ApplicationGateways_GetSslPredefinedPolicy: GetApplicationGatewaySslPredefinedPolicy
 
 directive:
-  # these operations are removed because they are pageable LROs which we currently do not support
-  - remove-operation: PutBastionShareableLink
-  - remove-operation: DeleteBastionShareableLink
-  - remove-operation: GetBastionShareableLink
-  - remove-operation: GetActiveSessions
-  - remove-operation: DisconnectActiveSessions
-  # these operations are renamed because their api-versions are different from others in the same operation group
-  - rename-operation:
-      from: NetworkInterfaces_ListVirtualMachineScaleSetVMNetworkInterfaces
-      to: VirtualMachineScaleSetVMs_ListNetworkInterfaces
-  - rename-operation:
-      from: NetworkInterfaces_ListVirtualMachineScaleSetNetworkInterfaces
-      to: VirtualMachineScaleSets_ListNetworkInterfaces
-  - rename-operation:
-      from: NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface
-      to: VirtualMachineScaleSets_GetNetworkInterface
-  - rename-operation:
-      from: NetworkInterfaces_ListVirtualMachineScaleSetIpConfigurations
-      to: VirtualMachineScaleSets_ListIpConfigurations
-  - rename-operation:
-      from: NetworkInterfaces_GetVirtualMachineScaleSetIpConfiguration
-      to: VirtualMachineScaleSets_GetIpConfiguration
-  - rename-operation:
-      from: PublicIPAddresses_ListVirtualMachineScaleSetPublicIPAddresses
-      to: VirtualMachineScaleSets_ListPublicIPAddresses
-  - rename-operation:
-      from: PublicIPAddresses_ListVirtualMachineScaleSetVMPublicIPAddresses
-      to: VirtualMachineScaleSetVMs_ListPublicIPAddresses
-  - rename-operation:
-      from: PublicIPAddresses_GetVirtualMachineScaleSetPublicIPAddress
-      to: VirtualMachineScaleSets_GetPublicIPAddress
+  - remove-operation: 'PutBastionShareableLink'
+  - remove-operation: 'DeleteBastionShareableLink'
+  - remove-operation: 'GetBastionShareableLink'
+  - remove-operation: 'GetActiveSessions'
+  - remove-operation: 'DisconnectActiveSessions'
   - from: virtualNetworkGateway.json
     where: $.definitions
     transform: >
@@ -476,7 +443,7 @@ input-file:
   - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/virtualNetworkTap.json
   - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/virtualRouter.json
   - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/virtualWan.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/vmssNetworkInterface.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/vmssPublicIpAddress.json
+#   - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/vmssNetworkInterface.json
+#   - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/vmssPublicIpAddress.json
   - https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/webapplicationfirewall.json
 ```
