@@ -213,6 +213,7 @@ rename-mapping:
   VolumeGroupMetaData: NetAppVolumeGroupMetadata
   VolumeGroup: NetAppVolumeGroupResult
   RegionInfoAvailabilityZoneMappingsItem: AvailabilityZoneMapping
+  ReadyToBeFinalized: IsReadyToBeFinalized
 
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}

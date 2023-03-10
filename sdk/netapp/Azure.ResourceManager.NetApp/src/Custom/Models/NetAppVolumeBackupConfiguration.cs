@@ -7,13 +7,21 @@ using System.ComponentModel;
 using System.Text;
 using Azure.Core;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace Azure.ResourceManager.NetApp.Models
 {
+    /// <summary> Volume Backup Properties. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NetAppVolumeBackupConfiguration
     {
+        /// <summary> Vault Resource ID. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier VaultId { get; set; }
 
+        /// <summary> Initializes a new instance of NetAppVolumeBackupConfiguration. </summary>
+        /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
+        /// <param name="isPolicyEnforced"> Policy Enforced. </param>
+        /// <param name="vaultId"> Vault Resource ID. </param>
+        /// <param name="isBackupEnabled"> Backup Enabled. </param>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         internal NetAppVolumeBackupConfiguration(ResourceIdentifier backupPolicyId, bool? isPolicyEnforced, ResourceIdentifier vaultId, bool? isBackupEnabled)
@@ -21,4 +29,3 @@ namespace Azure.ResourceManager.NetApp.Models
         }
     }
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

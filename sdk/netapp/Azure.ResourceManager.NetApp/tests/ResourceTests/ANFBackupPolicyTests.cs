@@ -171,8 +171,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 DefaultVirtualNetwork = await CreateVirtualNetwork();
             }
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new(backupPolicyResource1.Id, false, true);
-            NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection(backup: backupPolicyProperties, null,null);
+            //backupPolicyResource1.Id, false, true
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, IsBackupEnabled = false, IsPolicyEnforced = true };
+            NetAppVolumeDataProtection dataProtectionProperties = new() { Backup = backupPolicyProperties};
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId:DefaultSubnetId, dataProtection: dataProtectionProperties);
 
             //Validate if created properly
