@@ -162,12 +162,5 @@ namespace Azure.Core.Json
             mje.WriteTo(writer);
             writer.Flush();
         }
-
-        protected internal override string? ToString(object element)
-        {
-            MutableJsonElement mje = (MutableJsonElement)element;
-
-            return mje.ToString();
-        }
     }
 }

@@ -144,9 +144,9 @@ namespace Azure.Core.Dynamic
             _document.Dispose();
         }
 
-        public override string? ToString()
+        public override string ToString()
         {
-            return _document.ToString(_element);
+            return _element?.ToString() ?? "null";
         }
     }
 }

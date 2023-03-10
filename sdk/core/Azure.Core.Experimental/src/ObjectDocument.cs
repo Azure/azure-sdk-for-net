@@ -45,8 +45,6 @@ namespace Azure.Core.Dynamic
         // Conversion
         protected internal abstract T As<T>(object element);
 
-        protected internal abstract string? ToString(object element);
-
         public abstract void Dispose();
     }
 }
