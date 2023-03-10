@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the ClientEncryptionKeyGetResult data model. </summary>
+    /// <summary>
+    /// A class representing the ClientEncryptionKeyGetResult data model.
+    /// Client Encryption Key.
+    /// </summary>
     public partial class ClientEncryptionKeyGetResultData : ResourceData
     {
         /// <summary> Initializes a new instance of ClientEncryptionKeyGetResultData. </summary>

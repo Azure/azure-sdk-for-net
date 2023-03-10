@@ -10,19 +10,19 @@ using System;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB client encryption key resource object. </summary>
-    public partial class ClientEncryptionKeyResource
+    public partial class CosmosDBSqlClientEncryptionKeyResource
     {
-        /// <summary> Initializes a new instance of ClientEncryptionKeyResource. </summary>
-        public ClientEncryptionKeyResource()
+        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyResource. </summary>
+        public CosmosDBSqlClientEncryptionKeyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of ClientEncryptionKeyResource. </summary>
+        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyResource. </summary>
         /// <param name="id"> Name of the ClientEncryptionKey. </param>
         /// <param name="encryptionAlgorithm"> Encryption algorithm that will be used along with this client encryption key to encrypt/decrypt data. </param>
         /// <param name="wrappedDataEncryptionKey"> Wrapped (encrypted) form of the key represented as a byte array. </param>
         /// <param name="keyWrapMetadata"> Metadata for the wrapping provider that can be used to unwrap the wrapped client encryption key. </param>
-        internal ClientEncryptionKeyResource(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, KeyWrapMetadata keyWrapMetadata)
+        internal CosmosDBSqlClientEncryptionKeyResource(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, KeyWrapMetadata keyWrapMetadata)
         {
             Id = id;
             EncryptionAlgorithm = encryptionAlgorithm;

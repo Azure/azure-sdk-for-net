@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static KeyWrapMetadata DeserializeKeyWrapMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> value = default;

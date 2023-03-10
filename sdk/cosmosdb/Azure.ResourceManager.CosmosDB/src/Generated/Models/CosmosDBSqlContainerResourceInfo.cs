@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the container. </param>
         /// <param name="clientEncryptionPolicy"> The client encryption policy for the container. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, ClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl)
+        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl)
         {
             ContainerName = containerName;
             IndexingPolicy = indexingPolicy;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The conflict resolution policy for the container. </summary>
         public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
         /// <summary> The client encryption policy for the container. </summary>
-        public ClientEncryptionPolicy ClientEncryptionPolicy { get; set; }
+        public CosmosDBClientEncryptionPolicy ClientEncryptionPolicy { get; set; }
         /// <summary> Analytical TTL. </summary>
         public long? AnalyticalStorageTtl { get; set; }
     }

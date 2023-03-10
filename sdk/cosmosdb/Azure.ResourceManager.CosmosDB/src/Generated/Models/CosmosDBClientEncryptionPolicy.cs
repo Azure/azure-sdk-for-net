@@ -13,13 +13,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB client encryption policy. </summary>
-    public partial class ClientEncryptionPolicy
+    public partial class CosmosDBClientEncryptionPolicy
     {
-        /// <summary> Initializes a new instance of ClientEncryptionPolicy. </summary>
+        /// <summary> Initializes a new instance of CosmosDBClientEncryptionPolicy. </summary>
         /// <param name="includedPaths"> Paths of the item that need encryption along with path-specific settings. </param>
         /// <param name="policyFormatVersion"> Version of the client encryption policy definition. Supported versions are 1 and 2. Version 2 supports id and partition key path encryption. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="includedPaths"/> is null. </exception>
-        public ClientEncryptionPolicy(IEnumerable<ClientEncryptionIncludedPath> includedPaths, int policyFormatVersion)
+        public CosmosDBClientEncryptionPolicy(IEnumerable<CosmosDBClientEncryptionIncludedPath> includedPaths, int policyFormatVersion)
         {
             Argument.AssertNotNull(includedPaths, nameof(includedPaths));
 
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             PolicyFormatVersion = policyFormatVersion;
         }
 
-        /// <summary> Initializes a new instance of ClientEncryptionPolicy. </summary>
+        /// <summary> Initializes a new instance of CosmosDBClientEncryptionPolicy. </summary>
         /// <param name="includedPaths"> Paths of the item that need encryption along with path-specific settings. </param>
         /// <param name="policyFormatVersion"> Version of the client encryption policy definition. Supported versions are 1 and 2. Version 2 supports id and partition key path encryption. </param>
-        internal ClientEncryptionPolicy(IList<ClientEncryptionIncludedPath> includedPaths, int policyFormatVersion)
+        internal CosmosDBClientEncryptionPolicy(IList<CosmosDBClientEncryptionIncludedPath> includedPaths, int policyFormatVersion)
         {
             IncludedPaths = includedPaths;
             PolicyFormatVersion = policyFormatVersion;
         }
 
         /// <summary> Paths of the item that need encryption along with path-specific settings. </summary>
-        public IList<ClientEncryptionIncludedPath> IncludedPaths { get; }
+        public IList<CosmosDBClientEncryptionIncludedPath> IncludedPaths { get; }
         /// <summary> Version of the client encryption policy definition. Supported versions are 1 and 2. Version 2 supports id and partition key path encryption. </summary>
         public int PolicyFormatVersion { get; set; }
     }

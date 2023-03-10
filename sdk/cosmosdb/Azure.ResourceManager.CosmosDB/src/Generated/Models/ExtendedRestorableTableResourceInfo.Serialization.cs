@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static ExtendedRestorableTableResourceInfo DeserializeExtendedRestorableTableResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> rid = default;
             Optional<CosmosDBOperationType> operationType = default;
             Optional<string> eventTimestamp = default;

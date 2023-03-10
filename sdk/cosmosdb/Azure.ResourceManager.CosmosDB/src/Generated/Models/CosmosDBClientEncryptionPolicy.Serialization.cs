@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ClientEncryptionPolicy : IUtf8JsonSerializable
+    public partial class CosmosDBClientEncryptionPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,18 +28,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static ClientEncryptionPolicy DeserializeClientEncryptionPolicy(JsonElement element)
+        internal static CosmosDBClientEncryptionPolicy DeserializeCosmosDBClientEncryptionPolicy(JsonElement element)
         {
-            IList<ClientEncryptionIncludedPath> includedPaths = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<CosmosDBClientEncryptionIncludedPath> includedPaths = default;
             int policyFormatVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("includedPaths"u8))
                 {
-                    List<ClientEncryptionIncludedPath> array = new List<ClientEncryptionIncludedPath>();
+                    List<CosmosDBClientEncryptionIncludedPath> array = new List<CosmosDBClientEncryptionIncludedPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClientEncryptionIncludedPath.DeserializeClientEncryptionIncludedPath(item));
+                        array.Add(CosmosDBClientEncryptionIncludedPath.DeserializeCosmosDBClientEncryptionIncludedPath(item));
                     }
                     includedPaths = array;
                     continue;
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ClientEncryptionPolicy(includedPaths, policyFormatVersion);
+            return new CosmosDBClientEncryptionPolicy(includedPaths, policyFormatVersion);
         }
     }
 }

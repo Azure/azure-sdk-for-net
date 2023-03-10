@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ClientEncryptionKeyGetResultCreateOrUpdateContent. </summary>
         /// <param name="resource"> The standard JSON format of a ClientEncryptionKey. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public ClientEncryptionKeyGetResultCreateOrUpdateContent(ClientEncryptionKeyResource resource)
+        public ClientEncryptionKeyGetResultCreateOrUpdateContent(CosmosDBSqlClientEncryptionKeyResource resource)
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The standard JSON format of a ClientEncryptionKey. </summary>
-        public ClientEncryptionKeyResource Resource { get; }
+        public CosmosDBSqlClientEncryptionKeyResource Resource { get; }
     }
 }

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static GremlinDatabaseRestoreResourceInfo DeserializeGremlinDatabaseRestoreResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databaseName = default;
             Optional<IList<string>> graphNames = default;
             foreach (var property in element.EnumerateObject())
