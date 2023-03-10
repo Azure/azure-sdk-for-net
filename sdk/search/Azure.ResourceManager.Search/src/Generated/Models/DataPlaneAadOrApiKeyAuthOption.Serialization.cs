@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static DataPlaneAadOrApiKeyAuthOption DeserializeDataPlaneAadOrApiKeyAuthOption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchAadAuthFailureMode> aadAuthFailureMode = default;
             foreach (var property in element.EnumerateObject())
             {

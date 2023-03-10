@@ -359,7 +359,6 @@ namespace Azure.ResourceManager.Search.Models
         Degraded = 3,
         Disabled = 4,
         Error = 5,
-        Stopped = 6,
     }
     public enum SearchSkuName
     {

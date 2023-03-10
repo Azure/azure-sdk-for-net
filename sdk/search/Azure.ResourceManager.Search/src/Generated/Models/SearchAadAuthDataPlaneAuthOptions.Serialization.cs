@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchAadAuthDataPlaneAuthOptions DeserializeSearchAadAuthDataPlaneAuthOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> apiKeyOnly = default;
             Optional<DataPlaneAadOrApiKeyAuthOption> aadOrApiKey = default;
             foreach (var property in element.EnumerateObject())

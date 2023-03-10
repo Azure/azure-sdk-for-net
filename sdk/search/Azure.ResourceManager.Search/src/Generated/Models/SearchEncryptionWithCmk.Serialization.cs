@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchEncryptionWithCmk DeserializeSearchEncryptionWithCmk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchEncryptionWithCmkEnforcement> enforcement = default;
             Optional<SearchEncryptionComplianceStatus> encryptionComplianceStatus = default;
             foreach (var property in element.EnumerateObject())
