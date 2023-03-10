@@ -1604,7 +1604,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class VolumeRelocationProperties
     {
         public VolumeRelocationProperties() { }
-        public bool? ReadyToBeFinalized { get { throw null; } }
-        public bool? RelocationRequested { get { throw null; } set { } }
+        public bool? IsReadyToBeFinalized { get { throw null; } }
+        public bool? IsRelocationRequested { get { throw null; } set { } }
     }
 }

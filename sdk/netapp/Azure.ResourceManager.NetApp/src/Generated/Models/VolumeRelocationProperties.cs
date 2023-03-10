@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of VolumeRelocationProperties. </summary>
-        /// <param name="relocationRequested"> Has relocation been requested for this volume. </param>
-        /// <param name="readyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
-        internal VolumeRelocationProperties(bool? relocationRequested, bool? readyToBeFinalized)
+        /// <param name="isRelocationRequested"> Has relocation been requested for this volume. </param>
+        /// <param name="isReadyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
+        internal VolumeRelocationProperties(bool? isRelocationRequested, bool? isReadyToBeFinalized)
         {
-            RelocationRequested = relocationRequested;
-            ReadyToBeFinalized = readyToBeFinalized;
+            IsRelocationRequested = isRelocationRequested;
+            IsReadyToBeFinalized = isReadyToBeFinalized;
         }
 
         /// <summary> Has relocation been requested for this volume. </summary>
-        public bool? RelocationRequested { get; set; }
+        public bool? IsRelocationRequested { get; set; }
         /// <summary> Has relocation finished and is ready to be cleaned up. </summary>
-        public bool? ReadyToBeFinalized { get; }
+        public bool? IsReadyToBeFinalized { get; }
     }
 }

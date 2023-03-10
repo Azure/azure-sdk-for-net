@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.NetApp.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelocationRequested))
+            if (Optional.IsDefined(IsRelocationRequested))
             {
                 writer.WritePropertyName("relocationRequested"u8);
-                writer.WriteBooleanValue(RelocationRequested.Value);
+                writer.WriteBooleanValue(IsRelocationRequested.Value);
             }
             writer.WriteEndObject();
         }
