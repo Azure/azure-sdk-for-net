@@ -2,13 +2,13 @@
 
 This sample demonstrates how to get languages that are supported by other operations.
 
-## Create a `TranslatorClient`
+## Create a `TextTranslationClient`
 
-For this operation you can create a new `TranslatorClient` without any authentication. You will only need your endpoint:
+For this operation you can create a new `TextTranslationClient` without any authentication. You will only need your endpoint:
 
-```C# Snippet:CreateTranslatorClient
+```C# Snippet:CreateTextTranslationClient
 Uri endpoint = new("<endpoint>");
-TranslatorClient client = new(endpoint);
+TextTranslationClient client = new(endpoint);
 ```
 
 The values of the `endpoint` variable can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.

@@ -33,7 +33,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "Hola mundo" }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage).ConfigureAwait(false);
 
@@ -52,7 +52,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "This is a test." }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
 
@@ -73,7 +73,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "<span class=notranslate>今天是怎么回事是</span>非常可怕的" }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage, textType: TextTypes.Html).ConfigureAwait(false);
 
@@ -92,7 +92,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "The word < mstrans:dictionary translation =\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry." }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage).ConfigureAwait(false);
 
@@ -111,7 +111,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "hudha akhtabar." }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: "ar", fromScript: "Latn", toScript: "Latn").ConfigureAwait(false);
 
@@ -131,7 +131,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "ap kaise ho" }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: "hi", fromScript: "Latn", toScript: "Latn").ConfigureAwait(false);
 
@@ -150,7 +150,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "Esto es una prueba." },
                 new InputText { Text = "Dies ist ein Test." }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
 
@@ -178,7 +178,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "This is a test." }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
 
@@ -202,7 +202,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "<html><body>This <b>is</b> a test.</body></html>" }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, textType: TextTypes.Html).ConfigureAwait(false);
 
@@ -224,7 +224,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "shit this is fucking crazy" }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, profanityAction: profanityAction, profanityMarker: profanityMarkers).ConfigureAwait(false);
 
@@ -244,7 +244,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "It is a beautiful morning" }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, includeAlignment: includeAlignment).ConfigureAwait(false);
 
@@ -265,7 +265,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "La réponse se trouve dans la traduction automatique. La meilleure technologie de traduction automatique ne peut pas toujours fournir des traductions adaptées à un site ou des utilisateurs comme un être humain. Il suffit de copier et coller un extrait de code n'importe où." }
             };
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, includeSentenceLength: includeSentenceLength).ConfigureAwait(false);
 
@@ -286,7 +286,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "It is a beautiful morning" }
             };
-            TranslatorClient client = GetClient(endpoint: new Uri(TestEnvironment.CustomEndpoint));
+            TextTranslationClient client = GetClient(endpoint: new Uri(TestEnvironment.CustomEndpoint));
             Response<IReadOnlyList<Models.TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
 
@@ -304,7 +304,7 @@ namespace Azure.AI.Translation.Text.Tests
             string accessToken = await GetAzureAuthorizationTokenAsync();
             TokenCredential token = new StaticAccessTokenCredential(new AccessToken(accessToken, DateTimeOffset.Now.AddDays(1)));
 
-            TranslatorClient client = GetClient(token: token);
+            TextTranslationClient client = GetClient(token: token);
             IEnumerable<InputText> inputText = new[]
             {
                 new InputText { Text = "This is a test." }

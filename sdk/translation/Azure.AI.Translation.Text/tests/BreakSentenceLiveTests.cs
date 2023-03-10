@@ -24,7 +24,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task BreakSentenceWithAutoDetect()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             IEnumerable<InputText> inputText = new[]
             {
                 new InputText { Text = "hello world" }
@@ -41,7 +41,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task BreakSentenceWithLanguage()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             IEnumerable<InputText> inputText = new[]
             {
                 new InputText { Text = "รวบรวมแผ่นคำตอบ ระยะเวลาของโครงการ วิธีเลือกชายในฝัน หมายเลขซีเรียลของระเบียน วันที่สิ้นสุดของโครงการเมื่อเสร็จสมบูรณ์ ปีที่มีการรวบรวม ทุกคนมีวัฒนธรรมและวิธีคิดเหมือนกัน ได้รับโทษจำคุกตลอดชีวิตใน ฉันลดได้ถึง 55 ปอนด์ได้อย่างไร  ฉันคิดว่าใครๆ ก็ต้องการกำหนดเมนูอาหารส่วนบุคคล" }
@@ -60,7 +60,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task BreakSentenceWithLanguageAndScript()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             IEnumerable<InputText> inputText = new[]
             {
                 new InputText { Text = "zhè shì gè cè shì。" }
@@ -74,7 +74,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task BreakSentenceWithMultipleLanguages()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             IEnumerable<InputText> inputText = new[]
             {
                 new InputText { Text = "hello world" },

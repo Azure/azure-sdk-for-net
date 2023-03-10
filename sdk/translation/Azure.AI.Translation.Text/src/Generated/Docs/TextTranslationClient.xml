@@ -6,7 +6,7 @@
 This sample shows how to call GetLanguagesAsync and parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 Response response = await client.GetLanguagesAsync();
 
@@ -35,7 +35,7 @@ Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProp
 This sample shows how to call GetLanguagesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 Response response = await client.GetLanguagesAsync("<clientTraceId>", "<scope>", "<acceptLanguage>", null);
 
@@ -82,7 +82,7 @@ Schema for <c>GetLanguagesResult</c>:
 This sample shows how to call GetLanguages and parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 Response response = client.GetLanguages();
 
@@ -111,7 +111,7 @@ Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProp
 This sample shows how to call GetLanguages with all parameters, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 Response response = client.GetLanguages("<clientTraceId>", "<scope>", "<acceptLanguage>", null);
 
@@ -158,7 +158,7 @@ Schema for <c>GetLanguagesResult</c>:
 This sample shows how to call TranslateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -175,7 +175,7 @@ Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").T
 This sample shows how to call TranslateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -227,27 +227,27 @@ The score is between zero and one and a low score indicates a low confidence.
         text: string, # Required. A string giving the translated text in the target script.
       }, # Optional. An object giving the translated text in the script specified by the toScript parameter.
       alignment: {
-        proj: string, # Required. Maps input text to translated text. The alignment information is only provided when the request 
-parameter includeAlignment is true. Alignment is returned as a string value of the following 
-format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]]. 
-The colon separates start and end index, the dash separates the languages, and space separates the words. 
-One word may align with zero, one, or multiple words in the other language, and the aligned words may 
+        proj: string, # Required. Maps input text to translated text. The alignment information is only provided when the request
+parameter includeAlignment is true. Alignment is returned as a string value of the following
+format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]].
+The colon separates start and end index, the dash separates the languages, and space separates the words.
+One word may align with zero, one, or multiple words in the other language, and the aligned words may
 be non-contiguous. When no alignment information is available, the alignment element will be empty.
       }, # Optional. Alignment information.
       sentLen: {
-        srcSentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text. 
+        srcSentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text.
 The length of the array is the number of sentences, and the values are the length of each sentence.
-        transSentLen: [number], # Required. An integer array representing the lengths of the sentences in the translated text. 
+        transSentLen: [number], # Required. An integer array representing the lengths of the sentences in the translated text.
 The length of the array is the number of sentences, and the values are the length of each sentence.
       }, # Optional. Sentence boundaries in the input and output texts.
     }
-  ], # Required. An array of translation results. The size of the array matches the number of target 
+  ], # Required. An array of translation results. The size of the array matches the number of target
 languages specified through the to query parameter.
   sourceText: {
     text: string, # Required. Input text in the default script of the source language.
-  }, # Optional. Input text in the default script of the source language. sourceText property is present only when 
-the input is expressed in a script that&apos;s not the usual script for the language. For example, 
-if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text 
+  }, # Optional. Input text in the default script of the source language. sourceText property is present only when
+the input is expressed in a script that&apos;s not the usual script for the language. For example,
+if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
 converted into Arab script.
 }
 </code>
@@ -259,7 +259,7 @@ converted into Arab script.
 This sample shows how to call Translate with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -276,7 +276,7 @@ Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").T
 This sample shows how to call Translate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -328,27 +328,27 @@ The score is between zero and one and a low score indicates a low confidence.
         text: string, # Required. A string giving the translated text in the target script.
       }, # Optional. An object giving the translated text in the script specified by the toScript parameter.
       alignment: {
-        proj: string, # Required. Maps input text to translated text. The alignment information is only provided when the request 
-parameter includeAlignment is true. Alignment is returned as a string value of the following 
-format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]]. 
-The colon separates start and end index, the dash separates the languages, and space separates the words. 
-One word may align with zero, one, or multiple words in the other language, and the aligned words may 
+        proj: string, # Required. Maps input text to translated text. The alignment information is only provided when the request
+parameter includeAlignment is true. Alignment is returned as a string value of the following
+format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]].
+The colon separates start and end index, the dash separates the languages, and space separates the words.
+One word may align with zero, one, or multiple words in the other language, and the aligned words may
 be non-contiguous. When no alignment information is available, the alignment element will be empty.
       }, # Optional. Alignment information.
       sentLen: {
-        srcSentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text. 
+        srcSentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text.
 The length of the array is the number of sentences, and the values are the length of each sentence.
-        transSentLen: [number], # Required. An integer array representing the lengths of the sentences in the translated text. 
+        transSentLen: [number], # Required. An integer array representing the lengths of the sentences in the translated text.
 The length of the array is the number of sentences, and the values are the length of each sentence.
       }, # Optional. Sentence boundaries in the input and output texts.
     }
-  ], # Required. An array of translation results. The size of the array matches the number of target 
+  ], # Required. An array of translation results. The size of the array matches the number of target
 languages specified through the to query parameter.
   sourceText: {
     text: string, # Required. Input text in the default script of the source language.
-  }, # Optional. Input text in the default script of the source language. sourceText property is present only when 
-the input is expressed in a script that&apos;s not the usual script for the language. For example, 
-if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text 
+  }, # Optional. Input text in the default script of the source language. sourceText property is present only when
+the input is expressed in a script that&apos;s not the usual script for the language. For example,
+if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
 converted into Arab script.
 }
 </code>
@@ -360,7 +360,7 @@ converted into Arab script.
 This sample shows how to call TransliterateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -377,7 +377,7 @@ Console.WriteLine(result[0].GetProperty("script").ToString());
 This sample shows how to call TransliterateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -419,7 +419,7 @@ Schema for <c>TransliteratedText</c>:
 This sample shows how to call Transliterate with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -436,7 +436,7 @@ Console.WriteLine(result[0].GetProperty("script").ToString());
 This sample shows how to call Transliterate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -478,7 +478,7 @@ Schema for <c>TransliteratedText</c>:
 This sample shows how to call BreakSentenceAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -494,7 +494,7 @@ Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("sentLen")[0].ToS
 This sample shows how to call BreakSentenceAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -544,7 +544,7 @@ The length of the array is the number of sentences, and the values are the lengt
 This sample shows how to call BreakSentence with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -560,7 +560,7 @@ Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("sentLen")[0].ToS
 This sample shows how to call BreakSentence with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -610,7 +610,7 @@ The length of the array is the number of sentences, and the values are the lengt
 This sample shows how to call DictionaryLookupAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -636,7 +636,7 @@ Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTran
 This sample shows how to call DictionaryLookupAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -690,13 +690,13 @@ for end-user display. Generally, this will only differ from the normalizedTarget
 in terms of capitalization. For example, a proper noun like &quot;Juan&quot; will have
 normalizedTarget = &quot;juan&quot; and displayTarget = &quot;Juan&quot;.
       posTag: string, # Required. A string associating this term with a part-of-speech tag.
-      confidence: number, # Required. A value between 0.0 and 1.0 which represents the &quot;confidence&quot; 
-(or perhaps more accurately, &quot;probability in the training data&quot;) of that translation pair. 
+      confidence: number, # Required. A value between 0.0 and 1.0 which represents the &quot;confidence&quot;
+(or perhaps more accurately, &quot;probability in the training data&quot;) of that translation pair.
 The sum of confidence scores for one source word may or may not sum to 1.0.
       prefixWord: string, # Required. A string giving the word to display as a prefix of the translation. Currently,
 this is the gendered determiner of nouns, in languages that have gendered determiners.
-For example, the prefix of the Spanish word &quot;mosca&quot; is &quot;la&quot;, since &quot;mosca&quot; is a feminine noun in Spanish. 
-This is only dependent on the translation, and not on the source. 
+For example, the prefix of the Spanish word &quot;mosca&quot; is &quot;la&quot;, since &quot;mosca&quot; is a feminine noun in Spanish.
+This is only dependent on the translation, and not on the source.
 If there is no prefix, it will be the empty string.
       backTranslations: [BackTranslation], # Required. A list of &quot;back translations&quot; of the target. For example, source words that the target can translate to.
 The list is guaranteed to contain the source word that was requested (e.g., if the source word being
@@ -714,7 +714,7 @@ However, it is not guaranteed to be in the first position, and often will not be
 This sample shows how to call DictionaryLookup with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -740,7 +740,7 @@ Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTran
 This sample shows how to call DictionaryLookup with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -794,13 +794,13 @@ for end-user display. Generally, this will only differ from the normalizedTarget
 in terms of capitalization. For example, a proper noun like &quot;Juan&quot; will have
 normalizedTarget = &quot;juan&quot; and displayTarget = &quot;Juan&quot;.
       posTag: string, # Required. A string associating this term with a part-of-speech tag.
-      confidence: number, # Required. A value between 0.0 and 1.0 which represents the &quot;confidence&quot; 
-(or perhaps more accurately, &quot;probability in the training data&quot;) of that translation pair. 
+      confidence: number, # Required. A value between 0.0 and 1.0 which represents the &quot;confidence&quot;
+(or perhaps more accurately, &quot;probability in the training data&quot;) of that translation pair.
 The sum of confidence scores for one source word may or may not sum to 1.0.
       prefixWord: string, # Required. A string giving the word to display as a prefix of the translation. Currently,
 this is the gendered determiner of nouns, in languages that have gendered determiners.
-For example, the prefix of the Spanish word &quot;mosca&quot; is &quot;la&quot;, since &quot;mosca&quot; is a feminine noun in Spanish. 
-This is only dependent on the translation, and not on the source. 
+For example, the prefix of the Spanish word &quot;mosca&quot; is &quot;la&quot;, since &quot;mosca&quot; is a feminine noun in Spanish.
+This is only dependent on the translation, and not on the source.
 If there is no prefix, it will be the empty string.
       backTranslations: [BackTranslation], # Required. A list of &quot;back translations&quot; of the target. For example, source words that the target can translate to.
 The list is guaranteed to contain the source word that was requested (e.g., if the source word being
@@ -818,7 +818,7 @@ However, it is not guaranteed to be in the first position, and often will not be
 This sample shows how to call DictionaryExamplesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -842,7 +842,7 @@ Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetSuffix
 This sample shows how to call DictionaryExamplesAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -871,8 +871,8 @@ Request Body:
 
 Schema for <c>DictionaryExampleTextElement</c>:
 <code>{
-  translation: string, # Required. A string specifying the translated text previously returned by the Dictionary lookup operation. 
-This should be the value from the normalizedTarget field in the translations list of the Dictionary 
+  translation: string, # Required. A string specifying the translated text previously returned by the Dictionary lookup operation.
+This should be the value from the normalizedTarget field in the translations list of the Dictionary
 lookup response. The service will return examples for the specific source-target word-pair.
   text: string, # Required. Text to translate.
 }
@@ -912,7 +912,7 @@ This value may be an empty string.
 This sample shows how to call DictionaryExamples with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -936,7 +936,7 @@ Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetSuffix
 This sample shows how to call DictionaryExamples with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
+var client = new TextTranslationClient(endpoint);
 
 var data = new[] {
     new {
@@ -965,8 +965,8 @@ Request Body:
 
 Schema for <c>DictionaryExampleTextElement</c>:
 <code>{
-  translation: string, # Required. A string specifying the translated text previously returned by the Dictionary lookup operation. 
-This should be the value from the normalizedTarget field in the translations list of the Dictionary 
+  translation: string, # Required. A string specifying the translated text previously returned by the Dictionary lookup operation.
+This should be the value from the normalizedTarget field in the translations list of the Dictionary
 lookup response. The service will return examples for the specific source-target word-pair.
   text: string, # Required. Text to translate.
 }

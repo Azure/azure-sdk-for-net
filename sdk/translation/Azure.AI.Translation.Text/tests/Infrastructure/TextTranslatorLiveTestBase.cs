@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
-using static Azure.AI.Translation.Text.TranslatorClientOptions;
+using static Azure.AI.Translation.Text.TextTranslationClientOptions;
 
 namespace Azure.AI.Translation.Text.Tests
 {
@@ -20,15 +20,15 @@ namespace Azure.AI.Translation.Text.Tests
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 
-        public TranslatorClient GetClient(
+        public TextTranslationClient GetClient(
             Uri endpoint = default,
             AzureKeyCredential credential = default,
             string region = default,
             TokenCredential token = default,
-            TranslatorClientOptions options = default)
+            TextTranslationClientOptions options = default)
         {
             endpoint ??= new Uri(TestEnvironment.Endpoint);
-            options ??= new TranslatorClientOptions()
+            options ??= new TextTranslationClientOptions()
             {
                 Diagnostics =
                 {
@@ -38,13 +38,13 @@ namespace Azure.AI.Translation.Text.Tests
             };
             if (token != null)
             {
-                return InstrumentClient(new TranslatorClient(endpoint, token, InstrumentClientOptions(options)));
+                return InstrumentClient(new TextTranslationClient(endpoint, token, InstrumentClientOptions(options)));
             }
             else
             {
                 credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
                 region ??= TestEnvironment.Region;
-                return InstrumentClient(new TranslatorClient(endpoint, credential, region, InstrumentClientOptions(options)));
+                return InstrumentClient(new TextTranslationClient(endpoint, credential, region, InstrumentClientOptions(options)));
             }
         }
 

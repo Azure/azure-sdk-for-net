@@ -25,7 +25,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task VerifyTransliterationTest()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             IEnumerable<InputText> inputText = new[]
             {
                 new InputText { Text = "这里怎么一回事?" }
@@ -38,7 +38,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task VerifyTransliterationWithMultipleTextArray()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             IEnumerable<InputText> inputText = new[]
             {
                 new InputText { Text = "यहएककसौटीहैयहएककसौटीहै" },
@@ -54,7 +54,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task VerifyTransliterationWithEditDistance()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             IEnumerable<InputText> inputText = new[]
             {
                 new InputText { Text = "gujarat" },

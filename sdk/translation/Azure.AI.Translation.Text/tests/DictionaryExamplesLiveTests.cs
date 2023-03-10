@@ -24,7 +24,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task DictionaryExamplesSingleInputElement()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             IEnumerable<InputTextWithTranslation> inputText = new[]
             {
                 new InputTextWithTranslation { Text = "fly", Translation = "volar" }
@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task DictionaryExamplesMultipleInputElements()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             IEnumerable<InputTextWithTranslation> inputText = new[]
             {
                 new InputTextWithTranslation { Text = "fly", Translation = "volar" },

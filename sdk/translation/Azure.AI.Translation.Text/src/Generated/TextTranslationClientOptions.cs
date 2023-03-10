@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Client options for TranslatorClient. </summary>
-    public partial class TranslatorClientOptions : ClientOptions
+    /// <summary> Client options for TextTranslationClient. </summary>
+    public partial class TextTranslationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V3_0;
 
@@ -24,8 +24,8 @@ namespace Azure.AI.Translation.Text
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of TranslatorClientOptions. </summary>
-        public TranslatorClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of TextTranslationClientOptions. </summary>
+        public TextTranslationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

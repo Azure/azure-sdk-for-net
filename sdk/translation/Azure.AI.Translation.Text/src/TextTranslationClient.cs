@@ -14,51 +14,51 @@ using System.Threading;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> The Translator service client. </summary>
-    public partial class TranslatorClient
+    public partial class TextTranslationClient
     {
         private const string KEY_HEADER_NAME = "Ocp-Apim-Subscription-Key";
         private const string TOKEN_SCOPE = "https://cognitiveservices.azure.com/.default";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TranslatorClient"/> class.
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
         /// </summary>
         /// <param name="endpoint">Service Endpoint</param>
         /// <param name="key">Azure Key Credential</param>
         /// <param name="region">Region</param>
         /// <param name="options">Translate Client Options</param>
-        public TranslatorClient(Uri endpoint, AzureKeyCredential key, string region, TranslatorClientOptions options = null) : this(endpoint, options)
+        public TextTranslationClient(Uri endpoint, AzureKeyCredential key, string region, TextTranslationClientOptions options = null) : this(endpoint, options)
         {
             var policy = new GlobalEndpointAuthenticationPolicy(key, region);
-            options = options ?? new TranslatorClientOptions();
+            options = options ?? new TextTranslationClientOptions();
 
             this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TranslatorClient"/> class.
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
         /// </summary>
         /// <param name="endpoint">Service Endpoint</param>
         /// <param name="key">Security key</param>
         /// <param name="options">Translate Client Options</param>
-        public TranslatorClient(Uri endpoint, AzureKeyCredential key, TranslatorClientOptions options = null) : this(endpoint, options)
+        public TextTranslationClient(Uri endpoint, AzureKeyCredential key, TextTranslationClientOptions options = null) : this(endpoint, options)
         {
             var policy = new AzureKeyCredentialPolicy(key, KEY_HEADER_NAME);
-            options = options ?? new TranslatorClientOptions();
+            options = options ?? new TextTranslationClientOptions();
 
             this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             this._endpoint = new Uri(endpoint, "/translator/text/v3.0");
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TranslatorClient"/> class.
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
         /// </summary>
         /// <param name="endpoint">Service Endpoint</param>
         /// <param name="token">Cognitive Services Token</param>
         /// <param name="options">Translate Client Options</param>
-        public TranslatorClient(Uri endpoint, TokenCredential token, TranslatorClientOptions options = null) : this(endpoint, options)
+        public TextTranslationClient(Uri endpoint, TokenCredential token, TextTranslationClientOptions options = null) : this(endpoint, options)
         {
             var policy = new BearerTokenAuthenticationPolicy(token, TOKEN_SCOPE);
-            options = options ?? new TranslatorClientOptions();
+            options = options ?? new TextTranslationClientOptions();
 
             this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }

@@ -26,7 +26,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task GetLanguagesAllScopes()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<Models.GetLanguagesResult> response =
                 await client.GetLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task GetLanguagesTranslationScope()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<Models.GetLanguagesResult> response =
                 await client.GetLanguagesAsync(scope: "translation", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
@@ -54,7 +54,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task GetLanguagesTransliterationScope()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<Models.GetLanguagesResult> response =
                 await client.GetLanguagesAsync(scope: "transliteration", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
@@ -82,7 +82,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task GetLanguagesTransliterationScopeMultipleScripts()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<Models.GetLanguagesResult> response =
                 await client.GetLanguagesAsync(scope: "transliteration", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
@@ -101,7 +101,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task GetLanguagesDictionaryScope()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<Models.GetLanguagesResult> response =
                 await client.GetLanguagesAsync(scope: "dictionary", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
@@ -122,7 +122,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task GetLanguagesDictionaryScopeMultipleTranslations()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<Models.GetLanguagesResult> response =
                 await client.GetLanguagesAsync(scope: "dictionary", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
@@ -138,7 +138,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task GetLanguagesWithCulture()
         {
-            TranslatorClient client = GetClient();
+            TextTranslationClient client = GetClient();
             Response<Models.GetLanguagesResult> response =
                 await client.GetLanguagesAsync(acceptLanguage: "es", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 

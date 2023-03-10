@@ -19,7 +19,7 @@ namespace Azure.AI.Translation.Text
 {
     // Data plane generated client.
     /// <summary> The Translator service client. </summary>
-    public partial class TranslatorClient
+    public partial class TextTranslationClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -31,32 +31,32 @@ namespace Azure.AI.Translation.Text
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of TranslatorClient for mocking. </summary>
-        protected TranslatorClient()
+        /// <summary> Initializes a new instance of TextTranslationClient for mocking. </summary>
+        protected TextTranslationClient()
         {
         }
 
-        /// <summary> Initializes a new instance of TranslatorClient. </summary>
+        /// <summary> Initializes a new instance of TextTranslationClient. </summary>
         /// <param name="endpoint">
         /// Supported Text Translation endpoints (protocol and hostname, for example:
         ///     https://api.cognitive.microsofttranslator.com).
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public TranslatorClient(Uri endpoint) : this(endpoint, new TranslatorClientOptions())
+        public TextTranslationClient(Uri endpoint) : this(endpoint, new TextTranslationClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of TranslatorClient. </summary>
+        /// <summary> Initializes a new instance of TextTranslationClient. </summary>
         /// <param name="endpoint">
         /// Supported Text Translation endpoints (protocol and hostname, for example:
         ///     https://api.cognitive.microsofttranslator.com).
         /// </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public TranslatorClient(Uri endpoint, TranslatorClientOptions options)
+        public TextTranslationClient(Uri endpoint, TextTranslationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new TranslatorClientOptions();
+            options ??= new TextTranslationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
@@ -158,10 +158,10 @@ namespace Azure.AI.Translation.Text
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='GetLanguagesAsync(String,String,String,ETag,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetLanguagesAsync(String,String,String,ETag,RequestContext)']/*" />
         public virtual async Task<Response> GetLanguagesAsync(string clientTraceId = null, string scope = null, string acceptLanguage = null, ETag? ifNoneMatch = null, RequestContext context = null)
         {
-            using var scope0 = ClientDiagnostics.CreateScope("TranslatorClient.GetLanguages");
+            using var scope0 = ClientDiagnostics.CreateScope("TextTranslationClient.GetLanguages");
             scope0.Start();
             try
             {
@@ -199,10 +199,10 @@ namespace Azure.AI.Translation.Text
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='GetLanguages(String,String,String,ETag,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetLanguages(String,String,String,ETag,RequestContext)']/*" />
         public virtual Response GetLanguages(string clientTraceId = null, string scope = null, string acceptLanguage = null, ETag? ifNoneMatch = null, RequestContext context = null)
         {
-            using var scope0 = ClientDiagnostics.CreateScope("TranslatorClient.GetLanguages");
+            using var scope0 = ClientDiagnostics.CreateScope("TextTranslationClient.GetLanguages");
             scope0.Start();
             try
             {
@@ -437,13 +437,13 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='TranslateAsync(IEnumerable,RequestContent,String,String,String,String,String,String,Boolean,Boolean,String,String,String,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TranslateAsync(IEnumerable,RequestContent,String,String,String,String,String,String,Boolean,Boolean,String,String,String,Boolean,RequestContext)']/*" />
         public virtual async Task<Response> TranslateAsync(IEnumerable<string> to, RequestContent content, string clientTraceId = null, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.Translate");
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.Translate");
             scope.Start();
             try
             {
@@ -520,13 +520,13 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='Translate(IEnumerable,RequestContent,String,String,String,String,String,String,Boolean,Boolean,String,String,String,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Translate(IEnumerable,RequestContent,String,String,String,String,String,String,Boolean,Boolean,String,String,String,Boolean,RequestContext)']/*" />
         public virtual Response Translate(IEnumerable<string> to, RequestContent content, string clientTraceId = null, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.Translate");
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.Translate");
             scope.Start();
             try
             {
@@ -636,7 +636,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='TransliterateAsync(String,String,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TransliterateAsync(String,String,String,RequestContent,String,RequestContext)']/*" />
         public virtual async Task<Response> TransliterateAsync(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(language, nameof(language));
@@ -644,7 +644,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(toScript, nameof(toScript));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.Transliterate");
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.Transliterate");
             scope.Start();
             try
             {
@@ -678,7 +678,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='Transliterate(String,String,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Transliterate(String,String,String,RequestContent,String,RequestContext)']/*" />
         public virtual Response Transliterate(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(language, nameof(language));
@@ -686,7 +686,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(toScript, nameof(toScript));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.Transliterate");
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.Transliterate");
             scope.Start();
             try
             {
@@ -775,12 +775,12 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='BreakSentenceAsync(RequestContent,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='BreakSentenceAsync(RequestContent,String,String,String,RequestContext)']/*" />
         public virtual async Task<Response> BreakSentenceAsync(RequestContent content, string clientTraceId = null, string language = null, string script = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.BreakSentence");
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.BreakSentence");
             scope.Start();
             try
             {
@@ -809,12 +809,12 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='BreakSentence(RequestContent,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='BreakSentence(RequestContent,String,String,String,RequestContext)']/*" />
         public virtual Response BreakSentence(RequestContent content, string clientTraceId = null, string language = null, string script = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.BreakSentence");
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.BreakSentence");
             scope.Start();
             try
             {
@@ -907,14 +907,14 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='DictionaryLookupAsync(String,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='DictionaryLookupAsync(String,String,RequestContent,String,RequestContext)']/*" />
         public virtual async Task<Response> DictionaryLookupAsync(string @from, string to, RequestContent content, string clientTraceId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.DictionaryLookup");
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.DictionaryLookup");
             scope.Start();
             try
             {
@@ -943,14 +943,14 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='DictionaryLookup(String,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='DictionaryLookup(String,String,RequestContent,String,RequestContext)']/*" />
         public virtual Response DictionaryLookup(string @from, string to, RequestContent content, string clientTraceId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.DictionaryLookup");
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.DictionaryLookup");
             scope.Start();
             try
             {
@@ -1043,14 +1043,14 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='DictionaryExamplesAsync(String,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='DictionaryExamplesAsync(String,String,RequestContent,String,RequestContext)']/*" />
         public virtual async Task<Response> DictionaryExamplesAsync(string @from, string to, RequestContent content, string clientTraceId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.DictionaryExamples");
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.DictionaryExamples");
             scope.Start();
             try
             {
@@ -1079,14 +1079,14 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='DictionaryExamples(String,String,RequestContent,String,RequestContext)']/*" />
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='DictionaryExamples(String,String,RequestContent,String,RequestContext)']/*" />
         public virtual Response DictionaryExamples(string @from, string to, RequestContent content, string clientTraceId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.DictionaryExamples");
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.DictionaryExamples");
             scope.Start();
             try
             {

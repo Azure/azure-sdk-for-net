@@ -45,16 +45,16 @@ You can create either resource via the [Azure portal][create_text_resource_azure
 
 ### Authenticate the client
 
-Interaction with the service using the client library begins with creating an instance of the [TranslatorClient][translator_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object for all operations except GET Languages.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Translator Service][translator_auth].
+Interaction with the service using the client library begins with creating an instance of the [TextTranslationClient][translator_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object for all operations except GET Languages.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Translator Service][translator_auth].
 
-#### Create a `TranslatorClient` without any authentication
-For requests to get supported languages, you can create [TranslatorClient][translator_client_class] without any authentication.
+#### Create a `TextTranslationClient` without any authentication
+For requests to get supported languages, you can create [TextTranslationClient][translator_client_class] without any authentication.
 
 > Note: only GET Languages operation will work without authentication. All other operations will fail with 401 response.
 
-```C# Snippet:CreateTranslatorClientAnonymous
+```C# Snippet:CreateTextTranslationClientAnonymous
 Uri endpoint = new("<endpoint>");
-TranslatorClient client = new(endpoint);
+TextTranslationClient client = new(endpoint);
 ```
 
 #### Get an API key
@@ -67,51 +67,51 @@ Alternatively, use the [Azure CLI][azure_cli] snippet below to get the API key f
 az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
 ```
 
-#### Create a `TranslatorClient` using an API key and Region credential
+#### Create a `TextTranslationClient` using an API key and Region credential
 
 Once you have the value for the API key and Region, create an `AzureKeyCredential`. This will allow you to
 update the API key without creating a new client.
 
-With the value of the endpoint, `AzureKeyCredential` and a `Region`, you can create the [TranslatorClient][translator_client_class]:
+With the value of the endpoint, `AzureKeyCredential` and a `Region`, you can create the [TextTranslationClient][translator_client_class]:
 
-```C# Snippet:CreateTranslatorClient
+```C# Snippet:CreateTextTranslationClient
 Uri endpoint = new("<endpoint>");
 AzureKeyCredential credential = new("<apiKey>");
-TranslatorClient client = new(endpoint, credential, "<region>");
+TextTranslationClient client = new(endpoint, credential, "<region>");
 ```
 
-#### Create a `TranslatorClient` using a Token Authentication
+#### Create a `TextTranslationClient` using a Token Authentication
 
 Instead of API key and Region authentication you can use JWT token. For information on how to create token refer to [Authenticating with an access token][translator_token].
 
-Once you have the value for the token, create an class that extends `Azure.Core.TokenCredentials`. With the value of the endpoint, `AzureKeyCredential` and your service returning tokens, you can create the [TranslatorClient][translator_client_class]:
+Once you have the value for the token, create an class that extends `Azure.Core.TokenCredentials`. With the value of the endpoint, `AzureKeyCredential` and your service returning tokens, you can create the [TextTranslationClient][translator_client_class]:
 
-```C# Snippet:CreateTranslatorClientToken
+```C# Snippet:CreateTextTranslationClientToken
 Uri endpoint = new("<endpoint>");
 TokenCredential credential = new("<token>");
-TranslatorClient client = new(endpoint, credential);
+TextTranslationClient client = new(endpoint, credential);
 ```
 
-#### Create a `TranslatorClient` using a Custom Endpoint and Api Key
+#### Create a `TextTranslationClient` using a Custom Endpoint and Api Key
 When Translator service is configured to use [Virtual Network (VNET)][translator_vnet] capability you need to use [custom subdomain][custom_subdomain].
 
-Once you have your resource configured and you have your custom endpoint value and your API key, you can create the [TranslatorClient][translator_client_class]:
+Once you have your resource configured and you have your custom endpoint value and your API key, you can create the [TextTranslationClient][translator_client_class]:
 
-```C# Snippet:CreateTranslatorClientCustom
+```C# Snippet:CreateTextTranslationClientCustom
 Uri endpoint = new("<endpoint>");
 AzureKeyCredential credential = new("<apiKey>");
-TranslatorClient client = new(endpoint, credential);
+TextTranslationClient client = new(endpoint, credential);
 ```
 
 ## Key concepts
 
-### `TranslatorClient`
+### `TextTranslationClient`
 
-A `TranslatorClient` is the primary interface for developers using the Text Translator client library.  It provides both synchronous and asynchronous operations to access a specific use of text translator, such as get supported languages detection or text translation.
+A `TextTranslationClient` is the primary interface for developers using the Text Translator client library.  It provides both synchronous and asynchronous operations to access a specific use of text translator, such as get supported languages detection or text translation.
 
 ### Input
 
-A **text element**, is a single unit of input to be processed by the translation models in the Translator service. Operations on `TranslatorClient` may take a single text element or a collection of text elements.
+A **text element**, is a single unit of input to be processed by the translation models in the Translator service. Operations on `TextTranslationClient` may take a single text element or a collection of text elements.
 For text element length limits, maximum requests size, and supported text encoding see [here][translator_limits].
 
 ### Return value
@@ -135,7 +135,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-The following section provides several code snippets using the `client` [created above](#create-a-translatorclient-using-an-api-key-and-region-credential), and covers the main features present in this client library. Although most of the snippets below make use of asynchronous service calls, keep in mind that the `Azure.AI.Translation.Text` package supports both synchronous and asynchronous APIs.
+The following section provides several code snippets using the `client` [created above](#create-a-TextTranslationClient-using-an-api-key-and-region-credential), and covers the main features present in this client library. Although most of the snippets below make use of asynchronous service calls, keep in mind that the `Azure.AI.Translation.Text` package supports both synchronous and asynchronous APIs.
 
 ### Get Supported Languages
 
@@ -400,7 +400,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 
-[translator_client_class]: https://github.com/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src/TranslatorClient.cs
+[translator_client_class]: https://github.com/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src/TextTranslationClient.cs
 
 [translator_auth]: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference#authentication
 [translator_token]: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference#authenticating-with-an-access-token
