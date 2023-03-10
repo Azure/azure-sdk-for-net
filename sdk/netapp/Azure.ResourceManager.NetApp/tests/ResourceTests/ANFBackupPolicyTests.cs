@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.NetApp.Tests
                 DefaultVirtualNetwork = await CreateVirtualNetwork();
             }
             //backupPolicyResource1.Id, false, true
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, IsBackupEnabled = false, IsPolicyEnforced = true };
+            //NetAppVolumeBackupConfiguration backupPolicyProperties = new(backupPolicyResource1.Id, false, true);
+            //NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection(backup: backupPolicyProperties, null, null);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(5000);
+            }
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, IsPolicyEnforced = false, IsBackupEnabled = true };
             NetAppVolumeDataProtection dataProtectionProperties = new() { Backup = backupPolicyProperties};
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId:DefaultSubnetId, dataProtection: dataProtectionProperties);
 

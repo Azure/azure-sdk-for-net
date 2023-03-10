@@ -1195,6 +1195,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public long? Size { get { throw null; } }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
     public partial class NetAppVault : Azure.ResourceManager.Models.ResourceData
     {
         internal NetAppVault() { }

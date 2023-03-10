@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="backup"> Backup Properties. </param>
         /// <param name="replication"> Replication properties. </param>
         /// <param name="snapshot"> Snapshot properties. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         internal NetAppVolumeDataProtection(NetAppVolumeBackupConfiguration backup, NetAppReplicationObject replication, VolumeSnapshotProperties snapshot)
         {
             Backup = backup;
