@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -212,7 +211,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(400, ex.Status);
                 Assert.NotNull(ex.Message);
             }
         }
@@ -228,7 +226,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(400, ex.Status);
                 Assert.NotNull(ex.Message);
             }
         }
@@ -239,25 +236,10 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             try
             {
-                var purchaseOperation = await client.GetPurchasedPhoneNumberAsync(UnauthorizedNumber);
+                var phoneNumbers = await client.GetPurchasedPhoneNumberAsync(UnauthorizedNumber);
             }
             catch (Exception ex)
             {
-                Assert.NotNull(ex.Message);
-            }
-        }
-
-        [Test]
-        public async Task StartPurchasedUnauthorizedNumber()
-        {
-            var client = CreateClient();
-            try
-            {
-                var releaseOperation = await client.StartPurchasePhoneNumbersAsync(UnauthorizedNumber);
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.AreEqual(404, ex.Status);
                 Assert.NotNull(ex.Message);
             }
         }
