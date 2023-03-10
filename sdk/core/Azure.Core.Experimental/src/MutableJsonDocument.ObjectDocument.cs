@@ -108,9 +108,15 @@ namespace Azure.Core.Json
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
-            // TODO: implement try/get
-            value = mje.GetBoolean();
-            return true;
+            if (mje.ValueKind == JsonValueKind.True ||
+                mje.ValueKind == JsonValueKind.False)
+            {
+                value = mje.GetBoolean();
+                return true;
+            }
+
+            value = default;
+            return false;
         }
 
         protected internal override bool TryGetDouble(object element, out double value)
@@ -135,9 +141,14 @@ namespace Azure.Core.Json
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
-            // TODO: implement try/get
-            value = mje.GetString();
-            return true;
+            if (mje.ValueKind == JsonValueKind.String)
+            {
+                value = mje.GetString();
+                return true;
+            }
+
+            value = default;
+            return false;
         }
 
         protected internal override ObjectElement SetProperty(object element, string name, object value)
