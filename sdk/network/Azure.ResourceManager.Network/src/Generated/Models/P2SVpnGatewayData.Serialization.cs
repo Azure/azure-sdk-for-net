@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.Network
 
         internal static P2SVpnGatewayData DeserializeP2SVpnGatewayData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;

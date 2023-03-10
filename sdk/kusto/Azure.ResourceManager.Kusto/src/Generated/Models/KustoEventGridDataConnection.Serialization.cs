@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoEventGridDataConnection DeserializeKustoEventGridDataConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             DataConnectionKind kind = default;
             ResourceIdentifier id = default;

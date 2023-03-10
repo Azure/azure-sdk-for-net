@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataSku DeserializeHybridDataSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())

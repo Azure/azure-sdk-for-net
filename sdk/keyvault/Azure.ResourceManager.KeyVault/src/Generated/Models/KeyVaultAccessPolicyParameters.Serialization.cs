@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultAccessPolicyParameters DeserializeKeyVaultAccessPolicyParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             KeyVaultAccessPolicyProperties properties = default;
             ResourceIdentifier id = default;

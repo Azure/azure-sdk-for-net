@@ -43,6 +43,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkTableRequestTarget DeserializeLinkTableRequestTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tableName = default;
             Optional<string> schemaName = default;
             Optional<LinkTableRequestTargetDistributionOptions> distributionOptions = default;

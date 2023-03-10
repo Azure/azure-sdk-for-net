@@ -1,10 +1,16 @@
 # Release History
 
-## 5.8.0-beta.1 (Unreleased)
+## 5.8.1 (2023-03-09)
+
+### Bugs Fixed
+
+- Fix null reference exception when using the `EventProcessorClient`.
+
+## 5.8.0 (2023-03-07)
 
 ### Features Added
 
-### Breaking Changes
+- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the messaging attribute specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml#L98).
 
 ### Bugs Fixed
 
@@ -186,7 +192,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### Features Added
 
--  When stopping, the `EventProcessorClient` will now attempt to force-close the connection to the Event Hubs service to abort in-process read operations blocked on their timeout.  This should significantly help reduce the amount of time the processor takes to stop in many scenarios. _(Based on a community prototype contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_  
+-  When stopping, the `EventProcessorClient` will now attempt to force-close the connection to the Event Hubs service to abort in-process read operations blocked on their timeout.  This should significantly help reduce the amount of time the processor takes to stop in many scenarios. _(Based on a community prototype contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 - When the `EventProcessorClient` detects a partition being stolen outside of a load balancing cycle, it will immediately surrender ownership rather than waiting for a load balancing cycle to confirm the ownership change.  This will help reduce event duplication from overlapping ownership of processors.
 
@@ -212,7 +218,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### Features Added
 
--  When stopping, the `EventProcessorClient` will now attempt to force-close the connection to the Event Hubs service to abort in-process read operations blocked on their timeout.  This should significantly help reduce the amount of time the processor takes to stop in many scenarios. _(Based on a community prototype contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_  
+-  When stopping, the `EventProcessorClient` will now attempt to force-close the connection to the Event Hubs service to abort in-process read operations blocked on their timeout.  This should significantly help reduce the amount of time the processor takes to stop in many scenarios. _(Based on a community prototype contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 - When the `EventProcessorClient` detects a partition being stolen outside of a load balancing cycle, it will immediately surrender ownership rather than waiting for a load balancing cycle to confirm the ownership change.  This will help reduce event duplication from overlapping ownership of processors.
 
@@ -376,7 +382,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Connection strings for each of the clients now supports a `SharedAccessSignature` token, allowing a pre-generated SAS to be used for authorization.
 
-- Load balancing now has better recognition for being in a recovery state and will aggressively reclaim partitions for which it is the recognized owner, regardless of whether the current instance made the ownership claim.  Previously, those partitions were redistributed on a 1-by-1 basis as part of the standard cycle. 
+- Load balancing now has better recognition for being in a recovery state and will aggressively reclaim partitions for which it is the recognized owner, regardless of whether the current instance made the ownership claim.  Previously, those partitions were redistributed on a 1-by-1 basis as part of the standard cycle.
 
 ## 5.2.0-preview.3 (2020-08-18)
 
@@ -399,7 +405,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The approach used for creation of checkpoints has been updated to interact with Azure Blob storage more efficiently.  This will yield major performance improvements when soft delete was enabled and minor improvements otherwise.
 
-- Load balancing now has better recognition for being in a recovery state and will aggressively reclaim partitions for which it is the recognized owner, regardless of whether the current instance made the ownership claim.  Previously, those partitions were redistributed on a 1-by-1 basis as part of the standard cycle. 
+- Load balancing now has better recognition for being in a recovery state and will aggressively reclaim partitions for which it is the recognized owner, regardless of whether the current instance made the ownership claim.  Previously, those partitions were redistributed on a 1-by-1 basis as part of the standard cycle.
 
 #### Bug fixes and foundation
 
@@ -431,19 +437,19 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - A cleanup sweep was performed to tune small areas to be more efficient and perform fewer allocations.
 
-## 5.1.0 
+## 5.1.0
 
 ### Changes
 
 #### General availability of preview features
 
-- The set of features from v5.1.0-preview.1 are now generally available.  This includes the `EventProcessor<TPartition>` and `PartitionReceiver` types which focus on advanced application scenarios which require greater low-level control. 
+- The set of features from v5.1.0-preview.1 are now generally available.  This includes the `EventProcessor<TPartition>` and `PartitionReceiver` types which focus on advanced application scenarios which require greater low-level control.
 
 #### Bug fixes and foundation
 
 - Minor enhancements to reduce allocations and improve efficiency
 
-## 5.1.0-preview.1 
+## 5.1.0-preview.1
 
 ### Acknowledgments
 
@@ -480,7 +486,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The tests for load balancing and the Event Processor client have been tuned to remove dependencies on Azure resources and run more efficiently.  (A community contribution, courtesy of [christothes](https://github.com/christothes))
 
-## 5.0.1 
+## 5.0.1
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
@@ -510,7 +516,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The protected `On[EventName]` members have been marked private to reduce the public surface and reduce confusion.  They provided no benefit over providing a handler and the cognative cost was not justified.
 
-## 5.0.0-preview.6 
+## 5.0.0-preview.6
 
 ### Acknowledgments
 

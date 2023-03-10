@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static BigDataPoolLibraryListResult DeserializeBigDataPoolLibraryListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SynapseLibraryData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

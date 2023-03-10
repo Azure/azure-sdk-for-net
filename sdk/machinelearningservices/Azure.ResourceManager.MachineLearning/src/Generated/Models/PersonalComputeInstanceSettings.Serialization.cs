@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static PersonalComputeInstanceSettings DeserializePersonalComputeInstanceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningComputeInstanceAssignedUser> assignedUser = default;
             foreach (var property in element.EnumerateObject())
             {

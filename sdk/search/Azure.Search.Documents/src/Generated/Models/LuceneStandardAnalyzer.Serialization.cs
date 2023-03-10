@@ -40,6 +40,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static LuceneStandardAnalyzer DeserializeLuceneStandardAnalyzer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxTokenLength = default;
             Optional<IList<string>> stopwords = default;
             string odataType = default;

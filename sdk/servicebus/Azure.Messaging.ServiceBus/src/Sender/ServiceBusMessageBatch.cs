@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -51,14 +52,14 @@ namespace Azure.Messaging.ServiceBus
         ///
         private readonly TransportMessageBatch _innerBatch;
 
-        private readonly EntityScopeFactory _scopeFactory;
+        private readonly MessagingClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusMessageBatch"/> class.
         /// </summary>
         ///
         /// <param name="transportBatch">The  transport-specific batch responsible for performing the batch operations.</param>
-        /// <param name="entityScope">The entity scope used for instrumentation.</param>
+        /// <param name="clientDiagnostics">The entity scope used for instrumentation.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -69,11 +70,11 @@ namespace Azure.Messaging.ServiceBus
         ///   caller.
         /// </remarks>
         ///
-        internal ServiceBusMessageBatch(TransportMessageBatch transportBatch, EntityScopeFactory entityScope)
+        internal ServiceBusMessageBatch(TransportMessageBatch transportBatch, MessagingClientDiagnostics clientDiagnostics)
         {
             Argument.AssertNotNull(transportBatch, nameof(transportBatch));
             _innerBatch = transportBatch;
-            _scopeFactory = entityScope;
+            _clientDiagnostics = clientDiagnostics;
         }
 
         /// <summary>
@@ -112,7 +113,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 AssertNotLocked();
 
-                _scopeFactory.InstrumentMessage(message);
+                _clientDiagnostics.InstrumentMessage(message.ApplicationProperties, DiagnosticProperty.MessageActivityName, out var _, out var _, out var _);
                 return _innerBatch.TryAddMessage(message);
             }
         }

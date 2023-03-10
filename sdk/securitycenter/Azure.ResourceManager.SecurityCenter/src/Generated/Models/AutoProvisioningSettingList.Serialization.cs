@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AutoProvisioningSettingList DeserializeAutoProvisioningSettingList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutoProvisioningSettingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

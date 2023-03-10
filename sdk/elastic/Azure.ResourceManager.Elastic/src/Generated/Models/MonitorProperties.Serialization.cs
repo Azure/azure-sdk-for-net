@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static MonitorProperties DeserializeMonitorProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<MonitoringStatus> monitoringStatus = default;
             Optional<ElasticProperties> elasticProperties = default;

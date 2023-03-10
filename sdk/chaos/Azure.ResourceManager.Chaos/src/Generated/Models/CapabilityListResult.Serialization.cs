@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal static CapabilityListResult DeserializeCapabilityListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CapabilityData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

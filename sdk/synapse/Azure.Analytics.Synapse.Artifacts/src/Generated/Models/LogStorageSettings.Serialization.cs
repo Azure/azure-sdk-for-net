@@ -46,6 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LogStorageSettings DeserializeLogStorageSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkedServiceReference linkedServiceName = default;
             Optional<object> path = default;
             Optional<object> logLevel = default;

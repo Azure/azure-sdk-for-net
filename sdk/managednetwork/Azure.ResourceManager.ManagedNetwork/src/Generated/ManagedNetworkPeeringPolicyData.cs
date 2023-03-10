@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    /// <summary> A class representing the ManagedNetworkPeeringPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedNetworkPeeringPolicy data model.
+    /// The Managed Network Peering Policy resource
+    /// </summary>
     public partial class ManagedNetworkPeeringPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyData. </summary>

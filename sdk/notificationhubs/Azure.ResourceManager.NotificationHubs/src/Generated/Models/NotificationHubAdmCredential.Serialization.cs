@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubAdmCredential DeserializeNotificationHubAdmCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             Optional<Uri> authTokenUrl = default;

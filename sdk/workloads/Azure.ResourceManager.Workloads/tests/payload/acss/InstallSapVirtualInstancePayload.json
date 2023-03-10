@@ -1,0 +1,10 @@
+{
+    "softwareInstallationType": "SAPInstallWithoutOSConfig",
+    "bomUrl": "https://ybteststorageaccount.blob.core.windows.net/sapbits7/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml",
+    "softwareVersion": "SAP S/4HANA 1909 SPS 03",
+    "sapBitsStorageAccountId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/yb-SapInstall/providers/Microsoft.Storage/storageAccounts/ybteststorageaccount",
+    "highAvailabilitySoftwareConfiguration": {
+        "fencingClientId": "fbc04a4f-9152-48a5-8d5e-17c7fa8f9156",
+        "fencingClientPassword": "Sanitized"
+    }
+}

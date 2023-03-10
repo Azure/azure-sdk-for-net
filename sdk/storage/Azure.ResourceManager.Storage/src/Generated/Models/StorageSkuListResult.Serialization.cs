@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageSkuListResult DeserializeStorageSkuListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageSkuInformation>> value = default;
             foreach (var property in element.EnumerateObject())
             {

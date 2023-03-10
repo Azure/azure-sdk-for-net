@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerStorage DeserializeMySqlFlexibleServerStorage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> storageSizeGB = default;
             Optional<int> iops = default;
             Optional<MySqlFlexibleServerEnableStatusEnum> autoGrow = default;

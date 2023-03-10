@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static FactoryPrivateEndpointConnectionData DeserializeFactoryPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryPrivateEndpointProperties> properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

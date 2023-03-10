@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static LinkedTemplateArtifact DeserializeLinkedTemplateArtifact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string path = default;
             BinaryData template = default;
             foreach (var property in element.EnumerateObject())

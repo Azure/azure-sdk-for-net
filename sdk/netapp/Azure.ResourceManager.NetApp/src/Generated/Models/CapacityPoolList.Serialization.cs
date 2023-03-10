@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static CapacityPoolList DeserializeCapacityPoolList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CapacityPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

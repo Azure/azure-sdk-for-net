@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.PrivateDns
 
         internal static VirtualNetworkLinkData DeserializeVirtualNetworkLinkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

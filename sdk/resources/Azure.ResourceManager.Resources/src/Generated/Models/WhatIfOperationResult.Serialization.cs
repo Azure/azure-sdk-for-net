@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static WhatIfOperationResult DeserializeWhatIfOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<ResponseError> error = default;
             Optional<IReadOnlyList<WhatIfChange>> changes = default;

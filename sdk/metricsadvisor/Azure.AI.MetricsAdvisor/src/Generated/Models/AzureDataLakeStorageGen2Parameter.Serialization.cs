@@ -71,6 +71,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureDataLakeStorageGen2Parameter DeserializeAzureDataLakeStorageGen2Parameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountName = default;
             Optional<string> accountKey = default;
             string fileSystemName = default;

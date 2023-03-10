@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBSqlStoredProcedureListResult DeserializeCosmosDBSqlStoredProcedureListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CosmosDBSqlStoredProcedureData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static GroupContractProperties DeserializeGroupContractProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string displayName = default;
             Optional<string> description = default;
             Optional<bool> builtIn = default;

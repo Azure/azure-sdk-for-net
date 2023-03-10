@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppLogin DeserializeContainerAppLogin(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LoginRoutes> routes = default;
             Optional<bool> preserveUrlFragmentsForLogins = default;
             Optional<IList<string>> allowedExternalRedirectUrls = default;

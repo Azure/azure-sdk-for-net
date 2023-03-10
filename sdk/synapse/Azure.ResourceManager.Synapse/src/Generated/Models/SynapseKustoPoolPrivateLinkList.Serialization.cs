@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseKustoPoolPrivateLinkList DeserializeSynapseKustoPoolPrivateLinkList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SynapseKustoPoolPrivateLinkData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

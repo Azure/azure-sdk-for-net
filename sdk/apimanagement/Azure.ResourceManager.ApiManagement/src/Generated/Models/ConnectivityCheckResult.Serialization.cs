@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ConnectivityCheckResult DeserializeConnectivityCheckResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConnectivityHop>> hops = default;
             Optional<ConnectionStatus> connectionStatus = default;
             Optional<long> avgLatencyInMs = default;

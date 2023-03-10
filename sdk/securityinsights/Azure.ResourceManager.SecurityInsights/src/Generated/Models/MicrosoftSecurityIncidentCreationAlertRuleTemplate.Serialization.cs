@@ -93,6 +93,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static MicrosoftSecurityIncidentCreationAlertRuleTemplate DeserializeMicrosoftSecurityIncidentCreationAlertRuleTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AlertRuleKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

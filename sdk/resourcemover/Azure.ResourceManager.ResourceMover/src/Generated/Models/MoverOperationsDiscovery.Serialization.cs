@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverOperationsDiscovery DeserializeMoverOperationsDiscovery(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> isDataAction = default;
             Optional<MoverDisplayInfo> display = default;

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static RelationshipTypeFieldMapping DeserializeRelationshipTypeFieldMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string profileFieldName = default;
             string relatedProfileKeyProperty = default;
             foreach (var property in element.EnumerateObject())

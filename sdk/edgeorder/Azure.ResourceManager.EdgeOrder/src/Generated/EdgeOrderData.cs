@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> A class representing the EdgeOrder data model. </summary>
+    /// <summary>
+    /// A class representing the EdgeOrder data model.
+    /// Specifies the properties or parameters for an order. Order is a grouping of one or more order items.
+    /// </summary>
     public partial class EdgeOrderData : ResourceData
     {
         /// <summary> Initializes a new instance of EdgeOrderData. </summary>

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static ConnectionDetail DeserializeConnectionDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> privateIPAddress = default;
             Optional<string> linkIdentifier = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static LinkedResourceListResponse DeserializeLinkedResourceListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SubResource>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

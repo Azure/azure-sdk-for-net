@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Automanage
 
         internal static AutomanageConfigurationProfileData DeserializeAutomanageConfigurationProfileData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConfigurationProfileProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

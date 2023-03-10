@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static UnknownCustomAlertRule DeserializeUnknownCustomAlertRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayName = default;
             Optional<string> description = default;
             bool isEnabled = default;

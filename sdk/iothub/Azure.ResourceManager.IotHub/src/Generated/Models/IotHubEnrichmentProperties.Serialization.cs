@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubEnrichmentProperties DeserializeIotHubEnrichmentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             string value = default;
             IList<string> endpointNames = default;

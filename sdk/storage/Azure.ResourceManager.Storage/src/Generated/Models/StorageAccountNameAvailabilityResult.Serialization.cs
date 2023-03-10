@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageAccountNameAvailabilityResult DeserializeStorageAccountNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<StorageAccountNameUnavailableReason> reason = default;
             Optional<string> message = default;

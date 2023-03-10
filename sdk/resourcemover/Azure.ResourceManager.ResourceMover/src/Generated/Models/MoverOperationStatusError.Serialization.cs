@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverOperationStatusError DeserializeMoverOperationStatusError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<IReadOnlyList<MoverOperationStatusError>> details = default;

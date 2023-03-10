@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static LeaseShareResponse DeserializeLeaseShareResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> leaseId = default;
             Optional<string> leaseTimeSeconds = default;
             foreach (var property in element.EnumerateObject())

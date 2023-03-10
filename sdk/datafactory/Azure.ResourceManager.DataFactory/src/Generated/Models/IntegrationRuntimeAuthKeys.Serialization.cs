@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static IntegrationRuntimeAuthKeys DeserializeIntegrationRuntimeAuthKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> authKey1 = default;
             Optional<string> authKey2 = default;
             foreach (var property in element.EnumerateObject())

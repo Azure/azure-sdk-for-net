@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static SsoUri DeserializeSsoUri(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> ssoUriValue = default;
             foreach (var property in element.EnumerateObject())
             {

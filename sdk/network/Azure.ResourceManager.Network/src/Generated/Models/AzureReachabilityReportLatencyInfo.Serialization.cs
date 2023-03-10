@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AzureReachabilityReportLatencyInfo DeserializeAzureReachabilityReportLatencyInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timeStamp = default;
             Optional<int> score = default;
             foreach (var property in element.EnumerateObject())

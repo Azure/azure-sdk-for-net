@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryWebhookEventRequestMessage DeserializeContainerRegistryWebhookEventRequestMessage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerRegistryWebhookEventContent> content = default;
             Optional<IReadOnlyDictionary<string, string>> headers = default;
             Optional<string> method = default;

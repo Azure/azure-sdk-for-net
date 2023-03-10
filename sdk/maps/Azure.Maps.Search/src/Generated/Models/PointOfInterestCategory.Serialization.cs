@@ -15,6 +15,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static PointOfInterestCategory DeserializePointOfInterestCategory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> id = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<int>> childCategoryIds = default;

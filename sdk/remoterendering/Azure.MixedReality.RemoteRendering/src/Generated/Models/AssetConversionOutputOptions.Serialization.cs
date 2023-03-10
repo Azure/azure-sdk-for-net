@@ -38,6 +38,10 @@ namespace Azure.MixedReality.RemoteRendering
 
         internal static AssetConversionOutputOptions DeserializeAssetConversionOutputOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri storageContainerUri = default;
             Optional<string> storageContainerWriteSas = default;
             Optional<string> blobPrefix = default;

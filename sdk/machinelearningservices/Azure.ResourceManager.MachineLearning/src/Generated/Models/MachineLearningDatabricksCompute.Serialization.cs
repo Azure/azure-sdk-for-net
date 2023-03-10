@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningDatabricksCompute DeserializeMachineLearningDatabricksCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningDatabricksProperties> properties = default;
             ComputeType computeType = default;
             Optional<string> computeLocation = default;

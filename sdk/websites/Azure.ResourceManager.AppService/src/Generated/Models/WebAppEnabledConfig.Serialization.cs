@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppEnabledConfig DeserializeWebAppEnabledConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {

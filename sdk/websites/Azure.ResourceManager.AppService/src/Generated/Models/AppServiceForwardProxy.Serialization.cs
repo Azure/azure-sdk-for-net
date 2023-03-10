@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceForwardProxy DeserializeAppServiceForwardProxy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ForwardProxyConvention> convention = default;
             Optional<string> customHostHeaderName = default;
             Optional<string> customProtoHeaderName = default;

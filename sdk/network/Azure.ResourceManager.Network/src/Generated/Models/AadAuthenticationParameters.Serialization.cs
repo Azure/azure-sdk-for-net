@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AadAuthenticationParameters DeserializeAadAuthenticationParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> aadTenant = default;
             Optional<string> aadAudience = default;
             Optional<string> aadIssuer = default;

@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterApiServerAccessProfile DeserializeManagedClusterApiServerAccessProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> authorizedIPRanges = default;
             Optional<bool> enablePrivateCluster = default;
             Optional<string> privateDnsZone = default;

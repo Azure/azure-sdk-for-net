@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
     {
         internal static TrafficManagerNameAvailabilityResult DeserializeTrafficManagerNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<bool> nameAvailable = default;

@@ -90,6 +90,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlPool DeserializeSqlPool(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Sku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             string location = default;

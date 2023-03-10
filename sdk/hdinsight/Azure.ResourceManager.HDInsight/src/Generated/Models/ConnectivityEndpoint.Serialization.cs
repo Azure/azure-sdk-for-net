@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static ConnectivityEndpoint DeserializeConnectivityEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> protocol = default;
             Optional<string> location = default;

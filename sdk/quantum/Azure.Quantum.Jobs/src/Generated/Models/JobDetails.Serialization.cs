@@ -95,6 +95,10 @@ namespace Azure.Quantum.Jobs.Models
 
         internal static JobDetails DeserializeJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             string containerUri = default;

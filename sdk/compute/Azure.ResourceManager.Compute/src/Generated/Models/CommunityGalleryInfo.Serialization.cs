@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CommunityGalleryInfo DeserializeCommunityGalleryInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> publisherUri = default;
             Optional<string> publisherContact = default;
             Optional<string> eula = default;

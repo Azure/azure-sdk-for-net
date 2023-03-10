@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerGroupListResult DeserializeContainerGroupListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContainerGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

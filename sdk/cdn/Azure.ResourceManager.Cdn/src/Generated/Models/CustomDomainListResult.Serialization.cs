@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static CustomDomainListResult DeserializeCustomDomainListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CdnCustomDomainData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

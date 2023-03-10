@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static AnalyzeTextJobStatistics DeserializeAnalyzeTextJobStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TextDocumentBatchStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {

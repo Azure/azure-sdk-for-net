@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static TemplateSpecData DeserializeTemplateSpecData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;

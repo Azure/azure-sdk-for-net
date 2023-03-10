@@ -91,6 +91,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool?> enableDataExport = default;
             Optional<bool?> immediatePurgeDataOn30Days = default;
             Optional<bool?> enableLogAccessUsingOnlyResourcePermissions = default;

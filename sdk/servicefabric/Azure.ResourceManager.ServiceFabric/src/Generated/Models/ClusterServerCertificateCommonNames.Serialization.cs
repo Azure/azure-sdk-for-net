@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterServerCertificateCommonNames DeserializeClusterServerCertificateCommonNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ClusterServerCertificateCommonName>> commonNames = default;
             Optional<ClusterCertificateStoreName> x509StoreName = default;
             foreach (var property in element.EnumerateObject())

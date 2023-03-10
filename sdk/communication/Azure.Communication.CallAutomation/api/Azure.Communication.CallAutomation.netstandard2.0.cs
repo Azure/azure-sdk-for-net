@@ -52,6 +52,11 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties { get { throw null; } }
         public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AnswerCallEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
     }
+    public partial class BlobStorage : Azure.Communication.CallAutomation.ExternalStorage
+    {
+        public BlobStorage(System.Uri containerUri) { }
+        public System.Uri ContainerUri { get { throw null; } }
+    }
     public partial class CallAutomationClient
     {
         protected CallAutomationClient() { }
@@ -288,6 +293,7 @@ namespace Azure.Communication.CallAutomation
     {
         public CallMediaRecognizeChoiceOptions(Azure.Communication.CommunicationIdentifier targetParticipant, System.Collections.Generic.List<Azure.Communication.CallAutomation.RecognizeChoice> recognizeChoices) : base (default(Azure.Communication.CallAutomation.RecognizeInputType), default(Azure.Communication.CommunicationIdentifier)) { }
         public System.Collections.Generic.IList<Azure.Communication.CallAutomation.RecognizeChoice> RecognizeChoices { get { throw null; } }
+        public string SpeechLanguage { get { throw null; } set { } }
     }
     public partial class CallMediaRecognizeDtmfOptions : Azure.Communication.CallAutomation.CallMediaRecognizeOptions
     {
@@ -487,6 +493,11 @@ namespace Azure.Communication.CallAutomation
         protected EventResultBase() { }
         public bool IsSuccessEvent { get { throw null; } }
     }
+    public abstract partial class ExternalStorage
+    {
+        protected ExternalStorage() { }
+        public Azure.Communication.CallAutomation.RecordingStorageType StorageType { get { throw null; } protected set { } }
+    }
     public partial class FileSource : Azure.Communication.CallAutomation.PlaySource
     {
         public FileSource(System.Uri fileUri) { }
@@ -683,6 +694,7 @@ namespace Azure.Communication.CallAutomation
         private readonly int _dummyPrimitive;
         public ReasonCode(string value) { throw null; }
         public static Azure.Communication.CallAutomation.ReasonCode CompletedSuccessfully { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode PlayCognitiveServicesPlayError { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode PlayDownloadFailed { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode PlayInvalidFileFormat { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeDtmfOptionMatched { get { throw null; } }
@@ -691,8 +703,10 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeInterDigitTimedOut { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeMaxDigitsReceived { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizePlayPromptFailed { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode RecognizeSpeechNotRecognized { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeSpeechOptionMatched { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeSpeechOptionNotMatched { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode RecognizeSpeechServiceConnectionError { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeStopToneDetected { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode UnspecifiedError { get { throw null; } }
         public bool Equals(Azure.Communication.CallAutomation.ReasonCode other) { throw null; }
@@ -896,6 +910,11 @@ namespace Azure.Communication.CallAutomation
         public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SsmlSource
+    {
+        public SsmlSource(string ssmlText) { }
+        public string SsmlText { get { throw null; } }
+    }
     public partial class StartRecognizingEventResult : Azure.Communication.CallAutomation.EventResultBase
     {
         internal StartRecognizingEventResult() { }
@@ -911,18 +930,17 @@ namespace Azure.Communication.CallAutomation
     {
         public StartRecordingOptions(Azure.Communication.CallAutomation.CallLocator callLocator) { }
         public System.Collections.Generic.IList<Azure.Communication.CommunicationIdentifier> AudioChannelParticipantOrdering { get { throw null; } }
-        public System.Uri ExternalStorageLocation { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.ExternalStorage ExternalStorage { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingChannel RecordingChannel { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingContent RecordingContent { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingFormat RecordingFormat { get { throw null; } set { } }
         public System.Uri RecordingStateCallbackEndpoint { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.RecordingStorageType? RecordingStorageType { get { throw null; } set { } }
     }
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {
         public TextSource(string text) { }
-        public TextSource(string text, System.Globalization.CultureInfo sourceLocale, Azure.Communication.CallAutomation.GenderType gender) { }
         public TextSource(string text, string voiceName) { }
+        public TextSource(string text, string sourceLocale, Azure.Communication.CallAutomation.GenderType gender) { }
         public string SourceLocale { get { throw null; } set { } }
         public string Text { get { throw null; } }
         public Azure.Communication.CallAutomation.GenderType? VoiceGender { get { throw null; } set { } }

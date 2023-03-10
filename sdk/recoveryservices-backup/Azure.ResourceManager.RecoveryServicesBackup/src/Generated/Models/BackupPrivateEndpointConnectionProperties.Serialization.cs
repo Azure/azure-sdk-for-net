@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupPrivateEndpointConnectionProperties DeserializeBackupPrivateEndpointConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupPrivateEndpointConnectionProvisioningState> provisioningState = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<RecoveryServicesBackupPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;

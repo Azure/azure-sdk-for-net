@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static AdlsGen2FileDataSetMapping DeserializeAdlsGen2FileDataSetMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataSetMappingKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

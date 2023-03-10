@@ -29,6 +29,16 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("virtualMachineConfiguration"u8);
             writer.WriteObjectValue(VirtualMachineConfiguration);
+            if (Optional.IsDefined(DBDiskConfiguration))
+            {
+                writer.WritePropertyName("dbDiskConfiguration"u8);
+                writer.WriteObjectValue(DBDiskConfiguration);
+            }
+            if (Optional.IsDefined(CustomResourceNames))
+            {
+                writer.WritePropertyName("customResourceNames"u8);
+                writer.WriteObjectValue(CustomResourceNames);
+            }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
             writer.WritePropertyName("appResourceGroup"u8);
@@ -38,10 +48,16 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SingleServerConfiguration DeserializeSingleServerConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetworkConfiguration> networkConfiguration = default;
             Optional<SapDatabaseType> databaseType = default;
             ResourceIdentifier subnetId = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
+            Optional<DiskConfiguration> dbDiskConfiguration = default;
+            Optional<SingleServerCustomResourceNames> customResourceNames = default;
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
             foreach (var property in element.EnumerateObject())
@@ -76,6 +92,26 @@ namespace Azure.ResourceManager.Workloads.Models
                     virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(property.Value);
                     continue;
                 }
+                if (property.NameEquals("dbDiskConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dbDiskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("customResourceNames"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    customResourceNames = SingleServerCustomResourceNames.DeserializeSingleServerCustomResourceNames(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("deploymentType"u8))
                 {
                     deploymentType = new SapDeploymentType(property.Value.GetString());
@@ -87,7 +123,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SingleServerConfiguration(deploymentType, appResourceGroup, networkConfiguration.Value, Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration);
+            return new SingleServerConfiguration(deploymentType, appResourceGroup, networkConfiguration.Value, Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, dbDiskConfiguration.Value, customResourceNames.Value);
         }
     }
 }

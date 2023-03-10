@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult DeserializePostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage>> delegatedSubnetsUsage = default;
             Optional<AzureLocation> location = default;
             Optional<string> subscriptionId = default;

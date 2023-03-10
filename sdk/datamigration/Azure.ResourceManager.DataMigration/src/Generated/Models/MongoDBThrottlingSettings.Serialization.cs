@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBThrottlingSettings DeserializeMongoDBThrottlingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minFreeCpu = default;
             Optional<int> minFreeMemoryMb = default;
             Optional<int> maxParallelism = default;

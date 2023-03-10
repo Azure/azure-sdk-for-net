@@ -209,6 +209,11 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
+                if (item == null)
+                {
+                    content.JsonWriter.WriteNullValue();
+                    continue;
+                }
                 content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();

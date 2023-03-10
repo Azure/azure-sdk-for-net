@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static MsixPackageData DeserializeMsixPackageData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

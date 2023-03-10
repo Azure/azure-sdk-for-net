@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static EdgeKubernetesIPConfiguration DeserializeEdgeKubernetesIPConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> port = default;
             Optional<string> ipAddress = default;
             foreach (var property in element.EnumerateObject())

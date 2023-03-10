@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static HybridComputeServiceStatuses DeserializeHybridComputeServiceStatuses(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HybridComputeServiceStatus> extensionService = default;
             Optional<HybridComputeServiceStatus> guestConfigurationService = default;
             foreach (var property in element.EnumerateObject())

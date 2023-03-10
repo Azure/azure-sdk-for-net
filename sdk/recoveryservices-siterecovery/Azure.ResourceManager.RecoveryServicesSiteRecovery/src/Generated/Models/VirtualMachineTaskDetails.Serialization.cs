@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VirtualMachineTaskDetails DeserializeVirtualMachineTaskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> skippedReason = default;
             Optional<string> skippedReasonString = default;
             Optional<JobEntity> jobTask = default;

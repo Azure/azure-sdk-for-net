@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static PagedLabPlans DeserializePagedLabPlans(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LabPlanData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

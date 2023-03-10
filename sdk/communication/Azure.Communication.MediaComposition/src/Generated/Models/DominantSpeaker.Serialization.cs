@@ -29,6 +29,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static DominantSpeaker DeserializeDominantSpeaker(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string call = default;
             MediaInputType kind = default;
             Optional<string> placeholderImageUri = default;

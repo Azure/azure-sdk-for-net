@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyDefinition DeserializeManagementPolicyDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagementPolicyAction actions = default;
             Optional<ManagementPolicyFilter> filters = default;
             foreach (var property in element.EnumerateObject())

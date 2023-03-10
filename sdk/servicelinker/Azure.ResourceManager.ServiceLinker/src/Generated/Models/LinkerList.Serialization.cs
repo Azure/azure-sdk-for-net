@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         internal static LinkerList DeserializeLinkerList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<LinkerResourceData>> value = default;
             foreach (var property in element.EnumerateObject())

@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DocumentDBCollectionSink DeserializeDocumentDBCollectionSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> nestingSeparator = default;
             Optional<BinaryData> writeBehavior = default;
             string type = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableDelegation DeserializeAvailableDelegation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceName = default;
             Optional<IReadOnlyList<string>> actions = default;
             ResourceIdentifier id = default;

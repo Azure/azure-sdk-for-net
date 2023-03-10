@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static TopQueries DeserializeTopQueries(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> numberOfQueries = default;
             Optional<string> aggregationFunction = default;
             Optional<string> observationMetric = default;

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary> A class representing the KustoAttachedDatabaseConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the KustoAttachedDatabaseConfiguration data model.
+    /// Class representing an attached database configuration.
+    /// </summary>
     public partial class KustoAttachedDatabaseConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of KustoAttachedDatabaseConfigurationData. </summary>

@@ -40,6 +40,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummarizationTaskParameters DeserializeAbstractiveSummarizationTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
             Optional<int> sentenceCount = default;

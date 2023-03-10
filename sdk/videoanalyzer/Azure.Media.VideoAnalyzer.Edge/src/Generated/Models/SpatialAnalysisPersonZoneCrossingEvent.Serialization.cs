@@ -35,6 +35,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SpatialAnalysisPersonZoneCrossingEvent DeserializeSpatialAnalysisPersonZoneCrossingEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SpatialAnalysisPersonZoneCrossingEventType> eventType = default;
             Optional<string> threshold = default;
             Optional<SpatialAnalysisOperationFocus> focus = default;

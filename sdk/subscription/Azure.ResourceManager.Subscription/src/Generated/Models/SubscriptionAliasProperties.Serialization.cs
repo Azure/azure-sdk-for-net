@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static SubscriptionAliasProperties DeserializeSubscriptionAliasProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subscriptionId = default;
             Optional<string> displayName = default;
             Optional<SubscriptionProvisioningState> provisioningState = default;

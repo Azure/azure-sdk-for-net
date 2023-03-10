@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static MessageServerProperties DeserializeMessageServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long?> msPort = default;
             Optional<long?> internalMsPort = default;
             Optional<long?> httpPort = default;

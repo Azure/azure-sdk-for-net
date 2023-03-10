@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the TagContract data model. </summary>
+    /// <summary>
+    /// A class representing the TagContract data model.
+    /// Tag Contract details.
+    /// </summary>
     public partial class TagContractData : ResourceData
     {
         /// <summary> Initializes a new instance of TagContractData. </summary>

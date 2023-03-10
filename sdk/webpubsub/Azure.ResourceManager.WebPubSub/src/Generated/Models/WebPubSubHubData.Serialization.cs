@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static WebPubSubHubData DeserializeWebPubSubHubData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WebPubSubHubProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

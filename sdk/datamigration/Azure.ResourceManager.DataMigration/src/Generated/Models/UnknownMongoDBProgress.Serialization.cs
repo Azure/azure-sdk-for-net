@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static UnknownMongoDBProgress DeserializeUnknownMongoDBProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long bytesCopied = default;
             long documentsCopied = default;
             string elapsedTime = default;

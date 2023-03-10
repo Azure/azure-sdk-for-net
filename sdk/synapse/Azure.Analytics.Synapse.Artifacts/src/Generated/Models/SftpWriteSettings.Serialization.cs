@@ -51,6 +51,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SftpWriteSettings DeserializeSftpWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> operationTimeout = default;
             Optional<object> useTempFileRename = default;
             string type = default;

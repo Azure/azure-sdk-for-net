@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static CachedImagesListResult DeserializeCachedImagesListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CachedImages>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

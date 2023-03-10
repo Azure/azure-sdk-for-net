@@ -51,6 +51,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static DiscoveredOnvifDevice DeserializeDiscoveredOnvifDevice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceIdentifier = default;
             Optional<string> remoteIPAddress = default;
             Optional<IList<string>> scopes = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static TrustedAccessRoleBindingListResult DeserializeTrustedAccessRoleBindingListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContainerServiceTrustedAccessRoleBindingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

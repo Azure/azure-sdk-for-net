@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DevTestLabArmTemplateInfo DeserializeDevTestLabArmTemplateInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> template = default;
             Optional<BinaryData> parameters = default;
             foreach (var property in element.EnumerateObject())

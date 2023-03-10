@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static Pav2MeterDetails DeserializePav2MeterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> meterGuid = default;
             BillingType billingType = default;
             Optional<double> multiplier = default;

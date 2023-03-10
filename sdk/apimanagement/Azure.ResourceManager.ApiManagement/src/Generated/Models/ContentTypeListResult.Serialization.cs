@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ContentTypeListResult DeserializeContentTypeListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiManagementContentType>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

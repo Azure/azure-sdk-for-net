@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Purview.Models
     {
         internal static PurviewAccountNameAvailabilityResult DeserializePurviewAccountNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<bool> nameAvailable = default;
             Optional<PurviewAccountNameUnavailableReason> reason = default;

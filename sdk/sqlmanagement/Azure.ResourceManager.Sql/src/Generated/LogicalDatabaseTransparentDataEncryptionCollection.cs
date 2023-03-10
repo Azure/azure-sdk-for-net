@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource>(Response.FromValue(new LogicalDatabaseTransparentDataEncryptionResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource>(new LogicalDatabaseTransparentDataEncryptionOperationSource(Client), _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics, Pipeline, _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, data, cancellationToken);
-                var operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource>(Response.FromValue(new LogicalDatabaseTransparentDataEncryptionResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource>(new LogicalDatabaseTransparentDataEncryptionOperationSource(Client), _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics, Pipeline, _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

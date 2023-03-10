@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static NodeTypeVaultCertificate DeserializeNodeTypeVaultCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri certificateUrl = default;
             string certificateStore = default;
             foreach (var property in element.EnumerateObject())

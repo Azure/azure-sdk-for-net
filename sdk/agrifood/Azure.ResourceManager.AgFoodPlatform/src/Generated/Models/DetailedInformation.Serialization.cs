@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     {
         internal static DetailedInformation DeserializeDetailedInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiName = default;
             Optional<IReadOnlyList<string>> customParameters = default;
             Optional<IReadOnlyList<string>> platformParameters = default;

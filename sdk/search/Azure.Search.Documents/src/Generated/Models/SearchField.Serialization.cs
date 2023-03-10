@@ -123,6 +123,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchField DeserializeSearchField(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             SearchFieldDataType type = default;
             Optional<bool> key = default;

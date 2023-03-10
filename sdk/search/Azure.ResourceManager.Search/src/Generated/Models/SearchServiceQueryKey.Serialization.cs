@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Search.Models
     {
         internal static SearchServiceQueryKey DeserializeSearchServiceQueryKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> key = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsFieldMapping DeserializeSecurityInsightsFieldMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> identifier = default;
             Optional<string> columnName = default;
             foreach (var property in element.EnumerateObject())

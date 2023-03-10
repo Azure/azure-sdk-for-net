@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartArray();
             foreach (var item in ActionGroupIds)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleAddGroupsAction DeserializeAlertProcessingRuleAddGroupsAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ResourceIdentifier> actionGroupIds = default;
             AlertProcessingRuleActionType actionType = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +48,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ResourceIdentifier(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     actionGroupIds = array;
                     continue;

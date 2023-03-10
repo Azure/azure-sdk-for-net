@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static SupportedSkusResult DeserializeSupportedSkusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<BatchSupportedSku> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

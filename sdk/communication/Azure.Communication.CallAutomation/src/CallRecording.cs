@@ -62,8 +62,6 @@ namespace Azure.Communication.CallAutomation
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
-                    RecordingStorageType = options.RecordingStorageType,
-                    ExternalStorageLocation = options.ExternalStorageLocation?.AbsoluteUri,
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -72,7 +70,12 @@ namespace Azure.Communication.CallAutomation
                     {
                         request.AudioChannelParticipantOrdering.Add(CommunicationIdentifierSerializer.Serialize(c));
                     }
-                };
+                }
+
+                if (options.ExternalStorage is not null)
+                {
+                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
+                }
 
                 var repeatabilityHeaders = new RepeatabilityHeaders();
                 return _callRecordingRestClient.StartRecording(request,
@@ -107,8 +110,6 @@ namespace Azure.Communication.CallAutomation
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
-                    RecordingStorageType = options.RecordingStorageType,
-                    ExternalStorageLocation = options.ExternalStorageLocation?.AbsoluteUri,
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -118,6 +119,11 @@ namespace Azure.Communication.CallAutomation
                         request.AudioChannelParticipantOrdering.Add(CommunicationIdentifierSerializer.Serialize(c));
                     }
                 };
+
+                if (options.ExternalStorage is not null)
+                {
+                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
+                }
 
                 var repeatabilityHeaders = new RepeatabilityHeaders();
                 return await _callRecordingRestClient.StartRecordingAsync(request,
@@ -597,5 +603,24 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
+
+        #region private functions
+
+        private static ExternalStorageInternal TranslateExternalStorageToInternal(ExternalStorage externalStorage)
+        {
+            ExternalStorageInternal result = null;
+
+            if (externalStorage is BlobStorage blobStorage)
+            {
+                result = new ExternalStorageInternal(blobStorage.StorageType)
+                {
+                    BlobStorage = new BlobStorageInternal(blobStorage.ContainerUri.AbsoluteUri),
+                };
+            }
+
+            return result;
+        }
+
+        #endregion private functions
     }
 }
