@@ -29,5 +29,11 @@ namespace Azure.Communication.Chat
         public string Topic { get; }
         /// <summary> Participants to be added to the chat thread. </summary>
         public IList<ChatParticipantInternal> Participants { get; }
+        /// <summary>
+        /// Data retention policy for auto deletion.
+        /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BasedOnThreadCreationDateRetentionPolicy"/>.
+        /// </summary>
+        public RetentionPolicy RetentionPolicy { get; set; }
     }
 }

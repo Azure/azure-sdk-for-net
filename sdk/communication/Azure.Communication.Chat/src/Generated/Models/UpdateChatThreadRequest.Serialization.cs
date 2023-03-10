@@ -20,6 +20,11 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
             }
+            if (Optional.IsDefined(RetentionPolicy))
+            {
+                writer.WritePropertyName("retentionPolicy"u8);
+                writer.WriteObjectValue(RetentionPolicy);
+            }
             writer.WriteEndObject();
         }
     }

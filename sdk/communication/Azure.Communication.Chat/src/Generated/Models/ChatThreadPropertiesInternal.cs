@@ -38,13 +38,19 @@ namespace Azure.Communication.Chat
         /// <param name="createdOn"> The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="createdByCommunicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
         /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatThreadPropertiesInternal(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifierModel createdByCommunicationIdentifier, DateTimeOffset? deletedOn)
+        /// <param name="retentionPolicy">
+        /// Data retention policy for auto deletion.
+        /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BasedOnThreadCreationDateRetentionPolicy"/>.
+        /// </param>
+        internal ChatThreadPropertiesInternal(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifierModel createdByCommunicationIdentifier, DateTimeOffset? deletedOn, RetentionPolicy retentionPolicy)
         {
             Id = id;
             Topic = topic;
             CreatedOn = createdOn;
             CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
             DeletedOn = deletedOn;
+            RetentionPolicy = retentionPolicy;
         }
 
         /// <summary> Chat thread id. </summary>
@@ -57,5 +63,11 @@ namespace Azure.Communication.Chat
         public CommunicationIdentifierModel CreatedByCommunicationIdentifier { get; }
         /// <summary> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }
+        /// <summary>
+        /// Data retention policy for auto deletion.
+        /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BasedOnThreadCreationDateRetentionPolicy"/>.
+        /// </summary>
+        public RetentionPolicy RetentionPolicy { get; }
     }
 }

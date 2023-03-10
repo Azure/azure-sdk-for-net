@@ -48,18 +48,18 @@ namespace Azure.Communication.Chat
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatMessage ChatMessage(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
             => ChatMessage(id, type, sequenceId, version, content, senderDisplayName, createdOn, senderId, deletedOn, editedOn, null);
-
+#pragma warning disable CS0419
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChatThreadItem"/> class.
+        /// Initializes a new instance of the <see cref="ChatModelFactory.ChatThreadItem"/> class.
         /// </summary>
         /// <param name="id"> Chat thread id. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <returns>A new <see cref="ChatThreadItem"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="ChatModelFactory.ChatThreadItem"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatThreadItem ChatThreadItem(string id, string topic, DateTimeOffset? deletedOn, DateTimeOffset? lastMessageReceivedOn)
-            => new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn);
+            => ChatModelFactory.ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn,  null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatMessageReadReceipt"/> class.
