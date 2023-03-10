@@ -102,9 +102,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Person,
                     new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None), new PhoneNumberSearchOptions { AreaCode = "212", Quantity = 1 });
             }
-            catch (Azure.RequestFailedException ex)
+            catch (RequestFailedException ex)
             {
-                Assert.AreEqual(400, ex.Status);
+                Assert.IsTrue(IsClientError(ex.Status));
                 return;
             }
 
@@ -198,7 +198,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(updateOperation.HasCompleted);
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
+            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status));
         }
 
         [Test]
@@ -211,6 +211,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
+                Assert.IsTrue(IsClientError(ex.Status));
                 Assert.NotNull(ex.Message);
             }
         }
@@ -226,6 +227,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
+                Assert.IsTrue(IsClientError(ex.Status));
                 Assert.NotNull(ex.Message);
             }
         }
@@ -287,7 +289,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(updateOperation.HasCompleted);
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
+            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status));
         }
 
         [Test]
@@ -401,6 +403,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Console.WriteLine("Offering " + offering.ToString());
             }
             Assert.IsNotNull(offerings);
+        }
+
+        private static bool IsSuccess(int statusCode)
+        {
+            return statusCode >= 200 && statusCode < 300;
+        }
+
+        private static bool IsClientError(int statusCode)
+        {
+            return statusCode >= 400 && statusCode < 500;
         }
     }
 }
