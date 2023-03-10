@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Resources
     {
         internal static TenantData DeserializeTenantData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<Guid> tenantId = default;
             Optional<TenantCategory> tenantCategory = default;

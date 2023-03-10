@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterNotificationTarget DeserializeClusterNotificationTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ClusterNotificationChannel notificationChannel = default;
             IList<string> receivers = default;
             foreach (var property in element.EnumerateObject())

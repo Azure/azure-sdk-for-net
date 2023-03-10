@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBPrivateLinkServiceConnectionStateProperty DeserializeCosmosDBPrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

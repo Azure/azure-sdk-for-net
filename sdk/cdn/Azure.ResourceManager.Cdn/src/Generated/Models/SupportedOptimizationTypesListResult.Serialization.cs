@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static SupportedOptimizationTypesListResult DeserializeSupportedOptimizationTypesListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OptimizationType>> supportedOptimizationTypes = default;
             foreach (var property in element.EnumerateObject())
             {

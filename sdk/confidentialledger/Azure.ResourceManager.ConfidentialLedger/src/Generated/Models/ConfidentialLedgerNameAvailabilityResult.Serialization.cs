@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     {
         internal static ConfidentialLedgerNameAvailabilityResult DeserializeConfidentialLedgerNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<ConfidentialLedgerNameUnavailableReason> reason = default;
             Optional<string> message = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static ResourceProviderManifestReRegisterSubscriptionMetadata DeserializeResourceProviderManifestReRegisterSubscriptionMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             Optional<int> concurrencyLimit = default;
             foreach (var property in element.EnumerateObject())

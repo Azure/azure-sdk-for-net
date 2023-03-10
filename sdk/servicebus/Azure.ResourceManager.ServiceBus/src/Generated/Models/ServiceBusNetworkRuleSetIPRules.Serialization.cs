@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusNetworkRuleSetIPRules DeserializeServiceBusNetworkRuleSetIPRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipMask = default;
             Optional<ServiceBusNetworkRuleIPAction> action = default;
             foreach (var property in element.EnumerateObject())

@@ -1,6 +1,6 @@
 # Release History
 
-## 4.14.0-beta.1 (Unreleased)
+## 4.15.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.14.0 (2023-03-06)
+
+### Features Added
+
+- Added new Communication events, `AcsEmailDeliveryReportReceivedEventData` and `AcsEmailEngagementTrackingReportReceivedEventData`.
 
 ## 4.13.0 (2023-01-19)
 

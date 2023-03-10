@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static WebPubSubNameAvailability DeserializeWebPubSubNameAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
             Optional<string> message = default;

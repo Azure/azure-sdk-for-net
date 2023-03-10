@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabNetworkInterface DeserializeDevTestLabNetworkInterface(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> virtualNetworkId = default;
             Optional<ResourceIdentifier> subnetId = default;
             Optional<ResourceIdentifier> publicIPAddressId = default;

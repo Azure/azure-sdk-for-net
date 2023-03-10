@@ -26,6 +26,10 @@ namespace Azure.Communication.JobRouter
 
         internal static PassThroughQueueSelectorAttachment DeserializePassThroughQueueSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             LabelOperator labelOperator = default;
             string kind = default;

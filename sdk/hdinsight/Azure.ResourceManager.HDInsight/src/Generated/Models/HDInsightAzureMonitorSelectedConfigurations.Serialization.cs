@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightAzureMonitorSelectedConfigurations DeserializeHDInsightAzureMonitorSelectedConfigurations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> configurationVersion = default;
             Optional<IDictionary<string, string>> globalConfigurations = default;
             Optional<IList<HDInsightAzureMonitorTableConfiguration>> tableList = default;

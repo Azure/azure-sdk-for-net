@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ManagedRuleSetDefinitionList DeserializeManagedRuleSetDefinitionList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedRuleSetDefinition>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

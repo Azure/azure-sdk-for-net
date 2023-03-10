@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static StorageAccountCredentials DeserializeStorageAccountCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceId = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;

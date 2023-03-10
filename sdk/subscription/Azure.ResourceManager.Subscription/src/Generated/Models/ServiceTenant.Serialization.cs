@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static ServiceTenant DeserializeServiceTenant(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<string> tenantName = default;
             foreach (var property in element.EnumerateObject())

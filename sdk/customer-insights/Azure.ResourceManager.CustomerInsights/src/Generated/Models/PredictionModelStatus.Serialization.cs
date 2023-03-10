@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static PredictionModelStatus DeserializePredictionModelStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<string> predictionName = default;
             Optional<string> predictionGuidId = default;

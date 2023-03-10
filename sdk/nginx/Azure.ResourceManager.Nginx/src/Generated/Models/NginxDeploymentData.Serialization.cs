@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Nginx
 
         internal static NginxDeploymentData DeserializeNginxDeploymentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<NginxDeploymentProperties> properties = default;
             Optional<ResourceSku> sku = default;

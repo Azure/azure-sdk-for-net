@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeStorageContainerInfo DeserializeDataBoxEdgeStorageContainerInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier storageAccountCredentialId = default;
             string containerName = default;
             DataBoxEdgeStorageContainerDataFormat dataFormat = default;

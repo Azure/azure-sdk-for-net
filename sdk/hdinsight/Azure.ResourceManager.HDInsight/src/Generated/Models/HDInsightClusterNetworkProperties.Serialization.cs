@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightClusterNetworkProperties DeserializeHDInsightClusterNetworkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HDInsightResourceProviderConnection> resourceProviderConnection = default;
             Optional<HDInsightPrivateLinkState> privateLink = default;
             foreach (var property in element.EnumerateObject())

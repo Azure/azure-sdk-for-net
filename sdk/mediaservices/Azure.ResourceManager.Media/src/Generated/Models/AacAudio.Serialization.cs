@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AacAudio DeserializeAacAudio(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AacAudioProfile> profile = default;
             Optional<int> channels = default;
             Optional<int> samplingRate = default;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static AADProfileSecret DeserializeAADProfileSecret(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serverAppSecret = default;
             foreach (var property in element.EnumerateObject())
             {

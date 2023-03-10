@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static QosPortRange DeserializeQosPortRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> start = default;
             Optional<int> end = default;
             foreach (var property in element.EnumerateObject())

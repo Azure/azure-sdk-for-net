@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static StartMenuItemList DeserializeStartMenuItemList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DesktopVirtualizationStartMenuItem>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

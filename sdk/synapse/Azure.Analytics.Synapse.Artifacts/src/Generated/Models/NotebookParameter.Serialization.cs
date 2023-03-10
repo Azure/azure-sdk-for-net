@@ -40,6 +40,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookParameter DeserializeNotebookParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> value = default;
             Optional<NotebookParameterType> type = default;
             foreach (var property in element.EnumerateObject())

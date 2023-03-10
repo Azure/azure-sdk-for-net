@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static ServiceUnitArtifacts DeserializeServiceUnitArtifacts(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> templateUri = default;
             Optional<Uri> parametersUri = default;
             Optional<string> templateArtifactSourceRelativePath = default;

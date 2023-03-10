@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobOutputWatermarkProperties DeserializeStreamingJobOutputWatermarkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamingJobOutputWatermarkMode> watermarkMode = default;
             Optional<string> maxWatermarkDifferenceAcrossPartitions = default;
             foreach (var property in element.EnumerateObject())

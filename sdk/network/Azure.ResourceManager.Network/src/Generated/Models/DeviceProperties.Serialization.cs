@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static DeviceProperties DeserializeDeviceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceVendor = default;
             Optional<string> deviceModel = default;
             Optional<int> linkSpeedInMbps = default;

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AvsPrivateCloudAddonProperties DeserializeAvsPrivateCloudAddonProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("addonType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

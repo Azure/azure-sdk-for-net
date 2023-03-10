@@ -24,6 +24,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static InputError DeserializeInputError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Error error = default;
             foreach (var property in element.EnumerateObject())

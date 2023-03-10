@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ActivityUserProperty DeserializeActivityUserProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             BinaryData value = default;
             foreach (var property in element.EnumerateObject())

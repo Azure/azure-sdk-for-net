@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static CosmosDBServiceData DeserializeCosmosDBServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CosmosDBServiceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

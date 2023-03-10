@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Storage
 
         internal static BlobServiceData DeserializeBlobServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static RegressionTrainingSettings DeserializeRegressionTrainingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AutoMLVerticalRegressionModel>> allowedTrainingAlgorithms = default;
             Optional<IList<AutoMLVerticalRegressionModel>> blockedTrainingAlgorithms = default;
             Optional<bool> enableDnnTraining = default;

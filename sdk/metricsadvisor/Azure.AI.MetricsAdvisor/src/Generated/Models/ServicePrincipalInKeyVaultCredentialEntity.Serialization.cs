@@ -32,6 +32,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         internal static ServicePrincipalInKeyVaultCredentialEntity DeserializeServicePrincipalInKeyVaultCredentialEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ServicePrincipalInKVParam parameters = default;
             DataSourceCredentialKind dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;

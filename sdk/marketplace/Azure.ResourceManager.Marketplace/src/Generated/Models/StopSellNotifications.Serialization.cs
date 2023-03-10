@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static StopSellNotifications DeserializeStopSellNotifications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> offerId = default;
             Optional<string> displayName = default;
             Optional<bool> isEntire = default;

@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RequestUriMatchCondition DeserializeRequestUriMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RequestUriMatchConditionType typeName = default;
             RequestUriOperator @operator = default;
             Optional<bool> negateCondition = default;

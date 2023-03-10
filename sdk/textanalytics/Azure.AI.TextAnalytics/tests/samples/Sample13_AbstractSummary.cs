@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             AbstractSummaryOptions options = new()
             {
-                MaxSentenceCount = 2
+                SentenceCount = 2
             };
 
             // Perform the text analysis operation.

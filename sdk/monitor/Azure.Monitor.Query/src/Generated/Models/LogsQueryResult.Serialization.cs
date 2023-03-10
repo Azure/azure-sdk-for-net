@@ -15,6 +15,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<LogsTable> tables = default;
             Optional<JsonElement> statistics = default;
             Optional<JsonElement> render = default;

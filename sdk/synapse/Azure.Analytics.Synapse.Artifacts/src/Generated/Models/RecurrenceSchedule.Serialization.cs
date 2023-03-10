@@ -79,6 +79,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RecurrenceSchedule DeserializeRecurrenceSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<int>> minutes = default;
             Optional<IList<int>> hours = default;
             Optional<IList<DayOfWeek>> weekDays = default;

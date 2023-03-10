@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerGroupInstanceView DeserializeContainerGroupInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContainerEvent>> events = default;
             Optional<string> state = default;
             foreach (var property in element.EnumerateObject())

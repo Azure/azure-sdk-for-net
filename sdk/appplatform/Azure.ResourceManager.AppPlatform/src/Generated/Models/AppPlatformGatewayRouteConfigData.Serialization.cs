@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformGatewayRouteConfigData DeserializeAppPlatformGatewayRouteConfigData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformGatewayRouteConfigProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

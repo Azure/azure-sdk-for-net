@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static UnknownFormat DeserializeUnknownFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             string filenamePattern = default;
             foreach (var property in element.EnumerateObject())

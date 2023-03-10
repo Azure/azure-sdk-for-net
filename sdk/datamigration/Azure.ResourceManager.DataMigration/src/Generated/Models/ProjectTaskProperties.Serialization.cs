@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ProjectTaskProperties DeserializeProjectTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("taskType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

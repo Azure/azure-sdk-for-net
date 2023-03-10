@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ExecutePipelineActivityPolicy DeserializeExecutePipelineActivityPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> secureInput = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

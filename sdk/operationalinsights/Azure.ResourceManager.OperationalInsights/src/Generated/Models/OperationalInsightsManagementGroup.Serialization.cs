@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsManagementGroup DeserializeOperationalInsightsManagementGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> serverCount = default;
             Optional<bool> isGateway = default;
             Optional<string> name = default;

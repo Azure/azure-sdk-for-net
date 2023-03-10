@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobInputHttp DeserializeMediaJobInputHttp(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> baseUri = default;
             Optional<IList<string>> files = default;
             Optional<ClipTime> start = default;

@@ -24,6 +24,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static GroupCallOutput DeserializeGroupCallOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())

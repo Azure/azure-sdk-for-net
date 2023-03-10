@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAlertSyncSettings DeserializeSecurityAlertSyncSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SettingKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

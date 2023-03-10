@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Orbital.Models
     {
         internal static OrbitalAvailableContactsResult DeserializeOrbitalAvailableContactsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OrbitalAvailableContact>> value = default;
             foreach (var property in element.EnumerateObject())
             {

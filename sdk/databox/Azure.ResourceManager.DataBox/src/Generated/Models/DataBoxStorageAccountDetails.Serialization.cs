@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxStorageAccountDetails DeserializeDataBoxStorageAccountDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier storageAccountId = default;
             DataAccountType dataAccountType = default;
             Optional<string> sharePassword = default;

@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.CognitiveServices
 
         internal static CommitmentPlanData DeserializeCommitmentPlanData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<string> kind = default;
             Optional<CognitiveServicesSku> sku = default;

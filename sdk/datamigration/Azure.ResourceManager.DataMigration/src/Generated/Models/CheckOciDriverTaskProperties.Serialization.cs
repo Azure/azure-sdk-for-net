@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static CheckOciDriverTaskProperties DeserializeCheckOciDriverTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CheckOciDriverTaskInput> input = default;
             Optional<IReadOnlyList<CheckOciDriverTaskOutput>> output = default;
             TaskType taskType = default;

@@ -22,6 +22,10 @@ namespace Azure.Communication.JobRouter
 
         internal static ChannelConfiguration DeserializeChannelConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int capacityCostPerJob = default;
             foreach (var property in element.EnumerateObject())
             {

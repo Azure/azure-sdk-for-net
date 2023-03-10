@@ -93,6 +93,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static H264Layer DeserializeH264Layer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<H264VideoProfile> profile = default;
             Optional<string> level = default;
             Optional<TimeSpan> bufferWindow = default;

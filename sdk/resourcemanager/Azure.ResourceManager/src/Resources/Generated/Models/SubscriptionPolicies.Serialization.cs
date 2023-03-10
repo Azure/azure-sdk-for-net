@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static SubscriptionPolicies DeserializeSubscriptionPolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> locationPlacementId = default;
             Optional<string> quotaId = default;
             Optional<SpendingLimit> spendingLimit = default;

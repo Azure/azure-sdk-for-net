@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static ExpressionEvaluationDetails DeserializeExpressionEvaluationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> result = default;
             Optional<string> expression = default;
             Optional<string> expressionKind = default;

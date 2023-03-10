@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchServicePatch DeserializeSearchServicePatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.Search
 
         internal static SearchServiceData DeserializeSearchServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

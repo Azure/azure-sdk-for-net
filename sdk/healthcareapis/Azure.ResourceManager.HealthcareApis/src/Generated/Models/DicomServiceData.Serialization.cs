@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static DicomServiceData DeserializeDicomServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;

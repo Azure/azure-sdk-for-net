@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     {
         internal static DescendantListResult DeserializeDescendantListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DescendantData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

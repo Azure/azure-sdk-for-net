@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CustomTargetRollingWindowSize DeserializeCustomTargetRollingWindowSize(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int value = default;
             TargetRollingWindowSizeMode mode = default;
             foreach (var property in element.EnumerateObject())

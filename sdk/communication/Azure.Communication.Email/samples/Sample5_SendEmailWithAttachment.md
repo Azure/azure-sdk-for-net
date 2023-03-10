@@ -26,7 +26,7 @@ var filePath = "<path to your file>";
 var attachmentName = "<name of your attachment>";
 var contentType = MediaTypeNames.Text.Plain;
 
-string content = new BinaryData(File.ReadAllBytes(filePath));
+var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
 var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
 
 emailMessage.Attachments.Add(emailAttachment);

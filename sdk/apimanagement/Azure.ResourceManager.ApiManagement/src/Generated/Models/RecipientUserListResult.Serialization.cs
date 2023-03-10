@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static RecipientUserListResult DeserializeRecipientUserListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RecipientUserContract>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

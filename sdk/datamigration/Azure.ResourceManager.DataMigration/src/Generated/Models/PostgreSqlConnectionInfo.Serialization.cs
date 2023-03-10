@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static PostgreSqlConnectionInfo DeserializePostgreSqlConnectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string serverName = default;
             Optional<string> dataSource = default;
             Optional<string> serverVersion = default;

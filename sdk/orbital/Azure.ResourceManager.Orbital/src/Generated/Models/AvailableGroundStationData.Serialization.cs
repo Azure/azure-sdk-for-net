@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Orbital
     {
         internal static AvailableGroundStationData DeserializeAvailableGroundStationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;

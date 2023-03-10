@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultMonitoringSettings DeserializeVaultMonitoringSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
             Optional<ClassicAlertSettings> classicAlertSettings = default;
             foreach (var property in element.EnumerateObject())

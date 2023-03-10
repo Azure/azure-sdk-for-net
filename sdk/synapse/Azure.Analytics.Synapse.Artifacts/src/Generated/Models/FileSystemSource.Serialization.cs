@@ -56,6 +56,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static FileSystemSource DeserializeFileSystemSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> recursive = default;
             Optional<object> additionalColumns = default;
             string type = default;

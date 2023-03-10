@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static ComputeVmProperties DeserializeComputeVmProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ComputeVmInstanceViewStatus>> statuses = default;
             Optional<string> osType = default;
             Optional<string> vmSize = default;

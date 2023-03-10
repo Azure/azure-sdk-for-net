@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Advisor.Models
     {
         internal static MetadataSupportedValueDetail DeserializeMetadataSupportedValueDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())

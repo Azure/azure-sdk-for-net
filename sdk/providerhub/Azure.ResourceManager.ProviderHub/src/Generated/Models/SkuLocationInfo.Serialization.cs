@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static SkuLocationInfo DeserializeSkuLocationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureLocation location = default;
             Optional<IList<string>> zones = default;
             Optional<IList<SkuZoneDetail>> zoneDetails = default;

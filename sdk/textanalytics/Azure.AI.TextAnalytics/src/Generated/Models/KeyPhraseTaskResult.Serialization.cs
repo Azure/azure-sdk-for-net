@@ -14,6 +14,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static KeyPhraseTaskResult DeserializeKeyPhraseTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KeyPhraseResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
