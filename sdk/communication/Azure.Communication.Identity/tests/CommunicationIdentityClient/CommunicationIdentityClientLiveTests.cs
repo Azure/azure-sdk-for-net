@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
+using static Azure.Communication.Identity.CommunicationIdentityClientOptions;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -475,6 +477,24 @@ namespace Azure.Communication.Identity.Tests
                 return;
             }
             Assert.Fail("An exception should have been thrown.");
+        }
+
+        [Test]
+        [TestCase(ServiceVersion.V2021_03_07, TestName = "CreateIdentityWithServiceVersion_V2021_03_07")]
+        [TestCase(ServiceVersion.V2022_06_01, TestName = "CreateIdentityWithServiceVersion_V2022_06_01")]
+        [TestCase(ServiceVersion.V2022_10_01, TestName = "CreateIdentityWithServiceVersion_V2022_10_01")]
+        public async Task CreateIdentityWithDifferentServiceVersions(ServiceVersion version)
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClient(default, version);
+                CommunicationUserIdentifier userResponse = await client.CreateUserAsync();
+                Assert.IsNotNull(userResponse);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
         }
 
         private bool TokenExpirationWithinAllowedDeviation(TimeSpan expectedTokenExpiration, DateTimeOffset tokenExpiresIn, double allowedDeviation, out TimeSpan tokenTimeSpan)
