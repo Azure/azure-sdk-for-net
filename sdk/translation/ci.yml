@@ -28,3 +28,5 @@ extends:
     Artifacts:
     - name: Azure.AI.Translation.Document
       safeName: AzureAITranslationDocument
+    - name: Azure.AI.Translation.Text
+      safeName: AzureAITranslationText
