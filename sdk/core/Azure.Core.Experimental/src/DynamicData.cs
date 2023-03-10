@@ -125,13 +125,21 @@ namespace Azure.Core.Dynamic
             // So, if it exists in either form, we'll set it in that form.
             if (_element.TryGetProperty(name, out ObjectElement element))
             {
-                element.Set(value);
+                if (!element.TrySet(value))
+                {
+                    throw new InvalidOperationException($"Unable to set property \"{name}\" to {value}.");
+                }
+
                 return null;
             }
 
             if (_element.TryGetProperty(GetAsCamelCase(name), out element))
             {
-                element.Set(value);
+                if (!element.TrySet(value))
+                {
+                    throw new InvalidOperationException($"Unable to set property \"{name}\" to {value}.");
+                }
+
                 return null;
             }
 
@@ -151,7 +159,12 @@ namespace Azure.Core.Dynamic
                     return SetProperty(propertyName, value);
                 case int arrayIndex:
                     ObjectElement element = _element.GetIndexElement(arrayIndex);
-                    element.Set(value);
+
+                    if (!element.TrySet(value))
+                    {
+                        throw new InvalidOperationException($"Unable to set index {arrayIndex} to {value}.");
+                    }
+
                     return new DynamicData(element, _options);
             }
 

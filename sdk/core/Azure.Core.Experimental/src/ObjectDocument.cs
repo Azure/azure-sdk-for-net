@@ -37,7 +37,7 @@ namespace Azure.Core.Dynamic
 
         // Setters
         protected internal abstract ObjectElement SetProperty(object element, string name, object value);
-        protected internal abstract void Set(object element, object value);
+        protected internal abstract bool TrySet(object element, object value);
 
         // Serialization
         protected internal abstract void WriteTo(object element, Stream stream);

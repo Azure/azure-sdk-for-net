@@ -147,11 +147,12 @@ namespace Azure.Core.Json
             return new ObjectElement(this, mje.SetProperty(name, value));
         }
 
-        protected internal override void Set(object element, object value)
+        protected internal override bool TrySet(object element, object value)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
-
             mje.Set(value);
+
+            return true;
         }
 
         protected internal override void WriteTo(object element, Stream stream)

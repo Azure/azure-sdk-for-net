@@ -122,9 +122,9 @@ namespace Azure.Core.Dynamic
             throw new InvalidOperationException();
         }
 
-        public void Set(object value)
+        public bool TrySet(object value)
         {
-            _document.Set(_element, value);
+            return _document.TrySet(_element, value);
         }
 
         // TODO: add setters for primitives
