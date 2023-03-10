@@ -15,6 +15,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static Example DeserializeExample(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string sourcePrefix = default;
             string sourceTerm = default;
             string sourceSuffix = default;

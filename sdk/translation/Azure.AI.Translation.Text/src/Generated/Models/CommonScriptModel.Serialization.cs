@@ -15,6 +15,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static CommonScriptModel DeserializeCommonScriptModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string name = default;
             string nativeName = default;

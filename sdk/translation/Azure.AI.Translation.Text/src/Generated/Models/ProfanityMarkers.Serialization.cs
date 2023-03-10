@@ -20,8 +20,8 @@ namespace Azure.AI.Translation.Text.Models
 
         public static ProfanityMarkers ToProfanityMarkers(this string value)
         {
-            if (string.Equals(value, "Asterisk", StringComparison.InvariantCultureIgnoreCase)) return ProfanityMarkers.Asterisk;
-            if (string.Equals(value, "Tag", StringComparison.InvariantCultureIgnoreCase)) return ProfanityMarkers.Tag;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Asterisk")) return ProfanityMarkers.Asterisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tag")) return ProfanityMarkers.Tag;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityMarkers value.");
         }
     }

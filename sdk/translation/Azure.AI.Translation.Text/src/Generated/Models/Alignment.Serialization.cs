@@ -15,6 +15,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static Alignment DeserializeAlignment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string proj = default;
             foreach (var property in element.EnumerateObject())
             {

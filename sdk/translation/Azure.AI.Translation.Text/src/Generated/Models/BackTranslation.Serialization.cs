@@ -15,6 +15,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static BackTranslation DeserializeBackTranslation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string normalizedText = default;
             string displayText = default;
             int numExamples = default;

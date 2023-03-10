@@ -15,6 +15,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static DetectedLanguage DeserializeDetectedLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string language = default;
             float score = default;
             foreach (var property in element.EnumerateObject())

@@ -24,7 +24,7 @@ try
         new InputTextWithTranslation { Text = "fly", Translation = "volar" }
     };
 
-    Response<IReadOnlyList<DictionaryExampleElement>> response = await client.DictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<DictionaryExampleElement>> response = await client.LookupDictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
     IReadOnlyList<DictionaryExampleElement> dictionaryEntries = response.Value;
     DictionaryExampleElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
 

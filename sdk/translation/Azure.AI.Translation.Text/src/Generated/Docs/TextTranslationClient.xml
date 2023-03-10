@@ -11,26 +11,7 @@ var client = new TextTranslationClient(endpoint);
 Response response = await client.GetLanguagesAsync();
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("code").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLanguagesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
@@ -69,9 +50,9 @@ Response Body:
 
 Schema for <c>GetLanguagesResult</c>:
 <code>{
-  translation: Dictionary&lt;string, TranslationLanguage&gt;, # Required. Languages that support translate API.
-  transliteration: Dictionary&lt;string, TransliterationLanguage&gt;, # Required. Languages that support transliteration API.
-  dictionary: Dictionary&lt;string, SourceDictionaryLanguage&gt;, # Required. Languages that support dictionary API.
+  translation: Dictionary&lt;string, TranslationLanguage&gt;, # Optional. Languages that support translate API.
+  transliteration: Dictionary&lt;string, TransliterationLanguage&gt;, # Optional. Languages that support transliteration API.
+  dictionary: Dictionary&lt;string, SourceDictionaryLanguage&gt;, # Optional. Languages that support dictionary API.
 }
 </code>
 
@@ -87,26 +68,7 @@ var client = new TextTranslationClient(endpoint);
 Response response = client.GetLanguages();
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("translation").GetProperty("<test>").GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("transliteration").GetProperty("<test>").GetProperty("scripts")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("nativeName").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("dir").ToString());
-Console.WriteLine(result.GetProperty("dictionary").GetProperty("<test>").GetProperty("translations")[0].GetProperty("code").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLanguages with all parameters, and how to parse the result.
 <code><![CDATA[
@@ -145,9 +107,9 @@ Response Body:
 
 Schema for <c>GetLanguagesResult</c>:
 <code>{
-  translation: Dictionary&lt;string, TranslationLanguage&gt;, # Required. Languages that support translate API.
-  transliteration: Dictionary&lt;string, TransliterationLanguage&gt;, # Required. Languages that support transliteration API.
-  dictionary: Dictionary&lt;string, SourceDictionaryLanguage&gt;, # Required. Languages that support dictionary API.
+  translation: Dictionary&lt;string, TranslationLanguage&gt;, # Optional. Languages that support translate API.
+  transliteration: Dictionary&lt;string, TransliterationLanguage&gt;, # Optional. Languages that support transliteration API.
+  dictionary: Dictionary&lt;string, SourceDictionaryLanguage&gt;, # Optional. Languages that support dictionary API.
 }
 </code>
 
@@ -227,27 +189,27 @@ The score is between zero and one and a low score indicates a low confidence.
         text: string, # Required. A string giving the translated text in the target script.
       }, # Optional. An object giving the translated text in the script specified by the toScript parameter.
       alignment: {
-        proj: string, # Required. Maps input text to translated text. The alignment information is only provided when the request
-parameter includeAlignment is true. Alignment is returned as a string value of the following
-format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]].
-The colon separates start and end index, the dash separates the languages, and space separates the words.
-One word may align with zero, one, or multiple words in the other language, and the aligned words may
+        proj: string, # Required. Maps input text to translated text. The alignment information is only provided when the request 
+parameter includeAlignment is true. Alignment is returned as a string value of the following 
+format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]]. 
+The colon separates start and end index, the dash separates the languages, and space separates the words. 
+One word may align with zero, one, or multiple words in the other language, and the aligned words may 
 be non-contiguous. When no alignment information is available, the alignment element will be empty.
       }, # Optional. Alignment information.
       sentLen: {
-        srcSentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text.
+        srcSentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text. 
 The length of the array is the number of sentences, and the values are the length of each sentence.
-        transSentLen: [number], # Required. An integer array representing the lengths of the sentences in the translated text.
+        transSentLen: [number], # Required. An integer array representing the lengths of the sentences in the translated text. 
 The length of the array is the number of sentences, and the values are the length of each sentence.
       }, # Optional. Sentence boundaries in the input and output texts.
     }
-  ], # Required. An array of translation results. The size of the array matches the number of target
+  ], # Required. An array of translation results. The size of the array matches the number of target 
 languages specified through the to query parameter.
   sourceText: {
     text: string, # Required. Input text in the default script of the source language.
-  }, # Optional. Input text in the default script of the source language. sourceText property is present only when
-the input is expressed in a script that&apos;s not the usual script for the language. For example,
-if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
+  }, # Optional. Input text in the default script of the source language. sourceText property is present only when 
+the input is expressed in a script that&apos;s not the usual script for the language. For example, 
+if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text 
 converted into Arab script.
 }
 </code>
@@ -328,27 +290,27 @@ The score is between zero and one and a low score indicates a low confidence.
         text: string, # Required. A string giving the translated text in the target script.
       }, # Optional. An object giving the translated text in the script specified by the toScript parameter.
       alignment: {
-        proj: string, # Required. Maps input text to translated text. The alignment information is only provided when the request
-parameter includeAlignment is true. Alignment is returned as a string value of the following
-format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]].
-The colon separates start and end index, the dash separates the languages, and space separates the words.
-One word may align with zero, one, or multiple words in the other language, and the aligned words may
+        proj: string, # Required. Maps input text to translated text. The alignment information is only provided when the request 
+parameter includeAlignment is true. Alignment is returned as a string value of the following 
+format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]]. 
+The colon separates start and end index, the dash separates the languages, and space separates the words. 
+One word may align with zero, one, or multiple words in the other language, and the aligned words may 
 be non-contiguous. When no alignment information is available, the alignment element will be empty.
       }, # Optional. Alignment information.
       sentLen: {
-        srcSentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text.
+        srcSentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text. 
 The length of the array is the number of sentences, and the values are the length of each sentence.
-        transSentLen: [number], # Required. An integer array representing the lengths of the sentences in the translated text.
+        transSentLen: [number], # Required. An integer array representing the lengths of the sentences in the translated text. 
 The length of the array is the number of sentences, and the values are the length of each sentence.
       }, # Optional. Sentence boundaries in the input and output texts.
     }
-  ], # Required. An array of translation results. The size of the array matches the number of target
+  ], # Required. An array of translation results. The size of the array matches the number of target 
 languages specified through the to query parameter.
   sourceText: {
     text: string, # Required. Input text in the default script of the source language.
-  }, # Optional. Input text in the default script of the source language. sourceText property is present only when
-the input is expressed in a script that&apos;s not the usual script for the language. For example,
-if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
+  }, # Optional. Input text in the default script of the source language. sourceText property is present only when 
+the input is expressed in a script that&apos;s not the usual script for the language. For example, 
+if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text 
 converted into Arab script.
 }
 </code>
@@ -473,9 +435,9 @@ Schema for <c>TransliteratedText</c>:
 
 </remarks>
     </member>
-    <member name="BreakSentenceAsync(RequestContent,String,String,String,RequestContext)">
+    <member name="FindSentenceBoundariesAsync(RequestContent,String,String,String,RequestContext)">
 <example>
-This sample shows how to call BreakSentenceAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call FindSentenceBoundariesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -486,12 +448,12 @@ var data = new[] {
     }
 };
 
-Response response = await client.BreakSentenceAsync(RequestContent.Create(data));
+Response response = await client.FindSentenceBoundariesAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("sentLen")[0].ToString());
+Console.WriteLine(result[0].GetProperty("sentLen")[0].ToString());
 ]]></code>
-This sample shows how to call BreakSentenceAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call FindSentenceBoundariesAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -502,12 +464,12 @@ var data = new[] {
     }
 };
 
-Response response = await client.BreakSentenceAsync(RequestContent.Create(data), "<clientTraceId>", "<language>", "<script>");
+Response response = await client.FindSentenceBoundariesAsync(RequestContent.Create(data), "<clientTraceId>", "<language>", "<script>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("language").ToString());
 Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("sentLen")[0].ToString());
+Console.WriteLine(result[0].GetProperty("sentLen")[0].ToString());
 ]]></code>
 </example>
 <remarks>
@@ -530,18 +492,16 @@ Schema for <c>BreakSentenceElement</c>:
     score: number, # Required. A float value indicating the confidence in the result.
 The score is between zero and one and a low score indicates a low confidence.
   }, # Optional. The detectedLanguage property is only present in the result object when language auto-detection is requested.
-  sentLen: {
-    sentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text.
+  sentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text.
 The length of the array is the number of sentences, and the values are the length of each sentence.
-  }, # Required. Sentence boundaries in the input and output texts.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="BreakSentence(RequestContent,String,String,String,RequestContext)">
+    <member name="FindSentenceBoundaries(RequestContent,String,String,String,RequestContext)">
 <example>
-This sample shows how to call BreakSentence with required parameters and request content, and how to parse the result.
+This sample shows how to call FindSentenceBoundaries with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -552,12 +512,12 @@ var data = new[] {
     }
 };
 
-Response response = client.BreakSentence(RequestContent.Create(data));
+Response response = client.FindSentenceBoundaries(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("sentLen")[0].ToString());
+Console.WriteLine(result[0].GetProperty("sentLen")[0].ToString());
 ]]></code>
-This sample shows how to call BreakSentence with all parameters and request content, and how to parse the result.
+This sample shows how to call FindSentenceBoundaries with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -568,12 +528,12 @@ var data = new[] {
     }
 };
 
-Response response = client.BreakSentence(RequestContent.Create(data), "<clientTraceId>", "<language>", "<script>");
+Response response = client.FindSentenceBoundaries(RequestContent.Create(data), "<clientTraceId>", "<language>", "<script>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("language").ToString());
 Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("sentLen")[0].ToString());
+Console.WriteLine(result[0].GetProperty("sentLen")[0].ToString());
 ]]></code>
 </example>
 <remarks>
@@ -596,18 +556,16 @@ Schema for <c>BreakSentenceElement</c>:
     score: number, # Required. A float value indicating the confidence in the result.
 The score is between zero and one and a low score indicates a low confidence.
   }, # Optional. The detectedLanguage property is only present in the result object when language auto-detection is requested.
-  sentLen: {
-    sentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text.
+  sentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text.
 The length of the array is the number of sentences, and the values are the length of each sentence.
-  }, # Required. Sentence boundaries in the input and output texts.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="DictionaryLookupAsync(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryEntriesAsync(String,String,RequestContent,String,RequestContext)">
 <example>
-This sample shows how to call DictionaryLookupAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call LookupDictionaryEntriesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -618,7 +576,7 @@ var data = new[] {
     }
 };
 
-Response response = await client.DictionaryLookupAsync("<from>", "<to>", RequestContent.Create(data));
+Response response = await client.LookupDictionaryEntriesAsync("<from>", "<to>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
@@ -633,7 +591,7 @@ Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTran
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("numExamples").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("frequencyCount").ToString());
 ]]></code>
-This sample shows how to call DictionaryLookupAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call LookupDictionaryEntriesAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -644,7 +602,7 @@ var data = new[] {
     }
 };
 
-Response response = await client.DictionaryLookupAsync("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
+Response response = await client.LookupDictionaryEntriesAsync("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
@@ -690,13 +648,13 @@ for end-user display. Generally, this will only differ from the normalizedTarget
 in terms of capitalization. For example, a proper noun like &quot;Juan&quot; will have
 normalizedTarget = &quot;juan&quot; and displayTarget = &quot;Juan&quot;.
       posTag: string, # Required. A string associating this term with a part-of-speech tag.
-      confidence: number, # Required. A value between 0.0 and 1.0 which represents the &quot;confidence&quot;
-(or perhaps more accurately, &quot;probability in the training data&quot;) of that translation pair.
+      confidence: number, # Required. A value between 0.0 and 1.0 which represents the &quot;confidence&quot; 
+(or perhaps more accurately, &quot;probability in the training data&quot;) of that translation pair. 
 The sum of confidence scores for one source word may or may not sum to 1.0.
       prefixWord: string, # Required. A string giving the word to display as a prefix of the translation. Currently,
 this is the gendered determiner of nouns, in languages that have gendered determiners.
-For example, the prefix of the Spanish word &quot;mosca&quot; is &quot;la&quot;, since &quot;mosca&quot; is a feminine noun in Spanish.
-This is only dependent on the translation, and not on the source.
+For example, the prefix of the Spanish word &quot;mosca&quot; is &quot;la&quot;, since &quot;mosca&quot; is a feminine noun in Spanish. 
+This is only dependent on the translation, and not on the source. 
 If there is no prefix, it will be the empty string.
       backTranslations: [BackTranslation], # Required. A list of &quot;back translations&quot; of the target. For example, source words that the target can translate to.
 The list is guaranteed to contain the source word that was requested (e.g., if the source word being
@@ -709,9 +667,9 @@ However, it is not guaranteed to be in the first position, and often will not be
 
 </remarks>
     </member>
-    <member name="DictionaryLookup(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryEntries(String,String,RequestContent,String,RequestContext)">
 <example>
-This sample shows how to call DictionaryLookup with required parameters and request content, and how to parse the result.
+This sample shows how to call LookupDictionaryEntries with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -722,7 +680,7 @@ var data = new[] {
     }
 };
 
-Response response = client.DictionaryLookup("<from>", "<to>", RequestContent.Create(data));
+Response response = client.LookupDictionaryEntries("<from>", "<to>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
@@ -737,7 +695,7 @@ Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTran
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("numExamples").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("backTranslations")[0].GetProperty("frequencyCount").ToString());
 ]]></code>
-This sample shows how to call DictionaryLookup with all parameters and request content, and how to parse the result.
+This sample shows how to call LookupDictionaryEntries with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -748,7 +706,7 @@ var data = new[] {
     }
 };
 
-Response response = client.DictionaryLookup("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
+Response response = client.LookupDictionaryEntries("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
@@ -794,13 +752,13 @@ for end-user display. Generally, this will only differ from the normalizedTarget
 in terms of capitalization. For example, a proper noun like &quot;Juan&quot; will have
 normalizedTarget = &quot;juan&quot; and displayTarget = &quot;Juan&quot;.
       posTag: string, # Required. A string associating this term with a part-of-speech tag.
-      confidence: number, # Required. A value between 0.0 and 1.0 which represents the &quot;confidence&quot;
-(or perhaps more accurately, &quot;probability in the training data&quot;) of that translation pair.
+      confidence: number, # Required. A value between 0.0 and 1.0 which represents the &quot;confidence&quot; 
+(or perhaps more accurately, &quot;probability in the training data&quot;) of that translation pair. 
 The sum of confidence scores for one source word may or may not sum to 1.0.
       prefixWord: string, # Required. A string giving the word to display as a prefix of the translation. Currently,
 this is the gendered determiner of nouns, in languages that have gendered determiners.
-For example, the prefix of the Spanish word &quot;mosca&quot; is &quot;la&quot;, since &quot;mosca&quot; is a feminine noun in Spanish.
-This is only dependent on the translation, and not on the source.
+For example, the prefix of the Spanish word &quot;mosca&quot; is &quot;la&quot;, since &quot;mosca&quot; is a feminine noun in Spanish. 
+This is only dependent on the translation, and not on the source. 
 If there is no prefix, it will be the empty string.
       backTranslations: [BackTranslation], # Required. A list of &quot;back translations&quot; of the target. For example, source words that the target can translate to.
 The list is guaranteed to contain the source word that was requested (e.g., if the source word being
@@ -813,9 +771,9 @@ However, it is not guaranteed to be in the first position, and often will not be
 
 </remarks>
     </member>
-    <member name="DictionaryExamplesAsync(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryExamplesAsync(String,String,RequestContent,String,RequestContext)">
 <example>
-This sample shows how to call DictionaryExamplesAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call LookupDictionaryExamplesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -827,7 +785,7 @@ var data = new[] {
     }
 };
 
-Response response = await client.DictionaryExamplesAsync("<from>", "<to>", RequestContent.Create(data));
+Response response = await client.LookupDictionaryExamplesAsync("<from>", "<to>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
@@ -839,7 +797,7 @@ Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetPrefix
 Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetTerm").ToString());
 Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetSuffix").ToString());
 ]]></code>
-This sample shows how to call DictionaryExamplesAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call LookupDictionaryExamplesAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -851,7 +809,7 @@ var data = new[] {
     }
 };
 
-Response response = await client.DictionaryExamplesAsync("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
+Response response = await client.LookupDictionaryExamplesAsync("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
@@ -871,8 +829,8 @@ Request Body:
 
 Schema for <c>DictionaryExampleTextElement</c>:
 <code>{
-  translation: string, # Required. A string specifying the translated text previously returned by the Dictionary lookup operation.
-This should be the value from the normalizedTarget field in the translations list of the Dictionary
+  translation: string, # Required. A string specifying the translated text previously returned by the Dictionary lookup operation. 
+This should be the value from the normalizedTarget field in the translations list of the Dictionary 
 lookup response. The service will return examples for the specific source-target word-pair.
   text: string, # Required. Text to translate.
 }
@@ -907,9 +865,9 @@ This value may be an empty string.
 
 </remarks>
     </member>
-    <member name="DictionaryExamples(String,String,RequestContent,String,RequestContext)">
+    <member name="LookupDictionaryExamples(String,String,RequestContent,String,RequestContext)">
 <example>
-This sample shows how to call DictionaryExamples with required parameters and request content, and how to parse the result.
+This sample shows how to call LookupDictionaryExamples with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -921,7 +879,7 @@ var data = new[] {
     }
 };
 
-Response response = client.DictionaryExamples("<from>", "<to>", RequestContent.Create(data));
+Response response = client.LookupDictionaryExamples("<from>", "<to>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
@@ -933,7 +891,7 @@ Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetPrefix
 Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetTerm").ToString());
 Console.WriteLine(result[0].GetProperty("examples")[0].GetProperty("targetSuffix").ToString());
 ]]></code>
-This sample shows how to call DictionaryExamples with all parameters and request content, and how to parse the result.
+This sample shows how to call LookupDictionaryExamples with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new TextTranslationClient(endpoint);
@@ -945,7 +903,7 @@ var data = new[] {
     }
 };
 
-Response response = client.DictionaryExamples("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
+Response response = client.LookupDictionaryExamples("<from>", "<to>", RequestContent.Create(data), "<clientTraceId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("normalizedSource").ToString());
@@ -965,8 +923,8 @@ Request Body:
 
 Schema for <c>DictionaryExampleTextElement</c>:
 <code>{
-  translation: string, # Required. A string specifying the translated text previously returned by the Dictionary lookup operation.
-This should be the value from the normalizedTarget field in the translations list of the Dictionary
+  translation: string, # Required. A string specifying the translated text previously returned by the Dictionary lookup operation. 
+This should be the value from the normalizedTarget field in the translations list of the Dictionary 
 lookup response. The service will return examples for the specific source-target word-pair.
   text: string, # Required. Text to translate.
 }

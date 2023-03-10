@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputTextWithTranslation { Text = "fly", Translation = "volar" }
             };
             Response<IReadOnlyList<Models.DictionaryExampleElement>> response =
-                await client.DictionaryExamplesAsync("en", "es", inputText).ConfigureAwait(false);
+                await client.LookupDictionaryExamplesAsync("en", "es", inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual("fly", response.Value[0].NormalizedSource);
@@ -47,7 +47,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputTextWithTranslation { Text = "beef", Translation = "came" }
             };
             Response<IReadOnlyList<Models.DictionaryExampleElement>> response =
-                await client.DictionaryExamplesAsync("en", "es", inputText).ConfigureAwait(false);
+                await client.LookupDictionaryExamplesAsync("en", "es", inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(2, response.Value.Count);

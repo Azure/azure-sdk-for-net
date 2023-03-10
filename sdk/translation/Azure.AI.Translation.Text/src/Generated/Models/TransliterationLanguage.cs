@@ -13,8 +13,8 @@ using Azure.Core;
 namespace Azure.AI.Translation.Text.Models
 {
     /// <summary>
-    /// The value of the transliteration property is a dictionary of (key, value) pairs.
-    /// Each key is a BCP 47 language tag. A key identifies a language for which text can be converted from one script
+    /// The value of the transliteration property is a dictionary of (key, value) pairs. 
+    /// Each key is a BCP 47 language tag. A key identifies a language for which text can be converted from one script 
     /// to another script.
     /// </summary>
     public partial class TransliterationLanguage

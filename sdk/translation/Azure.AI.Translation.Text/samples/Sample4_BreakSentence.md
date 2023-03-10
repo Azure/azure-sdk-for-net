@@ -25,7 +25,7 @@ try
         new InputText { Text = "zhè shì gè cè shì。" }
     };
 
-    Response<IReadOnlyList<BreakSentenceElement>> response = await client.BreakSentenceAsync(inputTextElements, language: sourceLanguage, script: sourceScript).ConfigureAwait(false);
+    Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputTextElements, language: sourceLanguage, script: sourceScript).ConfigureAwait(false);
     IReadOnlyList<BreakSentenceElement> brokenSentences = response.Value;
     BreakSentenceElement brokenSentence = brokenSentences.FirstOrDefault();
 
@@ -52,7 +52,7 @@ try
         new InputText { Text = "How are you? I am fine. What did you do today?" }
     };
 
-    Response<IReadOnlyList<BreakSentenceElement>> response = await client.BreakSentenceAsync(inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputTextElements).ConfigureAwait(false);
     IReadOnlyList<BreakSentenceElement> brokenSentences = response.Value;
     BreakSentenceElement brokenSentence = brokenSentences.FirstOrDefault();
 

@@ -21,9 +21,9 @@ namespace Azure.AI.Translation.Text.Models
 
         public static ProfanityActions ToProfanityActions(this string value)
         {
-            if (string.Equals(value, "NoAction", StringComparison.InvariantCultureIgnoreCase)) return ProfanityActions.NoAction;
-            if (string.Equals(value, "Marked", StringComparison.InvariantCultureIgnoreCase)) return ProfanityActions.Marked;
-            if (string.Equals(value, "Deleted", StringComparison.InvariantCultureIgnoreCase)) return ProfanityActions.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoAction")) return ProfanityActions.NoAction;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Marked")) return ProfanityActions.Marked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted")) return ProfanityActions.Deleted;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityActions value.");
         }
     }

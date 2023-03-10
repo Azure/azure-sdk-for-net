@@ -16,6 +16,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static SentenceLength DeserializeSentenceLength(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<int> srcSentLen = default;
             IReadOnlyList<int> transSentLen = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static DictionaryTranslation DeserializeDictionaryTranslation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string normalizedTarget = default;
             string displayTarget = default;
             string posTag = default;

@@ -20,8 +20,8 @@ namespace Azure.AI.Translation.Text.Models
 
         public static TextTypes ToTextTypes(this string value)
         {
-            if (string.Equals(value, "plain", StringComparison.InvariantCultureIgnoreCase)) return TextTypes.Plain;
-            if (string.Equals(value, "html", StringComparison.InvariantCultureIgnoreCase)) return TextTypes.Html;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "plain")) return TextTypes.Plain;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "html")) return TextTypes.Html;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TextTypes value.");
         }
     }

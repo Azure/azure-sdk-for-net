@@ -270,11 +270,11 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<BreakSentenceElement>>> BreakSentenceAsync(IEnumerable<InputText> content, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<BreakSentenceElement>>> FindSentenceBoundariesAsync(IEnumerable<InputText> content, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.BreakSentenceAsync(content as object, clientTraceId, language, script, cancellationToken);
+            return this.FindSentenceBoundariesAsync(content as object, clientTraceId, language, script, cancellationToken);
         }
 
         /// <summary> Break Sentence. </summary>
@@ -290,11 +290,11 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<BreakSentenceElement>> BreakSentence(IEnumerable<InputText> content, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<BreakSentenceElement>> FindSentenceBoundaries(IEnumerable<InputText> content, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.BreakSentence(content as object, clientTraceId, language, script, cancellationToken);
+            return this.FindSentenceBoundaries(content as object, clientTraceId, language, script, cancellationToken);
         }
 
         /// <summary> Dictionary Lookup. </summary>
@@ -310,13 +310,13 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<DictionaryLookupElement>>> DictionaryLookupAsync(string @from, string to, IEnumerable<InputText> content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<DictionaryLookupElement>>> LookupDictionaryEntriesAsync(string @from, string to, IEnumerable<InputText> content, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.DictionaryLookupAsync(from, to, content as object, clientTraceId, cancellationToken);
+            return this.LookupDictionaryEntriesAsync(from, to, content as object, clientTraceId, cancellationToken);
         }
 
         /// <summary> Dictionary Lookup. </summary>
@@ -332,13 +332,13 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<DictionaryLookupElement>> DictionaryLookup(string @from, string to, IEnumerable<InputText> content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DictionaryLookupElement>> LookupDictionaryEntries(string @from, string to, IEnumerable<InputText> content, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.DictionaryLookup(from, to, content as object, clientTraceId, cancellationToken);
+            return this.LookupDictionaryEntries(from, to, content as object, clientTraceId, cancellationToken);
         }
 
         /// <summary> Dictionary Examples. </summary>
@@ -354,13 +354,13 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<DictionaryExampleElement>>> DictionaryExamplesAsync(string @from, string to, IEnumerable<InputTextWithTranslation> content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<DictionaryExampleElement>>> LookupDictionaryExamplesAsync(string @from, string to, IEnumerable<InputTextWithTranslation> content, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.DictionaryExamplesAsync(from, to, content as object, clientTraceId, cancellationToken);
+            return this.LookupDictionaryExamplesAsync(from, to, content as object, clientTraceId, cancellationToken);
         }
 
         /// <summary> Dictionary Examples. </summary>
@@ -376,13 +376,13 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<DictionaryExampleElement>> DictionaryExamples(string @from, string to, IEnumerable<InputTextWithTranslation> content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DictionaryExampleElement>> LookupDictionaryExamples(string @from, string to, IEnumerable<InputTextWithTranslation> content, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.DictionaryExamples(from, to, content as object, clientTraceId, cancellationToken);
+            return this.LookupDictionaryExamples(from, to, content as object, clientTraceId, cancellationToken);
         }
     }
 }

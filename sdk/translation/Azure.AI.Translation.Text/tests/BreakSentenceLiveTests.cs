@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "hello world" }
             };
             Response<IReadOnlyList<Models.BreakSentenceElement>> response =
-                await client.BreakSentenceAsync(inputText).ConfigureAwait(false);
+                await client.FindSentenceBoundariesAsync(inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual("en", response.Value[0].DetectedLanguage.Language);
@@ -47,7 +47,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "รวบรวมแผ่นคำตอบ ระยะเวลาของโครงการ วิธีเลือกชายในฝัน หมายเลขซีเรียลของระเบียน วันที่สิ้นสุดของโครงการเมื่อเสร็จสมบูรณ์ ปีที่มีการรวบรวม ทุกคนมีวัฒนธรรมและวิธีคิดเหมือนกัน ได้รับโทษจำคุกตลอดชีวิตใน ฉันลดได้ถึง 55 ปอนด์ได้อย่างไร  ฉันคิดว่าใครๆ ก็ต้องการกำหนดเมนูอาหารส่วนบุคคล" }
             };
             Response<IReadOnlyList<Models.BreakSentenceElement>> response =
-                await client.BreakSentenceAsync(inputText, language: "th").ConfigureAwait(false);
+                await client.FindSentenceBoundariesAsync(inputText, language: "th").ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             int[] expectedLengths = new[] { 78, 41, 110, 46 };
@@ -65,7 +65,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 new InputText { Text = "zhè shì gè cè shì。" }
             };
-            Response<IReadOnlyList<Models.BreakSentenceElement>> response = await client.BreakSentenceAsync(inputText, language: "zh-Hans", script: "Latn").ConfigureAwait(false);
+            Response<IReadOnlyList<Models.BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputText, language: "zh-Hans", script: "Latn").ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(18, response.Value[0].SentLen[0]);
@@ -80,7 +80,7 @@ namespace Azure.AI.Translation.Text.Tests
                 new InputText { Text = "hello world" },
                 new InputText { Text = "العالم هو مكان مثير جدا للاهتمام" }
             };
-            Response<IReadOnlyList<Models.BreakSentenceElement>> response = await client.BreakSentenceAsync(inputText).ConfigureAwait(false);
+            Response<IReadOnlyList<Models.BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual("en", response.Value[0].DetectedLanguage.Language);

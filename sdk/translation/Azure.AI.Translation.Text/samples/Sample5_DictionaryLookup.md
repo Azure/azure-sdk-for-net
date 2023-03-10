@@ -26,7 +26,7 @@ try
         new InputText { Text = "fly" }
     };
 
-    Response<IReadOnlyList<DictionaryLookupElement>> response = await client.DictionaryLookupAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<DictionaryLookupElement>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
     IReadOnlyList<DictionaryLookupElement> dictionaryEntries = response.Value;
     DictionaryLookupElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
 

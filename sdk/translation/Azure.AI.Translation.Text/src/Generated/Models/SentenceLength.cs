@@ -17,11 +17,11 @@ namespace Azure.AI.Translation.Text.Models
     {
         /// <summary> Initializes a new instance of SentenceLength. </summary>
         /// <param name="srcSentLen">
-        /// An integer array representing the lengths of the sentences in the input text.
+        /// An integer array representing the lengths of the sentences in the input text. 
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         /// <param name="transSentLen">
-        /// An integer array representing the lengths of the sentences in the translated text.
+        /// An integer array representing the lengths of the sentences in the translated text. 
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="srcSentLen"/> or <paramref name="transSentLen"/> is null. </exception>
@@ -36,11 +36,11 @@ namespace Azure.AI.Translation.Text.Models
 
         /// <summary> Initializes a new instance of SentenceLength. </summary>
         /// <param name="srcSentLen">
-        /// An integer array representing the lengths of the sentences in the input text.
+        /// An integer array representing the lengths of the sentences in the input text. 
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         /// <param name="transSentLen">
-        /// An integer array representing the lengths of the sentences in the translated text.
+        /// An integer array representing the lengths of the sentences in the translated text. 
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         internal SentenceLength(IReadOnlyList<int> srcSentLen, IReadOnlyList<int> transSentLen)
@@ -50,12 +50,12 @@ namespace Azure.AI.Translation.Text.Models
         }
 
         /// <summary>
-        /// An integer array representing the lengths of the sentences in the input text.
+        /// An integer array representing the lengths of the sentences in the input text. 
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </summary>
         public IReadOnlyList<int> SrcSentLen { get; }
         /// <summary>
-        /// An integer array representing the lengths of the sentences in the translated text.
+        /// An integer array representing the lengths of the sentences in the translated text. 
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </summary>
         public IReadOnlyList<int> TransSentLen { get; }

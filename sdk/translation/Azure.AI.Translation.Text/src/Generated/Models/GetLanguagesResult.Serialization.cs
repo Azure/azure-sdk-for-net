@@ -16,6 +16,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static GetLanguagesResult DeserializeGetLanguagesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, TranslationLanguage>> translation = default;
             Optional<IReadOnlyDictionary<string, TransliterationLanguage>> transliteration = default;
             Optional<IReadOnlyDictionary<string, SourceDictionaryLanguage>> dictionary = default;

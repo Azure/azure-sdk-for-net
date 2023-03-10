@@ -17,7 +17,7 @@ namespace Azure.AI.Translation.Text.Models
     {
         /// <summary> Initializes a new instance of TranslatedTextElement. </summary>
         /// <param name="translations">
-        /// An array of translation results. The size of the array matches the number of target
+        /// An array of translation results. The size of the array matches the number of target 
         /// languages specified through the to query parameter.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="translations"/> is null. </exception>
@@ -31,13 +31,13 @@ namespace Azure.AI.Translation.Text.Models
         /// <summary> Initializes a new instance of TranslatedTextElement. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
         /// <param name="translations">
-        /// An array of translation results. The size of the array matches the number of target
+        /// An array of translation results. The size of the array matches the number of target 
         /// languages specified through the to query parameter.
         /// </param>
         /// <param name="sourceText">
-        /// Input text in the default script of the source language. sourceText property is present only when
-        /// the input is expressed in a script that's not the usual script for the language. For example,
-        /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
+        /// Input text in the default script of the source language. sourceText property is present only when 
+        /// the input is expressed in a script that's not the usual script for the language. For example, 
+        /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text 
         /// converted into Arab script.
         /// </param>
         internal TranslatedTextElement(DetectedLanguage detectedLanguage, IReadOnlyList<Translation> translations, SourceText sourceText)
@@ -50,14 +50,14 @@ namespace Azure.AI.Translation.Text.Models
         /// <summary> The detectedLanguage property is only present in the result object when language auto-detection is requested. </summary>
         public DetectedLanguage DetectedLanguage { get; }
         /// <summary>
-        /// An array of translation results. The size of the array matches the number of target
+        /// An array of translation results. The size of the array matches the number of target 
         /// languages specified through the to query parameter.
         /// </summary>
         public IReadOnlyList<Translation> Translations { get; }
         /// <summary>
-        /// Input text in the default script of the source language. sourceText property is present only when
-        /// the input is expressed in a script that's not the usual script for the language. For example,
-        /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
+        /// Input text in the default script of the source language. sourceText property is present only when 
+        /// the input is expressed in a script that's not the usual script for the language. For example, 
+        /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text 
         /// converted into Arab script.
         /// </summary>
         public SourceText SourceText { get; }

@@ -16,6 +16,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static TransliterableScript DeserializeTransliterableScript(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<CommonScriptModel> toScripts = default;
             string code = default;
             string name = default;

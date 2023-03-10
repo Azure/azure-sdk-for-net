@@ -16,6 +16,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static DictionaryExampleElement DeserializeDictionaryExampleElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string normalizedSource = default;
             string normalizedTarget = default;
             IReadOnlyList<Example> examples = default;

@@ -15,6 +15,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static Translation DeserializeTranslation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string to = default;
             string text = default;
             Optional<Transliteration> transliteration = default;

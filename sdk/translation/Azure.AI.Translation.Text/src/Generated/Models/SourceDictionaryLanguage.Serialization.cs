@@ -16,6 +16,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static SourceDictionaryLanguage DeserializeSourceDictionaryLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string nativeName = default;
             string dir = default;

@@ -16,6 +16,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static BreakSentenceElement DeserializeBreakSentenceElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectedLanguage> detectedLanguage = default;
             IReadOnlyList<int> sentLen = default;
             foreach (var property in element.EnumerateObject())

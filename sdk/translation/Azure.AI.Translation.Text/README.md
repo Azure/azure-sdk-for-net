@@ -236,7 +236,7 @@ try
         new InputText { Text = "How are you? I am fine. What did you do today?" }
     };
 
-    Response<IReadOnlyList<BreakSentenceElement>> response = await client.BreakSentenceAsync(inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputTextElements).ConfigureAwait(false);
     IReadOnlyList<BreakSentenceElement> brokenSentences = response.Value;
     BreakSentenceElement brokenSentence = brokenSentences.FirstOrDefault();
 
@@ -269,7 +269,7 @@ try
         new InputText { Text = "fly" }
     };
 
-    Response<IReadOnlyList<DictionaryLookupElement>> response = await client.DictionaryLookupAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<DictionaryLookupElement>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
     IReadOnlyList<DictionaryLookupElement> dictionaryEntries = response.Value;
     DictionaryLookupElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
@@ -302,7 +302,7 @@ try
         new InputTextWithTranslation { Text = "fly", Translation = "volar" }
     };
 
-    Response<IReadOnlyList<DictionaryExampleElement>> response = await client.DictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<DictionaryExampleElement>> response = await client.LookupDictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
     IReadOnlyList<DictionaryExampleElement> dictionaryEntries = response.Value;
     DictionaryExampleElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
 

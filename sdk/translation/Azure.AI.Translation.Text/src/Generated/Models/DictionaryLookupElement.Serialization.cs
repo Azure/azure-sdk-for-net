@@ -16,6 +16,10 @@ namespace Azure.AI.Translation.Text.Models
     {
         internal static DictionaryLookupElement DeserializeDictionaryLookupElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string normalizedSource = default;
             string displaySource = default;
             IReadOnlyList<DictionaryTranslation> translations = default;

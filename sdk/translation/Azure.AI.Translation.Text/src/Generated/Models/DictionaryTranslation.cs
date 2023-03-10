@@ -28,15 +28,15 @@ namespace Azure.AI.Translation.Text.Models
         /// </param>
         /// <param name="posTag"> A string associating this term with a part-of-speech tag. </param>
         /// <param name="confidence">
-        /// A value between 0.0 and 1.0 which represents the "confidence"
-        /// (or perhaps more accurately, "probability in the training data") of that translation pair.
+        /// A value between 0.0 and 1.0 which represents the "confidence" 
+        /// (or perhaps more accurately, "probability in the training data") of that translation pair. 
         /// The sum of confidence scores for one source word may or may not sum to 1.0.
         /// </param>
         /// <param name="prefixWord">
         /// A string giving the word to display as a prefix of the translation. Currently,
         /// this is the gendered determiner of nouns, in languages that have gendered determiners.
-        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish.
-        /// This is only dependent on the translation, and not on the source.
+        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish. 
+        /// This is only dependent on the translation, and not on the source. 
         /// If there is no prefix, it will be the empty string.
         /// </param>
         /// <param name="backTranslations">
@@ -75,15 +75,15 @@ namespace Azure.AI.Translation.Text.Models
         /// </param>
         /// <param name="posTag"> A string associating this term with a part-of-speech tag. </param>
         /// <param name="confidence">
-        /// A value between 0.0 and 1.0 which represents the "confidence"
-        /// (or perhaps more accurately, "probability in the training data") of that translation pair.
+        /// A value between 0.0 and 1.0 which represents the "confidence" 
+        /// (or perhaps more accurately, "probability in the training data") of that translation pair. 
         /// The sum of confidence scores for one source word may or may not sum to 1.0.
         /// </param>
         /// <param name="prefixWord">
         /// A string giving the word to display as a prefix of the translation. Currently,
         /// this is the gendered determiner of nouns, in languages that have gendered determiners.
-        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish.
-        /// This is only dependent on the translation, and not on the source.
+        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish. 
+        /// This is only dependent on the translation, and not on the source. 
         /// If there is no prefix, it will be the empty string.
         /// </param>
         /// <param name="backTranslations">
@@ -117,16 +117,16 @@ namespace Azure.AI.Translation.Text.Models
         /// <summary> A string associating this term with a part-of-speech tag. </summary>
         public string PosTag { get; }
         /// <summary>
-        /// A value between 0.0 and 1.0 which represents the "confidence"
-        /// (or perhaps more accurately, "probability in the training data") of that translation pair.
+        /// A value between 0.0 and 1.0 which represents the "confidence" 
+        /// (or perhaps more accurately, "probability in the training data") of that translation pair. 
         /// The sum of confidence scores for one source word may or may not sum to 1.0.
         /// </summary>
         public float Confidence { get; }
         /// <summary>
         /// A string giving the word to display as a prefix of the translation. Currently,
         /// this is the gendered determiner of nouns, in languages that have gendered determiners.
-        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish.
-        /// This is only dependent on the translation, and not on the source.
+        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish. 
+        /// This is only dependent on the translation, and not on the source. 
         /// If there is no prefix, it will be the empty string.
         /// </summary>
         public string PrefixWord { get; }
