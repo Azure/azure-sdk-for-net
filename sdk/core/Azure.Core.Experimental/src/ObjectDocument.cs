@@ -23,32 +23,32 @@ namespace Azure.Core.Dynamic
         // Getters
 
         // Objects
-        public abstract bool TryGetPropertyNames(object element, out IEnumerable<string> enumerator);
-        public abstract bool TryGetProperty(object element, string name, out ObjectElement value);
+        internal protected abstract bool TryGetPropertyNames(object element, out IEnumerable<string> enumerator);
+        internal protected abstract bool TryGetProperty(object element, string name, out ObjectElement value);
 
         // Arrays
-        public abstract bool TryGetArrayLength(object element, out int length);
-        public abstract ObjectElement GetIndexElement(object element, int index);
+        internal protected abstract bool TryGetArrayLength(object element, out int length);
+        internal protected abstract ObjectElement GetIndexElement(object element, int index);
 
         // Primitives
-        public abstract bool TryGetBoolean(object element, out bool value);
-        public abstract bool TryGetDouble(object element, out double value);
-        public abstract bool TryGetInt64(object element, out long value);
-        public abstract bool TryGetString(object element, out string? value);
-        public abstract bool HasValue(object element);
+        internal protected abstract bool TryGetBoolean(object element, out bool value);
+        internal protected abstract bool TryGetDouble(object element, out double value);
+        internal protected abstract bool TryGetInt64(object element, out long value);
+        internal protected abstract bool TryGetString(object element, out string? value);
+        internal protected abstract bool HasValue(object element);
 
         // Setters
-        public abstract ObjectElement SetProperty(object element, string name, object value);
-        public abstract void Set(object element, object value);
+        internal protected abstract ObjectElement SetProperty(object element, string name, object value);
+        internal protected abstract void Set(object element, object value);
 
         // Serialization
-        public abstract void WriteTo(object element, Stream stream);
+        internal protected abstract void WriteTo(object element, Stream stream);
 
         // Conversion
-        public abstract T As<T>(object element);
+        internal protected abstract T As<T>(object element);
+
+        internal protected abstract string? ToString(object element);
 
         public abstract void Dispose();
-
-        public abstract string? ToString(object element);
     }
 }
