@@ -15,12 +15,14 @@ namespace Azure.Core.Dynamic
         private readonly ObjectDocument _document;
         private readonly object _element;
 
-        public bool HasValue { get => _document.HasValue(_element); }
+        public readonly ObjectValueKind ValueKind { get; }
 
         public ObjectElement(ObjectDocument document, object element)
         {
             _document = document;
             _element = element;
+
+            ValueKind = _document.GetValueKind(_element);
         }
 
         public T As<T>()
@@ -40,32 +42,12 @@ namespace Azure.Core.Dynamic
 
         public int GetArrayLength()
         {
-            if (_document.TryGetArrayLength(_element, out int length))
-            {
-                return length;
-            }
-
-            throw new InvalidOperationException();
-        }
-
-        public bool TryGetArrayLength(out int length)
-        {
-            return _document.TryGetArrayLength(_element, out length);
+            return _document.GetArrayLength(_element);
         }
 
         public IEnumerable<string> GetPropertyNames()
         {
-            if (_document.TryGetPropertyNames(_element, out var names))
-            {
-                return names;
-            }
-
-            throw new InvalidOperationException();
-        }
-
-        public bool TryGetPropertyNames(out IEnumerable<string> enumerator)
-        {
-            return _document.TryGetPropertyNames(_element, out enumerator);
+            return _document.GetPropertyNames(_element);
         }
 
         public ObjectElement GetProperty(string name)

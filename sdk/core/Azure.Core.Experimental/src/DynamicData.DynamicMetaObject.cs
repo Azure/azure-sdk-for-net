@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -27,9 +26,9 @@ namespace Azure.Core.Dynamic
 
             public override IEnumerable<string> GetDynamicMemberNames()
             {
-                if (_value._element.TryGetPropertyNames(out IEnumerable<string> properties))
+                if (_value._element.ValueKind == ObjectValueKind.Object)
                 {
-                    return properties;
+                    return _value._element.GetPropertyNames();
                 }
 
                 return Array.Empty<string>();

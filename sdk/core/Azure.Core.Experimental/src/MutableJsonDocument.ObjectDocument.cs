@@ -15,6 +15,38 @@ namespace Azure.Core.Json
 {
     public partial class MutableJsonDocument : ObjectDocument
     {
+        protected internal override ObjectValueKind GetValueKind(object element)
+        {
+            MutableJsonElement value = (MutableJsonElement)element;
+
+            switch (value.ValueKind)
+            {
+                case JsonValueKind.Array:
+                    return ObjectValueKind.Array;
+                case JsonValueKind.Object:
+                    return ObjectValueKind.Object;
+                case JsonValueKind.String:
+                    return ObjectValueKind.String;
+                case JsonValueKind.True:
+                case JsonValueKind.False:
+                    return ObjectValueKind.Boolean;
+                case JsonValueKind.Null:
+                    return ObjectValueKind.Null;
+                case JsonValueKind.Number:
+                    if (value.GetJsonElement().TryGetInt64(out long l))
+                    {
+                        return ObjectValueKind.Integer;
+                    }
+                    if (value.GetJsonElement().TryGetDecimal(out decimal d))
+                    {
+                        return ObjectValueKind.FloatingPoint;
+                    }
+                    break;
+            }
+
+            throw new InvalidOperationException();
+        }
+
         protected internal override T As<T>(object element)
         {
             MutableJsonElement value = (MutableJsonElement)element;
@@ -34,25 +66,16 @@ namespace Azure.Core.Json
             return new ObjectElement(this, value.GetIndexElement(index));
         }
 
-        protected internal override bool TryGetArrayLength(object element, out int length)
+        protected internal override int GetArrayLength(object element)
         {
             MutableJsonElement value = (MutableJsonElement)element;
 
             if (value.ValueKind != JsonValueKind.Array)
             {
-                length = -1;
-                return false;
+                throw new InvalidOperationException();
             }
 
-            length = value.GetJsonElement().GetArrayLength();
-            return true;
-        }
-
-        protected internal override bool HasValue(object element)
-        {
-            MutableJsonElement value = (MutableJsonElement)element;
-
-            return value.ValueKind != JsonValueKind.Null;
+            return value.GetJsonElement().GetArrayLength();
         }
 
         protected internal override bool TryGetProperty(object element, string name, out ObjectElement value)
@@ -69,18 +92,16 @@ namespace Azure.Core.Json
             return false;
         }
 
-        protected internal override bool TryGetPropertyNames(object element, out IEnumerable<string> enumerable)
+        protected internal override IEnumerable<string> GetPropertyNames(object element)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
             if (mje.ValueKind != JsonValueKind.Object)
             {
-                enumerable = Array.Empty<string>();
-                return false;
+                throw new InvalidOperationException();
             }
 
-            enumerable = mje.EnumerateObject().Select(p => p.Name);
-            return true;
+            return mje.EnumerateObject().Select(p => p.Name);
         }
 
         protected internal override bool TryGetBoolean(object element, out bool value)

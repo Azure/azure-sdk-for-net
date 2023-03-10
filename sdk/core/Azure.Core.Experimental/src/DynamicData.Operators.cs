@@ -57,30 +57,30 @@ namespace Azure.Core.Dynamic
         /// Converts the value to a <see cref="bool"/> or null.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator bool?(DynamicData value) => value._element.HasValue ? value._element.GetBoolean() : null;
+        public static implicit operator bool?(DynamicData value) => value._element.ValueKind == ObjectValueKind.Null ? value._element.GetBoolean() : null;
 
         /// <summary>
         /// Converts the value to a <see cref="int"/> or null.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator int?(DynamicData value) => value._element.HasValue ? value._element.GetInt32() : null;
+        public static implicit operator int?(DynamicData value) => value._element.ValueKind == ObjectValueKind.Null ? value._element.GetInt32() : null;
 
         /// <summary>
         /// Converts the value to a <see cref="long"/> or null.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator long?(DynamicData value) => value._element.HasValue ? value._element.GetInt64() : null;
+        public static implicit operator long?(DynamicData value) => value._element.ValueKind == ObjectValueKind.Null ? value._element.GetInt64() : null;
 
         /// <summary>
         /// Converts the value to a <see cref="float"/> or null.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator float?(DynamicData value) => value._element.HasValue ? value._element.GetSingle() : null;
+        public static implicit operator float?(DynamicData value) => value._element.ValueKind == ObjectValueKind.Null ? value._element.GetSingle() : null;
 
         /// <summary>
         /// Converts the value to a <see cref="double"/> or null.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator double?(DynamicData value) => value._element.HasValue ? value._element.GetDouble() : null;
+        public static implicit operator double?(DynamicData value) => value._element.ValueKind == ObjectValueKind.Null ? value._element.GetDouble() : null;
     }
 }

@@ -91,12 +91,12 @@ namespace Azure.Core.Dynamic
 
         private IEnumerable GetEnumerable()
         {
-            if (_element.TryGetArrayLength(out int _))
+            if (_element.ValueKind == ObjectValueKind.Array)
             {
                 return new ArrayEnumerator(_element, _options);
             }
 
-            if (_element.TryGetPropertyNames(out var _))
+            if (_element.ValueKind == ObjectValueKind.Object)
             {
                 return new ObjectEnumerator(_element, _options);
             }
