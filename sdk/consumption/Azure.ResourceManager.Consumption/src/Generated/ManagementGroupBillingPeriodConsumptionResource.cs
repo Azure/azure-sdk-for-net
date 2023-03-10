@@ -23,6 +23,41 @@ namespace Azure.ResourceManager.Consumption
     /// </summary>
     public partial class ManagementGroupBillingPeriodConsumptionResource : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagementGroupBillingPeriodConsumptionResource"/> instance. </summary>
+        internal static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string billingPeriodName)
+        {
+            var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _aggregatedCostClientDiagnostics;
+        private readonly AggregatedCostRestOperations _aggregatedCostRestClient;
+
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupBillingPeriodConsumptionResource"/> class for mocking. </summary>
+        protected ManagementGroupBillingPeriodConsumptionResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupBillingPeriodConsumptionResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal ManagementGroupBillingPeriodConsumptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+            _aggregatedCostClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _aggregatedCostRestClient = new AggregatedCostRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
+        }
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingPeriods";
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
 
         /// <summary>
         /// Provides the aggregate cost of a management group and all child management groups by specified billing period
@@ -38,9 +73,9 @@ namespace Azure.ResourceManager.Consumption
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostWithBillingPeriodAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _aggregatedCostClientDiagnostics.CreateScope("ManagementGroupBillingPeriodConsumptionResource.GetAggregatedCostWithBillingPeriod");
+            using var scope = _aggregatedCostClientDiagnostics.CreateScope("ManagementGroupBillingPeriodConsumptionResource.GetAggregatedCost");
             scope.Start();
             try
             {
@@ -68,9 +103,9 @@ namespace Azure.ResourceManager.Consumption
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConsumptionAggregatedCostResult> GetAggregatedCostWithBillingPeriod(CancellationToken cancellationToken = default)
+        public virtual Response<ConsumptionAggregatedCostResult> GetAggregatedCost(CancellationToken cancellationToken = default)
         {
-            using var scope = _aggregatedCostClientDiagnostics.CreateScope("ManagementGroupBillingPeriodConsumptionResource.GetAggregatedCostWithBillingPeriod");
+            using var scope = _aggregatedCostClientDiagnostics.CreateScope("ManagementGroupBillingPeriodConsumptionResource.GetAggregatedCost");
             scope.Start();
             try
             {
