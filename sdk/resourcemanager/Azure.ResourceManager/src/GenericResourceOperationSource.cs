@@ -25,16 +25,15 @@ namespace Azure.ResourceManager
         }
 
         TResource IOperationSource<TResource>.CreateResult(Response response, CancellationToken cancellationToken)
+            => CreateResult(response, cancellationToken);
+
+        ValueTask<TResource> IOperationSource<TResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+            => new(CreateResult(response, cancellationToken));
+
+        private TResource CreateResult(Response response, CancellationToken cancellationToken)
         {
             TModel data = _dataOperation.CreateResult(response, cancellationToken);
             return (TResource)Activator.CreateInstance(typeof(TResource), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
-        }
-
-        ValueTask<TResource> IOperationSource<TResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            object data = _dataOperation.CreateResult(response, cancellationToken);
-            var resource = (TResource)Activator.CreateInstance(typeof(TResource), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
-            return new ValueTask<TResource>(resource);
         }
     }
 }
