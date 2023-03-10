@@ -620,6 +620,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties Properties { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ReservationCatalog
     {
         internal ReservationCatalog() { }
