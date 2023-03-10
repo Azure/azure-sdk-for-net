@@ -49,8 +49,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         [Test]
         public async Task SetFunctionUsingTokenAuthentication()
         {
-            if (SkipTrunksLiveTest)
-                Assert.Ignore("Skip trunk related live tests flag is on.");
             var client = CreateClientWithTokenCredential();
 
             var response = await client.SetTrunkAsync(new SipTrunk(TestData!.TrunkList[0].Fqdn,5555)).ConfigureAwait(false);
@@ -60,8 +58,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         [Test]
         public async Task GetSipTrunksForResource()
         {
-            if (SkipTrunksLiveTest)
-                Assert.Ignore("Skip trunk related live tests flag is on.");
             var client = InitializeTest();
             var response = await client.GetTrunksAsync().ConfigureAwait(false);
             var trunks = response.Value;
@@ -88,8 +84,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         [Test]
         public async Task AddSipTrunkForResource()
         {
-            if (SkipTrunksLiveTest)
-                Assert.Ignore("Skip trunk related live tests flag is on.");
             var client = InitializeTest();
             var response = await client.SetTrunkAsync(TestData!.NewTrunk).ConfigureAwait(false);
             var actualTrunks = await client.GetTrunksAsync().ConfigureAwait(false);
@@ -101,8 +95,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         [Test]
         public async Task SetSipTrunkForResource()
         {
-            if (SkipTrunksLiveTest)
-                Assert.Ignore("Skip trunk related live tests flag is on.");
             var modifiedTrunk = new SipTrunk(TestData!.TrunkList[0].Fqdn, 9999);
             var client = InitializeTest();
 
@@ -115,8 +107,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         [Test]
         public async Task DeleteSipTrunkForResource()
         {
-            if (SkipTrunksLiveTest)
-                Assert.Ignore("Skip trunk related live tests flag is on.");
             var client = InitializeTest();
             var initialTrunks = await client.GetTrunksAsync().ConfigureAwait(false);
             Assert.AreEqual(TestData!.TrunkList.Count, initialTrunks.Value.Count());
@@ -131,8 +121,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         [Test]
         public async Task GetSipTrunkForResource()
         {
-            if (SkipTrunksLiveTest)
-                Assert.Ignore("Skip trunk related live tests flag is on.");
             var client = InitializeTest();
 
             var response = await client.GetTrunkAsync(TestData!.TrunkList[1].Fqdn).ConfigureAwait(false);
@@ -160,8 +148,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         [Test]
         public async Task ReplaceSipTrunksForResource()
         {
-            if (SkipTrunksLiveTest)
-                Assert.Ignore("Skip trunk related live tests flag is on.");
             var client = InitializeTest();
 
             await client.SetRoutesAsync(new List<SipTrunkRoute>()).ConfigureAwait(false);  // Need to clear the routes first

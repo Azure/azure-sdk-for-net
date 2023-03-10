@@ -22,10 +22,7 @@ extends:
           - $(sub-config-communication-int-test-resources-net)
         MatrixReplace: 
           - SKIP_UPDATE_CAPABILITIES_LIVE_TESTS=FALSE/TRUE
-          - SKIP_TRUNKS_LIVE_TESTS=FALSE/TRUE
     Clouds: Public,Int
     EnvVars:
       # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
       SKIP_PHONENUMBER_LIVE_TESTS: TRUE
-      # SKIP_SIPROUTING_LIVE_TESTS skips certain tests such as manage sip config samples
-      SKIP_SIPROUTING_LIVE_TESTS: TRUE
