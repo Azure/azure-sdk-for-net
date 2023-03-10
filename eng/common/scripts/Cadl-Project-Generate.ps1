@@ -43,8 +43,10 @@ function NpmInstallForProject([string]$workingDirectory) {
             $replacementPackageJson = &$GetEmitterPackageJsonPathFn
         }
 
+        $replacementNpmrc = "$PSScriptRoot/../../.npmrc"
         Write-Host("Copying package.json from $replacementPackageJson")
         Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
+        Copy-Item -Path $replacementNpmrc -Destination ".npmrc" -Force
         npm install --no-lock-file
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
