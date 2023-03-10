@@ -15,7 +15,7 @@ namespace Azure.Core.Json
 {
     public partial class MutableJsonDocument : ObjectDocument
     {
-        internal protected override T As<T>(object element)
+        protected internal override T As<T>(object element)
         {
             MutableJsonElement value = (MutableJsonElement)element;
 
@@ -27,14 +27,14 @@ namespace Azure.Core.Json
 #endif
         }
 
-        internal protected override ObjectElement GetIndexElement(object element, int index)
+        protected internal override ObjectElement GetIndexElement(object element, int index)
         {
             MutableJsonElement value = (MutableJsonElement)element;
 
             return new ObjectElement(this, value.GetIndexElement(index));
         }
 
-        internal protected override bool TryGetArrayLength(object element, out int length)
+        protected internal override bool TryGetArrayLength(object element, out int length)
         {
             MutableJsonElement value = (MutableJsonElement)element;
 
@@ -48,14 +48,14 @@ namespace Azure.Core.Json
             return true;
         }
 
-        internal protected override bool HasValue(object element)
+        protected internal override bool HasValue(object element)
         {
             MutableJsonElement value = (MutableJsonElement)element;
 
             return value.ValueKind != JsonValueKind.Null;
         }
 
-        internal protected override bool TryGetProperty(object element, string name, out ObjectElement value)
+        protected internal override bool TryGetProperty(object element, string name, out ObjectElement value)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
@@ -69,7 +69,7 @@ namespace Azure.Core.Json
             return false;
         }
 
-        internal protected override bool TryGetPropertyNames(object element, out IEnumerable<string> enumerable)
+        protected internal override bool TryGetPropertyNames(object element, out IEnumerable<string> enumerable)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
@@ -83,7 +83,7 @@ namespace Azure.Core.Json
             return true;
         }
 
-        internal protected override bool TryGetBoolean(object element, out bool value)
+        protected internal override bool TryGetBoolean(object element, out bool value)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
@@ -92,7 +92,7 @@ namespace Azure.Core.Json
             return true;
         }
 
-        internal protected override bool TryGetDouble(object element, out double value)
+        protected internal override bool TryGetDouble(object element, out double value)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
@@ -101,7 +101,7 @@ namespace Azure.Core.Json
             return true;
         }
 
-        internal protected override bool TryGetInt64(object element, out long value)
+        protected internal override bool TryGetInt64(object element, out long value)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
@@ -110,7 +110,7 @@ namespace Azure.Core.Json
             return true;
         }
 
-        internal protected override bool TryGetString(object element, out string? value)
+        protected internal override bool TryGetString(object element, out string? value)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
@@ -119,21 +119,21 @@ namespace Azure.Core.Json
             return true;
         }
 
-        internal protected override ObjectElement SetProperty(object element, string name, object value)
+        protected internal override ObjectElement SetProperty(object element, string name, object value)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
             return new ObjectElement(this, mje.SetProperty(name, value));
         }
 
-        internal protected override void Set(object element, object value)
+        protected internal override void Set(object element, object value)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
             mje.Set(value);
         }
 
-        internal protected override void WriteTo(object element, Stream stream)
+        protected internal override void WriteTo(object element, Stream stream)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
@@ -142,7 +142,7 @@ namespace Azure.Core.Json
             writer.Flush();
         }
 
-        internal protected override string? ToString(object element)
+        protected internal override string? ToString(object element)
         {
             MutableJsonElement mje = (MutableJsonElement)element;
 
