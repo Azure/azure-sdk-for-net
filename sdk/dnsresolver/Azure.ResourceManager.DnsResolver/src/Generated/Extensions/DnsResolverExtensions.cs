@@ -11,9 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
