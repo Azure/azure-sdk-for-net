@@ -1,14 +1,10 @@
 # Release History
 
-## 5.9.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 5.8.1 (2023-03-09)
 
 ### Other Changes
+
+- Upgrading dependency on `Azure.Core` library.
 
 ## 5.8.0 (2023-03-07)
 
