@@ -36,7 +36,7 @@ override-operation-name:
   Balances_GetForBillingPeriodByBillingAccount: GetBalance
   PriceSheet_GetByBillingPeriod: GetPriceSheet
   AggregatedCost_GetByManagementGroup: GetAggregatedCost
-  AggregatedCost_GetForBillingPeriodByManagementGroup: GetAggregatedCost
+  AggregatedCost_GetForBillingPeriodByManagementGroup: GetAggregatedCostWithBillingPeriod
   Events_ListByBillingAccount: GetEvents
   Events_ListByBillingProfile: GetEvents
   Lots_ListByBillingAccount: GetLots
