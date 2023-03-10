@@ -24,14 +24,10 @@ namespace Azure.ResourceManager
         }
 
         T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
-        {
-            return CreateResult(response);
-        }
+            => CreateResult(response);
 
         ValueTask<T> IOperationSource<T>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            return new ValueTask<T>(CreateResult(response));
-        }
+            => new ValueTask<T>(CreateResult(response));
 
         private T CreateResult(Response response)
         {
