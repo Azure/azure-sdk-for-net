@@ -104,7 +104,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status));
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
                 return;
             }
 
@@ -198,7 +198,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(updateOperation.HasCompleted);
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status));
+            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status), $"Status code {updateOperation.GetRawResponse().Status} does not indicate success");
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status));
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
                 Assert.NotNull(ex.Message);
             }
         }
@@ -227,7 +227,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.IsTrue(IsClientError(ex.Status));
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
                 Assert.NotNull(ex.Message);
             }
         }
@@ -242,6 +242,21 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (Exception ex)
             {
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task StartPurchaseInvalidSearchId()
+        {
+            var client = CreateClient();
+            try
+            {
+                var purchaseOperation = await client.StartPurchasePhoneNumbersAsync("some-invalid-id");
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
                 Assert.NotNull(ex.Message);
             }
         }
@@ -289,7 +304,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(updateOperation.HasCompleted);
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status));
+            Assert.IsTrue(IsSuccess(updateOperation.GetRawResponse().Status), $"Status code {updateOperation.GetRawResponse().Status} does not indicate success");
         }
 
         [Test]
