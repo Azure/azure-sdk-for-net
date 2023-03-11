@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="subscriptionId"> Fully-qualified identifier of the subscription. </param>
         /// <param name="resourceGroupId"> Fully-qualified identifier of the resource group. </param>
         /// <param name="displayName"> Display name. </param>
-        internal AppliedScopeProperties(Guid? tenantId, string managementGroupId, string subscriptionId, string resourceGroupId, string displayName)
+        internal AppliedScopeProperties(Guid? tenantId, ResourceIdentifier managementGroupId, ResourceIdentifier subscriptionId, ResourceIdentifier resourceGroupId, string displayName)
         {
             TenantId = tenantId;
             ManagementGroupId = managementGroupId;
@@ -35,11 +36,11 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Tenant ID where the savings plan should apply benefit. </summary>
         public Guid? TenantId { get; set; }
         /// <summary> Fully-qualified identifier of the management group where the benefit must be applied. </summary>
-        public string ManagementGroupId { get; set; }
+        public ResourceIdentifier ManagementGroupId { get; set; }
         /// <summary> Fully-qualified identifier of the subscription. </summary>
-        public string SubscriptionId { get; set; }
+        public ResourceIdentifier SubscriptionId { get; set; }
         /// <summary> Fully-qualified identifier of the resource group. </summary>
-        public string ResourceGroupId { get; set; }
+        public ResourceIdentifier ResourceGroupId { get; set; }
         /// <summary> Display name. </summary>
         public string DisplayName { get; set; }
     }

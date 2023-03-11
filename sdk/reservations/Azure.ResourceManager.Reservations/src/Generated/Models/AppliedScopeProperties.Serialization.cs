@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Reservations.Models
                 return null;
             }
             Optional<Guid> tenantId = default;
-            Optional<string> managementGroupId = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroupId = default;
+            Optional<ResourceIdentifier> managementGroupId = default;
+            Optional<ResourceIdentifier> subscriptionId = default;
+            Optional<ResourceIdentifier> resourceGroupId = default;
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,17 +69,32 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (property.NameEquals("managementGroupId"u8))
                 {
-                    managementGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    managementGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subscriptionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceGroupId"u8))
                 {
-                    resourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))

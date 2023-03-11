@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Exchange operation result. </summary>
@@ -18,14 +16,14 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of ExchangeResult. </summary>
-        /// <param name="id"> It should match what is used to GET the operation result. </param>
+        /// <param name="operationResultId"> It should match what is used to GET the operation result. </param>
         /// <param name="name"> It must match the last segment of the id field, and will typically be a GUID / system generated value. </param>
         /// <param name="status"> Status of the operation. </param>
         /// <param name="properties"> Exchange response properties. </param>
         /// <param name="error"> Required if status == failed or status == canceled. </param>
-        internal ExchangeResult(ResourceIdentifier id, string name, ExchangeOperationResultStatus? status, ExchangeResultProperties properties, OperationResultError error)
+        internal ExchangeResult(string operationResultId, string name, ExchangeOperationResultStatus? status, ExchangeResultProperties properties, OperationResultError error)
         {
-            Id = id;
+            OperationResultId = operationResultId;
             Name = name;
             Status = status;
             Properties = properties;
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> It should match what is used to GET the operation result. </summary>
-        public ResourceIdentifier Id { get; }
+        public string OperationResultId { get; }
         /// <summary> It must match the last segment of the id field, and will typically be a GUID / system generated value. </summary>
         public string Name { get; }
         /// <summary> Status of the operation. </summary>

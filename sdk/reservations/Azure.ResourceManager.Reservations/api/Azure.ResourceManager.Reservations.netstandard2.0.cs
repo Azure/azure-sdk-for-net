@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         public AppliedScopeProperties() { }
         public string DisplayName { get { throw null; } set { } }
-        public string ManagementGroupId { get { throw null; } set { } }
-        public string ResourceGroupId { get { throw null; } set { } }
-        public string SubscriptionId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ManagementGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -422,6 +422,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.OperationResultError Error { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
+        public string OperationResultId { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ExchangeResultProperties Properties { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus? Status { get { throw null; } }
     }

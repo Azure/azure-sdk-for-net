@@ -76,6 +76,7 @@ rename-mapping:
   CalculateExchangeOperationResultResponse: CalculateExchangeResult
   CatalogMsrp: ReservationCatalogMsrp
   ExchangeOperationResultResponse: ExchangeResult
+  ExchangeOperationResultResponse.id: OperationResultId
   AppliedReservations: AppliedReservationData
   CalculateExchangeRequestProperties: CalculateExchangeContentProperties
   CalculateExchangeResponseProperties: CalculateExchangeResultProperties
@@ -123,7 +124,9 @@ rename-mapping:
   SplitRequest.properties.reservationId: -|arm-id
   CalculateExchangeOperationResultResponse.id: -|arm-id
   CalculatePriceResponseProperties.reservationOrderId: -|uuid
-  ExchangeOperationResultResponse.id: -|arm-id
+  AppliedScopeProperties.subscriptionId: -|arm-id
+  AppliedScopeProperties.resourceGroupId: -|arm-id
+  AppliedScopeProperties.managementGroupId: -|arm-id
   Price: PurchasePrice
   Catalog: ReservationCatalog
   Catalog.resourceType: AppliedResourceType
