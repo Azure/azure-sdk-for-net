@@ -14,29 +14,20 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a policy that can be overriden to customize whether or not a request will be retried and how long to wait before retrying.
     /// </summary>
-    internal abstract class RetryPolicy : HttpPipelinePolicy
+    public abstract class RetryPolicy : HttpPipelinePolicy
     {
-        private readonly RetryMode _mode;
         private readonly int _maxRetries;
         private readonly DelayStrategy _delayStrategy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
-        /// <param name="options">The set of options to use for configuring the policy.</param>
+        /// <param name="maxRetries"></param>
         /// <param name="delayStrategy">The delay strategy to use</param>
-        protected RetryPolicy(RetryOptions? options = default, DelayStrategy? delayStrategy = default)
+        protected RetryPolicy(int? maxRetries = default, DelayStrategy? delayStrategy = default)
         {
-            options ??= ClientOptions.Default.Retry;
-            _mode = options.Mode;
-            _maxRetries = options.MaxRetries;
-            delayStrategy ??= _mode switch
-            {
-                RetryMode.Exponential => new ExponentialDelayStrategy(),
-                RetryMode.Fixed => new FixedDelayStrategy(),
-                _ => throw new ArgumentOutOfRangeException(nameof(options.Mode), options.Mode, "Unknown retry mode.")
-            };
-            _delayStrategy = delayStrategy;
+            _maxRetries = maxRetries ?? 3;
+            _delayStrategy = delayStrategy ?? new ExponentialDelayStrategy();
         }
 
         /// <summary>

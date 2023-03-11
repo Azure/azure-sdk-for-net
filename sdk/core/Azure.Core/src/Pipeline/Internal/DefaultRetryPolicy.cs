@@ -10,7 +10,7 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class DefaultRetryPolicy : RetryPolicy
     {
-        public DefaultRetryPolicy(RetryOptions options) : base(options)
+        public DefaultRetryPolicy(RetryOptions options) : base(options.MaxRetries, options.Mode == RetryMode.Exponential ? new ExponentialDelayStrategy() : new FixedDelayStrategy())
         {
         }
     }
