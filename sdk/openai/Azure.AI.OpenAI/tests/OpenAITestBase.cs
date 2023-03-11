@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -21,21 +22,24 @@ namespace Azure.AI.OpenAI.Tests
             public const string EmbeddingsDeploymentIdVariable = "OPENAI_EMBEDDINGS_DEPLOYMENT_ID";
             public const string EndpointVariable = "OPENAI_ENDPOINT";
             public const string ResourceGroupName = "openai-test-rg";
-            public const string CognitiveServicesAccountName = "openai-sdk-test-automation-account";
+            public const string CognitiveServicesAccountName = "openai-sdk-test-automation-account-eastus";
             public const string CompletionsModelName = "text-davinci-002";
-            public const string EmbeddingsModelName = "text-similarity-davinci-001";
+            public const string ChatCompletionsModelName = "gpt-35-turbo";
+            public const string EmbeddingsModelName = "text-similarity-curie-001";
             public const string SubDomainPrefix = "sdk";
-            public static AzureLocation Location = AzureLocation.WestEurope;
+            public static AzureLocation Location = AzureLocation.EastUS;
         }
 
         private static readonly object _deploymentIdLock = new object();
 
         public string CompletionsDeploymentId { get => _completionsDeploymentId; }
+        public string ChatCompletionsDeploymentId { get => _chatCompletionsDeploymentId; }
         public string EmbeddingsDeploymentId { get => _embeddingsDeploymentId; }
 
         private Uri _endpoint;
         private AzureKeyCredential _apiKey;
         private string _completionsDeploymentId;
+        private string _chatCompletionsDeploymentId;
         private string _embeddingsDeploymentId;
 
         protected OpenAITestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
@@ -107,6 +111,10 @@ namespace Azure.AI.OpenAI.Tests
                             openAIResource,
                             Constants.CompletionsModelName,
                             CognitiveServicesAccountDeploymentScaleType.Standard);
+                        CognitiveServicesAccountDeploymentResource chatCompletionsModelResource = GetEnsureDeployedModelResource(
+                            openAIResource,
+                            Constants.ChatCompletionsModelName,
+                            CognitiveServicesAccountDeploymentScaleType.Standard);
                         CognitiveServicesAccountDeploymentResource embeddingsModelResource = GetEnsureDeployedModelResource(
                             openAIResource,
                             Constants.EmbeddingsModelName,
@@ -114,6 +122,7 @@ namespace Azure.AI.OpenAI.Tests
 
                         _endpoint = new Uri(openAIResource.Data.Properties.Endpoint);
                         _completionsDeploymentId = completionsModelResource.Id.Name;
+                        _chatCompletionsDeploymentId = chatCompletionsModelResource.Id.Name;
                         _embeddingsDeploymentId = embeddingsModelResource.Id.Name;
 
                         ServiceAccountApiKeys keys = openAIResource.GetKeys();
@@ -162,10 +171,12 @@ namespace Azure.AI.OpenAI.Tests
             string modelName,
             CognitiveServicesAccountDeploymentScaleType modelScaleType)
         {
-            CognitiveServicesAccountModel matchingModel = openAIResource.GetModels().FirstOrDefault(m => m.Name == modelName);
+            Pageable<CognitiveServicesAccountModel> availableModels = openAIResource.GetModels();
+            CognitiveServicesAccountModel matchingModel = availableModels.FirstOrDefault(m => m.Name == modelName);
             if (matchingModel == null)
             {
-                throw new Exception($"No available models match '{matchingModel.Name}' for Azure OpenAI resource: {openAIResource.Id}");
+                throw new Exception($"No available models match 'modelName' for Azure OpenAI resource: {openAIResource.Id}"
+                    + $"Available models:\n  {string.Join("\n  ", availableModels.Select(model => model.Name))}");
             }
 
             var deploymentData = new CognitiveServicesAccountDeploymentData()

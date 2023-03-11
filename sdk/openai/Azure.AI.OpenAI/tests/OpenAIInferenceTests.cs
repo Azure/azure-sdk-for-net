@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -139,6 +140,74 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(firstChoice.Logprobs.Tokens[0], Is.Not.Null.Or.Empty);
 
             Assert.That(response.Value.Choices[2].Index, Is.EqualTo(2));
+        }
+
+        [RecordedTest]
+        public async Task ChatCompletions()
+        {
+            OpenAIClient client = GetClient();
+            ChatCompletionsOptions requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatMessage(ChatRole.System, "You are a helpful assistant."),
+                    new ChatMessage(ChatRole.User, "Can you help me?"),
+                    new ChatMessage(ChatRole.Assistant, "Of course! What do you need help with?"),
+                    new ChatMessage(ChatRole.User, "What temperature should I bake pizza at?"),
+                },
+                MaxTokens = 512,
+            };
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
+                ChatCompletionsDeploymentId,
+                requestOptions);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+            ChatChoice choice = response.Value.Choices[0];
+            Assert.That(choice.Index, Is.EqualTo(0));
+            Assert.That(choice.FinishReason, Is.EquivalentTo("stop"));
+            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+        }
+
+        [RecordedTest]
+        public async Task StreamingChatCompletions()
+        {
+            OpenAIClient client = GetClient();
+            ChatCompletionsOptions requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatMessage(ChatRole.System, "You are a helpful assistant."),
+                    new ChatMessage(ChatRole.User, "Can you help me?"),
+                    new ChatMessage(ChatRole.Assistant, "Of course! What do you need help with?"),
+                    new ChatMessage(ChatRole.User, "What temperature should I bake pizza at?"),
+                },
+                MaxTokens = 512,
+            };
+            Response<StreamingChatCompletions> streamingResponse = await client.GetChatCompletionsStreamingAsync(
+                ChatCompletionsDeploymentId,
+                requestOptions);
+            Assert.That(streamingResponse, Is.Not.Null);
+            Assert.That(streamingResponse.Value, Is.InstanceOf<StreamingChatCompletions>());
+
+            int totalMessages = 0;
+
+            await foreach (StreamingChatChoice streamingChoice in streamingResponse.Value.GetChoicesStreaming())
+            {
+                Assert.That(streamingChoice, Is.Not.Null);
+                await foreach (ChatMessage streamingMessage in streamingChoice.GetMessageStreaming())
+                {
+                    Assert.That(streamingMessage.Role, Is.EqualTo(ChatRole.Assistant));
+                    Assert.That(streamingMessage.Content, Is.Not.Null.Or.Empty);
+                    totalMessages++;
+                }
+            }
+
+            Assert.That(totalMessages, Is.GreaterThan(1));
         }
 
         [RecordedTest]

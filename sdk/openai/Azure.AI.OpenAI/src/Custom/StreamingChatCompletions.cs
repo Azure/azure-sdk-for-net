@@ -13,13 +13,13 @@ using Azure.Core.Sse;
 
 namespace Azure.AI.OpenAI
 {
-    public class StreamingCompletions : IDisposable
+    public class StreamingChatCompletions : IDisposable
     {
         private readonly Response _baseResponse;
         private readonly SseReader _baseResponseReader;
-        private readonly IList<Completions> _baseCompletions;
+        private readonly IList<ChatCompletions> _baseChatCompletions;
         private readonly object _baseCompletionsLock = new object();
-        private readonly IList<StreamingChoice> _streamingChoices;
+        private readonly IList<StreamingChatChoice> _streamingChatChoices;
         private readonly object _streamingChoicesLock = new object();
         private readonly AsyncAutoResetEvent _updateAvailableEvent;
         private bool _streamingTaskComplete;
@@ -28,27 +28,20 @@ namespace Azure.AI.OpenAI
         /// <summary>
         /// Gets the earliest Completion creation timestamp associated with this streamed response.
         /// </summary>
-        public DateTime Created
-        {
-            get
-            {
-                int baseSecondsAfterEpoch = GetLocked(() => _baseCompletions.First().Created.Value);
-                return TimeConverters.DateTimeFromUnixEpoch(baseSecondsAfterEpoch);
-            }
-        }
+        public DateTime Created => GetLocked(() => _baseChatCompletions.First().Created);
 
         /// <summary>
         /// Gets the unique identifier associated with this streaming Completions response.
         /// </summary>
-        public string Id => GetLocked(() => _baseCompletions.First().Id);
+        public string Id => GetLocked(() => _baseChatCompletions.First().Id);
 
-        internal StreamingCompletions(Response response)
+        internal StreamingChatCompletions(Response response)
         {
             _baseResponse = response;
             _baseResponseReader = new SseReader(response.ContentStream);
             _updateAvailableEvent = new AsyncAutoResetEvent();
-            _baseCompletions = new List<Completions>();
-            _streamingChoices = new List<StreamingChoice>();
+            _baseChatCompletions = new List<ChatCompletions>();
+            _streamingChatChoices = new List<StreamingChatChoice>();
             _streamingTaskComplete = false;
             _ = Task.Run(async () =>
             {
@@ -73,28 +66,28 @@ namespace Azure.AI.OpenAI
                     }
 
                     JsonDocument sseMessageJson = JsonDocument.Parse(sseEvent.Value.FieldValue);
-                    Completions completionsFromSse = Completions.DeserializeCompletions(sseMessageJson.RootElement);
+                    ChatCompletions chatCompletionsFromSse = ChatCompletions.DeserializeChatCompletions(sseMessageJson.RootElement);
 
                     lock (_baseCompletionsLock)
                     {
-                        _baseCompletions.Add(completionsFromSse);
+                        _baseChatCompletions.Add(chatCompletionsFromSse);
                     }
 
-                    foreach (Choice choiceFromSse in completionsFromSse.Choices)
+                    foreach (ChatChoice chatChoiceFromSse in chatCompletionsFromSse.Choices)
                     {
                         lock (_streamingChoicesLock)
                         {
-                            StreamingChoice existingStreamingChoice = _streamingChoices
-                                .FirstOrDefault(choice => choice.Index == choiceFromSse.Index);
+                            StreamingChatChoice existingStreamingChoice = _streamingChatChoices
+                                .FirstOrDefault(chatChoice => chatChoice.Index == chatChoiceFromSse.Index);
                             if (existingStreamingChoice == null)
                             {
-                                StreamingChoice newStreamingChoice = new StreamingChoice(choiceFromSse);
-                                _streamingChoices.Add(newStreamingChoice);
+                                StreamingChatChoice newStreamingChatChoice = new StreamingChatChoice(chatChoiceFromSse);
+                                _streamingChatChoices.Add(newStreamingChatChoice);
                                 _updateAvailableEvent.Set();
                             }
                             else
                             {
-                                existingStreamingChoice.UpdateFromEventStreamChoice(choiceFromSse);
+                                existingStreamingChoice.UpdateFromEventStreamChatChoice(chatChoiceFromSse);
                             }
                         }
                     }
@@ -105,7 +98,7 @@ namespace Azure.AI.OpenAI
             });
         }
 
-        public async IAsyncEnumerable<StreamingChoice> GetChoicesStreaming(
+        public async IAsyncEnumerable<StreamingChatChoice> GetChoicesStreaming(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             bool isFinalIndex = false;
@@ -116,8 +109,8 @@ namespace Azure.AI.OpenAI
                 {
                     lock (_streamingChoicesLock)
                     {
-                        doneWaiting = _streamingTaskComplete || i < _streamingChoices.Count;
-                        isFinalIndex = _streamingTaskComplete && i >= _streamingChoices.Count - 1;
+                        doneWaiting = _streamingTaskComplete || i < _streamingChatChoices.Count;
+                        isFinalIndex = _streamingTaskComplete && i >= _streamingChatChoices.Count - 1;
                     }
 
                     if (!doneWaiting)
@@ -126,18 +119,18 @@ namespace Azure.AI.OpenAI
                     }
                 }
 
-                StreamingChoice newChoice = null;
+                StreamingChatChoice newChatChoice = null;
                 lock (_streamingChoicesLock)
                 {
-                    if (i < _streamingChoices.Count)
+                    if (i < _streamingChatChoices.Count)
                     {
-                        newChoice = _streamingChoices[i];
+                        newChatChoice = _streamingChatChoices[i];
                     }
                 }
 
-                if (newChoice != null)
+                if (newChatChoice != null)
                 {
-                    yield return newChoice;
+                    yield return newChatChoice;
                 }
             }
         }
