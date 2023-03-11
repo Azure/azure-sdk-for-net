@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetNicTags = new ChangeTrackingDictionary<string, string>();
             SeedDiskTags = new ChangeTrackingDictionary<string, string>();
             TargetDiskTags = new ChangeTrackingDictionary<string, string>();
+            SupportedOSVersions = new ChangeTrackingList<string>();
             InstanceType = "VMwareCbt";
         }
 
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="instanceType"> Gets the instance type. </param>
         /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
         /// <param name="osType"> The type of the OS on the VM. </param>
+        /// <param name="osName"> The name of the OS on the VM. </param>
         /// <param name="firmwareType"> The firmware type. </param>
         /// <param name="targetGeneration"> The target generation. </param>
         /// <param name="licenseType"> License Type of the VM to be used. </param>
@@ -44,6 +46,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetAvailabilitySetId"> The target availability set Id. </param>
         /// <param name="targetAvailabilityZone"> The target availability zone. </param>
         /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="confidentialVmKeyVaultId"> The confidential VM key vault Id for ADE installation. </param>
+        /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
         /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
         /// <param name="targetVmTags"> The target VM tags. </param>
         /// <param name="protectedDisks"> The list of protected disks. </param>
@@ -66,10 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="performAutoResync"> A value indicating whether auto resync is to be done. </param>
         /// <param name="seedDiskTags"> The tags for the seed disks. </param>
         /// <param name="targetDiskTags"> The tags for the target disks. </param>
-        internal VMwareCbtMigrationDetails(string instanceType, string vmwareMachineId, string osType, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string storageAccountId, string targetVmName, string targetVmSize, string targetLocation, string targetResourceGroupId, string targetAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, string targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks, string targetNetworkId, string testNetworkId, IReadOnlyList<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, string migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, string resyncRequired, ResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags) : base(instanceType)
+        /// <param name="supportedOSVersions"> List of supported inplace OS Upgrade versions. </param>
+        internal VMwareCbtMigrationDetails(string instanceType, string vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string storageAccountId, string targetVmName, string targetVmSize, string targetLocation, string targetResourceGroupId, string targetAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, string confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, string targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks, string targetNetworkId, string testNetworkId, IReadOnlyList<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, string migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, string resyncRequired, ResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IReadOnlyList<string> supportedOSVersions) : base(instanceType)
         {
             VMwareMachineId = vmwareMachineId;
             OSType = osType;
+            OSName = osName;
             FirmwareType = firmwareType;
             TargetGeneration = targetGeneration;
             LicenseType = licenseType;
@@ -84,6 +90,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetAvailabilitySetId = targetAvailabilitySetId;
             TargetAvailabilityZone = targetAvailabilityZone;
             TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
+            ConfidentialVmKeyVaultId = confidentialVmKeyVaultId;
+            TargetVmSecurityProfile = targetVmSecurityProfile;
             TargetBootDiagnosticsStorageAccountId = targetBootDiagnosticsStorageAccountId;
             TargetVmTags = targetVmTags;
             ProtectedDisks = protectedDisks;
@@ -106,6 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PerformAutoResync = performAutoResync;
             SeedDiskTags = seedDiskTags;
             TargetDiskTags = targetDiskTags;
+            SupportedOSVersions = supportedOSVersions;
             InstanceType = instanceType ?? "VMwareCbt";
         }
 
@@ -113,6 +122,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string VMwareMachineId { get; }
         /// <summary> The type of the OS on the VM. </summary>
         public string OSType { get; }
+        /// <summary> The name of the OS on the VM. </summary>
+        public string OSName { get; }
         /// <summary> The firmware type. </summary>
         public string FirmwareType { get; }
         /// <summary> The target generation. </summary>
@@ -141,6 +152,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string TargetAvailabilityZone { get; }
         /// <summary> The target proximity placement group Id. </summary>
         public string TargetProximityPlacementGroupId { get; }
+        /// <summary> The confidential VM key vault Id for ADE installation. </summary>
+        public string ConfidentialVmKeyVaultId { get; }
+        /// <summary> The target VM security profile. </summary>
+        public VMwareCbtSecurityProfileProperties TargetVmSecurityProfile { get; }
         /// <summary> The target boot diagnostics storage account ARM Id. </summary>
         public string TargetBootDiagnosticsStorageAccountId { get; }
         /// <summary> The target VM tags. </summary>
@@ -185,5 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IReadOnlyDictionary<string, string> SeedDiskTags { get; }
         /// <summary> The tags for the target disks. </summary>
         public IReadOnlyDictionary<string, string> TargetDiskTags { get; }
+        /// <summary> List of supported inplace OS Upgrade versions. </summary>
+        public IReadOnlyList<string> SupportedOSVersions { get; }
     }
 }
