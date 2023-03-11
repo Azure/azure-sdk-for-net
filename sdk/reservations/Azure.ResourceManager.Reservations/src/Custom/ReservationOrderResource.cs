@@ -10,16 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Reservations.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Reservations
 {
-    /// <summary>
-    /// A Class representing a ReservationOrder along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReservationOrderResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetReservationOrderResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetReservationOrder method.
-    /// </summary>
     public partial class ReservationOrderResource
     {
         /// <summary>
