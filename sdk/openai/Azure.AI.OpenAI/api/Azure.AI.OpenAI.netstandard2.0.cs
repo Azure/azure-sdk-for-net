@@ -1,5 +1,54 @@
 namespace Azure.AI.OpenAI
 {
+    public partial class ChatChoice
+    {
+        internal ChatChoice() { }
+        public string FinishReason { get { throw null; } }
+        public int? Index { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsLogProbability Logprobs { get { throw null; } }
+        public Azure.AI.OpenAI.ChatMessage Message { get { throw null; } }
+    }
+    public partial class ChatCompletions
+    {
+        internal ChatCompletions() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ChatChoice> Choices { get { throw null; } }
+        public System.DateTime Created { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Model { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsUsage Usage { get { throw null; } }
+    }
+    public partial class ChatCompletionsOptions
+    {
+        public ChatCompletionsOptions() { }
+        public int? CacheLevel { get { throw null; } set { } }
+        public string CompletionConfig { get { throw null; } set { } }
+        public bool? Echo { get { throw null; } set { } }
+        public float? FrequencyPenalty { get { throw null; } set { } }
+        public int? GenerationSampleCount { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, int> LogitBias { get { throw null; } }
+        public int? LogProbability { get { throw null; } set { } }
+        public int? MaxTokens { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessage> Messages { get { throw null; } }
+        public string Model { get { throw null; } set { } }
+        public float? NucleusSamplingFactor { get { throw null; } set { } }
+        public float? PresencePenalty { get { throw null; } set { } }
+        public int? SnippetCount { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Stop { get { throw null; } }
+        public float? Temperature { get { throw null; } set { } }
+        public string User { get { throw null; } set { } }
+    }
+    public partial class ChatMessage
+    {
+        public ChatMessage(Azure.AI.OpenAI.ChatRole role, string content) { }
+        public string Content { get { throw null; } }
+        public Azure.AI.OpenAI.ChatRole Role { get { throw null; } }
+    }
+    public enum ChatRole
+    {
+        System = 0,
+        Assistant = 1,
+        User = 2,
+    }
     public partial class Choice
     {
         internal Choice() { }
@@ -87,6 +136,12 @@ namespace Azure.AI.OpenAI
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response<Azure.AI.OpenAI.Completions> GetChatCompletions(string deploymentId, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetChatCompletions(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.ChatCompletions>> GetChatCompletionsAsync(string deploymentId, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetChatCompletionsAsync(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.StreamingChatCompletions> GetChatCompletionsStreaming(string deploymentId, Azure.AI.OpenAI.ChatCompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.StreamingChatCompletions>> GetChatCompletionsStreamingAsync(string deploymentId, Azure.AI.OpenAI.ChatCompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Completions> GetCompletions(string deploymentId, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCompletions(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Completions> GetCompletions(string deploymentId, string prompt, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -107,6 +162,23 @@ namespace Azure.AI.OpenAI
         {
             V2022_12_01 = 1,
         }
+    }
+    public partial class StreamingChatChoice
+    {
+        internal StreamingChatChoice() { }
+        public string FinishReason { get { throw null; } }
+        public int? Index { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsLogProbability Logprobs { get { throw null; } }
+        public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.ChatMessage> GetMessageStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StreamingChatCompletions : System.IDisposable
+    {
+        internal StreamingChatCompletions() { }
+        public System.DateTime Created { get { throw null; } }
+        public string Id { get { throw null; } }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.StreamingChatChoice> GetChoicesStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StreamingChoice
     {
