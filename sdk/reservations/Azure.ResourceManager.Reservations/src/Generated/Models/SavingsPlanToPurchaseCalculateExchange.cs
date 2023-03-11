@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of SavingsPlanToPurchaseCalculateExchange. </summary>
         /// <param name="properties"> Request body for savings plan purchase. </param>
         /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
-        internal SavingsPlanToPurchaseCalculateExchange(SavingsPlanPurchaseRequest properties, PurchasePrice billingCurrencyTotal)
+        internal SavingsPlanToPurchaseCalculateExchange(SavingsPlanPurchase properties, PurchasePrice billingCurrencyTotal)
         {
             Properties = properties;
             BillingCurrencyTotal = billingCurrencyTotal;
         }
 
         /// <summary> Request body for savings plan purchase. </summary>
-        public SavingsPlanPurchaseRequest Properties { get; }
+        public SavingsPlanPurchase Properties { get; }
         /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice BillingCurrencyTotal { get; }
     }

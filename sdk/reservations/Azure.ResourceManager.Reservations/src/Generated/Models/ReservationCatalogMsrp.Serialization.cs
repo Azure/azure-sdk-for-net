@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class CatalogMsrp
+    public partial class ReservationCatalogMsrp
     {
-        internal static CatalogMsrp DeserializeCatalogMsrp(JsonElement element)
+        internal static ReservationCatalogMsrp DeserializeReservationCatalogMsrp(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new CatalogMsrp(p1Y.Value, p3Y.Value, p5Y.Value);
+            return new ReservationCatalogMsrp(p1Y.Value, p3Y.Value, p5Y.Value);
         }
     }
 }

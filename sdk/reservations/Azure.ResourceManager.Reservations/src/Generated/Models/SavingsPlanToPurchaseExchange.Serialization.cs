@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             Optional<string> savingsPlanOrderId = default;
             Optional<string> savingsPlanId = default;
-            Optional<SavingsPlanPurchaseRequest> properties = default;
+            Optional<SavingsPlanPurchase> properties = default;
             Optional<PurchasePrice> billingCurrencyTotal = default;
             Optional<ReservationOperationStatus> status = default;
             foreach (var property in element.EnumerateObject())
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = SavingsPlanPurchaseRequest.DeserializeSavingsPlanPurchaseRequest(property.Value);
+                    properties = SavingsPlanPurchase.DeserializeSavingsPlanPurchase(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Reservations.Models
         public CalculateExchangeContentProperties()
         {
             ReservationsToPurchase = new ChangeTrackingList<ReservationPurchaseContent>();
-            SavingsPlansToPurchase = new ChangeTrackingList<SavingsPlanPurchaseRequest>();
+            SavingsPlansToPurchase = new ChangeTrackingList<SavingsPlanPurchase>();
             ReservationsToExchange = new ChangeTrackingList<ReservationToReturn>();
         }
 
         /// <summary> List of reservations that are being purchased in this exchange. </summary>
         public IList<ReservationPurchaseContent> ReservationsToPurchase { get; }
         /// <summary> List of savings plans that are being purchased in this exchange. </summary>
-        public IList<SavingsPlanPurchaseRequest> SavingsPlansToPurchase { get; }
+        public IList<SavingsPlanPurchase> SavingsPlansToPurchase { get; }
         /// <summary> List of reservations that are being returned in this exchange. </summary>
         public IList<ReservationToReturn> ReservationsToExchange { get; }
     }

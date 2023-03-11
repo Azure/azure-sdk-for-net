@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="properties"> Request body for savings plan purchase. </param>
         /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
         /// <param name="status"> Status of the individual operation. </param>
-        internal SavingsPlanToPurchaseExchange(string savingsPlanOrderId, string savingsPlanId, SavingsPlanPurchaseRequest properties, PurchasePrice billingCurrencyTotal, ReservationOperationStatus? status)
+        internal SavingsPlanToPurchaseExchange(string savingsPlanOrderId, string savingsPlanId, SavingsPlanPurchase properties, PurchasePrice billingCurrencyTotal, ReservationOperationStatus? status)
         {
             SavingsPlanOrderId = savingsPlanOrderId;
             SavingsPlanId = savingsPlanId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Fully qualified id of the savings plan being purchased. This value is only guaranteed to be non-null if the purchase is successful. </summary>
         public string SavingsPlanId { get; }
         /// <summary> Request body for savings plan purchase. </summary>
-        public SavingsPlanPurchaseRequest Properties { get; }
+        public SavingsPlanPurchase Properties { get; }
         /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice BillingCurrencyTotal { get; }
         /// <summary> Status of the individual operation. </summary>

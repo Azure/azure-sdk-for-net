@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Pricing information about the sku. </summary>
-    public partial class CatalogMsrp
+    public partial class ReservationCatalogMsrp
     {
-        /// <summary> Initializes a new instance of CatalogMsrp. </summary>
-        internal CatalogMsrp()
+        /// <summary> Initializes a new instance of ReservationCatalogMsrp. </summary>
+        internal ReservationCatalogMsrp()
         {
         }
 
-        /// <summary> Initializes a new instance of CatalogMsrp. </summary>
+        /// <summary> Initializes a new instance of ReservationCatalogMsrp. </summary>
         /// <param name="p1Y"> Amount in pricing currency. Tax not included. </param>
         /// <param name="p3Y"> Amount in pricing currency. Tax not included. </param>
         /// <param name="p5Y"> Amount in pricing currency. Tax not included. </param>
-        internal CatalogMsrp(PurchasePrice p1Y, PurchasePrice p3Y, PurchasePrice p5Y)
+        internal ReservationCatalogMsrp(PurchasePrice p1Y, PurchasePrice p3Y, PurchasePrice p5Y)
         {
             P1Y = p1Y;
             P3Y = p3Y;

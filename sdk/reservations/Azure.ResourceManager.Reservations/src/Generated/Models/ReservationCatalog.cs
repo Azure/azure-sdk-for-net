@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="tier"> The tier of this sku. </param>
         /// <param name="size"> The size of this sku. </param>
         /// <param name="capabilities"></param>
-        internal ReservationCatalog(string appliedResourceType, string skuName, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans, IReadOnlyList<ReservationTerm> terms, IReadOnlyList<AzureLocation> locations, IReadOnlyList<SkuProperty> skuProperties, CatalogMsrp msrp, IReadOnlyList<SkuRestriction> restrictions, string tier, string size, IReadOnlyList<SkuCapability> capabilities)
+        internal ReservationCatalog(string appliedResourceType, string skuName, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans, IReadOnlyList<ReservationTerm> terms, IReadOnlyList<AzureLocation> locations, IReadOnlyList<SkuProperty> skuProperties, ReservationCatalogMsrp msrp, IReadOnlyList<SkuRestriction> restrictions, string tier, string size, IReadOnlyList<SkuCapability> capabilities)
         {
             AppliedResourceType = appliedResourceType;
             SkuName = skuName;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Gets the sku properties. </summary>
         public IReadOnlyList<SkuProperty> SkuProperties { get; }
         /// <summary> Pricing information about the sku. </summary>
-        public CatalogMsrp Msrp { get; }
+        public ReservationCatalogMsrp Msrp { get; }
         /// <summary> Gets the restrictions. </summary>
         public IReadOnlyList<SkuRestriction> Restrictions { get; }
         /// <summary> The tier of this sku. </summary>

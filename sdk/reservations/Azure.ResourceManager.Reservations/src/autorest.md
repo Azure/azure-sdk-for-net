@@ -68,7 +68,7 @@ rename-mapping:
   ReservationsProperties: ReservationProperties
   AvailableScopeProperties: AvailableScopesProperties
   AvailableScopeRequest: AvailableScopesContent
-  BillingPlan: ReservationBillingPlan 
+  BillingPlan: SavingsPlanBillingPlan
   PurchaseRequest: ReservationPurchaseContent
   PurchaseRequest.properties.renew: IsRenewEnabled
   CalculatePriceResponse: CalculatePriceResult

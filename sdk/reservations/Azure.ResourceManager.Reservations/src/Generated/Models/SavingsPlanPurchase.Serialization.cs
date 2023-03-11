@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class SavingsPlanPurchaseRequest : IUtf8JsonSerializable
+    public partial class SavingsPlanPurchase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteEndObject();
         }
 
-        internal static SavingsPlanPurchaseRequest DeserializeSavingsPlanPurchaseRequest(JsonElement element)
+        internal static SavingsPlanPurchase DeserializeSavingsPlanPurchase(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<string> displayName = default;
             Optional<ResourceIdentifier> billingScopeId = default;
             Optional<SavingsPlanTerm> term = default;
-            Optional<BillingPlan> billingPlan = default;
+            Optional<SavingsPlanBillingPlan> billingPlan = default;
             Optional<AppliedScopeType> appliedScopeType = default;
             Optional<AppliedScopeProperties> appliedScopeProperties = default;
             Optional<Commitment> commitment = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Reservations.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            billingPlan = new BillingPlan(property0.Value.GetString());
+                            billingPlan = new SavingsPlanBillingPlan(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("appliedScopeType"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new SavingsPlanPurchaseRequest(sku.Value, displayName.Value, billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, commitment.Value);
+            return new SavingsPlanPurchase(sku.Value, displayName.Value, billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, commitment.Value);
         }
     }
 }
