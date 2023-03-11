@@ -68,11 +68,13 @@ rename-mapping:
   ReservationsProperties: ReservationProperties
   AvailableScopeProperties: AvailableScopesProperties
   AvailableScopeRequest: AvailableScopesContent
+  BillingPlan: ReservationBillingPlan 
   PurchaseRequest: ReservationPurchaseContent
   PurchaseRequest.properties.renew: IsRenewEnabled
   CalculatePriceResponse: CalculatePriceResult
   CalculatePriceResponseProperties: CalculatePriceResultProperties
   CalculateExchangeOperationResultResponse: CalculateExchangeResult
+  CatalogMsrp: ReservationCatalogMsrp
   ExchangeOperationResultResponse: ExchangeResult
   AppliedReservations: AppliedReservationData
   CalculateExchangeRequestProperties: CalculateExchangeContentProperties
@@ -117,6 +119,7 @@ rename-mapping:
   ReservationToPurchaseExchange.reservationId: -|arm-id
   ReservationToReturn.reservationId: -|arm-id
   ReservationToReturnForExchange.reservationId: -|arm-id
+  SavingsPlanPurchaseRequest: SavingsPlanPurchase
   SplitRequest.properties.reservationId: -|arm-id
   CalculateExchangeOperationResultResponse.id: -|arm-id
   CalculatePriceResponseProperties.reservationOrderId: -|uuid
