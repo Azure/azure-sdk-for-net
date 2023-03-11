@@ -14,7 +14,7 @@ namespace Azure.Core
     /// Defaults to {1s, 1s, 1s, 2s, 4s, 8s, 16s, 32s}.
     /// </summary>
     /// <remarks>Polling interval always follows the given sequence.</remarks>
-    public class SequentialDelayStrategy : DelayStrategy
+    internal class SequentialDelayStrategy : DelayStrategy
     {
         private readonly IEnumerable<TimeSpan>? _sequence;
 
@@ -35,7 +35,7 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <param name="sequence"></param>
-        public SequentialDelayStrategy(IEnumerable<TimeSpan>? sequence = default)
+        public SequentialDelayStrategy(IEnumerable<TimeSpan>? sequence = default) : base(default, default, default)
         {
             _sequence = sequence ?? s_defaultPollingSequence;
         }
@@ -45,14 +45,15 @@ namespace Azure.Core
         /// </summary>
         /// <param name="response">Service response.</param>
         /// <param name="attempt"></param>
-        /// <param name="delayHint">Suggested delay.</param>
-        public override TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? delayHint)
+        /// <param name="clientDelayHint">Suggested delay.</param>
+        /// <param name="serverDelayHint"></param>
+        public override TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
         {
             if (attempt >= s_defaultPollingSequence.Length)
             {
-                return _maxDelay;
+                return Max(_maxDelay, serverDelayHint ?? TimeSpan.Zero);
             }
-            return s_defaultPollingSequence[attempt];
+            return Max(s_defaultPollingSequence[attempt], serverDelayHint ?? TimeSpan.Zero);
         }
     }
 }

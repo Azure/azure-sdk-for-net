@@ -262,6 +262,11 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         protected internal virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
 
-        private TimeSpan CalculateNextDelayInternal(HttpMessage message) => _delayStrategy.GetNextDelay(message.Response, message.RetryNumber + 1, null);
+        private TimeSpan CalculateNextDelayInternal(HttpMessage message) =>
+            _delayStrategy.GetNextDelay(
+                message.Response,
+                message.RetryNumber + 1,
+                _delayStrategy.GetClientDelayHint(message.Response, message.RetryNumber + 1),
+                message.Response.Headers.RetryAfter);
     }
 }

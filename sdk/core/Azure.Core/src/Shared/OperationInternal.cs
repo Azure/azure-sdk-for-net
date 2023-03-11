@@ -82,17 +82,17 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        /// <param name="delayStrategy">Optional delay strategy to use. Default is <see cref="FixedDelayStrategy"/>.</param>
+        /// <param name="strategy">Optional delay strategy to use. Default is <see cref="FixedDelayStrategy"/>.</param>
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation operation,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? delayStrategy = null)
-            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, delayStrategy)
+            DelayStrategy? strategy = null)
+            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, strategy)
         {
-            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, delayStrategy);
+            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, strategy);
         }
 
         private OperationInternal(OperationState finalState)

@@ -9,7 +9,7 @@ namespace Azure.Core
     /// <summary>
     ///
     /// </summary>
-    public class ExponentialDelayStrategy : DelayStrategy
+    internal class ExponentialDelayStrategy : DelayStrategy
     {
         private readonly TimeSpan _delay;
         private readonly TimeSpan _maxDelay;
@@ -32,20 +32,22 @@ namespace Azure.Core
         /// </summary>
         /// <param name="response"></param>
         /// <param name="attempt"></param>
-        /// <param name="delayHint"></param>
+        /// <param name="clientDelayHint"></param>
+        /// <param name="serverDelayHint"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? delayHint)
+        public override TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
         {
             return
                 Max(
-                    delayHint ?? TimeSpan.Zero,
+                    serverDelayHint ?? TimeSpan.Zero,
                     Max(
-                        GetServerDelay(response),
-                        TimeSpan.FromMilliseconds(
-                            Math.Min(
-                            (1 << (attempt - 1)) * _random.Next((int)(_delay.TotalMilliseconds * 0.8), (int)(_delay.TotalMilliseconds * 1.2)),
-                            _maxDelay.TotalMilliseconds))));
+                        clientDelayHint ?? TimeSpan.Zero,
+                        Max(
+                            response?.Headers.RetryAfter ?? TimeSpan.Zero,
+                            TimeSpan.FromMilliseconds(
+                                Math.Min(
+                                (1 << (attempt - 1)) * _random.Next((int)(_delay.TotalMilliseconds * 0.8), (int)(_delay.TotalMilliseconds * 1.2)),
+                                _maxDelay.TotalMilliseconds)))));
         }
     }
 }

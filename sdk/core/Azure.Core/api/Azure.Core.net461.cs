@@ -402,9 +402,12 @@ namespace Azure.Core
     }
     public abstract partial class DelayStrategy
     {
-        protected DelayStrategy() { }
-        public abstract System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint);
-        protected static System.TimeSpan GetServerDelay(Azure.Response? response) { throw null; }
+        protected DelayStrategy(Azure.Core.RetryMode? mode = default(Azure.Core.RetryMode?), System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { }
+        public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Core.DelayStrategy CreateSequentialDelayStrategy(System.Collections.Generic.IEnumerable<System.TimeSpan>? sequence = null) { throw null; }
+        public System.TimeSpan? GetClientDelayHint(Azure.Response? response, int attempt) { throw null; }
+        public abstract System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? clientDelayHint, System.TimeSpan? serverDelayHint);
         protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
     }
     public static partial class DelegatedTokenCredential
@@ -424,16 +427,6 @@ namespace Azure.Core
         public int LoggedContentSizeLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } }
-    }
-    public partial class ExponentialDelayStrategy : Azure.Core.DelayStrategy
-    {
-        public ExponentialDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { }
-        public override System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint) { throw null; }
-    }
-    public partial class FixedDelayStrategy : Azure.Core.DelayStrategy
-    {
-        public FixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { }
-        public override System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpHeader : System.IEquatable<Azure.Core.HttpHeader>
@@ -690,6 +683,7 @@ namespace Azure.Core
         public System.DateTimeOffset? Date { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public string? RequestId { get { throw null; } }
+        public System.TimeSpan? RetryAfter { get { throw null; } }
         public bool Contains(string name) { throw null; }
         public System.Collections.Generic.IEnumerator<Azure.Core.HttpHeader> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -709,11 +703,6 @@ namespace Azure.Core
         public int MaxRetries { get { throw null; } set { } }
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
-    }
-    public partial class SequentialDelayStrategy : Azure.Core.DelayStrategy
-    {
-        public SequentialDelayStrategy(System.Collections.Generic.IEnumerable<System.TimeSpan>? sequence = null) { }
-        public override System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint) { throw null; }
     }
     public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
     {

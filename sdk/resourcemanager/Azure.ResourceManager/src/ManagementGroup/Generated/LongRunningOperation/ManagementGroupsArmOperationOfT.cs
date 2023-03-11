@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagementGroups
         internal ManagementGroupsArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ManagementGroupsArmOperation", fallbackStrategy: new SequentialDelayStrategy());
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ManagementGroupsArmOperation", strategy: DelayStrategy.CreateSequentialDelayStrategy());
         }
 
         /// <inheritdoc />

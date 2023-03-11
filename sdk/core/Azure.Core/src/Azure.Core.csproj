@@ -60,7 +60,6 @@
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\OperationInternalBase.cs" />
-    <Compile Include="Shared\RetryAfterDelayStrategy.cs" />
     <Compile Include="Shared\VoidValue.cs" />
     <Compile Include="Shared\OperationInternal.cs" />
     <Compile Include="Shared\OperationInternalOfT.cs" />

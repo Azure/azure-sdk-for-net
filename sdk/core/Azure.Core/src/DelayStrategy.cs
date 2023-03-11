@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Core
 {
@@ -12,9 +13,54 @@ namespace Azure.Core
     /// </summary>
     public abstract class DelayStrategy
     {
-        private const string RetryAfterHeaderName = "Retry-After";
-        private const string RetryAfterMsHeaderName = "retry-after-ms";
-        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
+        private readonly DelayStrategy? _innerStrategy;
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <param name="initialDelay"></param>
+        /// <param name="maxDelay"></param>
+        protected DelayStrategy(RetryMode? mode = default, TimeSpan? initialDelay = default, TimeSpan? maxDelay = default)
+        {
+            _innerStrategy = mode switch
+            {
+                RetryMode.Exponential => new ExponentialDelayStrategy(initialDelay, maxDelay),
+                RetryMode.Fixed => new FixedDelayStrategy(initialDelay),
+                _ => null
+            };
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="initialDelay"></param>
+        /// <param name="maxDelay"></param>
+        /// <returns></returns>
+        public static DelayStrategy CreateExponentialDelayStrategy(TimeSpan? initialDelay = default, TimeSpan? maxDelay = default)
+        {
+            return new ExponentialDelayStrategy(initialDelay, maxDelay);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
+        public static DelayStrategy CreateFixedDelayStrategy(TimeSpan? delay = default)
+        {
+            return new FixedDelayStrategy(delay);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="sequence"></param>
+        /// <returns></returns>
+        public static DelayStrategy CreateSequentialDelayStrategy(IEnumerable<TimeSpan>? sequence = default)
+        {
+            return new SequentialDelayStrategy(sequence);
+        }
 
         /// <summary>
         /// Get the interval of next delay iteration.
@@ -22,45 +68,20 @@ namespace Azure.Core
         /// <remarks> Note that the value could change per call. </remarks>
         /// <param name="response"> Server response. </param>
         /// <param name="attempt"></param>
-        /// <param name="delayHint"></param>
+        /// <param name="clientDelayHint"></param>
+        /// <param name="serverDelayHint"></param>
         /// <returns> Delay interval of next iteration. </returns>
-        public abstract TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? delayHint);
+        public abstract TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint);
 
         /// <summary>
-        /// Gets the server specified delay. If there is no response, <see cref="TimeSpan.Zero"/> is returned.
-        /// This method can be used to help calculate the next delay when overriding <see cref="GetNextDelay"/>, i.e.
-        /// implementors may want to add the server delay to their own custom delay.
+        ///
         /// </summary>
-        /// <param name="response">The response to inspect for the server specified delay.</param>
-        /// <returns>The server specified delay.</returns>
-        protected static TimeSpan GetServerDelay(Response? response)
+        /// <param name="response"></param>
+        /// <param name="attempt"></param>
+        /// <returns></returns>
+        public TimeSpan? GetClientDelayHint(Response? response, int attempt)
         {
-            if (response == null)
-            {
-                return TimeSpan.Zero;
-            }
-            if (response.TryGetHeader(RetryAfterMsHeaderName, out var retryAfterValue) ||
-                response.TryGetHeader(XRetryAfterMsHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out var delaySeconds))
-                {
-                    return TimeSpan.FromMilliseconds(delaySeconds);
-                }
-            }
-
-            if (response.TryGetHeader(RetryAfterHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out var delaySeconds))
-                {
-                    return TimeSpan.FromSeconds(delaySeconds);
-                }
-                if (DateTimeOffset.TryParse(retryAfterValue, out DateTimeOffset delayTime))
-                {
-                    return delayTime - DateTimeOffset.Now;
-                }
-            }
-
-            return TimeSpan.Zero;
+            return _innerStrategy?.GetNextDelay(response, attempt, null, null);
         }
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace Azure.Core.Tests.DelayStrategies
         {
             var strategy = new SequentialDelayStrategy();
             var expected = TimeSpan.FromSeconds(1);
-            Assert.AreEqual(expected, strategy.GetNextDelay(_mockResponse, 1, TimeSpan.FromSeconds(suggest)));
+            Assert.AreEqual(expected, strategy.GetNextDelay(_mockResponse, 1, TimeSpan.FromSeconds(suggest), default));
         }
 
         private static readonly int[] _expectedValues = new int[]
@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.DelayStrategies
             TimeSpan actual = TimeSpan.Zero;
             for (int i = 0; i < retries; i++)
             {
-                actual += strategy.GetNextDelay(_mockResponse, i + 1, suggestion);
+                actual += strategy.GetNextDelay(_mockResponse, i + 1, suggestion, default);
             }
             Assert.AreEqual(expected, actual);
         }

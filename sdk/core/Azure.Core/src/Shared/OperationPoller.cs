@@ -17,9 +17,9 @@ namespace Azure.Core
     {
         private readonly DelayStrategy _delayStrategy;
 
-        public OperationPoller(DelayStrategy? fallbackStrategy = null)
+        public OperationPoller(DelayStrategy? strategy = null)
         {
-            _delayStrategy = new RetryAfterDelayStrategy(fallbackStrategy);
+            _delayStrategy = strategy ?? DelayStrategy.CreateSequentialDelayStrategy();
         }
 
         public ValueTask<Response> WaitForCompletionResponseAsync(Operation operation, TimeSpan? delayHint, CancellationToken cancellationToken)
@@ -69,7 +69,7 @@ namespace Azure.Core
                     return operation.GetRawResponse();
                 }
 
-                await Delay(async, _delayStrategy.GetNextDelay(response, ++attempt, delayHint), cancellationToken).ConfigureAwait(false);
+                await Delay(async, _delayStrategy.GetNextDelay(response, ++attempt, delayHint, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -84,7 +84,17 @@ namespace Azure.Core
                     return operation.RawResponse;
                 }
 
-                await Delay(async, _delayStrategy.GetNextDelay(response, ++attempt, delayHint), cancellationToken).ConfigureAwait(false);
+                var clientDelayHint = _delayStrategy.GetClientDelayHint(response, attempt);
+
+                // if at least one of the hints is not null, we need to pick the bigger one
+                if (clientDelayHint != null || delayHint != null)
+                {
+                    clientDelayHint ??= TimeSpan.Zero;
+                    delayHint ??= TimeSpan.Zero;
+                    delayHint = clientDelayHint > delayHint ? clientDelayHint : delayHint;
+                }
+
+                await Delay(async, _delayStrategy.GetNextDelay(response, ++attempt, delayHint, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
             }
         }
 

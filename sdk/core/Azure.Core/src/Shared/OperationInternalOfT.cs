@@ -91,7 +91,7 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        /// <param name="fallbackStrategy">The fallback delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used.
+        /// <param name="strategy">The fallback delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used.
         /// Default is <see cref="FixedDelayStrategy"/>.</param>
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
@@ -99,8 +99,8 @@ namespace Azure.Core
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            DelayStrategy? strategy = null)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, strategy)
         {
             _operation = operation;
             _rawResponse = rawResponse;
