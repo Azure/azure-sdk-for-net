@@ -6,7 +6,14 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
+    /// <summary>
+    /// An account setting.
+    /// </summary>
     [CodeGenModel("Setting")]
+    [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(string))]
+#pragma warning disable CA1825 // Avoid zero-length array allocations
+    [CodeGenSuppress("Content")]
+#pragma warning restore CA1825 // Avoid zero-length array allocations
     public partial class KeyVaultSetting
     {
         /// <summary>
@@ -21,59 +28,37 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Name = name;
-            Type = SettingType.Boolean;
-
-            // bool.ToString() returns "True" or "False", but the service wants "true" or "false".
-            Value = value ? "true" : "false";
+            Value = new KeyVaultSettingValue(value);
         }
 
-        // TODO: Consider using Azure.Value and making this class mutable: https://github.com/Azure/azure-sdk-for-net/issues/32174
-
         /// <summary>
-        /// Gets the boolean value of this account setting if <see cref="Type"/> is <see cref="SettingType.Boolean"/>.
+        /// Creates a new instance of the <see cref="KeyVaultSetting"/> class.
         /// </summary>
-        /// <returns>A boolean value if <see cref="Type"/> is <see cref="SettingType.Boolean"/>.</returns>
-        /// <exception cref="InvalidOperationException">The <see cref="Type"/> is not <see cref="SettingType.Boolean"/>, or the value cannot be normalized as a Boolean.</exception>
-        public bool AsBoolean() => CheckType(SettingType.Boolean, () => (bool.TryParse(Value, out bool parsedValue), parsedValue));
-
-        /// <summary>
-        /// Gets the string value of this account setting. Use <see cref="Type"/> to determine if a more appropriate method like <see cref="AsBoolean"/> should be used instead.
-        /// </summary>
-        /// <returns>The string value of this account setting.</returns>
-        public string AsString() => Value;
-
-        /// <summary>
-        /// Gets the raw string value of this account setting.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
+        /// <param name="name">The name of the account setting.</param>
+        /// <param name="value">The boolean value of the account setting.</param>
+        /// <param name="settingType">The type specifier of the value.</param>
+        internal KeyVaultSetting(string name, string value, KeyVaultSettingType? settingType)
         {
-            string method = nameof(AsString);
-            if (Type == SettingType.Boolean)
-            {
-                method = nameof(AsBoolean);
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(value, nameof(value));
 
-            return $"{Name}: {method}()=>{Value}";
+            Name = name;
+            Value = new KeyVaultSettingValue(value, settingType);
         }
 
-        [CodeGenMember("Value")]
-        internal string Value { get; }
+        /// <summary>
+        /// Gets the type specifier of the value.
+        /// </summary>
+        public KeyVaultSettingType? SettingType => Value.SettingType;
 
-        private T CheckType<T>(SettingType expectedType, Func<(bool IsValid, T ParsedValue)> converter)
-        {
-            if (Type != expectedType)
-            {
-                throw new InvalidOperationException($"Cannot get setting as {SettingType.Boolean}. Setting type is {Type}.");
-            }
+        /// <summary>
+        /// Gets the value of the account setting.
+        /// </summary>
+        public KeyVaultSettingValue Value { get; }
 
-            (bool isValid, T parsedValue) = converter();
-            if (isValid)
-            {
-                return parsedValue;
-            }
-
-            throw new InvalidOperationException($"Cannot normalize the setting as {expectedType}. Use {nameof(AsString)}() for a textual representation of the setting.");
-        }
+        /// <summary>
+        /// Gets the value of the account setting as a string.
+        /// </summary>
+        public string Content => Value.Serialize();
     }
 }
