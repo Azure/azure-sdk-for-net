@@ -8,23 +8,23 @@
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Commitment towards the benefit. </summary>
-    public partial class Commitment : PurchasePrice
+    public partial class BenefitsCommitment : PurchasePrice
     {
-        /// <summary> Initializes a new instance of Commitment. </summary>
-        public Commitment()
+        /// <summary> Initializes a new instance of BenefitsCommitment. </summary>
+        public BenefitsCommitment()
         {
         }
 
-        /// <summary> Initializes a new instance of Commitment. </summary>
+        /// <summary> Initializes a new instance of BenefitsCommitment. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
         /// <param name="grain"> Commitment grain. </param>
-        internal Commitment(string currencyCode, double? amount, CommitmentGrain? grain) : base(currencyCode, amount)
+        internal BenefitsCommitment(string currencyCode, double? amount, BenefitsCommitmentGrain? grain) : base(currencyCode, amount)
         {
             Grain = grain;
         }
 
         /// <summary> Commitment grain. </summary>
-        public CommitmentGrain? Grain { get; set; }
+        public BenefitsCommitmentGrain? Grain { get; set; }
     }
 }

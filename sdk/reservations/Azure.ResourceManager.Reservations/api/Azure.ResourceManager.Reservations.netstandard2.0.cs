@@ -251,6 +251,28 @@ namespace Azure.ResourceManager.Reservations.Models
         internal AvailableScopesProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ScopeProperties> Scopes { get { throw null; } }
     }
+    public partial class BenefitsCommitment : Azure.ResourceManager.Reservations.Models.PurchasePrice
+    {
+        public BenefitsCommitment() { }
+        public Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain? Grain { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BenefitsCommitmentGrain : System.IEquatable<Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BenefitsCommitmentGrain(string value) { throw null; }
+        public static Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain Hourly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain left, Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain left, Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class BillingInformation
     {
         internal BillingInformation() { }
@@ -362,28 +384,6 @@ namespace Azure.ResourceManager.Reservations.Models
         public bool? IsSucceeded { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    public partial class Commitment : Azure.ResourceManager.Reservations.Models.PurchasePrice
-    {
-        public Commitment() { }
-        public Azure.ResourceManager.Reservations.Models.CommitmentGrain? Grain { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CommitmentGrain : System.IEquatable<Azure.ResourceManager.Reservations.Models.CommitmentGrain>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CommitmentGrain(string value) { throw null; }
-        public static Azure.ResourceManager.Reservations.Models.CommitmentGrain Hourly { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Reservations.Models.CommitmentGrain other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Reservations.Models.CommitmentGrain left, Azure.ResourceManager.Reservations.Models.CommitmentGrain right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Reservations.Models.CommitmentGrain (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Reservations.Models.CommitmentGrain left, Azure.ResourceManager.Reservations.Models.CommitmentGrain right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ExchangeContent
     {
         public ExchangeContent() { }
@@ -416,6 +416,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ExchangeResult
     {
         internal ExchangeResult() { }
@@ -1099,7 +1100,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.AppliedScopeType? AppliedScopeType { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.SavingsPlanBillingPlan? BillingPlan { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier BillingScopeId { get { throw null; } set { } }
-        public Azure.ResourceManager.Reservations.Models.Commitment Commitment { get { throw null; } set { } }
+        public Azure.ResourceManager.Reservations.Models.BenefitsCommitment Commitment { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.SavingsPlanTerm? Term { get { throw null; } set { } }

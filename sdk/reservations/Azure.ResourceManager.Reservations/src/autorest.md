@@ -134,6 +134,8 @@ rename-mapping:
   ReservationResponse.etag: Version
   Kind: ReservationKind
   ReservationOrderResponse.etag: Version
+  Commitment: BenefitsCommitment
+  CommitmentGrain: BenefitsCommitmentGrain
 
 directive:
   - from: reservations.json

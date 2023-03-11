@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class Commitment : IUtf8JsonSerializable
+    public partial class BenefitsCommitment : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteEndObject();
         }
 
-        internal static Commitment DeserializeCommitment(JsonElement element)
+        internal static BenefitsCommitment DeserializeBenefitsCommitment(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CommitmentGrain> grain = default;
+            Optional<BenefitsCommitmentGrain> grain = default;
             Optional<string> currencyCode = default;
             Optional<double> amount = default;
             foreach (var property in element.EnumerateObject())
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    grain = new CommitmentGrain(property.Value.GetString());
+                    grain = new BenefitsCommitmentGrain(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("currencyCode"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new Commitment(currencyCode.Value, Optional.ToNullable(amount), Optional.ToNullable(grain));
+            return new BenefitsCommitment(currencyCode.Value, Optional.ToNullable(amount), Optional.ToNullable(grain));
         }
     }
 }

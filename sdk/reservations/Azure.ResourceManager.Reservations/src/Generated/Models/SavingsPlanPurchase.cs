@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
         /// <param name="commitment"> Commitment towards the benefit. </param>
-        internal SavingsPlanPurchase(ReservationsSkuName sku, string displayName, ResourceIdentifier billingScopeId, SavingsPlanTerm? term, SavingsPlanBillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, Commitment commitment)
+        internal SavingsPlanPurchase(ReservationsSkuName sku, string displayName, ResourceIdentifier billingScopeId, SavingsPlanTerm? term, SavingsPlanBillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, BenefitsCommitment commitment)
         {
             Sku = sku;
             DisplayName = displayName;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
         public AppliedScopeProperties AppliedScopeProperties { get; set; }
         /// <summary> Commitment towards the benefit. </summary>
-        public Commitment Commitment { get; set; }
+        public BenefitsCommitment Commitment { get; set; }
     }
 }

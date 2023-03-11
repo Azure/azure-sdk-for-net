@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<SavingsPlanBillingPlan> billingPlan = default;
             Optional<AppliedScopeType> appliedScopeType = default;
             Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Optional<Commitment> commitment = default;
+            Optional<BenefitsCommitment> commitment = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Reservations.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            commitment = Commitment.DeserializeCommitment(property0.Value);
+                            commitment = BenefitsCommitment.DeserializeBenefitsCommitment(property0.Value);
                             continue;
                         }
                     }
