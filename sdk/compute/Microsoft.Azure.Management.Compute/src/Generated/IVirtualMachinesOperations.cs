@@ -313,6 +313,12 @@ namespace Microsoft.Azure.Management.Compute
         /// Allowed value is 'virtualMachineScaleSet/id' eq
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
         /// </param>
+        /// <param name='expand'>
+        /// The expand expression to apply on operation. 'instanceView' enables
+        /// fetching run time status of all Virtual Machines, this can only be
+        /// specified if a valid $filter option is specified. Possible values
+        /// include: 'instanceView'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -328,7 +334,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the virtual machines in the specified subscription.
         /// Use the nextLink property in the response to get the next page of
@@ -343,6 +349,12 @@ namespace Microsoft.Azure.Management.Compute
         /// Allowed value is 'virtualMachineScaleSet/id' eq
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
         /// </param>
+        /// <param name='expand'>
+        /// The expand expression to apply on operation. 'instanceView' enables
+        /// fetching run time status of all Virtual Machines, this can only be
+        /// specified if a valid $filter option is specified. Possible values
+        /// include: 'instanceView'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -358,7 +370,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly = default(string), string filter = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all available virtual machine sizes to which the specified
         /// virtual machine can be resized.
