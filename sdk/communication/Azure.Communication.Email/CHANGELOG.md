@@ -1,14 +1,9 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0-beta.3 (2023-03-11)
 
 ### Other Changes
+- Upgraded dependent `Azure.Core` to `1.30.0`.
 
 ## 1.0.0-beta.2 (2023-03-01)
 
