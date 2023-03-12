@@ -1,14 +1,10 @@
 # Release History
 
-## 4.15.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 4.14.1 (2023-03-11)
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0`.
 
 ## 4.14.0 (2023-03-06)
 
