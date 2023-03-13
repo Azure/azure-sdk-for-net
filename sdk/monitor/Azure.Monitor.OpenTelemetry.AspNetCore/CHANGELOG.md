@@ -4,7 +4,7 @@
 
 ### Other Changes
 
-- Upgraded dependent `Azure.Core` to `1.30.0`.
+- Upgraded dependent `Azure.Core` to `1.30.0` due to a [issue in `ArrayBackedPropertyBag`](https://github.com/Azure/azure-sdk-for-net/pull/34800) in `Azure.Core` version `1.29.0`.
 
 ## 1.0.0-beta.1 (2023-03-07)
 
