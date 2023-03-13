@@ -1844,8 +1844,8 @@ namespace Azure.ResourceManager.Network
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSets(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionResource GetApplicationGatewayPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Network.ApplicationGatewayResource GetApplicationGatewayResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Network.ApplicationGatewayCollection GetApplicationGateways(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -4585,6 +4585,347 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.WebApplicationFirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.WebApplicationFirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Network.Mock
+{
+    public partial class ApplicationGatewayResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ApplicationGatewayResourceExtensionClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.Network.Models.ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.ApplicationGatewayResource> GetApplicationGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.ApplicationGatewayResource> GetApplicationGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(string predefinedPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(string predefinedPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<string> GetAvailableRequestHeadersApplicationGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<string> GetAvailableResponseHeadersApplicationGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<string> GetAvailableServerVariablesApplicationGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ApplicationSecurityGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ApplicationSecurityGroupResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.ApplicationSecurityGroupResource> GetApplicationSecurityGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.ApplicationSecurityGroupResource> GetApplicationSecurityGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AzureFirewallResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected AzureFirewallResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.AzureFirewallResource> GetAzureFirewalls(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.AzureFirewallResource> GetAzureFirewallsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class BastionHostResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected BastionHostResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.BastionHostResource> GetBastionHosts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.BastionHostResource> GetBastionHostsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class CustomIPPrefixResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected CustomIPPrefixResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.CustomIPPrefixResource> GetCustomIPPrefixes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.CustomIPPrefixResource> GetCustomIPPrefixesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DdosProtectionPlanResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected DdosProtectionPlanResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.DdosProtectionPlanResource> GetDdosProtectionPlans(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.DdosProtectionPlanResource> GetDdosProtectionPlansAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DscpConfigurationResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected DscpConfigurationResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.DscpConfigurationResource> GetDscpConfigurations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.DscpConfigurationResource> GetDscpConfigurationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ExpressRouteCircuitResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ExpressRouteCircuitResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.ExpressRouteCircuitResource> GetExpressRouteCircuits(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.ExpressRouteCircuitResource> GetExpressRouteCircuitsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ExpressRouteCrossConnectionResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ExpressRouteCrossConnectionResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ExpressRouteGatewayResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ExpressRouteGatewayResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.ExpressRouteGatewayResource> GetExpressRouteGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.ExpressRouteGatewayResource> GetExpressRouteGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ExpressRoutePortResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ExpressRoutePortResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.ExpressRoutePortResource> GetExpressRoutePorts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.ExpressRoutePortResource> GetExpressRoutePortsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FirewallPolicyResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected FirewallPolicyResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.FirewallPolicyResource> GetFirewallPolicies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.FirewallPolicyResource> GetFirewallPoliciesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class IPAllocationResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected IPAllocationResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.IPAllocationResource> GetIPAllocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.IPAllocationResource> GetIPAllocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class IPGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected IPGroupResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.IPGroupResource> GetIPGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.IPGroupResource> GetIPGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class LoadBalancerResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected LoadBalancerResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.LoadBalancerResource> GetLoadBalancers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.LoadBalancerResource> GetLoadBalancersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation SwapPublicIPAddressesLoadBalancer(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.LoadBalancerVipSwapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.LoadBalancerVipSwapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NatGatewayResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected NatGatewayResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.NatGatewayResource> GetNatGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.NatGatewayResource> GetNatGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkInterfaceResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkInterfaceResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.NetworkInterfaceResource> GetNetworkInterfaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.NetworkInterfaceResource> GetNetworkInterfacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkProfileResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkProfileResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.NetworkProfileResource> GetNetworkProfiles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.NetworkProfileResource> GetNetworkProfilesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkSecurityGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkSecurityGroupResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.NetworkSecurityGroupResource> GetNetworkSecurityGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.NetworkSecurityGroupResource> GetNetworkSecurityGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkVirtualApplianceResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkVirtualApplianceResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.NetworkVirtualApplianceResource> GetNetworkVirtualAppliances(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.NetworkVirtualApplianceResource> GetNetworkVirtualAppliancesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkWatcherResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkWatcherResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.NetworkWatcherResource> GetNetworkWatchers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.NetworkWatcherResource> GetNetworkWatchersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class P2SVpnGatewayResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected P2SVpnGatewayResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.P2SVpnGatewayResource> GetP2SVpnGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.P2SVpnGatewayResource> GetP2SVpnGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PrivateEndpointResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected PrivateEndpointResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.PrivateEndpointResource> GetPrivateEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.PrivateEndpointResource> GetPrivateEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PrivateLinkServiceResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected PrivateLinkServiceResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.PrivateLinkServiceResource> GetPrivateLinkServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.PrivateLinkServiceResource> GetPrivateLinkServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PublicIPAddressResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected PublicIPAddressResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.PublicIPAddressResource> GetPublicIPAddresses(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.PublicIPAddressResource> GetPublicIPAddressesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PublicIPPrefixResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected PublicIPPrefixResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.PublicIPPrefixResource> GetPublicIPPrefixes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.PublicIPPrefixResource> GetPublicIPPrefixesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Network.ApplicationGatewayCollection GetApplicationGateways() { throw null; }
+        public virtual Azure.ResourceManager.Network.ApplicationSecurityGroupCollection GetApplicationSecurityGroups() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableResourceGroupDelegations(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Network.AzureFirewallCollection GetAzureFirewalls() { throw null; }
+        public virtual Azure.ResourceManager.Network.BastionHostCollection GetBastionHosts() { throw null; }
+        public virtual Azure.ResourceManager.Network.CustomIPPrefixCollection GetCustomIPPrefixes() { throw null; }
+        public virtual Azure.ResourceManager.Network.DdosCustomPolicyCollection GetDdosCustomPolicies() { throw null; }
+        public virtual Azure.ResourceManager.Network.DdosProtectionPlanCollection GetDdosProtectionPlans() { throw null; }
+        public virtual Azure.ResourceManager.Network.DscpConfigurationCollection GetDscpConfigurations() { throw null; }
+        public virtual Azure.ResourceManager.Network.ExpressRouteCircuitCollection GetExpressRouteCircuits() { throw null; }
+        public virtual Azure.ResourceManager.Network.ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections() { throw null; }
+        public virtual Azure.ResourceManager.Network.ExpressRouteGatewayCollection GetExpressRouteGateways() { throw null; }
+        public virtual Azure.ResourceManager.Network.ExpressRoutePortCollection GetExpressRoutePorts() { throw null; }
+        public virtual Azure.ResourceManager.Network.FirewallPolicyCollection GetFirewallPolicies() { throw null; }
+        public virtual Azure.ResourceManager.Network.IPAllocationCollection GetIPAllocations() { throw null; }
+        public virtual Azure.ResourceManager.Network.IPGroupCollection GetIPGroups() { throw null; }
+        public virtual Azure.ResourceManager.Network.LoadBalancerCollection GetLoadBalancers() { throw null; }
+        public virtual Azure.ResourceManager.Network.LocalNetworkGatewayCollection GetLocalNetworkGateways() { throw null; }
+        public virtual Azure.ResourceManager.Network.NatGatewayCollection GetNatGateways() { throw null; }
+        public virtual Azure.ResourceManager.Network.NetworkInterfaceCollection GetNetworkInterfaces() { throw null; }
+        public virtual Azure.ResourceManager.Network.NetworkProfileCollection GetNetworkProfiles() { throw null; }
+        public virtual Azure.ResourceManager.Network.NetworkSecurityGroupCollection GetNetworkSecurityGroups() { throw null; }
+        public virtual Azure.ResourceManager.Network.NetworkVirtualApplianceCollection GetNetworkVirtualAppliances() { throw null; }
+        public virtual Azure.ResourceManager.Network.NetworkWatcherCollection GetNetworkWatchers() { throw null; }
+        public virtual Azure.ResourceManager.Network.P2SVpnGatewayCollection GetP2SVpnGateways() { throw null; }
+        public virtual Azure.ResourceManager.Network.PrivateEndpointCollection GetPrivateEndpoints() { throw null; }
+        public virtual Azure.ResourceManager.Network.PrivateLinkServiceCollection GetPrivateLinkServices() { throw null; }
+        public virtual Azure.ResourceManager.Network.PublicIPAddressCollection GetPublicIPAddresses() { throw null; }
+        public virtual Azure.ResourceManager.Network.PublicIPPrefixCollection GetPublicIPPrefixes() { throw null; }
+        public virtual Azure.ResourceManager.Network.RouteFilterCollection GetRouteFilters() { throw null; }
+        public virtual Azure.ResourceManager.Network.RouteTableCollection GetRouteTables() { throw null; }
+        public virtual Azure.ResourceManager.Network.SecurityPartnerProviderCollection GetSecurityPartnerProviders() { throw null; }
+        public virtual Azure.ResourceManager.Network.ServiceEndpointPolicyCollection GetServiceEndpointPolicies() { throw null; }
+        public virtual Azure.ResourceManager.Network.VirtualHubCollection GetVirtualHubs() { throw null; }
+        public virtual Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections() { throw null; }
+        public virtual Azure.ResourceManager.Network.VirtualNetworkGatewayCollection GetVirtualNetworkGateways() { throw null; }
+        public virtual Azure.ResourceManager.Network.VirtualNetworkCollection GetVirtualNetworks() { throw null; }
+        public virtual Azure.ResourceManager.Network.VirtualNetworkTapCollection GetVirtualNetworkTaps() { throw null; }
+        public virtual Azure.ResourceManager.Network.VirtualRouterCollection GetVirtualRouters() { throw null; }
+        public virtual Azure.ResourceManager.Network.VirtualWanCollection GetVirtualWans() { throw null; }
+        public virtual Azure.ResourceManager.Network.VpnGatewayCollection GetVpnGateways() { throw null; }
+        public virtual Azure.ResourceManager.Network.VpnServerConfigurationCollection GetVpnServerConfigurations() { throw null; }
+        public virtual Azure.ResourceManager.Network.VpnSiteCollection GetVpnSites() { throw null; }
+        public virtual Azure.ResourceManager.Network.WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies() { throw null; }
+    }
+    public partial class RouteFilterResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected RouteFilterResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.RouteFilterResource> GetRouteFilters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.RouteFilterResource> GetRouteFiltersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class RouteTableResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected RouteTableResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.RouteTableResource> GetRouteTables(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.RouteTableResource> GetRouteTablesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SecurityPartnerProviderResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected SecurityPartnerProviderResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.SecurityPartnerProviderResource> GetSecurityPartnerProviders(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.SecurityPartnerProviderResource> GetSecurityPartnerProvidersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ServiceEndpointPolicyResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ServiceEndpointPolicyResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SubscriptionResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtensionClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.Network.Models.DnsNameAvailabilityResult> CheckDnsNameAvailability(Azure.Core.AzureLocation location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(Azure.Core.AzureLocation location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableDelegations(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableDelegationsAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.EndpointServiceResult> GetAvailableEndpointServices(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.EndpointServiceResult> GetAvailableEndpointServicesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliases(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliasesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.AzureFirewallFqdnTag> GetAzureFirewallFqdnTags(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AzureFirewallFqdnTag> GetAzureFirewallFqdnTagsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Network.AzureWebCategoryCollection GetAzureWebCategories() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.BgpServiceCommunity> GetBgpServiceCommunities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.BgpServiceCommunity> GetBgpServiceCommunitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Network.ExpressRoutePortsLocationCollection GetExpressRoutePortsLocations() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.ExpressRouteServiceProvider> GetExpressRouteServiceProviders(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.ExpressRouteServiceProvider> GetExpressRouteServiceProvidersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Network.NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.Models.ServiceTagsListResult> GetServiceTag(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.ServiceTagsListResult>> GetServiceTagAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.NetworkUsage> GetUsages(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.NetworkUsage> GetUsagesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualHubResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected VirtualHubResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.VirtualHubResource> GetVirtualHubs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.VirtualHubResource> GetVirtualHubsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualNetworkResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected VirtualNetworkResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.VirtualNetworkResource> GetVirtualNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.VirtualNetworkResource> GetVirtualNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualNetworkTapResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected VirtualNetworkTapResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.VirtualNetworkTapResource> GetVirtualNetworkTaps(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.VirtualNetworkTapResource> GetVirtualNetworkTapsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualRouterResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected VirtualRouterResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.VirtualRouterResource> GetVirtualRouters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.VirtualRouterResource> GetVirtualRoutersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualWanResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected VirtualWanResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.VirtualWanResource> GetVirtualWans(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.VirtualWanResource> GetVirtualWansAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VpnGatewayResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected VpnGatewayResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.VpnGatewayResource> GetVpnGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.VpnGatewayResource> GetVpnGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VpnServerConfigurationResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected VpnServerConfigurationResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.VpnServerConfigurationResource> GetVpnServerConfigurations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.VpnServerConfigurationResource> GetVpnServerConfigurationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VpnSiteResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected VpnSiteResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.VpnSiteResource> GetVpnSites(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.VpnSiteResource> GetVpnSitesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class WebApplicationFirewallPolicyResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected WebApplicationFirewallPolicyResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPoliciesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Network.Models

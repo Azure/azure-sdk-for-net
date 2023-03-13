@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.Network.Mock
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet, ApplicationGatewayClientDiagnostics, Pipeline, "ApplicationGatewayResourceExtensionClient.GetApplicationGatewayAvailableWafRuleSetsAsync", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet, ApplicationGatewayClientDiagnostics, Pipeline, "ApplicationGatewayResourceExtensionClient.GetApplicationGatewayAvailableWafRuleSets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -250,10 +250,10 @@ namespace Azure.ResourceManager.Network.Mock
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet, ApplicationGatewayClientDiagnostics, Pipeline, "ApplicationGatewayResourceExtensionClient.GetApplicationGatewayAvailableWafRuleSetsAsync", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet, ApplicationGatewayClientDiagnostics, Pipeline, "ApplicationGatewayResourceExtensionClient.GetApplicationGatewayAvailableWafRuleSets", "value", null, cancellationToken);
         }
 
         /// <summary>
