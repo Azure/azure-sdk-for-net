@@ -36,16 +36,18 @@ namespace Azure.Core
         /// </summary>
         /// <param name="initialDelay"></param>
         /// <param name="maxDelay"></param>
+        /// <param name="factor"></param>
         /// <param name="minJitterFactor"></param>
         /// <param name="maxJitterFactor"></param>
         /// <returns></returns>
         public static DelayStrategy CreateExponentialDelayStrategy(
             TimeSpan? initialDelay = default,
             TimeSpan? maxDelay = default,
+            double factor = 2.0,
             double minJitterFactor = 0.8,
             double maxJitterFactor = 1.2)
         {
-            return new ExponentialDelayStrategy(initialDelay, maxDelay, minJitterFactor, maxJitterFactor);
+            return new ExponentialDelayStrategy(initialDelay, maxDelay, factor, minJitterFactor, maxJitterFactor);
         }
 
         /// <summary>

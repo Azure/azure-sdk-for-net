@@ -403,7 +403,7 @@ namespace Azure.Core
     public abstract partial class DelayStrategy
     {
         protected DelayStrategy(Azure.Core.RetryMode? mode = default(Azure.Core.RetryMode?), System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { }
-        public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?), double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { throw null; }
+        public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?), double factor = 2, double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { throw null; }
         public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
         public static Azure.Core.DelayStrategy CreateSequentialDelayStrategy(System.Collections.Generic.IEnumerable<System.TimeSpan>? sequence = null) { throw null; }
         public System.TimeSpan? GetClientDelayHint(Azure.Response? response, int retryNumber) { throw null; }
