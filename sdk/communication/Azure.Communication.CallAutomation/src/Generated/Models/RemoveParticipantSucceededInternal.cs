@@ -9,22 +9,22 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The participant successfully added event. </summary>
-    internal partial class AddParticipantSucceededInternal
+    /// <summary> The participant removed event. </summary>
+    internal partial class RemoveParticipantSucceededInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantSucceededInternal. </summary>
-        internal AddParticipantSucceededInternal()
+        /// <summary> Initializes a new instance of RemoveParticipantSucceededInternal. </summary>
+        internal RemoveParticipantSucceededInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of AddParticipantSucceededInternal. </summary>
+        /// <summary> Initializes a new instance of RemoveParticipantSucceededInternal. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         /// <param name="participant"> Participant. </param>
-        internal AddParticipantSucceededInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel participant)
+        internal RemoveParticipantSucceededInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel participant)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
