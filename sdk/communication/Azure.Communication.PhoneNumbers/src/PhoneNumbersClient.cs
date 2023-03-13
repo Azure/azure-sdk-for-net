@@ -335,6 +335,22 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
+        /// <summary> Gets the result of a search </summary>
+        /// <param name="searchId"> The id of the search to retrieve the phone numbers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<PhoneNumberSearchResult> GetPhoneNumberSearchResultAsync(string searchId, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary> Gets the result of a search </summary>
+        /// <param name="searchId"> The id of the search to retrieve the phone numbers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<PhoneNumberSearchResult> GetPhoneNumberSearchResult(string searchId, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbersAsync(CancellationToken cancellationToken = default)
@@ -797,13 +813,6 @@ namespace Azure.Communication.PhoneNumbers
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets the result of a search </summary>
-        /// <param name="searchId"> The cancellation token to use. </param>
-        public AsyncPageable<PhoneNumberSearchResult> GetPhoneNumberSearchResult(string searchId)
-        {
-            throw new NotImplementedException();
         }
     }
 }
