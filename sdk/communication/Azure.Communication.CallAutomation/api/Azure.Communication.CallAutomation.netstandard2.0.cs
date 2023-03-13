@@ -483,6 +483,31 @@ namespace Azure.Communication.CallAutomation
         public static bool operator !=(Azure.Communication.CallAutomation.DtmfTone left, Azure.Communication.CallAutomation.DtmfTone right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class EventProcessor
+    {
+        internal EventProcessor() { }
+        public void AttachOngoingEventProcessor<TEvent>(string callConnectionId, System.Action<TEvent> eventProcessor) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { }
+        public void DetachOngoingEventProcessor<TEvent>(string callConnectionId) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { }
+        public void ProcessEvents(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallAutomationEventBase> events) { }
+        public void ProcessEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> events) { }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CallAutomationEventBase> WaitForSingleEvent(System.Func<Azure.Communication.CallAutomation.CallAutomationEventBase, bool> predicate, System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
+        public System.Threading.Tasks.Task<TEvent> WaitForSingleEvent<TEvent>(string connectionId = null, string operationContext = null, System.TimeSpan eventTimeout = default(System.TimeSpan)) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { throw null; }
+    }
+    public partial class EventProcessorOptions
+    {
+        public EventProcessorOptions() { }
+        public System.TimeSpan EventTimeout { get { throw null; } set { } }
+    }
+    public abstract partial class EventResultBase
+    {
+        protected EventResultBase() { }
+        public bool IsSuccessEvent { get { throw null; } }
+    }
+    public abstract partial class ExternalStorage
+    {
+        protected ExternalStorage() { }
+        public Azure.Communication.CallAutomation.RecordingStorageType StorageType { get { throw null; } protected set { } }
+    }
     public partial class FileSource : Azure.Communication.CallAutomation.PlaySource
     {
         public FileSource(System.Uri fileUri) { }
@@ -896,6 +921,12 @@ namespace Azure.Communication.CallAutomation
         public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SsmlSource
+    {
+        public SsmlSource(string ssmlText) { }
+        public string SsmlText { get { throw null; } }
+    }
+    public partial class StartRecognizingEventResult : Azure.Communication.CallAutomation.EventResultBase
     public partial class StartRecognizingEventResult
     {
         internal StartRecognizingEventResult() { }
@@ -913,12 +944,11 @@ namespace Azure.Communication.CallAutomation
     {
         public StartRecordingOptions(Azure.Communication.CallAutomation.CallLocator callLocator) { }
         public System.Collections.Generic.IList<Azure.Communication.CommunicationIdentifier> AudioChannelParticipantOrdering { get { throw null; } }
-        public System.Uri ExternalStorageLocation { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.ExternalStorage ExternalStorage { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingChannel RecordingChannel { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingContent RecordingContent { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingFormat RecordingFormat { get { throw null; } set { } }
         public System.Uri RecordingStateCallbackEndpoint { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.RecordingStorageType? RecordingStorageType { get { throw null; } set { } }
     }
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {
