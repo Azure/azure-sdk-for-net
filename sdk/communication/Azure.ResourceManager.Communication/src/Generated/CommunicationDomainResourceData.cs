@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="location"> The location. </param>
         public CommunicationDomainResourceData(AzureLocation location) : base(location)
         {
-            ValidSenderUsernames = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
@@ -37,21 +36,35 @@ namespace Azure.ResourceManager.Communication
         /// <param name="fromSenderDomain"> P2 sender domain that is displayed to the email recipients [RFC 5322]. </param>
         /// <param name="mailFromSenderDomain"> P1 sender domain that is present on the email envelope [RFC 5321]. </param>
         /// <param name="domainManagement"> Describes how a Domains resource is being managed. </param>
-        /// <param name="verificationStates"> List of VerificationStatusRecord. </param>
-        /// <param name="verificationRecords"> List of DnsRecord. </param>
-        /// <param name="validSenderUsernames"> Collection of valid sender usernames. This is a key-value pair where key=username and value=display name. </param>
         /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
-        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProvisioningState? provisioningState, string dataLocation, string fromSenderDomain, string mailFromSenderDomain, DomainManagement? domainManagement, DomainPropertiesVerificationStates verificationStates, DomainPropertiesVerificationRecords verificationRecords, IDictionary<string, string> validSenderUsernames, UserEngagementTracking? userEngagementTracking) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="domainPropertiesVerificationRecordsDomain"> A class that represents a VerificationStatus record. </param>
+        /// <param name="spfPropertiesVerificationRecordsSpf"> A class that represents a VerificationStatus record. </param>
+        /// <param name="dkimPropertiesVerificationRecordsDkim"> A class that represents a VerificationStatus record. </param>
+        /// <param name="dkim2PropertiesVerificationRecordsDkim2"> A class that represents a VerificationStatus record. </param>
+        /// <param name="dmarcPropertiesVerificationRecordsDmarc"> A class that represents a VerificationStatus record. </param>
+        /// <param name="domainPropertiesVerificationStatesDomain"> A class that represents a VerificationStatus record. </param>
+        /// <param name="spfPropertiesVerificationStatesSpf"> A class that represents a VerificationStatus record. </param>
+        /// <param name="dkimPropertiesVerificationStatesDkim"> A class that represents a VerificationStatus record. </param>
+        /// <param name="dkim2PropertiesVerificationStatesDkim2"> A class that represents a VerificationStatus record. </param>
+        /// <param name="dmarcPropertiesVerificationStatesDmarc"> A class that represents a VerificationStatus record. </param>
+        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProvisioningState? provisioningState, string dataLocation, string fromSenderDomain, string mailFromSenderDomain, DomainManagement? domainManagement, UserEngagementTracking? userEngagementTracking, VerificationDnsRecord domainPropertiesVerificationRecordsDomain, VerificationDnsRecord spfPropertiesVerificationRecordsSpf, VerificationDnsRecord dkimPropertiesVerificationRecordsDkim, VerificationDnsRecord dkim2PropertiesVerificationRecordsDkim2, VerificationDnsRecord dmarcPropertiesVerificationRecordsDmarc, DomainVerificationStatusRecord domainPropertiesVerificationStatesDomain, DomainVerificationStatusRecord spfPropertiesVerificationStatesSpf, DomainVerificationStatusRecord dkimPropertiesVerificationStatesDkim, DomainVerificationStatusRecord dkim2PropertiesVerificationStatesDkim2, DomainVerificationStatusRecord dmarcPropertiesVerificationStatesDmarc) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             DataLocation = dataLocation;
             FromSenderDomain = fromSenderDomain;
             MailFromSenderDomain = mailFromSenderDomain;
             DomainManagement = domainManagement;
-            VerificationStates = verificationStates;
-            VerificationRecords = verificationRecords;
-            ValidSenderUsernames = validSenderUsernames;
             UserEngagementTracking = userEngagementTracking;
+            DomainPropertiesVerificationRecordsDomain = domainPropertiesVerificationRecordsDomain;
+            SpfPropertiesVerificationRecordsSpf = spfPropertiesVerificationRecordsSpf;
+            DkimPropertiesVerificationRecordsDkim = dkimPropertiesVerificationRecordsDkim;
+            Dkim2PropertiesVerificationRecordsDkim2 = dkim2PropertiesVerificationRecordsDkim2;
+            DmarcPropertiesVerificationRecordsDmarc = dmarcPropertiesVerificationRecordsDmarc;
+            DomainPropertiesVerificationStatesDomain = domainPropertiesVerificationStatesDomain;
+            SpfPropertiesVerificationStatesSpf = spfPropertiesVerificationStatesSpf;
+            DkimPropertiesVerificationStatesDkim = dkimPropertiesVerificationStatesDkim;
+            Dkim2PropertiesVerificationStatesDkim2 = dkim2PropertiesVerificationStatesDkim2;
+            DmarcPropertiesVerificationStatesDmarc = dmarcPropertiesVerificationStatesDmarc;
         }
 
         /// <summary> Provisioning state of the resource. </summary>
@@ -64,13 +77,27 @@ namespace Azure.ResourceManager.Communication
         public string MailFromSenderDomain { get; }
         /// <summary> Describes how a Domains resource is being managed. </summary>
         public DomainManagement? DomainManagement { get; set; }
-        /// <summary> List of VerificationStatusRecord. </summary>
-        public DomainPropertiesVerificationStates VerificationStates { get; }
-        /// <summary> List of DnsRecord. </summary>
-        public DomainPropertiesVerificationRecords VerificationRecords { get; }
-        /// <summary> Collection of valid sender usernames. This is a key-value pair where key=username and value=display name. </summary>
-        public IDictionary<string, string> ValidSenderUsernames { get; }
         /// <summary> Describes whether user engagement tracking is enabled or disabled. </summary>
         public UserEngagementTracking? UserEngagementTracking { get; set; }
+        /// <summary> A class that represents a VerificationStatus record. </summary>
+        public VerificationDnsRecord DomainPropertiesVerificationRecordsDomain { get; set; }
+        /// <summary> A class that represents a VerificationStatus record. </summary>
+        public VerificationDnsRecord SpfPropertiesVerificationRecordsSpf { get; set; }
+        /// <summary> A class that represents a VerificationStatus record. </summary>
+        public VerificationDnsRecord DkimPropertiesVerificationRecordsDkim { get; set; }
+        /// <summary> A class that represents a VerificationStatus record. </summary>
+        public VerificationDnsRecord Dkim2PropertiesVerificationRecordsDkim2 { get; set; }
+        /// <summary> A class that represents a VerificationStatus record. </summary>
+        public VerificationDnsRecord DmarcPropertiesVerificationRecordsDmarc { get; set; }
+        /// <summary> A class that represents a VerificationStatus record. </summary>
+        public DomainVerificationStatusRecord DomainPropertiesVerificationStatesDomain { get; set; }
+        /// <summary> A class that represents a VerificationStatus record. </summary>
+        public DomainVerificationStatusRecord SpfPropertiesVerificationStatesSpf { get; set; }
+        /// <summary> A class that represents a VerificationStatus record. </summary>
+        public DomainVerificationStatusRecord DkimPropertiesVerificationStatesDkim { get; set; }
+        /// <summary> A class that represents a VerificationStatus record. </summary>
+        public DomainVerificationStatusRecord Dkim2PropertiesVerificationStatesDkim2 { get; set; }
+        /// <summary> A class that represents a VerificationStatus record. </summary>
+        public DomainVerificationStatusRecord DmarcPropertiesVerificationStatesDmarc { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Communication.Models
     public partial class DomainVerificationStatusRecord
     {
         /// <summary> Initializes a new instance of DomainVerificationStatusRecord. </summary>
-        internal DomainVerificationStatusRecord()
+        public DomainVerificationStatusRecord()
         {
         }
 
