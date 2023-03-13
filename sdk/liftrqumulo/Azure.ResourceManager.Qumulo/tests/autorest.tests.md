@@ -2,7 +2,7 @@
 
 Run `dotnet build /t:GenerateTest` to generate code.
 
-# Azure.ResourceManager.LiftrQumulo.Tests
+# Azure.ResourceManager.Qumulo.Tests
 
 > see https://aka.ms/autorest
 ``` yaml

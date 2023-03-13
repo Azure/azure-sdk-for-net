@@ -8,18 +8,18 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace Azure.ResourceManager.LiftrQumulo.Tests
+namespace Azure.ResourceManager.Qumulo.Tests
 {
-    public class LiftrQumuloManagementTestBase : ManagementRecordedTestBase<LiftrQumuloManagementTestEnvironment>
+    public class QumuloManagementTestBase : ManagementRecordedTestBase<QumuloManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
 
-        protected LiftrQumuloManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected QumuloManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected LiftrQumuloManagementTestBase(bool isAsync)
+        protected QumuloManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

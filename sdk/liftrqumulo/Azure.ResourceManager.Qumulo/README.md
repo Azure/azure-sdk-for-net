@@ -1,6 +1,6 @@
-# Microsoft Azure LiftrQumulo management client library for .NET
+# Microsoft Azure Qumulo management client library for .NET
 
-Qumulo native solutions for Azure provides a high-performance, highly scalable file system for its customers.
+**[Describe the service briefly first.]**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -10,11 +10,11 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started
+## Getting started 
 
 ### Install the package
 
-Install the Microsoft Azure LiftrQumulo management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Qumulo management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.Qumulo --prerelease
@@ -22,7 +22,7 @@ dotnet add package Azure.ResourceManager.Qumulo --prerelease
 
 ### Prerequisites
 
--   You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ### Authenticate the Client
 
@@ -36,15 +36,14 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 
 Documentation is available to help you learn how to use this package:
 
--   [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
--   [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
--   [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
+- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
+- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
-
--   [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
+- [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ## Troubleshooting
 
@@ -76,7 +75,6 @@ more information, see the [Code of Conduct FAQ][coc_faq] or contact
 <opencode@microsoft.com> with any other questions or comments.
 
 <!-- LINKS -->
-
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

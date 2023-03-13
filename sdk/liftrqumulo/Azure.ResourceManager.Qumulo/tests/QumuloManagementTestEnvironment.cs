@@ -3,9 +3,9 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.ResourceManager.LiftrQumulo.Tests
+namespace Azure.ResourceManager.Qumulo.Tests
 {
-    public class LiftrQumuloManagementTestEnvironment : TestEnvironment
+    public class QumuloManagementTestEnvironment : TestEnvironment
     {
     }
 }
