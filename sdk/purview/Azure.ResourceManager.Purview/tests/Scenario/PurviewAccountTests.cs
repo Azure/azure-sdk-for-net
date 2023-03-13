@@ -79,7 +79,6 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
         //[TestCase(true)]
         //[TestCase(null)]
         [TestCase(false)]
-        [RecordedTest]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
