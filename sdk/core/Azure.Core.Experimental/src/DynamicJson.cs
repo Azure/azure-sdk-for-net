@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
@@ -14,6 +15,7 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// Dynamic layer over MutableJsonDocument.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [JsonConverter(typeof(JsonConverter))]
     public sealed partial class DynamicJson : DynamicData, IDisposable
     {
@@ -179,6 +181,9 @@ namespace Azure.Core.Dynamic
         {
             _element.DisposeRoot();
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string DebuggerDisplay => _element.DebuggerDisplay;
 
         private class JsonConverter : JsonConverter<DynamicJson>
         {

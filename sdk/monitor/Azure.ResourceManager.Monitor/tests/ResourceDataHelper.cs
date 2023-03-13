@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             IEnumerable<string> scopes = new List<string>()
             {
-                "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM01",
+                "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0309/providers/Microsoft.Storage/storageAccounts/metricalerttest",
                 // "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM02"
             };
             var metricAlertAction = new MetricAlertAction()
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Monitor.Tests
                 ActionGroupId = actionGroup.Id,
                 WebHookProperties = { new KeyValuePair<string, string>("key1", "value1") }
             };
-            var metricCriteria = new MetricCriteria("High_CPU_80", "Percentage CPU", MetricCriteriaTimeAggregationType.Average, MetricCriteriaOperator.GreaterThan, 80.50) { };
+            var metricCriteria = new MetricCriteria("High_CPU_80", "Transactions", MetricCriteriaTimeAggregationType.Total, MetricCriteriaOperator.GreaterThan, 80.50) { };
             return new MetricAlertData(
                 location,
                 3,

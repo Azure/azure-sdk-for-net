@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Azure.Communication.CallAutomation.Models;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -20,5 +21,11 @@ namespace Azure.Communication.CallAutomation
         /// The RecognizeResultType of this RecognizeResult.
         /// </summary>
         public override RecognizeResultType ResultType => RecognizeResultType.CollectTonesResult;
+        /// Convert the collection of tones to a string like "12345#".
+        /// </summary>
+        public string ConvertToString()
+        {
+            return string.Join("", Tones.Select(x => x.ToChar()));
+        }
     }
 }
