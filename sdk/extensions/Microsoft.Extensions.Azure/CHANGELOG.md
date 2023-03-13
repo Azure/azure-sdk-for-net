@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.6.3 (2023-03-10)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0`.
+
 ## 1.6.2 (2023-03-07)
 
 ### Bugs Fixed
