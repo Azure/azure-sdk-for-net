@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> targetAvailabilitySetId = default;
             Optional<string> targetAvailabilityZone = default;
             Optional<string> targetProximityPlacementGroupId = default;
-            Optional<string> confidentialVmKeyVaultId = default;
+            Optional<ResourceIdentifier> confidentialVmKeyVaultId = default;
             Optional<VMwareCbtSecurityProfileProperties> targetVmSecurityProfile = default;
             Optional<string> targetBootDiagnosticsStorageAccountId = default;
             Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
@@ -152,7 +152,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("confidentialVmKeyVaultId"u8))
                 {
-                    confidentialVmKeyVaultId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    confidentialVmKeyVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVmSecurityProfile"u8))

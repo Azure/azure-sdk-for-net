@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The target proximity placement group ARM Id. </summary>
         public string TargetProximityPlacementGroupId { get; set; }
         /// <summary> The confidential VM key vault Id for ADE installation. </summary>
-        public string ConfidentialVmKeyVaultId { get; set; }
+        public ResourceIdentifier ConfidentialVmKeyVaultId { get; set; }
         /// <summary> The target VM security profile. </summary>
         public VMwareCbtSecurityProfileProperties TargetVmSecurityProfile { get; set; }
         /// <summary> The target boot diagnostics storage account ARM Id. </summary>

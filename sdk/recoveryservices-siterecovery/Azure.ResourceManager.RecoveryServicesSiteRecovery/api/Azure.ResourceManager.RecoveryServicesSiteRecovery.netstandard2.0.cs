@@ -5573,7 +5573,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VMwareCbtEnableMigrationInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.EnableMigrationProviderSpecificInput
     {
         public VMwareCbtEnableMigrationInput(string vmwareMachineId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskInput> disksToInclude, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string targetResourceGroupId, string targetNetworkId) { }
-        public string ConfidentialVmKeyVaultId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ConfidentialVmKeyVaultId { get { throw null; } set { } }
         public string DataMoverRunAsAccountId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskInput> DisksToInclude { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.LicenseType? LicenseType { get { throw null; } set { } }
@@ -5613,7 +5613,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VMwareCbtMigrationDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrationProviderSpecificSettings
     {
         internal VMwareCbtMigrationDetails() { }
-        public string ConfidentialVmKeyVaultId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ConfidentialVmKeyVaultId { get { throw null; } }
         public string DataMoverRunAsAccountId { get { throw null; } }
         public string FirmwareType { get { throw null; } }
         public int? InitialSeedingProgressPercentage { get { throw null; } }

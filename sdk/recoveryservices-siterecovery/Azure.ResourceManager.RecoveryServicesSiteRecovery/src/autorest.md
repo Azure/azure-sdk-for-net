@@ -19,8 +19,8 @@ modelerfour:
 rename-mapping:
   InMageRcmFailbackReplicationDetails.targetvCenterId: TargetVCenterId
   SecurityType: VirtualMachineSecurityType
-  VMwareCbtEnableMigrationInput.properties.confidentialVmKeyVaultId: -|arm-id
-  VMwareCbtMigrationDetails.properties.confidentialVmKeyVaultId: -|arm-id
+  VMwareCbtEnableMigrationInput.confidentialVmKeyVaultId: -|arm-id
+  VMwareCbtMigrationDetails.confidentialVmKeyVaultId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'
