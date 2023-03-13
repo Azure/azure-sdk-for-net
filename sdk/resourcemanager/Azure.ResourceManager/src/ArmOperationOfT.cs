@@ -54,7 +54,6 @@ namespace Azure.ResourceManager
 
         /// <summary> Initializes a new instance of ArmOperation. </summary>
         public static ArmOperation<TResource> Rehydrate<TResource, TModel>(ArmClient client, string id)
-            where TResource : IData<TModel>
             where TModel : ISerializable, new()
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));

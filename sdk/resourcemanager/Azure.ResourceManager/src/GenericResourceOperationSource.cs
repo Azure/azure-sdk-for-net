@@ -12,7 +12,6 @@ using Azure.Core;
 namespace Azure.ResourceManager
 {
     internal class GenericResourceOperationSource<TResource, TModel> : IOperationSource<TResource>
-        where TResource : IData<TModel>
         where TModel: ISerializable, new()
     {
         private readonly ArmClient _client;
