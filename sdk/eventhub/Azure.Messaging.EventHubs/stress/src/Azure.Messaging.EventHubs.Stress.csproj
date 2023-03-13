@@ -14,9 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--TEMP: Unblock release
-        <ProjectReference Include="..\..\src\Azure.Messaging.EventHubs.csproj" />
-    -->
+    <ProjectReference Include="..\..\src\Azure.Messaging.EventHubs.csproj" />
     <ProjectReference Include="..\..\..\Azure.Messaging.EventHubs.Processor\src\Azure.Messaging.EventHubs.Processor.csproj" />
   </ItemGroup>
 
