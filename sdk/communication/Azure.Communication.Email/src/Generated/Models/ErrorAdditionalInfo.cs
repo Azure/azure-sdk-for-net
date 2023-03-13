@@ -8,7 +8,7 @@
 namespace Azure.Communication.Email
 {
     /// <summary> The resource management error additional info. </summary>
-    internal partial class ErrorAdditionalInfo
+    public partial class ErrorAdditionalInfo
     {
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
         internal ErrorAdditionalInfo()
