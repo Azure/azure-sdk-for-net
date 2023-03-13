@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -26,7 +27,19 @@ namespace Azure.ResourceManager.Monitor.Tests
             string accountName = Recording.GenerateAssetName("metrictests");
             var storageContent = ResourceDataHelper.GetContent();
             var storageAccount = await storageCeollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageContent);
-            return storageAccount.Value.Data.Id;
+            string storageAccountId;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                storageAccountId = $"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/{resourceGroup.Id.Name}/providers/Microsoft.Storage/storageAccounts/{accountName}";
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    storageAccountId = storageAccount.Value.Data.Id;
+                }
+            }
+            return storageAccountId;
         }
         #endregion
         private async Task<MetricAlertResource> CreateMetricAlertAsync(string alertName)
@@ -38,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
             var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
             var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
-            var storageAccountId = await GetStorageAccountId();
+            string storageAccountId = await GetStorageAccountId();
             var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup, storageAccountId);
             var metricAlert = await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, alertName, metricAlertData);
             return metricAlert.Value;
