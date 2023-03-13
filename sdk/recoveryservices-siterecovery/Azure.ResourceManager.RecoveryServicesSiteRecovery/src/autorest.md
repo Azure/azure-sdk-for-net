@@ -9,7 +9,7 @@ generate-model-factory: false
 csharp: true
 library-name: RecoveryServicesSiteRecovery
 namespace: Azure.ResourceManager.RecoveryServicesSiteRecovery
-require: https://github.com/Azure/azure-rest-api-specs/blob/ddbdba6d960f83647257d6dc08be7b81dc5eb8f8/specification/recoveryservicessiterecovery/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/95fb710c0025b325306898a3210333eaaf5d5e62/specification/recoveryservicessiterecovery/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
