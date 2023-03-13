@@ -38,22 +38,67 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("domainManagement"u8);
                 writer.WriteStringValue(DomainManagement.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ValidSenderUsernames))
-            {
-                writer.WritePropertyName("validSenderUsernames"u8);
-                writer.WriteStartObject();
-                foreach (var item in ValidSenderUsernames)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(UserEngagementTracking))
             {
                 writer.WritePropertyName("userEngagementTracking"u8);
                 writer.WriteStringValue(UserEngagementTracking.Value.ToString());
             }
+            writer.WritePropertyName("verificationRecords"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DomainPropertiesVerificationRecordsDomain))
+            {
+                writer.WritePropertyName("Domain"u8);
+                writer.WriteObjectValue(DomainPropertiesVerificationRecordsDomain);
+            }
+            if (Optional.IsDefined(SpfPropertiesVerificationRecordsSpf))
+            {
+                writer.WritePropertyName("SPF"u8);
+                writer.WriteObjectValue(SpfPropertiesVerificationRecordsSpf);
+            }
+            if (Optional.IsDefined(DkimPropertiesVerificationRecordsDkim))
+            {
+                writer.WritePropertyName("DKIM"u8);
+                writer.WriteObjectValue(DkimPropertiesVerificationRecordsDkim);
+            }
+            if (Optional.IsDefined(Dkim2PropertiesVerificationRecordsDkim2))
+            {
+                writer.WritePropertyName("DKIM2"u8);
+                writer.WriteObjectValue(Dkim2PropertiesVerificationRecordsDkim2);
+            }
+            if (Optional.IsDefined(DmarcPropertiesVerificationRecordsDmarc))
+            {
+                writer.WritePropertyName("DMARC"u8);
+                writer.WriteObjectValue(DmarcPropertiesVerificationRecordsDmarc);
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("verificationStates"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DomainPropertiesVerificationStatesDomain))
+            {
+                writer.WritePropertyName("Domain"u8);
+                writer.WriteObjectValue(DomainPropertiesVerificationStatesDomain);
+            }
+            if (Optional.IsDefined(SpfPropertiesVerificationStatesSpf))
+            {
+                writer.WritePropertyName("SPF"u8);
+                writer.WriteObjectValue(SpfPropertiesVerificationStatesSpf);
+            }
+            if (Optional.IsDefined(DkimPropertiesVerificationStatesDkim))
+            {
+                writer.WritePropertyName("DKIM"u8);
+                writer.WriteObjectValue(DkimPropertiesVerificationStatesDkim);
+            }
+            if (Optional.IsDefined(Dkim2PropertiesVerificationStatesDkim2))
+            {
+                writer.WritePropertyName("DKIM2"u8);
+                writer.WriteObjectValue(Dkim2PropertiesVerificationStatesDkim2);
+            }
+            if (Optional.IsDefined(DmarcPropertiesVerificationStatesDmarc))
+            {
+                writer.WritePropertyName("DMARC"u8);
+                writer.WriteObjectValue(DmarcPropertiesVerificationStatesDmarc);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -75,10 +120,17 @@ namespace Azure.ResourceManager.Communication
             Optional<string> fromSenderDomain = default;
             Optional<string> mailFromSenderDomain = default;
             Optional<DomainManagement> domainManagement = default;
-            Optional<DomainPropertiesVerificationStates> verificationStates = default;
-            Optional<DomainPropertiesVerificationRecords> verificationRecords = default;
-            Optional<IDictionary<string, string>> validSenderUsernames = default;
             Optional<UserEngagementTracking> userEngagementTracking = default;
+            Optional<VerificationDnsRecord> domain = default;
+            Optional<VerificationDnsRecord> spf = default;
+            Optional<VerificationDnsRecord> dkim = default;
+            Optional<VerificationDnsRecord> dkiM2 = default;
+            Optional<VerificationDnsRecord> dmarc = default;
+            Optional<DomainVerificationStatusRecord> domain0 = default;
+            Optional<DomainVerificationStatusRecord> spf0 = default;
+            Optional<DomainVerificationStatusRecord> dkim0 = default;
+            Optional<DomainVerificationStatusRecord> dkiM20 = default;
+            Optional<DomainVerificationStatusRecord> dmarc0 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -170,41 +222,6 @@ namespace Azure.ResourceManager.Communication
                             domainManagement = new DomainManagement(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("verificationStates"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            verificationStates = DomainPropertiesVerificationStates.DeserializeDomainPropertiesVerificationStates(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("verificationRecords"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            verificationRecords = DomainPropertiesVerificationRecords.DeserializeDomainPropertiesVerificationRecords(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("validSenderUsernames"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            validSenderUsernames = dictionary;
-                            continue;
-                        }
                         if (property0.NameEquals("userEngagementTracking"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -215,11 +232,135 @@ namespace Azure.ResourceManager.Communication
                             userEngagementTracking = new UserEngagementTracking(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("verificationRecords"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("Domain"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    domain = VerificationDnsRecord.DeserializeVerificationDnsRecord(property1.Value);
+                                    continue;
+                                }
+                                if (property1.NameEquals("SPF"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    spf = VerificationDnsRecord.DeserializeVerificationDnsRecord(property1.Value);
+                                    continue;
+                                }
+                                if (property1.NameEquals("DKIM"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    dkim = VerificationDnsRecord.DeserializeVerificationDnsRecord(property1.Value);
+                                    continue;
+                                }
+                                if (property1.NameEquals("DKIM2"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    dkiM2 = VerificationDnsRecord.DeserializeVerificationDnsRecord(property1.Value);
+                                    continue;
+                                }
+                                if (property1.NameEquals("DMARC"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    dmarc = VerificationDnsRecord.DeserializeVerificationDnsRecord(property1.Value);
+                                    continue;
+                                }
+                            }
+                            continue;
+                        }
+                        if (property0.NameEquals("verificationStates"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("Domain"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    domain0 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property1.Value);
+                                    continue;
+                                }
+                                if (property1.NameEquals("SPF"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    spf0 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property1.Value);
+                                    continue;
+                                }
+                                if (property1.NameEquals("DKIM"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    dkim0 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property1.Value);
+                                    continue;
+                                }
+                                if (property1.NameEquals("DKIM2"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    dkiM20 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property1.Value);
+                                    continue;
+                                }
+                                if (property1.NameEquals("DMARC"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    dmarc0 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property1.Value);
+                                    continue;
+                                }
+                            }
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new CommunicationDomainResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Optional.ToNullable(domainManagement), verificationStates.Value, verificationRecords.Value, Optional.ToDictionary(validSenderUsernames), Optional.ToNullable(userEngagementTracking));
+            return new CommunicationDomainResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Optional.ToNullable(domainManagement), Optional.ToNullable(userEngagementTracking), domain.Value, spf.Value, dkim.Value, dkiM2.Value, dmarc.Value, domain0.Value, spf0.Value, dkim0.Value, dkiM20.Value, dmarc0.Value);
         }
     }
 }

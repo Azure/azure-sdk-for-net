@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Communication.Models
     public partial class VerificationDnsRecord
     {
         /// <summary> Initializes a new instance of VerificationDnsRecord. </summary>
-        internal VerificationDnsRecord()
+        public VerificationDnsRecord()
         {
         }
 

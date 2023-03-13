@@ -10,8 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class VerificationDnsRecord
+    public partial class VerificationDnsRecord : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+        }
+
         internal static VerificationDnsRecord DeserializeVerificationDnsRecord(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
