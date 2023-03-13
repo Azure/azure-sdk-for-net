@@ -10,7 +10,6 @@ This tutorial has following sections:
 
 - [Azure SDK Code Generation Quickstart Tutorial (Data Plane)](#azure-sdk-code-generation-quickstart-tutorial-data-plane)
   - [Prerequisites](#prerequisites)
-  - [Setup your repository](#setup-your-repository)
   - [Create SDK Package](#create-sdk-package)
     - [Use Cadl as Input API spec](#use-cadl-as-input-api-spec)
       - [Before you Start](#before-you-start)
@@ -29,18 +28,7 @@ This tutorial has following sections:
 
 ## Prerequisites
 
-- Install Visual Studio 2022 (Community or higher) and make sure you have the [latest updates](https://www.visualstudio.com/).
-  - Need at least .NET Framework 4.6.1 and 4.7 development tools
-  - Install the **.NET Core cross-platform development** workloads in Visual Studio
-- Install **.NET 6.0 SDK** for your specific platform. (or a higher version)
-- Install the latest version of [git](https://git-scm.com/downloads)
-- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.
-- Install [NodeJS](https://nodejs.org/) (16.x.x or above).
-
-## Setup your repository
-
-- Fork and clone the [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repository. Instructions for doing so can be found in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md).
-- Create a branch to work in.
+For first time to setup of a new sdk package, please verify you have met the prerequisites. You can refer to [SDK Generation Prerequisites](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKGeneration_Prerequistites.md)
 
 ## Create SDK Package
 
@@ -80,8 +68,6 @@ We will generate SDK under the SDK project directory.
 You can update `cadl-location.yaml` under sdk project directory to set the cadl project.
 
 You can refer to the [cadl-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Cadl-Project-Scripts.md#cadl-locationyaml) which describes the supported properties in the file.
-
-**Note**: If you want to use a local specs repo that is already present, you can specify `spec-root-dir` to provide the path of the root directory of the specs repo, e.g. /home/azure-rest-api-specs, and don't provide the `commit` and `repo`.
 
 ***Generate Code***
 
