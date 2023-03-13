@@ -84,6 +84,10 @@ namespace Azure.AI.OpenAI
         protected OpenAIClient() { }
         public OpenAIClient(string openAIAuthToken) { }
         public OpenAIClient(string openAIAuthToken, Azure.AI.OpenAI.OpenAIClientOptions options) { }
+        public OpenAIClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public OpenAIClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
+        public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public OpenAIClient(System.Uri endpoint, string deploymentId, Azure.AzureKeyCredential credential) { }
         public OpenAIClient(System.Uri endpoint, string deploymentId, Azure.AzureKeyCredential credential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public OpenAIClient(System.Uri endpoint, string deploymentId, Azure.Core.TokenCredential credential) { }

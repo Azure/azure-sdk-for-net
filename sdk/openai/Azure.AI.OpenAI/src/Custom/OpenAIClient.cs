@@ -77,19 +77,9 @@ namespace Azure.AI.OpenAI
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, string deploymentId, AzureKeyCredential credential, OpenAIClientOptions options)
+        public OpenAIClient(Uri endpoint, string deploymentId, AzureKeyCredential credential, OpenAIClientOptions options) : this(endpoint, credential, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new OpenAIClientOptions();
-
             DeploymentId = deploymentId;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
         }
 
         /// <summary> Initializes a new instance of OpenAIClient. </summary>
@@ -101,19 +91,9 @@ namespace Azure.AI.OpenAI
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential, OpenAIClientOptions options)
+        public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential, OpenAIClientOptions options) : this(endpoint, credential, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new OpenAIClientOptions();
-
             DeploymentId = deploymentId;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
         }
 
         /// <summary> Return the completion for a given prompt. </summary>
