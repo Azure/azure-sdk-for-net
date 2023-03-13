@@ -12,9 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DnsResolver.Mock;
-using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -53,19 +51,19 @@ namespace Azure.ResourceManager.DnsResolver
             });
         }
 
-        private static Mock.ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new Mock.ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
             });
         }
 
-        private static Mock.ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new Mock.ResourceGroupResourceExtensionClient(client, scope);
+                return new ResourceGroupResourceExtensionClient(client, scope);
             });
         }
         #region DnsResolverResource
@@ -177,6 +175,25 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 DnsForwardingRulesetVirtualNetworkLinkResource.ValidateResourceId(id);
                 return new DnsForwardingRulesetVirtualNetworkLinkResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region VirtualNetworkDnsResolverResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkDnsResolverResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkDnsResolverResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkDnsResolverResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualNetworkDnsResolverResource" /> object. </returns>
+        public static VirtualNetworkDnsResolverResource GetVirtualNetworkDnsResolverResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualNetworkDnsResolverResource.ValidateResourceId(id);
+                return new VirtualNetworkDnsResolverResource(client, id);
             }
             );
         }
