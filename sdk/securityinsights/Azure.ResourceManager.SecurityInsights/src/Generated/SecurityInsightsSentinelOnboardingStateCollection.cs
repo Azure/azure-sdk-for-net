@@ -15,18 +15,20 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsSentinelOnboardingStateResource" /> and their operations.
-    /// Each <see cref="SecurityInsightsSentinelOnboardingStateResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
-    /// To get a <see cref="SecurityInsightsSentinelOnboardingStateCollection" /> instance call the GetSecurityInsightsSentinelOnboardingStates method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
+    /// Each <see cref="SecurityInsightsSentinelOnboardingStateResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="SecurityInsightsSentinelOnboardingStateCollection" /> instance call the GetSecurityInsightsSentinelOnboardingStates method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
     public partial class SecurityInsightsSentinelOnboardingStateCollection : ArmCollection, IEnumerable<SecurityInsightsSentinelOnboardingStateResource>, IAsyncEnumerable<SecurityInsightsSentinelOnboardingStateResource>
     {
         private readonly ClientDiagnostics _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics;
         private readonly SentinelOnboardingStatesRestOperations _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient;
+        private readonly string _workspaceName;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSentinelOnboardingStateCollection"/> class for mocking. </summary>
         protected SecurityInsightsSentinelOnboardingStateCollection()
@@ -36,8 +38,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSentinelOnboardingStateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SecurityInsightsSentinelOnboardingStateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal SecurityInsightsSentinelOnboardingStateCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
+            _workspaceName = workspaceName;
             _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsSentinelOnboardingStateResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecurityInsightsSentinelOnboardingStateResource.ResourceType, out string securityInsightsSentinelOnboardingStateSentinelOnboardingStatesApiVersion);
             _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient = new SentinelOnboardingStatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsSentinelOnboardingStateSentinelOnboardingStatesApiVersion);
@@ -48,8 +54,8 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -80,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = await _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sentinelOnboardingStateName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, sentinelOnboardingStateName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityInsightsArmOperation<SecurityInsightsSentinelOnboardingStateResource>(Response.FromValue(new SecurityInsightsSentinelOnboardingStateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -121,7 +127,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sentinelOnboardingStateName, data, cancellationToken);
+                var response = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, sentinelOnboardingStateName, data, cancellationToken);
                 var operation = new SecurityInsightsArmOperation<SecurityInsightsSentinelOnboardingStateResource>(Response.FromValue(new SecurityInsightsSentinelOnboardingStateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = await _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sentinelOnboardingStateName, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, sentinelOnboardingStateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SecurityInsightsSentinelOnboardingStateResource(Client, response.Value), response.GetRawResponse());
@@ -196,7 +202,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sentinelOnboardingStateName, cancellationToken);
+                var response = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, sentinelOnboardingStateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SecurityInsightsSentinelOnboardingStateResource(Client, response.Value), response.GetRawResponse());
@@ -225,7 +231,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> An async collection of <see cref="SecurityInsightsSentinelOnboardingStateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsSentinelOnboardingStateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SecurityInsightsSentinelOnboardingStateResource(Client, SecurityInsightsSentinelOnboardingStateData.DeserializeSecurityInsightsSentinelOnboardingStateData(e)), _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics, Pipeline, "SecurityInsightsSentinelOnboardingStateCollection.GetAll", "value", null, cancellationToken);
         }
 
@@ -246,7 +252,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> A collection of <see cref="SecurityInsightsSentinelOnboardingStateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsSentinelOnboardingStateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SecurityInsightsSentinelOnboardingStateResource(Client, SecurityInsightsSentinelOnboardingStateData.DeserializeSecurityInsightsSentinelOnboardingStateData(e)), _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics, Pipeline, "SecurityInsightsSentinelOnboardingStateCollection.GetAll", "value", null, cancellationToken);
         }
 
@@ -275,7 +281,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = await _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sentinelOnboardingStateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, sentinelOnboardingStateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,7 +316,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sentinelOnboardingStateName, cancellationToken: cancellationToken);
+                var response = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, sentinelOnboardingStateName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
