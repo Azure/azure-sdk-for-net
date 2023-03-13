@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// A Class representing a SecurityInsightsAlertRuleTemplate along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsAlertRuleTemplateResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsAlertRuleTemplateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> using the GetSecurityInsightsAlertRuleTemplate method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSecurityInsightsAlertRuleTemplate method.
     /// </summary>
     public partial class SecurityInsightsAlertRuleTemplateResource : ArmResource
     {
