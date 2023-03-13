@@ -34,11 +34,23 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
+        public void EventHubsOptions_SetsUpMinBatchSizeCorrectly()
+        {
+            var options = new EventHubOptions()
+            {
+                MaxEventBatchSize = 200,
+                MinEventBatchSize = 100
+            };
+        }
+
+        [Test]
         public void ConfigureOptions_AppliesValuesCorrectly()
         {
             EventHubOptions options = CreateOptionsFromConfig();
 
             Assert.AreEqual(123, options.MaxEventBatchSize);
+            Assert.AreEqual(100, options.MinEventBatchSize);
+            Assert.AreEqual(60, options.MaxWaitTime);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
@@ -70,6 +82,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
             Assert.AreEqual(123, result.MaxEventBatchSize);
+            Assert.AreEqual(100, options.MinEventBatchSize);
+            Assert.AreEqual(60, options.MaxWaitTime);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, result.PrefetchCount);
@@ -220,6 +234,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var values = new Dictionary<string, string>
             {
                 { $"{extensionPath}:MaxEventBatchSize", "123" },
+                { $"{extensionPath}:MinEventBatchSize", "100" },
+                { $"{extensionPath}:MaxWaitTime", "60" },
                 { $"{extensionPath}:TrackLastEnqueuedEventProperties", "true" },
                 { $"{extensionPath}:PrefetchCount", "123" },
                 { $"{extensionPath}:BatchCheckpointFrequency", "5" },

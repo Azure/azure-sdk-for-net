@@ -137,7 +137,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private int _minEventBatchSize;
 
         /// <summary>
-        /// Gets or sets the minimum number of events delivered in a batch. TODO.
+        /// Gets or sets the minimum number of events delivered in a batch. This setting applies only to functions that
+        /// receive multiple events. This value must be less than <see cref="MaxEventBatchSize"/>. This value is used in
+        /// conjunction with <see cref="MaxWaitTime"/>. Default 1.
         /// </summary>
         public int MinEventBatchSize
         {
@@ -149,10 +151,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 {
                     throw new ArgumentException("Batch size must be larger than or equal to 0.");
                 }
-                if (value > MaxEventBatchSize)
-                {
-                    throw new ArgumentException("Maximum batch size must be larger than minimum batch size.");
-                }
                 _minEventBatchSize = value;
             }
         }
@@ -160,7 +158,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private int _maxWaitTime;
 
         /// <summary>
-        /// Gets or sets the minimum number of events delivered in a batch. TODO.
+        /// Gets or sets the maximum time in seconds. This only applies when <see cref="MinEventBatchSize"/> is set. It denotes the maximum number of seconds
+        /// the processor will wait after receiving a batch of events less than <see cref="MinEventBatchSize"/> before invoking the function.
+        /// the function. Default 60 seconds.
         /// </summary>
         public int MaxWaitTime
         {
@@ -168,6 +168,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             set
             {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Max Wait Time must be larger than or equal to 0.");
+                }
                 _maxWaitTime = value;
             }
         }

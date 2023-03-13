@@ -142,6 +142,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _minBatchSize = minBatchSize;
             }
 
+            public void PartitionClosing()
+            {
+                try
+                {
+                    _storedEventsGuard.Wait();
+                    _storedEvents.Clear();
+                }
+                finally
+                {
+                    _storedEventsGuard.Release();
+                }
+            }
+
             public EventData[] ProcessWithStoredEvents(EventProcessorHostPartition partitionContext, List<EventData> events = null, bool timerTrigger = false, CancellationToken cancellationToken = default)
             {
                 Argument.AssertNotNull(partitionContext, nameof(partitionContext));
@@ -222,6 +235,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             {
                 // signal cancellation for any in progress executions
                 _cts.Cancel();
+                _storedEventsManager.PartitionClosing();
 
                 _logger.LogDebug(GetOperationDetails(context, $"CloseAsync, {reason.ToString()}"));
                 return Task.CompletedTask;
