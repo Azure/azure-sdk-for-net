@@ -38,7 +38,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         [TestCase(ResponseTypes.HttpResponseMessage)]
         [TestCase(ResponseTypes.Unknown)]
         [TestCase(ResponseTypes.AuthEventResponse)]
-        [Obsolete]
         public async Task Tests(ResponseTypes responseType)
         {
             var (code, payload) = GetExpected(responseType);

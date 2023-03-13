@@ -13,7 +13,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
 
     /// <summary>Tests the OnTokenIssuanceStart request and response for the csharp object model for version preview_10_01_2021</summary>
-    [Obsolete]
     [TestFixture]
     public class MiscTests
     {
