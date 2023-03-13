@@ -13,24 +13,6 @@ namespace Azure.Core
     /// </summary>
     public abstract class DelayStrategy
     {
-        private readonly DelayStrategy? _innerStrategy;
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="mode"></param>
-        /// <param name="initialDelay"></param>
-        /// <param name="maxDelay"></param>
-        protected DelayStrategy(RetryMode? mode = default, TimeSpan? initialDelay = default, TimeSpan? maxDelay = default)
-        {
-            _innerStrategy = mode switch
-            {
-                RetryMode.Exponential => new ExponentialDelayStrategy(initialDelay, maxDelay),
-                RetryMode.Fixed => new FixedDelayStrategy(initialDelay),
-                _ => null
-            };
-        }
-
         /// <summary>
         ///
         /// </summary>
@@ -80,17 +62,6 @@ namespace Azure.Core
         /// <param name="serverDelayHint"></param>
         /// <returns> Delay interval of next iteration. </returns>
         public abstract TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="response"></param>
-        /// <param name="retryNumber"></param>
-        /// <returns></returns>
-        public TimeSpan? GetClientDelayHint(Response? response, int retryNumber)
-        {
-            return _innerStrategy?.GetNextDelay(response, retryNumber, null, null);
-        }
 
         /// <summary>
         ///

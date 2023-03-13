@@ -16,7 +16,7 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <param name="delay"></param>
-        public FixedDelayStrategy(TimeSpan? delay = default) : base(RetryMode.Fixed, delay, delay)
+        public FixedDelayStrategy(TimeSpan? delay = default)
         {
             // use same defaults as RetryOptions
             _delay = delay ?? TimeSpan.FromSeconds(0.8);

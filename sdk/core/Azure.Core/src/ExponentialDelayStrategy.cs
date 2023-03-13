@@ -56,12 +56,10 @@ namespace Azure.Core
                     serverDelayHint ?? TimeSpan.Zero,
                     Max(
                         clientDelayHint ?? TimeSpan.Zero,
-                        Max(
-                            response?.Headers.RetryAfter ?? TimeSpan.Zero,
-                            TimeSpan.FromMilliseconds(
-                                Math.Min(
-                                Math.Pow(_factor, retryNumber) * _random.Next((int)(_delay.TotalMilliseconds * _minJitterFactor), (int)(_delay.TotalMilliseconds * _maxJitterFactor)),
-                                _maxDelay.TotalMilliseconds)))));
+                        TimeSpan.FromMilliseconds(
+                            Math.Min(
+                            Math.Pow(_factor, retryNumber) * _random.Next((int)(_delay.TotalMilliseconds * _minJitterFactor), (int)(_delay.TotalMilliseconds * _maxJitterFactor)),
+                            _maxDelay.TotalMilliseconds))));
         }
     }
 }

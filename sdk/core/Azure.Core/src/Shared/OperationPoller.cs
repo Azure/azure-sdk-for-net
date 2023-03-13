@@ -75,7 +75,7 @@ namespace Azure.Core
 
         private async ValueTask<Response> WaitForCompletionAsync(bool async, OperationInternalBase operation, TimeSpan? delayHint, CancellationToken cancellationToken)
         {
-            int attempt = 0;
+            int retryNumber = 0;
             while (true)
             {
                 Response response = async ? await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : operation.UpdateStatus(cancellationToken);
@@ -84,17 +84,13 @@ namespace Azure.Core
                     return operation.RawResponse;
                 }
 
-                var clientDelayHint = _delayStrategy.GetClientDelayHint(response, attempt);
+                retryNumber++;
+                var defaultDelay = _delayStrategy.GetNextDelay(response, retryNumber, null, null);
 
-                // if at least one of the hints is not null, we need to pick the bigger one
-                if (clientDelayHint != null || delayHint != null)
-                {
-                    clientDelayHint ??= TimeSpan.Zero;
-                    delayHint ??= TimeSpan.Zero;
-                    delayHint = clientDelayHint > delayHint ? clientDelayHint : delayHint;
-                }
+                delayHint ??= TimeSpan.Zero;
+                delayHint = defaultDelay > delayHint ? defaultDelay : delayHint;
 
-                await Delay(async, _delayStrategy.GetNextDelay(response, ++attempt, delayHint, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
+                await Delay(async, _delayStrategy.GetNextDelay(response, retryNumber, delayHint, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
             }
         }
 

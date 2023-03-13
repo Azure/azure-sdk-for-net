@@ -35,7 +35,7 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <param name="sequence"></param>
-        public SequentialDelayStrategy(IEnumerable<TimeSpan>? sequence = default) : base(default, default, default)
+        public SequentialDelayStrategy(IEnumerable<TimeSpan>? sequence = default)
         {
             _sequence = sequence ?? s_defaultPollingSequence;
         }

@@ -257,7 +257,7 @@ namespace Azure.Core.Pipeline
             _delayStrategy.GetNextDelay(
                 message.Response,
                 message.RetryNumber,
-                _delayStrategy.GetClientDelayHint(message.Response, message.RetryNumber),
+                _delayStrategy.GetNextDelay(message.Response, message.RetryNumber, null, null),
                 message.Response.Headers.RetryAfter);
     }
 }
