@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    internal partial class ErrorAdditionalInfo
+    public partial class ErrorAdditionalInfo
     {
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {

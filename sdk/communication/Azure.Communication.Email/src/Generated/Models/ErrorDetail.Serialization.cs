@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    internal partial class ErrorDetail
+    public partial class ErrorDetail
     {
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
