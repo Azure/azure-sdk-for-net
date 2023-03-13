@@ -17,4 +17,4 @@ description: Samples for the Azure.ResourceManager.Communication client library
 
 - [Managing Domains Resoures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/samples/Sample3_ManagingDomainsResource.md)
 
-- [Managing SenderUsername Resources](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/samples/Sample3_ManagingSenderUsernameResource.md)
+- [Managing SenderUsername Resources](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/samples/Sample4_ManagingSenderUsernameResource.md)
