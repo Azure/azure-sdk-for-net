@@ -24,6 +24,9 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
         [SyncOnly]
         public void ManageSipConfiguration()
         {
+            if (SkipSipRoutingLiveTests)
+                Assert.Ignore("Skip SIP routing live tests flag is on.");
+
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
 
             #region Snippet:CreateSipRoutingClient
@@ -100,6 +103,9 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
         [AsyncOnly]
         public async Task ManageSipConfigurationAsync()
         {
+            if (SkipSipRoutingLiveTests)
+                Assert.Ignore("Skip SIP routing live tests flag is on.");
+
             var client = CreateClient();
             var newTrunks = new List<SipTrunk> { TestData!.NewTrunk };
             var newRoutes = new List<SipTrunkRoute> { TestData.RuleNavigateToNewTrunk };

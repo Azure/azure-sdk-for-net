@@ -35,6 +35,10 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             TestData = new TestData(testDomain, randomGuid.ToString());
         }
 
+        public bool SkipSipRoutingLiveTests
+            => TestEnvironment.Mode != RecordedTestMode.Playback &&
+            string.Equals(Environment.GetEnvironmentVariable("SKIP_SIPROUTING_LIVE_TESTS"), "True", StringComparison.OrdinalIgnoreCase);
+
         /// <summary>
         /// Creates a <see cref="SipRoutingClient" /> with the connectionstring via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
@@ -42,7 +46,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         /// <returns>The instrumented <see cref="SipRoutingClient" />.</returns>
         protected SipRoutingClient CreateClient(bool isInstrumented = true)
         {
-            var client = new SipRoutingClient(TestEnvironment.LiveTestDynamicConnectionString,
+            var client = new SipRoutingClient(
+                    TestEnvironment.LiveTestDynamicConnectionString,
                     InstrumentClientOptions(new SipRoutingClientOptions()));
 
             // We always create the instrumented client to suppress the instrumentation check

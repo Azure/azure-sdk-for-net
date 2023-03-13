@@ -67,7 +67,7 @@
                     "CollectCoverage": true
                 }
             },
-            "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE"
+            "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE",
             "AZURE_TEST_AGENT": "WINDOWS_2019_NETCORE31"
         }
     ]
