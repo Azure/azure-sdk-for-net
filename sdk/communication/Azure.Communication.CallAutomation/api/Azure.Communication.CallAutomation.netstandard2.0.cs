@@ -57,6 +57,11 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.AnswerCallEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AnswerCallEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class BlobStorage : Azure.Communication.CallAutomation.ExternalStorage
+    {
+        public BlobStorage(System.Uri containerUri) { }
+        public System.Uri ContainerUri { get { throw null; } }
+    }
     public partial class CallAutomationClient
     {
         protected CallAutomationClient() { }
@@ -483,26 +488,6 @@ namespace Azure.Communication.CallAutomation
         public static bool operator !=(Azure.Communication.CallAutomation.DtmfTone left, Azure.Communication.CallAutomation.DtmfTone right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventProcessor
-    {
-        internal EventProcessor() { }
-        public void AttachOngoingEventProcessor<TEvent>(string callConnectionId, System.Action<TEvent> eventProcessor) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { }
-        public void DetachOngoingEventProcessor<TEvent>(string callConnectionId) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { }
-        public void ProcessEvents(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallAutomationEventBase> events) { }
-        public void ProcessEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> events) { }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CallAutomationEventBase> WaitForSingleEvent(System.Func<Azure.Communication.CallAutomation.CallAutomationEventBase, bool> predicate, System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
-        public System.Threading.Tasks.Task<TEvent> WaitForSingleEvent<TEvent>(string connectionId = null, string operationContext = null, System.TimeSpan eventTimeout = default(System.TimeSpan)) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { throw null; }
-    }
-    public partial class EventProcessorOptions
-    {
-        public EventProcessorOptions() { }
-        public System.TimeSpan EventTimeout { get { throw null; } set { } }
-    }
-    public abstract partial class EventResultBase
-    {
-        protected EventResultBase() { }
-        public bool IsSuccessEvent { get { throw null; } }
-    }
     public abstract partial class ExternalStorage
     {
         protected ExternalStorage() { }
@@ -926,7 +911,6 @@ namespace Azure.Communication.CallAutomation
         public SsmlSource(string ssmlText) { }
         public string SsmlText { get { throw null; } }
     }
-    public partial class StartRecognizingEventResult : Azure.Communication.CallAutomation.EventResultBase
     public partial class StartRecognizingEventResult
     {
         internal StartRecognizingEventResult() { }
