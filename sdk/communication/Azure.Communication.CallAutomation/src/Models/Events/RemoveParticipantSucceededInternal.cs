@@ -9,8 +9,8 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The participant removed event internal.
     /// </summary>
-    [CodeGenModel("ParticipantRemoved", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    internal partial class ParticipantRemovedInternal
+    [CodeGenModel("RemoveParticipantSucceeded", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    internal partial class RemoveParticipantSucceededInternal
     {
     }
 }
