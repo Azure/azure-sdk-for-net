@@ -52,6 +52,11 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties { get { throw null; } }
         public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AnswerCallEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
     }
+    public partial class BlobStorage : Azure.Communication.CallAutomation.ExternalStorage
+    {
+        public BlobStorage(System.Uri containerUri) { }
+        public System.Uri ContainerUri { get { throw null; } }
+    }
     public partial class CallAutomationClient
     {
         protected CallAutomationClient() { }
@@ -386,6 +391,7 @@ namespace Azure.Communication.CallAutomation
     {
         internal CollectTonesResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.DtmfTone> Tones { get { throw null; } }
+        public string ConvertToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ContentTransferOptions : System.IEquatable<Azure.Communication.CallAutomation.ContentTransferOptions>
@@ -466,6 +472,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(Azure.Communication.CallAutomation.DtmfTone left, Azure.Communication.CallAutomation.DtmfTone right) { throw null; }
         public static implicit operator Azure.Communication.CallAutomation.DtmfTone (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.DtmfTone left, Azure.Communication.CallAutomation.DtmfTone right) { throw null; }
+        public char ToChar() { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class EventProcessor
@@ -487,6 +494,11 @@ namespace Azure.Communication.CallAutomation
     {
         protected EventResultBase() { }
         public bool IsSuccessEvent { get { throw null; } }
+    }
+    public abstract partial class ExternalStorage
+    {
+        protected ExternalStorage() { }
+        public Azure.Communication.CallAutomation.RecordingStorageType StorageType { get { throw null; } protected set { } }
     }
     public partial class FileSource : Azure.Communication.CallAutomation.PlaySource
     {
@@ -900,6 +912,11 @@ namespace Azure.Communication.CallAutomation
         public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SsmlSource
+    {
+        public SsmlSource(string ssmlText) { }
+        public string SsmlText { get { throw null; } }
+    }
     public partial class StartRecognizingEventResult : Azure.Communication.CallAutomation.EventResultBase
     {
         internal StartRecognizingEventResult() { }
@@ -915,12 +932,11 @@ namespace Azure.Communication.CallAutomation
     {
         public StartRecordingOptions(Azure.Communication.CallAutomation.CallLocator callLocator) { }
         public System.Collections.Generic.IList<Azure.Communication.CommunicationIdentifier> AudioChannelParticipantOrdering { get { throw null; } }
-        public System.Uri ExternalStorageLocation { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.ExternalStorage ExternalStorage { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingChannel RecordingChannel { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingContent RecordingContent { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingFormat RecordingFormat { get { throw null; } set { } }
         public System.Uri RecordingStateCallbackEndpoint { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.RecordingStorageType? RecordingStorageType { get { throw null; } set { } }
     }
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {
