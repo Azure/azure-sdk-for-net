@@ -15,6 +15,9 @@ namespace Azure.ResourceManager.Communication
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationDomainResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationDomainResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.SenderUsernameResource> GetSenderUsernameResource(string senderUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SenderUsernameResource>> GetSenderUsernameResourceAsync(string senderUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Communication.SenderUsernameResourceCollection GetSenderUsernameResources() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation InitiateVerification(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.Models.DomainsRecordVerificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> InitiateVerificationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.Models.DomainsRecordVerificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationDomainResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -43,14 +46,21 @@ namespace Azure.ResourceManager.Communication
     {
         public CommunicationDomainResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string DataLocation { get { throw null; } }
+        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord Dkim2PropertiesVerificationRecordsDkim2 { get { throw null; } set { } }
+        public Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord Dkim2PropertiesVerificationStatesDkim2 { get { throw null; } set { } }
+        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord DkimPropertiesVerificationRecordsDkim { get { throw null; } set { } }
+        public Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord DkimPropertiesVerificationStatesDkim { get { throw null; } set { } }
+        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord DmarcPropertiesVerificationRecordsDmarc { get { throw null; } set { } }
+        public Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord DmarcPropertiesVerificationStatesDmarc { get { throw null; } set { } }
         public Azure.ResourceManager.Communication.Models.DomainManagement? DomainManagement { get { throw null; } set { } }
+        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord DomainPropertiesVerificationRecordsDomain { get { throw null; } set { } }
+        public Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord DomainPropertiesVerificationStatesDomain { get { throw null; } set { } }
         public string FromSenderDomain { get { throw null; } }
         public string MailFromSenderDomain { get { throw null; } }
         public Azure.ResourceManager.Communication.Models.DomainProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord SpfPropertiesVerificationRecordsSpf { get { throw null; } set { } }
+        public Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord SpfPropertiesVerificationStatesSpf { get { throw null; } set { } }
         public Azure.ResourceManager.Communication.Models.UserEngagementTracking? UserEngagementTracking { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> ValidSenderUsernames { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.DomainPropertiesVerificationRecords VerificationRecords { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.DomainPropertiesVerificationStates VerificationStates { get { throw null; } }
     }
     public static partial class CommunicationExtensions
     {
@@ -69,6 +79,7 @@ namespace Azure.ResourceManager.Communication
         public static Azure.ResourceManager.Communication.EmailServiceResourceCollection GetEmailServiceResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Communication.EmailServiceResource> GetEmailServiceResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Communication.EmailServiceResource> GetEmailServiceResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Communication.SenderUsernameResource GetSenderUsernameResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -168,6 +179,43 @@ namespace Azure.ResourceManager.Communication
         public string DataLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState? ProvisioningState { get { throw null; } }
     }
+    public partial class SenderUsernameResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SenderUsernameResource() { }
+        public virtual Azure.ResourceManager.Communication.SenderUsernameResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.SenderUsernameResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SenderUsernameResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SenderUsernameResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.SenderUsernameResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SenderUsernameResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Communication.SenderUsernameResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SenderUsernameResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.SenderUsernameResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.SenderUsernameResource>, System.Collections.IEnumerable
+    {
+        protected SenderUsernameResourceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SenderUsernameResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string senderUsername, Azure.ResourceManager.Communication.SenderUsernameResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.SenderUsernameResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string senderUsername, Azure.ResourceManager.Communication.SenderUsernameResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string senderUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string senderUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.SenderUsernameResource> Get(string senderUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Communication.SenderUsernameResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Communication.SenderUsernameResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.SenderUsernameResource>> GetAsync(string senderUsername, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Communication.SenderUsernameResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.SenderUsernameResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Communication.SenderUsernameResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.SenderUsernameResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SenderUsernameResourceData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SenderUsernameResourceData() { }
+        public string DataLocation { get { throw null; } }
+        public string DisplayName { get { throw null; } set { } }
+        public Azure.ResourceManager.Communication.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public string Username { get { throw null; } set { } }
+    }
 }
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -180,7 +228,6 @@ namespace Azure.ResourceManager.Communication.Models
     {
         public CommunicationDomainResourcePatch() { }
         public Azure.ResourceManager.Communication.Models.UserEngagementTracking? UserEngagementTracking { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> ValidSenderUsernames { get { throw null; } }
     }
     public partial class CommunicationNameAvailabilityContent
     {
@@ -279,24 +326,6 @@ namespace Azure.ResourceManager.Communication.Models
         public static bool operator !=(Azure.ResourceManager.Communication.Models.DomainManagement left, Azure.ResourceManager.Communication.Models.DomainManagement right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DomainPropertiesVerificationRecords
-    {
-        internal DomainPropertiesVerificationRecords() { }
-        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord Dkim { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord Dkim2 { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord Dmarc { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord Domain { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord Spf { get { throw null; } }
-    }
-    public partial class DomainPropertiesVerificationStates
-    {
-        internal DomainPropertiesVerificationStates() { }
-        public Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord Dkim { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord Dkim2 { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord Dmarc { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord Domain { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.DomainVerificationStatusRecord Spf { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DomainProvisioningState : System.IEquatable<Azure.ResourceManager.Communication.Models.DomainProvisioningState>
     {
@@ -372,7 +401,7 @@ namespace Azure.ResourceManager.Communication.Models
     }
     public partial class DomainVerificationStatusRecord
     {
-        internal DomainVerificationStatusRecord() { }
+        public DomainVerificationStatusRecord() { }
         public string ErrorCode { get { throw null; } }
         public Azure.ResourceManager.Communication.Models.DomainRecordVerificationStatus? Status { get { throw null; } }
     }
@@ -416,6 +445,31 @@ namespace Azure.ResourceManager.Communication.Models
         public string ConnectionString { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Communication.Models.ProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Communication.Models.ProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Communication.Models.ProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Communication.Models.ProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Communication.Models.ProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Communication.Models.ProvisioningState Moving { get { throw null; } }
+        public static Azure.ResourceManager.Communication.Models.ProvisioningState Running { get { throw null; } }
+        public static Azure.ResourceManager.Communication.Models.ProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Communication.Models.ProvisioningState Unknown { get { throw null; } }
+        public static Azure.ResourceManager.Communication.Models.ProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Communication.Models.ProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Communication.Models.ProvisioningState left, Azure.ResourceManager.Communication.Models.ProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Communication.Models.ProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Communication.Models.ProvisioningState left, Azure.ResourceManager.Communication.Models.ProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RegenerateCommunicationServiceKeyContent
     {
         public RegenerateCommunicationServiceKeyContent() { }
@@ -441,7 +495,7 @@ namespace Azure.ResourceManager.Communication.Models
     }
     public partial class VerificationDnsRecord
     {
-        internal VerificationDnsRecord() { }
+        public VerificationDnsRecord() { }
         public string DnsRecordType { get { throw null; } }
         public string Name { get { throw null; } }
         public int? TimeToLiveInSeconds { get { throw null; } }

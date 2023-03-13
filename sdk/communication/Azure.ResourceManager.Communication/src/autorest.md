@@ -9,7 +9,7 @@ generate-model-factory: false
 title: communication
 namespace: Azure.ResourceManager.Communication
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/7168ecde052e9797d31d74c40ad00ac68c74ec6a/specification/communication/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/81f3b2de7555216eb9176d127592fcfa1d327eba/specification/communication/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
