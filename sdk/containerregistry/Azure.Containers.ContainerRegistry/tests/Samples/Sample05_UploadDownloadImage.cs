@@ -13,8 +13,6 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
     public partial class UploadDownloadImageSample : ContainerRegistrySamplesBase
     {
-        [Test]
-        [AsyncOnly]
         public async Task UploadOciImageAsync()
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
@@ -68,6 +66,23 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             await client.UploadManifestAsync(manifest, tag);
 
             #endregion
+        }
+
+        public async Task DownloadOciImageAsync()
+        {
+            Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
+
+            // Get the service endpoint from the environment
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+            string repository = "sample-oci-image";
+            string tag = "demo";
+
+            // Create a new ContainerRegistryBlobClient
+            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
+            {
+                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+            });
 
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
             Directory.CreateDirectory(path);
@@ -76,11 +91,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Download the manifest to obtain the list of files in the image
             DownloadManifestResult result = await client.DownloadManifestAsync(tag);
-#if SNIPPET
             OciImageManifest manifest = result.AsOciManifest();
-#else
-            manifest = result.AsOciManifest();
-#endif
 
             string manifestFile = Path.Combine(path, "manifest.json");
             using (FileStream stream = File.Create(manifestFile))
@@ -118,26 +129,41 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 return digest;
             }
             #endregion
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task UploadDownloadOciImageAsync()
+        {
+            await UploadOciImageAsync();
+            await DownloadOciImageAsync();
+
+            Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
+
+            // Get the service endpoint from the environment
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+            string repository = "sample-oci-image";
+            string tag = "demo";
+
+            // Create a new ContainerRegistryBlobClient
+            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
+            {
+                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+            });
 
             #region Snippet:ContainerRegistry_Samples_DeleteBlob
-            DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
-#if SNIPPET
-            OciImageManifest manifest = downloadManifestResult.AsOciManifest();
-#else
-            manifest = downloadManifestResult.AsOciManifest();
-#endif
+            DownloadManifestResult result = await client.DownloadManifestAsync(tag);
+            OciImageManifest manifest = result.AsOciManifest();
 
             foreach (OciDescriptor layerInfo in manifest.Layers)
             {
                 await client.DeleteBlobAsync(layerInfo.Digest);
             }
-
             #endregion
 
             #region Snippet:ContainerRegistry_Samples_DeleteManifest
-#if SNIPPET
             DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
-#endif
             await client.DeleteManifestAsync(downloadManifestResult.Digest);
             #endregion
         }
