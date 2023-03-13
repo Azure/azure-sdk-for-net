@@ -3,11 +3,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication
 {
     /// <summary>Represents an identifier in Azure Communication Services.</summary>
+    [ExcludeFromCodeCoverage]
     public abstract class CommunicationIdentifier : IEquatable<CommunicationIdentifier>
     {
         /// <summary>

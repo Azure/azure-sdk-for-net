@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -19,6 +20,7 @@ namespace Azure.Communication
     /// <remarks>
     /// Proactive refreshing does not retry if it fails.
     /// </remarks>
+    [ExcludeFromCodeCoverage]
     internal sealed class ThreadSafeRefreshableAccessTokenCache : IDisposable
     {
         internal const int ProactiveRefreshIntervalInMinutes = 10;

@@ -3,10 +3,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication
 {
     /// <summary> The cloud that the identifier belongs to. </summary>
+    [ExcludeFromCodeCoverage]
     public readonly partial struct CommunicationCloudEnvironment : IEquatable<CommunicationCloudEnvironment>
     {
         private readonly string _value;

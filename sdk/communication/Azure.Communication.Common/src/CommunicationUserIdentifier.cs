@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication
 {
     /// <summary>Represents a user in Azure Communication Services.</summary>
+    [ExcludeFromCodeCoverage]
     public class CommunicationUserIdentifier : CommunicationIdentifier
     {
         /// <summary>The id of the communication user.</summary>

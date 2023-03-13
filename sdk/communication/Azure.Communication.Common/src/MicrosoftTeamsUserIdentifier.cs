@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication
 {
     /// <summary>Represents a Microsoft Teams user.</summary>
+    [ExcludeFromCodeCoverage]
     public class MicrosoftTeamsUserIdentifier : CommunicationIdentifier
     {
         private string _rawId;

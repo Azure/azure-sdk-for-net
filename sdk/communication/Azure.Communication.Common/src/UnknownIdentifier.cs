@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication
 {
     /// <summary>Represents an identifier of an unknown type. It will be encountered in communications with endpoints that are not identifiable by this version of the SDK.</summary>
+    [ExcludeFromCodeCoverage]
     public class UnknownIdentifier : CommunicationIdentifier
     {
         /// <summary>The id of the endpoint.</summary>

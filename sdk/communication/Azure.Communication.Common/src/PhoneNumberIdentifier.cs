@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication
 {
     /// <summary>Represents a Phone Number.</summary>
+    [ExcludeFromCodeCoverage]
     public class PhoneNumberIdentifier : CommunicationIdentifier
     {
         private string _rawId;

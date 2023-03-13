@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -11,6 +12,7 @@ namespace Azure.Communication
     /// <summary>
     /// The Communication Token Refresh Options
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class CommunicationTokenRefreshOptions
     {
         /// <summary>

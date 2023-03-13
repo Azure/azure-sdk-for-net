@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication;
@@ -12,6 +13,7 @@ namespace Azure.Communication
     /// <summary>
     /// The Azure Communication Services Token Credential.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public sealed class CommunicationTokenCredential : IDisposable
     {
         private readonly ICommunicationTokenCredential _tokenCredential;
