@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 using static Azure.Communication.Identity.CommunicationIdentityClientOptions;
 
