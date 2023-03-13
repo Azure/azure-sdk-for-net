@@ -26,11 +26,11 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <param name="response"></param>
-        /// <param name="attempt"></param>
+        /// <param name="retryNumber"></param>
         /// <param name="clientDelayHint"></param>
         /// <param name="serverDelayHint"></param>
         /// <returns></returns>
-        public override TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
+        public override TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
         {
             return
                 Max(

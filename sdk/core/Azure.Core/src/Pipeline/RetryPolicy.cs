@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a policy that can be overriden to customize whether or not a request will be retried and how long to wait before retrying.
     /// </summary>
-    public abstract class RetryPolicy : HttpPipelinePolicy
+    public class RetryPolicy : HttpPipelinePolicy
     {
         private readonly int _maxRetries;
         private readonly DelayStrategy _delayStrategy;
@@ -24,7 +24,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="maxRetries"></param>
         /// <param name="delayStrategy">The delay strategy to use</param>
-        protected RetryPolicy(int? maxRetries = default, DelayStrategy? delayStrategy = default)
+        public RetryPolicy(int? maxRetries = default, DelayStrategy? delayStrategy = default)
         {
             _maxRetries = maxRetries ?? 3;
             _delayStrategy = delayStrategy ?? new ExponentialDelayStrategy();
@@ -256,8 +256,8 @@ namespace Azure.Core.Pipeline
         private TimeSpan CalculateNextDelayInternal(HttpMessage message) =>
             _delayStrategy.GetNextDelay(
                 message.Response,
-                message.RetryNumber + 1,
-                _delayStrategy.GetClientDelayHint(message.Response, message.RetryNumber + 1),
+                message.RetryNumber,
+                _delayStrategy.GetClientDelayHint(message.Response, message.RetryNumber),
                 message.Response.Headers.RetryAfter);
     }
 }

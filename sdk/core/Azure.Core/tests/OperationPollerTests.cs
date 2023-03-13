@@ -70,7 +70,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 _cts = cts;
             }
 
-            public override TimeSpan GetNextDelay(Response response, int attempt, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
+            public override TimeSpan GetNextDelay(Response response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
             {
                 _cts.CancelAfter(_cancelAfter);
                 return _delay;

@@ -36,10 +36,16 @@ namespace Azure.Core
         /// </summary>
         /// <param name="initialDelay"></param>
         /// <param name="maxDelay"></param>
+        /// <param name="minJitterFactor"></param>
+        /// <param name="maxJitterFactor"></param>
         /// <returns></returns>
-        public static DelayStrategy CreateExponentialDelayStrategy(TimeSpan? initialDelay = default, TimeSpan? maxDelay = default)
+        public static DelayStrategy CreateExponentialDelayStrategy(
+            TimeSpan? initialDelay = default,
+            TimeSpan? maxDelay = default,
+            double minJitterFactor = 0.8,
+            double maxJitterFactor = 1.2)
         {
-            return new ExponentialDelayStrategy(initialDelay, maxDelay);
+            return new ExponentialDelayStrategy(initialDelay, maxDelay, minJitterFactor, maxJitterFactor);
         }
 
         /// <summary>
@@ -67,21 +73,21 @@ namespace Azure.Core
         /// </summary>
         /// <remarks> Note that the value could change per call. </remarks>
         /// <param name="response"> Server response. </param>
-        /// <param name="attempt"></param>
+        /// <param name="retryNumber"></param>
         /// <param name="clientDelayHint"></param>
         /// <param name="serverDelayHint"></param>
         /// <returns> Delay interval of next iteration. </returns>
-        public abstract TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint);
+        public abstract TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="response"></param>
-        /// <param name="attempt"></param>
+        /// <param name="retryNumber"></param>
         /// <returns></returns>
-        public TimeSpan? GetClientDelayHint(Response? response, int attempt)
+        public TimeSpan? GetClientDelayHint(Response? response, int retryNumber)
         {
-            return _innerStrategy?.GetNextDelay(response, attempt, null, null);
+            return _innerStrategy?.GetNextDelay(response, retryNumber, null, null);
         }
 
         /// <summary>

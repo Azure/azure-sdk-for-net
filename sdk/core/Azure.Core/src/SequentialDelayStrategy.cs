@@ -44,16 +44,16 @@ namespace Azure.Core
         /// Get the next delay from the sequence.
         /// </summary>
         /// <param name="response">Service response.</param>
-        /// <param name="attempt"></param>
+        /// <param name="retryNumber"></param>
         /// <param name="clientDelayHint">Suggested delay.</param>
         /// <param name="serverDelayHint"></param>
-        public override TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
+        public override TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
         {
-            if (attempt >= s_defaultPollingSequence.Length)
+            if (retryNumber >= s_defaultPollingSequence.Length)
             {
                 return Max(_maxDelay, serverDelayHint ?? TimeSpan.Zero);
             }
-            return Max(s_defaultPollingSequence[attempt], serverDelayHint ?? TimeSpan.Zero);
+            return Max(s_defaultPollingSequence[retryNumber], serverDelayHint ?? TimeSpan.Zero);
         }
     }
 }

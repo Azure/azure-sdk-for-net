@@ -403,11 +403,11 @@ namespace Azure.Core
     public abstract partial class DelayStrategy
     {
         protected DelayStrategy(Azure.Core.RetryMode? mode = default(Azure.Core.RetryMode?), System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { }
-        public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?), double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { throw null; }
         public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
         public static Azure.Core.DelayStrategy CreateSequentialDelayStrategy(System.Collections.Generic.IEnumerable<System.TimeSpan>? sequence = null) { throw null; }
-        public System.TimeSpan? GetClientDelayHint(Azure.Response? response, int attempt) { throw null; }
-        public abstract System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? clientDelayHint, System.TimeSpan? serverDelayHint);
+        public System.TimeSpan? GetClientDelayHint(Azure.Response? response, int retryNumber) { throw null; }
+        public abstract System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber, System.TimeSpan? clientDelayHint, System.TimeSpan? serverDelayHint);
         protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
     }
     public static partial class DelegatedTokenCredential
@@ -1036,9 +1036,9 @@ namespace Azure.Core.Pipeline
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
         public static void SetAllowAutoRedirect(Azure.Core.HttpMessage message, bool allowAutoRedirect) { }
     }
-    public abstract partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
+    public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
-        protected RetryPolicy(int? maxRetries = default(int?), Azure.Core.DelayStrategy? delayStrategy = null) { }
+        public RetryPolicy(int? maxRetries = default(int?), Azure.Core.DelayStrategy? delayStrategy = null) { }
         protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
         protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
         protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }

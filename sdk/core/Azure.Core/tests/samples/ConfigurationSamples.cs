@@ -103,17 +103,26 @@ namespace Azure.Core.Samples
         public void SetGlobalTimeoutRetryPolicy()
         {
             #region Snippet:SetGlobalTimeoutRetryPolicy
-            var retryOptions = new RetryOptions
-            {
-                Delay = TimeSpan.FromSeconds(2),
-                MaxRetries = 10,
-                Mode = RetryMode.Fixed
-            };
+
+            var strategy = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(2));
             SecretClientOptions options = new SecretClientOptions()
             {
-                RetryPolicy = new GlobalTimeoutRetryPolicy(retryOptions, timeout: TimeSpan.FromSeconds(30))
+                RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delayStrategy: strategy, timeout: TimeSpan.FromSeconds(30))
             };
             #endregion
         }
+
+        [Test]
+        public void CustomizedJitterExponentialDelay()
+        {
+            #region Snippet:CustomizeExponentialDelay
+            var strategy = DelayStrategy.CreateExponentialDelayStrategy(minJitterFactor: 0, maxJitterFactor: 1);
+            SecretClientOptions options = new SecretClientOptions()
+            {
+                RetryPolicy = new RetryPolicy(delayStrategy: strategy)
+            };
+            #endregion
+        }
+
     }
 }

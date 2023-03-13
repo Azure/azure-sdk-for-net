@@ -435,7 +435,7 @@ namespace Azure.Core.Tests
         {
             public int CallCount { get; private set; }
 
-            public override TimeSpan GetNextDelay(Response response, int attempt, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
+            public override TimeSpan GetNextDelay(Response response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
             {
                 CallCount++;
                 return TimeSpan.Zero;
