@@ -391,6 +391,7 @@ namespace Azure.Communication.CallAutomation
     {
         internal CollectTonesResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.DtmfTone> Tones { get { throw null; } }
+        public string ConvertToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ContentTransferOptions : System.IEquatable<Azure.Communication.CallAutomation.ContentTransferOptions>
@@ -471,6 +472,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(Azure.Communication.CallAutomation.DtmfTone left, Azure.Communication.CallAutomation.DtmfTone right) { throw null; }
         public static implicit operator Azure.Communication.CallAutomation.DtmfTone (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.DtmfTone left, Azure.Communication.CallAutomation.DtmfTone right) { throw null; }
+        public char ToChar() { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class EventProcessor
