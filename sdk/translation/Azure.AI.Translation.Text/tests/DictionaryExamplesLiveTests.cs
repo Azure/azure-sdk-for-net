@@ -27,7 +27,7 @@ namespace Azure.AI.Translation.Text.Tests
             TextTranslationClient client = GetClient();
             IEnumerable<InputTextWithTranslation> inputText = new[]
             {
-                new InputTextWithTranslation { Text = "fly", Translation = "volar" }
+                new InputTextWithTranslation("fly", "volar")
             };
             Response<IReadOnlyList<DictionaryExampleElement>> response =
                 await client.LookupDictionaryExamplesAsync("en", "es", inputText).ConfigureAwait(false);
@@ -43,8 +43,8 @@ namespace Azure.AI.Translation.Text.Tests
             TextTranslationClient client = GetClient();
             IEnumerable<InputTextWithTranslation> inputText = new[]
             {
-                new InputTextWithTranslation { Text = "fly", Translation = "volar" },
-                new InputTextWithTranslation { Text = "beef", Translation = "came" }
+                new InputTextWithTranslation("fly", "volar"),
+                new InputTextWithTranslation("beef", "came")
             };
             Response<IReadOnlyList<DictionaryExampleElement>> response =
                 await client.LookupDictionaryExamplesAsync("en", "es", inputText).ConfigureAwait(false);

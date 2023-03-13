@@ -8,7 +8,7 @@
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Translator profanity markers. </summary>
-    public enum ProfanityMarkers
+    public enum ProfanityMarker
     {
         /// <summary> Asterisk. </summary>
         Asterisk,

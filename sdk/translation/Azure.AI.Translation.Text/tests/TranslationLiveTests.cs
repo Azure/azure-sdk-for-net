@@ -65,7 +65,7 @@ namespace Azure.AI.Translation.Text.Tests
             IEnumerable<string> inputText = new[] { "<span class=notranslate>今天是怎么回事是</span>非常可怕的" };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
-                await client.TranslateAsync(targetLanguages, inputText, sourceLanguage: fromLanguage, textType: TextTypes.Html).ConfigureAwait(false);
+                await client.TranslateAsync(targetLanguages, inputText, sourceLanguage: fromLanguage, textType: TextType.Html).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -179,7 +179,7 @@ namespace Azure.AI.Translation.Text.Tests
             IEnumerable<string> inputText = new[] { "<html><body>This <b>is</b> a test.</body></html>" };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
-                await client.TranslateAsync(targetLanguages, inputText, textType: TextTypes.Html).ConfigureAwait(false);
+                await client.TranslateAsync(targetLanguages, inputText, textType: TextType.Html).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -192,8 +192,8 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateWithProfanity()
         {
-            ProfanityActions profanityAction = ProfanityActions.Marked;
-            ProfanityMarkers profanityMarkers = ProfanityMarkers.Asterisk;
+            ProfanityAction profanityAction = ProfanityAction.Marked;
+            ProfanityMarker profanityMarkers = ProfanityMarker.Asterisk;
             IEnumerable<string> targetLanguages = new[] { "zh-cn" };
             IEnumerable<string> inputText = new[] { "shit this is fucking crazy" };
             TextTranslationClient client = GetClient();

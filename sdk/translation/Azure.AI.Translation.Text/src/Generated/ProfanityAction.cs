@@ -8,7 +8,7 @@
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Translator profanity actions. </summary>
-    public enum ProfanityActions
+    public enum ProfanityAction
     {
         /// <summary> NoAction. </summary>
         NoAction,

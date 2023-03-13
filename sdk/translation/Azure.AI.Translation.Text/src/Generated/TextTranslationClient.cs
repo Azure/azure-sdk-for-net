@@ -283,7 +283,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        internal virtual async Task<Response<IReadOnlyList<TranslatedTextElement>>> TranslateAsync(IEnumerable<string> to, object content, string clientTraceId = null, string @from = null, TextTypes? textType = null, string category = null, ProfanityActions? profanityAction = null, ProfanityMarkers? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyList<TranslatedTextElement>>> TranslateAsync(IEnumerable<string> to, object content, string clientTraceId = null, string @from = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
@@ -362,7 +362,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        internal virtual Response<IReadOnlyList<TranslatedTextElement>> Translate(IEnumerable<string> to, object content, string clientTraceId = null, string @from = null, TextTypes? textType = null, string category = null, ProfanityActions? profanityAction = null, ProfanityMarkers? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyList<TranslatedTextElement>> Translate(IEnumerable<string> to, object content, string clientTraceId = null, string @from = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));

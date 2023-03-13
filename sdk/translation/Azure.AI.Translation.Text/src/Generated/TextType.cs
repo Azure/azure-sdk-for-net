@@ -8,7 +8,7 @@
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Translation text type. </summary>
-    public enum TextTypes
+    public enum TextType
     {
         /// <summary> plain. </summary>
         Plain,
