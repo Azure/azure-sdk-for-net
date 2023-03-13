@@ -71,6 +71,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(StickySessions))
+            {
+                writer.WritePropertyName("stickySessions"u8);
+                writer.WriteObjectValue(StickySessions);
+            }
             if (Optional.IsDefined(ClientCertificateMode))
             {
                 writer.WritePropertyName("clientCertificateMode"u8);
@@ -99,6 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<ContainerAppCustomDomain>> customDomains = default;
             Optional<bool> allowInsecure = default;
             Optional<IList<ContainerAppIPSecurityRestrictionRule>> ipSecurityRestrictions = default;
+            Optional<IngressStickySessions> stickySessions = default;
             Optional<ContainerAppIngressClientCertificateMode> clientCertificateMode = default;
             Optional<ContainerAppCorsPolicy> corsPolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -203,6 +209,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                     ipSecurityRestrictions = array;
                     continue;
                 }
+                if (property.NameEquals("stickySessions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    stickySessions = IngressStickySessions.DeserializeIngressStickySessions(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("clientCertificateMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -224,7 +240,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppIngressConfiguration(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(exposedPort), Optional.ToNullable(transport), Optional.ToList(traffic), Optional.ToList(customDomains), Optional.ToNullable(allowInsecure), Optional.ToList(ipSecurityRestrictions), Optional.ToNullable(clientCertificateMode), corsPolicy.Value);
+            return new ContainerAppIngressConfiguration(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(exposedPort), Optional.ToNullable(transport), Optional.ToList(traffic), Optional.ToList(customDomains), Optional.ToNullable(allowInsecure), Optional.ToList(ipSecurityRestrictions), stickySessions.Value, Optional.ToNullable(clientCertificateMode), corsPolicy.Value);
         }
     }
 }

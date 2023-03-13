@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> A premium workload profile. </summary>
+    /// <summary>
+    /// A workload profile with specific hardware configure to run container apps.
+    /// Serialized Name: AvailableWorkloadProfile
+    /// </summary>
     public partial class ContainerAppAvailableWorkloadProfile : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppAvailableWorkloadProfile. </summary>
@@ -23,17 +26,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Region of the workload profile. </param>
-        /// <param name="properties"> Revision resource specific properties. </param>
+        /// <param name="location">
+        /// Region of the workload profile.
+        /// Serialized Name: AvailableWorkloadProfile.location
+        /// </param>
+        /// <param name="properties">
+        /// Revision resource specific properties
+        /// Serialized Name: AvailableWorkloadProfile.properties
+        /// </param>
         internal ContainerAppAvailableWorkloadProfile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ContainerAppAvailableWorkloadProfileProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
         }
 
-        /// <summary> Region of the workload profile. </summary>
+        /// <summary>
+        /// Region of the workload profile.
+        /// Serialized Name: AvailableWorkloadProfile.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> Revision resource specific properties. </summary>
+        /// <summary>
+        /// Revision resource specific properties
+        /// Serialized Name: AvailableWorkloadProfile.properties
+        /// </summary>
         public ContainerAppAvailableWorkloadProfileProperties Properties { get; set; }
     }
 }

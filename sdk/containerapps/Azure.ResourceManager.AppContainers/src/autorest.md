@@ -8,7 +8,7 @@ generate-model-factory: false
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/e812b54127fad6c9bc2407b33980b0fe385b7717/specification/app/resource-manager/readme.md
+require: https://github.com/Seris370/azure-rest-api-specs/blob/4501ddbb0adc200bd9deae8c662113d5c5bedf70/specification/app/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -198,6 +198,11 @@ rename-mapping:
   VnetConfiguration.infrastructureSubnetId: -|arm-id
   VnetConfiguration.internal: IsInternal
   ContainerApp.properties.eventStreamEndpoint: -|uri
+  WorkloadProfile.maximumCount: MaxCount
+  WorkloadProfile.minimumCount: MinCount
+
+mgmt-debug:
+  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -225,8 +230,8 @@ directive:
       if ($['type'] === 'boolean')
         $['x-ms-client-name'] = 'IsEnabled'
   - from: ContainerApps.json
-    where: $.definitions.ContainerApp
+    where: $.definitions.ContainerAppProperties
     transform: >
-      $.properties.properties.properties.outboundIpAddresses['x-ms-client-name'] = 'outboundIpAddressList';
-      $.properties.properties.properties.outboundIpAddresses.items['x-ms-format'] = 'ip-address';
+      $.properties.outboundIpAddresses['x-ms-client-name'] = 'outboundIpAddressList';
+      $.properties.outboundIpAddresses.items['x-ms-format'] = 'ip-address';
 ```

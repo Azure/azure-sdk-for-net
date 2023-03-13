@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App credentials. </summary>
+    /// <summary>
+    /// Container App credentials.
+    /// Serialized Name: AzureCredentials
+    /// </summary>
     public partial class ContainerAppCredentials
     {
         /// <summary> Initializes a new instance of ContainerAppCredentials. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppCredentials. </summary>
-        /// <param name="clientId"> Client Id. </param>
-        /// <param name="clientSecret"> Client Secret. </param>
-        /// <param name="tenantId"> Tenant Id. </param>
-        /// <param name="subscriptionId"> Subscription Id. </param>
+        /// <param name="clientId">
+        /// Client Id.
+        /// Serialized Name: AzureCredentials.clientId
+        /// </param>
+        /// <param name="clientSecret">
+        /// Client Secret.
+        /// Serialized Name: AzureCredentials.clientSecret
+        /// </param>
+        /// <param name="tenantId">
+        /// Tenant Id.
+        /// Serialized Name: AzureCredentials.tenantId
+        /// </param>
+        /// <param name="subscriptionId">
+        /// Subscription Id.
+        /// Serialized Name: AzureCredentials.subscriptionId
+        /// </param>
         internal ContainerAppCredentials(string clientId, string clientSecret, Guid? tenantId, string subscriptionId)
         {
             ClientId = clientId;
@@ -30,13 +45,25 @@ namespace Azure.ResourceManager.AppContainers.Models
             SubscriptionId = subscriptionId;
         }
 
-        /// <summary> Client Id. </summary>
+        /// <summary>
+        /// Client Id.
+        /// Serialized Name: AzureCredentials.clientId
+        /// </summary>
         public string ClientId { get; set; }
-        /// <summary> Client Secret. </summary>
+        /// <summary>
+        /// Client Secret.
+        /// Serialized Name: AzureCredentials.clientSecret
+        /// </summary>
         public string ClientSecret { get; set; }
-        /// <summary> Tenant Id. </summary>
+        /// <summary>
+        /// Tenant Id.
+        /// Serialized Name: AzureCredentials.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> Subscription Id. </summary>
+        /// <summary>
+        /// Subscription Id.
+        /// Serialized Name: AzureCredentials.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; set; }
     }
 }

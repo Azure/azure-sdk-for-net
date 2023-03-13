@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic. </summary>
+    /// <summary>
+    /// Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
+    /// Serialized Name: ContainerAppProbe
+    /// </summary>
     public partial class ContainerAppProbe
     {
         /// <summary> Initializes a new instance of ContainerAppProbe. </summary>
@@ -16,15 +19,42 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppProbe. </summary>
-        /// <param name="failureThreshold"> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </param>
-        /// <param name="httpGet"> HTTPGet specifies the http request to perform. </param>
-        /// <param name="initialDelaySeconds"> Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60. </param>
-        /// <param name="periodSeconds"> How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value is 240. </param>
-        /// <param name="successThreshold"> Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1. Maximum value is 10. </param>
-        /// <param name="tcpSocket"> TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported. </param>
-        /// <param name="terminationGracePeriodSeconds"> Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod&apos;s terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour). </param>
-        /// <param name="timeoutSeconds"> Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240. </param>
-        /// <param name="probeType"> The type of probe. </param>
+        /// <param name="failureThreshold">
+        /// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10.
+        /// Serialized Name: ContainerAppProbe.failureThreshold
+        /// </param>
+        /// <param name="httpGet">
+        /// HTTPGet specifies the http request to perform.
+        /// Serialized Name: ContainerAppProbe.httpGet
+        /// </param>
+        /// <param name="initialDelaySeconds">
+        /// Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60.
+        /// Serialized Name: ContainerAppProbe.initialDelaySeconds
+        /// </param>
+        /// <param name="periodSeconds">
+        /// How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value is 240.
+        /// Serialized Name: ContainerAppProbe.periodSeconds
+        /// </param>
+        /// <param name="successThreshold">
+        /// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1. Maximum value is 10.
+        /// Serialized Name: ContainerAppProbe.successThreshold
+        /// </param>
+        /// <param name="tcpSocket">
+        /// TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported.
+        /// Serialized Name: ContainerAppProbe.tcpSocket
+        /// </param>
+        /// <param name="terminationGracePeriodSeconds">
+        /// Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod&apos;s terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour)
+        /// Serialized Name: ContainerAppProbe.terminationGracePeriodSeconds
+        /// </param>
+        /// <param name="timeoutSeconds">
+        /// Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240.
+        /// Serialized Name: ContainerAppProbe.timeoutSeconds
+        /// </param>
+        /// <param name="probeType">
+        /// The type of probe.
+        /// Serialized Name: ContainerAppProbe.type
+        /// </param>
         internal ContainerAppProbe(int? failureThreshold, ContainerAppHttpRequestInfo httpGet, int? initialDelaySeconds, int? periodSeconds, int? successThreshold, ContainerAppTcpSocketRequestInfo tcpSocket, long? terminationGracePeriodSeconds, int? timeoutSeconds, ContainerAppProbeType? probeType)
         {
             FailureThreshold = failureThreshold;
@@ -38,23 +68,50 @@ namespace Azure.ResourceManager.AppContainers.Models
             ProbeType = probeType;
         }
 
-        /// <summary> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </summary>
+        /// <summary>
+        /// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10.
+        /// Serialized Name: ContainerAppProbe.failureThreshold
+        /// </summary>
         public int? FailureThreshold { get; set; }
-        /// <summary> HTTPGet specifies the http request to perform. </summary>
+        /// <summary>
+        /// HTTPGet specifies the http request to perform.
+        /// Serialized Name: ContainerAppProbe.httpGet
+        /// </summary>
         public ContainerAppHttpRequestInfo HttpGet { get; set; }
-        /// <summary> Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60. </summary>
+        /// <summary>
+        /// Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60.
+        /// Serialized Name: ContainerAppProbe.initialDelaySeconds
+        /// </summary>
         public int? InitialDelaySeconds { get; set; }
-        /// <summary> How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value is 240. </summary>
+        /// <summary>
+        /// How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value is 240.
+        /// Serialized Name: ContainerAppProbe.periodSeconds
+        /// </summary>
         public int? PeriodSeconds { get; set; }
-        /// <summary> Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1. Maximum value is 10. </summary>
+        /// <summary>
+        /// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1. Maximum value is 10.
+        /// Serialized Name: ContainerAppProbe.successThreshold
+        /// </summary>
         public int? SuccessThreshold { get; set; }
-        /// <summary> TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported. </summary>
+        /// <summary>
+        /// TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported.
+        /// Serialized Name: ContainerAppProbe.tcpSocket
+        /// </summary>
         public ContainerAppTcpSocketRequestInfo TcpSocket { get; set; }
-        /// <summary> Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod&apos;s terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour). </summary>
+        /// <summary>
+        /// Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod&apos;s terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour)
+        /// Serialized Name: ContainerAppProbe.terminationGracePeriodSeconds
+        /// </summary>
         public long? TerminationGracePeriodSeconds { get; set; }
-        /// <summary> Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240. </summary>
+        /// <summary>
+        /// Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240.
+        /// Serialized Name: ContainerAppProbe.timeoutSeconds
+        /// </summary>
         public int? TimeoutSeconds { get; set; }
-        /// <summary> The type of probe. </summary>
+        /// <summary>
+        /// The type of probe.
+        /// Serialized Name: ContainerAppProbe.type
+        /// </summary>
         public ContainerAppProbeType? ProbeType { get; set; }
     }
 }

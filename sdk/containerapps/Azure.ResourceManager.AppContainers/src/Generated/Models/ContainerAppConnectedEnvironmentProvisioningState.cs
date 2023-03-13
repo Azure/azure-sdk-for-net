@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Provisioning state of the Kubernetes Environment. </summary>
+    /// <summary>
+    /// Provisioning state of the Kubernetes Environment.
+    /// Serialized Name: ConnectedEnvironmentProvisioningState
+    /// </summary>
     public readonly partial struct ContainerAppConnectedEnvironmentProvisioningState : IEquatable<ContainerAppConnectedEnvironmentProvisioningState>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string InfrastructureSetupCompleteValue = "InfrastructureSetupComplete";
         private const string ScheduledForDeleteValue = "ScheduledForDelete";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ConnectedEnvironmentProvisioningState.Succeeded
+        /// </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState Succeeded { get; } = new ContainerAppConnectedEnvironmentProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ConnectedEnvironmentProvisioningState.Failed
+        /// </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState Failed { get; } = new ContainerAppConnectedEnvironmentProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: ConnectedEnvironmentProvisioningState.Canceled
+        /// </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState Canceled { get; } = new ContainerAppConnectedEnvironmentProvisioningState(CanceledValue);
-        /// <summary> Waiting. </summary>
+        /// <summary>
+        /// Waiting
+        /// Serialized Name: ConnectedEnvironmentProvisioningState.Waiting
+        /// </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState Waiting { get; } = new ContainerAppConnectedEnvironmentProvisioningState(WaitingValue);
-        /// <summary> InitializationInProgress. </summary>
+        /// <summary>
+        /// InitializationInProgress
+        /// Serialized Name: ConnectedEnvironmentProvisioningState.InitializationInProgress
+        /// </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState InitializationInProgress { get; } = new ContainerAppConnectedEnvironmentProvisioningState(InitializationInProgressValue);
-        /// <summary> InfrastructureSetupInProgress. </summary>
+        /// <summary>
+        /// InfrastructureSetupInProgress
+        /// Serialized Name: ConnectedEnvironmentProvisioningState.InfrastructureSetupInProgress
+        /// </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState InfrastructureSetupInProgress { get; } = new ContainerAppConnectedEnvironmentProvisioningState(InfrastructureSetupInProgressValue);
-        /// <summary> InfrastructureSetupComplete. </summary>
+        /// <summary>
+        /// InfrastructureSetupComplete
+        /// Serialized Name: ConnectedEnvironmentProvisioningState.InfrastructureSetupComplete
+        /// </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState InfrastructureSetupComplete { get; } = new ContainerAppConnectedEnvironmentProvisioningState(InfrastructureSetupCompleteValue);
-        /// <summary> ScheduledForDelete. </summary>
+        /// <summary>
+        /// ScheduledForDelete
+        /// Serialized Name: ConnectedEnvironmentProvisioningState.ScheduledForDelete
+        /// </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState ScheduledForDelete { get; } = new ContainerAppConnectedEnvironmentProvisioningState(ScheduledForDeleteValue);
         /// <summary> Determines if two <see cref="ContainerAppConnectedEnvironmentProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppConnectedEnvironmentProvisioningState left, ContainerAppConnectedEnvironmentProvisioningState right) => left.Equals(right);

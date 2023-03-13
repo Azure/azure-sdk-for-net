@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing the ContainerAppAuthConfig data model.
     /// Configuration settings for the Azure ContainerApp Service Authentication / Authorization feature.
+    /// Serialized Name: AuthConfig
     /// </summary>
     public partial class ContainerAppAuthConfigData : ResourceData
     {
@@ -27,11 +28,26 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="platform"> The configuration settings of the platform of ContainerApp Service Authentication/Authorization. </param>
-        /// <param name="globalValidation"> The configuration settings that determines the validation flow of users using  Service Authentication/Authorization. </param>
-        /// <param name="identityProviders"> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </param>
-        /// <param name="login"> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </param>
-        /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization. </param>
+        /// <param name="platform">
+        /// The configuration settings of the platform of ContainerApp Service Authentication/Authorization.
+        /// Serialized Name: AuthConfig.properties.platform
+        /// </param>
+        /// <param name="globalValidation">
+        /// The configuration settings that determines the validation flow of users using  Service Authentication/Authorization.
+        /// Serialized Name: AuthConfig.properties.globalValidation
+        /// </param>
+        /// <param name="identityProviders">
+        /// The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization.
+        /// Serialized Name: AuthConfig.properties.identityProviders
+        /// </param>
+        /// <param name="login">
+        /// The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization.
+        /// Serialized Name: AuthConfig.properties.login
+        /// </param>
+        /// <param name="httpSettings">
+        /// The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization.
+        /// Serialized Name: AuthConfig.properties.httpSettings
+        /// </param>
         internal ContainerAppAuthConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppAuthPlatform platform, ContainerAppGlobalValidation globalValidation, ContainerAppIdentityProvidersConfiguration identityProviders, ContainerAppLogin login, ContainerAppHttpSettings httpSettings) : base(id, name, resourceType, systemData)
         {
             Platform = platform;
@@ -41,15 +57,30 @@ namespace Azure.ResourceManager.AppContainers
             HttpSettings = httpSettings;
         }
 
-        /// <summary> The configuration settings of the platform of ContainerApp Service Authentication/Authorization. </summary>
+        /// <summary>
+        /// The configuration settings of the platform of ContainerApp Service Authentication/Authorization.
+        /// Serialized Name: AuthConfig.properties.platform
+        /// </summary>
         public ContainerAppAuthPlatform Platform { get; set; }
-        /// <summary> The configuration settings that determines the validation flow of users using  Service Authentication/Authorization. </summary>
+        /// <summary>
+        /// The configuration settings that determines the validation flow of users using  Service Authentication/Authorization.
+        /// Serialized Name: AuthConfig.properties.globalValidation
+        /// </summary>
         public ContainerAppGlobalValidation GlobalValidation { get; set; }
-        /// <summary> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </summary>
+        /// <summary>
+        /// The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization.
+        /// Serialized Name: AuthConfig.properties.identityProviders
+        /// </summary>
         public ContainerAppIdentityProvidersConfiguration IdentityProviders { get; set; }
-        /// <summary> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </summary>
+        /// <summary>
+        /// The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization.
+        /// Serialized Name: AuthConfig.properties.login
+        /// </summary>
         public ContainerAppLogin Login { get; set; }
-        /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization. </summary>
+        /// <summary>
+        /// The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization.
+        /// Serialized Name: AuthConfig.properties.httpSettings
+        /// </summary>
         public ContainerAppHttpSettings HttpSettings { get; set; }
     }
 }

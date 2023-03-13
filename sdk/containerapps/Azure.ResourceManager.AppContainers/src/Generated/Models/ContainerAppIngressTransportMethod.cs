@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Ingress transport protocol. </summary>
+    /// <summary>
+    /// Ingress transport protocol
+    /// Serialized Name: IngressTransportMethod
+    /// </summary>
     public readonly partial struct ContainerAppIngressTransportMethod : IEquatable<ContainerAppIngressTransportMethod>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string Http2Value = "http2";
         private const string TcpValue = "tcp";
 
-        /// <summary> auto. </summary>
+        /// <summary>
+        /// auto
+        /// Serialized Name: IngressTransportMethod.auto
+        /// </summary>
         public static ContainerAppIngressTransportMethod Auto { get; } = new ContainerAppIngressTransportMethod(AutoValue);
-        /// <summary> http. </summary>
+        /// <summary>
+        /// http
+        /// Serialized Name: IngressTransportMethod.http
+        /// </summary>
         public static ContainerAppIngressTransportMethod Http { get; } = new ContainerAppIngressTransportMethod(HttpValue);
-        /// <summary> http2. </summary>
+        /// <summary>
+        /// http2
+        /// Serialized Name: IngressTransportMethod.http2
+        /// </summary>
         public static ContainerAppIngressTransportMethod Http2 { get; } = new ContainerAppIngressTransportMethod(Http2Value);
-        /// <summary> tcp. </summary>
+        /// <summary>
+        /// tcp
+        /// Serialized Name: IngressTransportMethod.tcp
+        /// </summary>
         public static ContainerAppIngressTransportMethod Tcp { get; } = new ContainerAppIngressTransportMethod(TcpValue);
         /// <summary> Determines if two <see cref="ContainerAppIngressTransportMethod"/> values are the same. </summary>
         public static bool operator ==(ContainerAppIngressTransportMethod left, ContainerAppIngressTransportMethod right) => left.Equals(right);

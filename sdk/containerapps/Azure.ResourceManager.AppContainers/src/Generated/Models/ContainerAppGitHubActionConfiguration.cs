@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Configuration properties that define the mutable settings of a Container App SourceControl. </summary>
+    /// <summary>
+    /// Configuration properties that define the mutable settings of a Container App SourceControl
+    /// Serialized Name: GithubActionConfiguration
+    /// </summary>
     public partial class ContainerAppGitHubActionConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppGitHubActionConfiguration. </summary>
@@ -16,14 +19,38 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppGitHubActionConfiguration. </summary>
-        /// <param name="registryInfo"> Registry configurations. </param>
-        /// <param name="azureCredentials"> AzureCredentials configurations. </param>
-        /// <param name="contextPath"> Context path. </param>
-        /// <param name="image"> Image name. </param>
-        /// <param name="publishType"> Code or Image. </param>
-        /// <param name="os"> Operation system. </param>
-        /// <param name="runtimeStack"> Runtime stack. </param>
-        /// <param name="runtimeVersion"> Runtime version. </param>
+        /// <param name="registryInfo">
+        /// Registry configurations.
+        /// Serialized Name: GithubActionConfiguration.registryInfo
+        /// </param>
+        /// <param name="azureCredentials">
+        /// AzureCredentials configurations.
+        /// Serialized Name: GithubActionConfiguration.azureCredentials
+        /// </param>
+        /// <param name="contextPath">
+        /// Context path
+        /// Serialized Name: GithubActionConfiguration.contextPath
+        /// </param>
+        /// <param name="image">
+        /// Image name
+        /// Serialized Name: GithubActionConfiguration.image
+        /// </param>
+        /// <param name="publishType">
+        /// Code or Image
+        /// Serialized Name: GithubActionConfiguration.publishType
+        /// </param>
+        /// <param name="os">
+        /// Operation system
+        /// Serialized Name: GithubActionConfiguration.os
+        /// </param>
+        /// <param name="runtimeStack">
+        /// Runtime stack
+        /// Serialized Name: GithubActionConfiguration.runtimeStack
+        /// </param>
+        /// <param name="runtimeVersion">
+        /// Runtime version
+        /// Serialized Name: GithubActionConfiguration.runtimeVersion
+        /// </param>
         internal ContainerAppGitHubActionConfiguration(ContainerAppRegistryInfo registryInfo, ContainerAppCredentials azureCredentials, string contextPath, string image, string publishType, string os, string runtimeStack, string runtimeVersion)
         {
             RegistryInfo = registryInfo;
@@ -36,21 +63,45 @@ namespace Azure.ResourceManager.AppContainers.Models
             RuntimeVersion = runtimeVersion;
         }
 
-        /// <summary> Registry configurations. </summary>
+        /// <summary>
+        /// Registry configurations.
+        /// Serialized Name: GithubActionConfiguration.registryInfo
+        /// </summary>
         public ContainerAppRegistryInfo RegistryInfo { get; set; }
-        /// <summary> AzureCredentials configurations. </summary>
+        /// <summary>
+        /// AzureCredentials configurations.
+        /// Serialized Name: GithubActionConfiguration.azureCredentials
+        /// </summary>
         public ContainerAppCredentials AzureCredentials { get; set; }
-        /// <summary> Context path. </summary>
+        /// <summary>
+        /// Context path
+        /// Serialized Name: GithubActionConfiguration.contextPath
+        /// </summary>
         public string ContextPath { get; set; }
-        /// <summary> Image name. </summary>
+        /// <summary>
+        /// Image name
+        /// Serialized Name: GithubActionConfiguration.image
+        /// </summary>
         public string Image { get; set; }
-        /// <summary> Code or Image. </summary>
+        /// <summary>
+        /// Code or Image
+        /// Serialized Name: GithubActionConfiguration.publishType
+        /// </summary>
         public string PublishType { get; set; }
-        /// <summary> Operation system. </summary>
+        /// <summary>
+        /// Operation system
+        /// Serialized Name: GithubActionConfiguration.os
+        /// </summary>
         public string OS { get; set; }
-        /// <summary> Runtime stack. </summary>
+        /// <summary>
+        /// Runtime stack
+        /// Serialized Name: GithubActionConfiguration.runtimeStack
+        /// </summary>
         public string RuntimeStack { get; set; }
-        /// <summary> Runtime version. </summary>
+        /// <summary>
+        /// Runtime version
+        /// Serialized Name: GithubActionConfiguration.runtimeVersion
+        /// </summary>
         public string RuntimeVersion { get; set; }
     }
 }

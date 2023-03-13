@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App container scaling rule. </summary>
+    /// <summary>
+    /// Container App container scaling rule.
+    /// Serialized Name: ScaleRule
+    /// </summary>
     public partial class ContainerAppScaleRule
     {
         /// <summary> Initializes a new instance of ContainerAppScaleRule. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppScaleRule. </summary>
-        /// <param name="name"> Scale Rule Name. </param>
-        /// <param name="azureQueue"> Azure Queue based scaling. </param>
-        /// <param name="custom"> Custom scale rule. </param>
-        /// <param name="http"> HTTP requests based scaling. </param>
-        /// <param name="tcp"> Tcp requests based scaling. </param>
+        /// <param name="name">
+        /// Scale Rule Name
+        /// Serialized Name: ScaleRule.name
+        /// </param>
+        /// <param name="azureQueue">
+        /// Azure Queue based scaling.
+        /// Serialized Name: ScaleRule.azureQueue
+        /// </param>
+        /// <param name="custom">
+        /// Custom scale rule.
+        /// Serialized Name: ScaleRule.custom
+        /// </param>
+        /// <param name="http">
+        /// HTTP requests based scaling.
+        /// Serialized Name: ScaleRule.http
+        /// </param>
+        /// <param name="tcp">
+        /// Tcp requests based scaling.
+        /// Serialized Name: ScaleRule.tcp
+        /// </param>
         internal ContainerAppScaleRule(string name, ContainerAppQueueScaleRule azureQueue, ContainerAppCustomScaleRule custom, ContainerAppHttpScaleRule http, ContainerAppTcpScaleRule tcp)
         {
             Name = name;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.AppContainers.Models
             Tcp = tcp;
         }
 
-        /// <summary> Scale Rule Name. </summary>
+        /// <summary>
+        /// Scale Rule Name
+        /// Serialized Name: ScaleRule.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Azure Queue based scaling. </summary>
+        /// <summary>
+        /// Azure Queue based scaling.
+        /// Serialized Name: ScaleRule.azureQueue
+        /// </summary>
         public ContainerAppQueueScaleRule AzureQueue { get; set; }
-        /// <summary> Custom scale rule. </summary>
+        /// <summary>
+        /// Custom scale rule.
+        /// Serialized Name: ScaleRule.custom
+        /// </summary>
         public ContainerAppCustomScaleRule Custom { get; set; }
-        /// <summary> HTTP requests based scaling. </summary>
+        /// <summary>
+        /// HTTP requests based scaling.
+        /// Serialized Name: ScaleRule.http
+        /// </summary>
         public ContainerAppHttpScaleRule Http { get; set; }
-        /// <summary> Tcp requests based scaling. </summary>
+        /// <summary>
+        /// Tcp requests based scaling.
+        /// Serialized Name: ScaleRule.tcp
+        /// </summary>
         public ContainerAppTcpScaleRule Tcp { get; set; }
     }
 }

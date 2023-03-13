@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny. </summary>
+    /// <summary>
+    /// Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny
+    /// Serialized Name: Action
+    /// </summary>
     public readonly partial struct ContainerAppIPRuleAction : IEquatable<ContainerAppIPRuleAction>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string AllowValue = "Allow";
         private const string DenyValue = "Deny";
 
-        /// <summary> Allow. </summary>
+        /// <summary>
+        /// Allow
+        /// Serialized Name: Action.Allow
+        /// </summary>
         public static ContainerAppIPRuleAction Allow { get; } = new ContainerAppIPRuleAction(AllowValue);
-        /// <summary> Deny. </summary>
+        /// <summary>
+        /// Deny
+        /// Serialized Name: Action.Deny
+        /// </summary>
         public static ContainerAppIPRuleAction Deny { get; } = new ContainerAppIPRuleAction(DenyValue);
         /// <summary> Determines if two <see cref="ContainerAppIPRuleAction"/> values are the same. </summary>
         public static bool operator ==(ContainerAppIPRuleAction left, ContainerAppIPRuleAction right) => left.Equals(right);

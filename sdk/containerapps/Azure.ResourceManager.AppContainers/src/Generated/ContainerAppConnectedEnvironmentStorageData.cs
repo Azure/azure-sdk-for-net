@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing the ContainerAppConnectedEnvironmentStorage data model.
     /// Storage resource for connectedEnvironment.
+    /// Serialized Name: ConnectedEnvironmentStorage
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentStorageData : ResourceData
     {
@@ -27,15 +28,24 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Storage properties. </param>
+        /// <param name="properties">
+        /// Storage properties
+        /// Serialized Name: ConnectedEnvironmentStorage.properties
+        /// </param>
         internal ContainerAppConnectedEnvironmentStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectedEnvironmentStorageProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Storage properties. </summary>
+        /// <summary>
+        /// Storage properties
+        /// Serialized Name: ConnectedEnvironmentStorage.properties
+        /// </summary>
         internal ConnectedEnvironmentStorageProperties Properties { get; set; }
-        /// <summary> Azure file properties. </summary>
+        /// <summary>
+        /// Azure file properties
+        /// Serialized Name: ConnectedEnvironmentStorageProperties.azureFile
+        /// </summary>
         public ContainerAppAzureFileProperties ConnectedEnvironmentStorageAzureFile
         {
             get => Properties is null ? default : Properties.AzureFile;

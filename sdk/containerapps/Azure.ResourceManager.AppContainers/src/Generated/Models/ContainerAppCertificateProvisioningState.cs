@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Provisioning state of the certificate. </summary>
+    /// <summary>
+    /// Provisioning state of the certificate.
+    /// Serialized Name: CertificateProvisioningState
+    /// </summary>
     public readonly partial struct ContainerAppCertificateProvisioningState : IEquatable<ContainerAppCertificateProvisioningState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string DeleteFailedValue = "DeleteFailed";
         private const string PendingValue = "Pending";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: CertificateProvisioningState.Succeeded
+        /// </summary>
         public static ContainerAppCertificateProvisioningState Succeeded { get; } = new ContainerAppCertificateProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: CertificateProvisioningState.Failed
+        /// </summary>
         public static ContainerAppCertificateProvisioningState Failed { get; } = new ContainerAppCertificateProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: CertificateProvisioningState.Canceled
+        /// </summary>
         public static ContainerAppCertificateProvisioningState Canceled { get; } = new ContainerAppCertificateProvisioningState(CanceledValue);
-        /// <summary> DeleteFailed. </summary>
+        /// <summary>
+        /// DeleteFailed
+        /// Serialized Name: CertificateProvisioningState.DeleteFailed
+        /// </summary>
         public static ContainerAppCertificateProvisioningState DeleteFailed { get; } = new ContainerAppCertificateProvisioningState(DeleteFailedValue);
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: CertificateProvisioningState.Pending
+        /// </summary>
         public static ContainerAppCertificateProvisioningState Pending { get; } = new ContainerAppCertificateProvisioningState(PendingValue);
         /// <summary> Determines if two <see cref="ContainerAppCertificateProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppCertificateProvisioningState left, ContainerAppCertificateProvisioningState right) => left.Equals(right);

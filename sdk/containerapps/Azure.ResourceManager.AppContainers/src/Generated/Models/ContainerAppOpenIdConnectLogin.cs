@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
+    /// <summary>
+    /// The configuration settings of the login flow of the custom Open ID Connect provider.
+    /// Serialized Name: OpenIdConnectLogin
+    /// </summary>
     public partial class ContainerAppOpenIdConnectLogin
     {
         /// <summary> Initializes a new instance of ContainerAppOpenIdConnectLogin. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppOpenIdConnectLogin. </summary>
-        /// <param name="nameClaimType"> The name of the claim that contains the users name. </param>
-        /// <param name="scopes"> A list of the scopes that should be requested while authenticating. </param>
+        /// <param name="nameClaimType">
+        /// The name of the claim that contains the users name.
+        /// Serialized Name: OpenIdConnectLogin.nameClaimType
+        /// </param>
+        /// <param name="scopes">
+        /// A list of the scopes that should be requested while authenticating.
+        /// Serialized Name: OpenIdConnectLogin.scopes
+        /// </param>
         internal ContainerAppOpenIdConnectLogin(string nameClaimType, IList<string> scopes)
         {
             NameClaimType = nameClaimType;
             Scopes = scopes;
         }
 
-        /// <summary> The name of the claim that contains the users name. </summary>
+        /// <summary>
+        /// The name of the claim that contains the users name.
+        /// Serialized Name: OpenIdConnectLogin.nameClaimType
+        /// </summary>
         public string NameClaimType { get; set; }
-        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        /// <summary>
+        /// A list of the scopes that should be requested while authenticating.
+        /// Serialized Name: OpenIdConnectLogin.scopes
+        /// </summary>
         public IList<string> Scopes { get; }
     }
 }

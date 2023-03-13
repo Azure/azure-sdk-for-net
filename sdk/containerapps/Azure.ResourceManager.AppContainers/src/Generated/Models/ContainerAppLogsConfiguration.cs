@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Configuration of application logs. </summary>
+    /// <summary>
+    /// Configuration of application logs
+    /// Serialized Name: AppLogsConfiguration
+    /// </summary>
     public partial class ContainerAppLogsConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppLogsConfiguration. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppLogsConfiguration. </summary>
-        /// <param name="destination"> Logs destination. </param>
-        /// <param name="logAnalyticsConfiguration"> Log Analytics configuration. </param>
+        /// <param name="destination">
+        /// Logs destination
+        /// Serialized Name: AppLogsConfiguration.destination
+        /// </param>
+        /// <param name="logAnalyticsConfiguration">
+        /// Log Analytics configuration
+        /// Serialized Name: AppLogsConfiguration.logAnalyticsConfiguration
+        /// </param>
         internal ContainerAppLogsConfiguration(string destination, ContainerAppLogAnalyticsConfiguration logAnalyticsConfiguration)
         {
             Destination = destination;
             LogAnalyticsConfiguration = logAnalyticsConfiguration;
         }
 
-        /// <summary> Logs destination. </summary>
+        /// <summary>
+        /// Logs destination
+        /// Serialized Name: AppLogsConfiguration.destination
+        /// </summary>
         public string Destination { get; set; }
-        /// <summary> Log Analytics configuration. </summary>
+        /// <summary>
+        /// Log Analytics configuration
+        /// Serialized Name: AppLogsConfiguration.logAnalyticsConfiguration
+        /// </summary>
         public ContainerAppLogAnalyticsConfiguration LogAnalyticsConfiguration { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the Twitter provider. </summary>
+    /// <summary>
+    /// The configuration settings of the Twitter provider.
+    /// Serialized Name: Twitter
+    /// </summary>
     public partial class ContainerAppTwitterConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppTwitterConfiguration. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppTwitterConfiguration. </summary>
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the Twitter provider. </param>
+        /// <param name="isEnabled">
+        /// &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Twitter.enabled
+        /// </param>
+        /// <param name="registration">
+        /// The configuration settings of the app registration for the Twitter provider.
+        /// Serialized Name: Twitter.registration
+        /// </param>
         internal ContainerAppTwitterConfiguration(bool? isEnabled, ContainerAppTwitterRegistration registration)
         {
             IsEnabled = isEnabled;
             Registration = registration;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Twitter.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> The configuration settings of the app registration for the Twitter provider. </summary>
+        /// <summary>
+        /// The configuration settings of the app registration for the Twitter provider.
+        /// Serialized Name: Twitter.registration
+        /// </summary>
         public ContainerAppTwitterRegistration Registration { get; set; }
     }
 }

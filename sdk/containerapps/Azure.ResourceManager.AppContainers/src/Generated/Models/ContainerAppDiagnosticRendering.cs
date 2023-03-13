@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Rendering details of a diagnostics table. </summary>
+    /// <summary>
+    /// Rendering details of a diagnostics table
+    /// Serialized Name: DiagnosticRendering
+    /// </summary>
     public partial class ContainerAppDiagnosticRendering
     {
         /// <summary> Initializes a new instance of ContainerAppDiagnosticRendering. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticRendering. </summary>
-        /// <param name="diagnosticRenderingType"> Rendering type. </param>
-        /// <param name="title"> Title of the table. </param>
-        /// <param name="description"> Description of the table. </param>
-        /// <param name="isVisible"> Flag if the table should be rendered. </param>
+        /// <param name="diagnosticRenderingType">
+        /// Rendering type
+        /// Serialized Name: DiagnosticRendering.type
+        /// </param>
+        /// <param name="title">
+        /// Title of the table
+        /// Serialized Name: DiagnosticRendering.title
+        /// </param>
+        /// <param name="description">
+        /// Description of the table
+        /// Serialized Name: DiagnosticRendering.description
+        /// </param>
+        /// <param name="isVisible">
+        /// Flag if the table should be rendered
+        /// Serialized Name: DiagnosticRendering.isVisible
+        /// </param>
         internal ContainerAppDiagnosticRendering(int? diagnosticRenderingType, string title, string description, bool? isVisible)
         {
             DiagnosticRenderingType = diagnosticRenderingType;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.AppContainers.Models
             IsVisible = isVisible;
         }
 
-        /// <summary> Rendering type. </summary>
+        /// <summary>
+        /// Rendering type
+        /// Serialized Name: DiagnosticRendering.type
+        /// </summary>
         public int? DiagnosticRenderingType { get; set; }
-        /// <summary> Title of the table. </summary>
+        /// <summary>
+        /// Title of the table
+        /// Serialized Name: DiagnosticRendering.title
+        /// </summary>
         public string Title { get; set; }
-        /// <summary> Description of the table. </summary>
+        /// <summary>
+        /// Description of the table
+        /// Serialized Name: DiagnosticRendering.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Flag if the table should be rendered. </summary>
+        /// <summary>
+        /// Flag if the table should be rendered
+        /// Serialized Name: DiagnosticRendering.isVisible
+        /// </summary>
         public bool? IsVisible { get; set; }
     }
 }

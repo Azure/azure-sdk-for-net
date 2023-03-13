@@ -22,8 +22,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
-            writer.WritePropertyName("certificateId"u8);
-            writer.WriteStringValue(CertificateId);
+            if (Optional.IsDefined(CertificateId))
+            {
+                writer.WritePropertyName("certificateId"u8);
+                writer.WriteStringValue(CertificateId);
+            }
             writer.WriteEndObject();
         }
 
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             string name = default;
             Optional<ContainerAppCustomDomainBindingType> bindingType = default;
-            ResourceIdentifier certificateId = default;
+            Optional<ResourceIdentifier> certificateId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -55,11 +58,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (property.NameEquals("certificateId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     certificateId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new ContainerAppCustomDomain(name, Optional.ToNullable(bindingType), certificateId);
+            return new ContainerAppCustomDomain(name, Optional.ToNullable(bindingType), certificateId.Value);
         }
     }
 }

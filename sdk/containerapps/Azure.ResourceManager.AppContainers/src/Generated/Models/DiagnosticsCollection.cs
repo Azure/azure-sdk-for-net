@@ -13,11 +13,17 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Diagnostics data collection for a resource. </summary>
+    /// <summary>
+    /// Diagnostics data collection for a resource.
+    /// Serialized Name: DiagnosticsCollection
+    /// </summary>
     internal partial class DiagnosticsCollection
     {
         /// <summary> Initializes a new instance of DiagnosticsCollection. </summary>
-        /// <param name="value"> Collection of diagnostic data. </param>
+        /// <param name="value">
+        /// Collection of diagnostic data.
+        /// Serialized Name: DiagnosticsCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiagnosticsCollection(IEnumerable<ContainerAppDiagnosticData> value)
         {
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of DiagnosticsCollection. </summary>
-        /// <param name="value"> Collection of diagnostic data. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of diagnostic data.
+        /// Serialized Name: DiagnosticsCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: DiagnosticsCollection.nextLink
+        /// </param>
         internal DiagnosticsCollection(IReadOnlyList<ContainerAppDiagnosticData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of diagnostic data. </summary>
+        /// <summary>
+        /// Collection of diagnostic data.
+        /// Serialized Name: DiagnosticsCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppDiagnosticData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: DiagnosticsCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

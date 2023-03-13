@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Environment Auth Token. </summary>
+    /// <summary>
+    /// Environment Auth Token.
+    /// Serialized Name: EnvironmentAuthToken
+    /// </summary>
     public partial class ContainerAppEnvironmentAuthToken : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppEnvironmentAuthToken. </summary>
@@ -28,17 +31,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="token"> Auth token value. </param>
-        /// <param name="expireOn"> Token expiration date. </param>
+        /// <param name="token">
+        /// Auth token value.
+        /// Serialized Name: EnvironmentAuthToken.properties.token
+        /// </param>
+        /// <param name="expireOn">
+        /// Token expiration date.
+        /// Serialized Name: EnvironmentAuthToken.properties.expires
+        /// </param>
         internal ContainerAppEnvironmentAuthToken(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string token, DateTimeOffset? expireOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Token = token;
             ExpireOn = expireOn;
         }
 
-        /// <summary> Auth token value. </summary>
+        /// <summary>
+        /// Auth token value.
+        /// Serialized Name: EnvironmentAuthToken.properties.token
+        /// </summary>
         public string Token { get; }
-        /// <summary> Token expiration date. </summary>
+        /// <summary>
+        /// Token expiration date.
+        /// Serialized Name: EnvironmentAuthToken.properties.expires
+        /// </summary>
         public DateTimeOffset? ExpireOn { get; }
     }
 }

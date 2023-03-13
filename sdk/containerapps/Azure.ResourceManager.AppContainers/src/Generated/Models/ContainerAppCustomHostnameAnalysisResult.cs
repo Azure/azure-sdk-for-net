@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Custom domain analysis. </summary>
+    /// <summary>
+    /// Custom domain analysis.
+    /// Serialized Name: CustomHostnameAnalysisResult
+    /// </summary>
     public partial class ContainerAppCustomHostnameAnalysisResult
     {
         /// <summary> Initializes a new instance of ContainerAppCustomHostnameAnalysisResult. </summary>
@@ -24,18 +27,54 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppCustomHostnameAnalysisResult. </summary>
-        /// <param name="hostName"> Host name that was analyzed. </param>
-        /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="customDomainVerificationTest"> DNS verification test result. </param>
-        /// <param name="customDomainVerificationFailureInfo"> Raw failure information if DNS verification fails. </param>
-        /// <param name="hasConflictOnManagedEnvironment"> &lt;code&gt;true&lt;/code&gt; if there is a conflict on the Container App&apos;s managed environment; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="conflictWithEnvironmentCustomDomain"> &lt;code&gt;true&lt;/code&gt; if there is a conflict on the Container App&apos;s managed environment level custom domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="conflictingContainerAppResourceId"> Name of the conflicting Container App on the Managed Environment if it&apos;s within the same subscription. </param>
-        /// <param name="cNameRecords"> CName records visible for this hostname. </param>
-        /// <param name="txtRecords"> TXT records visible for this hostname. </param>
-        /// <param name="aRecords"> A records visible for this hostname. </param>
-        /// <param name="alternateCNameRecords"> Alternate CName records visible for this hostname. </param>
-        /// <param name="alternateTxtRecords"> Alternate TXT records visible for this hostname. </param>
+        /// <param name="hostName">
+        /// Host name that was analyzed
+        /// Serialized Name: CustomHostnameAnalysisResult.hostName
+        /// </param>
+        /// <param name="isHostnameAlreadyVerified">
+        /// &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CustomHostnameAnalysisResult.isHostnameAlreadyVerified
+        /// </param>
+        /// <param name="customDomainVerificationTest">
+        /// DNS verification test result.
+        /// Serialized Name: CustomHostnameAnalysisResult.customDomainVerificationTest
+        /// </param>
+        /// <param name="customDomainVerificationFailureInfo">
+        /// Raw failure information if DNS verification fails.
+        /// Serialized Name: CustomHostnameAnalysisResult.customDomainVerificationFailureInfo
+        /// </param>
+        /// <param name="hasConflictOnManagedEnvironment">
+        /// &lt;code&gt;true&lt;/code&gt; if there is a conflict on the Container App&apos;s managed environment; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CustomHostnameAnalysisResult.hasConflictOnManagedEnvironment
+        /// </param>
+        /// <param name="conflictWithEnvironmentCustomDomain">
+        /// &lt;code&gt;true&lt;/code&gt; if there is a conflict on the Container App&apos;s managed environment level custom domain; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CustomHostnameAnalysisResult.conflictWithEnvironmentCustomDomain
+        /// </param>
+        /// <param name="conflictingContainerAppResourceId">
+        /// Name of the conflicting Container App on the Managed Environment if it&apos;s within the same subscription.
+        /// Serialized Name: CustomHostnameAnalysisResult.conflictingContainerAppResourceId
+        /// </param>
+        /// <param name="cNameRecords">
+        /// CName records visible for this hostname.
+        /// Serialized Name: CustomHostnameAnalysisResult.cNameRecords
+        /// </param>
+        /// <param name="txtRecords">
+        /// TXT records visible for this hostname.
+        /// Serialized Name: CustomHostnameAnalysisResult.txtRecords
+        /// </param>
+        /// <param name="aRecords">
+        /// A records visible for this hostname.
+        /// Serialized Name: CustomHostnameAnalysisResult.aRecords
+        /// </param>
+        /// <param name="alternateCNameRecords">
+        /// Alternate CName records visible for this hostname.
+        /// Serialized Name: CustomHostnameAnalysisResult.alternateCNameRecords
+        /// </param>
+        /// <param name="alternateTxtRecords">
+        /// Alternate TXT records visible for this hostname.
+        /// Serialized Name: CustomHostnameAnalysisResult.alternateTxtRecords
+        /// </param>
         internal ContainerAppCustomHostnameAnalysisResult(string hostName, bool? isHostnameAlreadyVerified, ContainerAppDnsVerificationTestResult? customDomainVerificationTest, ContainerAppCustomDomainVerificationFailureInfo customDomainVerificationFailureInfo, bool? hasConflictOnManagedEnvironment, bool? conflictWithEnvironmentCustomDomain, string conflictingContainerAppResourceId, IReadOnlyList<string> cNameRecords, IReadOnlyList<string> txtRecords, IReadOnlyList<string> aRecords, IReadOnlyList<string> alternateCNameRecords, IReadOnlyList<string> alternateTxtRecords)
         {
             HostName = hostName;
@@ -52,29 +91,65 @@ namespace Azure.ResourceManager.AppContainers.Models
             AlternateTxtRecords = alternateTxtRecords;
         }
 
-        /// <summary> Host name that was analyzed. </summary>
+        /// <summary>
+        /// Host name that was analyzed
+        /// Serialized Name: CustomHostnameAnalysisResult.hostName
+        /// </summary>
         public string HostName { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CustomHostnameAnalysisResult.isHostnameAlreadyVerified
+        /// </summary>
         public bool? IsHostnameAlreadyVerified { get; }
-        /// <summary> DNS verification test result. </summary>
+        /// <summary>
+        /// DNS verification test result.
+        /// Serialized Name: CustomHostnameAnalysisResult.customDomainVerificationTest
+        /// </summary>
         public ContainerAppDnsVerificationTestResult? CustomDomainVerificationTest { get; }
-        /// <summary> Raw failure information if DNS verification fails. </summary>
+        /// <summary>
+        /// Raw failure information if DNS verification fails.
+        /// Serialized Name: CustomHostnameAnalysisResult.customDomainVerificationFailureInfo
+        /// </summary>
         public ContainerAppCustomDomainVerificationFailureInfo CustomDomainVerificationFailureInfo { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on the Container App&apos;s managed environment; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if there is a conflict on the Container App&apos;s managed environment; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CustomHostnameAnalysisResult.hasConflictOnManagedEnvironment
+        /// </summary>
         public bool? HasConflictOnManagedEnvironment { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on the Container App&apos;s managed environment level custom domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if there is a conflict on the Container App&apos;s managed environment level custom domain; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CustomHostnameAnalysisResult.conflictWithEnvironmentCustomDomain
+        /// </summary>
         public bool? ConflictWithEnvironmentCustomDomain { get; }
-        /// <summary> Name of the conflicting Container App on the Managed Environment if it&apos;s within the same subscription. </summary>
+        /// <summary>
+        /// Name of the conflicting Container App on the Managed Environment if it&apos;s within the same subscription.
+        /// Serialized Name: CustomHostnameAnalysisResult.conflictingContainerAppResourceId
+        /// </summary>
         public string ConflictingContainerAppResourceId { get; }
-        /// <summary> CName records visible for this hostname. </summary>
+        /// <summary>
+        /// CName records visible for this hostname.
+        /// Serialized Name: CustomHostnameAnalysisResult.cNameRecords
+        /// </summary>
         public IReadOnlyList<string> CNameRecords { get; }
-        /// <summary> TXT records visible for this hostname. </summary>
+        /// <summary>
+        /// TXT records visible for this hostname.
+        /// Serialized Name: CustomHostnameAnalysisResult.txtRecords
+        /// </summary>
         public IReadOnlyList<string> TxtRecords { get; }
-        /// <summary> A records visible for this hostname. </summary>
+        /// <summary>
+        /// A records visible for this hostname.
+        /// Serialized Name: CustomHostnameAnalysisResult.aRecords
+        /// </summary>
         public IReadOnlyList<string> ARecords { get; }
-        /// <summary> Alternate CName records visible for this hostname. </summary>
+        /// <summary>
+        /// Alternate CName records visible for this hostname.
+        /// Serialized Name: CustomHostnameAnalysisResult.alternateCNameRecords
+        /// </summary>
         public IReadOnlyList<string> AlternateCNameRecords { get; }
-        /// <summary> Alternate TXT records visible for this hostname. </summary>
+        /// <summary>
+        /// Alternate TXT records visible for this hostname.
+        /// Serialized Name: CustomHostnameAnalysisResult.alternateTxtRecords
+        /// </summary>
         public IReadOnlyList<string> AlternateTxtRecords { get; }
     }
 }

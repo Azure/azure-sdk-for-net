@@ -13,11 +13,17 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> AuthConfig collection ARM resource. </summary>
+    /// <summary>
+    /// AuthConfig collection ARM resource.
+    /// Serialized Name: AuthConfigCollection
+    /// </summary>
     internal partial class AuthConfigCollection
     {
         /// <summary> Initializes a new instance of AuthConfigCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: AuthConfigCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AuthConfigCollection(IEnumerable<ContainerAppAuthConfigData> value)
         {
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of AuthConfigCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: AuthConfigCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: AuthConfigCollection.nextLink
+        /// </param>
         internal AuthConfigCollection(IReadOnlyList<ContainerAppAuthConfigData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: AuthConfigCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppAuthConfigData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: AuthConfigCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

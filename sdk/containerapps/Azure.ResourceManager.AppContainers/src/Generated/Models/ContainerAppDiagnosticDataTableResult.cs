@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Diagnostics data table. </summary>
+    /// <summary>
+    /// Diagnostics data table
+    /// Serialized Name: DiagnosticDataTableResponseObject
+    /// </summary>
     public partial class ContainerAppDiagnosticDataTableResult
     {
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataTableResult. </summary>
@@ -22,9 +25,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataTableResult. </summary>
-        /// <param name="tableName"> Table name. </param>
-        /// <param name="columns"> Columns in the table. </param>
-        /// <param name="rows"> Rows in the table. </param>
+        /// <param name="tableName">
+        /// Table name
+        /// Serialized Name: DiagnosticDataTableResponseObject.tableName
+        /// </param>
+        /// <param name="columns">
+        /// Columns in the table
+        /// Serialized Name: DiagnosticDataTableResponseObject.columns
+        /// </param>
+        /// <param name="rows">
+        /// Rows in the table
+        /// Serialized Name: DiagnosticDataTableResponseObject.rows
+        /// </param>
         internal ContainerAppDiagnosticDataTableResult(string tableName, IList<ContainerAppDiagnosticDataColumn> columns, IList<BinaryData> rows)
         {
             TableName = tableName;
@@ -32,12 +44,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             Rows = rows;
         }
 
-        /// <summary> Table name. </summary>
+        /// <summary>
+        /// Table name
+        /// Serialized Name: DiagnosticDataTableResponseObject.tableName
+        /// </summary>
         public string TableName { get; set; }
-        /// <summary> Columns in the table. </summary>
+        /// <summary>
+        /// Columns in the table
+        /// Serialized Name: DiagnosticDataTableResponseObject.columns
+        /// </summary>
         public IList<ContainerAppDiagnosticDataColumn> Columns { get; }
         /// <summary>
         /// Rows in the table
+        /// Serialized Name: DiagnosticDataTableResponseObject.rows
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

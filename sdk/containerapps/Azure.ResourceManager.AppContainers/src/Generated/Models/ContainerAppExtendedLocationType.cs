@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The type of extendedLocation. </summary>
+    /// <summary>
+    /// The type of extendedLocation.
+    /// Serialized Name: ExtendedLocationTypes
+    /// </summary>
     public readonly partial struct ContainerAppExtendedLocationType : IEquatable<ContainerAppExtendedLocationType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         private const string CustomLocationValue = "CustomLocation";
 
-        /// <summary> CustomLocation. </summary>
+        /// <summary>
+        /// CustomLocation
+        /// Serialized Name: ExtendedLocationTypes.CustomLocation
+        /// </summary>
         public static ContainerAppExtendedLocationType CustomLocation { get; } = new ContainerAppExtendedLocationType(CustomLocationValue);
         /// <summary> Determines if two <see cref="ContainerAppExtendedLocationType"/> values are the same. </summary>
         public static bool operator ==(ContainerAppExtendedLocationType left, ContainerAppExtendedLocationType right) => left.Equals(right);

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Diagnostics data returned from a detector. </summary>
+    /// <summary>
+    /// Diagnostics data returned from a detector
+    /// Serialized Name: DiagnosticsDataApiResponse
+    /// </summary>
     public partial class ContainerAppDiagnosticsDataApiResult
     {
         /// <summary> Initializes a new instance of ContainerAppDiagnosticsDataApiResult. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticsDataApiResult. </summary>
-        /// <param name="table"> Table response. </param>
-        /// <param name="renderingProperties"> Details of the table response. </param>
+        /// <param name="table">
+        /// Table response
+        /// Serialized Name: DiagnosticsDataApiResponse.table
+        /// </param>
+        /// <param name="renderingProperties">
+        /// Details of the table response
+        /// Serialized Name: DiagnosticsDataApiResponse.renderingProperties
+        /// </param>
         internal ContainerAppDiagnosticsDataApiResult(ContainerAppDiagnosticDataTableResult table, ContainerAppDiagnosticRendering renderingProperties)
         {
             Table = table;
             RenderingProperties = renderingProperties;
         }
 
-        /// <summary> Table response. </summary>
+        /// <summary>
+        /// Table response
+        /// Serialized Name: DiagnosticsDataApiResponse.table
+        /// </summary>
         public ContainerAppDiagnosticDataTableResult Table { get; set; }
-        /// <summary> Details of the table response. </summary>
+        /// <summary>
+        /// Details of the table response
+        /// Serialized Name: DiagnosticsDataApiResponse.renderingProperties
+        /// </summary>
         public ContainerAppDiagnosticRendering RenderingProperties { get; set; }
     }
 }

@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> HTTPGet specifies the http request to perform. </summary>
+    /// <summary>
+    /// HTTPGet specifies the http request to perform.
+    /// Serialized Name: ContainerAppProbeHttpGet
+    /// </summary>
     public partial class ContainerAppHttpRequestInfo
     {
         /// <summary> Initializes a new instance of ContainerAppHttpRequestInfo. </summary>
-        /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
+        /// <param name="port">
+        /// Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        /// Serialized Name: ContainerAppProbeHttpGet.port
+        /// </param>
         public ContainerAppHttpRequestInfo(int port)
         {
             HttpHeaders = new ChangeTrackingList<ContainerAppHttpHeaderInfo>();
@@ -22,11 +28,26 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppHttpRequestInfo. </summary>
-        /// <param name="host"> Host name to connect to, defaults to the pod IP. You probably want to set &quot;Host&quot; in httpHeaders instead. </param>
-        /// <param name="httpHeaders"> Custom headers to set in the request. HTTP allows repeated headers. </param>
-        /// <param name="path"> Path to access on the HTTP server. </param>
-        /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
-        /// <param name="scheme"> Scheme to use for connecting to the host. Defaults to HTTP. </param>
+        /// <param name="host">
+        /// Host name to connect to, defaults to the pod IP. You probably want to set &quot;Host&quot; in httpHeaders instead.
+        /// Serialized Name: ContainerAppProbeHttpGet.host
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Custom headers to set in the request. HTTP allows repeated headers.
+        /// Serialized Name: ContainerAppProbeHttpGet.httpHeaders
+        /// </param>
+        /// <param name="path">
+        /// Path to access on the HTTP server.
+        /// Serialized Name: ContainerAppProbeHttpGet.path
+        /// </param>
+        /// <param name="port">
+        /// Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        /// Serialized Name: ContainerAppProbeHttpGet.port
+        /// </param>
+        /// <param name="scheme">
+        /// Scheme to use for connecting to the host. Defaults to HTTP.
+        /// Serialized Name: ContainerAppProbeHttpGet.scheme
+        /// </param>
         internal ContainerAppHttpRequestInfo(string host, IList<ContainerAppHttpHeaderInfo> httpHeaders, string path, int port, ContainerAppHttpScheme? scheme)
         {
             Host = host;
@@ -36,15 +57,30 @@ namespace Azure.ResourceManager.AppContainers.Models
             Scheme = scheme;
         }
 
-        /// <summary> Host name to connect to, defaults to the pod IP. You probably want to set &quot;Host&quot; in httpHeaders instead. </summary>
+        /// <summary>
+        /// Host name to connect to, defaults to the pod IP. You probably want to set &quot;Host&quot; in httpHeaders instead.
+        /// Serialized Name: ContainerAppProbeHttpGet.host
+        /// </summary>
         public string Host { get; set; }
-        /// <summary> Custom headers to set in the request. HTTP allows repeated headers. </summary>
+        /// <summary>
+        /// Custom headers to set in the request. HTTP allows repeated headers.
+        /// Serialized Name: ContainerAppProbeHttpGet.httpHeaders
+        /// </summary>
         public IList<ContainerAppHttpHeaderInfo> HttpHeaders { get; }
-        /// <summary> Path to access on the HTTP server. </summary>
+        /// <summary>
+        /// Path to access on the HTTP server.
+        /// Serialized Name: ContainerAppProbeHttpGet.path
+        /// </summary>
         public string Path { get; set; }
-        /// <summary> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </summary>
+        /// <summary>
+        /// Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        /// Serialized Name: ContainerAppProbeHttpGet.port
+        /// </summary>
         public int Port { get; set; }
-        /// <summary> Scheme to use for connecting to the host. Defaults to HTTP. </summary>
+        /// <summary>
+        /// Scheme to use for connecting to the host. Defaults to HTTP.
+        /// Serialized Name: ContainerAppProbeHttpGet.scheme
+        /// </summary>
         public ContainerAppHttpScheme? Scheme { get; set; }
     }
 }

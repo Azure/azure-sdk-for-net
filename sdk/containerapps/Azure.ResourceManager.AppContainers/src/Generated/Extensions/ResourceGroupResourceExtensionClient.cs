@@ -45,6 +45,13 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(Client => new ContainerAppCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of JobResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
+        public virtual JobCollection GetJobs()
+        {
+            return GetCachedClient(Client => new JobCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ContainerAppManagedEnvironmentResources and their operations over a ContainerAppManagedEnvironmentResource. </returns>
         public virtual ContainerAppManagedEnvironmentCollection GetContainerAppManagedEnvironments()

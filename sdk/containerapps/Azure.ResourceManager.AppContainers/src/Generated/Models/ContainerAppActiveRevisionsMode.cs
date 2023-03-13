@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary>
     /// ActiveRevisionsMode controls how active revisions are handled for the Container app:
     /// &lt;list&gt;&lt;item&gt;Multiple: multiple revisions can be active.&lt;/item&gt;&lt;item&gt;Single: Only one revision can be active at a time. Revision weights can not be used in this mode. If no value if provided, this is the default.&lt;/item&gt;&lt;/list&gt;
+    /// Serialized Name: ActiveRevisionsMode
     /// </summary>
     public readonly partial struct ContainerAppActiveRevisionsMode : IEquatable<ContainerAppActiveRevisionsMode>
     {
@@ -28,9 +29,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string MultipleValue = "Multiple";
         private const string SingleValue = "Single";
 
-        /// <summary> Multiple. </summary>
+        /// <summary>
+        /// Multiple
+        /// Serialized Name: ActiveRevisionsMode.Multiple
+        /// </summary>
         public static ContainerAppActiveRevisionsMode Multiple { get; } = new ContainerAppActiveRevisionsMode(MultipleValue);
-        /// <summary> Single. </summary>
+        /// <summary>
+        /// Single
+        /// Serialized Name: ActiveRevisionsMode.Single
+        /// </summary>
         public static ContainerAppActiveRevisionsMode Single { get; } = new ContainerAppActiveRevisionsMode(SingleValue);
         /// <summary> Determines if two <see cref="ContainerAppActiveRevisionsMode"/> values are the same. </summary>
         public static bool operator ==(ContainerAppActiveRevisionsMode left, ContainerAppActiveRevisionsMode right) => left.Equals(right);

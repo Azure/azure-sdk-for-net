@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> indicates whether the profile is default for the location. </summary>
+    /// <summary>
+    /// indicates whether the profile is default for the location.
+    /// Serialized Name: Applicability
+    /// </summary>
     public readonly partial struct ContainerAppAvailableWorkloadProfileApplicability : IEquatable<ContainerAppAvailableWorkloadProfileApplicability>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string LocationDefaultValue = "LocationDefault";
         private const string CustomValue = "Custom";
 
-        /// <summary> LocationDefault. </summary>
+        /// <summary>
+        /// LocationDefault
+        /// Serialized Name: Applicability.LocationDefault
+        /// </summary>
         public static ContainerAppAvailableWorkloadProfileApplicability LocationDefault { get; } = new ContainerAppAvailableWorkloadProfileApplicability(LocationDefaultValue);
-        /// <summary> Custom. </summary>
+        /// <summary>
+        /// Custom
+        /// Serialized Name: Applicability.Custom
+        /// </summary>
         public static ContainerAppAvailableWorkloadProfileApplicability Custom { get; } = new ContainerAppAvailableWorkloadProfileApplicability(CustomValue);
         /// <summary> Determines if two <see cref="ContainerAppAvailableWorkloadProfileApplicability"/> values are the same. </summary>
         public static bool operator ==(ContainerAppAvailableWorkloadProfileApplicability left, ContainerAppAvailableWorkloadProfileApplicability right) => left.Equals(right);

@@ -11,7 +11,10 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of connectedEnvironments. </summary>
+    /// <summary>
+    /// Collection of connectedEnvironments
+    /// Serialized Name: ConnectedEnvironmentCollection
+    /// </summary>
     internal partial class ConnectedEnvironmentCollection
     {
         /// <summary> Initializes a new instance of ConnectedEnvironmentCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ConnectedEnvironmentCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: ConnectedEnvironmentCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: ConnectedEnvironmentCollection.nextLink
+        /// </param>
         internal ConnectedEnvironmentCollection(IReadOnlyList<ContainerAppConnectedEnvironmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: ConnectedEnvironmentCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppConnectedEnvironmentData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: ConnectedEnvironmentCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

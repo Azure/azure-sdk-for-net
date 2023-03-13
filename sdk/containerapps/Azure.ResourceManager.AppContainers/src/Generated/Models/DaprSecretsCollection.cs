@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Dapr component Secrets Collection for ListSecrets Action. </summary>
+    /// <summary>
+    /// Dapr component Secrets Collection for ListSecrets Action.
+    /// Serialized Name: DaprSecretsCollection
+    /// </summary>
     internal partial class DaprSecretsCollection
     {
         /// <summary> Initializes a new instance of DaprSecretsCollection. </summary>
-        /// <param name="value"> Collection of secrets used by a Dapr component. </param>
+        /// <param name="value">
+        /// Collection of secrets used by a Dapr component
+        /// Serialized Name: DaprSecretsCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DaprSecretsCollection(IEnumerable<ContainerAppDaprSecret> value)
         {
@@ -26,13 +32,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of DaprSecretsCollection. </summary>
-        /// <param name="value"> Collection of secrets used by a Dapr component. </param>
+        /// <param name="value">
+        /// Collection of secrets used by a Dapr component
+        /// Serialized Name: DaprSecretsCollection.value
+        /// </param>
         internal DaprSecretsCollection(IReadOnlyList<ContainerAppDaprSecret> value)
         {
             Value = value;
         }
 
-        /// <summary> Collection of secrets used by a Dapr component. </summary>
+        /// <summary>
+        /// Collection of secrets used by a Dapr component
+        /// Serialized Name: DaprSecretsCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppDaprSecret> Value { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The reason why the given name is not available. </summary>
+    /// <summary>
+    /// The reason why the given name is not available.
+    /// Serialized Name: CheckNameAvailabilityReason
+    /// </summary>
     public readonly partial struct ContainerAppNameUnavailableReason : IEquatable<ContainerAppNameUnavailableReason>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: CheckNameAvailabilityReason.Invalid
+        /// </summary>
         public static ContainerAppNameUnavailableReason Invalid { get; } = new ContainerAppNameUnavailableReason(InvalidValue);
-        /// <summary> AlreadyExists. </summary>
+        /// <summary>
+        /// AlreadyExists
+        /// Serialized Name: CheckNameAvailabilityReason.AlreadyExists
+        /// </summary>
         public static ContainerAppNameUnavailableReason AlreadyExists { get; } = new ContainerAppNameUnavailableReason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="ContainerAppNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(ContainerAppNameUnavailableReason left, ContainerAppNameUnavailableReason right) => left.Equals(right);

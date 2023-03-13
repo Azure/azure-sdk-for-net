@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Log analytics configuration. </summary>
+    /// <summary>
+    /// Log analytics configuration
+    /// Serialized Name: LogAnalyticsConfiguration
+    /// </summary>
     public partial class ContainerAppLogAnalyticsConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppLogAnalyticsConfiguration. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppLogAnalyticsConfiguration. </summary>
-        /// <param name="customerId"> Log analytics customer id. </param>
-        /// <param name="sharedKey"> Log analytics customer key. </param>
+        /// <param name="customerId">
+        /// Log analytics customer id
+        /// Serialized Name: LogAnalyticsConfiguration.customerId
+        /// </param>
+        /// <param name="sharedKey">
+        /// Log analytics customer key
+        /// Serialized Name: LogAnalyticsConfiguration.sharedKey
+        /// </param>
         internal ContainerAppLogAnalyticsConfiguration(string customerId, string sharedKey)
         {
             CustomerId = customerId;
             SharedKey = sharedKey;
         }
 
-        /// <summary> Log analytics customer id. </summary>
+        /// <summary>
+        /// Log analytics customer id
+        /// Serialized Name: LogAnalyticsConfiguration.customerId
+        /// </summary>
         public string CustomerId { get; set; }
-        /// <summary> Log analytics customer key. </summary>
+        /// <summary>
+        /// Log analytics customer key
+        /// Serialized Name: LogAnalyticsConfiguration.sharedKey
+        /// </summary>
         public string SharedKey { get; set; }
     }
 }

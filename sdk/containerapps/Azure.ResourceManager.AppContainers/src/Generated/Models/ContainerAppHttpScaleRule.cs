@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App container Http scaling rule. </summary>
+    /// <summary>
+    /// Container App container Http scaling rule.
+    /// Serialized Name: HttpScaleRule
+    /// </summary>
     public partial class ContainerAppHttpScaleRule
     {
         /// <summary> Initializes a new instance of ContainerAppHttpScaleRule. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppHttpScaleRule. </summary>
-        /// <param name="metadata"> Metadata properties to describe http scale rule. </param>
-        /// <param name="auth"> Authentication secrets for the custom scale rule. </param>
+        /// <param name="metadata">
+        /// Metadata properties to describe http scale rule.
+        /// Serialized Name: HttpScaleRule.metadata
+        /// </param>
+        /// <param name="auth">
+        /// Authentication secrets for the custom scale rule.
+        /// Serialized Name: HttpScaleRule.auth
+        /// </param>
         internal ContainerAppHttpScaleRule(IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth)
         {
             Metadata = metadata;
             Auth = auth;
         }
 
-        /// <summary> Metadata properties to describe http scale rule. </summary>
+        /// <summary>
+        /// Metadata properties to describe http scale rule.
+        /// Serialized Name: HttpScaleRule.metadata
+        /// </summary>
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> Authentication secrets for the custom scale rule. </summary>
+        /// <summary>
+        /// Authentication secrets for the custom scale rule.
+        /// Serialized Name: HttpScaleRule.auth
+        /// </summary>
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

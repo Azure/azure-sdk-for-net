@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> A certificate to update. </summary>
+    /// <summary>
+    /// A certificate to update
+    /// Serialized Name: CertificatePatch
+    /// </summary>
     public partial class ContainerAppCertificatePatch
     {
         /// <summary> Initializes a new instance of ContainerAppCertificatePatch. </summary>
@@ -19,7 +22,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        /// <summary>
+        /// Application-specific metadata in the form of key-value pairs.
+        /// Serialized Name: CertificatePatch.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

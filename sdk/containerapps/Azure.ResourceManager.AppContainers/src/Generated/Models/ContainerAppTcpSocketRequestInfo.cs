@@ -7,28 +7,46 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported. </summary>
+    /// <summary>
+    /// TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported.
+    /// Serialized Name: ContainerAppProbeTcpSocket
+    /// </summary>
     public partial class ContainerAppTcpSocketRequestInfo
     {
         /// <summary> Initializes a new instance of ContainerAppTcpSocketRequestInfo. </summary>
-        /// <param name="port"> Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
+        /// <param name="port">
+        /// Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        /// Serialized Name: ContainerAppProbeTcpSocket.port
+        /// </param>
         public ContainerAppTcpSocketRequestInfo(int port)
         {
             Port = port;
         }
 
         /// <summary> Initializes a new instance of ContainerAppTcpSocketRequestInfo. </summary>
-        /// <param name="host"> Optional: Host name to connect to, defaults to the pod IP. </param>
-        /// <param name="port"> Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
+        /// <param name="host">
+        /// Optional: Host name to connect to, defaults to the pod IP.
+        /// Serialized Name: ContainerAppProbeTcpSocket.host
+        /// </param>
+        /// <param name="port">
+        /// Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        /// Serialized Name: ContainerAppProbeTcpSocket.port
+        /// </param>
         internal ContainerAppTcpSocketRequestInfo(string host, int port)
         {
             Host = host;
             Port = port;
         }
 
-        /// <summary> Optional: Host name to connect to, defaults to the pod IP. </summary>
+        /// <summary>
+        /// Optional: Host name to connect to, defaults to the pod IP.
+        /// Serialized Name: ContainerAppProbeTcpSocket.host
+        /// </summary>
         public string Host { get; set; }
-        /// <summary> Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </summary>
+        /// <summary>
+        /// Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        /// Serialized Name: ContainerAppProbeTcpSocket.port
+        /// </summary>
         public int Port { get; set; }
     }
 }

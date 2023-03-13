@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Workload Profile resource specific properties. </summary>
+    /// <summary>
+    /// Workload Profile resource specific properties.
+    /// Serialized Name: WorkloadProfileStatesProperties
+    /// </summary>
     public partial class ContainerAppWorkloadProfileStateProperties
     {
         /// <summary> Initializes a new instance of ContainerAppWorkloadProfileStateProperties. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppWorkloadProfileStateProperties. </summary>
-        /// <param name="minimumCount"> Minimum count of instances. </param>
-        /// <param name="maximumCount"> Maximum count of nodes. </param>
-        /// <param name="currentCount"> Current count of nodes. </param>
+        /// <param name="minimumCount">
+        /// Minimum count of instances.
+        /// Serialized Name: WorkloadProfileStatesProperties.minimumCount
+        /// </param>
+        /// <param name="maximumCount">
+        /// Maximum count of nodes.
+        /// Serialized Name: WorkloadProfileStatesProperties.maximumCount
+        /// </param>
+        /// <param name="currentCount">
+        /// Current count of nodes.
+        /// Serialized Name: WorkloadProfileStatesProperties.currentCount
+        /// </param>
         internal ContainerAppWorkloadProfileStateProperties(int? minimumCount, int? maximumCount, int? currentCount)
         {
             MinimumCount = minimumCount;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             CurrentCount = currentCount;
         }
 
-        /// <summary> Minimum count of instances. </summary>
+        /// <summary>
+        /// Minimum count of instances.
+        /// Serialized Name: WorkloadProfileStatesProperties.minimumCount
+        /// </summary>
         public int? MinimumCount { get; set; }
-        /// <summary> Maximum count of nodes. </summary>
+        /// <summary>
+        /// Maximum count of nodes.
+        /// Serialized Name: WorkloadProfileStatesProperties.maximumCount
+        /// </summary>
         public int? MaximumCount { get; set; }
-        /// <summary> Current count of nodes. </summary>
+        /// <summary>
+        /// Current count of nodes.
+        /// Serialized Name: WorkloadProfileStatesProperties.currentCount
+        /// </summary>
         public int? CurrentCount { get; set; }
     }
 }

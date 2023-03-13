@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </summary>
+    /// <summary>
+    /// The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization.
+    /// Serialized Name: Login
+    /// </summary>
     public partial class ContainerAppLogin
     {
         /// <summary> Initializes a new instance of ContainerAppLogin. </summary>
@@ -20,15 +23,28 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppLogin. </summary>
-        /// <param name="routes"> The routes that specify the endpoints used for login and logout requests. </param>
-        /// <param name="preserveUrlFragmentsForLogins"> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="routes">
+        /// The routes that specify the endpoints used for login and logout requests.
+        /// Serialized Name: Login.routes
+        /// </param>
+        /// <param name="preserveUrlFragmentsForLogins">
+        /// &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: Login.preserveUrlFragmentsForLogins
+        /// </param>
         /// <param name="allowedExternalRedirectUrls">
         /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
         /// This is an advanced setting typically only needed by Windows Store application backends.
         /// Note that URLs within the current domain are always implicitly allowed.
+        /// Serialized Name: Login.allowedExternalRedirectUrls
         /// </param>
-        /// <param name="cookieExpiration"> The configuration settings of the session cookie&apos;s expiration. </param>
-        /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
+        /// <param name="cookieExpiration">
+        /// The configuration settings of the session cookie&apos;s expiration.
+        /// Serialized Name: Login.cookieExpiration
+        /// </param>
+        /// <param name="nonce">
+        /// The configuration settings of the nonce used in the login flow.
+        /// Serialized Name: Login.nonce
+        /// </param>
         internal ContainerAppLogin(LoginRoutes routes, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, ContainerAppCookieExpiration cookieExpiration, ContainerAppLoginNonce nonce)
         {
             Routes = routes;
@@ -38,9 +54,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             Nonce = nonce;
         }
 
-        /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
+        /// <summary>
+        /// The routes that specify the endpoints used for login and logout requests.
+        /// Serialized Name: Login.routes
+        /// </summary>
         internal LoginRoutes Routes { get; set; }
-        /// <summary> The endpoint at which a logout request should be made. </summary>
+        /// <summary>
+        /// The endpoint at which a logout request should be made.
+        /// Serialized Name: LoginRoutes.logoutEndpoint
+        /// </summary>
         public string RoutesLogoutEndpoint
         {
             get => Routes is null ? default : Routes.LogoutEndpoint;
@@ -52,17 +74,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: Login.preserveUrlFragmentsForLogins
+        /// </summary>
         public bool? PreserveUrlFragmentsForLogins { get; set; }
         /// <summary>
         /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
         /// This is an advanced setting typically only needed by Windows Store application backends.
         /// Note that URLs within the current domain are always implicitly allowed.
+        /// Serialized Name: Login.allowedExternalRedirectUrls
         /// </summary>
         public IList<string> AllowedExternalRedirectUrls { get; }
-        /// <summary> The configuration settings of the session cookie&apos;s expiration. </summary>
+        /// <summary>
+        /// The configuration settings of the session cookie&apos;s expiration.
+        /// Serialized Name: Login.cookieExpiration
+        /// </summary>
         public ContainerAppCookieExpiration CookieExpiration { get; set; }
-        /// <summary> The configuration settings of the nonce used in the login flow. </summary>
+        /// <summary>
+        /// The configuration settings of the nonce used in the login flow.
+        /// Serialized Name: Login.nonce
+        /// </summary>
         public ContainerAppLoginNonce Nonce { get; set; }
     }
 }

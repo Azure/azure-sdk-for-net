@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App Auth Token. </summary>
+    /// <summary>
+    /// Container App Auth Token.
+    /// Serialized Name: ContainerAppAuthToken
+    /// </summary>
     public partial class ContainerAppAuthToken : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppAuthToken. </summary>
@@ -28,17 +31,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="token"> Auth token value. </param>
-        /// <param name="expireOn"> Token expiration date. </param>
+        /// <param name="token">
+        /// Auth token value.
+        /// Serialized Name: ContainerAppAuthToken.properties.token
+        /// </param>
+        /// <param name="expireOn">
+        /// Token expiration date.
+        /// Serialized Name: ContainerAppAuthToken.properties.expires
+        /// </param>
         internal ContainerAppAuthToken(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string token, DateTimeOffset? expireOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Token = token;
             ExpireOn = expireOn;
         }
 
-        /// <summary> Auth token value. </summary>
+        /// <summary>
+        /// Auth token value.
+        /// Serialized Name: ContainerAppAuthToken.properties.token
+        /// </summary>
         public string Token { get; }
-        /// <summary> Token expiration date. </summary>
+        /// <summary>
+        /// Token expiration date.
+        /// Serialized Name: ContainerAppAuthToken.properties.expires
+        /// </summary>
         public DateTimeOffset? ExpireOn { get; }
     }
 }

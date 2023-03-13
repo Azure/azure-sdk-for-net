@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the registration for the Apple provider. </summary>
+    /// <summary>
+    /// The configuration settings of the registration for the Apple provider
+    /// Serialized Name: AppleRegistration
+    /// </summary>
     public partial class ContainerAppAppleRegistrationConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppAppleRegistrationConfiguration. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppAppleRegistrationConfiguration. </summary>
-        /// <param name="clientId"> The Client ID of the app used for login. </param>
-        /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
+        /// <param name="clientId">
+        /// The Client ID of the app used for login.
+        /// Serialized Name: AppleRegistration.clientId
+        /// </param>
+        /// <param name="clientSecretSettingName">
+        /// The app setting name that contains the client secret.
+        /// Serialized Name: AppleRegistration.clientSecretSettingName
+        /// </param>
         internal ContainerAppAppleRegistrationConfiguration(string clientId, string clientSecretSettingName)
         {
             ClientId = clientId;
             ClientSecretSettingName = clientSecretSettingName;
         }
 
-        /// <summary> The Client ID of the app used for login. </summary>
+        /// <summary>
+        /// The Client ID of the app used for login.
+        /// Serialized Name: AppleRegistration.clientId
+        /// </summary>
         public string ClientId { get; set; }
-        /// <summary> The app setting name that contains the client secret. </summary>
+        /// <summary>
+        /// The app setting name that contains the client secret.
+        /// Serialized Name: AppleRegistration.clientSecretSettingName
+        /// </summary>
         public string ClientSecretSettingName { get; set; }
     }
 }

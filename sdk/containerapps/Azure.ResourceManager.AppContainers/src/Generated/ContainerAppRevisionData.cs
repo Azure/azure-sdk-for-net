@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing the ContainerAppRevision data model.
     /// Container App Revision.
+    /// Serialized Name: Revision
     /// </summary>
     public partial class ContainerAppRevisionData : ResourceData
     {
@@ -31,20 +32,46 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="createdOn">
         /// Timestamp describing when the revision was created
         /// by controller
+        /// Serialized Name: Revision.properties.createdTime
         /// </param>
-        /// <param name="lastActiveOn"> Timestamp describing when the revision was last active. Only meaningful when revision is inactive. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the revision. </param>
+        /// <param name="lastActiveOn">
+        /// Timestamp describing when the revision was last active. Only meaningful when revision is inactive
+        /// Serialized Name: Revision.properties.lastActiveTime
+        /// </param>
+        /// <param name="fqdn">
+        /// Fully qualified domain name of the revision
+        /// Serialized Name: Revision.properties.fqdn
+        /// </param>
         /// <param name="template">
         /// Container App Revision Template with all possible settings and the
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
+        /// Serialized Name: Revision.properties.template
         /// </param>
-        /// <param name="isActive"> Boolean describing if the Revision is Active. </param>
-        /// <param name="replicas"> Number of pods currently running for this revision. </param>
-        /// <param name="trafficWeight"> Traffic weight assigned to this revision. </param>
-        /// <param name="provisioningError"> Optional Field - Platform Error Message. </param>
-        /// <param name="healthState"> Current health State of the revision. </param>
-        /// <param name="provisioningState"> Current provisioning State of the revision. </param>
+        /// <param name="isActive">
+        /// Boolean describing if the Revision is Active
+        /// Serialized Name: Revision.properties.active
+        /// </param>
+        /// <param name="replicas">
+        /// Number of pods currently running for this revision
+        /// Serialized Name: Revision.properties.replicas
+        /// </param>
+        /// <param name="trafficWeight">
+        /// Traffic weight assigned to this revision
+        /// Serialized Name: Revision.properties.trafficWeight
+        /// </param>
+        /// <param name="provisioningError">
+        /// Optional Field - Platform Error Message
+        /// Serialized Name: Revision.properties.provisioningError
+        /// </param>
+        /// <param name="healthState">
+        /// Current health State of the revision
+        /// Serialized Name: Revision.properties.healthState
+        /// </param>
+        /// <param name="provisioningState">
+        /// Current provisioning State of the revision
+        /// Serialized Name: Revision.properties.provisioningState
+        /// </param>
         internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastActiveOn, string fqdn, ContainerAppTemplate template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, ContainerAppRevisionHealthState? healthState, ContainerAppRevisionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
@@ -62,29 +89,55 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary>
         /// Timestamp describing when the revision was created
         /// by controller
+        /// Serialized Name: Revision.properties.createdTime
         /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Timestamp describing when the revision was last active. Only meaningful when revision is inactive. </summary>
+        /// <summary>
+        /// Timestamp describing when the revision was last active. Only meaningful when revision is inactive
+        /// Serialized Name: Revision.properties.lastActiveTime
+        /// </summary>
         public DateTimeOffset? LastActiveOn { get; }
-        /// <summary> Fully qualified domain name of the revision. </summary>
+        /// <summary>
+        /// Fully qualified domain name of the revision
+        /// Serialized Name: Revision.properties.fqdn
+        /// </summary>
         public string Fqdn { get; }
         /// <summary>
         /// Container App Revision Template with all possible settings and the
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
+        /// Serialized Name: Revision.properties.template
         /// </summary>
         public ContainerAppTemplate Template { get; }
-        /// <summary> Boolean describing if the Revision is Active. </summary>
+        /// <summary>
+        /// Boolean describing if the Revision is Active
+        /// Serialized Name: Revision.properties.active
+        /// </summary>
         public bool? IsActive { get; }
-        /// <summary> Number of pods currently running for this revision. </summary>
+        /// <summary>
+        /// Number of pods currently running for this revision
+        /// Serialized Name: Revision.properties.replicas
+        /// </summary>
         public int? Replicas { get; }
-        /// <summary> Traffic weight assigned to this revision. </summary>
+        /// <summary>
+        /// Traffic weight assigned to this revision
+        /// Serialized Name: Revision.properties.trafficWeight
+        /// </summary>
         public int? TrafficWeight { get; }
-        /// <summary> Optional Field - Platform Error Message. </summary>
+        /// <summary>
+        /// Optional Field - Platform Error Message
+        /// Serialized Name: Revision.properties.provisioningError
+        /// </summary>
         public string ProvisioningError { get; }
-        /// <summary> Current health State of the revision. </summary>
+        /// <summary>
+        /// Current health State of the revision
+        /// Serialized Name: Revision.properties.healthState
+        /// </summary>
         public ContainerAppRevisionHealthState? HealthState { get; }
-        /// <summary> Current provisioning State of the revision. </summary>
+        /// <summary>
+        /// Current provisioning State of the revision
+        /// Serialized Name: Revision.properties.provisioningState
+        /// </summary>
         public ContainerAppRevisionProvisioningState? ProvisioningState { get; }
     }
 }

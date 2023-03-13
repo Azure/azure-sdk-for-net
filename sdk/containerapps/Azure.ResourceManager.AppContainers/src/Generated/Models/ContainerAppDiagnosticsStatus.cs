@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Rendering details of a diagnostics table. </summary>
+    /// <summary>
+    /// Rendering details of a diagnostics table
+    /// Serialized Name: DiagnosticsStatus
+    /// </summary>
     public partial class ContainerAppDiagnosticsStatus
     {
         /// <summary> Initializes a new instance of ContainerAppDiagnosticsStatus. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticsStatus. </summary>
-        /// <param name="message"> Diagnostic message. </param>
-        /// <param name="statusId"> Status. </param>
+        /// <param name="message">
+        /// Diagnostic message
+        /// Serialized Name: DiagnosticsStatus.message
+        /// </param>
+        /// <param name="statusId">
+        /// Status
+        /// Serialized Name: DiagnosticsStatus.statusId
+        /// </param>
         internal ContainerAppDiagnosticsStatus(string message, int? statusId)
         {
             Message = message;
             StatusId = statusId;
         }
 
-        /// <summary> Diagnostic message. </summary>
+        /// <summary>
+        /// Diagnostic message
+        /// Serialized Name: DiagnosticsStatus.message
+        /// </summary>
         public string Message { get; set; }
-        /// <summary> Status. </summary>
+        /// <summary>
+        /// Status
+        /// Serialized Name: DiagnosticsStatus.statusId
+        /// </summary>
         public int? StatusId { get; set; }
     }
 }

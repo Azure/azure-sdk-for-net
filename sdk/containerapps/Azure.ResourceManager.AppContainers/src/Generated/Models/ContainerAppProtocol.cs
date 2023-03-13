@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http. </summary>
+    /// <summary>
+    /// Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http
+    /// Serialized Name: AppProtocol
+    /// </summary>
     public readonly partial struct ContainerAppProtocol : IEquatable<ContainerAppProtocol>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string HttpValue = "http";
         private const string GrpcValue = "grpc";
 
-        /// <summary> http. </summary>
+        /// <summary>
+        /// http
+        /// Serialized Name: AppProtocol.http
+        /// </summary>
         public static ContainerAppProtocol Http { get; } = new ContainerAppProtocol(HttpValue);
-        /// <summary> grpc. </summary>
+        /// <summary>
+        /// grpc
+        /// Serialized Name: AppProtocol.grpc
+        /// </summary>
         public static ContainerAppProtocol Grpc { get; } = new ContainerAppProtocol(GrpcValue);
         /// <summary> Determines if two <see cref="ContainerAppProtocol"/> values are the same. </summary>
         public static bool operator ==(ContainerAppProtocol left, ContainerAppProtocol right) => left.Equals(right);

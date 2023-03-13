@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Custom Domain binding type. </summary>
+    /// <summary>
+    /// Custom Domain binding type.
+    /// Serialized Name: BindingType
+    /// </summary>
     public readonly partial struct ContainerAppCustomDomainBindingType : IEquatable<ContainerAppCustomDomainBindingType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string DisabledValue = "Disabled";
         private const string SniEnabledValue = "SniEnabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: BindingType.Disabled
+        /// </summary>
         public static ContainerAppCustomDomainBindingType Disabled { get; } = new ContainerAppCustomDomainBindingType(DisabledValue);
-        /// <summary> SniEnabled. </summary>
+        /// <summary>
+        /// SniEnabled
+        /// Serialized Name: BindingType.SniEnabled
+        /// </summary>
         public static ContainerAppCustomDomainBindingType SniEnabled { get; } = new ContainerAppCustomDomainBindingType(SniEnabledValue);
         /// <summary> Determines if two <see cref="ContainerAppCustomDomainBindingType"/> values are the same. </summary>
         public static bool operator ==(ContainerAppCustomDomainBindingType left, ContainerAppCustomDomainBindingType right) => left.Equals(right);

@@ -25,11 +25,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("infrastructureSubnetId"u8);
                 writer.WriteStringValue(InfrastructureSubnetId);
             }
-            if (Optional.IsDefined(RuntimeSubnetId))
-            {
-                writer.WritePropertyName("runtimeSubnetId"u8);
-                writer.WriteStringValue(RuntimeSubnetId);
-            }
             if (Optional.IsDefined(DockerBridgeCidr))
             {
                 writer.WritePropertyName("dockerBridgeCidr"u8);
@@ -45,11 +40,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("platformReservedDnsIP"u8);
                 writer.WriteStringValue(PlatformReservedDnsIP);
             }
-            if (Optional.IsDefined(OutboundSettings))
-            {
-                writer.WritePropertyName("outboundSettings"u8);
-                writer.WriteObjectValue(OutboundSettings);
-            }
             writer.WriteEndObject();
         }
 
@@ -61,11 +51,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             Optional<bool> @internal = default;
             Optional<ResourceIdentifier> infrastructureSubnetId = default;
-            Optional<string> runtimeSubnetId = default;
             Optional<string> dockerBridgeCidr = default;
             Optional<string> platformReservedCidr = default;
             Optional<string> platformReservedDnsIP = default;
-            Optional<ContainerAppManagedEnvironmentOutboundSettings> outboundSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("internal"u8))
@@ -88,11 +76,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     infrastructureSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("runtimeSubnetId"u8))
-                {
-                    runtimeSubnetId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("dockerBridgeCidr"u8))
                 {
                     dockerBridgeCidr = property.Value.GetString();
@@ -108,18 +91,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                     platformReservedDnsIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outboundSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    outboundSettings = ContainerAppManagedEnvironmentOutboundSettings.DeserializeContainerAppManagedEnvironmentOutboundSettings(property.Value);
-                    continue;
-                }
             }
-            return new ContainerAppVnetConfiguration(Optional.ToNullable(@internal), infrastructureSubnetId.Value, runtimeSubnetId.Value, dockerBridgeCidr.Value, platformReservedCidr.Value, platformReservedDnsIP.Value, outboundSettings.Value);
+            return new ContainerAppVnetConfiguration(Optional.ToNullable(@internal), infrastructureSubnetId.Value, dockerBridgeCidr.Value, platformReservedCidr.Value, platformReservedDnsIP.Value);
         }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate. </summary>
+    /// <summary>
+    /// Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate.
+    /// Serialized Name: IngressClientCertificateMode
+    /// </summary>
     public readonly partial struct ContainerAppIngressClientCertificateMode : IEquatable<ContainerAppIngressClientCertificateMode>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string AcceptValue = "accept";
         private const string RequireValue = "require";
 
-        /// <summary> ignore. </summary>
+        /// <summary>
+        /// ignore
+        /// Serialized Name: IngressClientCertificateMode.ignore
+        /// </summary>
         public static ContainerAppIngressClientCertificateMode Ignore { get; } = new ContainerAppIngressClientCertificateMode(IgnoreValue);
-        /// <summary> accept. </summary>
+        /// <summary>
+        /// accept
+        /// Serialized Name: IngressClientCertificateMode.accept
+        /// </summary>
         public static ContainerAppIngressClientCertificateMode Accept { get; } = new ContainerAppIngressClientCertificateMode(AcceptValue);
-        /// <summary> require. </summary>
+        /// <summary>
+        /// require
+        /// Serialized Name: IngressClientCertificateMode.require
+        /// </summary>
         public static ContainerAppIngressClientCertificateMode Require { get; } = new ContainerAppIngressClientCertificateMode(RequireValue);
         /// <summary> Determines if two <see cref="ContainerAppIngressClientCertificateMode"/> values are the same. </summary>
         public static bool operator ==(ContainerAppIngressClientCertificateMode left, ContainerAppIngressClientCertificateMode right) => left.Equals(right);

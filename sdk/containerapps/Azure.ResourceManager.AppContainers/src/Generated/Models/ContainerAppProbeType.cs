@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The type of probe. </summary>
+    /// <summary>
+    /// The type of probe.
+    /// Serialized Name: ContainerAppProbeType
+    /// </summary>
     public readonly partial struct ContainerAppProbeType : IEquatable<ContainerAppProbeType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string ReadinessValue = "Readiness";
         private const string StartupValue = "Startup";
 
-        /// <summary> Liveness. </summary>
+        /// <summary>
+        /// Liveness
+        /// Serialized Name: ContainerAppProbeType.Liveness
+        /// </summary>
         public static ContainerAppProbeType Liveness { get; } = new ContainerAppProbeType(LivenessValue);
-        /// <summary> Readiness. </summary>
+        /// <summary>
+        /// Readiness
+        /// Serialized Name: ContainerAppProbeType.Readiness
+        /// </summary>
         public static ContainerAppProbeType Readiness { get; } = new ContainerAppProbeType(ReadinessValue);
-        /// <summary> Startup. </summary>
+        /// <summary>
+        /// Startup
+        /// Serialized Name: ContainerAppProbeType.Startup
+        /// </summary>
         public static ContainerAppProbeType Startup { get; } = new ContainerAppProbeType(StartupValue);
         /// <summary> Determines if two <see cref="ContainerAppProbeType"/> values are the same. </summary>
         public static bool operator ==(ContainerAppProbeType left, ContainerAppProbeType right) => left.Equals(right);

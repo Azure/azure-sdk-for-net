@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App scaling configurations. </summary>
+    /// <summary>
+    /// Container App scaling configurations.
+    /// Serialized Name: Scale
+    /// </summary>
     public partial class ContainerAppScale
     {
         /// <summary> Initializes a new instance of ContainerAppScale. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppScale. </summary>
-        /// <param name="minReplicas"> Optional. Minimum number of container replicas. </param>
-        /// <param name="maxReplicas"> Optional. Maximum number of container replicas. Defaults to 10 if not set. </param>
-        /// <param name="rules"> Scaling rules. </param>
+        /// <param name="minReplicas">
+        /// Optional. Minimum number of container replicas.
+        /// Serialized Name: Scale.minReplicas
+        /// </param>
+        /// <param name="maxReplicas">
+        /// Optional. Maximum number of container replicas. Defaults to 10 if not set.
+        /// Serialized Name: Scale.maxReplicas
+        /// </param>
+        /// <param name="rules">
+        /// Scaling rules.
+        /// Serialized Name: Scale.rules
+        /// </param>
         internal ContainerAppScale(int? minReplicas, int? maxReplicas, IList<ContainerAppScaleRule> rules)
         {
             MinReplicas = minReplicas;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             Rules = rules;
         }
 
-        /// <summary> Optional. Minimum number of container replicas. </summary>
+        /// <summary>
+        /// Optional. Minimum number of container replicas.
+        /// Serialized Name: Scale.minReplicas
+        /// </summary>
         public int? MinReplicas { get; set; }
-        /// <summary> Optional. Maximum number of container replicas. Defaults to 10 if not set. </summary>
+        /// <summary>
+        /// Optional. Maximum number of container replicas. Defaults to 10 if not set.
+        /// Serialized Name: Scale.maxReplicas
+        /// </summary>
         public int? MaxReplicas { get; set; }
-        /// <summary> Scaling rules. </summary>
+        /// <summary>
+        /// Scaling rules.
+        /// Serialized Name: Scale.rules
+        /// </summary>
         public IList<ContainerAppScaleRule> Rules { get; }
     }
 }

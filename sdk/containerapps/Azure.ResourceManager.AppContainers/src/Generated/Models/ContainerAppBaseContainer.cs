@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App base container definition. </summary>
+    /// <summary>
+    /// Container App base container definition.
+    /// Serialized Name: BaseContainer
+    /// </summary>
     public partial class ContainerAppBaseContainer
     {
         /// <summary> Initializes a new instance of ContainerAppBaseContainer. </summary>
@@ -23,13 +26,34 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppBaseContainer. </summary>
-        /// <param name="image"> Container image tag. </param>
-        /// <param name="name"> Custom container name. </param>
-        /// <param name="command"> Container start command. </param>
-        /// <param name="args"> Container start command arguments. </param>
-        /// <param name="env"> Container environment variables. </param>
-        /// <param name="resources"> Container resource requirements. </param>
-        /// <param name="volumeMounts"> Container volume mounts. </param>
+        /// <param name="image">
+        /// Container image tag.
+        /// Serialized Name: BaseContainer.image
+        /// </param>
+        /// <param name="name">
+        /// Custom container name.
+        /// Serialized Name: BaseContainer.name
+        /// </param>
+        /// <param name="command">
+        /// Container start command.
+        /// Serialized Name: BaseContainer.command
+        /// </param>
+        /// <param name="args">
+        /// Container start command arguments.
+        /// Serialized Name: BaseContainer.args
+        /// </param>
+        /// <param name="env">
+        /// Container environment variables.
+        /// Serialized Name: BaseContainer.env
+        /// </param>
+        /// <param name="resources">
+        /// Container resource requirements.
+        /// Serialized Name: BaseContainer.resources
+        /// </param>
+        /// <param name="volumeMounts">
+        /// Container volume mounts.
+        /// Serialized Name: BaseContainer.volumeMounts
+        /// </param>
         internal ContainerAppBaseContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts)
         {
             Image = image;
@@ -41,19 +65,40 @@ namespace Azure.ResourceManager.AppContainers.Models
             VolumeMounts = volumeMounts;
         }
 
-        /// <summary> Container image tag. </summary>
+        /// <summary>
+        /// Container image tag.
+        /// Serialized Name: BaseContainer.image
+        /// </summary>
         public string Image { get; set; }
-        /// <summary> Custom container name. </summary>
+        /// <summary>
+        /// Custom container name.
+        /// Serialized Name: BaseContainer.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Container start command. </summary>
+        /// <summary>
+        /// Container start command.
+        /// Serialized Name: BaseContainer.command
+        /// </summary>
         public IList<string> Command { get; }
-        /// <summary> Container start command arguments. </summary>
+        /// <summary>
+        /// Container start command arguments.
+        /// Serialized Name: BaseContainer.args
+        /// </summary>
         public IList<string> Args { get; }
-        /// <summary> Container environment variables. </summary>
+        /// <summary>
+        /// Container environment variables.
+        /// Serialized Name: BaseContainer.env
+        /// </summary>
         public IList<ContainerAppEnvironmentVariable> Env { get; }
-        /// <summary> Container resource requirements. </summary>
+        /// <summary>
+        /// Container resource requirements.
+        /// Serialized Name: BaseContainer.resources
+        /// </summary>
         public AppContainerResources Resources { get; set; }
-        /// <summary> Container volume mounts. </summary>
+        /// <summary>
+        /// Container volume mounts.
+        /// Serialized Name: BaseContainer.volumeMounts
+        /// </summary>
         public IList<ContainerAppVolumeMount> VolumeMounts { get; }
     }
 }

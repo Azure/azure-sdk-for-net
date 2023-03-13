@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Diagnostics data column. </summary>
+    /// <summary>
+    /// Diagnostics data column
+    /// Serialized Name: DiagnosticDataTableResponseColumn
+    /// </summary>
     public partial class ContainerAppDiagnosticDataColumn
     {
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataColumn. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataColumn. </summary>
-        /// <param name="columnName"> Column name. </param>
-        /// <param name="dataType"> Data type of the column. </param>
-        /// <param name="columnType"> Column type. </param>
+        /// <param name="columnName">
+        /// Column name
+        /// Serialized Name: DiagnosticDataTableResponseColumn.columnName
+        /// </param>
+        /// <param name="dataType">
+        /// Data type of the column
+        /// Serialized Name: DiagnosticDataTableResponseColumn.dataType
+        /// </param>
+        /// <param name="columnType">
+        /// Column type
+        /// Serialized Name: DiagnosticDataTableResponseColumn.columnType
+        /// </param>
         internal ContainerAppDiagnosticDataColumn(string columnName, string dataType, string columnType)
         {
             ColumnName = columnName;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             ColumnType = columnType;
         }
 
-        /// <summary> Column name. </summary>
+        /// <summary>
+        /// Column name
+        /// Serialized Name: DiagnosticDataTableResponseColumn.columnName
+        /// </summary>
         public string ColumnName { get; set; }
-        /// <summary> Data type of the column. </summary>
+        /// <summary>
+        /// Data type of the column
+        /// Serialized Name: DiagnosticDataTableResponseColumn.dataType
+        /// </summary>
         public string DataType { get; set; }
-        /// <summary> Column type. </summary>
+        /// <summary>
+        /// Column type
+        /// Serialized Name: DiagnosticDataTableResponseColumn.columnType
+        /// </summary>
         public string ColumnType { get; set; }
     }
 }

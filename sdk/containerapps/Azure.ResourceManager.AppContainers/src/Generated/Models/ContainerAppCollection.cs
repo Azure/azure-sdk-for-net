@@ -13,11 +13,17 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App collection ARM resource. </summary>
+    /// <summary>
+    /// Container App collection ARM resource.
+    /// Serialized Name: ContainerAppCollection
+    /// </summary>
     internal partial class ContainerAppCollection
     {
         /// <summary> Initializes a new instance of ContainerAppCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: ContainerAppCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ContainerAppCollection(IEnumerable<ContainerAppData> value)
         {
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: ContainerAppCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: ContainerAppCollection.nextLink
+        /// </param>
         internal ContainerAppCollection(IReadOnlyList<ContainerAppData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: ContainerAppCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: ContainerAppCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

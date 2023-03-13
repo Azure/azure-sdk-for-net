@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Detailed errors. </summary>
+    /// <summary>
+    /// Detailed errors.
+    /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfoDetailsItem
+    /// </summary>
     public partial class ContainerAppCustomDomainVerificationFailureInfoDetailsItem
     {
         /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfoDetailsItem. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfoDetailsItem. </summary>
-        /// <param name="code"> Standardized string to programmatically identify the error. </param>
-        /// <param name="message"> Detailed error description and debugging information. </param>
-        /// <param name="target"> Detailed error description and debugging information. </param>
+        /// <param name="code">
+        /// Standardized string to programmatically identify the error.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfoDetailsItem.code
+        /// </param>
+        /// <param name="message">
+        /// Detailed error description and debugging information.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfoDetailsItem.message
+        /// </param>
+        /// <param name="target">
+        /// Detailed error description and debugging information.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfoDetailsItem.target
+        /// </param>
         internal ContainerAppCustomDomainVerificationFailureInfoDetailsItem(string code, string message, string target)
         {
             Code = code;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             Target = target;
         }
 
-        /// <summary> Standardized string to programmatically identify the error. </summary>
+        /// <summary>
+        /// Standardized string to programmatically identify the error.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfoDetailsItem.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> Detailed error description and debugging information. </summary>
+        /// <summary>
+        /// Detailed error description and debugging information.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfoDetailsItem.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> Detailed error description and debugging information. </summary>
+        /// <summary>
+        /// Detailed error description and debugging information.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfoDetailsItem.target
+        /// </summary>
         public string Target { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Storage properties. </summary>
+    /// <summary>
+    /// Storage properties
+    /// Serialized Name: ManagedEnvironmentStorageProperties
+    /// </summary>
     internal partial class ManagedEnvironmentStorageProperties
     {
         /// <summary> Initializes a new instance of ManagedEnvironmentStorageProperties. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ManagedEnvironmentStorageProperties. </summary>
-        /// <param name="azureFile"> Azure file properties. </param>
+        /// <param name="azureFile">
+        /// Azure file properties
+        /// Serialized Name: ManagedEnvironmentStorageProperties.azureFile
+        /// </param>
         internal ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile)
         {
             AzureFile = azureFile;
         }
 
-        /// <summary> Azure file properties. </summary>
+        /// <summary>
+        /// Azure file properties
+        /// Serialized Name: ManagedEnvironmentStorageProperties.azureFile
+        /// </summary>
         public ContainerAppAzureFileProperties AzureFile { get; set; }
     }
 }

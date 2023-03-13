@@ -10,28 +10,75 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Workload profile to scope container app execution. </summary>
+    /// <summary>
+    /// Workload profile to scope container app execution.
+    /// Serialized Name: WorkloadProfile
+    /// </summary>
     public partial class ContainerAppWorkloadProfile
     {
         /// <summary> Initializes a new instance of ContainerAppWorkloadProfile. </summary>
-        /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
-        /// <param name="minimumCount"> The minimum capacity. </param>
-        /// <param name="maximumCount"> The maximum capacity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadProfileType"/> is null. </exception>
-        public ContainerAppWorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount)
+        /// <param name="name">
+        /// Workload profile type for the workloads to run on.
+        /// Serialized Name: WorkloadProfile.name
+        /// </param>
+        /// <param name="workloadProfileType">
+        /// Workload profile type for the workloads to run on.
+        /// Serialized Name: WorkloadProfile.workloadProfileType
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="workloadProfileType"/> is null. </exception>
+        public ContainerAppWorkloadProfile(string name, string workloadProfileType)
         {
+            Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(workloadProfileType, nameof(workloadProfileType));
 
+            Name = name;
             WorkloadProfileType = workloadProfileType;
-            MinimumCount = minimumCount;
-            MaximumCount = maximumCount;
         }
 
-        /// <summary> Workload profile type for the workloads to run on. </summary>
+        /// <summary> Initializes a new instance of ContainerAppWorkloadProfile. </summary>
+        /// <param name="name">
+        /// Workload profile type for the workloads to run on.
+        /// Serialized Name: WorkloadProfile.name
+        /// </param>
+        /// <param name="workloadProfileType">
+        /// Workload profile type for the workloads to run on.
+        /// Serialized Name: WorkloadProfile.workloadProfileType
+        /// </param>
+        /// <param name="minCount">
+        /// The minimum capacity.
+        /// Serialized Name: WorkloadProfile.minimumCount
+        /// </param>
+        /// <param name="maxCount">
+        /// The maximum capacity.
+        /// Serialized Name: WorkloadProfile.maximumCount
+        /// </param>
+        internal ContainerAppWorkloadProfile(string name, string workloadProfileType, int? minCount, int? maxCount)
+        {
+            Name = name;
+            WorkloadProfileType = workloadProfileType;
+            MinCount = minCount;
+            MaxCount = maxCount;
+        }
+
+        /// <summary>
+        /// Workload profile type for the workloads to run on.
+        /// Serialized Name: WorkloadProfile.name
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// Workload profile type for the workloads to run on.
+        /// Serialized Name: WorkloadProfile.workloadProfileType
+        /// </summary>
         public string WorkloadProfileType { get; set; }
-        /// <summary> The minimum capacity. </summary>
-        public int MinimumCount { get; set; }
-        /// <summary> The maximum capacity. </summary>
-        public int MaximumCount { get; set; }
+        /// <summary>
+        /// The minimum capacity.
+        /// Serialized Name: WorkloadProfile.minimumCount
+        /// </summary>
+        public int? MinCount { get; set; }
+        /// <summary>
+        /// The maximum capacity.
+        /// Serialized Name: WorkloadProfile.maximumCount
+        /// </summary>
+        public int? MaxCount { get; set; }
     }
 }

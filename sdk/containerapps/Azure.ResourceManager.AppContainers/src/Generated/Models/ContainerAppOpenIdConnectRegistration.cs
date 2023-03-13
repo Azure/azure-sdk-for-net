@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the app registration for the custom Open ID Connect provider. </summary>
+    /// <summary>
+    /// The configuration settings of the app registration for the custom Open ID Connect provider.
+    /// Serialized Name: OpenIdConnectRegistration
+    /// </summary>
     public partial class ContainerAppOpenIdConnectRegistration
     {
         /// <summary> Initializes a new instance of ContainerAppOpenIdConnectRegistration. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppOpenIdConnectRegistration. </summary>
-        /// <param name="clientId"> The client id of the custom Open ID Connect provider. </param>
-        /// <param name="clientCredential"> The authentication credentials of the custom Open ID Connect provider. </param>
-        /// <param name="openIdConnectConfiguration"> The configuration settings of the endpoints used for the custom Open ID Connect provider. </param>
+        /// <param name="clientId">
+        /// The client id of the custom Open ID Connect provider.
+        /// Serialized Name: OpenIdConnectRegistration.clientId
+        /// </param>
+        /// <param name="clientCredential">
+        /// The authentication credentials of the custom Open ID Connect provider.
+        /// Serialized Name: OpenIdConnectRegistration.clientCredential
+        /// </param>
+        /// <param name="openIdConnectConfiguration">
+        /// The configuration settings of the endpoints used for the custom Open ID Connect provider.
+        /// Serialized Name: OpenIdConnectRegistration.openIdConnectConfiguration
+        /// </param>
         internal ContainerAppOpenIdConnectRegistration(string clientId, ContainerAppOpenIdConnectClientCredential clientCredential, ContainerAppOpenIdConnectConfig openIdConnectConfiguration)
         {
             ClientId = clientId;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             OpenIdConnectConfiguration = openIdConnectConfiguration;
         }
 
-        /// <summary> The client id of the custom Open ID Connect provider. </summary>
+        /// <summary>
+        /// The client id of the custom Open ID Connect provider.
+        /// Serialized Name: OpenIdConnectRegistration.clientId
+        /// </summary>
         public string ClientId { get; set; }
-        /// <summary> The authentication credentials of the custom Open ID Connect provider. </summary>
+        /// <summary>
+        /// The authentication credentials of the custom Open ID Connect provider.
+        /// Serialized Name: OpenIdConnectRegistration.clientCredential
+        /// </summary>
         public ContainerAppOpenIdConnectClientCredential ClientCredential { get; set; }
-        /// <summary> The configuration settings of the endpoints used for the custom Open ID Connect provider. </summary>
+        /// <summary>
+        /// The configuration settings of the endpoints used for the custom Open ID Connect provider.
+        /// Serialized Name: OpenIdConnectRegistration.openIdConnectConfiguration
+        /// </summary>
         public ContainerAppOpenIdConnectConfig OpenIdConnectConfiguration { get; set; }
     }
 }

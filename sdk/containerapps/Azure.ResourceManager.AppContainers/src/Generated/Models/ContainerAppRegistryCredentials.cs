@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App Private Registry. </summary>
+    /// <summary>
+    /// Container App Private Registry
+    /// Serialized Name: RegistryCredentials
+    /// </summary>
     public partial class ContainerAppRegistryCredentials
     {
         /// <summary> Initializes a new instance of ContainerAppRegistryCredentials. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppRegistryCredentials. </summary>
-        /// <param name="server"> Container Registry Server. </param>
-        /// <param name="username"> Container Registry Username. </param>
-        /// <param name="passwordSecretRef"> The name of the Secret that contains the registry login password. </param>
-        /// <param name="identity"> A Managed Identity to use to authenticate with Azure Container Registry. For user-assigned identities, use the full user-assigned identity Resource ID. For system-assigned identities, use &apos;system&apos;. </param>
+        /// <param name="server">
+        /// Container Registry Server
+        /// Serialized Name: RegistryCredentials.server
+        /// </param>
+        /// <param name="username">
+        /// Container Registry Username
+        /// Serialized Name: RegistryCredentials.username
+        /// </param>
+        /// <param name="passwordSecretRef">
+        /// The name of the Secret that contains the registry login password
+        /// Serialized Name: RegistryCredentials.passwordSecretRef
+        /// </param>
+        /// <param name="identity">
+        /// A Managed Identity to use to authenticate with Azure Container Registry. For user-assigned identities, use the full user-assigned identity Resource ID. For system-assigned identities, use &apos;system&apos;
+        /// Serialized Name: RegistryCredentials.identity
+        /// </param>
         internal ContainerAppRegistryCredentials(string server, string username, string passwordSecretRef, string identity)
         {
             Server = server;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.AppContainers.Models
             Identity = identity;
         }
 
-        /// <summary> Container Registry Server. </summary>
+        /// <summary>
+        /// Container Registry Server
+        /// Serialized Name: RegistryCredentials.server
+        /// </summary>
         public string Server { get; set; }
-        /// <summary> Container Registry Username. </summary>
+        /// <summary>
+        /// Container Registry Username
+        /// Serialized Name: RegistryCredentials.username
+        /// </summary>
         public string Username { get; set; }
-        /// <summary> The name of the Secret that contains the registry login password. </summary>
+        /// <summary>
+        /// The name of the Secret that contains the registry login password
+        /// Serialized Name: RegistryCredentials.passwordSecretRef
+        /// </summary>
         public string PasswordSecretRef { get; set; }
-        /// <summary> A Managed Identity to use to authenticate with Azure Container Registry. For user-assigned identities, use the full user-assigned identity Resource ID. For system-assigned identities, use &apos;system&apos;. </summary>
+        /// <summary>
+        /// A Managed Identity to use to authenticate with Azure Container Registry. For user-assigned identities, use the full user-assigned identity Resource ID. For system-assigned identities, use &apos;system&apos;
+        /// Serialized Name: RegistryCredentials.identity
+        /// </summary>
         public string Identity { get; set; }
     }
 }

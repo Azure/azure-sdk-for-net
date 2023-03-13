@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the app registration for providers that have app ids and app secrets. </summary>
+    /// <summary>
+    /// The configuration settings of the app registration for providers that have app ids and app secrets
+    /// Serialized Name: AppRegistration
+    /// </summary>
     public partial class ContainerAppRegistration
     {
         /// <summary> Initializes a new instance of ContainerAppRegistration. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppRegistration. </summary>
-        /// <param name="appId"> The App ID of the app used for login. </param>
-        /// <param name="appSecretSettingName"> The app setting name that contains the app secret. </param>
+        /// <param name="appId">
+        /// The App ID of the app used for login.
+        /// Serialized Name: AppRegistration.appId
+        /// </param>
+        /// <param name="appSecretSettingName">
+        /// The app setting name that contains the app secret.
+        /// Serialized Name: AppRegistration.appSecretSettingName
+        /// </param>
         internal ContainerAppRegistration(string appId, string appSecretSettingName)
         {
             AppId = appId;
             AppSecretSettingName = appSecretSettingName;
         }
 
-        /// <summary> The App ID of the app used for login. </summary>
+        /// <summary>
+        /// The App ID of the app used for login.
+        /// Serialized Name: AppRegistration.appId
+        /// </summary>
         public string AppId { get; set; }
-        /// <summary> The app setting name that contains the app secret. </summary>
+        /// <summary>
+        /// The app setting name that contains the app secret.
+        /// Serialized Name: AppRegistration.appSecretSettingName
+        /// </summary>
         public string AppSecretSettingName { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Provisioning state of the Environment. </summary>
+    /// <summary>
+    /// Provisioning state of the Environment.
+    /// Serialized Name: EnvironmentProvisioningState
+    /// </summary>
     public readonly partial struct ContainerAppEnvironmentProvisioningState : IEquatable<ContainerAppEnvironmentProvisioningState>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string UpgradeRequestedValue = "UpgradeRequested";
         private const string UpgradeFailedValue = "UpgradeFailed";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: EnvironmentProvisioningState.Succeeded
+        /// </summary>
         public static ContainerAppEnvironmentProvisioningState Succeeded { get; } = new ContainerAppEnvironmentProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: EnvironmentProvisioningState.Failed
+        /// </summary>
         public static ContainerAppEnvironmentProvisioningState Failed { get; } = new ContainerAppEnvironmentProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: EnvironmentProvisioningState.Canceled
+        /// </summary>
         public static ContainerAppEnvironmentProvisioningState Canceled { get; } = new ContainerAppEnvironmentProvisioningState(CanceledValue);
-        /// <summary> Waiting. </summary>
+        /// <summary>
+        /// Waiting
+        /// Serialized Name: EnvironmentProvisioningState.Waiting
+        /// </summary>
         public static ContainerAppEnvironmentProvisioningState Waiting { get; } = new ContainerAppEnvironmentProvisioningState(WaitingValue);
-        /// <summary> InitializationInProgress. </summary>
+        /// <summary>
+        /// InitializationInProgress
+        /// Serialized Name: EnvironmentProvisioningState.InitializationInProgress
+        /// </summary>
         public static ContainerAppEnvironmentProvisioningState InitializationInProgress { get; } = new ContainerAppEnvironmentProvisioningState(InitializationInProgressValue);
-        /// <summary> InfrastructureSetupInProgress. </summary>
+        /// <summary>
+        /// InfrastructureSetupInProgress
+        /// Serialized Name: EnvironmentProvisioningState.InfrastructureSetupInProgress
+        /// </summary>
         public static ContainerAppEnvironmentProvisioningState InfrastructureSetupInProgress { get; } = new ContainerAppEnvironmentProvisioningState(InfrastructureSetupInProgressValue);
-        /// <summary> InfrastructureSetupComplete. </summary>
+        /// <summary>
+        /// InfrastructureSetupComplete
+        /// Serialized Name: EnvironmentProvisioningState.InfrastructureSetupComplete
+        /// </summary>
         public static ContainerAppEnvironmentProvisioningState InfrastructureSetupComplete { get; } = new ContainerAppEnvironmentProvisioningState(InfrastructureSetupCompleteValue);
-        /// <summary> ScheduledForDelete. </summary>
+        /// <summary>
+        /// ScheduledForDelete
+        /// Serialized Name: EnvironmentProvisioningState.ScheduledForDelete
+        /// </summary>
         public static ContainerAppEnvironmentProvisioningState ScheduledForDelete { get; } = new ContainerAppEnvironmentProvisioningState(ScheduledForDeleteValue);
-        /// <summary> UpgradeRequested. </summary>
+        /// <summary>
+        /// UpgradeRequested
+        /// Serialized Name: EnvironmentProvisioningState.UpgradeRequested
+        /// </summary>
         public static ContainerAppEnvironmentProvisioningState UpgradeRequested { get; } = new ContainerAppEnvironmentProvisioningState(UpgradeRequestedValue);
-        /// <summary> UpgradeFailed. </summary>
+        /// <summary>
+        /// UpgradeFailed
+        /// Serialized Name: EnvironmentProvisioningState.UpgradeFailed
+        /// </summary>
         public static ContainerAppEnvironmentProvisioningState UpgradeFailed { get; } = new ContainerAppEnvironmentProvisioningState(UpgradeFailedValue);
         /// <summary> Determines if two <see cref="ContainerAppEnvironmentProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppEnvironmentProvisioningState left, ContainerAppEnvironmentProvisioningState right) => left.Equals(right);

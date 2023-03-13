@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of workloadProfileStates. </summary>
+    /// <summary>
+    /// Collection of workloadProfileStates
+    /// Serialized Name: WorkloadProfileStatesCollection
+    /// </summary>
     internal partial class WorkloadProfileStatesCollection
     {
         /// <summary> Initializes a new instance of WorkloadProfileStatesCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: WorkloadProfileStatesCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WorkloadProfileStatesCollection(IEnumerable<ContainerAppWorkloadProfileState> value)
         {
@@ -26,17 +32,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadProfileStatesCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: WorkloadProfileStatesCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: WorkloadProfileStatesCollection.nextLink
+        /// </param>
         internal WorkloadProfileStatesCollection(IReadOnlyList<ContainerAppWorkloadProfileState> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: WorkloadProfileStatesCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppWorkloadProfileState> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: WorkloadProfileStatesCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

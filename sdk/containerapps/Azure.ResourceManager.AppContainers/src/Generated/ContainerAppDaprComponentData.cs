@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing the ContainerAppDaprComponent data model.
     /// Dapr Component.
+    /// Serialized Name: DaprComponent
     /// </summary>
     public partial class ContainerAppDaprComponentData : ResourceData
     {
@@ -31,14 +32,38 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="componentType"> Component type. </param>
-        /// <param name="version"> Component version. </param>
-        /// <param name="ignoreErrors"> Boolean describing if the component errors are ignores. </param>
-        /// <param name="initTimeout"> Initialization timeout. </param>
-        /// <param name="secrets"> Collection of secrets used by a Dapr component. </param>
-        /// <param name="secretStoreComponent"> Name of a Dapr component to retrieve component secrets from. </param>
-        /// <param name="metadata"> Component metadata. </param>
-        /// <param name="scopes"> Names of container apps that can use this Dapr component. </param>
+        /// <param name="componentType">
+        /// Component type
+        /// Serialized Name: DaprComponent.properties.componentType
+        /// </param>
+        /// <param name="version">
+        /// Component version
+        /// Serialized Name: DaprComponent.properties.version
+        /// </param>
+        /// <param name="ignoreErrors">
+        /// Boolean describing if the component errors are ignores
+        /// Serialized Name: DaprComponent.properties.ignoreErrors
+        /// </param>
+        /// <param name="initTimeout">
+        /// Initialization timeout
+        /// Serialized Name: DaprComponent.properties.initTimeout
+        /// </param>
+        /// <param name="secrets">
+        /// Collection of secrets used by a Dapr component
+        /// Serialized Name: DaprComponent.properties.secrets
+        /// </param>
+        /// <param name="secretStoreComponent">
+        /// Name of a Dapr component to retrieve component secrets from
+        /// Serialized Name: DaprComponent.properties.secretStoreComponent
+        /// </param>
+        /// <param name="metadata">
+        /// Component metadata
+        /// Serialized Name: DaprComponent.properties.metadata
+        /// </param>
+        /// <param name="scopes">
+        /// Names of container apps that can use this Dapr component
+        /// Serialized Name: DaprComponent.properties.scopes
+        /// </param>
         internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes) : base(id, name, resourceType, systemData)
         {
             ComponentType = componentType;
@@ -51,21 +76,45 @@ namespace Azure.ResourceManager.AppContainers
             Scopes = scopes;
         }
 
-        /// <summary> Component type. </summary>
+        /// <summary>
+        /// Component type
+        /// Serialized Name: DaprComponent.properties.componentType
+        /// </summary>
         public string ComponentType { get; set; }
-        /// <summary> Component version. </summary>
+        /// <summary>
+        /// Component version
+        /// Serialized Name: DaprComponent.properties.version
+        /// </summary>
         public string Version { get; set; }
-        /// <summary> Boolean describing if the component errors are ignores. </summary>
+        /// <summary>
+        /// Boolean describing if the component errors are ignores
+        /// Serialized Name: DaprComponent.properties.ignoreErrors
+        /// </summary>
         public bool? IgnoreErrors { get; set; }
-        /// <summary> Initialization timeout. </summary>
+        /// <summary>
+        /// Initialization timeout
+        /// Serialized Name: DaprComponent.properties.initTimeout
+        /// </summary>
         public string InitTimeout { get; set; }
-        /// <summary> Collection of secrets used by a Dapr component. </summary>
+        /// <summary>
+        /// Collection of secrets used by a Dapr component
+        /// Serialized Name: DaprComponent.properties.secrets
+        /// </summary>
         public IList<ContainerAppWritableSecret> Secrets { get; }
-        /// <summary> Name of a Dapr component to retrieve component secrets from. </summary>
+        /// <summary>
+        /// Name of a Dapr component to retrieve component secrets from
+        /// Serialized Name: DaprComponent.properties.secretStoreComponent
+        /// </summary>
         public string SecretStoreComponent { get; set; }
-        /// <summary> Component metadata. </summary>
+        /// <summary>
+        /// Component metadata
+        /// Serialized Name: DaprComponent.properties.metadata
+        /// </summary>
         public IList<ContainerAppDaprMetadata> Metadata { get; }
-        /// <summary> Names of container apps that can use this Dapr component. </summary>
+        /// <summary>
+        /// Names of container apps that can use this Dapr component
+        /// Serialized Name: DaprComponent.properties.scopes
+        /// </summary>
         public IList<string> Scopes { get; }
     }
 }

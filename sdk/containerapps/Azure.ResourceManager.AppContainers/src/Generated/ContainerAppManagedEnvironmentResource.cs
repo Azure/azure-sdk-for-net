@@ -259,6 +259,59 @@ namespace Azure.ResourceManager.AppContainers
             return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
         }
 
+        /// <summary> Gets a collection of ManagedCertificateResources in the ContainerAppManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ManagedCertificateResources and their operations over a ManagedCertificateResource. </returns>
+        public virtual ManagedCertificateCollection GetManagedCertificates()
+        {
+            return GetCachedClient(Client => new ManagedCertificateCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get the specified Managed Certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/managedCertificates/{managedCertificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedCertificates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedCertificateName"> Name of the Managed Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedCertificateResource>> GetManagedCertificateAsync(string managedCertificateName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedCertificates().GetAsync(managedCertificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified Managed Certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/managedCertificates/{managedCertificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedCertificates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedCertificateName"> Name of the Managed Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedCertificateResource> GetManagedCertificate(string managedCertificateName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedCertificates().Get(managedCertificateName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentStorageResources in the ContainerAppManagedEnvironment. </summary>
         /// <returns> An object representing collection of ContainerAppManagedEnvironmentStorageResources and their operations over a ContainerAppManagedEnvironmentStorageResource. </returns>
         public virtual ContainerAppManagedEnvironmentStorageCollection GetContainerAppManagedEnvironmentStorages()
@@ -581,7 +634,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get all workload Profile States for a Premium Managed Environment.
+        /// Get all workload Profile States for a Managed Environment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -603,7 +656,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get all workload Profile States for a Premium Managed Environment.
+        /// Get all workload Profile States for a Managed Environment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

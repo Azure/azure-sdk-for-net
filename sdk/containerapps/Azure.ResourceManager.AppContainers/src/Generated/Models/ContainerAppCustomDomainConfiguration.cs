@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Configuration properties for apps environment custom domain. </summary>
+    /// <summary>
+    /// Configuration properties for apps environment custom domain
+    /// Serialized Name: CustomDomainConfiguration
+    /// </summary>
     public partial class ContainerAppCustomDomainConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppCustomDomainConfiguration. </summary>
@@ -18,13 +21,34 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppCustomDomainConfiguration. </summary>
-        /// <param name="customDomainVerificationId"> Id used to verify domain name ownership. </param>
-        /// <param name="dnsSuffix"> Dns suffix for the environment domain. </param>
-        /// <param name="certificateValue"> PFX or PEM blob. </param>
-        /// <param name="certificatePassword"> Certificate password. </param>
-        /// <param name="expireOn"> Certificate expiration date. </param>
-        /// <param name="thumbprint"> Certificate thumbprint. </param>
-        /// <param name="subjectName"> Subject name of the certificate. </param>
+        /// <param name="customDomainVerificationId">
+        /// Id used to verify domain name ownership
+        /// Serialized Name: CustomDomainConfiguration.customDomainVerificationId
+        /// </param>
+        /// <param name="dnsSuffix">
+        /// Dns suffix for the environment domain
+        /// Serialized Name: CustomDomainConfiguration.dnsSuffix
+        /// </param>
+        /// <param name="certificateValue">
+        /// PFX or PEM blob
+        /// Serialized Name: CustomDomainConfiguration.certificateValue
+        /// </param>
+        /// <param name="certificatePassword">
+        /// Certificate password
+        /// Serialized Name: CustomDomainConfiguration.certificatePassword
+        /// </param>
+        /// <param name="expireOn">
+        /// Certificate expiration date.
+        /// Serialized Name: CustomDomainConfiguration.expirationDate
+        /// </param>
+        /// <param name="thumbprint">
+        /// Certificate thumbprint.
+        /// Serialized Name: CustomDomainConfiguration.thumbprint
+        /// </param>
+        /// <param name="subjectName">
+        /// Subject name of the certificate.
+        /// Serialized Name: CustomDomainConfiguration.subjectName
+        /// </param>
         internal ContainerAppCustomDomainConfiguration(string customDomainVerificationId, string dnsSuffix, byte[] certificateValue, string certificatePassword, DateTimeOffset? expireOn, string thumbprint, string subjectName)
         {
             CustomDomainVerificationId = customDomainVerificationId;
@@ -36,19 +60,40 @@ namespace Azure.ResourceManager.AppContainers.Models
             SubjectName = subjectName;
         }
 
-        /// <summary> Id used to verify domain name ownership. </summary>
+        /// <summary>
+        /// Id used to verify domain name ownership
+        /// Serialized Name: CustomDomainConfiguration.customDomainVerificationId
+        /// </summary>
         public string CustomDomainVerificationId { get; }
-        /// <summary> Dns suffix for the environment domain. </summary>
+        /// <summary>
+        /// Dns suffix for the environment domain
+        /// Serialized Name: CustomDomainConfiguration.dnsSuffix
+        /// </summary>
         public string DnsSuffix { get; set; }
-        /// <summary> PFX or PEM blob. </summary>
+        /// <summary>
+        /// PFX or PEM blob
+        /// Serialized Name: CustomDomainConfiguration.certificateValue
+        /// </summary>
         public byte[] CertificateValue { get; set; }
-        /// <summary> Certificate password. </summary>
+        /// <summary>
+        /// Certificate password
+        /// Serialized Name: CustomDomainConfiguration.certificatePassword
+        /// </summary>
         public string CertificatePassword { get; set; }
-        /// <summary> Certificate expiration date. </summary>
+        /// <summary>
+        /// Certificate expiration date.
+        /// Serialized Name: CustomDomainConfiguration.expirationDate
+        /// </summary>
         public DateTimeOffset? ExpireOn { get; }
-        /// <summary> Certificate thumbprint. </summary>
+        /// <summary>
+        /// Certificate thumbprint.
+        /// Serialized Name: CustomDomainConfiguration.thumbprint
+        /// </summary>
         public string Thumbprint { get; }
-        /// <summary> Subject name of the certificate. </summary>
+        /// <summary>
+        /// Subject name of the certificate.
+        /// Serialized Name: CustomDomainConfiguration.subjectName
+        /// </summary>
         public string SubjectName { get; }
     }
 }

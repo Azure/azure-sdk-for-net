@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App Ingress configuration. </summary>
+    /// <summary>
+    /// Container App Ingress configuration.
+    /// Serialized Name: Ingress
+    /// </summary>
     public partial class ContainerAppIngressConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
@@ -22,18 +25,55 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
-        /// <param name="fqdn"> Hostname. </param>
-        /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
-        /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>
-        /// <param name="exposedPort"> Exposed Port in containers for TCP traffic from ingress. </param>
-        /// <param name="transport"> Ingress transport protocol. </param>
-        /// <param name="traffic"> Traffic weights for app&apos;s revisions. </param>
-        /// <param name="customDomains"> custom domain bindings for Container Apps&apos; hostnames. </param>
-        /// <param name="allowInsecure"> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </param>
-        /// <param name="ipSecurityRestrictions"> Rules to restrict incoming IP address. </param>
-        /// <param name="clientCertificateMode"> Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate. </param>
-        /// <param name="corsPolicy"> CORS policy for container app. </param>
-        internal ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IList<ContainerAppRevisionTrafficWeight> traffic, IList<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy)
+        /// <param name="fqdn">
+        /// Hostname.
+        /// Serialized Name: Ingress.fqdn
+        /// </param>
+        /// <param name="external">
+        /// Bool indicating if app exposes an external http endpoint
+        /// Serialized Name: Ingress.external
+        /// </param>
+        /// <param name="targetPort">
+        /// Target Port in containers for traffic from ingress
+        /// Serialized Name: Ingress.targetPort
+        /// </param>
+        /// <param name="exposedPort">
+        /// Exposed Port in containers for TCP traffic from ingress
+        /// Serialized Name: Ingress.exposedPort
+        /// </param>
+        /// <param name="transport">
+        /// Ingress transport protocol
+        /// Serialized Name: Ingress.transport
+        /// </param>
+        /// <param name="traffic">
+        /// Traffic weights for app&apos;s revisions
+        /// Serialized Name: Ingress.traffic
+        /// </param>
+        /// <param name="customDomains">
+        /// custom domain bindings for Container Apps&apos; hostnames.
+        /// Serialized Name: Ingress.customDomains
+        /// </param>
+        /// <param name="allowInsecure">
+        /// Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections
+        /// Serialized Name: Ingress.allowInsecure
+        /// </param>
+        /// <param name="ipSecurityRestrictions">
+        /// Rules to restrict incoming IP address.
+        /// Serialized Name: Ingress.ipSecurityRestrictions
+        /// </param>
+        /// <param name="stickySessions">
+        /// Sticky Sessions for Single Revision Mode
+        /// Serialized Name: Ingress.stickySessions
+        /// </param>
+        /// <param name="clientCertificateMode">
+        /// Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate.
+        /// Serialized Name: Ingress.clientCertificateMode
+        /// </param>
+        /// <param name="corsPolicy">
+        /// CORS policy for container app
+        /// Serialized Name: Ingress.corsPolicy
+        /// </param>
+        internal ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IList<ContainerAppRevisionTrafficWeight> traffic, IList<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, IngressStickySessions stickySessions, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy)
         {
             Fqdn = fqdn;
             External = external;
@@ -44,31 +84,85 @@ namespace Azure.ResourceManager.AppContainers.Models
             CustomDomains = customDomains;
             AllowInsecure = allowInsecure;
             IPSecurityRestrictions = ipSecurityRestrictions;
+            StickySessions = stickySessions;
             ClientCertificateMode = clientCertificateMode;
             CorsPolicy = corsPolicy;
         }
 
-        /// <summary> Hostname. </summary>
+        /// <summary>
+        /// Hostname.
+        /// Serialized Name: Ingress.fqdn
+        /// </summary>
         public string Fqdn { get; }
-        /// <summary> Bool indicating if app exposes an external http endpoint. </summary>
+        /// <summary>
+        /// Bool indicating if app exposes an external http endpoint
+        /// Serialized Name: Ingress.external
+        /// </summary>
         public bool? External { get; set; }
-        /// <summary> Target Port in containers for traffic from ingress. </summary>
+        /// <summary>
+        /// Target Port in containers for traffic from ingress
+        /// Serialized Name: Ingress.targetPort
+        /// </summary>
         public int? TargetPort { get; set; }
-        /// <summary> Exposed Port in containers for TCP traffic from ingress. </summary>
+        /// <summary>
+        /// Exposed Port in containers for TCP traffic from ingress
+        /// Serialized Name: Ingress.exposedPort
+        /// </summary>
         public int? ExposedPort { get; set; }
-        /// <summary> Ingress transport protocol. </summary>
+        /// <summary>
+        /// Ingress transport protocol
+        /// Serialized Name: Ingress.transport
+        /// </summary>
         public ContainerAppIngressTransportMethod? Transport { get; set; }
-        /// <summary> Traffic weights for app&apos;s revisions. </summary>
+        /// <summary>
+        /// Traffic weights for app&apos;s revisions
+        /// Serialized Name: Ingress.traffic
+        /// </summary>
         public IList<ContainerAppRevisionTrafficWeight> Traffic { get; }
-        /// <summary> custom domain bindings for Container Apps&apos; hostnames. </summary>
+        /// <summary>
+        /// custom domain bindings for Container Apps&apos; hostnames.
+        /// Serialized Name: Ingress.customDomains
+        /// </summary>
         public IList<ContainerAppCustomDomain> CustomDomains { get; }
-        /// <summary> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </summary>
+        /// <summary>
+        /// Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections
+        /// Serialized Name: Ingress.allowInsecure
+        /// </summary>
         public bool? AllowInsecure { get; set; }
-        /// <summary> Rules to restrict incoming IP address. </summary>
+        /// <summary>
+        /// Rules to restrict incoming IP address.
+        /// Serialized Name: Ingress.ipSecurityRestrictions
+        /// </summary>
         public IList<ContainerAppIPSecurityRestrictionRule> IPSecurityRestrictions { get; }
-        /// <summary> Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate. </summary>
+        /// <summary>
+        /// Sticky Sessions for Single Revision Mode
+        /// Serialized Name: Ingress.stickySessions
+        /// </summary>
+        internal IngressStickySessions StickySessions { get; set; }
+        /// <summary>
+        /// Sticky Session Affinity
+        /// Serialized Name: IngressStickySessions.affinity
+        /// </summary>
+        public Affinity? StickySessionsAffinity
+        {
+            get => StickySessions is null ? default : StickySessions.Affinity;
+            set
+            {
+                if (StickySessions is null)
+                    StickySessions = new IngressStickySessions();
+                StickySessions.Affinity = value;
+            }
+        }
+
+        /// <summary>
+        /// Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate.
+        /// Serialized Name: Ingress.clientCertificateMode
+        /// </summary>
         public ContainerAppIngressClientCertificateMode? ClientCertificateMode { get; set; }
-        /// <summary> CORS policy for container app. </summary>
+        /// <summary>
+        /// CORS policy for container app
+        /// Serialized Name: Ingress.corsPolicy
+        /// </summary>
         public ContainerAppCorsPolicy CorsPolicy { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Traffic weight assigned to a revision. </summary>
+    /// <summary>
+    /// Traffic weight assigned to a revision
+    /// Serialized Name: TrafficWeight
+    /// </summary>
     public partial class ContainerAppRevisionTrafficWeight
     {
         /// <summary> Initializes a new instance of ContainerAppRevisionTrafficWeight. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppRevisionTrafficWeight. </summary>
-        /// <param name="revisionName"> Name of a revision. </param>
-        /// <param name="weight"> Traffic weight assigned to a revision. </param>
-        /// <param name="isLatestRevision"> Indicates that the traffic weight belongs to a latest stable revision. </param>
-        /// <param name="label"> Associates a traffic label with a revision. </param>
+        /// <param name="revisionName">
+        /// Name of a revision
+        /// Serialized Name: TrafficWeight.revisionName
+        /// </param>
+        /// <param name="weight">
+        /// Traffic weight assigned to a revision
+        /// Serialized Name: TrafficWeight.weight
+        /// </param>
+        /// <param name="isLatestRevision">
+        /// Indicates that the traffic weight belongs to a latest stable revision
+        /// Serialized Name: TrafficWeight.latestRevision
+        /// </param>
+        /// <param name="label">
+        /// Associates a traffic label with a revision
+        /// Serialized Name: TrafficWeight.label
+        /// </param>
         internal ContainerAppRevisionTrafficWeight(string revisionName, int? weight, bool? isLatestRevision, string label)
         {
             RevisionName = revisionName;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.AppContainers.Models
             Label = label;
         }
 
-        /// <summary> Name of a revision. </summary>
+        /// <summary>
+        /// Name of a revision
+        /// Serialized Name: TrafficWeight.revisionName
+        /// </summary>
         public string RevisionName { get; set; }
-        /// <summary> Traffic weight assigned to a revision. </summary>
+        /// <summary>
+        /// Traffic weight assigned to a revision
+        /// Serialized Name: TrafficWeight.weight
+        /// </summary>
         public int? Weight { get; set; }
-        /// <summary> Indicates that the traffic weight belongs to a latest stable revision. </summary>
+        /// <summary>
+        /// Indicates that the traffic weight belongs to a latest stable revision
+        /// Serialized Name: TrafficWeight.latestRevision
+        /// </summary>
         public bool? IsLatestRevision { get; set; }
-        /// <summary> Associates a traffic label with a revision. </summary>
+        /// <summary>
+        /// Associates a traffic label with a revision
+        /// Serialized Name: TrafficWeight.label
+        /// </summary>
         public string Label { get; set; }
     }
 }

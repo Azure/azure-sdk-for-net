@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The method that should be used to authenticate the user. </summary>
+    /// <summary>
+    /// The method that should be used to authenticate the user.
+    /// Serialized Name: ClientCredentialMethod
+    /// </summary>
     public readonly partial struct ContainerAppOpenIdConnectClientCredentialMethod : IEquatable<ContainerAppOpenIdConnectClientCredentialMethod>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         private const string ClientSecretPostValue = "ClientSecretPost";
 
-        /// <summary> ClientSecretPost. </summary>
+        /// <summary>
+        /// ClientSecretPost
+        /// Serialized Name: ClientCredentialMethod.ClientSecretPost
+        /// </summary>
         public static ContainerAppOpenIdConnectClientCredentialMethod ClientSecretPost { get; } = new ContainerAppOpenIdConnectClientCredentialMethod(ClientSecretPostValue);
         /// <summary> Determines if two <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/> values are the same. </summary>
         public static bool operator ==(ContainerAppOpenIdConnectClientCredentialMethod left, ContainerAppOpenIdConnectClientCredentialMethod right) => left.Equals(right);

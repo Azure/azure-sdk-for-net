@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Provisioning state of the Container App. </summary>
+    /// <summary>
+    /// Provisioning state of the Container App.
+    /// Serialized Name: ContainerAppProvisioningState
+    /// </summary>
     public readonly partial struct ContainerAppProvisioningState : IEquatable<ContainerAppProvisioningState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string CanceledValue = "Canceled";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: ContainerAppProvisioningState.InProgress
+        /// </summary>
         public static ContainerAppProvisioningState InProgress { get; } = new ContainerAppProvisioningState(InProgressValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ContainerAppProvisioningState.Succeeded
+        /// </summary>
         public static ContainerAppProvisioningState Succeeded { get; } = new ContainerAppProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ContainerAppProvisioningState.Failed
+        /// </summary>
         public static ContainerAppProvisioningState Failed { get; } = new ContainerAppProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: ContainerAppProvisioningState.Canceled
+        /// </summary>
         public static ContainerAppProvisioningState Canceled { get; } = new ContainerAppProvisioningState(CanceledValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ContainerAppProvisioningState.Deleting
+        /// </summary>
         public static ContainerAppProvisioningState Deleting { get; } = new ContainerAppProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="ContainerAppProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppProvisioningState left, ContainerAppProvisioningState right) => left.Equals(right);

@@ -13,11 +13,17 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of Storage for Environments. </summary>
+    /// <summary>
+    /// Collection of Storage for Environments
+    /// Serialized Name: ConnectedEnvironmentStoragesCollection
+    /// </summary>
     internal partial class ConnectedEnvironmentStoragesCollection
     {
         /// <summary> Initializes a new instance of ConnectedEnvironmentStoragesCollection. </summary>
-        /// <param name="value"> Collection of storage resources. </param>
+        /// <param name="value">
+        /// Collection of storage resources.
+        /// Serialized Name: ConnectedEnvironmentStoragesCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ConnectedEnvironmentStoragesCollection(IEnumerable<ContainerAppConnectedEnvironmentStorageData> value)
         {
@@ -27,13 +33,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ConnectedEnvironmentStoragesCollection. </summary>
-        /// <param name="value"> Collection of storage resources. </param>
+        /// <param name="value">
+        /// Collection of storage resources.
+        /// Serialized Name: ConnectedEnvironmentStoragesCollection.value
+        /// </param>
         internal ConnectedEnvironmentStoragesCollection(IReadOnlyList<ContainerAppConnectedEnvironmentStorageData> value)
         {
             Value = value;
         }
 
-        /// <summary> Collection of storage resources. </summary>
+        /// <summary>
+        /// Collection of storage resources.
+        /// Serialized Name: ConnectedEnvironmentStoragesCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppConnectedEnvironmentStorageData> Value { get; }
     }
 }

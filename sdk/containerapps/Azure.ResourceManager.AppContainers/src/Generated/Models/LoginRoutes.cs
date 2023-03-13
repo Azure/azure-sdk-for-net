@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
+    /// <summary>
+    /// The routes that specify the endpoints used for login and logout requests.
+    /// Serialized Name: LoginRoutes
+    /// </summary>
     internal partial class LoginRoutes
     {
         /// <summary> Initializes a new instance of LoginRoutes. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of LoginRoutes. </summary>
-        /// <param name="logoutEndpoint"> The endpoint at which a logout request should be made. </param>
+        /// <param name="logoutEndpoint">
+        /// The endpoint at which a logout request should be made.
+        /// Serialized Name: LoginRoutes.logoutEndpoint
+        /// </param>
         internal LoginRoutes(string logoutEndpoint)
         {
             LogoutEndpoint = logoutEndpoint;
         }
 
-        /// <summary> The endpoint at which a logout request should be made. </summary>
+        /// <summary>
+        /// The endpoint at which a logout request should be made.
+        /// Serialized Name: LoginRoutes.logoutEndpoint
+        /// </summary>
         public string LogoutEndpoint { get; set; }
     }
 }

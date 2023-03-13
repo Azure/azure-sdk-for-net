@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> HTTPHeader describes a custom header to be used in HTTP probes. </summary>
+    /// <summary>
+    /// HTTPHeader describes a custom header to be used in HTTP probes
+    /// Serialized Name: ContainerAppHttpHeaderInfo
+    /// </summary>
     public partial class ContainerAppHttpHeaderInfo
     {
         /// <summary> Initializes a new instance of ContainerAppHttpHeaderInfo. </summary>
-        /// <param name="name"> The header field name. </param>
-        /// <param name="value"> The header field value. </param>
+        /// <param name="name">
+        /// The header field name
+        /// Serialized Name: ContainerAppHttpHeaderInfo.name
+        /// </param>
+        /// <param name="value">
+        /// The header field value
+        /// Serialized Name: ContainerAppHttpHeaderInfo.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public ContainerAppHttpHeaderInfo(string name, string value)
         {
@@ -26,9 +35,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value;
         }
 
-        /// <summary> The header field name. </summary>
+        /// <summary>
+        /// The header field name
+        /// Serialized Name: ContainerAppHttpHeaderInfo.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The header field value. </summary>
+        /// <summary>
+        /// The header field value
+        /// Serialized Name: ContainerAppHttpHeaderInfo.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

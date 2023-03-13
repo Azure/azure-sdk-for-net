@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the app registration for providers that have client ids and client secrets. </summary>
+    /// <summary>
+    /// The configuration settings of the app registration for providers that have client ids and client secrets
+    /// Serialized Name: ClientRegistration
+    /// </summary>
     public partial class ContainerAppClientRegistration
     {
         /// <summary> Initializes a new instance of ContainerAppClientRegistration. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppClientRegistration. </summary>
-        /// <param name="clientId"> The Client ID of the app used for login. </param>
-        /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
+        /// <param name="clientId">
+        /// The Client ID of the app used for login.
+        /// Serialized Name: ClientRegistration.clientId
+        /// </param>
+        /// <param name="clientSecretSettingName">
+        /// The app setting name that contains the client secret.
+        /// Serialized Name: ClientRegistration.clientSecretSettingName
+        /// </param>
         internal ContainerAppClientRegistration(string clientId, string clientSecretSettingName)
         {
             ClientId = clientId;
             ClientSecretSettingName = clientSecretSettingName;
         }
 
-        /// <summary> The Client ID of the app used for login. </summary>
+        /// <summary>
+        /// The Client ID of the app used for login.
+        /// Serialized Name: ClientRegistration.clientId
+        /// </summary>
         public string ClientId { get; set; }
-        /// <summary> The app setting name that contains the client secret. </summary>
+        /// <summary>
+        /// The app setting name that contains the client secret.
+        /// Serialized Name: ClientRegistration.clientSecretSettingName
+        /// </summary>
         public string ClientSecretSettingName { get; set; }
     }
 }

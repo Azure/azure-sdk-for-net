@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing the ContainerAppManagedEnvironmentStorage data model.
     /// Storage resource for managedEnvironment.
+    /// Serialized Name: ManagedEnvironmentStorage
     /// </summary>
     public partial class ContainerAppManagedEnvironmentStorageData : ResourceData
     {
@@ -27,15 +28,24 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Storage properties. </param>
+        /// <param name="properties">
+        /// Storage properties
+        /// Serialized Name: ManagedEnvironmentStorage.properties
+        /// </param>
         internal ContainerAppManagedEnvironmentStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedEnvironmentStorageProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Storage properties. </summary>
+        /// <summary>
+        /// Storage properties
+        /// Serialized Name: ManagedEnvironmentStorage.properties
+        /// </summary>
         internal ManagedEnvironmentStorageProperties Properties { get; set; }
-        /// <summary> Azure file properties. </summary>
+        /// <summary>
+        /// Azure file properties
+        /// Serialized Name: ManagedEnvironmentStorageProperties.azureFile
+        /// </summary>
         public ContainerAppAzureFileProperties ManagedEnvironmentStorageAzureFile
         {
             get => Properties is null ? default : Properties.AzureFile;

@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of available workload profiles in the location. </summary>
+    /// <summary>
+    /// Collection of available workload profiles in the location.
+    /// Serialized Name: AvailableWorkloadProfilesCollection
+    /// </summary>
     internal partial class AvailableWorkloadProfilesCollection
     {
         /// <summary> Initializes a new instance of AvailableWorkloadProfilesCollection. </summary>
-        /// <param name="value"> Collection of workload profiles. </param>
+        /// <param name="value">
+        /// Collection of workload profiles.
+        /// Serialized Name: AvailableWorkloadProfilesCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AvailableWorkloadProfilesCollection(IEnumerable<ContainerAppAvailableWorkloadProfile> value)
         {
@@ -26,17 +32,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of AvailableWorkloadProfilesCollection. </summary>
-        /// <param name="value"> Collection of workload profiles. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of workload profiles.
+        /// Serialized Name: AvailableWorkloadProfilesCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: AvailableWorkloadProfilesCollection.nextLink
+        /// </param>
         internal AvailableWorkloadProfilesCollection(IReadOnlyList<ContainerAppAvailableWorkloadProfile> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of workload profiles. </summary>
+        /// <summary>
+        /// Collection of workload profiles.
+        /// Serialized Name: AvailableWorkloadProfilesCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppAvailableWorkloadProfile> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: AvailableWorkloadProfilesCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Azure File Properties. </summary>
+    /// <summary>
+    /// Azure File Properties.
+    /// Serialized Name: AzureFileProperties
+    /// </summary>
     public partial class ContainerAppAzureFileProperties
     {
         /// <summary> Initializes a new instance of ContainerAppAzureFileProperties. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppAzureFileProperties. </summary>
-        /// <param name="accountName"> Storage account name for azure file. </param>
-        /// <param name="accountKey"> Storage account key for azure file. </param>
-        /// <param name="accessMode"> Access mode for storage. </param>
-        /// <param name="shareName"> Azure file share name. </param>
+        /// <param name="accountName">
+        /// Storage account name for azure file.
+        /// Serialized Name: AzureFileProperties.accountName
+        /// </param>
+        /// <param name="accountKey">
+        /// Storage account key for azure file.
+        /// Serialized Name: AzureFileProperties.accountKey
+        /// </param>
+        /// <param name="accessMode">
+        /// Access mode for storage
+        /// Serialized Name: AzureFileProperties.accessMode
+        /// </param>
+        /// <param name="shareName">
+        /// Azure file share name.
+        /// Serialized Name: AzureFileProperties.shareName
+        /// </param>
         internal ContainerAppAzureFileProperties(string accountName, string accountKey, ContainerAppAccessMode? accessMode, string shareName)
         {
             AccountName = accountName;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.AppContainers.Models
             ShareName = shareName;
         }
 
-        /// <summary> Storage account name for azure file. </summary>
+        /// <summary>
+        /// Storage account name for azure file.
+        /// Serialized Name: AzureFileProperties.accountName
+        /// </summary>
         public string AccountName { get; set; }
-        /// <summary> Storage account key for azure file. </summary>
+        /// <summary>
+        /// Storage account key for azure file.
+        /// Serialized Name: AzureFileProperties.accountKey
+        /// </summary>
         public string AccountKey { get; set; }
-        /// <summary> Access mode for storage. </summary>
+        /// <summary>
+        /// Access mode for storage
+        /// Serialized Name: AzureFileProperties.accessMode
+        /// </summary>
         public ContainerAppAccessMode? AccessMode { get; set; }
-        /// <summary> Azure file share name. </summary>
+        /// <summary>
+        /// Azure file share name.
+        /// Serialized Name: AzureFileProperties.shareName
+        /// </summary>
         public string ShareName { get; set; }
     }
 }

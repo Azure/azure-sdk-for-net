@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the nonce used in the login flow. </summary>
+    /// <summary>
+    /// The configuration settings of the nonce used in the login flow.
+    /// Serialized Name: Nonce
+    /// </summary>
     public partial class ContainerAppLoginNonce
     {
         /// <summary> Initializes a new instance of ContainerAppLoginNonce. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppLoginNonce. </summary>
-        /// <param name="validateNonce"> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="nonceExpirationInterval"> The time after the request is made when the nonce should expire. </param>
+        /// <param name="validateNonce">
+        /// &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Nonce.validateNonce
+        /// </param>
+        /// <param name="nonceExpirationInterval">
+        /// The time after the request is made when the nonce should expire.
+        /// Serialized Name: Nonce.nonceExpirationInterval
+        /// </param>
         internal ContainerAppLoginNonce(bool? validateNonce, string nonceExpirationInterval)
         {
             ValidateNonce = validateNonce;
             NonceExpirationInterval = nonceExpirationInterval;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Nonce.validateNonce
+        /// </summary>
         public bool? ValidateNonce { get; set; }
-        /// <summary> The time after the request is made when the nonce should expire. </summary>
+        /// <summary>
+        /// The time after the request is made when the nonce should expire.
+        /// Serialized Name: Nonce.nonceExpirationInterval
+        /// </summary>
         public string NonceExpirationInterval { get; set; }
     }
 }

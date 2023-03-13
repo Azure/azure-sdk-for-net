@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Property details. </summary>
+    /// <summary>
+    /// Property details
+    /// Serialized Name: DiagnosticDataProviderMetadataPropertyBagItem
+    /// </summary>
     public partial class ContainerAppDiagnosticDataProviderMetadataPropertyBagItem
     {
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadataPropertyBagItem. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadataPropertyBagItem. </summary>
-        /// <param name="name"> Property name. </param>
-        /// <param name="value"> Property value. </param>
+        /// <param name="name">
+        /// Property name
+        /// Serialized Name: DiagnosticDataProviderMetadataPropertyBagItem.name
+        /// </param>
+        /// <param name="value">
+        /// Property value
+        /// Serialized Name: DiagnosticDataProviderMetadataPropertyBagItem.value
+        /// </param>
         internal ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(string name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary> Property name. </summary>
+        /// <summary>
+        /// Property name
+        /// Serialized Name: DiagnosticDataProviderMetadataPropertyBagItem.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Property value. </summary>
+        /// <summary>
+        /// Property value
+        /// Serialized Name: DiagnosticDataProviderMetadataPropertyBagItem.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

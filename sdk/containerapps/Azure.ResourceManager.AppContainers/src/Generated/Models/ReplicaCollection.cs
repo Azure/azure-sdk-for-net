@@ -13,11 +13,17 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App Revision Replicas collection ARM resource. </summary>
+    /// <summary>
+    /// Container App Revision Replicas collection ARM resource.
+    /// Serialized Name: ReplicaCollection
+    /// </summary>
     internal partial class ReplicaCollection
     {
         /// <summary> Initializes a new instance of ReplicaCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: ReplicaCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ReplicaCollection(IEnumerable<ContainerAppReplicaData> value)
         {
@@ -27,13 +33,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ReplicaCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: ReplicaCollection.value
+        /// </param>
         internal ReplicaCollection(IReadOnlyList<ContainerAppReplicaData> value)
         {
             Value = value;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: ReplicaCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppReplicaData> Value { get; }
     }
 }

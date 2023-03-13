@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Rule to restrict incoming IP address. </summary>
+    /// <summary>
+    /// Rule to restrict incoming IP address.
+    /// Serialized Name: IpSecurityRestrictionRule
+    /// </summary>
     public partial class ContainerAppIPSecurityRestrictionRule
     {
         /// <summary> Initializes a new instance of ContainerAppIPSecurityRestrictionRule. </summary>
-        /// <param name="name"> Name for the IP restriction rule. </param>
-        /// <param name="ipAddressRange"> CIDR notation to match incoming IP address. </param>
-        /// <param name="action"> Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny. </param>
+        /// <param name="name">
+        /// Name for the IP restriction rule.
+        /// Serialized Name: IpSecurityRestrictionRule.name
+        /// </param>
+        /// <param name="ipAddressRange">
+        /// CIDR notation to match incoming IP address
+        /// Serialized Name: IpSecurityRestrictionRule.ipAddressRange
+        /// </param>
+        /// <param name="action">
+        /// Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny
+        /// Serialized Name: IpSecurityRestrictionRule.action
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="ipAddressRange"/> is null. </exception>
         public ContainerAppIPSecurityRestrictionRule(string name, string ipAddressRange, ContainerAppIPRuleAction action)
         {
@@ -29,10 +41,22 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppIPSecurityRestrictionRule. </summary>
-        /// <param name="name"> Name for the IP restriction rule. </param>
-        /// <param name="description"> Describe the IP restriction rule that is being sent to the container-app. This is an optional field. </param>
-        /// <param name="ipAddressRange"> CIDR notation to match incoming IP address. </param>
-        /// <param name="action"> Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny. </param>
+        /// <param name="name">
+        /// Name for the IP restriction rule.
+        /// Serialized Name: IpSecurityRestrictionRule.name
+        /// </param>
+        /// <param name="description">
+        /// Describe the IP restriction rule that is being sent to the container-app. This is an optional field.
+        /// Serialized Name: IpSecurityRestrictionRule.description
+        /// </param>
+        /// <param name="ipAddressRange">
+        /// CIDR notation to match incoming IP address
+        /// Serialized Name: IpSecurityRestrictionRule.ipAddressRange
+        /// </param>
+        /// <param name="action">
+        /// Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny
+        /// Serialized Name: IpSecurityRestrictionRule.action
+        /// </param>
         internal ContainerAppIPSecurityRestrictionRule(string name, string description, string ipAddressRange, ContainerAppIPRuleAction action)
         {
             Name = name;
@@ -41,13 +65,25 @@ namespace Azure.ResourceManager.AppContainers.Models
             Action = action;
         }
 
-        /// <summary> Name for the IP restriction rule. </summary>
+        /// <summary>
+        /// Name for the IP restriction rule.
+        /// Serialized Name: IpSecurityRestrictionRule.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Describe the IP restriction rule that is being sent to the container-app. This is an optional field. </summary>
+        /// <summary>
+        /// Describe the IP restriction rule that is being sent to the container-app. This is an optional field.
+        /// Serialized Name: IpSecurityRestrictionRule.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> CIDR notation to match incoming IP address. </summary>
+        /// <summary>
+        /// CIDR notation to match incoming IP address
+        /// Serialized Name: IpSecurityRestrictionRule.ipAddressRange
+        /// </summary>
         public string IPAddressRange { get; set; }
-        /// <summary> Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny. </summary>
+        /// <summary>
+        /// Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny
+        /// Serialized Name: IpSecurityRestrictionRule.action
+        /// </summary>
         public ContainerAppIPRuleAction Action { get; set; }
     }
 }

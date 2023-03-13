@@ -13,11 +13,17 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of Environments. </summary>
+    /// <summary>
+    /// Collection of Environments
+    /// Serialized Name: ManagedEnvironmentsCollection
+    /// </summary>
     internal partial class ManagedEnvironmentsCollection
     {
         /// <summary> Initializes a new instance of ManagedEnvironmentsCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: ManagedEnvironmentsCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ManagedEnvironmentsCollection(IEnumerable<ContainerAppManagedEnvironmentData> value)
         {
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ManagedEnvironmentsCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: ManagedEnvironmentsCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: ManagedEnvironmentsCollection.nextLink
+        /// </param>
         internal ManagedEnvironmentsCollection(IReadOnlyList<ContainerAppManagedEnvironmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: ManagedEnvironmentsCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppManagedEnvironmentData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: ManagedEnvironmentsCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

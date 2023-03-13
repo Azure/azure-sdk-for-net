@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing the ContainerAppCertificate data model.
     /// Certificate used for Custom Domain bindings of Container Apps in a Managed Environment
+    /// Serialized Name: Certificate
     /// </summary>
     public partial class ContainerAppCertificateData : TrackedResourceData
     {
@@ -31,13 +32,19 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Certificate resource specific properties. </param>
+        /// <param name="properties">
+        /// Certificate resource specific properties
+        /// Serialized Name: Certificate.properties
+        /// </param>
         internal ContainerAppCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppCertificateProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
 
-        /// <summary> Certificate resource specific properties. </summary>
+        /// <summary>
+        /// Certificate resource specific properties
+        /// Serialized Name: Certificate.properties
+        /// </summary>
         public ContainerAppCertificateProperties Properties { get; set; }
     }
 }

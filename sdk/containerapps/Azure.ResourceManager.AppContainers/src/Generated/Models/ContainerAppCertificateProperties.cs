@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Certificate resource specific properties. </summary>
+    /// <summary>
+    /// Certificate resource specific properties
+    /// Serialized Name: CertificateProperties
+    /// </summary>
     public partial class ContainerAppCertificateProperties
     {
         /// <summary> Initializes a new instance of ContainerAppCertificateProperties. </summary>
@@ -21,17 +24,50 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppCertificateProperties. </summary>
-        /// <param name="provisioningState"> Provisioning state of the certificate. </param>
-        /// <param name="password"> Certificate password. </param>
-        /// <param name="subjectName"> Subject name of the certificate. </param>
-        /// <param name="subjectAlternativeNames"> Subject alternative names the certificate applies to. </param>
-        /// <param name="value"> PFX or PEM blob. </param>
-        /// <param name="issuer"> Certificate issuer. </param>
-        /// <param name="issueOn"> Certificate issue Date. </param>
-        /// <param name="expireOn"> Certificate expiration date. </param>
-        /// <param name="thumbprint"> Certificate thumbprint. </param>
-        /// <param name="isValid"> Is the certificate valid?. </param>
-        /// <param name="publicKeyHash"> Public key hash. </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the certificate.
+        /// Serialized Name: CertificateProperties.provisioningState
+        /// </param>
+        /// <param name="password">
+        /// Certificate password.
+        /// Serialized Name: CertificateProperties.password
+        /// </param>
+        /// <param name="subjectName">
+        /// Subject name of the certificate.
+        /// Serialized Name: CertificateProperties.subjectName
+        /// </param>
+        /// <param name="subjectAlternativeNames">
+        /// Subject alternative names the certificate applies to.
+        /// Serialized Name: CertificateProperties.subjectAlternativeNames
+        /// </param>
+        /// <param name="value">
+        /// PFX or PEM blob
+        /// Serialized Name: CertificateProperties.value
+        /// </param>
+        /// <param name="issuer">
+        /// Certificate issuer.
+        /// Serialized Name: CertificateProperties.issuer
+        /// </param>
+        /// <param name="issueOn">
+        /// Certificate issue Date.
+        /// Serialized Name: CertificateProperties.issueDate
+        /// </param>
+        /// <param name="expireOn">
+        /// Certificate expiration date.
+        /// Serialized Name: CertificateProperties.expirationDate
+        /// </param>
+        /// <param name="thumbprint">
+        /// Certificate thumbprint.
+        /// Serialized Name: CertificateProperties.thumbprint
+        /// </param>
+        /// <param name="isValid">
+        /// Is the certificate valid?.
+        /// Serialized Name: CertificateProperties.valid
+        /// </param>
+        /// <param name="publicKeyHash">
+        /// Public key hash.
+        /// Serialized Name: CertificateProperties.publicKeyHash
+        /// </param>
         internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash)
         {
             ProvisioningState = provisioningState;
@@ -47,27 +83,60 @@ namespace Azure.ResourceManager.AppContainers.Models
             PublicKeyHash = publicKeyHash;
         }
 
-        /// <summary> Provisioning state of the certificate. </summary>
+        /// <summary>
+        /// Provisioning state of the certificate.
+        /// Serialized Name: CertificateProperties.provisioningState
+        /// </summary>
         public ContainerAppCertificateProvisioningState? ProvisioningState { get; }
-        /// <summary> Certificate password. </summary>
+        /// <summary>
+        /// Certificate password.
+        /// Serialized Name: CertificateProperties.password
+        /// </summary>
         public string Password { get; set; }
-        /// <summary> Subject name of the certificate. </summary>
+        /// <summary>
+        /// Subject name of the certificate.
+        /// Serialized Name: CertificateProperties.subjectName
+        /// </summary>
         public string SubjectName { get; }
-        /// <summary> Subject alternative names the certificate applies to. </summary>
+        /// <summary>
+        /// Subject alternative names the certificate applies to.
+        /// Serialized Name: CertificateProperties.subjectAlternativeNames
+        /// </summary>
         public IReadOnlyList<string> SubjectAlternativeNames { get; }
-        /// <summary> PFX or PEM blob. </summary>
+        /// <summary>
+        /// PFX or PEM blob
+        /// Serialized Name: CertificateProperties.value
+        /// </summary>
         public byte[] Value { get; set; }
-        /// <summary> Certificate issuer. </summary>
+        /// <summary>
+        /// Certificate issuer.
+        /// Serialized Name: CertificateProperties.issuer
+        /// </summary>
         public string Issuer { get; }
-        /// <summary> Certificate issue Date. </summary>
+        /// <summary>
+        /// Certificate issue Date.
+        /// Serialized Name: CertificateProperties.issueDate
+        /// </summary>
         public DateTimeOffset? IssueOn { get; }
-        /// <summary> Certificate expiration date. </summary>
+        /// <summary>
+        /// Certificate expiration date.
+        /// Serialized Name: CertificateProperties.expirationDate
+        /// </summary>
         public DateTimeOffset? ExpireOn { get; }
-        /// <summary> Certificate thumbprint. </summary>
+        /// <summary>
+        /// Certificate thumbprint.
+        /// Serialized Name: CertificateProperties.thumbprint
+        /// </summary>
         public string Thumbprint { get; }
-        /// <summary> Is the certificate valid?. </summary>
+        /// <summary>
+        /// Is the certificate valid?.
+        /// Serialized Name: CertificateProperties.valid
+        /// </summary>
         public bool? IsValid { get; }
-        /// <summary> Public key hash. </summary>
+        /// <summary>
+        /// Public key hash.
+        /// Serialized Name: CertificateProperties.publicKeyHash
+        /// </summary>
         public string PublicKeyHash { get; }
     }
 }

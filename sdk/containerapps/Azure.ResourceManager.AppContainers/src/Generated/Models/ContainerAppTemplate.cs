@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// Container App versioned application definition.
     /// Defines the desired state of an immutable revision.
     /// Any changes to this section Will result in a new revision being created
+    /// Serialized Name: Template
     /// </summary>
     public partial class ContainerAppTemplate
     {
@@ -26,11 +27,26 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppTemplate. </summary>
-        /// <param name="revisionSuffix"> User friendly suffix that is appended to the revision name. </param>
-        /// <param name="initContainers"> List of specialized containers that run before app containers. </param>
-        /// <param name="containers"> List of container definitions for the Container App. </param>
-        /// <param name="scale"> Scaling properties for the Container App. </param>
-        /// <param name="volumes"> List of volume definitions for the Container App. </param>
+        /// <param name="revisionSuffix">
+        /// User friendly suffix that is appended to the revision name
+        /// Serialized Name: Template.revisionSuffix
+        /// </param>
+        /// <param name="initContainers">
+        /// List of specialized containers that run before app containers.
+        /// Serialized Name: Template.initContainers
+        /// </param>
+        /// <param name="containers">
+        /// List of container definitions for the Container App.
+        /// Serialized Name: Template.containers
+        /// </param>
+        /// <param name="scale">
+        /// Scaling properties for the Container App.
+        /// Serialized Name: Template.scale
+        /// </param>
+        /// <param name="volumes">
+        /// List of volume definitions for the Container App.
+        /// Serialized Name: Template.volumes
+        /// </param>
         internal ContainerAppTemplate(string revisionSuffix, IList<ContainerAppInitContainer> initContainers, IList<ContainerAppContainer> containers, ContainerAppScale scale, IList<ContainerAppVolume> volumes)
         {
             RevisionSuffix = revisionSuffix;
@@ -40,15 +56,30 @@ namespace Azure.ResourceManager.AppContainers.Models
             Volumes = volumes;
         }
 
-        /// <summary> User friendly suffix that is appended to the revision name. </summary>
+        /// <summary>
+        /// User friendly suffix that is appended to the revision name
+        /// Serialized Name: Template.revisionSuffix
+        /// </summary>
         public string RevisionSuffix { get; set; }
-        /// <summary> List of specialized containers that run before app containers. </summary>
+        /// <summary>
+        /// List of specialized containers that run before app containers.
+        /// Serialized Name: Template.initContainers
+        /// </summary>
         public IList<ContainerAppInitContainer> InitContainers { get; }
-        /// <summary> List of container definitions for the Container App. </summary>
+        /// <summary>
+        /// List of container definitions for the Container App.
+        /// Serialized Name: Template.containers
+        /// </summary>
         public IList<ContainerAppContainer> Containers { get; }
-        /// <summary> Scaling properties for the Container App. </summary>
+        /// <summary>
+        /// Scaling properties for the Container App.
+        /// Serialized Name: Template.scale
+        /// </summary>
         public ContainerAppScale Scale { get; set; }
-        /// <summary> List of volume definitions for the Container App. </summary>
+        /// <summary>
+        /// List of volume definitions for the Container App.
+        /// Serialized Name: Template.volumes
+        /// </summary>
         public IList<ContainerAppVolume> Volumes { get; }
     }
 }

@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.AppContainers
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<Uri> OutboundIPAddresses { get; }
+
+        /// <summary> WorkloadProfileType for container app. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string WorkloadProfileType { get; set; }
     }
 }

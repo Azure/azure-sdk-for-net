@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Current provisioning State of the operation. </summary>
+    /// <summary>
+    /// Current provisioning State of the operation
+    /// Serialized Name: SourceControlOperationState
+    /// </summary>
     public readonly partial struct ContainerAppSourceControlOperationState : IEquatable<ContainerAppSourceControlOperationState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: SourceControlOperationState.InProgress
+        /// </summary>
         public static ContainerAppSourceControlOperationState InProgress { get; } = new ContainerAppSourceControlOperationState(InProgressValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: SourceControlOperationState.Succeeded
+        /// </summary>
         public static ContainerAppSourceControlOperationState Succeeded { get; } = new ContainerAppSourceControlOperationState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: SourceControlOperationState.Failed
+        /// </summary>
         public static ContainerAppSourceControlOperationState Failed { get; } = new ContainerAppSourceControlOperationState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: SourceControlOperationState.Canceled
+        /// </summary>
         public static ContainerAppSourceControlOperationState Canceled { get; } = new ContainerAppSourceControlOperationState(CanceledValue);
         /// <summary> Determines if two <see cref="ContainerAppSourceControlOperationState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppSourceControlOperationState left, ContainerAppSourceControlOperationState right) => left.Equals(right);

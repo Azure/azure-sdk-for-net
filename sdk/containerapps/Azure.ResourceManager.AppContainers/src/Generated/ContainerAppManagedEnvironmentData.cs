@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing the ContainerAppManagedEnvironment data model.
     /// An environment for hosting container apps
+    /// Serialized Name: ManagedEnvironment
     /// </summary>
     public partial class ContainerAppManagedEnvironmentData : TrackedResourceData
     {
@@ -33,28 +34,75 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> Kind of the Environment. </param>
-        /// <param name="sku"> SKU properties of the Environment. </param>
-        /// <param name="provisioningState"> Provisioning state of the Environment. </param>
-        /// <param name="daprAIInstrumentationKey"> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </param>
-        /// <param name="daprAIConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
-        /// <param name="vnetConfiguration"> Vnet configuration for the environment. </param>
-        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
-        /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
-        /// <param name="staticIP"> Static IP of the Environment. </param>
+        /// <param name="kind">
+        /// Kind of the Environment.
+        /// Serialized Name: ManagedEnvironment.kind
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the Environment.
+        /// Serialized Name: ManagedEnvironment.properties.provisioningState
+        /// </param>
+        /// <param name="daprAIInstrumentationKey">
+        /// Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry
+        /// Serialized Name: ManagedEnvironment.properties.daprAIInstrumentationKey
+        /// </param>
+        /// <param name="daprAIConnectionString">
+        /// Application Insights connection string used by Dapr to export Service to Service communication telemetry
+        /// Serialized Name: ManagedEnvironment.properties.daprAIConnectionString
+        /// </param>
+        /// <param name="vnetConfiguration">
+        /// Vnet configuration for the environment
+        /// Serialized Name: ManagedEnvironment.properties.vnetConfiguration
+        /// </param>
+        /// <param name="deploymentErrors">
+        /// Any errors that occurred during deployment or deployment validation
+        /// Serialized Name: ManagedEnvironment.properties.deploymentErrors
+        /// </param>
+        /// <param name="defaultDomain">
+        /// Default Domain Name for the cluster
+        /// Serialized Name: ManagedEnvironment.properties.defaultDomain
+        /// </param>
+        /// <param name="staticIP">
+        /// Static IP of the Environment
+        /// Serialized Name: ManagedEnvironment.properties.staticIp
+        /// </param>
         /// <param name="appLogsConfiguration">
         /// Cluster configuration which enables the log daemon to export
         /// app logs to a destination. Currently only &quot;log-analytics&quot; is
         /// supported
+        /// Serialized Name: ManagedEnvironment.properties.appLogsConfiguration
         /// </param>
-        /// <param name="isZoneRedundant"> Whether or not this Managed Environment is zone-redundant. </param>
-        /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
-        /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the Environment. </param>
-        /// <param name="workloadProfiles"> Workload profiles configured for the Managed Environment. </param>
-        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, EnvironmentSkuProperties sku, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="isZoneRedundant">
+        /// Whether or not this Managed Environment is zone-redundant.
+        /// Serialized Name: ManagedEnvironment.properties.zoneRedundant
+        /// </param>
+        /// <param name="customDomainConfiguration">
+        /// Custom domain configuration for the environment
+        /// Serialized Name: ManagedEnvironment.properties.customDomainConfiguration
+        /// </param>
+        /// <param name="eventStreamEndpoint">
+        /// The endpoint of the eventstream of the Environment.
+        /// Serialized Name: ManagedEnvironment.properties.eventStreamEndpoint
+        /// </param>
+        /// <param name="workloadProfiles">
+        /// Workload profiles configured for the Managed Environment.
+        /// Serialized Name: ManagedEnvironment.properties.workloadProfiles
+        /// </param>
+        /// <param name="kedaConfiguration">
+        /// The configuration of Keda component.
+        /// Serialized Name: ManagedEnvironment.properties.kedaConfiguration
+        /// </param>
+        /// <param name="daprConfiguration">
+        /// The configuration of Dapr component.
+        /// Serialized Name: ManagedEnvironment.properties.daprConfiguration
+        /// </param>
+        /// <param name="infrastructureResourceGroup">
+        /// Name of the platform-managed resource group created for the Managed Environment to host infrastructure resources. If a subnet ID is provided, this resource group will be created in the same subscription as the subnet.
+        /// Serialized Name: ManagedEnvironment.properties.infrastructureResourceGroup
+        /// </param>
+        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
-            Sku = sku;
             ProvisioningState = provisioningState;
             DaprAIInstrumentationKey = daprAIInstrumentationKey;
             DaprAIConnectionString = daprAIConnectionString;
@@ -67,49 +115,110 @@ namespace Azure.ResourceManager.AppContainers
             CustomDomainConfiguration = customDomainConfiguration;
             EventStreamEndpoint = eventStreamEndpoint;
             WorkloadProfiles = workloadProfiles;
+            KedaConfiguration = kedaConfiguration;
+            DaprConfiguration = daprConfiguration;
+            InfrastructureResourceGroup = infrastructureResourceGroup;
         }
 
-        /// <summary> Kind of the Environment. </summary>
+        /// <summary>
+        /// Kind of the Environment.
+        /// Serialized Name: ManagedEnvironment.kind
+        /// </summary>
         public string Kind { get; set; }
-        /// <summary> SKU properties of the Environment. </summary>
-        internal EnvironmentSkuProperties Sku { get; set; }
-        /// <summary> Name of the Sku. </summary>
-        public AppContainersSkuName? SkuName
-        {
-            get => Sku is null ? default(AppContainersSkuName?) : Sku.Name;
-            set
-            {
-                Sku = value.HasValue ? new EnvironmentSkuProperties(value.Value) : null;
-            }
-        }
-
-        /// <summary> Provisioning state of the Environment. </summary>
+        /// <summary>
+        /// Provisioning state of the Environment.
+        /// Serialized Name: ManagedEnvironment.properties.provisioningState
+        /// </summary>
         public ContainerAppEnvironmentProvisioningState? ProvisioningState { get; }
-        /// <summary> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </summary>
+        /// <summary>
+        /// Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry
+        /// Serialized Name: ManagedEnvironment.properties.daprAIInstrumentationKey
+        /// </summary>
         public string DaprAIInstrumentationKey { get; set; }
-        /// <summary> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </summary>
+        /// <summary>
+        /// Application Insights connection string used by Dapr to export Service to Service communication telemetry
+        /// Serialized Name: ManagedEnvironment.properties.daprAIConnectionString
+        /// </summary>
         public string DaprAIConnectionString { get; set; }
-        /// <summary> Vnet configuration for the environment. </summary>
+        /// <summary>
+        /// Vnet configuration for the environment
+        /// Serialized Name: ManagedEnvironment.properties.vnetConfiguration
+        /// </summary>
         public ContainerAppVnetConfiguration VnetConfiguration { get; set; }
-        /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        /// <summary>
+        /// Any errors that occurred during deployment or deployment validation
+        /// Serialized Name: ManagedEnvironment.properties.deploymentErrors
+        /// </summary>
         public string DeploymentErrors { get; }
-        /// <summary> Default Domain Name for the cluster. </summary>
+        /// <summary>
+        /// Default Domain Name for the cluster
+        /// Serialized Name: ManagedEnvironment.properties.defaultDomain
+        /// </summary>
         public string DefaultDomain { get; }
-        /// <summary> Static IP of the Environment. </summary>
+        /// <summary>
+        /// Static IP of the Environment
+        /// Serialized Name: ManagedEnvironment.properties.staticIp
+        /// </summary>
         public IPAddress StaticIP { get; }
         /// <summary>
         /// Cluster configuration which enables the log daemon to export
         /// app logs to a destination. Currently only &quot;log-analytics&quot; is
         /// supported
+        /// Serialized Name: ManagedEnvironment.properties.appLogsConfiguration
         /// </summary>
         public ContainerAppLogsConfiguration AppLogsConfiguration { get; set; }
-        /// <summary> Whether or not this Managed Environment is zone-redundant. </summary>
+        /// <summary>
+        /// Whether or not this Managed Environment is zone-redundant.
+        /// Serialized Name: ManagedEnvironment.properties.zoneRedundant
+        /// </summary>
         public bool? IsZoneRedundant { get; set; }
-        /// <summary> Custom domain configuration for the environment. </summary>
+        /// <summary>
+        /// Custom domain configuration for the environment
+        /// Serialized Name: ManagedEnvironment.properties.customDomainConfiguration
+        /// </summary>
         public ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get; set; }
-        /// <summary> The endpoint of the eventstream of the Environment. </summary>
+        /// <summary>
+        /// The endpoint of the eventstream of the Environment.
+        /// Serialized Name: ManagedEnvironment.properties.eventStreamEndpoint
+        /// </summary>
         public string EventStreamEndpoint { get; }
-        /// <summary> Workload profiles configured for the Managed Environment. </summary>
+        /// <summary>
+        /// Workload profiles configured for the Managed Environment.
+        /// Serialized Name: ManagedEnvironment.properties.workloadProfiles
+        /// </summary>
         public IList<ContainerAppWorkloadProfile> WorkloadProfiles { get; }
+        /// <summary>
+        /// The configuration of Keda component.
+        /// Serialized Name: ManagedEnvironment.properties.kedaConfiguration
+        /// </summary>
+        internal KedaConfiguration KedaConfiguration { get; set; }
+        /// <summary>
+        /// The version of Keda
+        /// Serialized Name: KedaConfiguration.version
+        /// </summary>
+        public string KedaVersion
+        {
+            get => KedaConfiguration is null ? default : KedaConfiguration.Version;
+        }
+
+        /// <summary>
+        /// The configuration of Dapr component.
+        /// Serialized Name: ManagedEnvironment.properties.daprConfiguration
+        /// </summary>
+        internal DaprConfiguration DaprConfiguration { get; set; }
+        /// <summary>
+        /// The version of Dapr
+        /// Serialized Name: DaprConfiguration.version
+        /// </summary>
+        public string DaprVersion
+        {
+            get => DaprConfiguration is null ? default : DaprConfiguration.Version;
+        }
+
+        /// <summary>
+        /// Name of the platform-managed resource group created for the Managed Environment to host infrastructure resources. If a subnet ID is provided, this resource group will be created in the same subscription as the subnet.
+        /// Serialized Name: ManagedEnvironment.properties.infrastructureResourceGroup
+        /// </summary>
+        public string InfrastructureResourceGroup { get; set; }
     }
 }

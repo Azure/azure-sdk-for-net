@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App container environment variable. </summary>
+    /// <summary>
+    /// Container App container environment variable.
+    /// Serialized Name: EnvironmentVar
+    /// </summary>
     public partial class ContainerAppEnvironmentVariable
     {
         /// <summary> Initializes a new instance of ContainerAppEnvironmentVariable. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppEnvironmentVariable. </summary>
-        /// <param name="name"> Environment variable name. </param>
-        /// <param name="value"> Non-secret environment variable value. </param>
-        /// <param name="secretRef"> Name of the Container App secret from which to pull the environment variable value. </param>
+        /// <param name="name">
+        /// Environment variable name.
+        /// Serialized Name: EnvironmentVar.name
+        /// </param>
+        /// <param name="value">
+        /// Non-secret environment variable value.
+        /// Serialized Name: EnvironmentVar.value
+        /// </param>
+        /// <param name="secretRef">
+        /// Name of the Container App secret from which to pull the environment variable value.
+        /// Serialized Name: EnvironmentVar.secretRef
+        /// </param>
         internal ContainerAppEnvironmentVariable(string name, string value, string secretRef)
         {
             Name = name;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             SecretRef = secretRef;
         }
 
-        /// <summary> Environment variable name. </summary>
+        /// <summary>
+        /// Environment variable name.
+        /// Serialized Name: EnvironmentVar.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Non-secret environment variable value. </summary>
+        /// <summary>
+        /// Non-secret environment variable value.
+        /// Serialized Name: EnvironmentVar.value
+        /// </summary>
         public string Value { get; set; }
-        /// <summary> Name of the Container App secret from which to pull the environment variable value. </summary>
+        /// <summary>
+        /// Name of the Container App secret from which to pull the environment variable value.
+        /// Serialized Name: EnvironmentVar.secretRef
+        /// </summary>
         public string SecretRef { get; set; }
     }
 }

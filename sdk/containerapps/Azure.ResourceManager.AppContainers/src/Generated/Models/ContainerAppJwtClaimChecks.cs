@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
+    /// <summary>
+    /// The configuration settings of the checks that should be made while validating the JWT Claims.
+    /// Serialized Name: JwtClaimChecks
+    /// </summary>
     public partial class ContainerAppJwtClaimChecks
     {
         /// <summary> Initializes a new instance of ContainerAppJwtClaimChecks. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppJwtClaimChecks. </summary>
-        /// <param name="allowedGroups"> The list of the allowed groups. </param>
-        /// <param name="allowedClientApplications"> The list of the allowed client applications. </param>
+        /// <param name="allowedGroups">
+        /// The list of the allowed groups.
+        /// Serialized Name: JwtClaimChecks.allowedGroups
+        /// </param>
+        /// <param name="allowedClientApplications">
+        /// The list of the allowed client applications.
+        /// Serialized Name: JwtClaimChecks.allowedClientApplications
+        /// </param>
         internal ContainerAppJwtClaimChecks(IList<string> allowedGroups, IList<string> allowedClientApplications)
         {
             AllowedGroups = allowedGroups;
             AllowedClientApplications = allowedClientApplications;
         }
 
-        /// <summary> The list of the allowed groups. </summary>
+        /// <summary>
+        /// The list of the allowed groups.
+        /// Serialized Name: JwtClaimChecks.allowedGroups
+        /// </summary>
         public IList<string> AllowedGroups { get; }
-        /// <summary> The list of the allowed client applications. </summary>
+        /// <summary>
+        /// The list of the allowed client applications.
+        /// Serialized Name: JwtClaimChecks.allowedClientApplications
+        /// </summary>
         public IList<string> AllowedClientApplications { get; }
     }
 }

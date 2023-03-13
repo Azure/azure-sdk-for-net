@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App Dapr configuration. </summary>
+    /// <summary>
+    /// Container App Dapr configuration.
+    /// Serialized Name: Dapr
+    /// </summary>
     public partial class ContainerAppDaprConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppDaprConfiguration. </summary>
@@ -16,14 +19,38 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDaprConfiguration. </summary>
-        /// <param name="isEnabled"> Boolean indicating if the Dapr side car is enabled. </param>
-        /// <param name="appId"> Dapr application identifier. </param>
-        /// <param name="appProtocol"> Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http. </param>
-        /// <param name="appPort"> Tells Dapr which port your application is listening on. </param>
-        /// <param name="httpReadBufferSize"> Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB. </param>
-        /// <param name="httpMaxRequestSize"> Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB. </param>
-        /// <param name="logLevel"> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </param>
-        /// <param name="isApiLoggingEnabled"> Enables API logging for the Dapr sidecar. </param>
+        /// <param name="isEnabled">
+        /// Boolean indicating if the Dapr side car is enabled
+        /// Serialized Name: Dapr.enabled
+        /// </param>
+        /// <param name="appId">
+        /// Dapr application identifier
+        /// Serialized Name: Dapr.appId
+        /// </param>
+        /// <param name="appProtocol">
+        /// Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http
+        /// Serialized Name: Dapr.appProtocol
+        /// </param>
+        /// <param name="appPort">
+        /// Tells Dapr which port your application is listening on
+        /// Serialized Name: Dapr.appPort
+        /// </param>
+        /// <param name="httpReadBufferSize">
+        /// Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB.
+        /// Serialized Name: Dapr.httpReadBufferSize
+        /// </param>
+        /// <param name="httpMaxRequestSize">
+        /// Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB.
+        /// Serialized Name: Dapr.httpMaxRequestSize
+        /// </param>
+        /// <param name="logLevel">
+        /// Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info.
+        /// Serialized Name: Dapr.logLevel
+        /// </param>
+        /// <param name="isApiLoggingEnabled">
+        /// Enables API logging for the Dapr sidecar
+        /// Serialized Name: Dapr.enableApiLogging
+        /// </param>
         internal ContainerAppDaprConfiguration(bool? isEnabled, string appId, ContainerAppProtocol? appProtocol, int? appPort, int? httpReadBufferSize, int? httpMaxRequestSize, ContainerAppDaprLogLevel? logLevel, bool? isApiLoggingEnabled)
         {
             IsEnabled = isEnabled;
@@ -36,21 +63,45 @@ namespace Azure.ResourceManager.AppContainers.Models
             IsApiLoggingEnabled = isApiLoggingEnabled;
         }
 
-        /// <summary> Boolean indicating if the Dapr side car is enabled. </summary>
+        /// <summary>
+        /// Boolean indicating if the Dapr side car is enabled
+        /// Serialized Name: Dapr.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> Dapr application identifier. </summary>
+        /// <summary>
+        /// Dapr application identifier
+        /// Serialized Name: Dapr.appId
+        /// </summary>
         public string AppId { get; set; }
-        /// <summary> Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http. </summary>
+        /// <summary>
+        /// Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http
+        /// Serialized Name: Dapr.appProtocol
+        /// </summary>
         public ContainerAppProtocol? AppProtocol { get; set; }
-        /// <summary> Tells Dapr which port your application is listening on. </summary>
+        /// <summary>
+        /// Tells Dapr which port your application is listening on
+        /// Serialized Name: Dapr.appPort
+        /// </summary>
         public int? AppPort { get; set; }
-        /// <summary> Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB. </summary>
+        /// <summary>
+        /// Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB.
+        /// Serialized Name: Dapr.httpReadBufferSize
+        /// </summary>
         public int? HttpReadBufferSize { get; set; }
-        /// <summary> Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB. </summary>
+        /// <summary>
+        /// Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB.
+        /// Serialized Name: Dapr.httpMaxRequestSize
+        /// </summary>
         public int? HttpMaxRequestSize { get; set; }
-        /// <summary> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </summary>
+        /// <summary>
+        /// Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info.
+        /// Serialized Name: Dapr.logLevel
+        /// </summary>
         public ContainerAppDaprLogLevel? LogLevel { get; set; }
-        /// <summary> Enables API logging for the Dapr sidecar. </summary>
+        /// <summary>
+        /// Enables API logging for the Dapr sidecar
+        /// Serialized Name: Dapr.enableApiLogging
+        /// </summary>
         public bool? IsApiLoggingEnabled { get; set; }
     }
 }

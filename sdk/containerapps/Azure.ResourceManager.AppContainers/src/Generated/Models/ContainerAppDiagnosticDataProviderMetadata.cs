@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Details of a diagnostics data provider. </summary>
+    /// <summary>
+    /// Details of a diagnostics data provider
+    /// Serialized Name: DiagnosticDataProviderMetadata
+    /// </summary>
     public partial class ContainerAppDiagnosticDataProviderMetadata
     {
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadata. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadata. </summary>
-        /// <param name="providerName"> Name of data provider. </param>
-        /// <param name="propertyBag"> Collection of properties. </param>
+        /// <param name="providerName">
+        /// Name of data provider
+        /// Serialized Name: DiagnosticDataProviderMetadata.providerName
+        /// </param>
+        /// <param name="propertyBag">
+        /// Collection of properties
+        /// Serialized Name: DiagnosticDataProviderMetadata.propertyBag
+        /// </param>
         internal ContainerAppDiagnosticDataProviderMetadata(string providerName, IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> propertyBag)
         {
             ProviderName = providerName;
             PropertyBag = propertyBag;
         }
 
-        /// <summary> Name of data provider. </summary>
+        /// <summary>
+        /// Name of data provider
+        /// Serialized Name: DiagnosticDataProviderMetadata.providerName
+        /// </summary>
         public string ProviderName { get; set; }
-        /// <summary> Collection of properties. </summary>
+        /// <summary>
+        /// Collection of properties
+        /// Serialized Name: DiagnosticDataProviderMetadata.propertyBag
+        /// </summary>
         public IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> PropertyBag { get; }
     }
 }

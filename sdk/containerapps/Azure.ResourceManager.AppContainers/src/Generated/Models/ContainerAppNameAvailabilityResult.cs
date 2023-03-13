@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The check availability result. </summary>
+    /// <summary>
+    /// The check availability result.
+    /// Serialized Name: CheckNameAvailabilityResponse
+    /// </summary>
     public partial class ContainerAppNameAvailabilityResult
     {
         /// <summary> Initializes a new instance of ContainerAppNameAvailabilityResult. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppNameAvailabilityResult. </summary>
-        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is available. </param>
+        /// <param name="isNameAvailable">
+        /// Indicates if the resource name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// The reason why the given name is not available.
+        /// Serialized Name: CheckNameAvailabilityResponse.reason
+        /// </param>
+        /// <param name="message">
+        /// Detailed reason why the given name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.message
+        /// </param>
         internal ContainerAppNameAvailabilityResult(bool? isNameAvailable, ContainerAppNameUnavailableReason? reason, string message)
         {
             IsNameAvailable = isNameAvailable;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             Message = message;
         }
 
-        /// <summary> Indicates if the resource name is available. </summary>
+        /// <summary>
+        /// Indicates if the resource name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
+        /// </summary>
         public bool? IsNameAvailable { get; }
-        /// <summary> The reason why the given name is not available. </summary>
+        /// <summary>
+        /// The reason why the given name is not available.
+        /// Serialized Name: CheckNameAvailabilityResponse.reason
+        /// </summary>
         public ContainerAppNameUnavailableReason? Reason { get; }
-        /// <summary> Detailed reason why the given name is available. </summary>
+        /// <summary>
+        /// Detailed reason why the given name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.message
+        /// </summary>
         public string Message { get; }
     }
 }

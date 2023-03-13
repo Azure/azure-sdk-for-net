@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App Secrets Collection ARM resource. </summary>
+    /// <summary>
+    /// Container App Secrets Collection ARM resource.
+    /// Serialized Name: SecretsCollection
+    /// </summary>
     internal partial class SecretsCollection
     {
         /// <summary> Initializes a new instance of SecretsCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: SecretsCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SecretsCollection(IEnumerable<ContainerAppSecret> value)
         {
@@ -26,13 +32,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of SecretsCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: SecretsCollection.value
+        /// </param>
         internal SecretsCollection(IReadOnlyList<ContainerAppSecret> value)
         {
             Value = value;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: SecretsCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppSecret> Value { get; }
     }
 }

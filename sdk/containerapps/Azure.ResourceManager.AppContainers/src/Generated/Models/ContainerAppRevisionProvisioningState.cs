@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Current provisioning State of the revision. </summary>
+    /// <summary>
+    /// Current provisioning State of the revision
+    /// Serialized Name: RevisionProvisioningState
+    /// </summary>
     public readonly partial struct ContainerAppRevisionProvisioningState : IEquatable<ContainerAppRevisionProvisioningState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string DeprovisioningValue = "Deprovisioning";
         private const string DeprovisionedValue = "Deprovisioned";
 
-        /// <summary> Provisioning. </summary>
+        /// <summary>
+        /// Provisioning
+        /// Serialized Name: RevisionProvisioningState.Provisioning
+        /// </summary>
         public static ContainerAppRevisionProvisioningState Provisioning { get; } = new ContainerAppRevisionProvisioningState(ProvisioningValue);
-        /// <summary> Provisioned. </summary>
+        /// <summary>
+        /// Provisioned
+        /// Serialized Name: RevisionProvisioningState.Provisioned
+        /// </summary>
         public static ContainerAppRevisionProvisioningState Provisioned { get; } = new ContainerAppRevisionProvisioningState(ProvisionedValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: RevisionProvisioningState.Failed
+        /// </summary>
         public static ContainerAppRevisionProvisioningState Failed { get; } = new ContainerAppRevisionProvisioningState(FailedValue);
-        /// <summary> Deprovisioning. </summary>
+        /// <summary>
+        /// Deprovisioning
+        /// Serialized Name: RevisionProvisioningState.Deprovisioning
+        /// </summary>
         public static ContainerAppRevisionProvisioningState Deprovisioning { get; } = new ContainerAppRevisionProvisioningState(DeprovisioningValue);
-        /// <summary> Deprovisioned. </summary>
+        /// <summary>
+        /// Deprovisioned
+        /// Serialized Name: RevisionProvisioningState.Deprovisioned
+        /// </summary>
         public static ContainerAppRevisionProvisioningState Deprovisioned { get; } = new ContainerAppRevisionProvisioningState(DeprovisionedValue);
         /// <summary> Determines if two <see cref="ContainerAppRevisionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppRevisionProvisioningState left, ContainerAppRevisionProvisioningState right) => left.Equals(right);

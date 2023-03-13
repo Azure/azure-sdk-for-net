@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Scheme to use for connecting to the host. Defaults to HTTP. </summary>
+    /// <summary>
+    /// Scheme to use for connecting to the host. Defaults to HTTP.
+    /// Serialized Name: ContainerAppHttpScheme
+    /// </summary>
     public readonly partial struct ContainerAppHttpScheme : IEquatable<ContainerAppHttpScheme>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string HttpValue = "HTTP";
         private const string HttpsValue = "HTTPS";
 
-        /// <summary> HTTP. </summary>
+        /// <summary>
+        /// HTTP
+        /// Serialized Name: ContainerAppHttpScheme.HTTP
+        /// </summary>
         public static ContainerAppHttpScheme Http { get; } = new ContainerAppHttpScheme(HttpValue);
-        /// <summary> HTTPS. </summary>
+        /// <summary>
+        /// HTTPS
+        /// Serialized Name: ContainerAppHttpScheme.HTTPS
+        /// </summary>
         public static ContainerAppHttpScheme Https { get; } = new ContainerAppHttpScheme(HttpsValue);
         /// <summary> Determines if two <see cref="ContainerAppHttpScheme"/> values are the same. </summary>
         public static bool operator ==(ContainerAppHttpScheme left, ContainerAppHttpScheme right) => left.Equals(right);

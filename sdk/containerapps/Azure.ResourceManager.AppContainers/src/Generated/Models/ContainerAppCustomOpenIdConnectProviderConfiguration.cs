@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the custom Open ID Connect provider. </summary>
+    /// <summary>
+    /// The configuration settings of the custom Open ID Connect provider.
+    /// Serialized Name: CustomOpenIdConnectProvider
+    /// </summary>
     public partial class ContainerAppCustomOpenIdConnectProviderConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppCustomOpenIdConnectProviderConfiguration. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppCustomOpenIdConnectProviderConfiguration. </summary>
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider should not be enabled; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the custom Open ID Connect provider. </param>
-        /// <param name="login"> The configuration settings of the login flow of the custom Open ID Connect provider. </param>
+        /// <param name="isEnabled">
+        /// &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider should not be enabled; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: CustomOpenIdConnectProvider.enabled
+        /// </param>
+        /// <param name="registration">
+        /// The configuration settings of the app registration for the custom Open ID Connect provider.
+        /// Serialized Name: CustomOpenIdConnectProvider.registration
+        /// </param>
+        /// <param name="login">
+        /// The configuration settings of the login flow of the custom Open ID Connect provider.
+        /// Serialized Name: CustomOpenIdConnectProvider.login
+        /// </param>
         internal ContainerAppCustomOpenIdConnectProviderConfiguration(bool? isEnabled, ContainerAppOpenIdConnectRegistration registration, ContainerAppOpenIdConnectLogin login)
         {
             IsEnabled = isEnabled;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             Login = login;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider should not be enabled; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider should not be enabled; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: CustomOpenIdConnectProvider.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> The configuration settings of the app registration for the custom Open ID Connect provider. </summary>
+        /// <summary>
+        /// The configuration settings of the app registration for the custom Open ID Connect provider.
+        /// Serialized Name: CustomOpenIdConnectProvider.registration
+        /// </summary>
         public ContainerAppOpenIdConnectRegistration Registration { get; set; }
-        /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
+        /// <summary>
+        /// The configuration settings of the login flow of the custom Open ID Connect provider.
+        /// Serialized Name: CustomOpenIdConnectProvider.login
+        /// </summary>
         public ContainerAppOpenIdConnectLogin Login { get; set; }
     }
 }

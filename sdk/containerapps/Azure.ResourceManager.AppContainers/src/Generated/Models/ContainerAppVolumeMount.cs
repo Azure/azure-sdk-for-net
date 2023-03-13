@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Volume mount for the Container App. </summary>
+    /// <summary>
+    /// Volume mount for the Container App.
+    /// Serialized Name: VolumeMount
+    /// </summary>
     public partial class ContainerAppVolumeMount
     {
         /// <summary> Initializes a new instance of ContainerAppVolumeMount. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppVolumeMount. </summary>
-        /// <param name="volumeName"> This must match the Name of a Volume. </param>
-        /// <param name="mountPath"> Path within the container at which the volume should be mounted.Must not contain &apos;:&apos;. </param>
+        /// <param name="volumeName">
+        /// This must match the Name of a Volume.
+        /// Serialized Name: VolumeMount.volumeName
+        /// </param>
+        /// <param name="mountPath">
+        /// Path within the container at which the volume should be mounted.Must not contain &apos;:&apos;.
+        /// Serialized Name: VolumeMount.mountPath
+        /// </param>
         internal ContainerAppVolumeMount(string volumeName, string mountPath)
         {
             VolumeName = volumeName;
             MountPath = mountPath;
         }
 
-        /// <summary> This must match the Name of a Volume. </summary>
+        /// <summary>
+        /// This must match the Name of a Volume.
+        /// Serialized Name: VolumeMount.volumeName
+        /// </summary>
         public string VolumeName { get; set; }
-        /// <summary> Path within the container at which the volume should be mounted.Must not contain &apos;:&apos;. </summary>
+        /// <summary>
+        /// Path within the container at which the volume should be mounted.Must not contain &apos;:&apos;.
+        /// Serialized Name: VolumeMount.mountPath
+        /// </summary>
         public string MountPath { get; set; }
     }
 }

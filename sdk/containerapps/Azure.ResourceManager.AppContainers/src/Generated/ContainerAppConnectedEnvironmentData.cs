@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing the ContainerAppConnectedEnvironment data model.
     /// An environment for Kubernetes cluster specialized for web workloads by Azure App Service
+    /// Serialized Name: ConnectedEnvironment
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentData : TrackedResourceData
     {
@@ -32,13 +33,34 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The complex type of the extended location. </param>
-        /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
-        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
-        /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
-        /// <param name="staticIP"> Static IP of the connectedEnvironment. </param>
-        /// <param name="daprAIConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
-        /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
+        /// <param name="extendedLocation">
+        /// The complex type of the extended location.
+        /// Serialized Name: ConnectedEnvironment.extendedLocation
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the Kubernetes Environment.
+        /// Serialized Name: ConnectedEnvironment.properties.provisioningState
+        /// </param>
+        /// <param name="deploymentErrors">
+        /// Any errors that occurred during deployment or deployment validation
+        /// Serialized Name: ConnectedEnvironment.properties.deploymentErrors
+        /// </param>
+        /// <param name="defaultDomain">
+        /// Default Domain Name for the cluster
+        /// Serialized Name: ConnectedEnvironment.properties.defaultDomain
+        /// </param>
+        /// <param name="staticIP">
+        /// Static IP of the connectedEnvironment
+        /// Serialized Name: ConnectedEnvironment.properties.staticIp
+        /// </param>
+        /// <param name="daprAIConnectionString">
+        /// Application Insights connection string used by Dapr to export Service to Service communication telemetry
+        /// Serialized Name: ConnectedEnvironment.properties.daprAIConnectionString
+        /// </param>
+        /// <param name="customDomainConfiguration">
+        /// Custom domain configuration for the environment
+        /// Serialized Name: ConnectedEnvironment.properties.customDomainConfiguration
+        /// </param>
         internal ContainerAppConnectedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ContainerAppConnectedEnvironmentProvisioningState? provisioningState, string deploymentErrors, string defaultDomain, IPAddress staticIP, string daprAIConnectionString, ContainerAppCustomDomainConfiguration customDomainConfiguration) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
@@ -50,19 +72,40 @@ namespace Azure.ResourceManager.AppContainers
             CustomDomainConfiguration = customDomainConfiguration;
         }
 
-        /// <summary> The complex type of the extended location. </summary>
+        /// <summary>
+        /// The complex type of the extended location.
+        /// Serialized Name: ConnectedEnvironment.extendedLocation
+        /// </summary>
         public ContainerAppExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> Provisioning state of the Kubernetes Environment. </summary>
+        /// <summary>
+        /// Provisioning state of the Kubernetes Environment.
+        /// Serialized Name: ConnectedEnvironment.properties.provisioningState
+        /// </summary>
         public ContainerAppConnectedEnvironmentProvisioningState? ProvisioningState { get; }
-        /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        /// <summary>
+        /// Any errors that occurred during deployment or deployment validation
+        /// Serialized Name: ConnectedEnvironment.properties.deploymentErrors
+        /// </summary>
         public string DeploymentErrors { get; }
-        /// <summary> Default Domain Name for the cluster. </summary>
+        /// <summary>
+        /// Default Domain Name for the cluster
+        /// Serialized Name: ConnectedEnvironment.properties.defaultDomain
+        /// </summary>
         public string DefaultDomain { get; }
-        /// <summary> Static IP of the connectedEnvironment. </summary>
+        /// <summary>
+        /// Static IP of the connectedEnvironment
+        /// Serialized Name: ConnectedEnvironment.properties.staticIp
+        /// </summary>
         public IPAddress StaticIP { get; set; }
-        /// <summary> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </summary>
+        /// <summary>
+        /// Application Insights connection string used by Dapr to export Service to Service communication telemetry
+        /// Serialized Name: ConnectedEnvironment.properties.daprAIConnectionString
+        /// </summary>
         public string DaprAIConnectionString { get; set; }
-        /// <summary> Custom domain configuration for the environment. </summary>
+        /// <summary>
+        /// Custom domain configuration for the environment
+        /// Serialized Name: ConnectedEnvironment.properties.customDomainConfiguration
+        /// </summary>
         public ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get; set; }
     }
 }

@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> DNS verification test result. </summary>
+    /// <summary>
+    /// DNS verification test result.
+    /// Serialized Name: DnsVerificationTestResult
+    /// </summary>
     public enum ContainerAppDnsVerificationTestResult
     {
-        /// <summary> Passed. </summary>
+        /// <summary>
+        /// Passed
+        /// Serialized Name: DnsVerificationTestResult.Passed
+        /// </summary>
         Passed,
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: DnsVerificationTestResult.Failed
+        /// </summary>
         Failed,
-        /// <summary> Skipped. </summary>
+        /// <summary>
+        /// Skipped
+        /// Serialized Name: DnsVerificationTestResult.Skipped
+        /// </summary>
         Skipped
     }
 }

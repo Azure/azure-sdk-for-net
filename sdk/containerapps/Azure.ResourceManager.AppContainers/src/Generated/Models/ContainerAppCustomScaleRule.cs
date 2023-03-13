@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App container Custom scaling rule. </summary>
+    /// <summary>
+    /// Container App container Custom scaling rule.
+    /// Serialized Name: CustomScaleRule
+    /// </summary>
     public partial class ContainerAppCustomScaleRule
     {
         /// <summary> Initializes a new instance of ContainerAppCustomScaleRule. </summary>
@@ -24,9 +27,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="customScaleRuleType">
         /// Type of the custom scale rule
         /// eg: azure-servicebus, redis etc.
+        /// Serialized Name: CustomScaleRule.type
         /// </param>
-        /// <param name="metadata"> Metadata properties to describe custom scale rule. </param>
-        /// <param name="auth"> Authentication secrets for the custom scale rule. </param>
+        /// <param name="metadata">
+        /// Metadata properties to describe custom scale rule.
+        /// Serialized Name: CustomScaleRule.metadata
+        /// </param>
+        /// <param name="auth">
+        /// Authentication secrets for the custom scale rule.
+        /// Serialized Name: CustomScaleRule.auth
+        /// </param>
         internal ContainerAppCustomScaleRule(string customScaleRuleType, IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth)
         {
             CustomScaleRuleType = customScaleRuleType;
@@ -37,11 +47,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary>
         /// Type of the custom scale rule
         /// eg: azure-servicebus, redis etc.
+        /// Serialized Name: CustomScaleRule.type
         /// </summary>
         public string CustomScaleRuleType { get; set; }
-        /// <summary> Metadata properties to describe custom scale rule. </summary>
+        /// <summary>
+        /// Metadata properties to describe custom scale rule.
+        /// Serialized Name: CustomScaleRule.metadata
+        /// </summary>
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> Authentication secrets for the custom scale rule. </summary>
+        /// <summary>
+        /// Authentication secrets for the custom scale rule.
+        /// Serialized Name: CustomScaleRule.auth
+        /// </summary>
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

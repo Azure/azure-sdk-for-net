@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App container Azure Queue based scaling rule. </summary>
+    /// <summary>
+    /// Container App container Azure Queue based scaling rule.
+    /// Serialized Name: QueueScaleRule
+    /// </summary>
     public partial class ContainerAppQueueScaleRule
     {
         /// <summary> Initializes a new instance of ContainerAppQueueScaleRule. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppQueueScaleRule. </summary>
-        /// <param name="queueName"> Queue name. </param>
-        /// <param name="queueLength"> Queue length. </param>
-        /// <param name="auth"> Authentication secrets for the queue scale rule. </param>
+        /// <param name="queueName">
+        /// Queue name.
+        /// Serialized Name: QueueScaleRule.queueName
+        /// </param>
+        /// <param name="queueLength">
+        /// Queue length.
+        /// Serialized Name: QueueScaleRule.queueLength
+        /// </param>
+        /// <param name="auth">
+        /// Authentication secrets for the queue scale rule.
+        /// Serialized Name: QueueScaleRule.auth
+        /// </param>
         internal ContainerAppQueueScaleRule(string queueName, int? queueLength, IList<ContainerAppScaleRuleAuth> auth)
         {
             QueueName = queueName;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             Auth = auth;
         }
 
-        /// <summary> Queue name. </summary>
+        /// <summary>
+        /// Queue name.
+        /// Serialized Name: QueueScaleRule.queueName
+        /// </summary>
         public string QueueName { get; set; }
-        /// <summary> Queue length. </summary>
+        /// <summary>
+        /// Queue length.
+        /// Serialized Name: QueueScaleRule.queueLength
+        /// </summary>
         public int? QueueLength { get; set; }
-        /// <summary> Authentication secrets for the queue scale rule. </summary>
+        /// <summary>
+        /// Authentication secrets for the queue scale rule.
+        /// Serialized Name: QueueScaleRule.auth
+        /// </summary>
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

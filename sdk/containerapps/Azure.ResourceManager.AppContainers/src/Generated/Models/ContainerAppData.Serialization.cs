@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.AppContainers
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
+            if (Optional.IsDefined(ManagedBy))
+            {
+                writer.WritePropertyName("managedBy"u8);
+                writer.WriteStringValue(ManagedBy);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -56,10 +61,10 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Optional.IsDefined(WorkloadProfileType))
+            if (Optional.IsDefined(WorkloadProfileName))
             {
-                writer.WritePropertyName("workloadProfileType"u8);
-                writer.WriteStringValue(WorkloadProfileType);
+                writer.WritePropertyName("workloadProfileName"u8);
+                writer.WriteStringValue(WorkloadProfileName);
             }
             if (Optional.IsDefined(Configuration))
             {
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.AppContainers
             }
             Optional<ContainerAppExtendedLocation> extendedLocation = default;
             Optional<ManagedServiceIdentity> identity = default;
+            Optional<string> managedBy = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -92,7 +98,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<ContainerAppProvisioningState> provisioningState = default;
             Optional<ResourceIdentifier> managedEnvironmentId = default;
             Optional<ResourceIdentifier> environmentId = default;
-            Optional<string> workloadProfileType = default;
+            Optional<string> workloadProfileName = default;
             Optional<string> latestRevisionName = default;
             Optional<string> latestReadyRevisionName = default;
             Optional<string> latestRevisionFqdn = default;
@@ -122,6 +128,11 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
+                if (property.NameEquals("managedBy"u8))
+                {
+                    managedBy = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -208,9 +219,9 @@ namespace Azure.ResourceManager.AppContainers
                             environmentId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("workloadProfileType"u8))
+                        if (property0.NameEquals("workloadProfileName"u8))
                         {
-                            workloadProfileType = property0.Value.GetString();
+                            workloadProfileName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("latestRevisionName"u8))
@@ -289,7 +300,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, identity, Optional.ToNullable(provisioningState), managedEnvironmentId.Value, environmentId.Value, workloadProfileType.Value, latestRevisionName.Value, latestReadyRevisionName.Value, latestRevisionFqdn.Value, customDomainVerificationId.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
+            return new ContainerAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, identity, managedBy.Value, Optional.ToNullable(provisioningState), managedEnvironmentId.Value, environmentId.Value, workloadProfileName.Value, latestRevisionName.Value, latestReadyRevisionName.Value, latestRevisionFqdn.Value, customDomainVerificationId.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
         }
     }
 }

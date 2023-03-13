@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Storage type for the volume. If not provided, use EmptyDir. </summary>
+    /// <summary>
+    /// Storage type for the volume. If not provided, use EmptyDir.
+    /// Serialized Name: StorageType
+    /// </summary>
     public readonly partial struct ContainerAppStorageType : IEquatable<ContainerAppStorageType>
     {
         private readonly string _value;
@@ -24,11 +27,23 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         private const string AzureFileValue = "AzureFile";
         private const string EmptyDirValue = "EmptyDir";
+        private const string SecretValue = "Secret";
 
-        /// <summary> AzureFile. </summary>
+        /// <summary>
+        /// AzureFile
+        /// Serialized Name: StorageType.AzureFile
+        /// </summary>
         public static ContainerAppStorageType AzureFile { get; } = new ContainerAppStorageType(AzureFileValue);
-        /// <summary> EmptyDir. </summary>
+        /// <summary>
+        /// EmptyDir
+        /// Serialized Name: StorageType.EmptyDir
+        /// </summary>
         public static ContainerAppStorageType EmptyDir { get; } = new ContainerAppStorageType(EmptyDirValue);
+        /// <summary>
+        /// Secret
+        /// Serialized Name: StorageType.Secret
+        /// </summary>
+        public static ContainerAppStorageType Secret { get; } = new ContainerAppStorageType(SecretValue);
         /// <summary> Determines if two <see cref="ContainerAppStorageType"/> values are the same. </summary>
         public static bool operator ==(ContainerAppStorageType left, ContainerAppStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppStorageType"/> values are not the same. </summary>

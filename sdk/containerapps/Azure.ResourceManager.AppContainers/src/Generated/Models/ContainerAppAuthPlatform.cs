@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the platform of ContainerApp Service Authentication/Authorization. </summary>
+    /// <summary>
+    /// The configuration settings of the platform of ContainerApp Service Authentication/Authorization.
+    /// Serialized Name: AuthPlatform
+    /// </summary>
     public partial class ContainerAppAuthPlatform
     {
         /// <summary> Initializes a new instance of ContainerAppAuthPlatform. </summary>
@@ -16,10 +19,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppAuthPlatform. </summary>
-        /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isEnabled">
+        /// &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AuthPlatform.enabled
+        /// </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
+        /// Serialized Name: AuthPlatform.runtimeVersion
         /// </param>
         internal ContainerAppAuthPlatform(bool? isEnabled, string runtimeVersion)
         {
@@ -27,11 +34,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             RuntimeVersion = runtimeVersion;
         }
 
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AuthPlatform.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
         /// <summary>
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
+        /// Serialized Name: AuthPlatform.runtimeVersion
         /// </summary>
         public string RuntimeVersion { get; set; }
     }

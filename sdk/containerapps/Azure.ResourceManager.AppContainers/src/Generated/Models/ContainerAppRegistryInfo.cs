@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App registry information. </summary>
+    /// <summary>
+    /// Container App registry information.
+    /// Serialized Name: RegistryInfo
+    /// </summary>
     public partial class ContainerAppRegistryInfo
     {
         /// <summary> Initializes a new instance of ContainerAppRegistryInfo. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppRegistryInfo. </summary>
-        /// <param name="registryUri"> registry server Url. </param>
-        /// <param name="registryUserName"> registry username. </param>
-        /// <param name="registryPassword"> registry secret. </param>
+        /// <param name="registryUri">
+        /// registry server Url.
+        /// Serialized Name: RegistryInfo.registryUrl
+        /// </param>
+        /// <param name="registryUserName">
+        /// registry username.
+        /// Serialized Name: RegistryInfo.registryUserName
+        /// </param>
+        /// <param name="registryPassword">
+        /// registry secret.
+        /// Serialized Name: RegistryInfo.registryPassword
+        /// </param>
         internal ContainerAppRegistryInfo(Uri registryUri, string registryUserName, string registryPassword)
         {
             RegistryUri = registryUri;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             RegistryPassword = registryPassword;
         }
 
-        /// <summary> registry server Url. </summary>
+        /// <summary>
+        /// registry server Url.
+        /// Serialized Name: RegistryInfo.registryUrl
+        /// </summary>
         public Uri RegistryUri { get; set; }
-        /// <summary> registry username. </summary>
+        /// <summary>
+        /// registry username.
+        /// Serialized Name: RegistryInfo.registryUserName
+        /// </summary>
         public string RegistryUserName { get; set; }
-        /// <summary> registry secret. </summary>
+        /// <summary>
+        /// registry secret.
+        /// Serialized Name: RegistryInfo.registryPassword
+        /// </summary>
         public string RegistryPassword { get; set; }
     }
 }

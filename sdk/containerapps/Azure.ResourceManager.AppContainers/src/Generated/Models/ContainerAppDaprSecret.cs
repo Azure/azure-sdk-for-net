@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Dapr component Secret for ListSecrets Action. </summary>
+    /// <summary>
+    /// Dapr component Secret for ListSecrets Action
+    /// Serialized Name: DaprSecret
+    /// </summary>
     public partial class ContainerAppDaprSecret
     {
         /// <summary> Initializes a new instance of ContainerAppDaprSecret. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDaprSecret. </summary>
-        /// <param name="name"> Secret Name. </param>
-        /// <param name="value"> Secret Value. </param>
+        /// <param name="name">
+        /// Secret Name.
+        /// Serialized Name: DaprSecret.name
+        /// </param>
+        /// <param name="value">
+        /// Secret Value.
+        /// Serialized Name: DaprSecret.value
+        /// </param>
         internal ContainerAppDaprSecret(string name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary> Secret Name. </summary>
+        /// <summary>
+        /// Secret Name.
+        /// Serialized Name: DaprSecret.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Secret Value. </summary>
+        /// <summary>
+        /// Secret Value.
+        /// Serialized Name: DaprSecret.value
+        /// </summary>
         public string Value { get; }
     }
 }

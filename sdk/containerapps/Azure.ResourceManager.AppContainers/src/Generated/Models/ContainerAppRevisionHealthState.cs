@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Current health State of the revision. </summary>
+    /// <summary>
+    /// Current health State of the revision
+    /// Serialized Name: RevisionHealthState
+    /// </summary>
     public readonly partial struct ContainerAppRevisionHealthState : IEquatable<ContainerAppRevisionHealthState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string UnhealthyValue = "Unhealthy";
         private const string NoneValue = "None";
 
-        /// <summary> Healthy. </summary>
+        /// <summary>
+        /// Healthy
+        /// Serialized Name: RevisionHealthState.Healthy
+        /// </summary>
         public static ContainerAppRevisionHealthState Healthy { get; } = new ContainerAppRevisionHealthState(HealthyValue);
-        /// <summary> Unhealthy. </summary>
+        /// <summary>
+        /// Unhealthy
+        /// Serialized Name: RevisionHealthState.Unhealthy
+        /// </summary>
         public static ContainerAppRevisionHealthState Unhealthy { get; } = new ContainerAppRevisionHealthState(UnhealthyValue);
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: RevisionHealthState.None
+        /// </summary>
         public static ContainerAppRevisionHealthState None { get; } = new ContainerAppRevisionHealthState(NoneValue);
         /// <summary> Determines if two <see cref="ContainerAppRevisionHealthState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppRevisionHealthState left, ContainerAppRevisionHealthState right) => left.Equals(right);

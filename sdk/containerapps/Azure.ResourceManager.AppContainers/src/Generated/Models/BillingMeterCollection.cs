@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of premium workload billing meters. </summary>
+    /// <summary>
+    /// Collection of billing meters.
+    /// Serialized Name: BillingMeterCollection
+    /// </summary>
     internal partial class BillingMeterCollection
     {
         /// <summary> Initializes a new instance of BillingMeterCollection. </summary>
-        /// <param name="value"> Collection of billing meters. </param>
+        /// <param name="value">
+        /// Collection of billing meters.
+        /// Serialized Name: BillingMeterCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal BillingMeterCollection(IEnumerable<ContainerAppBillingMeter> value)
         {
@@ -26,13 +32,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of BillingMeterCollection. </summary>
-        /// <param name="value"> Collection of billing meters. </param>
+        /// <param name="value">
+        /// Collection of billing meters.
+        /// Serialized Name: BillingMeterCollection.value
+        /// </param>
         internal BillingMeterCollection(IReadOnlyList<ContainerAppBillingMeter> value)
         {
             Value = value;
         }
 
-        /// <summary> Collection of billing meters. </summary>
+        /// <summary>
+        /// Collection of billing meters.
+        /// Serialized Name: BillingMeterCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppBillingMeter> Value { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Access mode for storage. </summary>
+    /// <summary>
+    /// Access mode for storage
+    /// Serialized Name: AccessMode
+    /// </summary>
     public readonly partial struct ContainerAppAccessMode : IEquatable<ContainerAppAccessMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string ReadOnlyValue = "ReadOnly";
         private const string ReadWriteValue = "ReadWrite";
 
-        /// <summary> ReadOnly. </summary>
+        /// <summary>
+        /// ReadOnly
+        /// Serialized Name: AccessMode.ReadOnly
+        /// </summary>
         public static ContainerAppAccessMode ReadOnly { get; } = new ContainerAppAccessMode(ReadOnlyValue);
-        /// <summary> ReadWrite. </summary>
+        /// <summary>
+        /// ReadWrite
+        /// Serialized Name: AccessMode.ReadWrite
+        /// </summary>
         public static ContainerAppAccessMode ReadWrite { get; } = new ContainerAppAccessMode(ReadWriteValue);
         /// <summary> Determines if two <see cref="ContainerAppAccessMode"/> values are the same. </summary>
         public static bool operator ==(ContainerAppAccessMode left, ContainerAppAccessMode right) => left.Equals(right);

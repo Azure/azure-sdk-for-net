@@ -13,11 +13,17 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Dapr Components ARM resource. </summary>
+    /// <summary>
+    /// Dapr Components ARM resource.
+    /// Serialized Name: DaprComponentsCollection
+    /// </summary>
     internal partial class DaprComponentsCollection
     {
         /// <summary> Initializes a new instance of DaprComponentsCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: DaprComponentsCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DaprComponentsCollection(IEnumerable<ContainerAppDaprComponentData> value)
         {
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of DaprComponentsCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: DaprComponentsCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: DaprComponentsCollection.nextLink
+        /// </param>
         internal DaprComponentsCollection(IReadOnlyList<ContainerAppDaprComponentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: DaprComponentsCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppDaprComponentData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: DaprComponentsCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

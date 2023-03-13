@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Metadata of the diagnostics response. </summary>
+    /// <summary>
+    /// Metadata of the diagnostics response
+    /// Serialized Name: DiagnosticsDefinition
+    /// </summary>
     public partial class ContainerAppDiagnosticsMetadata : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppDiagnosticsMetadata. </summary>
@@ -26,12 +29,30 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Details of the diagnostics info. </param>
-        /// <param name="author"> Authors&apos; names of the detector. </param>
-        /// <param name="category"> Category of the detector. </param>
-        /// <param name="supportTopicList"> List of support topics. </param>
-        /// <param name="analysisTypes"> List of analysis types. </param>
-        /// <param name="score"> Authors&apos; names of the detector. </param>
+        /// <param name="description">
+        /// Details of the diagnostics info
+        /// Serialized Name: DiagnosticsDefinition.description
+        /// </param>
+        /// <param name="author">
+        /// Authors&apos; names of the detector
+        /// Serialized Name: DiagnosticsDefinition.author
+        /// </param>
+        /// <param name="category">
+        /// Category of the detector
+        /// Serialized Name: DiagnosticsDefinition.category
+        /// </param>
+        /// <param name="supportTopicList">
+        /// List of support topics
+        /// Serialized Name: DiagnosticsDefinition.supportTopicList
+        /// </param>
+        /// <param name="analysisTypes">
+        /// List of analysis types
+        /// Serialized Name: DiagnosticsDefinition.analysisTypes
+        /// </param>
+        /// <param name="score">
+        /// Authors&apos; names of the detector
+        /// Serialized Name: DiagnosticsDefinition.score
+        /// </param>
         internal ContainerAppDiagnosticsMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string author, string category, IList<ContainerAppDiagnosticSupportTopic> supportTopicList, IList<string> analysisTypes, float? score) : base(id, name, resourceType, systemData)
         {
             Description = description;
@@ -42,17 +63,35 @@ namespace Azure.ResourceManager.AppContainers.Models
             Score = score;
         }
 
-        /// <summary> Details of the diagnostics info. </summary>
+        /// <summary>
+        /// Details of the diagnostics info
+        /// Serialized Name: DiagnosticsDefinition.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> Authors&apos; names of the detector. </summary>
+        /// <summary>
+        /// Authors&apos; names of the detector
+        /// Serialized Name: DiagnosticsDefinition.author
+        /// </summary>
         public string Author { get; }
-        /// <summary> Category of the detector. </summary>
+        /// <summary>
+        /// Category of the detector
+        /// Serialized Name: DiagnosticsDefinition.category
+        /// </summary>
         public string Category { get; }
-        /// <summary> List of support topics. </summary>
+        /// <summary>
+        /// List of support topics
+        /// Serialized Name: DiagnosticsDefinition.supportTopicList
+        /// </summary>
         public IList<ContainerAppDiagnosticSupportTopic> SupportTopicList { get; }
-        /// <summary> List of analysis types. </summary>
+        /// <summary>
+        /// List of analysis types
+        /// Serialized Name: DiagnosticsDefinition.analysisTypes
+        /// </summary>
         public IList<string> AnalysisTypes { get; }
-        /// <summary> Authors&apos; names of the detector. </summary>
+        /// <summary>
+        /// Authors&apos; names of the detector
+        /// Serialized Name: DiagnosticsDefinition.score
+        /// </summary>
         public float? Score { get; }
     }
 }

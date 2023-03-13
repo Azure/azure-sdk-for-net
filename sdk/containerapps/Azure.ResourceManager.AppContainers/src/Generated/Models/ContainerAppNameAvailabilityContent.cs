@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The check availability request body. </summary>
+    /// <summary>
+    /// The check availability request body.
+    /// Serialized Name: CheckNameAvailabilityRequest
+    /// </summary>
     public partial class ContainerAppNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of ContainerAppNameAvailabilityContent. </summary>
@@ -17,9 +20,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
         }
 
-        /// <summary> The name of the resource for which availability needs to be checked. </summary>
+        /// <summary>
+        /// The name of the resource for which availability needs to be checked.
+        /// Serialized Name: CheckNameAvailabilityRequest.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The resource type. </summary>
+        /// <summary>
+        /// The resource type.
+        /// Serialized Name: CheckNameAvailabilityRequest.type
+        /// </summary>
         public ResourceType? ResourceType { get; set; }
     }
 }

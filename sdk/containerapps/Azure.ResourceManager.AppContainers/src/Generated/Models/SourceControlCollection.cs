@@ -13,11 +13,17 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> SourceControl collection ARM resource. </summary>
+    /// <summary>
+    /// SourceControl collection ARM resource.
+    /// Serialized Name: SourceControlCollection
+    /// </summary>
     internal partial class SourceControlCollection
     {
         /// <summary> Initializes a new instance of SourceControlCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: SourceControlCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SourceControlCollection(IEnumerable<ContainerAppSourceControlData> value)
         {
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of SourceControlCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: SourceControlCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: SourceControlCollection.nextLink
+        /// </param>
         internal SourceControlCollection(IReadOnlyList<ContainerAppSourceControlData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: SourceControlCollection.value
+        /// </summary>
         public IReadOnlyList<ContainerAppSourceControlData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: SourceControlCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

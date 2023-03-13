@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing the ContainerAppSourceControl data model.
     /// Container App SourceControl.
+    /// Serialized Name: SourceControl
     /// </summary>
     public partial class ContainerAppSourceControlData : ResourceData
     {
@@ -28,13 +29,23 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="operationState"> Current provisioning State of the operation. </param>
-        /// <param name="repoUri"> The repo url which will be integrated to ContainerApp. </param>
-        /// <param name="branch"> The branch which will trigger the auto deployment. </param>
+        /// <param name="operationState">
+        /// Current provisioning State of the operation
+        /// Serialized Name: SourceControl.properties.operationState
+        /// </param>
+        /// <param name="repoUri">
+        /// The repo url which will be integrated to ContainerApp.
+        /// Serialized Name: SourceControl.properties.repoUrl
+        /// </param>
+        /// <param name="branch">
+        /// The branch which will trigger the auto deployment
+        /// Serialized Name: SourceControl.properties.branch
+        /// </param>
         /// <param name="gitHubActionConfiguration">
         /// Container App Revision Template with all possible settings and the
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
+        /// Serialized Name: SourceControl.properties.githubActionConfiguration
         /// </param>
         internal ContainerAppSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppSourceControlOperationState? operationState, Uri repoUri, string branch, ContainerAppGitHubActionConfiguration gitHubActionConfiguration) : base(id, name, resourceType, systemData)
         {
@@ -44,16 +55,26 @@ namespace Azure.ResourceManager.AppContainers
             GitHubActionConfiguration = gitHubActionConfiguration;
         }
 
-        /// <summary> Current provisioning State of the operation. </summary>
+        /// <summary>
+        /// Current provisioning State of the operation
+        /// Serialized Name: SourceControl.properties.operationState
+        /// </summary>
         public ContainerAppSourceControlOperationState? OperationState { get; }
-        /// <summary> The repo url which will be integrated to ContainerApp. </summary>
+        /// <summary>
+        /// The repo url which will be integrated to ContainerApp.
+        /// Serialized Name: SourceControl.properties.repoUrl
+        /// </summary>
         public Uri RepoUri { get; set; }
-        /// <summary> The branch which will trigger the auto deployment. </summary>
+        /// <summary>
+        /// The branch which will trigger the auto deployment
+        /// Serialized Name: SourceControl.properties.branch
+        /// </summary>
         public string Branch { get; set; }
         /// <summary>
         /// Container App Revision Template with all possible settings and the
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
+        /// Serialized Name: SourceControl.properties.githubActionConfiguration
         /// </summary>
         public ContainerAppGitHubActionConfiguration GitHubActionConfiguration { get; set; }
     }

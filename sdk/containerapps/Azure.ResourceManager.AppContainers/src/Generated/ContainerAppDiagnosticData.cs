@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing the ContainerAppDiagnostic data model.
     /// Diagnostics data for a resource.
+    /// Serialized Name: Diagnostics
     /// </summary>
     public partial class ContainerAppDiagnosticData : ResourceData
     {
@@ -27,13 +28,19 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Diagnostics resource specific properties. </param>
+        /// <param name="properties">
+        /// Diagnostics resource specific properties
+        /// Serialized Name: Diagnostics.properties
+        /// </param>
         internal ContainerAppDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppDiagnosticsProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Diagnostics resource specific properties. </summary>
+        /// <summary>
+        /// Diagnostics resource specific properties
+        /// Serialized Name: Diagnostics.properties
+        /// </summary>
         public ContainerAppDiagnosticsProperties Properties { get; set; }
     }
 }

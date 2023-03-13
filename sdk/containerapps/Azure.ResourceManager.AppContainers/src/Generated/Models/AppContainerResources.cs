@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App container resource requirements. </summary>
+    /// <summary>
+    /// Container App container resource requirements.
+    /// Serialized Name: ContainerResources
+    /// </summary>
     public partial class AppContainerResources
     {
         /// <summary> Initializes a new instance of AppContainerResources. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of AppContainerResources. </summary>
-        /// <param name="cpu"> Required CPU in cores, e.g. 0.5. </param>
-        /// <param name="memory"> Required memory, e.g. &quot;250Mb&quot;. </param>
-        /// <param name="ephemeralStorage"> Ephemeral Storage, e.g. &quot;1Gi&quot;. </param>
+        /// <param name="cpu">
+        /// Required CPU in cores, e.g. 0.5
+        /// Serialized Name: ContainerResources.cpu
+        /// </param>
+        /// <param name="memory">
+        /// Required memory, e.g. &quot;250Mb&quot;
+        /// Serialized Name: ContainerResources.memory
+        /// </param>
+        /// <param name="ephemeralStorage">
+        /// Ephemeral Storage, e.g. &quot;1Gi&quot;
+        /// Serialized Name: ContainerResources.ephemeralStorage
+        /// </param>
         internal AppContainerResources(double? cpu, string memory, string ephemeralStorage)
         {
             Cpu = cpu;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             EphemeralStorage = ephemeralStorage;
         }
 
-        /// <summary> Required CPU in cores, e.g. 0.5. </summary>
+        /// <summary>
+        /// Required CPU in cores, e.g. 0.5
+        /// Serialized Name: ContainerResources.cpu
+        /// </summary>
         public double? Cpu { get; set; }
-        /// <summary> Required memory, e.g. &quot;250Mb&quot;. </summary>
+        /// <summary>
+        /// Required memory, e.g. &quot;250Mb&quot;
+        /// Serialized Name: ContainerResources.memory
+        /// </summary>
         public string Memory { get; set; }
-        /// <summary> Ephemeral Storage, e.g. &quot;1Gi&quot;. </summary>
+        /// <summary>
+        /// Ephemeral Storage, e.g. &quot;1Gi&quot;
+        /// Serialized Name: ContainerResources.ephemeralStorage
+        /// </summary>
         public string EphemeralStorage { get; }
     }
 }

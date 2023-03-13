@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the Allowed Audiences validation flow. </summary>
+    /// <summary>
+    /// The configuration settings of the Allowed Audiences validation flow.
+    /// Serialized Name: AllowedAudiencesValidation
+    /// </summary>
     internal partial class AllowedAudiencesValidation
     {
         /// <summary> Initializes a new instance of AllowedAudiencesValidation. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of AllowedAudiencesValidation. </summary>
-        /// <param name="allowedAudiences"> The configuration settings of the allowed list of audiences from which to validate the JWT token. </param>
+        /// <param name="allowedAudiences">
+        /// The configuration settings of the allowed list of audiences from which to validate the JWT token.
+        /// Serialized Name: AllowedAudiencesValidation.allowedAudiences
+        /// </param>
         internal AllowedAudiencesValidation(IList<string> allowedAudiences)
         {
             AllowedAudiences = allowedAudiences;
         }
 
-        /// <summary> The configuration settings of the allowed list of audiences from which to validate the JWT token. </summary>
+        /// <summary>
+        /// The configuration settings of the allowed list of audiences from which to validate the JWT token.
+        /// Serialized Name: AllowedAudiencesValidation.allowedAudiences
+        /// </summary>
         public IList<string> AllowedAudiences { get; }
     }
 }

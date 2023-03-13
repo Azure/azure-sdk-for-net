@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </summary>
+    /// <summary>
+    /// Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info.
+    /// Serialized Name: LogLevel
+    /// </summary>
     public readonly partial struct ContainerAppDaprLogLevel : IEquatable<ContainerAppDaprLogLevel>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string WarnValue = "warn";
         private const string ErrorValue = "error";
 
-        /// <summary> info. </summary>
+        /// <summary>
+        /// info
+        /// Serialized Name: LogLevel.info
+        /// </summary>
         public static ContainerAppDaprLogLevel Info { get; } = new ContainerAppDaprLogLevel(InfoValue);
-        /// <summary> debug. </summary>
+        /// <summary>
+        /// debug
+        /// Serialized Name: LogLevel.debug
+        /// </summary>
         public static ContainerAppDaprLogLevel Debug { get; } = new ContainerAppDaprLogLevel(DebugValue);
-        /// <summary> warn. </summary>
+        /// <summary>
+        /// warn
+        /// Serialized Name: LogLevel.warn
+        /// </summary>
         public static ContainerAppDaprLogLevel Warn { get; } = new ContainerAppDaprLogLevel(WarnValue);
-        /// <summary> error. </summary>
+        /// <summary>
+        /// error
+        /// Serialized Name: LogLevel.error
+        /// </summary>
         public static ContainerAppDaprLogLevel Error { get; } = new ContainerAppDaprLogLevel(ErrorValue);
         /// <summary> Determines if two <see cref="ContainerAppDaprLogLevel"/> values are the same. </summary>
         public static bool operator ==(ContainerAppDaprLogLevel left, ContainerAppDaprLogLevel right) => left.Equals(right);

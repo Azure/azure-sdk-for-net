@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of all the workload Profile States for a Premium Managed Environment.. </summary>
+    /// <summary>
+    /// Collection of all the workload Profile States for a Managed Environment..
+    /// Serialized Name: WorkloadProfileStates
+    /// </summary>
     public partial class ContainerAppWorkloadProfileState : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppWorkloadProfileState. </summary>
@@ -23,13 +26,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Workload Profile resource specific properties. </param>
+        /// <param name="properties">
+        /// Workload Profile resource specific properties.
+        /// Serialized Name: WorkloadProfileStates.properties
+        /// </param>
         internal ContainerAppWorkloadProfileState(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppWorkloadProfileStateProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Workload Profile resource specific properties. </summary>
+        /// <summary>
+        /// Workload Profile resource specific properties.
+        /// Serialized Name: WorkloadProfileStates.properties
+        /// </summary>
         public ContainerAppWorkloadProfileStateProperties Properties { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Dapr component metadata. </summary>
+    /// <summary>
+    /// Dapr component metadata.
+    /// Serialized Name: DaprMetadata
+    /// </summary>
     public partial class ContainerAppDaprMetadata
     {
         /// <summary> Initializes a new instance of ContainerAppDaprMetadata. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDaprMetadata. </summary>
-        /// <param name="name"> Metadata property name. </param>
-        /// <param name="value"> Metadata property value. </param>
-        /// <param name="secretRef"> Name of the Dapr Component secret from which to pull the metadata property value. </param>
+        /// <param name="name">
+        /// Metadata property name.
+        /// Serialized Name: DaprMetadata.name
+        /// </param>
+        /// <param name="value">
+        /// Metadata property value.
+        /// Serialized Name: DaprMetadata.value
+        /// </param>
+        /// <param name="secretRef">
+        /// Name of the Dapr Component secret from which to pull the metadata property value.
+        /// Serialized Name: DaprMetadata.secretRef
+        /// </param>
         internal ContainerAppDaprMetadata(string name, string value, string secretRef)
         {
             Name = name;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             SecretRef = secretRef;
         }
 
-        /// <summary> Metadata property name. </summary>
+        /// <summary>
+        /// Metadata property name.
+        /// Serialized Name: DaprMetadata.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Metadata property value. </summary>
+        /// <summary>
+        /// Metadata property value.
+        /// Serialized Name: DaprMetadata.value
+        /// </summary>
         public string Value { get; set; }
-        /// <summary> Name of the Dapr Component secret from which to pull the metadata property value. </summary>
+        /// <summary>
+        /// Name of the Dapr Component secret from which to pull the metadata property value.
+        /// Serialized Name: DaprMetadata.secretRef
+        /// </summary>
         public string SecretRef { get; set; }
     }
 }

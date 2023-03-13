@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The complex type of the extended location. </summary>
+    /// <summary>
+    /// The complex type of the extended location.
+    /// Serialized Name: ExtendedLocation
+    /// </summary>
     public partial class ContainerAppExtendedLocation
     {
         /// <summary> Initializes a new instance of ContainerAppExtendedLocation. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppExtendedLocation. </summary>
-        /// <param name="name"> The name of the extended location. </param>
-        /// <param name="extendedLocationType"> The type of the extended location. </param>
+        /// <param name="name">
+        /// The name of the extended location.
+        /// Serialized Name: ExtendedLocation.name
+        /// </param>
+        /// <param name="extendedLocationType">
+        /// The type of the extended location.
+        /// Serialized Name: ExtendedLocation.type
+        /// </param>
         internal ContainerAppExtendedLocation(string name, ContainerAppExtendedLocationType? extendedLocationType)
         {
             Name = name;
             ExtendedLocationType = extendedLocationType;
         }
 
-        /// <summary> The name of the extended location. </summary>
+        /// <summary>
+        /// The name of the extended location.
+        /// Serialized Name: ExtendedLocation.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The type of the extended location. </summary>
+        /// <summary>
+        /// The type of the extended location.
+        /// Serialized Name: ExtendedLocation.type
+        /// </summary>
         public ContainerAppExtendedLocationType? ExtendedLocationType { get; set; }
     }
 }

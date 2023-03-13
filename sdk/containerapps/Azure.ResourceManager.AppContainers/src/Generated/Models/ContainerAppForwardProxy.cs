@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
+    /// <summary>
+    /// The configuration settings of a forward proxy used to make the requests.
+    /// Serialized Name: ForwardProxy
+    /// </summary>
     public partial class ContainerAppForwardProxy
     {
         /// <summary> Initializes a new instance of ContainerAppForwardProxy. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppForwardProxy. </summary>
-        /// <param name="convention"> The convention used to determine the url of the request made. </param>
-        /// <param name="customHostHeaderName"> The name of the header containing the host of the request. </param>
-        /// <param name="customProtoHeaderName"> The name of the header containing the scheme of the request. </param>
+        /// <param name="convention">
+        /// The convention used to determine the url of the request made.
+        /// Serialized Name: ForwardProxy.convention
+        /// </param>
+        /// <param name="customHostHeaderName">
+        /// The name of the header containing the host of the request.
+        /// Serialized Name: ForwardProxy.customHostHeaderName
+        /// </param>
+        /// <param name="customProtoHeaderName">
+        /// The name of the header containing the scheme of the request.
+        /// Serialized Name: ForwardProxy.customProtoHeaderName
+        /// </param>
         internal ContainerAppForwardProxy(ContainerAppForwardProxyConvention? convention, string customHostHeaderName, string customProtoHeaderName)
         {
             Convention = convention;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             CustomProtoHeaderName = customProtoHeaderName;
         }
 
-        /// <summary> The convention used to determine the url of the request made. </summary>
+        /// <summary>
+        /// The convention used to determine the url of the request made.
+        /// Serialized Name: ForwardProxy.convention
+        /// </summary>
         public ContainerAppForwardProxyConvention? Convention { get; set; }
-        /// <summary> The name of the header containing the host of the request. </summary>
+        /// <summary>
+        /// The name of the header containing the host of the request.
+        /// Serialized Name: ForwardProxy.customHostHeaderName
+        /// </summary>
         public string CustomHostHeaderName { get; set; }
-        /// <summary> The name of the header containing the scheme of the request. </summary>
+        /// <summary>
+        /// The name of the header containing the scheme of the request.
+        /// Serialized Name: ForwardProxy.customProtoHeaderName
+        /// </summary>
         public string CustomProtoHeaderName { get; set; }
     }
 }

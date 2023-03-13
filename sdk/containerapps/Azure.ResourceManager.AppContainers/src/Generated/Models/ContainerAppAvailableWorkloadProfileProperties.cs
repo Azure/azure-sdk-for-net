@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Revision resource specific properties. </summary>
+    /// <summary>
+    /// Revision resource specific properties
+    /// Serialized Name: AvailableWorkloadProfileProperties
+    /// </summary>
     public partial class ContainerAppAvailableWorkloadProfileProperties
     {
         /// <summary> Initializes a new instance of ContainerAppAvailableWorkloadProfileProperties. </summary>
@@ -16,29 +19,59 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppAvailableWorkloadProfileProperties. </summary>
-        /// <param name="billingMeterCategory"> Used to map workload profile types to billing meter. </param>
-        /// <param name="applicability"> indicates whether the profile is default for the location. </param>
-        /// <param name="cores"> Number of cores in CPU. </param>
-        /// <param name="memoryInGiB"> Memory in GiB. </param>
-        /// <param name="displayName"> The everyday name of the workload profile. </param>
-        internal ContainerAppAvailableWorkloadProfileProperties(ContainerAppBillingMeterCategory? billingMeterCategory, ContainerAppAvailableWorkloadProfileApplicability? applicability, int? cores, int? memoryInGiB, string displayName)
+        /// <param name="category">
+        /// Used to categorize workload profiles.
+        /// Serialized Name: AvailableWorkloadProfileProperties.category
+        /// </param>
+        /// <param name="applicability">
+        /// indicates whether the profile is default for the location.
+        /// Serialized Name: AvailableWorkloadProfileProperties.applicability
+        /// </param>
+        /// <param name="cores">
+        /// Number of cores in CPU.
+        /// Serialized Name: AvailableWorkloadProfileProperties.cores
+        /// </param>
+        /// <param name="memoryInGiB">
+        /// Memory in GiB.
+        /// Serialized Name: AvailableWorkloadProfileProperties.memoryGiB
+        /// </param>
+        /// <param name="displayName">
+        /// The everyday name of the workload profile.
+        /// Serialized Name: AvailableWorkloadProfileProperties.displayName
+        /// </param>
+        internal ContainerAppAvailableWorkloadProfileProperties(string category, ContainerAppAvailableWorkloadProfileApplicability? applicability, int? cores, int? memoryInGiB, string displayName)
         {
-            BillingMeterCategory = billingMeterCategory;
+            Category = category;
             Applicability = applicability;
             Cores = cores;
             MemoryInGiB = memoryInGiB;
             DisplayName = displayName;
         }
 
-        /// <summary> Used to map workload profile types to billing meter. </summary>
-        public ContainerAppBillingMeterCategory? BillingMeterCategory { get; set; }
-        /// <summary> indicates whether the profile is default for the location. </summary>
+        /// <summary>
+        /// Used to categorize workload profiles.
+        /// Serialized Name: AvailableWorkloadProfileProperties.category
+        /// </summary>
+        public string Category { get; set; }
+        /// <summary>
+        /// indicates whether the profile is default for the location.
+        /// Serialized Name: AvailableWorkloadProfileProperties.applicability
+        /// </summary>
         public ContainerAppAvailableWorkloadProfileApplicability? Applicability { get; set; }
-        /// <summary> Number of cores in CPU. </summary>
+        /// <summary>
+        /// Number of cores in CPU.
+        /// Serialized Name: AvailableWorkloadProfileProperties.cores
+        /// </summary>
         public int? Cores { get; set; }
-        /// <summary> Memory in GiB. </summary>
+        /// <summary>
+        /// Memory in GiB.
+        /// Serialized Name: AvailableWorkloadProfileProperties.memoryGiB
+        /// </summary>
         public int? MemoryInGiB { get; set; }
-        /// <summary> The everyday name of the workload profile. </summary>
+        /// <summary>
+        /// The everyday name of the workload profile.
+        /// Serialized Name: AvailableWorkloadProfileProperties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
     }
 }

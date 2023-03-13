@@ -24,11 +24,6 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -84,6 +79,21 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(KedaConfiguration))
+            {
+                writer.WritePropertyName("kedaConfiguration"u8);
+                writer.WriteObjectValue(KedaConfiguration);
+            }
+            if (Optional.IsDefined(DaprConfiguration))
+            {
+                writer.WritePropertyName("daprConfiguration"u8);
+                writer.WriteObjectValue(DaprConfiguration);
+            }
+            if (Optional.IsDefined(InfrastructureResourceGroup))
+            {
+                writer.WritePropertyName("infrastructureResourceGroup"u8);
+                writer.WriteStringValue(InfrastructureResourceGroup);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -95,7 +105,6 @@ namespace Azure.ResourceManager.AppContainers
                 return null;
             }
             Optional<string> kind = default;
-            Optional<EnvironmentSkuProperties> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -114,21 +123,14 @@ namespace Azure.ResourceManager.AppContainers
             Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
             Optional<string> eventStreamEndpoint = default;
             Optional<IList<ContainerAppWorkloadProfile>> workloadProfiles = default;
+            Optional<KedaConfiguration> kedaConfiguration = default;
+            Optional<DaprConfiguration> daprConfiguration = default;
+            Optional<string> infrastructureResourceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sku = EnvironmentSkuProperties.DeserializeEnvironmentSkuProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -285,11 +287,36 @@ namespace Azure.ResourceManager.AppContainers
                             workloadProfiles = array;
                             continue;
                         }
+                        if (property0.NameEquals("kedaConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            kedaConfiguration = KedaConfiguration.DeserializeKedaConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("daprConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            daprConfiguration = DaprConfiguration.DeserializeDaprConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("infrastructureResourceGroup"u8))
+                        {
+                            infrastructureResourceGroup = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerAppManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, sku.Value, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant), customDomainConfiguration.Value, eventStreamEndpoint.Value, Optional.ToList(workloadProfiles));
+            return new ContainerAppManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant), customDomainConfiguration.Value, eventStreamEndpoint.Value, Optional.ToList(workloadProfiles), kedaConfiguration.Value, daprConfiguration.Value, infrastructureResourceGroup.Value);
         }
     }
 }

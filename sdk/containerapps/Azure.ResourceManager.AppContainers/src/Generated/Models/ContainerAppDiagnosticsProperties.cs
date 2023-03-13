@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Diagnostics resource specific properties. </summary>
+    /// <summary>
+    /// Diagnostics resource specific properties
+    /// Serialized Name: DiagnosticsProperties
+    /// </summary>
     public partial class ContainerAppDiagnosticsProperties
     {
         /// <summary> Initializes a new instance of ContainerAppDiagnosticsProperties. </summary>
@@ -20,10 +23,22 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticsProperties. </summary>
-        /// <param name="metadata"> Metadata of the diagnostics response. </param>
-        /// <param name="dataset"> Set of data collections associated with the response. </param>
-        /// <param name="status"> Status of the diagnostics response. </param>
-        /// <param name="dataProviderMetadata"> List of data providers&apos; metadata. </param>
+        /// <param name="metadata">
+        /// Metadata of the diagnostics response.
+        /// Serialized Name: DiagnosticsProperties.metadata
+        /// </param>
+        /// <param name="dataset">
+        /// Set of data collections associated with the response.
+        /// Serialized Name: DiagnosticsProperties.dataset
+        /// </param>
+        /// <param name="status">
+        /// Status of the diagnostics response.
+        /// Serialized Name: DiagnosticsProperties.status
+        /// </param>
+        /// <param name="dataProviderMetadata">
+        /// List of data providers&apos; metadata.
+        /// Serialized Name: DiagnosticsProperties.dataProviderMetadata
+        /// </param>
         internal ContainerAppDiagnosticsProperties(ContainerAppDiagnosticsMetadata metadata, IList<ContainerAppDiagnosticsDataApiResult> dataset, ContainerAppDiagnosticsStatus status, ContainerAppDiagnosticDataProviderMetadata dataProviderMetadata)
         {
             Metadata = metadata;
@@ -32,13 +47,25 @@ namespace Azure.ResourceManager.AppContainers.Models
             DataProviderMetadata = dataProviderMetadata;
         }
 
-        /// <summary> Metadata of the diagnostics response. </summary>
+        /// <summary>
+        /// Metadata of the diagnostics response.
+        /// Serialized Name: DiagnosticsProperties.metadata
+        /// </summary>
         public ContainerAppDiagnosticsMetadata Metadata { get; set; }
-        /// <summary> Set of data collections associated with the response. </summary>
+        /// <summary>
+        /// Set of data collections associated with the response.
+        /// Serialized Name: DiagnosticsProperties.dataset
+        /// </summary>
         public IList<ContainerAppDiagnosticsDataApiResult> Dataset { get; }
-        /// <summary> Status of the diagnostics response. </summary>
+        /// <summary>
+        /// Status of the diagnostics response.
+        /// Serialized Name: DiagnosticsProperties.status
+        /// </summary>
         public ContainerAppDiagnosticsStatus Status { get; set; }
-        /// <summary> List of data providers&apos; metadata. </summary>
+        /// <summary>
+        /// List of data providers&apos; metadata.
+        /// Serialized Name: DiagnosticsProperties.dataProviderMetadata
+        /// </summary>
         public ContainerAppDiagnosticDataProviderMetadata DataProviderMetadata { get; set; }
     }
 }

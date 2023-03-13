@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Raw failure information if DNS verification fails. </summary>
+    /// <summary>
+    /// Raw failure information if DNS verification fails.
+    /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfo
+    /// </summary>
     public partial class ContainerAppCustomDomainVerificationFailureInfo
     {
         /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfo. </summary>
@@ -20,10 +23,22 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfo. </summary>
-        /// <param name="code"> Standardized string to programmatically identify the error. </param>
-        /// <param name="message"> Detailed error description and debugging information. </param>
-        /// <param name="target"> Detailed error description and debugging information. </param>
-        /// <param name="details"> Details or the error. </param>
+        /// <param name="code">
+        /// Standardized string to programmatically identify the error.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfo.code
+        /// </param>
+        /// <param name="message">
+        /// Detailed error description and debugging information.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfo.message
+        /// </param>
+        /// <param name="target">
+        /// Detailed error description and debugging information.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfo.target
+        /// </param>
+        /// <param name="details">
+        /// Details or the error
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfo.details
+        /// </param>
         internal ContainerAppCustomDomainVerificationFailureInfo(string code, string message, string target, IReadOnlyList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem> details)
         {
             Code = code;
@@ -32,13 +47,25 @@ namespace Azure.ResourceManager.AppContainers.Models
             Details = details;
         }
 
-        /// <summary> Standardized string to programmatically identify the error. </summary>
+        /// <summary>
+        /// Standardized string to programmatically identify the error.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfo.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> Detailed error description and debugging information. </summary>
+        /// <summary>
+        /// Detailed error description and debugging information.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfo.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> Detailed error description and debugging information. </summary>
+        /// <summary>
+        /// Detailed error description and debugging information.
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfo.target
+        /// </summary>
         public string Target { get; }
-        /// <summary> Details or the error. </summary>
+        /// <summary>
+        /// Details or the error
+        /// Serialized Name: CustomHostnameAnalysisResultCustomDomainVerificationFailureInfo.details
+        /// </summary>
         public IReadOnlyList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem> Details { get; }
     }
 }

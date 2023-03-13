@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> A premium billing meter. </summary>
+    /// <summary>
+    /// Billing meter.
+    /// Serialized Name: BillingMeter
+    /// </summary>
     public partial class ContainerAppBillingMeter : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppBillingMeter. </summary>
@@ -23,17 +26,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Region for the billing meter. </param>
-        /// <param name="properties"> Revision resource specific properties. </param>
+        /// <param name="location">
+        /// Region for the billing meter.
+        /// Serialized Name: BillingMeter.location
+        /// </param>
+        /// <param name="properties">
+        /// Revision resource specific properties
+        /// Serialized Name: BillingMeter.properties
+        /// </param>
         internal ContainerAppBillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ContainerAppBillingMeterProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
         }
 
-        /// <summary> Region for the billing meter. </summary>
+        /// <summary>
+        /// Region for the billing meter.
+        /// Serialized Name: BillingMeter.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> Revision resource specific properties. </summary>
+        /// <summary>
+        /// Revision resource specific properties
+        /// Serialized Name: BillingMeter.properties
+        /// </summary>
         public ContainerAppBillingMeterProperties Properties { get; set; }
     }
 }

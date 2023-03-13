@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App container Tcp scaling rule. </summary>
+    /// <summary>
+    /// Container App container Tcp scaling rule.
+    /// Serialized Name: TcpScaleRule
+    /// </summary>
     public partial class ContainerAppTcpScaleRule
     {
         /// <summary> Initializes a new instance of ContainerAppTcpScaleRule. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppTcpScaleRule. </summary>
-        /// <param name="metadata"> Metadata properties to describe tcp scale rule. </param>
-        /// <param name="auth"> Authentication secrets for the tcp scale rule. </param>
+        /// <param name="metadata">
+        /// Metadata properties to describe tcp scale rule.
+        /// Serialized Name: TcpScaleRule.metadata
+        /// </param>
+        /// <param name="auth">
+        /// Authentication secrets for the tcp scale rule.
+        /// Serialized Name: TcpScaleRule.auth
+        /// </param>
         internal ContainerAppTcpScaleRule(IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth)
         {
             Metadata = metadata;
             Auth = auth;
         }
 
-        /// <summary> Metadata properties to describe tcp scale rule. </summary>
+        /// <summary>
+        /// Metadata properties to describe tcp scale rule.
+        /// Serialized Name: TcpScaleRule.metadata
+        /// </summary>
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> Authentication secrets for the tcp scale rule. </summary>
+        /// <summary>
+        /// Authentication secrets for the tcp scale rule.
+        /// Serialized Name: TcpScaleRule.auth
+        /// </summary>
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

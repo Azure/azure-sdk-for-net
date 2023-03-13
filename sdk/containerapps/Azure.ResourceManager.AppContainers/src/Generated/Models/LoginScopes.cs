@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the login flow, including the scopes that should be requested. </summary>
+    /// <summary>
+    /// The configuration settings of the login flow, including the scopes that should be requested.
+    /// Serialized Name: LoginScopes
+    /// </summary>
     internal partial class LoginScopes
     {
         /// <summary> Initializes a new instance of LoginScopes. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of LoginScopes. </summary>
-        /// <param name="scopes"> A list of the scopes that should be requested while authenticating. </param>
+        /// <param name="scopes">
+        /// A list of the scopes that should be requested while authenticating.
+        /// Serialized Name: LoginScopes.scopes
+        /// </param>
         internal LoginScopes(IList<string> scopes)
         {
             Scopes = scopes;
         }
 
-        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        /// <summary>
+        /// A list of the scopes that should be requested while authenticating.
+        /// Serialized Name: LoginScopes.scopes
+        /// </summary>
         public IList<string> Scopes { get; }
     }
 }

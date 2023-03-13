@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Support topic information. </summary>
+    /// <summary>
+    /// Support topic information
+    /// Serialized Name: DiagnosticSupportTopic
+    /// </summary>
     public partial class ContainerAppDiagnosticSupportTopic
     {
         /// <summary> Initializes a new instance of ContainerAppDiagnosticSupportTopic. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticSupportTopic. </summary>
-        /// <param name="id"> Unique topic identifier. </param>
-        /// <param name="pesId"> PES identifier. </param>
+        /// <param name="id">
+        /// Unique topic identifier
+        /// Serialized Name: DiagnosticSupportTopic.id
+        /// </param>
+        /// <param name="pesId">
+        /// PES identifier
+        /// Serialized Name: DiagnosticSupportTopic.pesId
+        /// </param>
         internal ContainerAppDiagnosticSupportTopic(string id, string pesId)
         {
             Id = id;
             PesId = pesId;
         }
 
-        /// <summary> Unique topic identifier. </summary>
+        /// <summary>
+        /// Unique topic identifier
+        /// Serialized Name: DiagnosticSupportTopic.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> PES identifier. </summary>
+        /// <summary>
+        /// PES identifier
+        /// Serialized Name: DiagnosticSupportTopic.pesId
+        /// </summary>
         public string PesId { get; }
     }
 }

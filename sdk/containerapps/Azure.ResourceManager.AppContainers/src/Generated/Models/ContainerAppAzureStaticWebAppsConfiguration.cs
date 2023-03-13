@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the Azure Static Web Apps provider. </summary>
+    /// <summary>
+    /// The configuration settings of the Azure Static Web Apps provider.
+    /// Serialized Name: AzureStaticWebApps
+    /// </summary>
     public partial class ContainerAppAzureStaticWebAppsConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppAzureStaticWebAppsConfiguration. </summary>
@@ -16,19 +19,34 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppAzureStaticWebAppsConfiguration. </summary>
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Static Web Apps provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the Azure Static Web Apps registration. </param>
+        /// <param name="isEnabled">
+        /// &lt;code&gt;false&lt;/code&gt; if the Azure Static Web Apps provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: AzureStaticWebApps.enabled
+        /// </param>
+        /// <param name="registration">
+        /// The configuration settings of the Azure Static Web Apps registration.
+        /// Serialized Name: AzureStaticWebApps.registration
+        /// </param>
         internal ContainerAppAzureStaticWebAppsConfiguration(bool? isEnabled, AzureStaticWebAppsRegistration registration)
         {
             IsEnabled = isEnabled;
             Registration = registration;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the Azure Static Web Apps provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the Azure Static Web Apps provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: AzureStaticWebApps.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> The configuration settings of the Azure Static Web Apps registration. </summary>
+        /// <summary>
+        /// The configuration settings of the Azure Static Web Apps registration.
+        /// Serialized Name: AzureStaticWebApps.registration
+        /// </summary>
         internal AzureStaticWebAppsRegistration Registration { get; set; }
-        /// <summary> The Client ID of the app used for login. </summary>
+        /// <summary>
+        /// The Client ID of the app used for login.
+        /// Serialized Name: AzureStaticWebAppsRegistration.clientId
+        /// </summary>
         public string RegistrationClientId
         {
             get => Registration is null ? default : Registration.ClientId;

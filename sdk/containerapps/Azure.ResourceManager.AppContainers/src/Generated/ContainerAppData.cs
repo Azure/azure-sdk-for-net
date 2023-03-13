@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing the ContainerApp data model.
     /// Container App.
+    /// Serialized Name: ContainerApp
     /// </summary>
     public partial class ContainerAppData : TrackedResourceData
     {
@@ -34,28 +35,75 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The complex type of the extended location. </param>
-        /// <param name="identity"> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </param>
-        /// <param name="provisioningState"> Provisioning state of the Container App. </param>
-        /// <param name="managedEnvironmentId"> Deprecated. Resource ID of the Container App&apos;s environment. </param>
-        /// <param name="environmentId"> Resource ID of environment. </param>
-        /// <param name="workloadProfileType"> Workload profile type to pin for container app execution. </param>
-        /// <param name="latestRevisionName"> Name of the latest revision of the Container App. </param>
-        /// <param name="latestReadyRevisionName"> Name of the latest ready revision of the Container App. </param>
-        /// <param name="latestRevisionFqdn"> Fully Qualified Domain Name of the latest revision of the Container App. </param>
-        /// <param name="customDomainVerificationId"> Id used to verify domain name ownership. </param>
-        /// <param name="configuration"> Non versioned Container App configuration properties. </param>
-        /// <param name="template"> Container App versioned application definition. </param>
-        /// <param name="outboundIPAddressList"> Outbound IP Addresses for container app. </param>
-        /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container app. </param>
-        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, ContainerAppProvisioningState? provisioningState, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileType, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="extendedLocation">
+        /// The complex type of the extended location.
+        /// Serialized Name: ContainerApp.extendedLocation
+        /// </param>
+        /// <param name="identity">
+        /// managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code.
+        /// Serialized Name: ContainerApp.identity
+        /// </param>
+        /// <param name="managedBy">
+        /// The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource.
+        /// Serialized Name: ContainerApp.managedBy
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the Container App.
+        /// Serialized Name: ContainerApp.properties.provisioningState
+        /// </param>
+        /// <param name="managedEnvironmentId">
+        /// Deprecated. Resource ID of the Container App&apos;s environment.
+        /// Serialized Name: ContainerApp.properties.managedEnvironmentId
+        /// </param>
+        /// <param name="environmentId">
+        /// Resource ID of environment.
+        /// Serialized Name: ContainerApp.properties.environmentId
+        /// </param>
+        /// <param name="workloadProfileName">
+        /// Workload profile name to pin for container app execution.
+        /// Serialized Name: ContainerApp.properties.workloadProfileName
+        /// </param>
+        /// <param name="latestRevisionName">
+        /// Name of the latest revision of the Container App.
+        /// Serialized Name: ContainerApp.properties.latestRevisionName
+        /// </param>
+        /// <param name="latestReadyRevisionName">
+        /// Name of the latest ready revision of the Container App.
+        /// Serialized Name: ContainerApp.properties.latestReadyRevisionName
+        /// </param>
+        /// <param name="latestRevisionFqdn">
+        /// Fully Qualified Domain Name of the latest revision of the Container App.
+        /// Serialized Name: ContainerApp.properties.latestRevisionFqdn
+        /// </param>
+        /// <param name="customDomainVerificationId">
+        /// Id used to verify domain name ownership
+        /// Serialized Name: ContainerApp.properties.customDomainVerificationId
+        /// </param>
+        /// <param name="configuration">
+        /// Non versioned Container App configuration properties.
+        /// Serialized Name: ContainerApp.properties.configuration
+        /// </param>
+        /// <param name="template">
+        /// Container App versioned application definition.
+        /// Serialized Name: ContainerApp.properties.template
+        /// </param>
+        /// <param name="outboundIPAddressList">
+        /// Outbound IP Addresses for container app.
+        /// Serialized Name: ContainerApp.properties.outboundIpAddresses
+        /// </param>
+        /// <param name="eventStreamEndpoint">
+        /// The endpoint of the eventstream of the container app.
+        /// Serialized Name: ContainerApp.properties.eventStreamEndpoint
+        /// </param>
+        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, string managedBy, ContainerAppProvisioningState? provisioningState, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileName, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Identity = identity;
+            ManagedBy = managedBy;
             ProvisioningState = provisioningState;
             ManagedEnvironmentId = managedEnvironmentId;
             EnvironmentId = environmentId;
-            WorkloadProfileType = workloadProfileType;
+            WorkloadProfileName = workloadProfileName;
             LatestRevisionName = latestRevisionName;
             LatestReadyRevisionName = latestReadyRevisionName;
             LatestRevisionFqdn = latestRevisionFqdn;
@@ -66,33 +114,80 @@ namespace Azure.ResourceManager.AppContainers
             EventStreamEndpoint = eventStreamEndpoint;
         }
 
-        /// <summary> The complex type of the extended location. </summary>
+        /// <summary>
+        /// The complex type of the extended location.
+        /// Serialized Name: ContainerApp.extendedLocation
+        /// </summary>
         public ContainerAppExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </summary>
+        /// <summary>
+        /// managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code.
+        /// Serialized Name: ContainerApp.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Provisioning state of the Container App. </summary>
+        /// <summary>
+        /// The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource.
+        /// Serialized Name: ContainerApp.managedBy
+        /// </summary>
+        public string ManagedBy { get; set; }
+        /// <summary>
+        /// Provisioning state of the Container App.
+        /// Serialized Name: ContainerApp.properties.provisioningState
+        /// </summary>
         public ContainerAppProvisioningState? ProvisioningState { get; }
-        /// <summary> Deprecated. Resource ID of the Container App&apos;s environment. </summary>
+        /// <summary>
+        /// Deprecated. Resource ID of the Container App&apos;s environment.
+        /// Serialized Name: ContainerApp.properties.managedEnvironmentId
+        /// </summary>
         public ResourceIdentifier ManagedEnvironmentId { get; set; }
-        /// <summary> Resource ID of environment. </summary>
+        /// <summary>
+        /// Resource ID of environment.
+        /// Serialized Name: ContainerApp.properties.environmentId
+        /// </summary>
         public ResourceIdentifier EnvironmentId { get; set; }
-        /// <summary> Workload profile type to pin for container app execution. </summary>
-        public string WorkloadProfileType { get; set; }
-        /// <summary> Name of the latest revision of the Container App. </summary>
+        /// <summary>
+        /// Workload profile name to pin for container app execution.
+        /// Serialized Name: ContainerApp.properties.workloadProfileName
+        /// </summary>
+        public string WorkloadProfileName { get; set; }
+        /// <summary>
+        /// Name of the latest revision of the Container App.
+        /// Serialized Name: ContainerApp.properties.latestRevisionName
+        /// </summary>
         public string LatestRevisionName { get; }
-        /// <summary> Name of the latest ready revision of the Container App. </summary>
+        /// <summary>
+        /// Name of the latest ready revision of the Container App.
+        /// Serialized Name: ContainerApp.properties.latestReadyRevisionName
+        /// </summary>
         public string LatestReadyRevisionName { get; }
-        /// <summary> Fully Qualified Domain Name of the latest revision of the Container App. </summary>
+        /// <summary>
+        /// Fully Qualified Domain Name of the latest revision of the Container App.
+        /// Serialized Name: ContainerApp.properties.latestRevisionFqdn
+        /// </summary>
         public string LatestRevisionFqdn { get; }
-        /// <summary> Id used to verify domain name ownership. </summary>
+        /// <summary>
+        /// Id used to verify domain name ownership
+        /// Serialized Name: ContainerApp.properties.customDomainVerificationId
+        /// </summary>
         public string CustomDomainVerificationId { get; }
-        /// <summary> Non versioned Container App configuration properties. </summary>
+        /// <summary>
+        /// Non versioned Container App configuration properties.
+        /// Serialized Name: ContainerApp.properties.configuration
+        /// </summary>
         public ContainerAppConfiguration Configuration { get; set; }
-        /// <summary> Container App versioned application definition. </summary>
+        /// <summary>
+        /// Container App versioned application definition.
+        /// Serialized Name: ContainerApp.properties.template
+        /// </summary>
         public ContainerAppTemplate Template { get; set; }
-        /// <summary> Outbound IP Addresses for container app. </summary>
+        /// <summary>
+        /// Outbound IP Addresses for container app.
+        /// Serialized Name: ContainerApp.properties.outboundIpAddresses
+        /// </summary>
         public IReadOnlyList<IPAddress> OutboundIPAddressList { get; }
-        /// <summary> The endpoint of the eventstream of the container app. </summary>
+        /// <summary>
+        /// The endpoint of the eventstream of the container app.
+        /// Serialized Name: ContainerApp.properties.eventStreamEndpoint
+        /// </summary>
         public Uri EventStreamEndpoint { get; }
     }
 }

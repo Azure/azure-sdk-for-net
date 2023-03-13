@@ -5,9 +5,14 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App Secret. </summary>
+    /// <summary>
+    /// Container App Secret.
+    /// Serialized Name: ContainerAppSecret
+    /// </summary>
     public partial class ContainerAppSecret
     {
         /// <summary> Initializes a new instance of ContainerAppSecret. </summary>
@@ -16,17 +21,49 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppSecret. </summary>
-        /// <param name="name"> Secret Name. </param>
-        /// <param name="value"> Secret Value. </param>
-        internal ContainerAppSecret(string name, string value)
+        /// <param name="name">
+        /// Secret Name.
+        /// Serialized Name: ContainerAppSecret.name
+        /// </param>
+        /// <param name="value">
+        /// Secret Value.
+        /// Serialized Name: ContainerAppSecret.value
+        /// </param>
+        /// <param name="identity">
+        /// Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity.
+        /// Serialized Name: ContainerAppSecret.identity
+        /// </param>
+        /// <param name="keyVaultUri">
+        /// Azure Key Vault URL pointing to the secret referenced by the container app.
+        /// Serialized Name: ContainerAppSecret.keyVaultUrl
+        /// </param>
+        internal ContainerAppSecret(string name, string value, string identity, Uri keyVaultUri)
         {
             Name = name;
             Value = value;
+            Identity = identity;
+            KeyVaultUri = keyVaultUri;
         }
 
-        /// <summary> Secret Name. </summary>
+        /// <summary>
+        /// Secret Name.
+        /// Serialized Name: ContainerAppSecret.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Secret Value. </summary>
+        /// <summary>
+        /// Secret Value.
+        /// Serialized Name: ContainerAppSecret.value
+        /// </summary>
         public string Value { get; }
+        /// <summary>
+        /// Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity.
+        /// Serialized Name: ContainerAppSecret.identity
+        /// </summary>
+        public string Identity { get; }
+        /// <summary>
+        /// Azure Key Vault URL pointing to the secret referenced by the container app.
+        /// Serialized Name: ContainerAppSecret.keyVaultUrl
+        /// </summary>
+        public Uri KeyVaultUri { get; }
     }
 }

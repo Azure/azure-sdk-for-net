@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of the Azure Active Directory app registration. </summary>
+    /// <summary>
+    /// The configuration settings of the Azure Active Directory app registration.
+    /// Serialized Name: AzureActiveDirectoryRegistration
+    /// </summary>
     public partial class ContainerAppAzureActiveDirectoryRegistrationConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryRegistrationConfiguration. </summary>
@@ -21,25 +24,33 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// When using Azure Active Directory, this value is the URI of the directory tenant, e.g. https://login.microsoftonline.com/v2.0/{tenant-guid}/.
         /// This URI is a case-sensitive identifier for the token issuer.
         /// More information on OpenID Connect Discovery: http://openid.net/specs/openid-connect-discovery-1_0.html
+        /// Serialized Name: AzureActiveDirectoryRegistration.openIdIssuer
         /// </param>
         /// <param name="clientId">
         /// The Client ID of this relying party application, known as the client_id.
         /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or 
         /// other 3rd party OpenID Connect providers.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
+        /// Serialized Name: AzureActiveDirectoryRegistration.clientId
         /// </param>
-        /// <param name="clientSecretSettingName"> The app setting name that contains the client secret of the relying party application. </param>
+        /// <param name="clientSecretSettingName">
+        /// The app setting name that contains the client secret of the relying party application.
+        /// Serialized Name: AzureActiveDirectoryRegistration.clientSecretSettingName
+        /// </param>
         /// <param name="clientSecretCertificateThumbprint">
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
+        /// Serialized Name: AzureActiveDirectoryRegistration.clientSecretCertificateThumbprint
         /// </param>
         /// <param name="clientSecretCertificateSubjectAlternativeName">
         /// An alternative to the client secret thumbprint, that is the subject alternative name of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
+        /// Serialized Name: AzureActiveDirectoryRegistration.clientSecretCertificateSubjectAlternativeName
         /// </param>
         /// <param name="clientSecretCertificateIssuer">
         /// An alternative to the client secret thumbprint, that is the issuer of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
+        /// Serialized Name: AzureActiveDirectoryRegistration.clientSecretCertificateIssuer
         /// </param>
         internal ContainerAppAzureActiveDirectoryRegistrationConfiguration(string openIdIssuer, string clientId, string clientSecretSettingName, string clientSecretCertificateThumbprint, string clientSecretCertificateSubjectAlternativeName, string clientSecretCertificateIssuer)
         {
@@ -56,6 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// When using Azure Active Directory, this value is the URI of the directory tenant, e.g. https://login.microsoftonline.com/v2.0/{tenant-guid}/.
         /// This URI is a case-sensitive identifier for the token issuer.
         /// More information on OpenID Connect Discovery: http://openid.net/specs/openid-connect-discovery-1_0.html
+        /// Serialized Name: AzureActiveDirectoryRegistration.openIdIssuer
         /// </summary>
         public string OpenIdIssuer { get; set; }
         /// <summary>
@@ -63,23 +75,30 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or 
         /// other 3rd party OpenID Connect providers.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
+        /// Serialized Name: AzureActiveDirectoryRegistration.clientId
         /// </summary>
         public string ClientId { get; set; }
-        /// <summary> The app setting name that contains the client secret of the relying party application. </summary>
+        /// <summary>
+        /// The app setting name that contains the client secret of the relying party application.
+        /// Serialized Name: AzureActiveDirectoryRegistration.clientSecretSettingName
+        /// </summary>
         public string ClientSecretSettingName { get; set; }
         /// <summary>
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
+        /// Serialized Name: AzureActiveDirectoryRegistration.clientSecretCertificateThumbprint
         /// </summary>
         public string ClientSecretCertificateThumbprint { get; set; }
         /// <summary>
         /// An alternative to the client secret thumbprint, that is the subject alternative name of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
+        /// Serialized Name: AzureActiveDirectoryRegistration.clientSecretCertificateSubjectAlternativeName
         /// </summary>
         public string ClientSecretCertificateSubjectAlternativeName { get; set; }
         /// <summary>
         /// An alternative to the client secret thumbprint, that is the issuer of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
+        /// Serialized Name: AzureActiveDirectoryRegistration.clientSecretCertificateIssuer
         /// </summary>
         public string ClientSecretCertificateIssuer { get; set; }
     }
