@@ -13,7 +13,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary>
     /// The Azure Communication Services phone numbers client.
     /// </summary>
-    public class PhoneNumbersClient
+    public class PhoneNumbersClient : IPhoneNumbersClient
     {
         internal InternalPhoneNumbersRestClient RestClient { get; }
         private readonly ClientDiagnostics _clientDiagnostics;
