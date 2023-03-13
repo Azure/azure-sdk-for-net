@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppVault : ResourceData
     {
         /// <summary> Vault Name. </summary>
+       // [EditorBrowsable(EditorBrowsableState.Never)]
         public string VaultName { get; }
 
         internal NetAppVault() { }
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="vaultName"> Vault Name. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         internal NetAppVault(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string vaultName) : base(id, name, resourceType, systemData)
         {
             VaultName = vaultName;
