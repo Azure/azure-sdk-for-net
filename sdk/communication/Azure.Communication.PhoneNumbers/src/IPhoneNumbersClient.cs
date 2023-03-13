@@ -85,6 +85,10 @@ namespace Azure.Communication.PhoneNumbers
         SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
             PhoneNumberCapabilities capabilities, PhoneNumberSearchOptions options = null, CancellationToken cancellationToken = default);
 
+        /// <summary> Gets the result of a search </summary>
+        /// <param name="searchId"> The cancellation token to use. </param>
+        AsyncPageable<PhoneNumberSearchResult> GetPhoneNumberSearchResult(string searchId);
+
         /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         AsyncPageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbersAsync(CancellationToken cancellationToken = default);

@@ -798,5 +798,12 @@ namespace Azure.Communication.PhoneNumbers
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
+
+        /// <summary> Gets the result of a search </summary>
+        /// <param name="searchId"> The cancellation token to use. </param>
+        public AsyncPageable<PhoneNumberSearchResult> GetPhoneNumberSearchResult(string searchId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
