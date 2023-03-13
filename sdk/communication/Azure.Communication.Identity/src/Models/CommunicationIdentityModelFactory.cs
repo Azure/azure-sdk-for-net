@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
@@ -9,7 +8,6 @@ namespace Azure.Communication.Identity.Models
     /// <summary>
     /// Model factory that enables mocking for the Identity library.
     /// </summary>
-    [ExcludeFromCodeCoverage]
     public static class CommunicationIdentityModelFactory
     {
         /// <summary>

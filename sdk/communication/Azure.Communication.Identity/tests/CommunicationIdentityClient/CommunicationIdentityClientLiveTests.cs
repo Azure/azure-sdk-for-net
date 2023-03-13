@@ -497,6 +497,23 @@ namespace Azure.Communication.Identity.Tests
             }
         }
 
+        [Test]
+        public void CreateClientWithIncorrectServiceVersionShouldThrow()
+        {
+            try
+            {
+                ServiceVersion invalidVersion = (ServiceVersion)4;
+                CommunicationIdentityClient client = CreateClient(default, invalidVersion);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown.");
+        }
+
         private bool TokenExpirationWithinAllowedDeviation(TimeSpan expectedTokenExpiration, DateTimeOffset tokenExpiresIn, double allowedDeviation, out TimeSpan tokenTimeSpan)
         {
             tokenTimeSpan = tokenExpiresIn - DateTimeOffset.UtcNow;
