@@ -65,7 +65,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             });
 
             // Finally, upload the manifest file
-            UploadManifestResult uploadManifestResult = await client.UploadManifestAsync(manifest, tag);
+            await client.UploadManifestAsync(manifest, tag);
 
             #endregion
 
@@ -138,7 +138,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 #if SNIPPET
             DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
 #endif
-            await client.DeleteManifestAsync(uploadManifestResult.Digest);
+            await client.DeleteManifestAsync(downloadManifestResult.Digest);
             #endregion
         }
 

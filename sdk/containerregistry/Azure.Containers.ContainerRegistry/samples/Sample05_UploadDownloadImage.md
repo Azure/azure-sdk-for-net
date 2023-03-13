@@ -58,7 +58,7 @@ manifest.Layers.Add(new OciDescriptor()
 });
 
 // Finally, upload the manifest file
-UploadManifestResult uploadManifestResult = await client.UploadManifestAsync(manifest, tag);
+await client.UploadManifestAsync(manifest, tag);
 ```
 
 ## Download an OCI Image
@@ -165,7 +165,7 @@ A manifest can be deleted as shown below.  It is also possible to delete a full 
 
 ```C# Snippet:ContainerRegistry_Samples_DeleteManifest
 DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
-await client.DeleteManifestAsync(uploadManifestResult.Digest);
+await client.DeleteManifestAsync(downloadManifestResult.Digest);
 ```
 
 ## Delete a blob
