@@ -1,4 +1,4 @@
-# For details see https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Cadl-Project-Scripts.md
+# For details see https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Typespec-Project-Scripts.md
 
 [CmdletBinding()]
 param (
@@ -6,7 +6,7 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $ProjectDirectory,
     [Parameter(Position=1)]
-    [string] $CadlAdditionalOptions ## addtional cadl emitter options, separated by semicolon if more than one, e.g. option1=value1;option2=value2
+    [string] $TypespecAdditionalOptions ## addtional typespec emitter options, separated by semicolon if more than one, e.g. option1=value1;option2=value2
 )
 
 $ErrorActionPreference = "Stop"
@@ -55,17 +55,17 @@ function NpmInstallForProject([string]$workingDirectory) {
 
 $resolvedProjectDirectory = Resolve-Path $ProjectDirectory
 $emitterName = &$GetEmitterNameFn
-$cadlConfigurationFile = Resolve-Path "$ProjectDirectory/cadl-location.yaml"
+$typespecConfigurationFile = Resolve-Path "$ProjectDirectory/typespec-location.yaml"
 
-Write-Host "Reading configuration from $cadlConfigurationFile"
-$configuration = Get-Content -Path $cadlConfigurationFile -Raw | ConvertFrom-Yaml
+Write-Host "Reading configuration from $typespecConfigurationFile"
+$configuration = Get-Content -Path $typespecConfigurationFile -Raw | ConvertFrom-Yaml
 
 $specSubDirectory = $configuration["directory"]
 $innerFolder = Split-Path $specSubDirectory -Leaf
 
-$tempFolder = "$ProjectDirectory/TempCadlFiles"
+$tempFolder = "$ProjectDirectory/TempTypespecFiles"
 $npmWorkingDir = Resolve-Path $tempFolder/$innerFolder
-$mainCadlFile = If (Test-Path "$npmWorkingDir/client.cadl") { Resolve-Path "$npmWorkingDir/client.cadl" } Else { Resolve-Path "$npmWorkingDir/main.cadl"}
+$mainTypespecFile = If (Test-Path "$npmWorkingDir/client.tsp") { Resolve-Path "$npmWorkingDir/client.tsp" } Else { Resolve-Path "$npmWorkingDir/main.tsp"}
 
 try {
     Push-Location $npmWorkingDir
@@ -79,15 +79,15 @@ try {
             $emitterAdditionalOptions = " $emitterAdditionalOptions"
         }
     }
-    $cadlCompileCommand = "npx cadl compile $mainCadlFile --emit $emitterName$emitterAdditionalOptions"
-    if ($CadlAdditionalOptions) {
-        $options = $CadlAdditionalOptions.Split(";");
+    $typespecCompileCommand = "npx tsp compile $mainTypespecFile --emit $emitterName$emitterAdditionalOptions"
+    if ($TypespecAdditionalOptions) {
+        $options = $TypespecAdditionalOptions.Split(";");
         foreach ($option in $options) {
-            $cadlCompileCommand += " --option $emitterName.$option"
+            $typespecCompileCommand += " --option $emitterName.$option"
         }
     }
-    Write-Host($cadlCompileCommand)
-    Invoke-Expression $cadlCompileCommand
+    Write-Host($typespecCompileCommand)
+    Invoke-Expression $typespecCompileCommand
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
