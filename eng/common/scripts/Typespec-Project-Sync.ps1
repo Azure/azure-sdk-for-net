@@ -1,4 +1,4 @@
-# For details see https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Cadl-Project-Scripts.md
+# For details see https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Typespec-Project-Scripts.md
 
 [CmdletBinding()]
 param (
@@ -86,11 +86,11 @@ function GetSpecCloneDir([string]$projectName) {
     return $createResult
 }
 
-$cadlConfigurationFile = Resolve-Path "$ProjectDirectory/cadl-location.yaml"
-Write-Host "Reading configuration from $cadlConfigurationFile"
-$configuration = Get-Content -Path $cadlConfigurationFile -Raw | ConvertFrom-Yaml
+$typespecConfigurationFile = Resolve-Path "$ProjectDirectory/typespec-location.yaml"
+Write-Host "Reading configuration from $typespecConfigurationFile"
+$configuration = Get-Content -Path $typespecConfigurationFile -Raw | ConvertFrom-Yaml
 
-$pieces = $cadlConfigurationFile.Path.Replace("\","/").Split("/")
+$pieces = $typespecConfigurationFile.Path.Replace("\","/").Split("/")
 $projectName = $pieces[$pieces.Count - 2]
 
 $specSubDirectory = $configuration["directory"]
@@ -118,10 +118,10 @@ if ( $configuration["repo"] -and $configuration["commit"]) {
 }
 
 
-$tempCadlDir = "$ProjectDirectory/TempCadlFiles"
-New-Item $tempCadlDir -Type Directory -Force | Out-Null
+$tempTypespecDir = "$ProjectDirectory/TempTypespecFiles"
+New-Item $tempTypespecDir -Type Directory -Force | Out-Null
 CopySpecToProjectIfNeeded `
     -specCloneRoot $specCloneDir `
     -mainSpecDir $specSubDirectory `
-    -dest $tempCadlDir `
+    -dest $tempTypespecDir `
     -specAdditionalSubDirectories $configuration["additionalDirectories"]
