@@ -1,4 +1,4 @@
-# package ship requirements
+# Azure sdk package ship requirements
 
 Before the library package can be released, you will need to add several requirements manually, including tests, samples, README, and CHANGELOG.
 You can refer to following guideline to add those requirements:
