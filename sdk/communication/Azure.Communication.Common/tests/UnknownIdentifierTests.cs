@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using NUnit.Framework;
 
 namespace Azure.Communication
 {
+    [ExcludeFromCodeCoverage]
     public class UnknownIdentifierTests
     {
         private readonly string _id = "some id";

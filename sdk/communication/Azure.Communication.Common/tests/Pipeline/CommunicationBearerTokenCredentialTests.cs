@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
@@ -9,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Pipeline
 {
+    [ExcludeFromCodeCoverage]
     public class CommunicationBearerTokenCredentialTests
     {
         private const string SampleToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjMyNTAzNjgwMDAwfQ.9i7FNNHHJT8cOzo-yrAUJyBSfJ-tPPk2emcHavOEpWc";

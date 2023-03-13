@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using IScheduledAction = Azure.Communication.ThreadSafeRefreshableAccessTokenCache.IScheduledAction;
 
@@ -12,6 +13,7 @@ namespace Azure.Communication.Identity
     /// Test utility to manipulate time and timers. Pass the UtcNow and Schedule members to the code under test and
     /// call Tick to change the clock and execute any scheduled actions that are due.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     internal class TestClock
     {
         private readonly List<ScheduledAction> _scheduledActions = new();

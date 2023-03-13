@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -9,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Pipeline
 {
+    [ExcludeFromCodeCoverage]
     public abstract class PolicyTestBase
     {
         protected static async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier? responseClassifier = null)

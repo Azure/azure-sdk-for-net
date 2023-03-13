@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -9,6 +10,7 @@ using NUnit.Framework.Internal;
 
 namespace Azure.Communication.Pipeline
 {
+    [ExcludeFromCodeCoverage]
     public class HMACAuthenticationPolicyTests : PolicyTestBase
     {
         private const string SecretKey = "68810419818922fb0263dd6ee4b9c56537dbad914aa7324a119fce26778a286e";

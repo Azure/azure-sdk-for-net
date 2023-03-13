@@ -5,9 +5,11 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using NUnit.Framework;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication
 {
+    [ExcludeFromCodeCoverage]
     public class CommunicationIdentifierTest
     {
         [Test]

@@ -3,7 +3,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.Communication</RootNamespace>
     <Nullable>enable</Nullable>
-    <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Moq" />

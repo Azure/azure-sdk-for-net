@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Tests
 {
+    [ExcludeFromCodeCoverage]
     public class CommunicationTestEnvironment : TestEnvironment
     {
         public const string LiveTestDynamicConnectionStringEnvironmentVariableName = "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING";
