@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.Email
 {
     /// <summary> The error detail. </summary>
-    internal partial class ErrorDetail
+    public partial class ErrorDetail
     {
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
         internal ErrorDetail()

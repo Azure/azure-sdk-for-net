@@ -20,7 +20,7 @@ namespace Azure.Communication.Email
     {
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        private readonly RestClient _restClient;
+        private readonly EmailRestClient _restClient;
 
         /// <summary> Initializes a new instance of EmailClient for mocking. </summary>
         protected EmailClient()
@@ -78,7 +78,7 @@ namespace Azure.Communication.Email
         private EmailClient(Uri endpoint, HttpPipeline httpPipeline, EmailClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            _restClient = new RestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            _restClient = new EmailRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
         private EmailClient(string endpoint, AzureKeyCredential credential, EmailClientOptions options)
