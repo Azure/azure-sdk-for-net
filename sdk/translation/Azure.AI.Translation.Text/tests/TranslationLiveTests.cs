@@ -31,7 +31,7 @@ namespace Azure.AI.Translation.Text.Tests
             IEnumerable<string> inputText = new[] { "Hola mundo" };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
-                await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage).ConfigureAwait(false);
+                await client.TranslateAsync(targetLanguages, inputText, sourceLanguage: fromLanguage).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -65,7 +65,7 @@ namespace Azure.AI.Translation.Text.Tests
             IEnumerable<string> inputText = new[] { "<span class=notranslate>今天是怎么回事是</span>非常可怕的" };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
-                await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage, textType: TextTypes.Html).ConfigureAwait(false);
+                await client.TranslateAsync(targetLanguages, inputText, sourceLanguage: fromLanguage, textType: TextTypes.Html).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -81,7 +81,7 @@ namespace Azure.AI.Translation.Text.Tests
             IEnumerable<string> inputText = new[] { "The word < mstrans:dictionary translation =\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry." };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
-                await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage).ConfigureAwait(false);
+                await client.TranslateAsync(targetLanguages, inputText, sourceLanguage: fromLanguage).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -97,7 +97,7 @@ namespace Azure.AI.Translation.Text.Tests
             IEnumerable<string> inputText = new[] { "hudha akhtabar." };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
-                await client.TranslateAsync(targetLanguages, inputText, from: "ar", fromScript: "Latn", toScript: "Latn").ConfigureAwait(false);
+                await client.TranslateAsync(targetLanguages, inputText, sourceLanguage: "ar", fromScript: "Latn", toScript: "Latn").ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -114,7 +114,7 @@ namespace Azure.AI.Translation.Text.Tests
             IEnumerable<string> inputText = new[] { "ap kaise ho" };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
-                await client.TranslateAsync(targetLanguages, inputText, from: "hi", fromScript: "Latn", toScript: "Latn").ConfigureAwait(false);
+                await client.TranslateAsync(targetLanguages, inputText, sourceLanguage: "hi", fromScript: "Latn", toScript: "Latn").ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Transliteration);
