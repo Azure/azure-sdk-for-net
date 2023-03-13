@@ -129,7 +129,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             foreach (OciDescriptor layerInfo in manifest.Layers)
             {
-                await client.DeleteBlobAsync(uploadLayerResult.Digest);
+                await client.DeleteBlobAsync(layerInfo.Digest);
             }
 
             #endregion

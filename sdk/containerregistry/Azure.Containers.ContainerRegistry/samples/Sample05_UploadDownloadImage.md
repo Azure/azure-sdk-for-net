@@ -178,6 +178,6 @@ OciImageManifest manifest = downloadManifestResult.AsOciManifest();
 
 foreach (OciDescriptor layerInfo in manifest.Layers)
 {
-    await client.DeleteBlobAsync(uploadLayerResult.Digest);
+    await client.DeleteBlobAsync(layerInfo.Digest);
 }
 ```
