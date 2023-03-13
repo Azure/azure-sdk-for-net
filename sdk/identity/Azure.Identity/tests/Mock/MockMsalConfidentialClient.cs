@@ -14,6 +14,7 @@ namespace Azure.Identity.Tests.Mock
         internal Func<string[], string, string, AuthenticationAccount, ValueTask<AuthenticationResult>> SilentFactory { get; set; }
         internal Func<string[], string, string, string, AuthenticationResult> AuthcodeFactory { get; set; }
         internal Func<string[], string, UserAssertion, bool, CancellationToken, ValueTask<AuthenticationResult>> OnBehalfOfFactory { get; set; }
+        public Func<string[], IConfidentialClientApplication> ClientAppFactory { get; set; }
 
         public MockMsalConfidentialClient()
         { }
@@ -36,6 +37,21 @@ namespace Azure.Identity.Tests.Mock
             SilentFactory = (_, _, _, _) => throw exception;
             AuthcodeFactory = (_, _, _, _) => throw exception;
             OnBehalfOfFactory = (_, _, _, _, _) => throw exception;
+        }
+
+         internal ValueTask<IConfidentialClientApplication> CallCreateClientAsync(bool async, CancellationToken cancellationToken)
+        {
+            return CreateClientAsync(async, cancellationToken);
+        }
+
+        protected override ValueTask<IConfidentialClientApplication> CreateClientCoreAsync(string[] clientCapabilities, bool async, CancellationToken cancellationToken)
+        {
+            if (ClientAppFactory == null)
+            {
+                throw new NotImplementedException();
+            }
+
+            return new ValueTask<IConfidentialClientApplication>(ClientAppFactory(clientCapabilities));
         }
 
         public MockMsalConfidentialClient WithClientFactory(Func<string[], string, AuthenticationResult> clientFactory)

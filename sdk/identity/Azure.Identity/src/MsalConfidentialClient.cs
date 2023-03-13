@@ -61,7 +61,15 @@ namespace Azure.Identity
 
         internal string RegionalAuthority { get; } = EnvironmentVariables.AzureRegionalAuthorityName;
 
-        protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
+        protected override ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
+        {
+            string[] clientCapabilities =
+                IdentityCompatSwitches.DisableCP1 ? Array.Empty<string>() : new[] { "CP1" };
+
+            return CreateClientCoreAsync(clientCapabilities, async, cancellationToken);
+        }
+
+        protected virtual async ValueTask<IConfidentialClientApplication> CreateClientCoreAsync(string[] clientCapabilities, bool async, CancellationToken cancellationToken)
         {
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
@@ -82,6 +90,11 @@ namespace Azure.Identity
                 {
                     confClientBuilder.WithInstanceDiscovery(false);
                 }
+            }
+
+            if (clientCapabilities.Length > 0)
+            {
+                confClientBuilder.WithClientCapabilities(clientCapabilities);
             }
 
             if (_clientSecret != null)
