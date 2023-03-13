@@ -42,13 +42,13 @@ sdk\<service name>\<package name>\<package name>.sln
 
 We will generate SDK under the SDK project directory.
 
-***configuration (optional)***
+#### configuration (optional)
 
 You can update `cadl-location.yaml` under sdk project directory to set the cadl project.
 
 You can refer to the [cadl-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Cadl-Project-Scripts.md#cadl-locationyaml) which describes the supported properties in the file.
 
-***Generate Code***
+#### Generate Code
 
 Enter `src` sub-directory of sdk project folder, e.g. /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector/src
 Run `dotnet build /t:GenerateCode`, and the code will be generated under `sdk\<servie name>\<package name>\src\Generated`
