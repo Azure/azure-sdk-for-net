@@ -132,19 +132,19 @@ namespace Azure.ResourceManager.AppService
             });
         }
 
-        private static Mock.ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new Mock.ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
             });
         }
 
-        private static Mock.ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new Mock.ResourceGroupResourceExtensionClient(client, scope);
+                return new ResourceGroupResourceExtensionClient(client, scope);
             });
         }
 
@@ -164,19 +164,19 @@ namespace Azure.ResourceManager.AppService
             });
         }
 
-        private static Mock.SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new Mock.SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
             });
         }
 
-        private static Mock.SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new Mock.SubscriptionResourceExtensionClient(client, scope);
+                return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
 
