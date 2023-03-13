@@ -297,17 +297,13 @@ namespace Azure.ResourceManager.DnsResolver.Mock
     {
         protected DnsForwardingRulesetResourceExtensionClient() { }
         public virtual Azure.Pageable<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> GetDnsForwardingRulesets(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesets(string virtualNetworkName, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> GetDnsForwardingRulesetsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsAsync(string virtualNetworkName, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DnsResolverResourceExtensionClient : Azure.ResourceManager.ArmResource
     {
         protected DnsResolverResourceExtensionClient() { }
         public virtual Azure.Pageable<Azure.ResourceManager.DnsResolver.DnsResolverResource> GetDnsResolvers(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.WritableSubResource> GetDnsResolvers(string virtualNetworkName, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DnsResolver.DnsResolverResource> GetDnsResolversAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.WritableSubResource> GetDnsResolversAsync(string virtualNetworkName, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
     {

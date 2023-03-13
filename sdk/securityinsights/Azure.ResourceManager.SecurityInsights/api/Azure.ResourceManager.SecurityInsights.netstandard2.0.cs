@@ -626,6 +626,13 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.SecurityInsights.Mock
+{
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+    }
+}
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class AlertRuleTemplateDataSource
