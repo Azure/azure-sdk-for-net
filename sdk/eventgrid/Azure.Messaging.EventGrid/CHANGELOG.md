@@ -1,10 +1,10 @@
 # Release History
 
-## 4.14.1 (2023-03-11)
+## 4.14.1 (2023-03-13)
 
 ### Other Changes
 
-- Upgraded dependent `Azure.Core` to `1.30.0`.
+- Upgraded dependent `Azure.Core` to `1.30.0` due to an [issue in `ArrayBackedPropertyBag`](https://github.com/Azure/azure-sdk-for-net/pull/34800) in `Azure.Core` version `1.29.0`.
 
 ## 4.14.0 (2023-03-06)
 
