@@ -381,10 +381,12 @@ namespace Azure.Communication.CallAutomation
         internal ChoiceResult() { }
         public string Label { get { throw null; } }
         public string RecognizedPhrase { get { throw null; } }
+        public override Azure.Communication.CallAutomation.Models.RecognizeResultType ResultType { get { throw null; } }
     }
     public partial class CollectTonesResult : Azure.Communication.CallAutomation.RecognizeResult
     {
         internal CollectTonesResult() { }
+        public override Azure.Communication.CallAutomation.Models.RecognizeResultType ResultType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.DtmfTone> Tones { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -704,6 +706,7 @@ namespace Azure.Communication.CallAutomation
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        public int GetReasonCodeValue() { throw null; }
         public static bool operator ==(Azure.Communication.CallAutomation.ReasonCode left, Azure.Communication.CallAutomation.ReasonCode right) { throw null; }
         public static implicit operator Azure.Communication.CallAutomation.ReasonCode (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.ReasonCode left, Azure.Communication.CallAutomation.ReasonCode right) { throw null; }
@@ -753,6 +756,7 @@ namespace Azure.Communication.CallAutomation
     public abstract partial class RecognizeResult
     {
         protected RecognizeResult() { }
+        public abstract Azure.Communication.CallAutomation.Models.RecognizeResultType ResultType { get; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecordingChannel : System.IEquatable<Azure.Communication.CallAutomation.RecordingChannel>
@@ -960,5 +964,26 @@ namespace Azure.Communication.CallAutomation
     {
         internal UnmuteParticipantsResponse() { }
         public string OperationContext { get { throw null; } }
+    }
+}
+namespace Azure.Communication.CallAutomation.Models
+{
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecognizeResultType : System.IEquatable<Azure.Communication.CallAutomation.Models.RecognizeResultType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecognizeResultType(string value) { throw null; }
+        public static Azure.Communication.CallAutomation.Models.RecognizeResultType ChoiceResult { get { throw null; } }
+        public static Azure.Communication.CallAutomation.Models.RecognizeResultType CollectTonesResult { get { throw null; } }
+        public bool Equals(Azure.Communication.CallAutomation.Models.RecognizeResultType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallAutomation.Models.RecognizeResultType left, Azure.Communication.CallAutomation.Models.RecognizeResultType right) { throw null; }
+        public static implicit operator Azure.Communication.CallAutomation.Models.RecognizeResultType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallAutomation.Models.RecognizeResultType left, Azure.Communication.CallAutomation.Models.RecognizeResultType right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
