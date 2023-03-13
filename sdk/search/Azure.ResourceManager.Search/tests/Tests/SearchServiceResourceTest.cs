@@ -285,18 +285,18 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                DisableLocalAuth = true
+                IsLocalAuthDisabled = true
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             var result = (await SearchResource.GetAsync()).Value;
             Assert.NotNull(result);
-            Assert.IsTrue(result.Data.DisableLocalAuth);
+            Assert.IsTrue(result.Data.IsLocalAuthDisabled);
 
-            data.DisableLocalAuth = false;
+            data.IsLocalAuthDisabled = false;
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
             Assert.NotNull(result);
-            Assert.IsFalse(result.Data.DisableLocalAuth);
+            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
 
             data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
             Assert.NotNull(result);
-            Assert.IsFalse(result.Data.DisableLocalAuth);
+            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
             Assert.IsNotNull(result.Data.AuthOptions);
             Assert.IsNull(result.Data.AuthOptions.AadOrApiKey);
             Assert.IsNotNull(result.Data.AuthOptions.ApiKeyOnly);
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
             Assert.NotNull(result);
-            Assert.IsFalse(result.Data.DisableLocalAuth);
+            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
             Assert.IsNotNull(result.Data.AuthOptions);
             Assert.IsNull(result.Data.AuthOptions.ApiKeyOnly);
             Assert.IsNotNull(result.Data.AuthOptions.AadOrApiKey);
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
             Assert.NotNull(result);
-            Assert.IsFalse(result.Data.DisableLocalAuth);
+            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
             Assert.IsNotNull(result.Data.AuthOptions);
             Assert.IsNull(result.Data.AuthOptions.ApiKeyOnly);
             Assert.IsNotNull(result.Data.AuthOptions.AadOrApiKey);

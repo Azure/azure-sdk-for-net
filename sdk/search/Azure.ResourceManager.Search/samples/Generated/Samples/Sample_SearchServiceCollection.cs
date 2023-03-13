@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Search.Samples
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                DisableLocalAuth = true,
+                IsLocalAuthDisabled = true,
                 Tags =
 {
 ["app-name"] = "My e-commerce app",

@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Search.Samples
             SearchServicePatch patch = new SearchServicePatch(new AzureLocation("placeholder"))
             {
                 ReplicaCount = 2,
-                DisableLocalAuth = true,
+                IsLocalAuthDisabled = true,
                 Tags =
 {
 ["app-name"] = "My e-commerce app",

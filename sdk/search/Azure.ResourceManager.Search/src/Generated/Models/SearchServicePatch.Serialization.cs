@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("encryptionWithCmk"u8);
                 writer.WriteObjectValue(EncryptionWithCmk);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
-                if (DisableLocalAuth != null)
+                if (IsLocalAuthDisabled != null)
                 {
                     writer.WritePropertyName("disableLocalAuth"u8);
-                    writer.WriteBooleanValue(DisableLocalAuth.Value);
+                    writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
                 }
                 else
                 {
