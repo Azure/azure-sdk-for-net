@@ -65,36 +65,22 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             });
 
             // Finally, upload the manifest file
-            await client.UploadManifestAsync(manifest, tag);
+            UploadManifestResult uploadManifestResult = await client.UploadManifestAsync(manifest, tag);
 
             #endregion
-        }
 
-        [Test]
-        [AsyncOnly]
-        public async Task DownloadOciImageAsync()
-        {
-            Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
-
-            // Get the service endpoint from the environment
-            Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
-
-            string repository = "sample-oci-image";
-            string tag = "demo";
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
             Directory.CreateDirectory(path);
-
-            // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-            {
-                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-            });
 
             #region Snippet:ContainerRegistry_Samples_DownloadOciImageAsync
 
             // Download the manifest to obtain the list of files in the image
             DownloadManifestResult result = await client.DownloadManifestAsync(tag);
+#if SNIPPET
             OciImageManifest manifest = result.AsOciManifest();
+#else
+            manifest = result.AsOciManifest();
+#endif
 
             string manifestFile = Path.Combine(path, "manifest.json");
             using (FileStream stream = File.Create(manifestFile))
@@ -112,12 +98,12 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             }
 
             // Download and write out the layers
-            foreach (OciDescriptor layer in manifest.Layers)
+            foreach (OciDescriptor layerInfo in manifest.Layers)
             {
-                string layerFile = Path.Combine(path, TrimSha(layer.Digest));
+                string layerFile = Path.Combine(path, TrimSha(layerInfo.Digest));
                 using (FileStream stream = File.Create(layerFile))
                 {
-                    await client.DownloadBlobToAsync(layer.Digest, stream);
+                    await client.DownloadBlobToAsync(layerInfo.Digest, stream);
                 }
             }
 
@@ -131,7 +117,28 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
                 return digest;
             }
+            #endregion
 
+            #region Snippet:ContainerRegistry_Samples_DeleteBlob
+            DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
+#if SNIPPET
+            OciImageManifest manifest = downloadManifestResult.AsOciManifest();
+#else
+            manifest = downloadManifestResult.AsOciManifest();
+#endif
+
+            foreach (OciDescriptor layerInfo in manifest.Layers)
+            {
+                await client.DeleteBlobAsync(uploadLayerResult.Digest);
+            }
+
+            #endregion
+
+            #region Snippet:ContainerRegistry_Samples_DeleteManifest
+#if SNIPPET
+            DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
+#endif
+            await client.DeleteManifestAsync(uploadManifestResult.Digest);
             #endregion
         }
 
@@ -152,7 +159,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             });
 
-            #region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
+#region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
 
             // Create a manifest file in the Docker v2 Manifest List format
             var manifestList = new
@@ -177,7 +184,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             BinaryData content = BinaryData.FromObjectAsJson(manifestList);
             await client.UploadManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
 
-            #endregion
+#endregion
         }
 
         [Test]
@@ -199,7 +206,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             });
 
-            #region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
+#region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
 
             // Pass multiple media types if the media type of the manifest to download is unknown
             List<ManifestMediaType> mediaTypes = new() {
@@ -217,7 +224,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 Console.WriteLine("Manifest is an OCI index.");
             }
 
-            #endregion
+#endregion
         }
     }
 }

@@ -58,7 +58,7 @@ manifest.Layers.Add(new OciDescriptor()
 });
 
 // Finally, upload the manifest file
-await client.UploadManifestAsync(manifest, tag);
+UploadManifestResult uploadManifestResult = await client.UploadManifestAsync(manifest, tag);
 ```
 
 ## Download an OCI Image
@@ -87,12 +87,12 @@ using (FileStream stream = File.Create(configFile))
 }
 
 // Download and write out the layers
-foreach (OciDescriptor layer in manifest.Layers)
+foreach (OciDescriptor layerInfo in manifest.Layers)
 {
-    string layerFile = Path.Combine(path, TrimSha(layer.Digest));
+    string layerFile = Path.Combine(path, TrimSha(layerInfo.Digest));
     using (FileStream stream = File.Create(layerFile))
     {
-        await client.DownloadBlobToAsync(layer.Digest, stream);
+        await client.DownloadBlobToAsync(layerInfo.Digest, stream);
     }
 }
 
@@ -156,5 +156,28 @@ if (result.MediaType == "application/vnd.docker.distribution.manifest.list.v2+js
 else if (result.MediaType == "application/vnd.oci.image.index.v1+json")
 {
     Console.WriteLine("Manifest is an OCI index.");
+}
+```
+
+## Delete a manifest
+
+A manifest can be deleted as shown below.  It is also possible to delete a full image using the `ContainerRegistryClient` as shown in [Sample 2: Delete Image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample02b_DeleteImagesAsync.md).
+
+```C# Snippet:ContainerRegistry_Samples_DeleteManifest
+DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
+await client.DeleteManifestAsync(uploadManifestResult.Digest);
+```
+
+## Delete a blob
+
+A blob can be deleted as shown below.  It is also possible to delete a full image using the `ContainerRegistryClient` as shown in [Sample 2: Delete Image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample02b_DeleteImagesAsync.md).
+
+```C# Snippet:ContainerRegistry_Samples_DeleteBlob
+DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
+OciImageManifest manifest = downloadManifestResult.AsOciManifest();
+
+foreach (OciDescriptor layerInfo in manifest.Layers)
+{
+    await client.DeleteBlobAsync(uploadLayerResult.Digest);
 }
 ```
