@@ -35,7 +35,7 @@ rename-mapping:
   QueryKey: SearchServiceQueryKey
   ResourceType: SearchServiceResourceType
   SearchEncryptionWithCmk: SearchEncryptionWithCmkEnforcement
-  SearchServiceData.DisableLocalAuth: IsLocalAuthDisabled
+  SearchServiceProperties.disableLocalAuth: isLocalAuthDisabled
   ShareablePrivateLinkResourceProperties: ShareableSearchServicePrivateLinkResourceProperties
   ShareablePrivateLinkResourceType: ShareableSearchServicePrivateLinkResourceType
   SharedPrivateLinkResource: SharedSearchServicePrivateLinkResource
