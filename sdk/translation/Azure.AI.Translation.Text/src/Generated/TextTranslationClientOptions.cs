@@ -14,6 +14,7 @@ namespace Azure.AI.Translation.Text
     public partial class TextTranslationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V3_0;
+        internal const string DefaultRegion = "global";
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
@@ -24,14 +25,18 @@ namespace Azure.AI.Translation.Text
 
         internal string Version { get; }
 
+        internal string Region { get; }
+
         /// <summary> Initializes new instance of TextTranslationClientOptions. </summary>
-        public TextTranslationClientOptions(ServiceVersion version = LatestVersion)
+        public TextTranslationClientOptions(ServiceVersion version = LatestVersion, string region = DefaultRegion)
         {
             Version = version switch
             {
                 ServiceVersion.V3_0 => "3.0",
                 _ => throw new NotSupportedException()
             };
+
+            Region = region;
         }
     }
 }

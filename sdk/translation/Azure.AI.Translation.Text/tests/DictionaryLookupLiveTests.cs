@@ -26,9 +26,9 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task DictionaryLookupSingleInputElement()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<InputText> inputText = new[]
+            IEnumerable<string> inputText = new[]
             {
-                new InputText { Text = "fly" }
+                    "fly"
             };
             Response<IReadOnlyList<DictionaryLookupElement>> response =
                 await client.LookupDictionaryEntriesAsync("en", "es", inputText).ConfigureAwait(false);
@@ -42,10 +42,10 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task DictionaryLookupMultipleInputElements()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<InputText> inputText = new[]
+            IEnumerable<string> inputText = new[]
             {
-                new InputText { Text = "fly" },
-                new InputText { Text = "fox" }
+                "fly",
+                "fox"
             };
             Response<IReadOnlyList<DictionaryLookupElement>> response =
                 await client.LookupDictionaryEntriesAsync("en", "es", inputText).ConfigureAwait(false);

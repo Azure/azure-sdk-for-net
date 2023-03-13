@@ -58,25 +58,14 @@ namespace Azure.AI.Translation.Text
         /// Supported Text Translation endpoints (protocol and hostname, for example:
         ///     https://api.cognitive.microsofttranslator.com).
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public TextTranslationClient(Uri endpoint) : this(endpoint, new TextTranslationClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of TextTranslationClient. </summary>
-        /// <param name="endpoint">
-        /// Supported Text Translation endpoints (protocol and hostname, for example:
-        ///     https://api.cognitive.microsofttranslator.com).
-        /// </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public TextTranslationClient(Uri endpoint, TextTranslationClientOptions options)
+        protected TextTranslationClient(Uri endpoint, TextTranslationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new TextTranslationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }

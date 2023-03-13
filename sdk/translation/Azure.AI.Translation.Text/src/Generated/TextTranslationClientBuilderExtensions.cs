@@ -14,25 +14,25 @@ namespace Microsoft.Extensions.Azure
     /// <summary> Extension methods to add <see cref="TextTranslationClient"/> to client builder. </summary>
     public static partial class TextTranslationClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="TextTranslationClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint">
-        /// Supported Text Translation endpoints (protocol and hostname, for example:
-        ///     https://api.cognitive.microsofttranslator.com).
-        /// </param>
-        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>((options) => new TextTranslationClient(endpoint, options));
-        }
+        ///// <summary> Registers a <see cref="TextTranslationClient"/> instance. </summary>
+        ///// <param name="builder"> The builder to register with. </param>
+        ///// <param name="endpoint">
+        ///// Supported Text Translation endpoints (protocol and hostname, for example:
+        /////     https://api.cognitive.microsofttranslator.com).
+        ///// </param>
+        //public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        //where TBuilder : IAzureClientFactoryBuilder
+        //{
+        //    return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>((options) => new TextTranslationClient(endpoint, options));
+        //}
 
-        /// <summary> Registers a <see cref="TextTranslationClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(configuration);
-        }
+        ///// <summary> Registers a <see cref="TextTranslationClient"/> instance. </summary>
+        ///// <param name="builder"> The builder to register with. </param>
+        ///// <param name="configuration"> The configuration values. </param>
+        //public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        //where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        //{
+        //    return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(configuration);
+        //}
     }
 }

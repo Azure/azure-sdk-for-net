@@ -8,17 +8,14 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Translation.Text
 {
-    internal class GlobalEndpointAuthenticationPolicy : HttpPipelinePolicy
+    internal class TranslatorRegionalEndpointAuthenticationPolicy : HttpPipelinePolicy
     {
-        private const string KEY_HEADER_NAME = "Ocp-Apim-Subscription-Key";
         private const string REGION_HEADER_NAME = "Ocp-Apim-Subscription-Region";
 
-        private readonly AzureKeyCredential key;
         private readonly string region;
 
-        public GlobalEndpointAuthenticationPolicy(AzureKeyCredential key, string region)
+        internal TranslatorRegionalEndpointAuthenticationPolicy(string region)
         {
-            this.key = key;
             this.region = region;
         }
 
@@ -36,7 +33,6 @@ namespace Azure.AI.Translation.Text
 
         private void AddAuthenticationHeaders(HttpMessage message)
         {
-            message.Request.Headers.Add(KEY_HEADER_NAME, key.Key);
             message.Request.Headers.Add(REGION_HEADER_NAME, region);
         }
     }

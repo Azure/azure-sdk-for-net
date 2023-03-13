@@ -25,9 +25,9 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task BreakSentenceWithAutoDetect()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<InputText> inputText = new[]
+            IEnumerable<string> inputText = new[]
             {
-                new InputText { Text = "hello world" }
+                "hello world"
             };
             Response<IReadOnlyList<BreakSentenceElement>> response =
                 await client.FindSentenceBoundariesAsync(inputText).ConfigureAwait(false);
@@ -42,9 +42,9 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task BreakSentenceWithLanguage()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<InputText> inputText = new[]
+            IEnumerable<string> inputText = new[]
             {
-                new InputText { Text = "รวบรวมแผ่นคำตอบ ระยะเวลาของโครงการ วิธีเลือกชายในฝัน หมายเลขซีเรียลของระเบียน วันที่สิ้นสุดของโครงการเมื่อเสร็จสมบูรณ์ ปีที่มีการรวบรวม ทุกคนมีวัฒนธรรมและวิธีคิดเหมือนกัน ได้รับโทษจำคุกตลอดชีวิตใน ฉันลดได้ถึง 55 ปอนด์ได้อย่างไร  ฉันคิดว่าใครๆ ก็ต้องการกำหนดเมนูอาหารส่วนบุคคล" }
+                "รวบรวมแผ่นคำตอบ ระยะเวลาของโครงการ วิธีเลือกชายในฝัน หมายเลขซีเรียลของระเบียน วันที่สิ้นสุดของโครงการเมื่อเสร็จสมบูรณ์ ปีที่มีการรวบรวม ทุกคนมีวัฒนธรรมและวิธีคิดเหมือนกัน ได้รับโทษจำคุกตลอดชีวิตใน ฉันลดได้ถึง 55 ปอนด์ได้อย่างไร  ฉันคิดว่าใครๆ ก็ต้องการกำหนดเมนูอาหารส่วนบุคคล"
             };
             Response<IReadOnlyList<BreakSentenceElement>> response =
                 await client.FindSentenceBoundariesAsync(inputText, language: "th").ConfigureAwait(false);
@@ -61,9 +61,9 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task BreakSentenceWithLanguageAndScript()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<InputText> inputText = new[]
+            IEnumerable<string> inputText = new[]
             {
-                new InputText { Text = "zhè shì gè cè shì。" }
+                "zhè shì gè cè shì。"
             };
             Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputText, language: "zh-Hans", script: "Latn").ConfigureAwait(false);
 
@@ -75,10 +75,10 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task BreakSentenceWithMultipleLanguages()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<InputText> inputText = new[]
+            IEnumerable<string> inputText = new[]
             {
-                new InputText { Text = "hello world" },
-                new InputText { Text = "العالم هو مكان مثير جدا للاهتمام" }
+                "hello world",
+                "العالم هو مكان مثير جدا للاهتمام"
             };
             Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputText).ConfigureAwait(false);
 

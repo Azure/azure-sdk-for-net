@@ -26,9 +26,9 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task VerifyTransliterationTest()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<InputText> inputText = new[]
+            IEnumerable<string> inputText = new[]
             {
-                new InputText { Text = "这里怎么一回事?" }
+                "这里怎么一回事?"
             };
             Response<IReadOnlyList<TransliteratedText>> response =
                 await client.TransliterateAsync("zh-Hans", "Hans", "Latn", inputText).ConfigureAwait(false);
@@ -39,10 +39,10 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task VerifyTransliterationWithMultipleTextArray()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<InputText> inputText = new[]
+            IEnumerable<string> inputText = new[]
             {
-                new InputText { Text = "यहएककसौटीहैयहएककसौटीहै" },
-                new InputText { Text = "यहएककसौटीहै" }
+                "यहएककसौटीहैयहएककसौटीहै",
+                "यहएककसौटीहै"
             };
             Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync("hi", "Deva", "Latn", inputText).ConfigureAwait(false);
 
@@ -55,11 +55,11 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task VerifyTransliterationWithEditDistance()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<InputText> inputText = new[]
+            IEnumerable<string> inputText = new[]
             {
-                new InputText { Text = "gujarat" },
-                new InputText { Text = "hadman" },
-                new InputText { Text = "hukkabar" }
+                "gujarat",
+                "hadman",
+                "hukkabar"
             };
             Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync("gu", "latn", "gujr", inputText).ConfigureAwait(false);
 

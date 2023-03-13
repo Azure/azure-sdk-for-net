@@ -28,10 +28,7 @@ namespace Azure.AI.Translation.Text.Tests
         {
             string fromLanguage = "es";
             IEnumerable<string> targetLanguages = new[] { "cs" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "Hola mundo" }
-            };
+            IEnumerable<string> inputText = new[] { "Hola mundo" };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage).ConfigureAwait(false);
@@ -47,10 +44,7 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task TranslateWithAutoDetect()
         {
             IEnumerable<string> targetLanguages = new[] { "cs" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "This is a test." }
-            };
+            IEnumerable<string> inputText = new[] { "This is a test." };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
@@ -68,10 +62,7 @@ namespace Azure.AI.Translation.Text.Tests
         {
             string fromLanguage = "zh-chs";
             IEnumerable<string> targetLanguages = new[] { "en" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "<span class=notranslate>今天是怎么回事是</span>非常可怕的" }
-            };
+            IEnumerable<string> inputText = new[] { "<span class=notranslate>今天是怎么回事是</span>非常可怕的" };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage, textType: TextTypes.Html).ConfigureAwait(false);
@@ -87,10 +78,7 @@ namespace Azure.AI.Translation.Text.Tests
         {
             string fromLanguage = "en";
             IEnumerable<string> targetLanguages = new[] { "es" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "The word < mstrans:dictionary translation =\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry." }
-            };
+            IEnumerable<string> inputText = new[] { "The word < mstrans:dictionary translation =\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry." };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: fromLanguage).ConfigureAwait(false);
@@ -106,10 +94,7 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task TranslateWithTransliteration()
         {
             IEnumerable<string> targetLanguages = new[] { "zh-Hans" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "hudha akhtabar." }
-            };
+            IEnumerable<string> inputText = new[] { "hudha akhtabar." };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: "ar", fromScript: "Latn", toScript: "Latn").ConfigureAwait(false);
@@ -126,10 +111,7 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task TranslateFromLatinToLatinScript()
         {
             IEnumerable<string> targetLanguages = new[] { "ta" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "ap kaise ho" }
-            };
+            IEnumerable<string> inputText = new[] { "ap kaise ho" };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, from: "hi", fromScript: "Latn", toScript: "Latn").ConfigureAwait(false);
@@ -143,11 +125,11 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task TranslateWithMultipleInputTexts()
         {
             IEnumerable<string> targetLanguages = new[] { "cs" };
-            IEnumerable<InputText> inputText = new[]
+            IEnumerable<string> inputText = new[]
             {
-                new InputText { Text = "This is a test." },
-                new InputText { Text = "Esto es una prueba." },
-                new InputText { Text = "Dies ist ein Test." }
+                "This is a test.",
+                "Esto es una prueba.",
+                "Dies ist ein Test."
             };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
@@ -173,10 +155,7 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task TranslateMultipleTargetLanguages()
         {
             IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "This is a test." }
-            };
+            IEnumerable<string> inputText = new[] { "This is a test." };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
@@ -197,10 +176,7 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task TranslateDifferentTextTypes()
         {
             IEnumerable<string> targetLanguages = new[] { "cs" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "<html><body>This <b>is</b> a test.</body></html>" }
-            };
+            IEnumerable<string> inputText = new[] { "<html><body>This <b>is</b> a test.</body></html>" };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, textType: TextTypes.Html).ConfigureAwait(false);
@@ -219,10 +195,7 @@ namespace Azure.AI.Translation.Text.Tests
             ProfanityActions profanityAction = ProfanityActions.Marked;
             ProfanityMarkers profanityMarkers = ProfanityMarkers.Asterisk;
             IEnumerable<string> targetLanguages = new[] { "zh-cn" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "shit this is fucking crazy" }
-            };
+            IEnumerable<string> inputText = new[] { "shit this is fucking crazy" };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, profanityAction: profanityAction, profanityMarker: profanityMarkers).ConfigureAwait(false);
@@ -239,10 +212,7 @@ namespace Azure.AI.Translation.Text.Tests
         {
             bool includeAlignment = true;
             IEnumerable<string> targetLanguages = new[] { "cs" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "It is a beautiful morning" }
-            };
+            IEnumerable<string> inputText = new[] { "It is a beautiful morning" };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, includeAlignment: includeAlignment).ConfigureAwait(false);
@@ -260,10 +230,7 @@ namespace Azure.AI.Translation.Text.Tests
         {
             bool includeSentenceLength = true;
             IEnumerable<string> targetLanguages = new[] { "fr" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "La réponse se trouve dans la traduction automatique. La meilleure technologie de traduction automatique ne peut pas toujours fournir des traductions adaptées à un site ou des utilisateurs comme un être humain. Il suffit de copier et coller un extrait de code n'importe où." }
-            };
+            IEnumerable<string> inputText = new[] { "La réponse se trouve dans la traduction automatique. La meilleure technologie de traduction automatique ne peut pas toujours fournir des traductions adaptées à un site ou des utilisateurs comme un être humain. Il suffit de copier et coller un extrait de code n'importe où." };
             TextTranslationClient client = GetClient();
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText, includeSentenceLength: includeSentenceLength).ConfigureAwait(false);
@@ -281,10 +248,7 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task TranslateWithCustomEndpoint()
         {
             IEnumerable<string> targetLanguages = new[] { "cs" };
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "It is a beautiful morning" }
-            };
+            IEnumerable<string> inputText = new[] { "It is a beautiful morning" };
             TextTranslationClient client = GetClient(endpoint: new Uri(TestEnvironment.CustomEndpoint));
             Response<IReadOnlyList<TranslatedTextElement>> response =
                 await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
@@ -304,10 +268,7 @@ namespace Azure.AI.Translation.Text.Tests
             TokenCredential token = new StaticAccessTokenCredential(new AccessToken(accessToken, DateTimeOffset.Now.AddDays(1)));
 
             TextTranslationClient client = GetClient(token: token);
-            IEnumerable<InputText> inputText = new[]
-            {
-                new InputText { Text = "This is a test." }
-            };
+            IEnumerable<string> inputText = new[] { "This is a test." };
             Response<IReadOnlyList<TranslatedTextElement>> translate =
                 await client.TranslateAsync(new[] { "cs" }, inputText).ConfigureAwait(false);
 

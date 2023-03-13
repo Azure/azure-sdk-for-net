@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Text.Tests
             TextTranslationClientOptions options = default)
         {
             endpoint ??= new Uri(TestEnvironment.Endpoint);
-            options ??= new TextTranslationClientOptions()
+            options ??= new TextTranslationClientOptions(region: region)
             {
                 Diagnostics =
                 {
@@ -36,6 +36,7 @@ namespace Azure.AI.Translation.Text.Tests
                     IsLoggingContentEnabled = true
                 }
             };
+
             if (token != null)
             {
                 return InstrumentClient(new TextTranslationClient(endpoint, token, InstrumentClientOptions(options)));
@@ -44,7 +45,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
                 region ??= TestEnvironment.Region;
-                return InstrumentClient(new TextTranslationClient(endpoint, credential, region, InstrumentClientOptions(options)));
+                return InstrumentClient(new TextTranslationClient(endpoint, credential, InstrumentClientOptions(options)));
             }
         }
 
