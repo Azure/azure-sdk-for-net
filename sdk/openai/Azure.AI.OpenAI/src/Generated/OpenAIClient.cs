@@ -100,6 +100,7 @@ namespace Azure.AI.OpenAI
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
+
         /// <summary> Return the embeddings for a given prompt. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="embeddingsOptions"> Schema to create a prompt completion from a deployment. </param>
