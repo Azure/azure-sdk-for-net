@@ -70,7 +70,6 @@ namespace Azure.Communication.Identity
 }
 namespace Azure.Communication.Identity.Models
 {
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public static partial class CommunicationIdentityModelFactory
     {
         public static Azure.Communication.Identity.CommunicationUserIdentifierAndToken CommunicationUserIdentifierAndToken(Azure.Communication.CommunicationUserIdentifier user, Azure.Core.AccessToken accessToken) { throw null; }
