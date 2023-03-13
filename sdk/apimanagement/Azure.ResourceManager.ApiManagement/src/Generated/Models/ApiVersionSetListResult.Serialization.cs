@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiVersionSetListResult DeserializeApiVersionSetListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiVersionSetData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

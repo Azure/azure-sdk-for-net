@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static PrivateEndpoint DeserializePrivateEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlServerPrivateEndpointConnectionProperties DeserializeMySqlServerPrivateEndpointConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<MySqlServerPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<MySqlPrivateEndpointProvisioningState> provisioningState = default;

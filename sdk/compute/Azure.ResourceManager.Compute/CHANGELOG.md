@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Added new properties `ComputerName`, `OSName`, `OSVersion` and `HyperVGeneration` to `VirtualMachineScaleSetVmInstanceView` class
+- Added new value `StandardSsdLrs` to `ImageStorageAccountType`
+
 ### Breaking Changes
+
+- Class `VirtualMachineScaleSetNetworkConfiguration` and `VirtualMachineScaleSetIPConfiguration` no longer have the property `Id`
 
 ### Bugs Fixed
 

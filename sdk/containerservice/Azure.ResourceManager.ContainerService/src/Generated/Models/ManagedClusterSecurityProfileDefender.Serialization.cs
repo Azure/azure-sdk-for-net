@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterSecurityProfileDefender DeserializeManagedClusterSecurityProfileDefender(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> logAnalyticsWorkspaceResourceId = default;
             Optional<ManagedClusterSecurityProfileDefenderSecurityMonitoring> securityMonitoring = default;
             foreach (var property in element.EnumerateObject())

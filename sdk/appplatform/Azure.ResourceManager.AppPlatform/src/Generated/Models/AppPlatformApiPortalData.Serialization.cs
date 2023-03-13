@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformApiPortalData DeserializeAppPlatformApiPortalData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformApiPortalProperties> properties = default;
             Optional<AppPlatformSku> sku = default;
             ResourceIdentifier id = default;

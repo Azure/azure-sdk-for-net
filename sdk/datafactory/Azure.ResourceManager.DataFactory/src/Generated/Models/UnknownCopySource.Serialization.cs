@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static UnknownCopySource DeserializeUnknownCopySource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<BinaryData> sourceRetryCount = default;
             Optional<BinaryData> sourceRetryWait = default;

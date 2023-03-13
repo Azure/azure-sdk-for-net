@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static AvroFormatSerialization DeserializeAvroFormatSerialization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> properties = default;
             EventSerializationType type = default;
             foreach (var property in element.EnumerateObject())

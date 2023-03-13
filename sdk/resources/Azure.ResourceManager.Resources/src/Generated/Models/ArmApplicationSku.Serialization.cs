@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationSku DeserializeArmApplicationSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> tier = default;
             Optional<string> size = default;

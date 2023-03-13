@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static AsymmetricEncryptedSecret DeserializeAsymmetricEncryptedSecret(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string value = default;
             Optional<string> encryptionCertThumbprint = default;
             DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm = default;

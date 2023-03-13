@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownDistributionConfiguration DeserializeUnknownDistributionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DistributionType distributionType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

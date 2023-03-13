@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteLegSummary DeserializeRouteLegSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> lengthInMeters = default;
             Optional<int> travelTimeInSeconds = default;
             Optional<int> trafficDelayInSeconds = default;

@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmentProperties DeserializeIntegrationServiceEnvironmentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicWorkflowProvisioningState> provisioningState = default;
             Optional<LogicWorkflowState> state = default;
             Optional<string> integrationServiceEnvironmentId = default;

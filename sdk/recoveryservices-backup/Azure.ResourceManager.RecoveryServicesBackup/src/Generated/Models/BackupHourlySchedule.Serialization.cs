@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupHourlySchedule DeserializeBackupHourlySchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> interval = default;
             Optional<DateTimeOffset> scheduleWindowStartTime = default;
             Optional<int> scheduleWindowDuration = default;

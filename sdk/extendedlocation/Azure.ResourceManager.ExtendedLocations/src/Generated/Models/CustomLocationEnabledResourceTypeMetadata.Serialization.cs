@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 
         internal static CustomLocationEnabledResourceTypeMetadata DeserializeCustomLocationEnabledResourceTypeMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiVersion = default;
             Optional<string> resourceProviderNamespace = default;
             Optional<string> resourceType = default;

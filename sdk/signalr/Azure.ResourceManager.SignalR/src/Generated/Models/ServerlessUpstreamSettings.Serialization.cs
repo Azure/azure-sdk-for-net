@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static ServerlessUpstreamSettings DeserializeServerlessUpstreamSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SignalRUpstreamTemplate>> templates = default;
             foreach (var property in element.EnumerateObject())
             {

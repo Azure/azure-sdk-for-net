@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static GlobalValidation DeserializeGlobalValidation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> requireAuthentication = default;
             Optional<UnauthenticatedClientActionV2> unauthenticatedClientAction = default;
             Optional<string> redirectToProvider = default;

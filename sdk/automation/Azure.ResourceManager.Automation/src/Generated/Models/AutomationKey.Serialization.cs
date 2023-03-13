@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationKey DeserializeAutomationKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationKeyName> keyName = default;
             Optional<AutomationKeyPermission> permissions = default;
             Optional<string> value = default;

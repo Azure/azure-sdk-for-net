@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static AvailableOperations DeserializeAvailableOperations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ResourceOperation>> value = default;
             foreach (var property in element.EnumerateObject())
             {

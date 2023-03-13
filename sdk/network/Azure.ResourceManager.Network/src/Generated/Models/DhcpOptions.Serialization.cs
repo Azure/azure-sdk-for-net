@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static DhcpOptions DeserializeDhcpOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> dnsServers = default;
             foreach (var property in element.EnumerateObject())
             {

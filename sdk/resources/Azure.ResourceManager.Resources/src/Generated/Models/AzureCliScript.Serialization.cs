@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportingScriptUris)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
@@ -110,6 +115,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static AzureCliScript DeserializeAzureCliScript(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArmDeploymentScriptManagedIdentity> identity = default;
             AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -284,7 +293,14 @@ namespace Azure.ResourceManager.Resources.Models
                             List<Uri> array = new List<Uri>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new Uri(item.GetString()));
+                                }
                             }
                             supportingScriptUris = array;
                             continue;

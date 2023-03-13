@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static AgentConfiguration DeserializeAgentConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> proxyUrl = default;
             Optional<IReadOnlyList<string>> incomingConnectionsPorts = default;
             Optional<IReadOnlyList<ConfigurationExtension>> extensionsAllowList = default;

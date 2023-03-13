@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ContainerAppCustomHostnameAnalysisResult DeserializeContainerAppCustomHostnameAnalysisResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostName = default;
             Optional<bool> isHostnameAlreadyVerified = default;
             Optional<ContainerAppDnsVerificationTestResult> customDomainVerificationTest = default;

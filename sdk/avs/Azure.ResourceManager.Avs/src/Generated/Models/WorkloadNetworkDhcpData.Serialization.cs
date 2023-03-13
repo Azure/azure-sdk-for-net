@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Avs
 
         internal static WorkloadNetworkDhcpData DeserializeWorkloadNetworkDhcpData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WorkloadNetworkDhcpEntity> properties = default;
             ResourceIdentifier id = default;
             string name = default;

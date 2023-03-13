@@ -18,6 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly string _instrumentationKey;
         private readonly AzureMonitorPersistentStorage? _persistentStorage;
         private AzureMonitorResource? _resource;
+        private bool _disposed;
 
         public AzureMonitorTraceExporter(AzureMonitorExporterOptions options, TokenCredential? credential = null) : this(TransmitterFactory.Instance.Get(options, credential))
         {
@@ -62,6 +63,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return exportResult;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _transmitter?.Dispose();
+                }
+
+                _disposed = true;
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

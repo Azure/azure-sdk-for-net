@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBCollectionResourceInfo DeserializeMongoDBCollectionResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<IDictionary<string, string>> shardKey = default;
             Optional<IList<MongoDBIndex>> indexes = default;

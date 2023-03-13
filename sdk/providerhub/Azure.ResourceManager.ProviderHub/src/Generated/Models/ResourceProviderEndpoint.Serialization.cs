@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static ResourceProviderEndpoint DeserializeResourceProviderEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<Uri> endpointUri = default;

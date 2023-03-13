@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static EntityReference DeserializeEntityReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationRuntimeEntityReferenceType> type = default;
             Optional<string> referenceName = default;
             foreach (var property in element.EnumerateObject())

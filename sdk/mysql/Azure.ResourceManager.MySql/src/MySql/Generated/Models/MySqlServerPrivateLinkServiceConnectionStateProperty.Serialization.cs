@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlServerPrivateLinkServiceConnectionStateProperty DeserializeMySqlServerPrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MySqlPrivateLinkServiceConnectionStateStatus status = default;
             string description = default;
             Optional<MySqlPrivateLinkServiceConnectionStateRequiredAction> actionsRequired = default;

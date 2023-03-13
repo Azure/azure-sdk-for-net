@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabVirtualMachineCredential DeserializeLabVirtualMachineCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string username = default;
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())

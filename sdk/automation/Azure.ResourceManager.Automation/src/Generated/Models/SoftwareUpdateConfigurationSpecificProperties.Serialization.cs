@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static SoftwareUpdateConfigurationSpecificProperties DeserializeSoftwareUpdateConfigurationSpecificProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SoftwareUpdateConfigurationOperatingSystemType operatingSystem = default;
             Optional<WindowsUpdateConfigurationProperties> windows = default;
             Optional<LinuxUpdateConfigurationProperties> linux = default;

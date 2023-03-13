@@ -97,6 +97,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static JsonSink DeserializeJsonSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreWriteSettings> storeSettings = default;
             Optional<JsonWriteSettings> formatSettings = default;
             string type = default;

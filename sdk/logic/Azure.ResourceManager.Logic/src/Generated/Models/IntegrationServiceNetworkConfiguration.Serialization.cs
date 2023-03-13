@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceNetworkConfiguration DeserializeIntegrationServiceNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> virtualNetworkAddressSpace = default;
             Optional<IntegrationServiceEnvironmentAccessEndpoint> accessEndpoint = default;
             Optional<IList<LogicResourceReference>> subnets = default;

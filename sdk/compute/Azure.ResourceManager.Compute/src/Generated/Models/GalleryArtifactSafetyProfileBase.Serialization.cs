@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryArtifactSafetyProfileBase DeserializeGalleryArtifactSafetyProfileBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> allowDeletionOfReplicatedLocations = default;
             foreach (var property in element.EnumerateObject())
             {

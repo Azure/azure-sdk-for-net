@@ -33,5 +33,21 @@ namespace Microsoft.Azure.Management.Compute.Models
             DeleteOption = deleteOption;
             CustomInit();
         }
+
+        public VirtualMachineScaleSetUpdateNetworkConfiguration(string id = default(string), string name = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? disableTcpStateTracking = default(bool?), bool? enableFpga = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default(IList<VirtualMachineScaleSetUpdateIPConfiguration>), bool? enableIPForwarding = default(bool?), string deleteOption = default(string))
+            : base(id)
+        {
+            Name = name;
+            Primary = primary;
+            EnableAcceleratedNetworking = enableAcceleratedNetworking;
+            DisableTcpStateTracking = disableTcpStateTracking;
+            EnableFpga = enableFpga;
+            NetworkSecurityGroup = networkSecurityGroup;
+            DnsSettings = dnsSettings;
+            IpConfigurations = ipConfigurations;
+            EnableIPForwarding = enableIPForwarding;
+            DeleteOption = deleteOption;
+            CustomInit();
+        }
     }
 }

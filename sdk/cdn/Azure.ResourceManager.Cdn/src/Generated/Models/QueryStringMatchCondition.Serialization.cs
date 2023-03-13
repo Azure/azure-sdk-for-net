@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static QueryStringMatchCondition DeserializeQueryStringMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             QueryStringMatchConditionType typeName = default;
             QueryStringOperator @operator = default;
             Optional<bool> negateCondition = default;

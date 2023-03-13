@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationRefundResult DeserializeReservationRefundResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<ReservationRefundResponseProperties> properties = default;
             foreach (var property in element.EnumerateObject())

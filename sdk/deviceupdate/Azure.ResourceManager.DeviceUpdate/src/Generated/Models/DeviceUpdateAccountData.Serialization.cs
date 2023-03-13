@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         internal static DeviceUpdateAccountData DeserializeDeviceUpdateAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

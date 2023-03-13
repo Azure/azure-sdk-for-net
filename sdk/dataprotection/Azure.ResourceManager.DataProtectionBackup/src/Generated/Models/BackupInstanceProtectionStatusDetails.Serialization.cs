@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static BackupInstanceProtectionStatusDetails DeserializeBackupInstanceProtectionStatusDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResponseError> errorDetails = default;
             Optional<BackupInstanceProtectionStatus> status = default;
             foreach (var property in element.EnumerateObject())

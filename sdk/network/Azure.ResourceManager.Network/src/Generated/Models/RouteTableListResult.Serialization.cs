@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static RouteTableListResult DeserializeRouteTableListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RouteTableData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

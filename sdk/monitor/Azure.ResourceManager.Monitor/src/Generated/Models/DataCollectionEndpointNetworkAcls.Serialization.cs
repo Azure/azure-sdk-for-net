@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataCollectionEndpointNetworkAcls DeserializeDataCollectionEndpointNetworkAcls(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MonitorPublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {

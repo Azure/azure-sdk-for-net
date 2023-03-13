@@ -1,14 +1,21 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.2 (2023-03-11)
 
-### Features Added
+### Other Changes
 
-### Breaking Changes
+- Upgraded dependent `Azure.Core` to `1.30.0`.
+
+## 1.1.1 (2023-03-06)
 
 ### Bugs Fixed
 
+- Fixed the serilization issue for properties `MaintenanceConfigurationData.StartOn` and `MaintenanceConfigurationData.ExpireOn`.
+- Fixed the incorrect response from `MaintenanceConfigurationResource.Delete` operation.
+
 ### Other Changes
+
+- Add test cases.
 
 ## 1.1.0 (2023-02-13)
 

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static FileShareProvisionIlrContent DeserializeFileShareProvisionIlrContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryPointId = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
             string objectType = default;

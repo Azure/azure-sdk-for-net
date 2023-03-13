@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
 
         internal static ResourceProperties DeserializeResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<ETag> etag = default;
             foreach (var property in element.EnumerateObject())

@@ -130,8 +130,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     DiagnosticProperty.DiagnosticNamespace,
                     DiagnosticProperty.ResourceProviderNamespace,
                     DiagnosticProperty.ServiceBusServiceContext,
-                    _batchReceiver.Value.EntityPath,
-                    _batchReceiver.Value.FullyQualifiedNamespace));
+                    _batchReceiver.Value.FullyQualifiedNamespace,
+                    _batchReceiver.Value.EntityPath));
 
             if (concurrencyManager.Enabled)
             {

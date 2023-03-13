@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.Compute
 
         internal static DedicatedHostGroupData DeserializeDedicatedHostGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> zones = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

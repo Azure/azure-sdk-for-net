@@ -58,6 +58,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CustomEntityAlias DeserializeCustomEntityAlias(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             Optional<bool?> caseSensitive = default;
             Optional<bool?> accentSensitive = default;

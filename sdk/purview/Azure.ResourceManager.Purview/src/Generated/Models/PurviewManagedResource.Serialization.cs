@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Purview.Models
     {
         internal static PurviewManagedResource DeserializePurviewManagedResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> eventHubNamespace = default;
             Optional<ResourceIdentifier> resourceGroup = default;
             Optional<ResourceIdentifier> storageAccount = default;

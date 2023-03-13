@@ -129,28 +129,6 @@ namespace Azure.AI.TextAnalytics
         internal ResolutionKind ResolutionKind { get; set; }
     }
 
-    [CodeGenModel("BooleanResolution")]
-    public partial class BooleanResolution
-    {
-        internal BooleanResolution(bool value)
-        {
-            Value = value;
-            ResolutionKind = ResolutionKind.BooleanResolution;
-        }
-
-        internal BooleanResolution(ResolutionKind resolutionKind, bool value) : base(resolutionKind)
-        {
-            Value = value;
-            ResolutionKind = resolutionKind;
-        }
-
-        /// <summary>
-        /// Gets or sets the value.
-        /// </summary>
-        [CodeGenMember("Value")]
-        public bool Value { get; }
-    }
-
     [CodeGenModel("CurrencyResolution")]
     public partial class CurrencyResolution
     {

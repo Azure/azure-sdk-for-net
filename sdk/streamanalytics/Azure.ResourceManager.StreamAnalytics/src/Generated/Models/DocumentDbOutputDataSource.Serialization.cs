@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static DocumentDbOutputDataSource DeserializeDocumentDbOutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> accountId = default;
             Optional<string> accountKey = default;

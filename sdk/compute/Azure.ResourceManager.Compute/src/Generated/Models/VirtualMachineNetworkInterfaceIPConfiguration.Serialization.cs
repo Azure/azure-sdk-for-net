@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineNetworkInterfaceIPConfiguration DeserializeVirtualMachineNetworkInterfaceIPConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<WritableSubResource> subnet = default;
             Optional<bool> primary = default;

@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Relay
 
         internal static RelayNamespaceData DeserializeRelayNamespaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RelaySku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

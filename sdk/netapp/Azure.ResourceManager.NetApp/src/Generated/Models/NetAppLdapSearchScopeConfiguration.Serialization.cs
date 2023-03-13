@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppLdapSearchScopeConfiguration DeserializeNetAppLdapSearchScopeConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userDN = default;
             Optional<string> groupDN = default;
             Optional<string> groupMembershipFilter = default;

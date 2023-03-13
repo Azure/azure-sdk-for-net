@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     {
         internal static AgFoodPlatformPrivateEndpointConnectionListResult DeserializeAgFoodPlatformPrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AgFoodPlatformPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

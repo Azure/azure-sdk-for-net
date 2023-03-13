@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedInstanceVcoresCapability DeserializeManagedInstanceVcoresCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> value = default;
             Optional<MaxSizeCapability> includedMaxSize = default;

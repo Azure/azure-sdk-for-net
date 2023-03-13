@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightClusterConfigurations DeserializeHDInsightClusterConfigurations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, IDictionary<string, string>>> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -28,12 +32,19 @@ namespace Azure.ResourceManager.HDInsight.Models
                     Dictionary<string, IDictionary<string, string>> dictionary = new Dictionary<string, IDictionary<string, string>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        Dictionary<string, string> dictionary0 = new Dictionary<string, string>();
-                        foreach (var property1 in property0.Value.EnumerateObject())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary0.Add(property1.Name, property1.Value.GetString());
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, dictionary0);
+                        else
+                        {
+                            Dictionary<string, string> dictionary0 = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary0.Add(property1.Name, property1.Value.GetString());
+                            }
+                            dictionary.Add(property0.Name, dictionary0);
+                        }
                     }
                     configurations = dictionary;
                     continue;

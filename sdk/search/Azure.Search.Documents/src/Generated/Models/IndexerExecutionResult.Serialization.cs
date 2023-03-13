@@ -16,6 +16,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static IndexerExecutionResult DeserializeIndexerExecutionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IndexerExecutionStatus status = default;
             Optional<IndexerExecutionStatusDetail?> statusDetail = default;
             Optional<IndexerState> currentState = default;

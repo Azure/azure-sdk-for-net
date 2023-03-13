@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkSku DeserializeNetworkSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BastionHostSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {

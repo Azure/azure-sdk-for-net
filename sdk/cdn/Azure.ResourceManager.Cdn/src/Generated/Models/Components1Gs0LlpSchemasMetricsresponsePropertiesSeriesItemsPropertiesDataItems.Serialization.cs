@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems DeserializeComponents1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dateTime = default;
             Optional<float> value = default;
             foreach (var property in element.EnumerateObject())

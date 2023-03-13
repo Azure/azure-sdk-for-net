@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryVstsConfiguration DeserializeFactoryVstsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string projectName = default;
             Optional<Guid> tenantId = default;
             string type = default;

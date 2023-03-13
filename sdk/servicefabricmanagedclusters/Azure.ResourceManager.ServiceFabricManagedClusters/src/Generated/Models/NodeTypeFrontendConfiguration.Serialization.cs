@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static NodeTypeFrontendConfiguration DeserializeNodeTypeFrontendConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NodeTypeFrontendConfigurationIPAddressType> ipAddressType = default;
             Optional<ResourceIdentifier> loadBalancerBackendAddressPoolId = default;
             Optional<ResourceIdentifier> loadBalancerInboundNatPoolId = default;

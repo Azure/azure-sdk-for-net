@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ForecastingTrainingSettings DeserializeForecastingTrainingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ForecastingModel>> allowedTrainingAlgorithms = default;
             Optional<IList<ForecastingModel>> blockedTrainingAlgorithms = default;
             Optional<bool> enableDnnTraining = default;

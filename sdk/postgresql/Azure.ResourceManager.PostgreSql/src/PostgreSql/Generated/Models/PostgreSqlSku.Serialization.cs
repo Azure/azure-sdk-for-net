@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlSku DeserializePostgreSqlSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<PostgreSqlSkuTier> tier = default;
             Optional<int> capacity = default;

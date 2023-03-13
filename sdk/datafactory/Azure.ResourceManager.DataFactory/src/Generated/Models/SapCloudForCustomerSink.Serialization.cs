@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapCloudForCustomerSink DeserializeSapCloudForCustomerSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SapCloudForCustomerSinkWriteBehavior> writeBehavior = default;
             Optional<BinaryData> httpRequestTimeout = default;
             string type = default;

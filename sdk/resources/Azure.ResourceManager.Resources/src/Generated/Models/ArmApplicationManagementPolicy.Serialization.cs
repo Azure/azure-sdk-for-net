@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationManagementPolicy DeserializeArmApplicationManagementPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArmApplicationManagementMode> mode = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static LogAnalyticsConfiguration DeserializeLogAnalyticsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customerId = default;
             Optional<string> sharedKey = default;
             foreach (var property in element.EnumerateObject())

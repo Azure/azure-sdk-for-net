@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static BackupInstanceDeletionInfo DeserializeBackupInstanceDeletionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> deletionTime = default;
             Optional<DateTimeOffset> billingEndDate = default;
             Optional<DateTimeOffset> scheduledPurgeTime = default;

@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DeviceTwinInfo DeserializeDeviceTwinInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> authenticationType = default;
             Optional<float> cloudToDeviceMessageCount = default;
             Optional<string> connectionState = default;

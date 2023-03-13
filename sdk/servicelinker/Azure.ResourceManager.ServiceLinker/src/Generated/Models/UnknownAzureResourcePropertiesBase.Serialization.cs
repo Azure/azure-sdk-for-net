@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static UnknownAzureResourcePropertiesBase DeserializeUnknownAzureResourcePropertiesBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureResourceType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

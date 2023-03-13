@@ -1,20 +1,19 @@
 # Release History
 
-## 4.5.0-beta.2 (Unreleased)
-
-### Features Added
+## 4.5.0 (2023-03-07)
 
 ### Breaking Changes
 
+- Service version "7.4-preview.1" is not supported.
 - Removed `CreateOkpKeyOptions`.
 - Removed `KeyClient.CreateOkpKey` and `CreateOkpKeyAsync`.
 - Removed `KeyType.Okp` and `KeyType.OkpHsm` from `JsonWebKey`.
 - Removed `KeyCurveName.Ed25519`.
 - Removed `SignatureAlgorithm.EdDsa`.
 
-### Bugs Fixed
-
 ### Other Changes
+
+- The default service version is now "7.4".
 
 ## 4.5.0-beta.1 (2022-11-09)
 

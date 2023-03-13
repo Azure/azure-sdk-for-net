@@ -15,6 +15,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static InstancesSuggestResponse DeserializeInstancesSuggestResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<InstancesSearchStringSuggestion>> suggestions = default;
             foreach (var property in element.EnumerateObject())
             {

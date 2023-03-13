@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FileServerWriteSettings DeserializeFileServerWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<BinaryData> maxConcurrentConnections = default;
             Optional<BinaryData> disableMetricsCollection = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         internal static DataLakeStoreUsage DeserializeDataLakeStoreUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataLakeStoreUsageUnit> unit = default;
             Optional<ResourceIdentifier> id = default;
             Optional<int> currentValue = default;

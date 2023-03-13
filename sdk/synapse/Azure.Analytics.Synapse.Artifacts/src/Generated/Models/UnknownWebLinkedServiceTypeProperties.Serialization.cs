@@ -24,6 +24,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static UnknownWebLinkedServiceTypeProperties DeserializeUnknownWebLinkedServiceTypeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object url = default;
             WebAuthenticationType authenticationType = "Unknown";
             foreach (var property in element.EnumerateObject())

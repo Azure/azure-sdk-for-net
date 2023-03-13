@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationRefundResponseProperties DeserializeReservationRefundResponseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> sessionId = default;
             Optional<int> quantity = default;
             Optional<PurchasePrice> billingRefundAmount = default;

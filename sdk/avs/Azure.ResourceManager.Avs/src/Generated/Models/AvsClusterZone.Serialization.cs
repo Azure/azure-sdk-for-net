@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static AvsClusterZone DeserializeAvsClusterZone(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> hosts = default;
             Optional<string> zone = default;
             foreach (var property in element.EnumerateObject())

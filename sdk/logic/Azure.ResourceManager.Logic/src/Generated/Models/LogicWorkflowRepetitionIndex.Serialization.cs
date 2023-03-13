@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRepetitionIndex DeserializeLogicWorkflowRepetitionIndex(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> scopeName = default;
             int itemIndex = default;
             foreach (var property in element.EnumerateObject())

@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static IotSecurityDeviceRecommendation DeserializeIotSecurityDeviceRecommendation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recommendationDisplayName = default;
             Optional<ReportedSeverity> reportedSeverity = default;
             Optional<long> devicesCount = default;

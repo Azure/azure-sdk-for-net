@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static MonitoringSettings DeserializeMonitoringSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
             foreach (var property in element.EnumerateObject())
             {

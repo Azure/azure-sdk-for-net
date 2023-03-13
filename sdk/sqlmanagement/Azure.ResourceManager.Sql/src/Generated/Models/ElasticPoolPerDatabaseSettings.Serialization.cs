@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ElasticPoolPerDatabaseSettings DeserializeElasticPoolPerDatabaseSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> minCapacity = default;
             Optional<double> maxCapacity = default;
             foreach (var property in element.EnumerateObject())

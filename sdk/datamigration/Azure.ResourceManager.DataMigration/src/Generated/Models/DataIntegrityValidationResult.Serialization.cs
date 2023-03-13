@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static DataIntegrityValidationResult DeserializeDataIntegrityValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, string>> failedObjects = default;
             Optional<ValidationError> validationErrors = default;
             foreach (var property in element.EnumerateObject())
