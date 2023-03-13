@@ -375,7 +375,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -421,7 +421,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
             {

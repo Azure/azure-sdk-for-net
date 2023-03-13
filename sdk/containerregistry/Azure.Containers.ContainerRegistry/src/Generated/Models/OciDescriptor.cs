@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> Docker V2 image layer descriptor including config and layers. </summary>
-    public partial class OciBlobDescriptor
+    public partial class OciDescriptor
     {
-        /// <summary> Initializes a new instance of OciBlobDescriptor. </summary>
-        public OciBlobDescriptor()
+        /// <summary> Initializes a new instance of OciDescriptor. </summary>
+        public OciDescriptor()
         {
             Urls = new ChangeTrackingList<Uri>();
         }
 
-        /// <summary> Initializes a new instance of OciBlobDescriptor. </summary>
+        /// <summary> Initializes a new instance of OciDescriptor. </summary>
         /// <param name="mediaType"> Layer media type. </param>
         /// <param name="sizeInBytes"> Layer size. </param>
         /// <param name="digest"> Layer digest. </param>
         /// <param name="urls"> Specifies a list of URIs from which this object may be downloaded. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciBlobDescriptor(string mediaType, long? sizeInBytes, string digest, IList<Uri> urls, OciAnnotations annotations)
+        internal OciDescriptor(string mediaType, long? sizeInBytes, string digest, IList<Uri> urls, OciAnnotations annotations)
         {
             MediaType = mediaType;
             SizeInBytes = sizeInBytes;
@@ -34,5 +34,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Urls = urls;
             Annotations = annotations;
         }
+
+        /// <summary> Layer media type. </summary>
+        public string MediaType { get; set; }
+        /// <summary> Layer size. </summary>
+        public long? SizeInBytes { get; set; }
+        /// <summary> Layer digest. </summary>
+        public string Digest { get; set; }
+        /// <summary> Additional information provided through arbitrary metadata. </summary>
+        public OciAnnotations Annotations { get; set; }
     }
 }
