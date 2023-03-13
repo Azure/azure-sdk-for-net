@@ -37,7 +37,6 @@ namespace Azure.AI.OpenAI
         {
         }
 
-
         private static RequestContext DefaultRequestContext = new RequestContext();
         internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
         {
