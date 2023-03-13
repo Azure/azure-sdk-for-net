@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// A Class representing a SecurityInsightsIncident along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsIncidentResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsIncidentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> using the GetSecurityInsightsIncident method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSecurityInsightsIncident method.
     /// </summary>
     public partial class SecurityInsightsIncidentResource : ArmResource
     {
