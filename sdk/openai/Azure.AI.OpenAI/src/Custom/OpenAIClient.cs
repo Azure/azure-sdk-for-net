@@ -169,7 +169,7 @@ namespace Azure.AI.OpenAI
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEmbeddingsRequest(content, context);
+                using HttpMessage message = CreateGetEmbeddingsRequest(DeploymentId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -193,7 +193,7 @@ namespace Azure.AI.OpenAI
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEmbeddingsRequest(content, context);
+                using HttpMessage message = CreateGetEmbeddingsRequest(DeploymentId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -229,7 +229,7 @@ namespace Azure.AI.OpenAI
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCompletionsRequest(content, context);
+                using HttpMessage message = CreateGetCompletionsRequest(DeploymentId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -253,7 +253,7 @@ namespace Azure.AI.OpenAI
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCompletionsRequest(content, context);
+                using HttpMessage message = CreateGetCompletionsRequest(DeploymentId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -280,7 +280,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetCompletionsRequest(streamingContent, context);
+                HttpMessage message = CreateGetCompletionsRequest(DeploymentId, streamingContent, context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
@@ -309,7 +309,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetCompletionsRequest(streamingContent, context);
+                HttpMessage message = CreateGetCompletionsRequest(DeploymentId, streamingContent, context);
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(
                     message,
@@ -352,19 +352,19 @@ namespace Azure.AI.OpenAI
 
             return augmentedContent;
         }
-        internal HttpMessage CreateGetCompletionsRequest(RequestContent content, RequestContext context)
+
+        internal HttpMessage CreateGetCompletionsRequest(string deploymentId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            if (!string.IsNullOrEmpty(DeploymentId))
+            if (!string.IsNullOrEmpty(deploymentId))
             {
-                Argument.AssertNotNullOrEmpty(DeploymentId, nameof(DeploymentId));
                 uri.AppendRaw("/openai", false);
                 uri.AppendPath("/deployments/", false);
-                uri.AppendPath(DeploymentId, true);
+                uri.AppendPath(deploymentId, true);
                 uri.AppendPath("/completions", false);
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
@@ -379,19 +379,18 @@ namespace Azure.AI.OpenAI
             return message;
         }
 
-        internal HttpMessage CreateGetEmbeddingsRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetEmbeddingsRequest(string deploymentId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            if (!string.IsNullOrEmpty(DeploymentId))
+            if (!string.IsNullOrEmpty(deploymentId))
             {
-                Argument.AssertNotNullOrEmpty(DeploymentId, nameof(DeploymentId));
                 uri.AppendRaw("/openai", false);
                 uri.AppendPath("/deployments/", false);
-                uri.AppendPath(DeploymentId, true);
+                uri.AppendPath(deploymentId, true);
                 uri.AppendPath("/embeddings", false);
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
