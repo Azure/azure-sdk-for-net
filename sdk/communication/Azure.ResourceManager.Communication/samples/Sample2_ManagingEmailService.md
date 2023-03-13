@@ -60,7 +60,7 @@ await foreach (EmailServiceResource emailService  in list)
 
 ***Delete a Email Service***
 
-```C# Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
+```C# Snippet:Managing_EmailService_DeleteAnApplicationDefinition
 EmailServiceResourceCollection collection = await resourceGroup.GetEmailServiceResourcesAsync();
 string emailServiceName = "myEmailService";
 
