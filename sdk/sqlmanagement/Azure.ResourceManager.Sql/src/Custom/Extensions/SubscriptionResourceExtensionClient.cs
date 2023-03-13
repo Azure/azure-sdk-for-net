@@ -4,16 +4,17 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Sql.Models;
 
-namespace Azure.ResourceManager.Sql
+namespace Azure.ResourceManager.Sql.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         /// <summary>
         /// Lists the long term retention backups for a given location.
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SubscriptionLongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
@@ -70,6 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<SubscriptionLongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
@@ -116,6 +119,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SubscriptionLongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
@@ -162,6 +166,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<SubscriptionLongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
@@ -208,6 +213,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> FirstPageFunc(int? pageSizeHint)
@@ -254,6 +260,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> FirstPageFunc(int? pageSizeHint)
@@ -299,6 +306,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> FirstPageFunc(int? pageSizeHint)
@@ -344,6 +352,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> FirstPageFunc(int? pageSizeHint)
