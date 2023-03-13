@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.NetApp
         public virtual Azure.Response<Azure.ResourceManager.NetApp.SnapshotPolicyResource> GetSnapshotPolicy(string snapshotPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.SnapshotPolicyResource>> GetSnapshotPolicyAsync(string snapshotPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and not needed anymore and will be removed in a future release", false)]
         public virtual Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppVault> GetVaults(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and not needed anymore and will be removed in a future release", false)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.Models.NetAppVault> GetVaultsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupResult> GetVolumeGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupResult> GetVolumeGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
