@@ -8,32 +8,32 @@
         "Authorization": "Sanitized",
         "Content-Length": "30",
         "Content-Type": "application/json",
-        "traceparent": "00-96c3056355bbb4408471863138e00e2d-04ec9f20c2731846-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221207.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4e7919ae4d3710b0dd8570d41d9c624c",
+        "traceparent": "00-271f901f21983389289b6ca83d8f9a4f-e8c1a8642d91ad22-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20230310.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ef9c12a8de2a3addcfac2568850d3792",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 07 Dec 2022 21:33:58 GMT",
+        "x-ms-date": "Sat, 11 Mar 2023 01:02:13 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "searchId": "\u002BSanitized"
+        "searchId": "some-invalid-id"
       },
       "StatusCode": 404,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01",
+        "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01, 2022-12-02-preview2",
         "Content-Type": "application/json",
-        "Date": "Wed, 07 Dec 2022 21:33:57 GMT",
-        "MS-CV": "9KTgslHaAkWEdlR527bG9g.0",
+        "Date": "Sat, 11 Mar 2023 01:02:13 GMT",
+        "MS-CV": "FGSEEDAi9Uq0o24mXzp1Ow.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0xgaRYwAAAAAYHhW6DLhMR6sXNruZCqMMTUVYMzFFREdFMDQxOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0FdMLZAAAAAChWX2PykE1SIn0VgeNsXKfTEFYMzExMDAwMTA4MDE3ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "419ms"
+        "X-Processing-Time": "189ms"
       },
       "ResponseBody": {
         "error": {
           "code": "NotFound",
-          "message": "Input searchId Sanitized cannot be found.",
+          "message": "Input searchId some-invalid-id cannot be found.",
           "target": "searchid"
         }
       }
@@ -41,6 +41,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "479739574"
+    "RandomSeed": "1604679153"
   }
 }
