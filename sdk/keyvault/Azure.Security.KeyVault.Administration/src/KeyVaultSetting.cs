@@ -31,11 +31,13 @@ namespace Azure.Security.KeyVault.Administration
             Value = new KeyVaultSettingValue(value);
         }
 
+        // TODO: Move construction to KeyVaultSettingValue and hide constructors here when the number of supported value types warrants it e.g., more than 3 intrinsic types.
+
         /// <summary>
         /// Creates a new instance of the <see cref="KeyVaultSetting"/> class.
         /// </summary>
         /// <param name="name">The name of the account setting.</param>
-        /// <param name="value">The boolean value of the account setting.</param>
+        /// <param name="value">The string value of the account setting.</param>
         /// <param name="settingType">The type specifier of the value.</param>
         internal KeyVaultSetting(string name, string value, KeyVaultSettingType? settingType)
         {
@@ -57,8 +59,9 @@ namespace Azure.Security.KeyVault.Administration
         public KeyVaultSettingValue Value { get; }
 
         /// <summary>
-        /// Gets the value of the account setting as a string.
+        /// Returns the setting name, value, and type.
         /// </summary>
-        public string Content => Value.Serialize();
+        /// <returns></returns>
+        public override string ToString() => $"{Name}={Value} ({SettingType ?? string.Empty})";
     }
 }

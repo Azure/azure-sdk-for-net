@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// An account setting value.
     /// </summary>
-    public class KeyVaultSettingValue
+    public readonly struct KeyVaultSettingValue
     {
         internal KeyVaultSettingValue(string value, KeyVaultSettingType? settingType)
         {
@@ -53,21 +53,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Gets the raw string value of this account setting.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The raw string value of this account setting.</returns>
         public override string ToString()
-        {
-            string conversionMethod = null;
-            if (SettingType == KeyVaultSettingType.Boolean)
-            {
-                conversionMethod = nameof(AsBoolean);
-            }
-
-            return conversionMethod == null
-                ? $"{nameof(KeyVaultSetting)}: {nameof(SettingType)}={SettingType}"
-                : $"{nameof(KeyVaultSetting)}: {nameof(SettingType)}={SettingType}, {conversionMethod}()=>Value";
-        }
-
-        internal string Serialize()
         {
             if (SettingType == KeyVaultSettingType.Boolean)
             {
@@ -75,7 +62,7 @@ namespace Azure.Security.KeyVault.Administration
                 return ValueBool.Value ? "true" : "false";
             }
 
-            // A value is required.
+            // Though a value is required, ToString() should never return null.
             return ValueString ?? string.Empty;
         }
 
@@ -97,6 +84,6 @@ namespace Azure.Security.KeyVault.Administration
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static InvalidOperationException InvalidSettingType(KeyVaultSettingType expectedType) =>
-            new($"Cannot normalize the setting as {expectedType}. Use '{nameof(KeyVaultSetting)}.{nameof(KeyVaultSetting.Content)}' for a textual representation of the setting.");
+            new($"Cannot normalize the setting as {expectedType}. Use '{nameof(KeyVaultSetting)}.{nameof(KeyVaultSetting.Value)}.ToString()' for a textual representation of the setting.");
     }
 }

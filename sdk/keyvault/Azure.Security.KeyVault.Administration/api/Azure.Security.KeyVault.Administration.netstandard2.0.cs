@@ -292,10 +292,10 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultSetting
     {
         public KeyVaultSetting(string name, bool value) { }
-        public string Content { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Security.KeyVault.Administration.KeyVaultSettingType? SettingType { get { throw null; } }
         public Azure.Security.KeyVault.Administration.KeyVaultSettingValue Value { get { throw null; } }
+        public override string ToString() { throw null; }
     }
     public partial class KeyVaultSettingsClient
     {
@@ -327,9 +327,11 @@ namespace Azure.Security.KeyVault.Administration
         public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultSettingType left, Azure.Security.KeyVault.Administration.KeyVaultSettingType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultSettingValue
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultSettingValue
     {
-        internal KeyVaultSettingValue() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public bool AsBoolean() { throw null; }
         public override string ToString() { throw null; }
     }

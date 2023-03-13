@@ -37,8 +37,9 @@ namespace Azure.Security.KeyVault.Administration.Tests
             KeyVaultSetting setting = new("test", value);
             Assert.That(setting.Name, Is.EqualTo("test"));
             Assert.That(setting.SettingType, Is.EqualTo(KeyVaultSettingType.Boolean));
+            Assert.That(setting.ToString(), Is.EqualTo($"test={(value ? "true" : "false")} (boolean)"));
             Assert.That(setting.Value.AsBoolean(), Is.EqualTo(value));
-            Assert.That(setting.Value.ToString(), Is.EqualTo($"KeyVaultSetting: SettingType=boolean, AsBoolean()=>Value"));
+            Assert.That(setting.Value.ToString(), Is.EqualTo(value ? "true" : "false"));
         }
 
         [Test]
@@ -47,7 +48,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             KeyVaultSetting setting = new("test", "false", new KeyVaultSettingType("invalid"));
             Assert.That(setting.Name, Is.EqualTo("test"));
             Assert.That(setting.SettingType.ToString(), Is.EqualTo("invalid"));
-            Assert.That(setting.Value.ToString(), Is.EqualTo($"KeyVaultSetting: SettingType=invalid"));
+            Assert.That(setting.Value.ToString(), Is.EqualTo("false"));
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => setting.Value.AsBoolean());
             Assert.That(ex.Message, Is.EqualTo("Cannot get setting as boolean. Setting type is invalid."));
         }
@@ -56,7 +57,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public void AsBooleanInvalidValueThrows()
         {
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => new KeyVaultSetting("test", "invalid", KeyVaultSettingType.Boolean));
-            Assert.That(ex.Message, Is.EqualTo("Cannot normalize the setting as boolean. Use 'KeyVaultSetting.Content' for a textual representation of the setting."));
+            Assert.That(ex.Message, Is.EqualTo("Cannot normalize the setting as boolean. Use 'KeyVaultSetting.Value.ToString()' for a textual representation of the setting."));
         }
 
         [Test]
