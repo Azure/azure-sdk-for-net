@@ -402,11 +402,12 @@ namespace Azure.Core
     }
     public abstract partial class DelayStrategy
     {
-        protected DelayStrategy() { }
+        protected DelayStrategy(System.TimeSpan? maxDelay = default(System.TimeSpan?), double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { }
         public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?), double factor = 2, double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { throw null; }
-        public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
-        public static Azure.Core.DelayStrategy CreateSequentialDelayStrategy(System.Collections.Generic.IEnumerable<System.TimeSpan>? sequence = null) { throw null; }
-        public abstract System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber, System.TimeSpan? clientDelayHint, System.TimeSpan? serverDelayHint);
+        public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?), double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { throw null; }
+        public static Azure.Core.DelayStrategy CreateSequentialDelayStrategy(System.Collections.Generic.IEnumerable<System.TimeSpan>? sequence = null, double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { throw null; }
+        public virtual System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint, System.TimeSpan? clientDelayHint) { throw null; }
+        protected abstract System.TimeSpan GetNextDelayCore(Azure.Response? response, int retryNumber);
         protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
     }
     public static partial class DelegatedTokenCredential

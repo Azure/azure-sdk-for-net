@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
@@ -13,6 +14,25 @@ namespace Azure.Core
     /// </summary>
     public abstract class DelayStrategy
     {
+        private readonly Random _random = new ThreadSafeRandom();
+        private readonly double _minJitterFactor;
+        private readonly double _maxJitterFactor;
+        private readonly TimeSpan _maxDelay;
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="maxDelay"></param>
+        /// <param name="minJitterFactor"></param>
+        /// <param name="maxJitterFactor"></param>
+        protected DelayStrategy(TimeSpan? maxDelay = default, double minJitterFactor = 0.8, double maxJitterFactor = 1.2)
+        {
+            // use same defaults as RetryOptions
+            _minJitterFactor = minJitterFactor;
+            _maxJitterFactor = maxJitterFactor;
+            _maxDelay = maxDelay ?? TimeSpan.FromMinutes(1);
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -29,28 +49,51 @@ namespace Azure.Core
             double minJitterFactor = 0.8,
             double maxJitterFactor = 1.2)
         {
-            return new ExponentialDelayStrategy(initialDelay, maxDelay, factor, minJitterFactor, maxJitterFactor);
+            return new ExponentialDelayStrategy(initialDelay ?? TimeSpan.FromSeconds(0.8), maxDelay ?? TimeSpan.FromMinutes(1), factor, minJitterFactor, maxJitterFactor);
         }
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="delay"></param>
+        /// <param name="minJitterFactor"></param>
+        /// <param name="maxJitterFactor"></param>
         /// <returns></returns>
-        public static DelayStrategy CreateFixedDelayStrategy(TimeSpan? delay = default)
+        public static DelayStrategy CreateFixedDelayStrategy(
+            TimeSpan? delay = default,
+            double minJitterFactor = 0.8,
+            double maxJitterFactor = 1.2)
         {
-            return new FixedDelayStrategy(delay);
+            return new FixedDelayStrategy(delay ?? TimeSpan.FromSeconds(0.8), minJitterFactor, maxJitterFactor);
         }
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="sequence"></param>
+        /// <param name="minJitterFactor"></param>
+        /// <param name="maxJitterFactor"></param>
         /// <returns></returns>
-        public static DelayStrategy CreateSequentialDelayStrategy(IEnumerable<TimeSpan>? sequence = default)
+        public static DelayStrategy CreateSequentialDelayStrategy(
+            IEnumerable<TimeSpan>? sequence = default,
+            double minJitterFactor = 0.8,
+            double maxJitterFactor = 1.2)
         {
-            return new SequentialDelayStrategy(sequence);
+            return new SequentialDelayStrategy(sequence, minJitterFactor, maxJitterFactor);
         }
+
+        private TimeSpan ApplyJitter(TimeSpan delay)
+        {
+            return TimeSpan.FromMilliseconds(_random.Next((int)(delay.TotalMilliseconds * _minJitterFactor), (int)(delay.TotalMilliseconds * _maxJitterFactor)));
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="retryNumber"></param>
+        /// <returns></returns>
+        protected abstract TimeSpan GetNextDelayCore(Response? response, int retryNumber);
 
         /// <summary>
         /// Get the interval of next delay iteration.
@@ -58,10 +101,21 @@ namespace Azure.Core
         /// <remarks> Note that the value could change per call. </remarks>
         /// <param name="response"> Server response. </param>
         /// <param name="retryNumber"></param>
-        /// <param name="clientDelayHint"></param>
         /// <param name="serverDelayHint"></param>
+        /// <param name="clientDelayHint"></param>
         /// <returns> Delay interval of next iteration. </returns>
-        public abstract TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint);
+        public virtual TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? serverDelayHint, TimeSpan? clientDelayHint)
+        {
+            return
+                Max(
+                    ApplyJitter(
+                        Max(
+                            serverDelayHint ?? TimeSpan.Zero,
+                            Max(
+                                clientDelayHint ?? TimeSpan.Zero,
+                                GetNextDelayCore(response, retryNumber)))),
+                    _maxDelay);
+        }
 
         /// <summary>
         ///

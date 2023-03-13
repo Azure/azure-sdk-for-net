@@ -35,25 +35,19 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <param name="sequence"></param>
-        public SequentialDelayStrategy(IEnumerable<TimeSpan>? sequence = default)
+        /// <param name="minJitterFactor"></param>
+        /// <param name="maxJitterFactor"></param>
+        public SequentialDelayStrategy(
+            IEnumerable<TimeSpan>? sequence,
+            double minJitterFactor,
+            double maxJitterFactor) : base(_maxDelay, minJitterFactor, maxJitterFactor)
         {
             _sequence = sequence ?? s_defaultPollingSequence;
         }
 
-        /// <summary>
-        /// Get the next delay from the sequence.
-        /// </summary>
-        /// <param name="response">Service response.</param>
-        /// <param name="retryNumber"></param>
-        /// <param name="clientDelayHint">Suggested delay.</param>
-        /// <param name="serverDelayHint"></param>
-        public override TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
+        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber)
         {
-            if (retryNumber >= s_defaultPollingSequence.Length)
-            {
-                return Max(_maxDelay, serverDelayHint ?? TimeSpan.Zero);
-            }
-            return Max(s_defaultPollingSequence[retryNumber], serverDelayHint ?? TimeSpan.Zero);
+            return retryNumber >= s_defaultPollingSequence.Length ? _maxDelay : s_defaultPollingSequence[retryNumber];
         }
     }
 }

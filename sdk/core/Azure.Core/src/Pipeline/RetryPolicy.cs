@@ -27,7 +27,7 @@ namespace Azure.Core.Pipeline
         public RetryPolicy(int? maxRetries = default, DelayStrategy? delayStrategy = default)
         {
             _maxRetries = maxRetries ?? 3;
-            _delayStrategy = delayStrategy ?? new ExponentialDelayStrategy();
+            _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.Core.Pipeline
             _delayStrategy.GetNextDelay(
                 message.Response,
                 message.RetryNumber,
-                _delayStrategy.GetNextDelay(message.Response, message.RetryNumber, null, null),
-                message.Response.Headers.RetryAfter);
+                message.Response.Headers.RetryAfter,
+                null);
     }
 }

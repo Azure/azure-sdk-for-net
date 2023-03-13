@@ -16,30 +16,16 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <param name="delay"></param>
-        public FixedDelayStrategy(TimeSpan? delay = default)
+        /// <param name="minJitterFactor"></param>
+        /// <param name="maxJitterFactor"></param>
+        public FixedDelayStrategy(
+            TimeSpan delay,
+            double minJitterFactor,
+            double maxJitterFactor) : base(TimeSpan.FromMilliseconds(delay.TotalMilliseconds * maxJitterFactor), minJitterFactor, maxJitterFactor)
         {
-            // use same defaults as RetryOptions
-            _delay = delay ?? TimeSpan.FromSeconds(0.8);
+            _delay = delay;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="response"></param>
-        /// <param name="retryNumber"></param>
-        /// <param name="clientDelayHint"></param>
-        /// <param name="serverDelayHint"></param>
-        /// <returns></returns>
-        public override TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
-        {
-            return
-                Max(
-                    serverDelayHint ?? TimeSpan.Zero,
-                    Max(
-                        clientDelayHint ?? TimeSpan.Zero,
-                        Max(
-                            response?.Headers.RetryAfter ?? TimeSpan.Zero,
-                            _delay)));
-        }
+        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) => _delay;
     }
 }

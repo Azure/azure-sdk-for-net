@@ -69,7 +69,7 @@ namespace Azure.Core
                     return operation.GetRawResponse();
                 }
 
-                await Delay(async, _delayStrategy.GetNextDelay(response, ++attempt, delayHint, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
+                await Delay(async, _delayStrategy.GetNextDelay(response, ++attempt, response.Headers.RetryAfter, delayHint), cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.Core
                 delayHint ??= TimeSpan.Zero;
                 delayHint = defaultDelay > delayHint ? defaultDelay : delayHint;
 
-                await Delay(async, _delayStrategy.GetNextDelay(response, retryNumber, delayHint, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
+                await Delay(async, _delayStrategy.GetNextDelay(response, retryNumber, response.Headers.RetryAfter, delayHint), cancellationToken).ConfigureAwait(false);
             }
         }
 

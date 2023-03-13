@@ -17,7 +17,7 @@ namespace Azure.Core.Tests.DelayStrategies
         {
             var strategy = new FixedDelayStrategy();
             var expected = TimeSpan.FromSeconds(suggest);
-            Assert.AreEqual(expected, strategy.GetNextDelay(_mockResponse, 1, TimeSpan.FromSeconds(suggest), null));
+            Assert.AreEqual(expected, strategy.GetNextDelay(_mockResponse, 1, null, TimeSpan.FromSeconds(suggest)));
         }
 
         [TestCase(1)]

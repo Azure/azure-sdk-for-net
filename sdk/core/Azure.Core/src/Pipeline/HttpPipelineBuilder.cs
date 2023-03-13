@@ -158,8 +158,8 @@ namespace Azure.Core.Pipeline
                 new RetryPolicy(
                     retryOptions.MaxRetries,
                     retryOptions.Mode == RetryMode.Exponential ?
-                        new ExponentialDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay) :
-                        new FixedDelayStrategy(retryOptions.Delay)));
+                        DelayStrategy.CreateExponentialDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay) :
+                        DelayStrategy.CreateFixedDelayStrategy(retryOptions.Delay)));
 
             policies.Add(RedirectPolicy.Shared);
 
