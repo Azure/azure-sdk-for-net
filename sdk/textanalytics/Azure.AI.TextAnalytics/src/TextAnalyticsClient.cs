@@ -738,7 +738,6 @@ namespace Azure.AI.TextAnalytics
             RecognizeCustomEntitiesOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, language, options, cancellationToken);
         }
 
@@ -774,7 +773,6 @@ namespace Azure.AI.TextAnalytics
             RecognizeCustomEntitiesOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, options, cancellationToken);
         }
 
@@ -816,7 +814,6 @@ namespace Azure.AI.TextAnalytics
             RecognizeCustomEntitiesOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -852,7 +849,6 @@ namespace Azure.AI.TextAnalytics
             RecognizeCustomEntitiesOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1733,7 +1729,6 @@ namespace Azure.AI.TextAnalytics
             AnalyzeActionsOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartAnalyzeActionsAsync(documents, actions, language, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1780,7 +1775,6 @@ namespace Azure.AI.TextAnalytics
             AnalyzeActionsOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartAnalyzeActions(documents, actions, language, options, cancellationToken);
         }
 
@@ -1825,7 +1819,6 @@ namespace Azure.AI.TextAnalytics
             AnalyzeActionsOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartAnalyzeActions(documents, actions, options, cancellationToken);
         }
 
@@ -1870,7 +1863,6 @@ namespace Azure.AI.TextAnalytics
             AnalyzeActionsOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartAnalyzeActionsAsync(documents, actions, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1918,7 +1910,6 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
         }
 
@@ -1956,7 +1947,6 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
         }
 
@@ -2000,7 +1990,6 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2038,7 +2027,6 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2086,7 +2074,6 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
         }
 
@@ -2124,7 +2111,6 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
         }
 
@@ -2168,7 +2154,6 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2206,7 +2191,6 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
         }
 

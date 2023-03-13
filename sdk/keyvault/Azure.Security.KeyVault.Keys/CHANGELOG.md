@@ -1,8 +1,6 @@
 # Release History
 
-## 4.5.0-beta.2 (Unreleased)
-
-### Features Added
+## 4.5.0 (2023-03-07)
 
 ### Breaking Changes
 
@@ -12,8 +10,6 @@
 - Removed `KeyType.Okp` and `KeyType.OkpHsm` from `JsonWebKey`.
 - Removed `KeyCurveName.Ed25519`.
 - Removed `SignatureAlgorithm.EdDsa`.
-
-### Bugs Fixed
 
 ### Other Changes
 
