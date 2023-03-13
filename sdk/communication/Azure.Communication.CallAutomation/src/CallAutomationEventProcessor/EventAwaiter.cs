@@ -11,8 +11,8 @@ namespace Azure.Communication.CallAutomation
 {
     internal class EventAwaiter : IDisposable
     {
-        private TimeSpan _exceptionTimeout;
-        private Timer _expiringTimer;
+        private const int DEFAULT_EVENT_EXPIRATION_SECONDS = 240;
+        private readonly CancellationToken _cancellationToken;
 
         private Func<CallAutomationEventBase, bool> _predicate;
 
@@ -21,15 +21,23 @@ namespace Azure.Communication.CallAutomation
         internal TaskCompletionSource<EventProcessorArgs> taskSource { get; }
         internal Action<object, EventProcessorArgs> OnEventReceived => OnEventsReceived;
 
-        internal EventAwaiter(Func<CallAutomationEventBase, bool> predicate, TimeSpan defaultTimeout)
+        internal EventAwaiter(Func<CallAutomationEventBase, bool> predicate, CancellationToken cancellationToken)
         {
             // With constructor, define predicate that matches the condition given.
             _predicate = predicate;
-            _exceptionTimeout = defaultTimeout;
 
-            // Timer is required for this eventawaiter to throw timeout exception on no events received
-            _expiringTimer = new Timer(new TimerCallback(TimerProc));
-            _expiringTimer.Change((int)_exceptionTimeout.TotalMilliseconds, 0);
+            if (cancellationToken == default)
+            {
+                // set default timeout
+                CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(DEFAULT_EVENT_EXPIRATION_SECONDS));
+                _cancellationToken = cts.Token;
+            }
+            else
+            {
+                _cancellationToken = cancellationToken;
+            }
+
+            _cancellationToken.Register(OnCancellationRequested);
 
             taskSource = new TaskCompletionSource<EventProcessorArgs>(TaskCreationOptions.RunContinuationsAsynchronously);
         }
@@ -39,20 +47,17 @@ namespace Azure.Communication.CallAutomation
             // See if events sent matches filter set on constructor.
             if (_predicate(e.CallAutomationEvent))
             {
-                // Dispose expiring timer, as we don't want timer activating.
-                _expiringTimer.Dispose();
-
                 // Complete the task source with the matching event.
                 taskSource.TrySetResult(e);
             }
         }
 
         /// <summary>
-        /// When timer procs, throw Exception on Task completion source.
+        /// When cancellation procs, throw Exception on Task completion source.
         /// </summary>
-        private void TimerProc(object state)
+        private void OnCancellationRequested()
         {
-            taskSource.TrySetException(new[] { new TimeoutException() });
+            taskSource.TrySetException(new[] { new OperationCanceledException() });
         }
 
         public void Dispose()
@@ -66,11 +71,6 @@ namespace Azure.Communication.CallAutomation
             if (_disposed)
             {
                 return;
-            }
-
-            if (disposing)
-            {
-                _expiringTimer.Dispose();
             }
 
             _disposed = true;

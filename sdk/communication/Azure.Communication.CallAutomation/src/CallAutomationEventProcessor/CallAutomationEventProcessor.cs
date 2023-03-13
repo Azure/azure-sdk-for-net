@@ -16,22 +16,18 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class CallAutomationEventProcessor
     {
-        private const int DEFAULT_EVENT_EXPIRATION_SECONDS = 40;
-
-        private TimeSpan _exceptionTimeout;
         private EventBacklog _eventBacklog;
         private ConcurrentDictionary<(string, Type), EventHandler<EventProcessorArgs>> _ongoingEvents;
         private event EventHandler<EventProcessorArgs> _eventReceived;
 
         internal CallAutomationEventProcessor()
         {
-            _exceptionTimeout = TimeSpan.FromSeconds(DEFAULT_EVENT_EXPIRATION_SECONDS);
             _eventBacklog = new EventBacklog();
             _ongoingEvents = new ConcurrentDictionary<(string, Type), EventHandler<EventProcessorArgs>>();
         }
 
         /// <summary>
-        /// Process incoming events. Pass incoming events to get it processed to have other method like WaitForEvent to function.
+        /// Process incoming events. Pass incoming events to get it processed to have other method like WaitForEventProcessor to function.
         /// </summary>
         /// <param name="events">Incoming CloudEvent object.</param>
         public void ProcessEvents(IEnumerable<CloudEvent> events)
@@ -41,7 +37,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Process incoming events. Pass incoming events to get it processed to have other method like WaitForEvent to function.
+        /// Process incoming events. Pass incoming events to get it processed to have other method like WaitForEventProcessor to function.
         /// </summary>
         /// <param name="events">Incoming <see cref="CallAutomationEventBase"/>.</param>
         public void ProcessEvents(IEnumerable<CallAutomationEventBase> events)
@@ -106,15 +102,77 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
+        /// Wait for matching incoming event. This is blocking Call. Returns the <see cref="CallAutomationEventBase"/> once it arrives in ProcessEvent method.
+        /// </summary>
+        /// <param name="predicate">Predicate for waiting on event.</param>
+        /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
+        /// <returns>Returns <see cref="CallAutomationEventBase"/> once matching event arrives.</returns>
+        public CallAutomationEventBase WaitForEventProcessor(Func<CallAutomationEventBase, bool> predicate, CancellationToken cancellationToken = default)
+        {
+            // Initialize awaiter and get event handler of it
+            var awaiter = new EventAwaiter(predicate, cancellationToken);
+            EventHandler<EventProcessorArgs> handler = (o, arg) => awaiter.OnEventReceived(o, arg);
+
+            try
+            {
+                // Register eventhandler
+                _eventReceived += handler;
+
+                // See if events have arrived earlier and saved in backlog
+                if (_eventBacklog.TryGetAndRemoveEvent(predicate, out var backlogEvent))
+                {
+                    _eventReceived -= handler;
+                    awaiter.Dispose();
+                    return backlogEvent.Value;
+                }
+                else
+                {
+                    // blocking call
+                    // Wait for incoming event until timeout exception is arised from awaiter
+                    var matchingEvent = awaiter.taskSource.Task;
+                    matchingEvent.Wait(cancellationToken);
+
+                    // Matching event found. Remove from EventProcessor & Backlogs
+                    _eventReceived -= handler;
+                    awaiter.Dispose();
+                    _eventBacklog.TryRemoveEvent(matchingEvent.Result.EventArgsId);
+
+                    return matchingEvent.Result.CallAutomationEvent;
+                }
+            }
+            catch (Exception)
+            {
+                _eventReceived -= handler;
+                awaiter.Dispose();
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Wait for matching incoming event. This is blocking Call. Returns the <see cref="CallAutomationEventBase"/> once it arrives in ProcessEvent method.
+        /// </summary>
+        /// <typeparam name="TEvent">Matching event type.</typeparam>
+        /// <param name="connectionId">CallConnectionId of the call.</param>
+        /// <param name="operationContext">OperationContext of the method.</param>
+        /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
+        /// <returns>Returns the event once matching event arrives.</returns>
+        public TEvent WaitForEventProcessor<TEvent>(string connectionId = default, string operationContext = default, CancellationToken cancellationToken = default) where TEvent : CallAutomationEventBase
+            => (TEvent)WaitForEventProcessor(predicate
+                => (predicate.CallConnectionId == connectionId || connectionId is null)
+                && (predicate.OperationContext == operationContext || operationContext is null)
+                && predicate is TEvent,
+                cancellationToken);
+
+        /// <summary>
         /// Wait for matching incoming event. Returns the <see cref="CallAutomationEventBase"/> once it arrives in ProcessEvent method.
         /// </summary>
         /// <param name="predicate">Predicate for waiting on event.</param>
-        /// <param name="eventTimeout">Timeout for this waiting on event.</param>
+        /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
         /// <returns>Returns <see cref="CallAutomationEventBase"/> once matching event arrives.</returns>
-        public async Task<CallAutomationEventBase> WaitForSingleEvent(Func<CallAutomationEventBase, bool> predicate, TimeSpan eventTimeout = default)
+        public async Task<CallAutomationEventBase> WaitForEventProcessorAsync(Func<CallAutomationEventBase, bool> predicate, CancellationToken cancellationToken = default)
         {
             // Initialize awaiter and get event handler of it
-            var awaiter = new EventAwaiter(predicate, eventTimeout == default ? _exceptionTimeout : eventTimeout);
+            var awaiter = new EventAwaiter(predicate, cancellationToken);
             EventHandler<EventProcessorArgs> handler = (o, arg) => awaiter.OnEventReceived(o, arg);
 
             try
@@ -156,14 +214,14 @@ namespace Azure.Communication.CallAutomation
         /// <typeparam name="TEvent">Matching event type.</typeparam>
         /// <param name="connectionId">CallConnectionId of the call.</param>
         /// <param name="operationContext">OperationContext of the method.</param>
-        /// <param name="eventTimeout">Timeout for this waiting on event.</param>
+        /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
         /// <returns>Returns the event once matching event arrives.</returns>
-        public async Task<TEvent> WaitForSingleEvent<TEvent>(string connectionId = default, string operationContext = default, TimeSpan eventTimeout = default) where TEvent : CallAutomationEventBase
-            => (TEvent)await WaitForSingleEvent(predicate
+        public async Task<TEvent> WaitForEventProcessorAsync<TEvent>(string connectionId = default, string operationContext = default, CancellationToken cancellationToken = default) where TEvent : CallAutomationEventBase
+            => (TEvent)await WaitForEventProcessorAsync(predicate
                 => (predicate.CallConnectionId == connectionId || connectionId is null)
                 && (predicate.OperationContext == operationContext || operationContext is null)
                 && predicate is TEvent,
-                eventTimeout).ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
 
         private void RemoveFromOngoingEvent(string callConnectionId, Type eventType = null)
         {

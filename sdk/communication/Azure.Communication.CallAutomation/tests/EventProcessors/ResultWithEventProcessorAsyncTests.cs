@@ -8,11 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 {
-    public class ResultWithEventProcessorTests : CallAutomationEventProcessorTestBase
+    public class ResultWithEventProcessorAsyncTests : CallAutomationEventProcessorTestBase
     {
         [Test]
         public async Task CreateCallEventResultSuccessTest()
@@ -31,7 +32,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
-            CreateCallEventResult returnedResult = await response.Value.WaitForEvent();
+            CreateCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -61,7 +62,9 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             try
             {
-                _ = await response.Value.WaitForEvent();
+                CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+                CancellationToken token = cts.Token;
+                _ = await response.Value.WaitForEventProcessorAsync(token);
             }
             catch (TimeoutException)
             {
@@ -87,7 +90,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
-            AnswerCallEventResult returnedResult = await response.Value.WaitForEvent();
+            AnswerCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -117,7 +120,9 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             try
             {
-                _ = await response.Value.WaitForEvent();
+                CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+                CancellationToken token = cts.Token;
+                _ = await response.Value.WaitForEventProcessorAsync();
             }
             catch (TimeoutException)
             {
@@ -141,7 +146,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, new CallTransferAccepted(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
 
-            TransferCallToParticipantEventResult returnedResult = await response.Value.WaitForEvent();
+            TransferCallToParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -168,7 +173,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, new CallTransferFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
 
-            TransferCallToParticipantEventResult returnedResult = await response.Value.WaitForEvent();
+            TransferCallToParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -195,7 +200,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
-            AddParticipantsEventResult returnedResult = await response.Value.WaitForEvent();
+            AddParticipantsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -222,7 +227,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
-            AddParticipantsEventResult returnedResult = await response.Value.WaitForEvent();
+            AddParticipantsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -248,7 +253,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, new PlayCompleted(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation() { }));
 
-            PlayEventResult returnedResult = await response.Value.WaitForEvent();
+            PlayEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -274,7 +279,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, new PlayFailed(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation() { }));
 
-            PlayEventResult returnedResult = await response.Value.WaitForEvent();
+            PlayEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -300,7 +305,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, new PlayCanceled(CallConnectionId, ServerCallId, CorelationId, null));
 
-            CancelAllMediaOperationsEventResult returnedResult = await response.Value.WaitForEvent();
+            CancelAllMediaOperationsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -325,7 +330,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, new RecognizeCanceled(CallConnectionId, ServerCallId, CorelationId, null));
 
-            CancelAllMediaOperationsEventResult returnedResult = await response.Value.WaitForEvent();
+            CancelAllMediaOperationsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -350,7 +355,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, new RecognizeCompleted(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation(), CallMediaRecognitionType.Dtmf, null, null));
 
-            StartRecognizingEventResult returnedResult = await response.Value.WaitForEvent();
+            StartRecognizingEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -376,7 +381,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, new RecognizeFailed(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation()));
 
-            StartRecognizingEventResult returnedResult = await response.Value.WaitForEvent();
+            StartRecognizingEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);

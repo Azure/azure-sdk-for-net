@@ -10,8 +10,13 @@ namespace Azure.Communication.CallAutomation
     /// The play completed event.
     /// </summary>
     [CodeGenModel("PlayCompleted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class PlayCompleted : CallAutomationEventWithReasonCodeName
+    public partial class PlayCompleted : CallAutomationEventBase
     {
+        /// <summary>
+        /// Reason code.
+        /// </summary>
+        public ReasonCode ReasonCode { get; internal set; }
+
         /// <summary> Initializes a new instance of PlayCompleted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>

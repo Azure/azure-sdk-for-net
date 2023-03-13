@@ -4,8 +4,13 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary><see cref="PlayEventResult"/> is returned from WaitForEvent of <see cref="PlayResult"/>.</summary>
-    public class PlayEventResult : EventResultBase
+    public class PlayEventResult
     {
+        /// <summary>
+        /// Indicates whether the returned event is considered successful or not.
+        /// </summary>
+        public bool IsSuccessEvent { get; internal set; }
+
         /// <summary>
         /// <see cref="PlayCompleted"/> event will be returned once the play is completed successfully.
         /// </summary>
