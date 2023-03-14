@@ -476,7 +476,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout)
         {
             byte[] bufferForLockToken = ArrayPool<byte>.Shared.Rent(SizeOfGuidInBytes);
-            GuidUtilities.WriteGuidToBuffer(lockToken, bufferForLockToken);
+            GuidUtilities.WriteGuidToBuffer(lockToken, bufferForLockToken.AsSpan(0, 16));
 
             ArraySegment<byte> deliveryTag = new ArraySegment<byte>(bufferForLockToken, 0, SizeOfGuidInBytes);
             ReceivingAmqpLink receiveLink = null;
