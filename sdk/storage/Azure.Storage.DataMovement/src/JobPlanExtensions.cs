@@ -189,7 +189,7 @@ namespace Azure.Storage.DataMovement
                 priority: 0, // TODO: add priority feature
                 ttlAfterCompletion: DateTimeOffset.MinValue, // TODO: revisit for Azure Files
                 fromTo: 0, // TODO: revisit when we add this feature
-                folderPropertyOption: FolderPropertiesMode.None, // TODO: revisit for Azure Files
+                folderPropertyMode: FolderPropertiesMode.None, // TODO: revisit for Azure Files
                 numberChunks: 0, // TODO: revisit when added
                 dstBlobData: default, // TODO: revisit when we add feature to cache this info
                 dstLocalData: default, // TODO: revisit when we add feature to cache this info

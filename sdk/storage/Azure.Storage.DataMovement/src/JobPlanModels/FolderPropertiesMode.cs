@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement.JobPlanModels
 {
     /// <summary>
     /// SMB Feature whether to preserve permissions on the folder

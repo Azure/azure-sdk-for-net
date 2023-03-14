@@ -45,7 +45,7 @@ namespace Azure.Storage.DataMovement.Tests
                 priority: 0,
                 ttlAfterCompletion: DateTimeOffset.MinValue,
                 fromTo: 0,
-                folderPropertyOption: FolderPropertiesMode.None,
+                folderPropertyMode: FolderPropertiesMode.None,
                 numberChunks: 0,
                 dstBlobData: default,
                 dstLocalData: default,

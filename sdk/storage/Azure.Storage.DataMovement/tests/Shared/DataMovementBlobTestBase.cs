@@ -436,13 +436,6 @@ namespace Azure.Storage.DataMovement.Tests
             } while (properties.Value.DeleteRetentionPolicy.Enabled);
         }
 
-        public Dictionary<string, string> BuildTags()
-            => new Dictionary<string, string>
-            {
-                { "tagKey0", "tagValue0" },
-                { "tagKey1", "tagValue1" }
-            };
-
         public class BlobQueryErrorHandler
         {
             private readonly BlobQueryError _expectedBlobQueryError;

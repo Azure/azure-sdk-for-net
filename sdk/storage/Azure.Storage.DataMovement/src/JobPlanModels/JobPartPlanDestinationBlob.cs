@@ -146,16 +146,14 @@ namespace Azure.Storage.DataMovement
             bool putMd5,
             IDictionary<string,string> metadata,
             IDictionary<string, string> blobTags,
-            long cpkInfoLength,
             string cpkInfo,
             bool isSourceEncrypted,
-            long cpkScopeInfoLength,
             string cpkScopeInfo,
             long blockSize)
         {
             BlobType = blobType;
             NoGuessMimeType = noGuessMimeType;
-            if (contentType.Length <= DataMovementConstants.PlanFile.PathStrMaxSize)
+            if (contentType.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
             {
                 ContentType = contentType;
                 ContentTypeLength = contentType.Length;
@@ -164,10 +162,10 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidPlanFileJson(
                     elementName: nameof(ContentType),
-                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: contentType.Length);
             }
-            if (contentEncoding.Length <= DataMovementConstants.PlanFile.PathStrMaxSize)
+            if (contentEncoding.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
             {
                 ContentEncoding = contentEncoding;
                 ContentEncodingLength = contentEncoding.Length;
@@ -176,10 +174,10 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidPlanFileJson(
                     elementName: nameof(ContentEncoding),
-                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: contentEncoding.Length);
             }
-            if (contentLanguage.Length < DataMovementConstants.PlanFile.PathStrMaxSize)
+            if (contentLanguage.Length < DataMovementConstants.PlanFile.HeaderValueMaxSize)
             {
                 ContentLanguage = contentLanguage;
                 ContentLanguageLength = contentLanguage.Length;
@@ -188,10 +186,10 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidPlanFileJson(
                     elementName: nameof(ContentLanguage),
-                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: contentLanguage.Length);
             }
-            if (contentDisposition.Length <= DataMovementConstants.PlanFile.PathStrMaxSize)
+            if (contentDisposition.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
             {
                 ContentDisposition = contentDisposition;
                 ContentDispositionLength = contentDisposition.Length;
@@ -200,10 +198,10 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidPlanFileJson(
                     elementName: nameof(ContentDisposition),
-                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: contentDisposition.Length);
             }
-            if (cacheControl.Length <= DataMovementConstants.PlanFile.PathStrMaxSize)
+            if (cacheControl.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
             {
                 CacheControl = cacheControl;
                 CacheControlLength = cacheControl.Length;
@@ -212,7 +210,7 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidPlanFileJson(
                     elementName: nameof(CacheControl),
-                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: cacheControl.Length);
             }
             BlockBlobTier = blockBlobTier;
@@ -244,11 +242,31 @@ namespace Azure.Storage.DataMovement
                     expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
                     actualSize: blobTagsConvert.Length);
             }
-            CpkInfoLength = cpkInfoLength;
-            CpkInfo = cpkInfo;
+            if (cpkInfo.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
+            {
+                CpkInfo = cpkInfo;
+                CpkInfoLength = cpkInfo.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(CpkInfo),
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
+                    actualSize: cpkInfo.Length);
+            }
             IsSourceEncrypted = isSourceEncrypted;
-            CpkScopeInfoLength = cpkScopeInfoLength;
-            CpkScopeInfo = cpkScopeInfo;
+            if (cpkScopeInfo.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
+            {
+                CpkScopeInfo = cpkScopeInfo;
+                CpkScopeInfoLength = cpkScopeInfo.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(CpkScopeInfo),
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
+                    actualSize: cpkScopeInfo.Length);
+            }
             BlockSize = blockSize;
         }
 

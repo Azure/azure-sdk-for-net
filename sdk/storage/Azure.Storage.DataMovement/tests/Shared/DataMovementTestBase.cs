@@ -86,5 +86,12 @@ namespace Azure.Storage.DataMovement.Tests
             Directory.CreateDirectory(directoryPath);
             return new DisposingLocalDirectory(directoryPath);
         }
+
+        public Dictionary<string, string> BuildTags()
+            => new Dictionary<string, string>
+            {
+                { "tagKey0", "tagValue0" },
+                { "tagKey1", "tagValue1" }
+            };
     }
 }

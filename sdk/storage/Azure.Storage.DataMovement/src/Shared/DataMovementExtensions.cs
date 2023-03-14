@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement
         {
             // Convert query to byte array.
             byte[] arr = new byte[bufferSize];
-            byte[] queryArr = query.ToString(CultureInfo.InvariantCulture).ToByteArray();
+            byte[] queryArr = BitConverter.GetBytes(query);
             Array.Copy(queryArr, arr, queryArr.Length);
             return arr;
         }
