@@ -90,7 +90,7 @@
     <PackageReference Update="Azure.Data.Tables" Version="12.5.0" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.8.1" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.14.1" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.13.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.13.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.7.0" />
