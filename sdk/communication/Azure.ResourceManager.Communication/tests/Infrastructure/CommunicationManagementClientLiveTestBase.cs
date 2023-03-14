@@ -7,7 +7,6 @@ using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
