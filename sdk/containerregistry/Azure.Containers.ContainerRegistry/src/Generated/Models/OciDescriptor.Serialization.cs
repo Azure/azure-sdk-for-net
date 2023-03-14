@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    public partial class OciBlobDescriptor : IUtf8JsonSerializable
+    public partial class OciDescriptor : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -62,7 +62,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             writer.WriteEndObject();
         }
 
-        internal static OciBlobDescriptor DeserializeOciBlobDescriptor(JsonElement element)
+        internal static OciDescriptor DeserializeOciDescriptor(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -128,7 +128,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     continue;
                 }
             }
-            return new OciBlobDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
+            return new OciDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
         }
     }
 }
