@@ -335,7 +335,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        /// <summary> Gets the result of a search </summary>
+        /// <summary> Retrieve the search result details. </summary>
         /// <param name="searchId"> The id of the search to retrieve the phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PhoneNumberSearchResult>> GetPhoneNumberSearchResultAsync(string searchId, CancellationToken cancellationToken = default)
@@ -356,7 +356,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        /// <summary> Gets the result of a search </summary>
+        /// <summary> Retrieve the search result details. </summary>
         /// <param name="searchId"> The id of the search to retrieve the phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PhoneNumberSearchResult> GetPhoneNumberSearchResult(string searchId, CancellationToken cancellationToken = default)
