@@ -42,7 +42,10 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         protected CreateSnapshotOperation() { }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets the <see cref="ConfigurationSettingsSnapshot"/>. This snapshot will have a status of
+        /// <see cref="SnapshotStatus.Provisioning"/> until the operation has completed.
+        /// </summary>
         public override ConfigurationSettingsSnapshot Value => _snapshot;
 
         /// <inheritdoc/>
@@ -70,12 +73,7 @@ namespace Azure.Data.AppConfiguration
             return GetRawResponse();
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <inheritdoc/>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
             if (!HasCompleted)

@@ -1,6 +1,6 @@
 # Update a Configuration If Unchanged
 
-This sample illustrates how to create, retrieve, and modify the status of `ConfigurationSettingSnapshot` objects. A `ConfigurationSettingSnapshot` object
+This sample illustrates how to create, retrieve, and modify the status of a `ConfigurationSettingSnapshot`. 
 
 To get started, you'll need a connection string to the Azure App Configuration. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md) for links and instructions.
 

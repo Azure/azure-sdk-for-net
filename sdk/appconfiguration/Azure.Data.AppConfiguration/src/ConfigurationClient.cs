@@ -913,18 +913,18 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                //RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-                //using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
-                //ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                // TODO:
+                // needs to be tested and cleaned up once the service is no longer in dogfood
 
-                //Response response = await CreateSnapshotAsync(name, content, contentType, context).ConfigureAwait(false);
-                //ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
-                //return Response.FromValue(value, response);
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+                using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
 
-                // TODO: update to LRO pattern
-
-                await Task.Yield();
-                throw new NotImplementedException();
+                Operation<BinaryData> response = await CreateSnapshotAsync(wait, name, content, contentType, context).ConfigureAwait(false);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response.GetRawResponse());
+                var constructedResponse =  Response.FromValue(value, response.GetRawResponse());
+                CreateSnapshotOperation operation = new(_pipeline, ClientDiagnostics, constructedResponse);
+                return operation;
             }
             catch (Exception e)
             {
@@ -947,15 +947,18 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                //RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-                //using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
-                //ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
+                // TODO:
+                // needs to be tested and cleaned up once the service is no longer in dogfood
 
-                //Response response = CreateSnapshot(name, content, contentType, context);
-                //ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
-                //return Response.FromValue(value, response);
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+                using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
 
-                // TODO: update to LRO pattern
+                Operation<BinaryData> response = CreateSnapshot(wait, name, content, contentType, context);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response.GetRawResponse());
+                var constructedResponse = Response.FromValue(value, response.GetRawResponse());
+                CreateSnapshotOperation operation = new(_pipeline, ClientDiagnostics, constructedResponse);
+                return operation;
 
                 throw new NotImplementedException();
             }
