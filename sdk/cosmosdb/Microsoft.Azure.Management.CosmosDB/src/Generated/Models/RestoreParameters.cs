@@ -44,13 +44,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// databases available for restore.</param>
         /// <param name="tablesToRestore">List of specific tables available for
         /// restore.</param>
-        public RestoreParameters(string restoreSource = default(string), System.DateTime? restoreTimestampInUtc = default(System.DateTime?), string restoreMode = default(string), IList<DatabaseRestoreResource> databasesToRestore = default(IList<DatabaseRestoreResource>), IList<GremlinDatabaseRestoreResource> gremlinDatabasesToRestore = default(IList<GremlinDatabaseRestoreResource>), IList<string> tablesToRestore = default(IList<string>))
+        /// <param name="sourceBackupLocation">The source backup location for
+        /// restore.</param>
+        public RestoreParameters(string restoreSource = default(string), System.DateTime? restoreTimestampInUtc = default(System.DateTime?), string restoreMode = default(string), IList<DatabaseRestoreResource> databasesToRestore = default(IList<DatabaseRestoreResource>), IList<GremlinDatabaseRestoreResource> gremlinDatabasesToRestore = default(IList<GremlinDatabaseRestoreResource>), IList<string> tablesToRestore = default(IList<string>), string sourceBackupLocation = default(string))
             : base(restoreSource, restoreTimestampInUtc)
         {
             RestoreMode = restoreMode;
             DatabasesToRestore = databasesToRestore;
             GremlinDatabasesToRestore = gremlinDatabasesToRestore;
             TablesToRestore = tablesToRestore;
+            SourceBackupLocation = sourceBackupLocation;
             CustomInit();
         }
 
@@ -84,6 +87,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "tablesToRestore")]
         public IList<string> TablesToRestore { get; set; }
+
+        /// <summary>
+        /// Gets or sets the source backup location for restore.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceBackupLocation")]
+        public string SourceBackupLocation { get; set; }
 
     }
 }

@@ -118,7 +118,14 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="enablePartitionMerge">Flag to indicate
         /// enabling/disabling of Partition Merge feature on the
         /// account</param>
-        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string kind = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string defaultIdentity = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), AnalyticalStorageConfiguration analyticalStorageConfiguration = default(AnalyticalStorageConfiguration), string createMode = default(string), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>), DiagnosticLogSettings diagnosticLogSettings = default(DiagnosticLogSettings), bool? disableLocalAuth = default(bool?), RestoreParameters restoreParameters = default(RestoreParameters), Capacity capacity = default(Capacity), bool? enableMaterializedViews = default(bool?), DatabaseAccountKeysMetadata keysMetadata = default(DatabaseAccountKeysMetadata), bool? enablePartitionMerge = default(bool?))
+        /// <param name="enableBurstCapacity">Flag to indicate
+        /// enabling/disabling of Burst Capacity Preview feature on the
+        /// account</param>
+        /// <param name="minimalTlsVersion">Indicates the minimum allowed Tls
+        /// version. The default is Tls 1.0, except for Cassandra and Mongo
+        /// API's, which only work with Tls 1.2. Possible values include:
+        /// 'Tls', 'Tls11', 'Tls12'</param>
+        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string kind = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string defaultIdentity = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), AnalyticalStorageConfiguration analyticalStorageConfiguration = default(AnalyticalStorageConfiguration), string createMode = default(string), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>), DiagnosticLogSettings diagnosticLogSettings = default(DiagnosticLogSettings), bool? disableLocalAuth = default(bool?), RestoreParameters restoreParameters = default(RestoreParameters), Capacity capacity = default(Capacity), bool? enableMaterializedViews = default(bool?), DatabaseAccountKeysMetadata keysMetadata = default(DatabaseAccountKeysMetadata), bool? enablePartitionMerge = default(bool?), bool? enableBurstCapacity = default(bool?), string minimalTlsVersion = default(string))
             : base(id, name, type, location, tags, identity)
         {
             Kind = kind;
@@ -152,6 +159,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             EnableMaterializedViews = enableMaterializedViews;
             KeysMetadata = keysMetadata;
             EnablePartitionMerge = enablePartitionMerge;
+            EnableBurstCapacity = enableBurstCapacity;
+            MinimalTlsVersion = minimalTlsVersion;
             CustomInit();
         }
         /// <summary>
@@ -381,6 +390,21 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enablePartitionMerge")]
         public bool? EnablePartitionMerge { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to indicate enabling/disabling of Burst Capacity
+        /// Preview feature on the account
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableBurstCapacity")]
+        public bool? EnableBurstCapacity { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the minimum allowed Tls version. The default
+        /// is Tls 1.0, except for Cassandra and Mongo API's, which only work
+        /// with Tls 1.2. Possible values include: 'Tls', 'Tls11', 'Tls12'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimalTlsVersion")]
+        public string MinimalTlsVersion { get; set; }
 
         /// <summary>
         /// The offer type for the database

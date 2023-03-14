@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<GraphResourceGetResults>> CreateUpdateGraphWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, GraphResourceCreateUpdateParameters createUpdateGraphParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GraphResourceGetResults,GraphResourcesCreateUpdateGraphHeaders>> CreateUpdateGraphWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, GraphResourceCreateUpdateParameters createUpdateGraphParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing Azure Cosmos DB Graph Resource.
         /// </summary>
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteGraphResourceWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<GraphResourcesDeleteGraphResourceHeaders>> DeleteGraphResourceWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update an Azure Cosmos DB Graph.
         /// </summary>
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<GraphResourceGetResults>> BeginCreateUpdateGraphWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, GraphResourceCreateUpdateParameters createUpdateGraphParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GraphResourceGetResults,GraphResourcesCreateUpdateGraphHeaders>> BeginCreateUpdateGraphWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, GraphResourceCreateUpdateParameters createUpdateGraphParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing Azure Cosmos DB Graph Resource.
         /// </summary>
@@ -189,6 +189,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteGraphResourceWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<GraphResourcesDeleteGraphResourceHeaders>> BeginDeleteGraphResourceWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

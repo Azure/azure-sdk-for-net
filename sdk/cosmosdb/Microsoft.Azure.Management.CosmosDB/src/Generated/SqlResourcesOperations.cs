@@ -553,10 +553,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SqlDatabaseGetResults>> CreateUpdateSqlDatabaseWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateParameters createUpdateSqlDatabaseParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SqlDatabaseGetResults,SqlResourcesCreateUpdateSqlDatabaseHeaders>> CreateUpdateSqlDatabaseWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateParameters createUpdateSqlDatabaseParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<SqlDatabaseGetResults> _response = await BeginCreateUpdateSqlDatabaseWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, createUpdateSqlDatabaseParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<SqlDatabaseGetResults,SqlResourcesCreateUpdateSqlDatabaseHeaders> _response = await BeginCreateUpdateSqlDatabaseWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, createUpdateSqlDatabaseParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -578,10 +578,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteSqlDatabaseWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<SqlResourcesDeleteSqlDatabaseHeaders>> DeleteSqlDatabaseWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteSqlDatabaseWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationHeaderResponse<SqlResourcesDeleteSqlDatabaseHeaders> _response = await BeginDeleteSqlDatabaseWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -853,10 +853,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> UpdateSqlDatabaseThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesUpdateSqlDatabaseThroughputHeaders>> UpdateSqlDatabaseThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginUpdateSqlDatabaseThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, updateThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesUpdateSqlDatabaseThroughputHeaders> _response = await BeginUpdateSqlDatabaseThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, updateThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -878,10 +878,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateSqlDatabaseToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlDatabaseToAutoscaleHeaders>> MigrateSqlDatabaseToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateSqlDatabaseToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlDatabaseToAutoscaleHeaders> _response = await BeginMigrateSqlDatabaseToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -903,10 +903,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateSqlDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlDatabaseToManualThroughputHeaders>> MigrateSqlDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateSqlDatabaseToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlDatabaseToManualThroughputHeaders> _response = await BeginMigrateSqlDatabaseToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1436,10 +1436,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ClientEncryptionKeyGetResults>> CreateUpdateClientEncryptionKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, ClientEncryptionKeyCreateUpdateParameters createUpdateClientEncryptionKeyParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ClientEncryptionKeyGetResults,SqlResourcesCreateUpdateClientEncryptionKeyHeaders>> CreateUpdateClientEncryptionKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, ClientEncryptionKeyCreateUpdateParameters createUpdateClientEncryptionKeyParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<ClientEncryptionKeyGetResults> _response = await BeginCreateUpdateClientEncryptionKeyWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, clientEncryptionKeyName, createUpdateClientEncryptionKeyParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ClientEncryptionKeyGetResults,SqlResourcesCreateUpdateClientEncryptionKeyHeaders> _response = await BeginCreateUpdateClientEncryptionKeyWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, clientEncryptionKeyName, createUpdateClientEncryptionKeyParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1966,10 +1966,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SqlContainerGetResults>> CreateUpdateSqlContainerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateParameters createUpdateSqlContainerParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SqlContainerGetResults,SqlResourcesCreateUpdateSqlContainerHeaders>> CreateUpdateSqlContainerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateParameters createUpdateSqlContainerParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<SqlContainerGetResults> _response = await BeginCreateUpdateSqlContainerWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, createUpdateSqlContainerParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<SqlContainerGetResults,SqlResourcesCreateUpdateSqlContainerHeaders> _response = await BeginCreateUpdateSqlContainerWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, createUpdateSqlContainerParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1994,10 +1994,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteSqlContainerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<SqlResourcesDeleteSqlContainerHeaders>> DeleteSqlContainerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteSqlContainerWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationHeaderResponse<SqlResourcesDeleteSqlContainerHeaders> _response = await BeginDeleteSqlContainerWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2025,10 +2025,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PhysicalPartitionStorageInfoCollection>> ListSqlContainerPartitionMergeWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, MergeParameters mergeParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PhysicalPartitionStorageInfoCollection,SqlResourcesListSqlContainerPartitionMergeHeaders>> ListSqlContainerPartitionMergeWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, MergeParameters mergeParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<PhysicalPartitionStorageInfoCollection> _response = await BeginListSqlContainerPartitionMergeWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, mergeParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<PhysicalPartitionStorageInfoCollection,SqlResourcesListSqlContainerPartitionMergeHeaders> _response = await BeginListSqlContainerPartitionMergeWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, mergeParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2312,10 +2312,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> UpdateSqlContainerThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesUpdateSqlContainerThroughputHeaders>> UpdateSqlContainerThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginUpdateSqlContainerThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, updateThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesUpdateSqlContainerThroughputHeaders> _response = await BeginUpdateSqlContainerThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, updateThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2341,10 +2341,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateSqlContainerToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlContainerToAutoscaleHeaders>> MigrateSqlContainerToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateSqlContainerToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlContainerToAutoscaleHeaders> _response = await BeginMigrateSqlContainerToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2370,10 +2370,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateSqlContainerToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlContainerToManualThroughputHeaders>> MigrateSqlContainerToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<ThroughputSettingsGetResults> _response = await BeginMigrateSqlContainerToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlContainerToManualThroughputHeaders> _response = await BeginMigrateSqlContainerToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2399,10 +2399,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> SqlDatabaseRetrieveThroughputDistributionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, RetrieveThroughputParameters retrieveThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlDatabaseRetrieveThroughputDistributionHeaders>> SqlDatabaseRetrieveThroughputDistributionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, RetrieveThroughputParameters retrieveThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<PhysicalPartitionThroughputInfoResult> _response = await BeginSqlDatabaseRetrieveThroughputDistributionWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, retrieveThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlDatabaseRetrieveThroughputDistributionHeaders> _response = await BeginSqlDatabaseRetrieveThroughputDistributionWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, retrieveThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2428,10 +2428,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> SqlDatabaseRedistributeThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, RedistributeThroughputParameters redistributeThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlDatabaseRedistributeThroughputHeaders>> SqlDatabaseRedistributeThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, RedistributeThroughputParameters redistributeThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<PhysicalPartitionThroughputInfoResult> _response = await BeginSqlDatabaseRedistributeThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, redistributeThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlDatabaseRedistributeThroughputHeaders> _response = await BeginSqlDatabaseRedistributeThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, redistributeThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2460,10 +2460,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> SqlContainerRetrieveThroughputDistributionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, RetrieveThroughputParameters retrieveThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlContainerRetrieveThroughputDistributionHeaders>> SqlContainerRetrieveThroughputDistributionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, RetrieveThroughputParameters retrieveThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<PhysicalPartitionThroughputInfoResult> _response = await BeginSqlContainerRetrieveThroughputDistributionWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, retrieveThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlContainerRetrieveThroughputDistributionHeaders> _response = await BeginSqlContainerRetrieveThroughputDistributionWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, retrieveThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2492,10 +2492,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> SqlContainerRedistributeThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, RedistributeThroughputParameters redistributeThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlContainerRedistributeThroughputHeaders>> SqlContainerRedistributeThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, RedistributeThroughputParameters redistributeThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<PhysicalPartitionThroughputInfoResult> _response = await BeginSqlContainerRedistributeThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, redistributeThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlContainerRedistributeThroughputHeaders> _response = await BeginSqlContainerRedistributeThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, redistributeThroughputParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3045,10 +3045,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SqlStoredProcedureGetResults>> CreateUpdateSqlStoredProcedureWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateParameters createUpdateSqlStoredProcedureParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SqlStoredProcedureGetResults,SqlResourcesCreateUpdateSqlStoredProcedureHeaders>> CreateUpdateSqlStoredProcedureWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateParameters createUpdateSqlStoredProcedureParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<SqlStoredProcedureGetResults> _response = await BeginCreateUpdateSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, storedProcedureName, createUpdateSqlStoredProcedureParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<SqlStoredProcedureGetResults,SqlResourcesCreateUpdateSqlStoredProcedureHeaders> _response = await BeginCreateUpdateSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, storedProcedureName, createUpdateSqlStoredProcedureParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3076,10 +3076,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteSqlStoredProcedureWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<SqlResourcesDeleteSqlStoredProcedureHeaders>> DeleteSqlStoredProcedureWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, storedProcedureName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationHeaderResponse<SqlResourcesDeleteSqlStoredProcedureHeaders> _response = await BeginDeleteSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, storedProcedureName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3629,10 +3629,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SqlUserDefinedFunctionGetResults>> CreateUpdateSqlUserDefinedFunctionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateParameters createUpdateSqlUserDefinedFunctionParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SqlUserDefinedFunctionGetResults,SqlResourcesCreateUpdateSqlUserDefinedFunctionHeaders>> CreateUpdateSqlUserDefinedFunctionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateParameters createUpdateSqlUserDefinedFunctionParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<SqlUserDefinedFunctionGetResults> _response = await BeginCreateUpdateSqlUserDefinedFunctionWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<SqlUserDefinedFunctionGetResults,SqlResourcesCreateUpdateSqlUserDefinedFunctionHeaders> _response = await BeginCreateUpdateSqlUserDefinedFunctionWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3660,10 +3660,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteSqlUserDefinedFunctionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<SqlResourcesDeleteSqlUserDefinedFunctionHeaders>> DeleteSqlUserDefinedFunctionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteSqlUserDefinedFunctionWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationHeaderResponse<SqlResourcesDeleteSqlUserDefinedFunctionHeaders> _response = await BeginDeleteSqlUserDefinedFunctionWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -4211,10 +4211,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SqlTriggerGetResults>> CreateUpdateSqlTriggerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateParameters createUpdateSqlTriggerParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SqlTriggerGetResults,SqlResourcesCreateUpdateSqlTriggerHeaders>> CreateUpdateSqlTriggerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateParameters createUpdateSqlTriggerParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<SqlTriggerGetResults> _response = await BeginCreateUpdateSqlTriggerWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, triggerName, createUpdateSqlTriggerParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<SqlTriggerGetResults,SqlResourcesCreateUpdateSqlTriggerHeaders> _response = await BeginCreateUpdateSqlTriggerWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, triggerName, createUpdateSqlTriggerParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -4242,10 +4242,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteSqlTriggerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<SqlResourcesDeleteSqlTriggerHeaders>> DeleteSqlTriggerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteSqlTriggerWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, triggerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationHeaderResponse<SqlResourcesDeleteSqlTriggerHeaders> _response = await BeginDeleteSqlTriggerWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, triggerName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -5386,7 +5386,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SqlDatabaseGetResults>> BeginCreateUpdateSqlDatabaseWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateParameters createUpdateSqlDatabaseParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SqlDatabaseGetResults,SqlResourcesCreateUpdateSqlDatabaseHeaders>> BeginCreateUpdateSqlDatabaseWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateParameters createUpdateSqlDatabaseParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -5581,7 +5581,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SqlDatabaseGetResults>();
+            var _result = new AzureOperationResponse<SqlDatabaseGetResults,SqlResourcesCreateUpdateSqlDatabaseHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -5605,6 +5605,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesCreateUpdateSqlDatabaseHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -5643,7 +5656,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteSqlDatabaseWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<SqlResourcesDeleteSqlDatabaseHeaders>> BeginDeleteSqlDatabaseWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -5823,12 +5836,25 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationHeaderResponse<SqlResourcesDeleteSqlDatabaseHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesDeleteSqlDatabaseHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -5874,7 +5900,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginUpdateSqlDatabaseThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesUpdateSqlDatabaseThroughputHeaders>> BeginUpdateSqlDatabaseThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -6069,7 +6095,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ThroughputSettingsGetResults>();
+            var _result = new AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesUpdateSqlDatabaseThroughputHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6093,6 +6119,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesUpdateSqlDatabaseThroughputHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -6134,7 +6173,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateSqlDatabaseToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlDatabaseToAutoscaleHeaders>> BeginMigrateSqlDatabaseToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -6314,7 +6353,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ThroughputSettingsGetResults>();
+            var _result = new AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlDatabaseToAutoscaleHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6338,6 +6377,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesMigrateSqlDatabaseToAutoscaleHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -6379,7 +6431,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateSqlDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlDatabaseToManualThroughputHeaders>> BeginMigrateSqlDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -6559,7 +6611,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ThroughputSettingsGetResults>();
+            var _result = new AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlDatabaseToManualThroughputHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6583,6 +6635,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesMigrateSqlDatabaseToManualThroughputHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -6631,7 +6696,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ClientEncryptionKeyGetResults>> BeginCreateUpdateClientEncryptionKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, ClientEncryptionKeyCreateUpdateParameters createUpdateClientEncryptionKeyParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ClientEncryptionKeyGetResults,SqlResourcesCreateUpdateClientEncryptionKeyHeaders>> BeginCreateUpdateClientEncryptionKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, ClientEncryptionKeyCreateUpdateParameters createUpdateClientEncryptionKeyParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -6832,7 +6897,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ClientEncryptionKeyGetResults>();
+            var _result = new AzureOperationResponse<ClientEncryptionKeyGetResults,SqlResourcesCreateUpdateClientEncryptionKeyHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6856,6 +6921,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesCreateUpdateClientEncryptionKeyHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -6903,7 +6981,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SqlContainerGetResults>> BeginCreateUpdateSqlContainerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateParameters createUpdateSqlContainerParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SqlContainerGetResults,SqlResourcesCreateUpdateSqlContainerHeaders>> BeginCreateUpdateSqlContainerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateParameters createUpdateSqlContainerParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -7104,7 +7182,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SqlContainerGetResults>();
+            var _result = new AzureOperationResponse<SqlContainerGetResults,SqlResourcesCreateUpdateSqlContainerHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -7128,6 +7206,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesCreateUpdateSqlContainerHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -7169,7 +7260,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteSqlContainerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<SqlResourcesDeleteSqlContainerHeaders>> BeginDeleteSqlContainerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -7355,12 +7446,25 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationHeaderResponse<SqlResourcesDeleteSqlContainerHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesDeleteSqlContainerHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -7408,7 +7512,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PhysicalPartitionStorageInfoCollection>> BeginListSqlContainerPartitionMergeWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, MergeParameters mergeParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PhysicalPartitionStorageInfoCollection,SqlResourcesListSqlContainerPartitionMergeHeaders>> BeginListSqlContainerPartitionMergeWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, MergeParameters mergeParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -7605,7 +7709,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PhysicalPartitionStorageInfoCollection>();
+            var _result = new AzureOperationResponse<PhysicalPartitionStorageInfoCollection,SqlResourcesListSqlContainerPartitionMergeHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -7629,6 +7733,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesListSqlContainerPartitionMergeHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -7677,7 +7794,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginUpdateSqlContainerThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesUpdateSqlContainerThroughputHeaders>> BeginUpdateSqlContainerThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -7878,7 +7995,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ThroughputSettingsGetResults>();
+            var _result = new AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesUpdateSqlContainerThroughputHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -7902,6 +8019,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesUpdateSqlContainerThroughputHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -7947,7 +8077,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateSqlContainerToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlContainerToAutoscaleHeaders>> BeginMigrateSqlContainerToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -8133,7 +8263,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ThroughputSettingsGetResults>();
+            var _result = new AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlContainerToAutoscaleHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -8157,6 +8287,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesMigrateSqlContainerToAutoscaleHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -8202,7 +8345,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateSqlContainerToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlContainerToManualThroughputHeaders>> BeginMigrateSqlContainerToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -8388,7 +8531,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ThroughputSettingsGetResults>();
+            var _result = new AzureOperationResponse<ThroughputSettingsGetResults,SqlResourcesMigrateSqlContainerToManualThroughputHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -8412,6 +8555,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesMigrateSqlContainerToManualThroughputHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -8457,7 +8613,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> BeginSqlDatabaseRetrieveThroughputDistributionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, RetrieveThroughputParameters retrieveThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlDatabaseRetrieveThroughputDistributionHeaders>> BeginSqlDatabaseRetrieveThroughputDistributionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, RetrieveThroughputParameters retrieveThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -8652,7 +8808,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PhysicalPartitionThroughputInfoResult>();
+            var _result = new AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlDatabaseRetrieveThroughputDistributionHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -8676,6 +8832,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesSqlDatabaseRetrieveThroughputDistributionHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -8721,7 +8890,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> BeginSqlDatabaseRedistributeThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, RedistributeThroughputParameters redistributeThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlDatabaseRedistributeThroughputHeaders>> BeginSqlDatabaseRedistributeThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, RedistributeThroughputParameters redistributeThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -8916,7 +9085,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PhysicalPartitionThroughputInfoResult>();
+            var _result = new AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlDatabaseRedistributeThroughputHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -8940,6 +9109,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesSqlDatabaseRedistributeThroughputHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -8988,7 +9170,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> BeginSqlContainerRetrieveThroughputDistributionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, RetrieveThroughputParameters retrieveThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlContainerRetrieveThroughputDistributionHeaders>> BeginSqlContainerRetrieveThroughputDistributionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, RetrieveThroughputParameters retrieveThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -9189,7 +9371,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PhysicalPartitionThroughputInfoResult>();
+            var _result = new AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlContainerRetrieveThroughputDistributionHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -9213,6 +9395,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesSqlContainerRetrieveThroughputDistributionHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -9261,7 +9456,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> BeginSqlContainerRedistributeThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, RedistributeThroughputParameters redistributeThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlContainerRedistributeThroughputHeaders>> BeginSqlContainerRedistributeThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, RedistributeThroughputParameters redistributeThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -9462,7 +9657,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PhysicalPartitionThroughputInfoResult>();
+            var _result = new AzureOperationResponse<PhysicalPartitionThroughputInfoResult,SqlResourcesSqlContainerRedistributeThroughputHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -9486,6 +9681,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesSqlContainerRedistributeThroughputHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -9536,7 +9744,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SqlStoredProcedureGetResults>> BeginCreateUpdateSqlStoredProcedureWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateParameters createUpdateSqlStoredProcedureParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SqlStoredProcedureGetResults,SqlResourcesCreateUpdateSqlStoredProcedureHeaders>> BeginCreateUpdateSqlStoredProcedureWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateParameters createUpdateSqlStoredProcedureParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -9743,7 +9951,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SqlStoredProcedureGetResults>();
+            var _result = new AzureOperationResponse<SqlStoredProcedureGetResults,SqlResourcesCreateUpdateSqlStoredProcedureHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -9767,6 +9975,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesCreateUpdateSqlStoredProcedureHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -9811,7 +10032,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteSqlStoredProcedureWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<SqlResourcesDeleteSqlStoredProcedureHeaders>> BeginDeleteSqlStoredProcedureWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -10003,12 +10224,25 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationHeaderResponse<SqlResourcesDeleteSqlStoredProcedureHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesDeleteSqlStoredProcedureHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -10059,7 +10293,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SqlUserDefinedFunctionGetResults>> BeginCreateUpdateSqlUserDefinedFunctionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateParameters createUpdateSqlUserDefinedFunctionParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SqlUserDefinedFunctionGetResults,SqlResourcesCreateUpdateSqlUserDefinedFunctionHeaders>> BeginCreateUpdateSqlUserDefinedFunctionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateParameters createUpdateSqlUserDefinedFunctionParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -10266,7 +10500,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SqlUserDefinedFunctionGetResults>();
+            var _result = new AzureOperationResponse<SqlUserDefinedFunctionGetResults,SqlResourcesCreateUpdateSqlUserDefinedFunctionHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -10290,6 +10524,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesCreateUpdateSqlUserDefinedFunctionHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -10334,7 +10581,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteSqlUserDefinedFunctionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<SqlResourcesDeleteSqlUserDefinedFunctionHeaders>> BeginDeleteSqlUserDefinedFunctionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -10526,12 +10773,25 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationHeaderResponse<SqlResourcesDeleteSqlUserDefinedFunctionHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesDeleteSqlUserDefinedFunctionHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -10582,7 +10842,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SqlTriggerGetResults>> BeginCreateUpdateSqlTriggerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateParameters createUpdateSqlTriggerParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SqlTriggerGetResults,SqlResourcesCreateUpdateSqlTriggerHeaders>> BeginCreateUpdateSqlTriggerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateParameters createUpdateSqlTriggerParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -10789,7 +11049,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SqlTriggerGetResults>();
+            var _result = new AzureOperationResponse<SqlTriggerGetResults,SqlResourcesCreateUpdateSqlTriggerHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -10813,6 +11073,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesCreateUpdateSqlTriggerHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -10857,7 +11130,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteSqlTriggerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<SqlResourcesDeleteSqlTriggerHeaders>> BeginDeleteSqlTriggerWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -11049,12 +11322,25 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationHeaderResponse<SqlResourcesDeleteSqlTriggerHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SqlResourcesDeleteSqlTriggerHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {

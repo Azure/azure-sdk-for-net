@@ -176,9 +176,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='serviceName'>
             /// Cosmos DB service name.
             /// </param>
-            public static void Delete(this IServiceOperations operations, string resourceGroupName, string accountName, string serviceName)
+            public static ServiceDeleteHeaders Delete(this IServiceOperations operations, string resourceGroupName, string accountName, string serviceName)
             {
-                operations.DeleteAsync(resourceGroupName, accountName, serviceName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, accountName, serviceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -199,9 +199,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IServiceOperations operations, string resourceGroupName, string accountName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServiceDeleteHeaders> DeleteAsync(this IServiceOperations operations, string resourceGroupName, string accountName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -271,9 +274,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='serviceName'>
             /// Cosmos DB service name.
             /// </param>
-            public static void BeginDelete(this IServiceOperations operations, string resourceGroupName, string accountName, string serviceName)
+            public static ServiceDeleteHeaders BeginDelete(this IServiceOperations operations, string resourceGroupName, string accountName, string serviceName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, accountName, serviceName).GetAwaiter().GetResult();
+                return operations.BeginDeleteAsync(resourceGroupName, accountName, serviceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -294,9 +297,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IServiceOperations operations, string resourceGroupName, string accountName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServiceDeleteHeaders> BeginDeleteAsync(this IServiceOperations operations, string resourceGroupName, string accountName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
     }

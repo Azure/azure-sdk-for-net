@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TableGetResults>> CreateUpdateTableWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, TableCreateUpdateParameters createUpdateTableParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TableGetResults,TableResourcesCreateUpdateTableHeaders>> CreateUpdateTableWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, TableCreateUpdateParameters createUpdateTableParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing Azure Cosmos DB Table.
         /// </summary>
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteTableWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<TableResourcesDeleteTableHeaders>> DeleteTableWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the RUs per second of the Table under an existing Azure Cosmos
         /// DB database account with the provided name.
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ThroughputSettingsGetResults>> UpdateTableThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ThroughputSettingsGetResults,TableResourcesUpdateTableThroughputHeaders>> UpdateTableThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Migrate an Azure Cosmos DB Table from manual throughput to
         /// autoscale
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateTableToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ThroughputSettingsGetResults,TableResourcesMigrateTableToAutoscaleHeaders>> MigrateTableToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Migrate an Azure Cosmos DB Table from autoscale to manual
         /// throughput
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateTableToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ThroughputSettingsGetResults,TableResourcesMigrateTableToManualThroughputHeaders>> MigrateTableToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves continuous backup information for a table.
         /// </summary>
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TableGetResults>> BeginCreateUpdateTableWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, TableCreateUpdateParameters createUpdateTableParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TableGetResults,TableResourcesCreateUpdateTableHeaders>> BeginCreateUpdateTableWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, TableCreateUpdateParameters createUpdateTableParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing Azure Cosmos DB Table.
         /// </summary>
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteTableWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<TableResourcesDeleteTableHeaders>> BeginDeleteTableWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update RUs per second of an Azure Cosmos DB Table
         /// </summary>
@@ -371,7 +371,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginUpdateTableThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ThroughputSettingsGetResults,TableResourcesUpdateTableThroughputHeaders>> BeginUpdateTableThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Migrate an Azure Cosmos DB Table from manual throughput to
         /// autoscale
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateTableToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ThroughputSettingsGetResults,TableResourcesMigrateTableToAutoscaleHeaders>> BeginMigrateTableToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Migrate an Azure Cosmos DB Table from autoscale to manual
         /// throughput
@@ -429,7 +429,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateTableToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ThroughputSettingsGetResults,TableResourcesMigrateTableToManualThroughputHeaders>> BeginMigrateTableToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves continuous backup information for a table.
         /// </summary>

@@ -169,9 +169,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='accountName'>
             /// Cosmos DB database account name.
             /// </param>
-            public static void Delete(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName)
+            public static DatabaseAccountsDeleteHeaders Delete(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName)
             {
-                operations.DeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -189,9 +189,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatabaseAccountsDeleteHeaders> DeleteAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -213,9 +216,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='failoverParameters'>
             /// The new failover policies for the database account.
             /// </param>
-            public static void FailoverPriorityChange(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, FailoverPolicies failoverParameters)
+            public static DatabaseAccountsFailoverPriorityChangeHeaders FailoverPriorityChange(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, FailoverPolicies failoverParameters)
             {
-                operations.FailoverPriorityChangeAsync(resourceGroupName, accountName, failoverParameters).GetAwaiter().GetResult();
+                return operations.FailoverPriorityChangeAsync(resourceGroupName, accountName, failoverParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -240,9 +243,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task FailoverPriorityChangeAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatabaseAccountsFailoverPriorityChangeHeaders> FailoverPriorityChangeAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.FailoverPriorityChangeWithHttpMessagesAsync(resourceGroupName, accountName, failoverParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.FailoverPriorityChangeWithHttpMessagesAsync(resourceGroupName, accountName, failoverParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -409,9 +415,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='regionParameterForOffline'>
             /// Cosmos DB region to offline for the database account.
             /// </param>
-            public static void OfflineRegion(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline)
+            public static DatabaseAccountsOfflineRegionHeaders OfflineRegion(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline)
             {
-                operations.OfflineRegionAsync(resourceGroupName, accountName, regionParameterForOffline).GetAwaiter().GetResult();
+                return operations.OfflineRegionAsync(resourceGroupName, accountName, regionParameterForOffline).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -433,9 +439,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task OfflineRegionAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatabaseAccountsOfflineRegionHeaders> OfflineRegionAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.OfflineRegionWithHttpMessagesAsync(resourceGroupName, accountName, regionParameterForOffline, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.OfflineRegionWithHttpMessagesAsync(resourceGroupName, accountName, regionParameterForOffline, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -454,9 +463,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='regionParameterForOnline'>
             /// Cosmos DB region to online for the database account.
             /// </param>
-            public static void OnlineRegion(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline)
+            public static DatabaseAccountsOnlineRegionHeaders OnlineRegion(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline)
             {
-                operations.OnlineRegionAsync(resourceGroupName, accountName, regionParameterForOnline).GetAwaiter().GetResult();
+                return operations.OnlineRegionAsync(resourceGroupName, accountName, regionParameterForOnline).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -478,9 +487,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task OnlineRegionAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatabaseAccountsOnlineRegionHeaders> OnlineRegionAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.OnlineRegionWithHttpMessagesAsync(resourceGroupName, accountName, regionParameterForOnline, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.OnlineRegionWithHttpMessagesAsync(resourceGroupName, accountName, regionParameterForOnline, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -583,9 +595,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='keyToRegenerate'>
             /// The name of the key to regenerate.
             /// </param>
-            public static void RegenerateKey(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyParameters keyToRegenerate)
+            public static DatabaseAccountsRegenerateKeyHeaders RegenerateKey(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyParameters keyToRegenerate)
             {
-                operations.RegenerateKeyAsync(resourceGroupName, accountName, keyToRegenerate).GetAwaiter().GetResult();
+                return operations.RegenerateKeyAsync(resourceGroupName, accountName, keyToRegenerate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -607,9 +619,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RegenerateKeyAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyParameters keyToRegenerate, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatabaseAccountsRegenerateKeyHeaders> RegenerateKeyAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyParameters keyToRegenerate, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, keyToRegenerate, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, keyToRegenerate, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -900,9 +915,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='accountName'>
             /// Cosmos DB database account name.
             /// </param>
-            public static void BeginDelete(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName)
+            public static DatabaseAccountsDeleteHeaders BeginDelete(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+                return operations.BeginDeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -920,9 +935,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatabaseAccountsDeleteHeaders> BeginDeleteAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -944,9 +962,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='failoverParameters'>
             /// The new failover policies for the database account.
             /// </param>
-            public static void BeginFailoverPriorityChange(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, FailoverPolicies failoverParameters)
+            public static DatabaseAccountsFailoverPriorityChangeHeaders BeginFailoverPriorityChange(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, FailoverPolicies failoverParameters)
             {
-                operations.BeginFailoverPriorityChangeAsync(resourceGroupName, accountName, failoverParameters).GetAwaiter().GetResult();
+                return operations.BeginFailoverPriorityChangeAsync(resourceGroupName, accountName, failoverParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -971,9 +989,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginFailoverPriorityChangeAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatabaseAccountsFailoverPriorityChangeHeaders> BeginFailoverPriorityChangeAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginFailoverPriorityChangeWithHttpMessagesAsync(resourceGroupName, accountName, failoverParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginFailoverPriorityChangeWithHttpMessagesAsync(resourceGroupName, accountName, failoverParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -992,9 +1013,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='regionParameterForOffline'>
             /// Cosmos DB region to offline for the database account.
             /// </param>
-            public static void BeginOfflineRegion(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline)
+            public static DatabaseAccountsOfflineRegionHeaders BeginOfflineRegion(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline)
             {
-                operations.BeginOfflineRegionAsync(resourceGroupName, accountName, regionParameterForOffline).GetAwaiter().GetResult();
+                return operations.BeginOfflineRegionAsync(resourceGroupName, accountName, regionParameterForOffline).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1016,9 +1037,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginOfflineRegionAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatabaseAccountsOfflineRegionHeaders> BeginOfflineRegionAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginOfflineRegionWithHttpMessagesAsync(resourceGroupName, accountName, regionParameterForOffline, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginOfflineRegionWithHttpMessagesAsync(resourceGroupName, accountName, regionParameterForOffline, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -1037,9 +1061,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='regionParameterForOnline'>
             /// Cosmos DB region to online for the database account.
             /// </param>
-            public static void BeginOnlineRegion(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline)
+            public static DatabaseAccountsOnlineRegionHeaders BeginOnlineRegion(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline)
             {
-                operations.BeginOnlineRegionAsync(resourceGroupName, accountName, regionParameterForOnline).GetAwaiter().GetResult();
+                return operations.BeginOnlineRegionAsync(resourceGroupName, accountName, regionParameterForOnline).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1061,9 +1085,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginOnlineRegionAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatabaseAccountsOnlineRegionHeaders> BeginOnlineRegionAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginOnlineRegionWithHttpMessagesAsync(resourceGroupName, accountName, regionParameterForOnline, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginOnlineRegionWithHttpMessagesAsync(resourceGroupName, accountName, regionParameterForOnline, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -1082,9 +1109,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='keyToRegenerate'>
             /// The name of the key to regenerate.
             /// </param>
-            public static void BeginRegenerateKey(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyParameters keyToRegenerate)
+            public static DatabaseAccountsRegenerateKeyHeaders BeginRegenerateKey(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyParameters keyToRegenerate)
             {
-                operations.BeginRegenerateKeyAsync(resourceGroupName, accountName, keyToRegenerate).GetAwaiter().GetResult();
+                return operations.BeginRegenerateKeyAsync(resourceGroupName, accountName, keyToRegenerate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1106,9 +1133,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginRegenerateKeyAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyParameters keyToRegenerate, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatabaseAccountsRegenerateKeyHeaders> BeginRegenerateKeyAsync(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyParameters keyToRegenerate, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginRegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, keyToRegenerate, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginRegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, keyToRegenerate, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
     }

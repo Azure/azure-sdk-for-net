@@ -28,15 +28,21 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Initializes a new instance of the TableGetPropertiesResource class.
         /// </summary>
         /// <param name="id">Name of the Cosmos DB table</param>
+        /// <param name="restoreParameters">Parameters to indicate the
+        /// information about the restore</param>
+        /// <param name="createMode">Enum to indicate the mode of resource
+        /// creation. Possible values include: 'Default', 'Restore'</param>
         /// <param name="_rid">A system generated property. A unique
         /// identifier.</param>
         /// <param name="_ts">A system generated property that denotes the last
         /// updated timestamp of the resource.</param>
         /// <param name="_etag">A system generated property representing the
         /// resource etag required for optimistic concurrency control.</param>
-        public TableGetPropertiesResource(string id, string _rid = default(string), double? _ts = default(double?), string _etag = default(string))
+        public TableGetPropertiesResource(string id, ResourceRestoreParameters restoreParameters = default(ResourceRestoreParameters), string createMode = default(string), string _rid = default(string), double? _ts = default(double?), string _etag = default(string))
         {
             Id = id;
+            RestoreParameters = restoreParameters;
+            CreateMode = createMode;
             this._rid = _rid;
             this._ts = _ts;
             this._etag = _etag;
@@ -53,6 +59,20 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets parameters to indicate the information about the
+        /// restore
+        /// </summary>
+        [JsonProperty(PropertyName = "restoreParameters")]
+        public ResourceRestoreParameters RestoreParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets enum to indicate the mode of resource creation.
+        /// Possible values include: 'Default', 'Restore'
+        /// </summary>
+        [JsonProperty(PropertyName = "createMode")]
+        public string CreateMode { get; set; }
 
         /// <summary>
         /// Gets a system generated property. A unique identifier.

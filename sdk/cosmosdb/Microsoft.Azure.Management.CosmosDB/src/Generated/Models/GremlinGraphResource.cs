@@ -43,7 +43,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="conflictResolutionPolicy">The conflict resolution
         /// policy for the graph.</param>
         /// <param name="analyticalStorageTtl">Analytical TTL.</param>
-        public GremlinGraphResource(string id, IndexingPolicy indexingPolicy = default(IndexingPolicy), ContainerPartitionKey partitionKey = default(ContainerPartitionKey), int? defaultTtl = default(int?), UniqueKeyPolicy uniqueKeyPolicy = default(UniqueKeyPolicy), ConflictResolutionPolicy conflictResolutionPolicy = default(ConflictResolutionPolicy), long? analyticalStorageTtl = default(long?))
+        /// <param name="restoreParameters">Parameters to indicate the
+        /// information about the restore</param>
+        /// <param name="createMode">Enum to indicate the mode of resource
+        /// creation. Possible values include: 'Default', 'Restore'</param>
+        public GremlinGraphResource(string id, IndexingPolicy indexingPolicy = default(IndexingPolicy), ContainerPartitionKey partitionKey = default(ContainerPartitionKey), int? defaultTtl = default(int?), UniqueKeyPolicy uniqueKeyPolicy = default(UniqueKeyPolicy), ConflictResolutionPolicy conflictResolutionPolicy = default(ConflictResolutionPolicy), long? analyticalStorageTtl = default(long?), ResourceRestoreParameters restoreParameters = default(ResourceRestoreParameters), string createMode = default(string))
         {
             Id = id;
             IndexingPolicy = indexingPolicy;
@@ -52,6 +56,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             UniqueKeyPolicy = uniqueKeyPolicy;
             ConflictResolutionPolicy = conflictResolutionPolicy;
             AnalyticalStorageTtl = analyticalStorageTtl;
+            RestoreParameters = restoreParameters;
+            CreateMode = createMode;
             CustomInit();
         }
 
@@ -105,6 +111,20 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "analyticalStorageTtl")]
         public long? AnalyticalStorageTtl { get; set; }
+
+        /// <summary>
+        /// Gets or sets parameters to indicate the information about the
+        /// restore
+        /// </summary>
+        [JsonProperty(PropertyName = "restoreParameters")]
+        public ResourceRestoreParameters RestoreParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets enum to indicate the mode of resource creation.
+        /// Possible values include: 'Default', 'Restore'
+        /// </summary>
+        [JsonProperty(PropertyName = "createMode")]
+        public string CreateMode { get; set; }
 
         /// <summary>
         /// Validate the object.

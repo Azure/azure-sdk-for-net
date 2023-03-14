@@ -553,10 +553,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<GraphResourceGetResults>> CreateUpdateGraphWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, GraphResourceCreateUpdateParameters createUpdateGraphParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GraphResourceGetResults,GraphResourcesCreateUpdateGraphHeaders>> CreateUpdateGraphWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, GraphResourceCreateUpdateParameters createUpdateGraphParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<GraphResourceGetResults> _response = await BeginCreateUpdateGraphWithHttpMessagesAsync(resourceGroupName, accountName, graphName, createUpdateGraphParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<GraphResourceGetResults,GraphResourcesCreateUpdateGraphHeaders> _response = await BeginCreateUpdateGraphWithHttpMessagesAsync(resourceGroupName, accountName, graphName, createUpdateGraphParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -578,10 +578,10 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteGraphResourceWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<GraphResourcesDeleteGraphResourceHeaders>> DeleteGraphResourceWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteGraphResourceWithHttpMessagesAsync(resourceGroupName, accountName, graphName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationHeaderResponse<GraphResourcesDeleteGraphResourceHeaders> _response = await BeginDeleteGraphResourceWithHttpMessagesAsync(resourceGroupName, accountName, graphName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -621,7 +621,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<GraphResourceGetResults>> BeginCreateUpdateGraphWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, GraphResourceCreateUpdateParameters createUpdateGraphParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GraphResourceGetResults,GraphResourcesCreateUpdateGraphHeaders>> BeginCreateUpdateGraphWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, GraphResourceCreateUpdateParameters createUpdateGraphParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -816,7 +816,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<GraphResourceGetResults>();
+            var _result = new AzureOperationResponse<GraphResourceGetResults,GraphResourcesCreateUpdateGraphHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -840,6 +840,19 @@ namespace Microsoft.Azure.Management.CosmosDB
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GraphResourcesCreateUpdateGraphHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -878,7 +891,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteGraphResourceWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<GraphResourcesDeleteGraphResourceHeaders>> BeginDeleteGraphResourceWithHttpMessagesAsync(string resourceGroupName, string accountName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1058,12 +1071,25 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationHeaderResponse<GraphResourcesDeleteGraphResourceHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GraphResourcesDeleteGraphResourceHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {

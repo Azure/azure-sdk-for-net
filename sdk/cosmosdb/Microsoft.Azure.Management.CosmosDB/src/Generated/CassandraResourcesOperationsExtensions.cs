@@ -180,9 +180,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='keyspaceName'>
             /// Cosmos DB keyspace name.
             /// </param>
-            public static void DeleteCassandraKeyspace(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName)
+            public static CassandraResourcesDeleteCassandraKeyspaceHeaders DeleteCassandraKeyspace(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName)
             {
-                operations.DeleteCassandraKeyspaceAsync(resourceGroupName, accountName, keyspaceName).GetAwaiter().GetResult();
+                return operations.DeleteCassandraKeyspaceAsync(resourceGroupName, accountName, keyspaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -203,9 +203,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteCassandraKeyspaceAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CassandraResourcesDeleteCassandraKeyspaceHeaders> DeleteCassandraKeyspaceAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -584,9 +587,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='tableName'>
             /// Cosmos DB table name.
             /// </param>
-            public static void DeleteCassandraTable(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName)
+            public static CassandraResourcesDeleteCassandraTableHeaders DeleteCassandraTable(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName)
             {
-                operations.DeleteCassandraTableAsync(resourceGroupName, accountName, keyspaceName, tableName).GetAwaiter().GetResult();
+                return operations.DeleteCassandraTableAsync(resourceGroupName, accountName, keyspaceName, tableName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -610,9 +613,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteCassandraTableAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CassandraResourcesDeleteCassandraTableHeaders> DeleteCassandraTableAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteCassandraTableWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, tableName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteCassandraTableWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -1013,9 +1019,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='viewName'>
             /// Cosmos DB view name.
             /// </param>
-            public static void DeleteCassandraView(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string viewName)
+            public static CassandraResourcesDeleteCassandraViewHeaders DeleteCassandraView(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string viewName)
             {
-                operations.DeleteCassandraViewAsync(resourceGroupName, accountName, keyspaceName, viewName).GetAwaiter().GetResult();
+                return operations.DeleteCassandraViewAsync(resourceGroupName, accountName, keyspaceName, viewName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1039,9 +1045,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteCassandraViewAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CassandraResourcesDeleteCassandraViewHeaders> DeleteCassandraViewAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteCassandraViewWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, viewName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteCassandraViewWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, viewName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -1333,9 +1342,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='keyspaceName'>
             /// Cosmos DB keyspace name.
             /// </param>
-            public static void BeginDeleteCassandraKeyspace(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName)
+            public static CassandraResourcesDeleteCassandraKeyspaceHeaders BeginDeleteCassandraKeyspace(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName)
             {
-                operations.BeginDeleteCassandraKeyspaceAsync(resourceGroupName, accountName, keyspaceName).GetAwaiter().GetResult();
+                return operations.BeginDeleteCassandraKeyspaceAsync(resourceGroupName, accountName, keyspaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1356,9 +1365,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteCassandraKeyspaceAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CassandraResourcesDeleteCassandraKeyspaceHeaders> BeginDeleteCassandraKeyspaceAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginDeleteCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -1587,9 +1599,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='tableName'>
             /// Cosmos DB table name.
             /// </param>
-            public static void BeginDeleteCassandraTable(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName)
+            public static CassandraResourcesDeleteCassandraTableHeaders BeginDeleteCassandraTable(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName)
             {
-                operations.BeginDeleteCassandraTableAsync(resourceGroupName, accountName, keyspaceName, tableName).GetAwaiter().GetResult();
+                return operations.BeginDeleteCassandraTableAsync(resourceGroupName, accountName, keyspaceName, tableName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1613,9 +1625,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteCassandraTableAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CassandraResourcesDeleteCassandraTableHeaders> BeginDeleteCassandraTableAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteCassandraTableWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, tableName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginDeleteCassandraTableWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -1862,9 +1877,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='viewName'>
             /// Cosmos DB view name.
             /// </param>
-            public static void BeginDeleteCassandraView(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string viewName)
+            public static CassandraResourcesDeleteCassandraViewHeaders BeginDeleteCassandraView(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string viewName)
             {
-                operations.BeginDeleteCassandraViewAsync(resourceGroupName, accountName, keyspaceName, viewName).GetAwaiter().GetResult();
+                return operations.BeginDeleteCassandraViewAsync(resourceGroupName, accountName, keyspaceName, viewName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1888,9 +1903,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteCassandraViewAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CassandraResourcesDeleteCassandraViewHeaders> BeginDeleteCassandraViewAsync(this ICassandraResourcesOperations operations, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteCassandraViewWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, viewName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginDeleteCassandraViewWithHttpMessagesAsync(resourceGroupName, accountName, keyspaceName, viewName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
