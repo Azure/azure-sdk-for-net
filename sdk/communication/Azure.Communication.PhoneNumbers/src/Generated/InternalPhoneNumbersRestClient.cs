@@ -38,7 +38,7 @@ namespace Azure.Communication.PhoneNumbers
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateListAreaCodesRequest(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, AssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAreaCodesRequest(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -90,7 +90,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
-        public async Task<Response<PhoneNumberAreaCodes>> ListAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, AssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PhoneNumberAreaCodes>> ListAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (twoLetterIsoCountryName == null)
             {
@@ -124,7 +124,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
-        public Response<PhoneNumberAreaCodes> ListAreaCodes(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, AssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public Response<PhoneNumberAreaCodes> ListAreaCodes(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (twoLetterIsoCountryName == null)
             {
@@ -313,7 +313,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateListOfferingsRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, AssignmentType? assignmentType, string acceptLanguage)
+        internal HttpMessage CreateListOfferingsRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -354,11 +354,11 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
-        /// <param name="assignmentType"> Filter by assignmentType, e.g. User, Application. </param>
+        /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
-        public async Task<Response<OfferingsResponse>> ListOfferingsAsync(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, AssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public async Task<Response<OfferingsResponse>> ListOfferingsAsync(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (twoLetterIsoCountryName == null)
             {
@@ -386,11 +386,11 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
-        /// <param name="assignmentType"> Filter by assignmentType, e.g. User, Application. </param>
+        /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
-        public Response<OfferingsResponse> ListOfferings(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, AssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public Response<OfferingsResponse> ListOfferings(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (twoLetterIsoCountryName == null)
             {
@@ -1015,7 +1015,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateListAreaCodesNextPageRequest(string nextLink, string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, AssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAreaCodesNextPageRequest(string nextLink, string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1044,7 +1044,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="twoLetterIsoCountryName"/> is null. </exception>
-        public async Task<Response<PhoneNumberAreaCodes>> ListAreaCodesNextPageAsync(string nextLink, string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, AssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PhoneNumberAreaCodes>> ListAreaCodesNextPageAsync(string nextLink, string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1083,7 +1083,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="twoLetterIsoCountryName"/> is null. </exception>
-        public Response<PhoneNumberAreaCodes> ListAreaCodesNextPage(string nextLink, string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, AssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public Response<PhoneNumberAreaCodes> ListAreaCodesNextPage(string nextLink, string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1276,7 +1276,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateListOfferingsNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, AssignmentType? assignmentType, string acceptLanguage)
+        internal HttpMessage CreateListOfferingsNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1299,11 +1299,11 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
-        /// <param name="assignmentType"> Filter by assignmentType, e.g. User, Application. </param>
+        /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="twoLetterIsoCountryName"/> is null. </exception>
-        public async Task<Response<OfferingsResponse>> ListOfferingsNextPageAsync(string nextLink, string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, AssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public async Task<Response<OfferingsResponse>> ListOfferingsNextPageAsync(string nextLink, string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1336,11 +1336,11 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
-        /// <param name="assignmentType"> Filter by assignmentType, e.g. User, Application. </param>
+        /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="twoLetterIsoCountryName"/> is null. </exception>
-        public Response<OfferingsResponse> ListOfferingsNextPage(string nextLink, string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, AssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        public Response<OfferingsResponse> ListOfferingsNextPage(string nextLink, string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
