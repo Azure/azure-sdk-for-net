@@ -22,7 +22,7 @@ namespace Azure.Data.AppConfiguration
         private ConfigurationSettingsSnapshot _snapshot;
         private OperationInternal _operationInternal;
 
-        internal CreateSnapshotOperation(HttpPipeline httpPipeline, Response<ConfigurationSettingsSnapshot> response)
+        internal CreateSnapshotOperation(HttpPipeline httpPipeline, ClientDiagnostics diagnostics, Response<ConfigurationSettingsSnapshot> response)
         {
             _httpPipeline = httpPipeline;
             _snapshot = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
@@ -33,7 +33,7 @@ namespace Azure.Data.AppConfiguration
             }
             else
             {
-                // TODO
+                _operationInternal = new(diagnostics, this, response.GetRawResponse(), nameof(CreateSnapshotOperation));
             }
         }
 
@@ -76,9 +76,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            if (!HasCompleted)
+            {
+                return await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+            }
+            return GetRawResponse();
         }
 
         ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)

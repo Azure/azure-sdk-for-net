@@ -1660,12 +1660,13 @@ namespace Azure.Data.AppConfiguration.Tests
                 List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
                 var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
 
-                ConfigurationSettingsSnapshot createdSnapshot = await service.CreateSnapshotAsync("some_snapshot", settingsSnapshot);
+                CreateSnapshotOperation snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, "some_snapshot", settingsSnapshot);
+                ConfigurationSettingsSnapshot createdSnapshot = snapshotOperation.Value;
 
                 Assert.NotNull(createdSnapshot);
                 Assert.AreEqual("some_snapshot", createdSnapshot.Name);
 
-                ConfigurationSettingsSnapshot retrievedSnapshot = await service.GetSnapshot("some_snapshot");
+                ConfigurationSettingsSnapshot retrievedSnapshot = await service.GetSnapshotAsync("some_snapshot");
 
                 Assert.NotNull(retrievedSnapshot);
                 Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
@@ -1690,7 +1691,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
                 var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
 
-                ConfigurationSettingsSnapshot createdSnapshot = await service.CreateSnapshotAsync("some_snapshot", settingsSnapshot);
+                CreateSnapshotOperation snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, "some_snapshot", settingsSnapshot);
+                ConfigurationSettingsSnapshot createdSnapshot = snapshotOperation.Value;
                 Assert.NotNull(createdSnapshot);
                 Assert.AreEqual("some_snapshot", createdSnapshot.Name);
 
@@ -1726,18 +1728,22 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(secondSetting);
 
                 List<SnapshotSettingFilter> firstSnapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(firstSetting.Key) });
-                ConfigurationSettingsSnapshot createdfirstSnapshot = await service.CreateSnapshotAsync("first_snapshot", new ConfigurationSettingsSnapshot(firstSnapshotFilter));
+
+                CreateSnapshotOperation firstSnapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, "first_snapshot", new ConfigurationSettingsSnapshot(firstSnapshotFilter));
+                ConfigurationSettingsSnapshot createdfirstSnapshot = firstSnapshotOperation.Value;
 
                 Assert.NotNull(createdfirstSnapshot);
                 Assert.AreEqual("first_snapshot", createdfirstSnapshot.Name);
 
                 List<SnapshotSettingFilter> secondSnapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(secondSetting.Key) });
-                ConfigurationSettingsSnapshot createdsecondSnapshot = await service.CreateSnapshotAsync("second_snapshot", new ConfigurationSettingsSnapshot(secondSnapshotFilter));
+                CreateSnapshotOperation secondSnapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, "second_snapshot", new ConfigurationSettingsSnapshot(secondSnapshotFilter));
+                ConfigurationSettingsSnapshot createdsecondSnapshot = secondSnapshotOperation.Value;
 
                 Assert.NotNull(createdsecondSnapshot);
                 Assert.AreEqual("second_snapshot", createdsecondSnapshot.Name);
 
-                var resultsReturned = (await service.GetSnapshotsAsync().ToEnumerableAsync()).Count;
+                AsyncPageable<ConfigurationSettingsSnapshot> snapshots = service.GetSnapshotsAsync(cancellationToken: CancellationToken.None);
+                var resultsReturned = (await snapshots.ToEnumerableAsync()).Count;
                 Assert.GreaterOrEqual(resultsReturned, 1);
             }
             finally
