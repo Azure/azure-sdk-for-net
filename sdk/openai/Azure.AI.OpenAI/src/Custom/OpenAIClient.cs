@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
         private const string publicOpenAIEndpoint = $"https://api.openai.com/v{publicOpenAIVersion}";
 
         /// <remarks> This is the deployment id for all Azure OpenAI operations (completions and embeddings) </remarks>
-        private string DeploymentId { get; } = null;
+        private string DeploymentId { get; }
 
         /// <remarks> This key is used to connect to a non-Azure OpenAI resource created directly with OpenAI.
         /// For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that provides
