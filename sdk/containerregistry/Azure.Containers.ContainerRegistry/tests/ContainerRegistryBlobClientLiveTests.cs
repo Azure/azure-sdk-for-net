@@ -366,6 +366,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             UploadBlobResult uploadResult = await client.UploadBlobAsync(data);
 
             Assert.AreEqual(digest, uploadResult.Digest);
+            Assert.AreEqual(data.ToMemory().Length, uploadResult.SizeInBytes);
 
             // Assert
             var downloadResult = await client.DownloadBlobAsync(digest);
@@ -430,6 +431,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(digest, uploadResult.Digest);
+            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -459,6 +461,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(digest, uploadResult.Digest);
+            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -486,6 +489,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(digest, uploadResult.Digest);
+            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -773,9 +777,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     var uploadResult = await client.UploadBlobAsync(fs);
 
                     // Update manifest
-                    OciBlobDescriptor descriptor = new OciBlobDescriptor();
+                    OciDescriptor descriptor = new OciDescriptor();
                     descriptor.Digest = uploadResult.Value.Digest;
-                    descriptor.SizeInBytes = fs.Length;
+                    descriptor.SizeInBytes = uploadResult.Value.SizeInBytes;
                     descriptor.MediaType = "application/vnd.acme.rocket.config";
 
                     manifest.Config = descriptor;
@@ -793,9 +797,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
                         var uploadResult = await client.UploadBlobAsync(fs);
 
                         // Update manifest
-                        OciBlobDescriptor descriptor = new OciBlobDescriptor();
+                        OciDescriptor descriptor = new OciDescriptor();
                         descriptor.Digest = uploadResult.Value.Digest;
-                        descriptor.SizeInBytes = fs.Length;
+                        descriptor.SizeInBytes = uploadResult.Value.SizeInBytes;
                         descriptor.MediaType = "application/vnd.oci.image.layer.v1.tar";
 
                         manifest.Layers.Add(descriptor);
