@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Common;
 using Microsoft.Azure.SignalR.Management;
@@ -114,6 +116,47 @@ namespace SignalRServiceExtension.Tests
             Assert.Equal(2, mock.Invocations.Count);
             // By design, the new endpoint is firstly appended to the original endpoint list instead of replacing the old endpoint.
             Assert.Equal(2, (mock.Invocations.Last().Arguments[1] as IEnumerable<ServiceEndpoint>).Count());
+        }
+
+        [Theory]
+        [InlineData(ServiceTransportType.Transient)]
+        [InlineData(ServiceTransportType.Persistent)]
+        public async void TestAddMessagePackHubProtocolViaSignalROptions(ServiceTransportType serviceTransportType)
+        {
+            var emptyConfiguration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            var signalROptions = new SignalROptions
+            {
+                ServiceTransportType = serviceTransportType,
+                MessagePackHubProtocol = new MessagePackHubProtocol()
+            };
+            signalROptions.ServiceEndpoints.Add(FakeEndpointUtils.GetFakeEndpoint(1).Single());
+            var managerStore = new ServiceManagerStore(emptyConfiguration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(signalROptions));
+            var hubContextStore = managerStore.GetOrAddByConnectionStringKey("doesn't matter");
+            var hubContext = await hubContextStore.GetAsync("hub") as ServiceHubContextImpl;
+            var serviceProvider = hubContext.ServiceProvider;
+            var hubProtocolResolver = serviceProvider.GetRequiredService<IHubProtocolResolver>();
+            Assert.Equal(2, hubProtocolResolver.AllProtocols.Count);
+            Assert.Contains(hubProtocolResolver.AllProtocols, h => h.Name.Equals("messagepack", System.StringComparison.OrdinalIgnoreCase));
+            Assert.Contains(hubProtocolResolver.AllProtocols, h => h.Name.Equals("json", System.StringComparison.OrdinalIgnoreCase));
+        }
+
+        [Theory]
+        [InlineData(ServiceTransportType.Transient)]
+        [InlineData(ServiceTransportType.Persistent)]
+        public async void TestAddMessagePackHubProtocolViaConfiguration(ServiceTransportType serviceTransportType)
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration["Azure:SignalR:HubProtocol:MessagePack"] = "enabled";
+            configuration["AzureSignalRConnectionString"] = FakeEndpointUtils.GetFakeConnectionString();
+            configuration["AzureSignalRServiceTransportType"] = serviceTransportType.ToString();
+            var managerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));
+            var hubContextStore = managerStore.GetOrAddByConnectionStringKey("AzureSignalRConnectionString");
+            var hubContext = await hubContextStore.GetAsync("hub") as ServiceHubContextImpl;
+            var serviceProvider = hubContext.ServiceProvider;
+            var hubProtocolResolver = serviceProvider.GetRequiredService<IHubProtocolResolver>();
+            Assert.Equal(2, hubProtocolResolver.AllProtocols.Count);
+            Assert.Contains(hubProtocolResolver.AllProtocols, h => h.Name.Equals("messagepack", System.StringComparison.OrdinalIgnoreCase));
+            Assert.Contains(hubProtocolResolver.AllProtocols, h => h.Name.Equals("json", System.StringComparison.OrdinalIgnoreCase));
         }
     }
 }

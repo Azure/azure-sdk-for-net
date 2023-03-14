@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Extensions.Azure;
@@ -57,6 +58,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 // Serves as a reload token provider only
                 .WithConfiguration(new EmptyConfiguration(_configuration))
                 .WithCallingAssembly();
+
+            if (_options.MessagePackHubProtocol != null)
+            {
+                serviceManagerBuilder.AddHubProtocol(_options.MessagePackHubProtocol);
+            }
+            // Allow isolated-process runtimes such as JS, C#-isolated to enable MessagePack hub protocol
+            else if (string.Equals(_configuration[Constants.AzureSignalRMessagePackHubProtocol], Constants.Enabled, StringComparison.InvariantCultureIgnoreCase))
+            {
+                serviceManagerBuilder.AddHubProtocol(new MessagePackHubProtocol());
+            }
+
             AddWorkingInfo(serviceManagerBuilder, _configuration);
             if (_router != null)
             {
