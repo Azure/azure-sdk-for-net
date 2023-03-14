@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -20,10 +19,12 @@ namespace Azure.ResourceManager
         private readonly OperationInternal<T> _operation;
 
         /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public ArmOperation(ArmClient client, string id, Type modelType = null)
+        public ArmOperation(ArmClient client, string id)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            if (typeof(T).GetInterface(nameof(ISerializable)) is not null)
+            var obj = Activator.CreateInstance(typeof(T));
+            var iserializable = obj as ISerializable;
+            if (iserializable is not null)
             {
                 IOperationSource<T> source = new GenericOperationSource<T>();
                 var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
@@ -33,12 +34,12 @@ namespace Azure.ResourceManager
             }
             else
             {
-                if (modelType is null)
+                var resource = obj as IResource;
+                if (resource is null)
                 {
-                    throw new InvalidOperationException("Please fill in the model type for the resource. ");
+                    throw new InvalidOperationException("The type needs to be model or resource. ");
                 }
-
-                IOperationSource<T> source = new GenericResourceOperationSource<T>(client, modelType);
+                IOperationSource<T> source = new GenericResourceOperationSource<T>(client, resource);
                 var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
                 // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
                 var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);

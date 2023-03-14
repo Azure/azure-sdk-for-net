@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 
@@ -25,7 +23,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetVirtualMachineScaleSetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVirtualMachineScaleSet method.
     /// </summary>
-    public partial class VirtualMachineScaleSetResource : ArmResource
+    public partial class VirtualMachineScaleSetResource : ArmResource, IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineScaleSetResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
@@ -41,7 +39,7 @@ namespace Azure.ResourceManager.Compute
         private readonly VirtualMachineScaleSetData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSetResource"/> class for mocking. </summary>
-        protected VirtualMachineScaleSetResource()
+        public VirtualMachineScaleSetResource()
         {
         }
 
@@ -87,6 +85,8 @@ namespace Azure.ResourceManager.Compute
                 return _data;
             }
         }
+
+        ISerializable IResource.DataBag => new VirtualMachineScaleSetData();
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
