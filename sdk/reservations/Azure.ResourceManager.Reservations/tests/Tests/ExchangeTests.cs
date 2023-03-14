@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Reservations.Tests
 
             Assert.IsNotNull(exchangeResponse.Value);
             Assert.AreEqual(ExchangeOperationResultStatus.Succeeded, exchangeResponse.Value.Status);
-            Assert.IsNotEmpty(exchangeResponse.Value.OperationResultId);
+            Assert.IsNotEmpty(exchangeResponse.Value.Id);
             Assert.IsNotEmpty(exchangeResponse.Value.Name);
             Assert.IsNotNull(exchangeResponse.Value.Properties);
             Assert.IsNotNull(exchangeResponse.Value.Properties.NetPayable);

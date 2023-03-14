@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ExchangeOperationResultStatus> status = default;
             Optional<ExchangeResultProperties> properties = default;
@@ -27,7 +27,12 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))

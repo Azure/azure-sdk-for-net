@@ -416,14 +416,12 @@ namespace Azure.ResourceManager.Reservations.Models
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ExchangeResult
     {
         internal ExchangeResult() { }
         public Azure.ResourceManager.Reservations.Models.OperationResultError Error { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public string OperationResultId { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ExchangeResultProperties Properties { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus? Status { get { throw null; } }
     }
