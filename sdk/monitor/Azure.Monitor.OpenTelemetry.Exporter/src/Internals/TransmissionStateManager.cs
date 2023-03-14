@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             _consecutiveErrors = 0;
 
-            // reset _sync so that the threads can close the transmission again if needed.
+            // Reset _sync so that the threads can open the transmission again if needed.
             _syncBackOffIntervalCalculation = 0;
             State = TransmissionState.Closed;
         }
