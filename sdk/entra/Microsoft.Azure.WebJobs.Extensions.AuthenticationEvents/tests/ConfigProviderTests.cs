@@ -20,7 +20,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <param name="httpStatusCode"></param>
         /// <param name="method"></param>
         /// <param name="expectedMessage"></param>
-        [Obsolete]
         [Test]
         [TestCase("http://test/mock?function=onTokenissuancestart", HttpStatusCode.Unauthorized, HttpMethods.Post, null)]
         [TestCase("http://test/mock?function=onTokenissuancestart", HttpStatusCode.BadRequest, HttpMethods.Post, null)]
@@ -33,8 +32,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             {
                 if (t.FunctionData.TriggerValue is HttpRequestMessage mockedRequest)
                 {
+                    AuthenticationEventResponseHandler eventsResponseHandler = GetAuthenticationEventResponseHandler(mockedRequest);
 
-                    AuthenticationEventResponseHandler eventsResponseHandler = (AuthenticationEventResponseHandler)mockedRequest.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
                     eventsResponseHandler.Response = GetContentForHttpStatus(httpStatusCode);
                 }
             });

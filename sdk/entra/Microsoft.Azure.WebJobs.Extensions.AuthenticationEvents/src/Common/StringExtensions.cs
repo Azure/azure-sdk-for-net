@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     ///     Provides extension methods for performing operations on <see
     ///     cref="String"/> objects.
     /// </summary>
-    public static class StringExtensions
+    internal static class StringExtensions
     {
         /// <summary>
         ///     Matches two strings using ordinal ignore case and returns
