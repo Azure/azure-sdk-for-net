@@ -73,7 +73,7 @@ namespace Azure.DigitalTwins.Core.Tests
             }
             catch (Exception ex)
             {
-                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+                Assert.Fail($"Failure in executing a step in the test case: {ex}.");
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.DigitalTwins.Core.Tests
             }
             catch (Exception ex)
             {
-                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+                Assert.Fail($"Failure in executing a step in the test case: {ex}.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.DigitalTwins.Core.Tests
             }
             catch (Exception ex)
             {
-                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+                Assert.Fail($"Failure in executing a step in the test case: {ex}.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.DigitalTwins.Core.Tests
             }
             catch (Exception ex)
             {
-                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+                Assert.Fail($"Failure in executing a step in the test case: {ex}.");
             }
         }
     }
