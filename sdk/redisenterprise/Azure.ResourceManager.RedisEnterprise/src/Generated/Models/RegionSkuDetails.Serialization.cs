@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         internal static RegionSkuDetails DeserializeRegionSkuDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RegionSkuDetail>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         internal static LocationInfo DeserializeLocationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<Capability>> capabilities = default;
             foreach (var property in element.EnumerateObject())

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static ClusterPropertiesEncryption DeserializeClusterPropertiesEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ClusterPropertiesEncryptionCustomerManagedKeyEncryption> customerManagedKeyEncryption = default;
             foreach (var property in element.EnumerateObject())
             {

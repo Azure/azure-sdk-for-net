@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         internal static SkuDetail DeserializeSkuDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Name> name = default;
             foreach (var property in element.EnumerateObject())
             {

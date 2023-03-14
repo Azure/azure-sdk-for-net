@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         internal static Capability DeserializeCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> value = default;
             foreach (var property in element.EnumerateObject())

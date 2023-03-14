@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity DeserializeClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userAssignedIdentityResourceId = default;
             Optional<CmkIdentityType> identityType = default;
             foreach (var property in element.EnumerateObject())

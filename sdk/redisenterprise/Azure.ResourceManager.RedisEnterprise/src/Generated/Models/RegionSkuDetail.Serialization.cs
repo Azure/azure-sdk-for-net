@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         internal static RegionSkuDetail DeserializeRegionSkuDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<LocationInfo> locationInfo = default;
             Optional<SkuDetail> skuDetails = default;
