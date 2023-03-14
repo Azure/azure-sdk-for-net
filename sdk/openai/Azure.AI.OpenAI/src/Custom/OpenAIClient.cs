@@ -26,7 +26,7 @@ namespace Azure.AI.OpenAI
         /// <remarks> This key is used to connect to a non-Azure OpenAI resource created directly with OpenAI.
         /// For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that provides
         /// an Azure resource endpoint and credential, instead. </remarks>
-        private string PublicOpenAIToken { get; } = "";
+        private string PublicOpenAIToken { get; }
 
         /// <summary> Initializes a instance of OpenAIClient using the public OpenAI endpoint. </summary>
         /// <param name="openAIAuthToken "> A credential used to authenticate to an Azure Service. </param>
