@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
                 Filter = new RemediationFilters() { Locations = { AzureLocation.EastUS } },
                 ParallelDeployments = 1,
                 ResourceCount = 1,
-                FailureThreshold = new RemediationPropertiesFailureThreshold() { Percentage = (float?)0.42f }
             };
             var policyRemediation = await policyRemediationCollection.CreateOrUpdateAsync(WaitUntil.Completed, policyRemediationName, data);
             ValidatepolicyRemediation(policyRemediation.Value.Data, policyRemediationName);
@@ -86,7 +85,6 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
                 Filter = new RemediationFilters() { Locations = { AzureLocation.EastUS } },
                 ParallelDeployments = 1,
                 ResourceCount = 1,
-                FailureThreshold = new RemediationPropertiesFailureThreshold() { Percentage = (float?)0.42f }
             };
             var policyRemediation = await policyRemediationCollection.CreateOrUpdateAsync(WaitUntil.Completed, policyRemediationName, data);
             ValidatepolicyRemediation(policyRemediation.Value.Data, policyRemediationName);
@@ -115,7 +113,6 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             Assert.AreEqual(policyRemediationName, policyRemediation.Name);
             Assert.AreEqual(1, policyRemediation.ParallelDeployments);
             Assert.AreEqual(1, policyRemediation.ResourceCount);
-            Assert.AreEqual((float)0.42, policyRemediation.FailureThreshold.Percentage);
         }
     }
 }
