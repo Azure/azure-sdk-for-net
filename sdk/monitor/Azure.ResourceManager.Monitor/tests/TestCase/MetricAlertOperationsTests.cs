@@ -26,16 +26,17 @@ namespace Azure.ResourceManager.Monitor.Tests
             var storageCeollection = resourceGroup.GetStorageAccounts();
             string accountName = Recording.GenerateAssetName("metrictests");
             var storageContent = ResourceDataHelper.GetContent();
-            var storageAccount = await storageCeollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageContent);
             string storageAccountId;
             if (Mode == RecordedTestMode.Playback)
             {
-                storageAccountId = $"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/{resourceGroup.Id.Name}/providers/Microsoft.Storage/storageAccounts/{accountName}";
+                storageAccountId = StorageAccountResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, accountName).ToString();
+                //storageAccountId = $"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/{resourceGroup.Id.Name}/providers/Microsoft.Storage/storageAccounts/{accountName}";
             }
             else
             {
                 using (Recording.DisableRecording())
                 {
+                    var storageAccount = await storageCeollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageContent);
                     storageAccountId = storageAccount.Value.Data.Id;
                 }
             }
