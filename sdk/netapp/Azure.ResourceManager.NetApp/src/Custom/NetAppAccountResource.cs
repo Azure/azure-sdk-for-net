@@ -53,13 +53,25 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetAppVault" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and not needed anymore and will be removed in a future release", false)]
         public virtual AsyncPageable<NetAppVault> GetVaultsAsync(CancellationToken cancellationToken = default)
         {
-            _vaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVault.DeserializeNetAppVault, _vaultsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVaults", "value", null, cancellationToken);
+            if (_vaultsRestClient == null)
+            {
+                _vaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+                _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            }
+            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.GetVaults");
+            scope.Start();
+            try
+            {
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVault.DeserializeNetAppVault, _vaultsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVaults", "value", null, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -77,10 +89,14 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppVault" /> that may take multiple service requests to iterate over. </returns>
-        [Obsolete("This method is obsolete and not needed anymore and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetAppVault> GetVaults(CancellationToken cancellationToken = default)
         {
+            if (_vaultsRestClient == null)
+            {
+                _vaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+                _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            }
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVault.DeserializeNetAppVault, _vaultsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVaults", "value", null, cancellationToken);
         }

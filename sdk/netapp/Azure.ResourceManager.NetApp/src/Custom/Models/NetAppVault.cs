@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Vault information. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This class is obsolete and will be removed in a future release", false)]
     public partial class NetAppVault : ResourceData
     {
         /// <summary> Vault Name. </summary>
@@ -31,7 +30,6 @@ namespace Azure.ResourceManager.NetApp.Models
         internal NetAppVault(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string vaultName) : base(id, name, resourceType, systemData)
         {
             VaultName = vaultName;
-            throw null;
         }
     }
 }

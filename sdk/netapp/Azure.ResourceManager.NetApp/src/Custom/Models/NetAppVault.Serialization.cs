@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVault(id, name, type, systemData.Value, vaultName.Value);
+            return new NetAppVault(id, name, type, systemData.Value, name);
         }
     }
 }
