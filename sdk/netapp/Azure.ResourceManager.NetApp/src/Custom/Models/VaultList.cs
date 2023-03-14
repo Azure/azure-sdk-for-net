@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> List of Vaults. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This class is obsolete and will be removed in a future release", false)]
+
     internal partial class VaultList
     {
         /// <summary> Initializes a new instance of VaultList. </summary>

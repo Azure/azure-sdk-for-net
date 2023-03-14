@@ -54,13 +54,12 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task GetVaultObsolteButCustomCodeWorksOn2022_05_01()
         {
-#pragma warning disable 0618
             List<NetAppVault> _vaults;
             NetAppVault _vault;
             _vaults = await _netAppAccount.GetVaultsAsync().ToEnumerableAsync();
             _vault = _vaults.FirstOrDefault();
             _vaults.Should().HaveCount(1);
-#pragma warning restore 0618
+            Assert.IsNotNull(_vault);
         }
     }
 }
