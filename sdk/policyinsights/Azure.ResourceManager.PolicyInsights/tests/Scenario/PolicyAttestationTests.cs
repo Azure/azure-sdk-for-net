@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
     {
         private PolicyAssignmentResource _policyAssignment;
         private SubscriptionPolicyDefinitionResource _policyDefinition;
-        public PolicyAttestationTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public PolicyAttestationTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -131,6 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         private void ValidateAttestation(PolicyAttestationData attestation, string attestationName)
         {
             Assert.IsNotNull(attestation);
+            Assert.IsNotEmpty(attestation.Id);
             Assert.AreEqual(attestationName, attestation.Name);
             Assert.AreEqual(".NET SDK Test", attestation.Comments);
             Assert.AreEqual("Compliant", attestation.ComplianceState.ToString());

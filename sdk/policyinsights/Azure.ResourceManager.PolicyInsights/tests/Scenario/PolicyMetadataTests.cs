@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
     internal class PolicyMetadataTests : PolicyInsightsManagementTestBase
     {
         private PolicyMetadataCollection _metadataCollection;
-        public PolicyMetadataTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public PolicyMetadataTests(bool isAsync) : base(isAsync)
         {
         }
 

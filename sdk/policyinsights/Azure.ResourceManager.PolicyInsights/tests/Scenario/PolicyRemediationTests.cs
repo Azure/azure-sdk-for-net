@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         private const string _remediationPrefixName = "remediation";
         private PolicyAssignmentResource _policyAssignment;
 
-        public PolicyRemediationTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public PolicyRemediationTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         private void ValidatepolicyRemediation(PolicyRemediationData policyRemediation, string policyRemediationName)
         {
             Assert.IsNotNull(policyRemediation);
-            Assert.IsNotNull(policyRemediation.Id);
+            Assert.IsNotEmpty(policyRemediation.Id);
             Assert.AreEqual(policyRemediationName, policyRemediation.Name);
             Assert.AreEqual(1, policyRemediation.ParallelDeployments);
             Assert.AreEqual(1, policyRemediation.ResourceCount);
