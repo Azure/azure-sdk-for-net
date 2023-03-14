@@ -18,9 +18,14 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
-    <Compile Include="..\..\Azure.Communication.Common\tests\AuthMethod.cs" />
-    <Compile Include="..\..\Azure.Communication.Common\tests\CommunicationTestEnvironment.cs" />
   </ItemGroup>
+
+  <!-- Shared source from Azure.Communication.Common.Tests -->
+  <ItemGroup>
+    <Compile Include="..\..\Azure.Communication.Common\tests\AuthMethod.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Communication.Common\tests\CommunicationTestEnvironment.cs" LinkBase="Shared" />
+  </ItemGroup>
+  
   <ItemGroup>
     <None Include="..\tests.yml" Link="\tests.yml" />
     <None Include="..\samples\README.md" Link="samples\README.md" />
