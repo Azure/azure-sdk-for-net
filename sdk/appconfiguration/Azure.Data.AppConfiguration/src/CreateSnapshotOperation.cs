@@ -21,19 +21,21 @@ namespace Azure.Data.AppConfiguration
         private HttpPipeline _httpPipeline;
         private ConfigurationSettingsSnapshot _snapshot;
         private OperationInternal _operationInternal;
+        private Operation<BinaryData> _operation;
 
-        internal CreateSnapshotOperation(HttpPipeline httpPipeline, ClientDiagnostics diagnostics, Response<ConfigurationSettingsSnapshot> response)
+        internal CreateSnapshotOperation(HttpPipeline httpPipeline, ClientDiagnostics diagnostics, Operation<BinaryData> operation, Response<ConfigurationSettingsSnapshot> response)
         {
             _httpPipeline = httpPipeline;
             _snapshot = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
+            _operation = operation;
 
             if (_snapshot.Status == SnapshotStatus.Ready)
             {
-                _operationInternal = OperationInternal.Succeeded(response.GetRawResponse());
+                _operationInternal = OperationInternal.Succeeded(operation.GetRawResponse());
             }
             else
             {
-                _operationInternal = new(diagnostics, this, response.GetRawResponse(), nameof(CreateSnapshotOperation));
+                _operationInternal = new(diagnostics, this, operation.GetRawResponse(), nameof(CreateSnapshotOperation));
             }
         }
 
@@ -52,7 +54,7 @@ namespace Azure.Data.AppConfiguration
         public override bool HasValue => true;
 
         /// <inheritdoc/>
-        public override string Id => _snapshot.Etag.ToString(); // TODO
+        public override string Id => _operation.Id;
 
         /// <inheritdoc/>
         public override bool HasCompleted => _operationInternal.HasCompleted;

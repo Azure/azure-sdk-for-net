@@ -920,11 +920,11 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
 
-                Operation<BinaryData> response = await CreateSnapshotAsync(wait, name, content, contentType, context).ConfigureAwait(false);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response.GetRawResponse());
-                var constructedResponse =  Response.FromValue(value, response.GetRawResponse());
-                CreateSnapshotOperation operation = new(_pipeline, ClientDiagnostics, constructedResponse);
-                return operation;
+                Operation<BinaryData> operation = await CreateSnapshotAsync(wait, name, content, contentType, context).ConfigureAwait(false);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(operation.GetRawResponse());
+                var constructedResponse =  Response.FromValue(value, operation.GetRawResponse());
+                CreateSnapshotOperation createSnapshotOperation = new(_pipeline, ClientDiagnostics, operation, constructedResponse);
+                return createSnapshotOperation;
             }
             catch (Exception e)
             {
@@ -954,13 +954,11 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
 
-                Operation<BinaryData> response = CreateSnapshot(wait, name, content, contentType, context);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response.GetRawResponse());
-                var constructedResponse = Response.FromValue(value, response.GetRawResponse());
-                CreateSnapshotOperation operation = new(_pipeline, ClientDiagnostics, constructedResponse);
-                return operation;
-
-                throw new NotImplementedException();
+                Operation<BinaryData> operation = CreateSnapshot(wait, name, content, contentType, context);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(operation.GetRawResponse());
+                var response = Response.FromValue(value, operation.GetRawResponse());
+                CreateSnapshotOperation createSnapshotOperation = new(_pipeline, ClientDiagnostics, operation, response);
+                return createSnapshotOperation;
             }
             catch (Exception e)
             {
