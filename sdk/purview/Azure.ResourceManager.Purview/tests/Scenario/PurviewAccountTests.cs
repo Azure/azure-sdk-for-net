@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
         private const string _purviewAccountPrefix = "PurviewAccount";
         private PurviewAccountCollection _purviewAccountCollection;
 
-        public PurviewAccountTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public PurviewAccountTests(bool isAsync) : base(isAsync)
         {
         }
 
