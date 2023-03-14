@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Purview.Tests;
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
 {
     internal class PurviewAccountTests : PurviewManagementTestBase
     {
-        private const string _purviewAccountPrefix = "purviewaccount";
+        private const string _purviewAccountPrefix = "PurviewAccount";
         private PurviewAccountCollection _purviewAccountCollection;
 
         public PurviewAccountTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
-            string purviewAccountName = Recording.GenerateAssetName("purviewAccount");
+            string purviewAccountName = Recording.GenerateAssetName(_purviewAccountPrefix);
             var purviewAccount = await CreatePurviewAccount(purviewAccountName);
 
             // AddTag
@@ -102,9 +103,9 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
         private void ValidatePurviewAccount(PurviewAccountData purviewAccount, string purviewAccountName)
         {
             Assert.IsNotNull(purviewAccount);
-            Assert.IsNotNull(purviewAccount.Id);
-            Assert.AreEqual(purviewAccountName,purviewAccount.Name);
-            Assert.AreEqual("eastus",purviewAccount.Location.ToString());
+            Assert.IsNotEmpty(purviewAccount.Id);
+            Assert.AreEqual(purviewAccountName, purviewAccount.Name);
+            Assert.AreEqual(DefaultLocation, purviewAccount.Location);
             Assert.AreEqual("Standard", purviewAccount.Sku.Name.ToString());
             Assert.AreEqual("SystemAssigned", purviewAccount.Identity.ManagedServiceIdentityType.ToString());
         }
