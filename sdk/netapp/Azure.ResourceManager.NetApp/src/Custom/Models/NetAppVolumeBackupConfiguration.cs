@@ -22,10 +22,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="isPolicyEnforced"> Policy Enforced. </param>
         /// <param name="vaultId"> Vault Resource ID. </param>
         /// <param name="isBackupEnabled"> Backup Enabled. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         internal NetAppVolumeBackupConfiguration(ResourceIdentifier backupPolicyId, bool? isPolicyEnforced, ResourceIdentifier vaultId, bool? isBackupEnabled)
         {
+            BackupPolicyId = backupPolicyId;
+            IsPolicyEnforced = isPolicyEnforced;
+            VaultId = vaultId;
+            IsBackupEnabled = isBackupEnabled;
         }
     }
 }
