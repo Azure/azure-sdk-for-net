@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static ExcludedServicesConfig DeserializeExcludedServicesConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> excludedServicesConfigId = default;
             Optional<string> excludedServicesList = default;
             foreach (var property in element.EnumerateObject())

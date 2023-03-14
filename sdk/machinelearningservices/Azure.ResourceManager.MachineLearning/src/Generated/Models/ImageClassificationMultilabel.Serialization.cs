@@ -114,6 +114,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageClassificationMultilabel DeserializeImageClassificationMultilabel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ClassificationMultilabelPrimaryMetric> primaryMetric = default;
             Optional<ImageModelSettingsClassification> modelSettings = default;
             Optional<IList<ImageModelDistributionSettingsClassification>> searchSpace = default;

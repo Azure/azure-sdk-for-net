@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowTriggerRecurrence DeserializeLogicWorkflowTriggerRecurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicWorkflowRecurrenceFrequency> frequency = default;
             Optional<int> interval = default;
             Optional<DateTimeOffset> startTime = default;

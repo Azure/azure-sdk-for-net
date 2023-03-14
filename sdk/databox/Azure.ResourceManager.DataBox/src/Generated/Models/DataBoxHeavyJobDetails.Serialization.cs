@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxHeavyJobDetails DeserializeDataBoxHeavyJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxCopyProgress>> copyProgress = default;
             Optional<string> devicePassword = default;
             Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;

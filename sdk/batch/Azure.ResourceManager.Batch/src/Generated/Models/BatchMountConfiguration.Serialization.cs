@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchMountConfiguration DeserializeBatchMountConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchBlobFileSystemConfiguration> azureBlobFileSystemConfiguration = default;
             Optional<BatchNfsMountConfiguration> nfsMountConfiguration = default;
             Optional<BatchCifsMountConfiguration> cifsMountConfiguration = default;

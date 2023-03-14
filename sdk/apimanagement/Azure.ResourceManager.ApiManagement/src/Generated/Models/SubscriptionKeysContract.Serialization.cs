@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static SubscriptionKeysContract DeserializeSubscriptionKeysContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())

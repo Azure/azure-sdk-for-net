@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsSearchCoreSummary DeserializeOperationalInsightsSearchCoreSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             long numberOfDocuments = default;
             foreach (var property in element.EnumerateObject())

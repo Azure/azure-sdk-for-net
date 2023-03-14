@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagedServices
     {
         internal static ManagedServicesMarketplaceRegistrationData DeserializeManagedServicesMarketplaceRegistrationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServicesMarketplaceRegistrationProperties> properties = default;
             Optional<ManagedServicesPlan> plan = default;
             ResourceIdentifier id = default;

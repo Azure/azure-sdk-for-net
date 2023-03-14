@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static InstancePoolData DeserializeInstancePoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

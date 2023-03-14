@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleOverrideSetting DeserializeManagedRuleOverrideSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleId = default;
             Optional<ManagedRuleSetupState> enabledState = default;
             Optional<OverrideActionType> action = default;

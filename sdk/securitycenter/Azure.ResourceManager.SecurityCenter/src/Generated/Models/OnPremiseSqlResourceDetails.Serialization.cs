@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static OnPremiseSqlResourceDetails DeserializeOnPremiseSqlResourceDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string serverName = default;
             string databaseName = default;
             ResourceIdentifier workspaceId = default;

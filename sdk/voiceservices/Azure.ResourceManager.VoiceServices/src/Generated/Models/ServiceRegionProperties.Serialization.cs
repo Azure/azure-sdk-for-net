@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.VoiceServices.Models
 
         internal static ServiceRegionProperties DeserializeServiceRegionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             PrimaryRegionProperties primaryRegionProperties = default;
             foreach (var property in element.EnumerateObject())

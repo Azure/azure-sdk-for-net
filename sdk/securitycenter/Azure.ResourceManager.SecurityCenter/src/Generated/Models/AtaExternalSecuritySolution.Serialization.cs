@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AtaExternalSecuritySolution DeserializeAtaExternalSecuritySolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AtaSolutionProperties> properties = default;
             ExternalSecuritySolutionKind? kind = default;
             Optional<AzureLocation> location = default;

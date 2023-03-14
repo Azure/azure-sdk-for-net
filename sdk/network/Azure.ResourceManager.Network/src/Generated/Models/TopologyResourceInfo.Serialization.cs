@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TopologyResourceInfo DeserializeTopologyResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<AzureLocation> location = default;

@@ -181,6 +181,20 @@ namespace Azure.Messaging.EventHubs.Tests
             actualOptions = GetBaseOptions(processorClient);
             assertOptionsMatch(expectedOptions, actualOptions, description);
 
+            // SAS constructor
+
+            description = "{{ SAS constructor }}";
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), clientOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
+            // Named Key constructor
+
+            description = "{{ Named Key constructor }}";
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureNamedKeyCredential("fakeName", "fakeKey"), clientOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
             // Internal testing constructor (Token)
 
             description = "{{ internal testing constructor (Token) }}";
@@ -204,6 +218,49 @@ namespace Azure.Messaging.EventHubs.Tests
             processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), expectedOptions);
             actualOptions = GetBaseOptions(processorClient);
             assertOptionsMatch(expectedOptions, actualOptions, description);
+        }
+
+        [Test]
+        public void ConstructorsSetClientDiagnostics()
+        {
+            // Connection String constructor
+
+            EventProcessorClient processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Connection String and Event Hub Name constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123", "theHub", default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Namespace constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", Mock.Of<TokenCredential>(), default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // SAS constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Named Key constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureNamedKeyCredential("fakeName", "fakeKey"), default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Internal testing constructor (Token)
+
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, Mock.Of<TokenCredential>(), default(EventProcessorOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+            // Internal testing constructor (Shared Key)
+
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureNamedKeyCredential("key", "value"), default(EventProcessorOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Internal testing constructor (SAS)
+
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), default(EventProcessorOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
         }
 
         /// <summary>

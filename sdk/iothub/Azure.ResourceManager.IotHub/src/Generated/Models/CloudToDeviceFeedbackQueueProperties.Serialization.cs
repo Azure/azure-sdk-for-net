@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static CloudToDeviceFeedbackQueueProperties DeserializeCloudToDeviceFeedbackQueueProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> lockDurationAsIso8601 = default;
             Optional<TimeSpan> ttlAsIso8601 = default;
             Optional<int> maxDeliveryCount = default;

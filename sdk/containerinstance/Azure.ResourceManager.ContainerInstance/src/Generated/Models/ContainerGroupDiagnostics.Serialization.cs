@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupDiagnostics DeserializeContainerGroupDiagnostics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerGroupLogAnalytics> logAnalytics = default;
             foreach (var property in element.EnumerateObject())
             {

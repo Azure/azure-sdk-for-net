@@ -15,6 +15,10 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static JobResponse DeserializeJobResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobId = default;
             Optional<string> queryCondition = default;
             Optional<DateTimeOffset> createdTime = default;

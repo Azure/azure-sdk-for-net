@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchNetworkConfiguration DeserializeBatchNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> subnetId = default;
             Optional<DynamicVNetAssignmentScope> dynamicVnetAssignmentScope = default;
             Optional<PoolEndpointConfiguration> endpointConfiguration = default;

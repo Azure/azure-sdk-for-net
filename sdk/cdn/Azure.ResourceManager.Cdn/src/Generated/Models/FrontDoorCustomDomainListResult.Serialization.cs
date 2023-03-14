@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static FrontDoorCustomDomainListResult DeserializeFrontDoorCustomDomainListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FrontDoorCustomDomainData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

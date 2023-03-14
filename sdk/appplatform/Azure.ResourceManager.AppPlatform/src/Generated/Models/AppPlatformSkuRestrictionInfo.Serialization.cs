@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformSkuRestrictionInfo DeserializeAppPlatformSkuRestrictionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<string>> zones = default;
             foreach (var property in element.EnumerateObject())

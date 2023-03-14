@@ -71,6 +71,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static ModuleIdentity DeserializeModuleIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> moduleId = default;
             Optional<string> managedBy = default;
             Optional<string> deviceId = default;

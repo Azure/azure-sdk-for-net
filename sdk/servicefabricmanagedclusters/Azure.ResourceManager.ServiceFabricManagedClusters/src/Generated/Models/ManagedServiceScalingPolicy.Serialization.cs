@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedServiceScalingPolicy DeserializeManagedServiceScalingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedServiceScalingMechanism scalingMechanism = default;
             ManagedServiceScalingTrigger scalingTrigger = default;
             foreach (var property in element.EnumerateObject())

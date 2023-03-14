@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerCustomDynamicTreeParameterInfo DeserializeSwaggerCustomDynamicTreeParameterInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> selectedItemValuePath = default;
             Optional<BinaryData> value = default;
             Optional<string> parameterReference = default;

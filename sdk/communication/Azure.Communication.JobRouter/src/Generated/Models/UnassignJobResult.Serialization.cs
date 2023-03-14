@@ -14,6 +14,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static UnassignJobResult DeserializeUnassignJobResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string jobId = default;
             int unassignmentCount = default;
             foreach (var property in element.EnumerateObject())

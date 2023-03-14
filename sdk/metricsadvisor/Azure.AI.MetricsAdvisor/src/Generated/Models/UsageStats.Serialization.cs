@@ -15,6 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static UsageStats DeserializeUsageStats(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<int> activeSeriesCount = default;
             Optional<int> allSeriesCount = default;

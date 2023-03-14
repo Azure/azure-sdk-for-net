@@ -188,6 +188,10 @@ namespace Azure.AI.OpenAI
 
         internal static CompletionsOptions DeserializeCompletionsOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> prompt = default;
             Optional<int?> maxTokens = default;
             Optional<float?> temperature = default;

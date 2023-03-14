@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationDefinitionArtifact DeserializeArmApplicationDefinitionArtifact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ArmApplicationDefinitionArtifactName name = default;
             Uri uri = default;
             ArmApplicationArtifactType type = default;

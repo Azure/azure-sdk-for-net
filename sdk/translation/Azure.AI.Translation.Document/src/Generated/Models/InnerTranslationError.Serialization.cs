@@ -14,6 +14,10 @@ namespace Azure.AI.Translation.Document.Models
     {
         internal static InnerTranslationError DeserializeInnerTranslationError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
             Optional<string> target = default;

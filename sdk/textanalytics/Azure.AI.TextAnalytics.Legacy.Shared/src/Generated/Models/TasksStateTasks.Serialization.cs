@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     {
         internal static TasksStateTasks DeserializeTasksStateTasks(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int completed = default;
             int failed = default;
             int inProgress = default;

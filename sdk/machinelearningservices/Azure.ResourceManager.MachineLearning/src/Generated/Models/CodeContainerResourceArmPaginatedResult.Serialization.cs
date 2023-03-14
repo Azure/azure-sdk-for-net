@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static CodeContainerResourceArmPaginatedResult DeserializeCodeContainerResourceArmPaginatedResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<MachineLearningCodeContainerData>> value = default;
             foreach (var property in element.EnumerateObject())

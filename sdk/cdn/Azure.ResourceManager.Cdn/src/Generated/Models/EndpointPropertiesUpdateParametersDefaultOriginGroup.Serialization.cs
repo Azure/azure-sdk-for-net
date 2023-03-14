@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static EndpointPropertiesUpdateParametersDefaultOriginGroup DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {

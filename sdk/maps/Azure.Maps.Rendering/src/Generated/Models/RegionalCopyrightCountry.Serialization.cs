@@ -14,6 +14,10 @@ namespace Azure.Maps.Rendering
     {
         internal static RegionalCopyrightCountry DeserializeRegionalCopyrightCountry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> isO3 = default;
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())

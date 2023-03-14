@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static AssignmentDeploymentJobResult DeserializeAssignmentDeploymentJobResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureResourceManagerError> error = default;
             Optional<IList<AssignmentJobCreatedResource>> resources = default;
             foreach (var property in element.EnumerateObject())

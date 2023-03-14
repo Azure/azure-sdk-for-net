@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationDeploymentPolicy DeserializeArmApplicationDeploymentPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ArmApplicationDeploymentMode deploymentMode = default;
             foreach (var property in element.EnumerateObject())
             {

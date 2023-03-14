@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static HubRoute DeserializeHubRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string destinationType = default;
             IList<string> destinations = default;

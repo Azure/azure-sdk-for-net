@@ -26,6 +26,10 @@ namespace Azure.AI.FormRecognizer.Models
 
         internal static CopyAuthorizationResult DeserializeCopyAuthorizationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string modelId = default;
             string accessToken = default;
             long expirationDateTimeTicks = default;

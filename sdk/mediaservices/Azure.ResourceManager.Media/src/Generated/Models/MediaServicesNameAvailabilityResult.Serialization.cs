@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaServicesNameAvailabilityResult DeserializeMediaServicesNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool nameAvailable = default;
             Optional<string> reason = default;
             Optional<string> message = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static AttestationListResult DeserializeAttestationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PolicyAttestationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadSqlRestoreWithRehydrateContent DeserializeWorkloadSqlRestoreWithRehydrateContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
             Optional<bool> shouldUseAlternateTargetLocation = default;
             Optional<bool> isNonRecoverable = default;

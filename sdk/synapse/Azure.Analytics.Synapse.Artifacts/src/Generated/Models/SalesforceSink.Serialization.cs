@@ -71,6 +71,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SalesforceSink DeserializeSalesforceSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SalesforceSinkWriteBehavior> writeBehavior = default;
             Optional<object> externalIdFieldName = default;
             Optional<object> ignoreNullValues = default;

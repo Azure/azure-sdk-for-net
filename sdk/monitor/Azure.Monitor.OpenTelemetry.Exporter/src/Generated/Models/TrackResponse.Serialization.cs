@@ -15,6 +15,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         internal static TrackResponse DeserializeTrackResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> itemsReceived = default;
             Optional<int> itemsAccepted = default;
             Optional<IReadOnlyList<TelemetryErrorDetails>> errors = default;

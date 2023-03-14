@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static MsTeamsChannel DeserializeMsTeamsChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MsTeamsChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

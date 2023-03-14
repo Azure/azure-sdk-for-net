@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerCustomDynamicTreeCommand DeserializeSwaggerCustomDynamicTreeCommand(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationId = default;
             Optional<string> itemsPath = default;
             Optional<string> itemValuePath = default;

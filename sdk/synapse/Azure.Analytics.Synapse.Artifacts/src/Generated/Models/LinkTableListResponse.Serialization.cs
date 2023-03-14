@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static LinkTableListResponse DeserializeLinkTableListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LinkTableResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {

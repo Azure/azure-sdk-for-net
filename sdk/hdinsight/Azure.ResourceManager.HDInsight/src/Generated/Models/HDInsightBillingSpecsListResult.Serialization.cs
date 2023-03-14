@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightBillingSpecsListResult DeserializeHDInsightBillingSpecsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> vmSizes = default;
             Optional<IReadOnlyList<string>> vmSizesWithEncryptionAtHost = default;
             Optional<IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2>> vmSizeFilters = default;

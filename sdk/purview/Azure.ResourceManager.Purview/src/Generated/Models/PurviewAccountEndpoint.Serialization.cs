@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Purview.Models
     {
         internal static PurviewAccountEndpoint DeserializePurviewAccountEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> catalog = default;
             Optional<string> guardian = default;
             Optional<string> scan = default;

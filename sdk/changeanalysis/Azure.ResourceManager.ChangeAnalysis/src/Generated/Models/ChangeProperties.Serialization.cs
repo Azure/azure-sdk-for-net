@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     {
         internal static ChangeProperties DeserializeChangeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<DateTimeOffset> timeStamp = default;
             Optional<IReadOnlyList<string>> initiatedByList = default;

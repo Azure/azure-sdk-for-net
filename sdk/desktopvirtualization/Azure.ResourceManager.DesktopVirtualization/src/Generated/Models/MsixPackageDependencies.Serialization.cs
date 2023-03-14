@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static MsixPackageDependencies DeserializeMsixPackageDependencies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dependencyName = default;
             Optional<string> publisher = default;
             Optional<string> minVersion = default;

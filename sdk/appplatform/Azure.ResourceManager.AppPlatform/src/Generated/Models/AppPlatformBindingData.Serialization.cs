@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformBindingData DeserializeAppPlatformBindingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformBindingProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

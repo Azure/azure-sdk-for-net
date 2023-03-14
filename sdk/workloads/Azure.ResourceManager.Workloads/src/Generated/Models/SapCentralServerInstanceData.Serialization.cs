@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
@@ -59,6 +60,10 @@ namespace Azure.ResourceManager.Workloads
 
         internal static SapCentralServerInstanceData DeserializeSapCentralServerInstanceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<EnqueueReplicationServerProperties> enqueueReplicationServerProperties = default;
             Optional<string> kernelVersion = default;
             Optional<string> kernelPatch = default;
+            Optional<SubResource> loadBalancerDetails = default;
             Optional<IReadOnlyList<CentralServerVmDetails>> vmDetails = default;
             Optional<SapVirtualInstanceStatus> status = default;
             Optional<SapHealthState> health = default;
@@ -209,6 +215,16 @@ namespace Azure.ResourceManager.Workloads
                             kernelPatch = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("loadBalancerDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            loadBalancerDetails = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("vmDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -268,7 +284,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapCentralServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, messageServerProperties.Value, enqueueServerProperties.Value, gatewayServerProperties.Value, enqueueReplicationServerProperties.Value, kernelVersion.Value, kernelPatch.Value, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value);
+            return new SapCentralServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, messageServerProperties.Value, enqueueServerProperties.Value, gatewayServerProperties.Value, enqueueReplicationServerProperties.Value, kernelVersion.Value, kernelPatch.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value);
         }
     }
 }

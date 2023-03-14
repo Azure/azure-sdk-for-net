@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DocumentDbCollectionSource DeserializeDocumentDbCollectionSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> query = default;
             Optional<object> nestingSeparator = default;
             Optional<object> queryTimeout = default;

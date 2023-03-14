@@ -16,6 +16,10 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static UnivariateChangePointDetectionResult DeserializeUnivariateChangePointDetectionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> period = default;
             Optional<IReadOnlyList<bool>> isChangePoint = default;
             Optional<IReadOnlyList<float>> confidenceScores = default;

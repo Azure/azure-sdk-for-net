@@ -24,12 +24,16 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="hostname"> Gets or sets the target machine name. </param>
         /// <param name="sid"> Gets or sets the cluster sid. </param>
         /// <param name="clusterName"> Gets or sets the clusterName. </param>
-        internal PrometheusHAClusterProviderInstanceProperties(string providerType, Uri prometheusUri, string hostname, string sid, string clusterName) : base(providerType)
+        /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
+        /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the HA cluster exporter. </param>
+        internal PrometheusHAClusterProviderInstanceProperties(string providerType, Uri prometheusUri, string hostname, string sid, string clusterName, SslPreference? sslPreference, Uri sslCertificateUri) : base(providerType)
         {
             PrometheusUri = prometheusUri;
             Hostname = hostname;
             Sid = sid;
             ClusterName = clusterName;
+            SslPreference = sslPreference;
+            SslCertificateUri = sslCertificateUri;
             ProviderType = providerType ?? "PrometheusHaCluster";
         }
 
@@ -41,5 +45,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public string Sid { get; set; }
         /// <summary> Gets or sets the clusterName. </summary>
         public string ClusterName { get; set; }
+        /// <summary> Gets or sets certificate preference if secure communication is enabled. </summary>
+        public SslPreference? SslPreference { get; set; }
+        /// <summary> Gets or sets the blob URI to SSL certificate for the HA cluster exporter. </summary>
+        public Uri SslCertificateUri { get; set; }
     }
 }

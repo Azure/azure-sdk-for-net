@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceProperties DeserializeHealthcareApisServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareApisProvisioningState> provisioningState = default;
             Optional<IList<HealthcareApisServiceAccessPolicyEntry>> accessPolicies = default;
             Optional<HealthcareApisServiceCosmosDbConfiguration> cosmosDbConfiguration = default;

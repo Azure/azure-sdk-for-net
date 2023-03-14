@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static WebAppRuntimes DeserializeWebAppRuntimes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WebAppRuntimeSettings> linuxRuntimeSettings = default;
             Optional<WebAppRuntimeSettings> windowsRuntimeSettings = default;
             Optional<LinuxJavaContainerSettings> linuxContainerSettings = default;

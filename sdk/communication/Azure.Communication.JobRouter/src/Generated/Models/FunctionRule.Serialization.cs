@@ -30,6 +30,10 @@ namespace Azure.Communication.JobRouter
 
         internal static FunctionRule DeserializeFunctionRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri functionUri = default;
             Optional<FunctionRuleCredential> credential = default;
             string kind = default;

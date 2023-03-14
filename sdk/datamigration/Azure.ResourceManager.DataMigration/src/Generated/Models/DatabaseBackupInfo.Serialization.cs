@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static DatabaseBackupInfo DeserializeDatabaseBackupInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databaseName = default;
             Optional<BackupType> backupType = default;
             Optional<IReadOnlyList<string>> backupFiles = default;

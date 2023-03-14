@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     {
         internal static GitHubOwnerListResponse DeserializeGitHubOwnerListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<GitHubOwnerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

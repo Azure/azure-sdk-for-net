@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HdfsLocation DeserializeHdfsLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<BinaryData> folderPath = default;
             Optional<BinaryData> fileName = default;

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static TargetBranchConfiguration DeserializeTargetBranchConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> names = default;
             foreach (var property in element.EnumerateObject())
             {

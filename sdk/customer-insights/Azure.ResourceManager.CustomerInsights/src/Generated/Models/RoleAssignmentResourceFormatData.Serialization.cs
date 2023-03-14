@@ -129,6 +129,10 @@ namespace Azure.ResourceManager.CustomerInsights
 
         internal static RoleAssignmentResourceFormatData DeserializeRoleAssignmentResourceFormatData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

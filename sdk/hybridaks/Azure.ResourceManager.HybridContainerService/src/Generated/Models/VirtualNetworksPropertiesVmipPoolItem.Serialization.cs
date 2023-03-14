@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static VirtualNetworksPropertiesVmipPoolItem DeserializeVirtualNetworksPropertiesVmipPoolItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endIP = default;
             Optional<string> startIP = default;
             foreach (var property in element.EnumerateObject())

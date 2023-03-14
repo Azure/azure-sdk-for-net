@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningPrivateEndpointConnectionData DeserializeMachineLearningPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MachineLearningSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;

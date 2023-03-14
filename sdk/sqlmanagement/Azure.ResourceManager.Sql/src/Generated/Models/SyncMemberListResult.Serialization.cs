@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SyncMemberListResult DeserializeSyncMemberListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SyncMemberData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

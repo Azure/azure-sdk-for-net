@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ElasticPoolOperationListResult DeserializeElasticPoolOperationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ElasticPoolOperationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

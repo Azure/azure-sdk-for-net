@@ -22,6 +22,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static CommentFeedbackValue DeserializeCommentFeedbackValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string commentValue = default;
             foreach (var property in element.EnumerateObject())
             {

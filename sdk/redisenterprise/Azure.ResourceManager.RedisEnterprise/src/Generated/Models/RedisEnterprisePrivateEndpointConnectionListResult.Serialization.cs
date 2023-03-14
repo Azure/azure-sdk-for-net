@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         internal static RedisEnterprisePrivateEndpointConnectionListResult DeserializeRedisEnterprisePrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

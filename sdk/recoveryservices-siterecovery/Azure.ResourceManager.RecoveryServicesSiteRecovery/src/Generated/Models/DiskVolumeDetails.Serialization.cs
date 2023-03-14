@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static DiskVolumeDetails DeserializeDiskVolumeDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> label = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())

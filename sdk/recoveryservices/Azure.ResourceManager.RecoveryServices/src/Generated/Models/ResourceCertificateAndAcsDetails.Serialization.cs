@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static ResourceCertificateAndAcsDetails DeserializeResourceCertificateAndAcsDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string globalAcsNamespace = default;
             string globalAcsHostName = default;
             string globalAcsRPRealm = default;

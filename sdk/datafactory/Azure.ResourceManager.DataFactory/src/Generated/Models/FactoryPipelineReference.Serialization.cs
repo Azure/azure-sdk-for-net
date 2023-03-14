@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryPipelineReference DeserializeFactoryPipelineReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactoryPipelineReferenceType type = default;
             string referenceName = default;
             Optional<string> name = default;

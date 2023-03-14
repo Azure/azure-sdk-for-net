@@ -15,6 +15,10 @@ namespace Azure.Maps.Geolocation
     {
         internal static CountryRegionResult DeserializeCountryRegionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CountryRegion> countryRegion = default;
             Optional<IPAddress> ipAddress = default;
             foreach (var property in element.EnumerateObject())

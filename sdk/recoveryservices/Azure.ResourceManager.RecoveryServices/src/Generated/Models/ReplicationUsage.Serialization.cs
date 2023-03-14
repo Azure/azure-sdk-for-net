@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VaultMonitoringSummary> monitoringSummary = default;
             Optional<ReplicationJobSummary> jobsSummary = default;
             Optional<int> protectedItemCount = default;

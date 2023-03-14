@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ContinentsResponseCountryOrRegionsItem DeserializeContinentsResponseCountryOrRegionsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> continentId = default;
             foreach (var property in element.EnumerateObject())

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static HealthCheckStepProperties DeserializeHealthCheckStepProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HealthCheckStepAttributes attributes = default;
             StepType stepType = default;
             foreach (var property in element.EnumerateObject())

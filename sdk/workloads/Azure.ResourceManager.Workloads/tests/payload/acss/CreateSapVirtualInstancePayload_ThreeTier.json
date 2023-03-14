@@ -1,0 +1,153 @@
+{
+  "identity": {
+    "type": "UserAssigned",
+    "userAssignedIdentities": {
+      "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/E2E-RBAC-MSI": {}
+    }
+  },
+  "properties": {
+    "environment": "NonProd",
+    "sapProduct": "S4HANA",
+    "configuration": {
+      "configurationType": "DeploymentWithOSConfig",
+      "appLocation": "eastus",
+      "infrastructureConfiguration": {
+        "deploymentType": "ThreeTier",
+        "storageConfiguration": {
+          "transportFileShareConfiguration": {
+            "configurationType": "CreateAndMount"
+          }
+        },
+        "centralServer": {
+          "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+          "virtualMachineConfiguration": {
+            "vmSize": "Standard_E4ds_v4",
+            "imageReference": {
+              "publisher": "RedHat",
+              "offer": "RHEL-SAP-HA",
+              "sku": "84sapha-gen2",
+              "version": "8.4.2021091202"
+            },
+            "osProfile": {
+              "adminUsername": "azureuser",
+              "osConfiguration": {
+                "osType": "Linux",
+                "disablePasswordAuthentication": true,
+                "sshKeyPair": {
+                  "publicKey": "Sanitized",
+                  "privateKey": "Sanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\n"
+                }
+              }
+            }
+          },
+          "instanceCount": 2
+        },
+        "applicationServer": {
+          "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+          "virtualMachineConfiguration": {
+            "vmSize": "Standard_E4ds_v4",
+            "imageReference": {
+              "publisher": "RedHat",
+              "offer": "RHEL-SAP-HA",
+              "sku": "84sapha-gen2",
+              "version": "8.4.2021091202"
+            },
+            "osProfile": {
+              "adminUsername": "azureuser",
+              "osConfiguration": {
+                "osType": "Linux",
+                "disablePasswordAuthentication": true,
+                "sshKeyPair": {
+                  "publicKey": "Sanitized",
+                  "privateKey": "Sanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\n"
+                }
+              }
+            }
+          },
+          "instanceCount": 2
+        },
+        "databaseServer": {
+          "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet-db",
+          "virtualMachineConfiguration": {
+            "vmSize": "Standard_E16ds_v4",
+            "imageReference": {
+              "publisher": "RedHat",
+              "offer": "RHEL-SAP-HA",
+              "sku": "84sapha-gen2",
+              "version": "8.4.2021091202"
+            },
+            "osProfile": {
+              "adminUsername": "azureuser",
+              "osConfiguration": {
+                "osType": "Linux",
+                "disablePasswordAuthentication": true,
+                "sshKeyPair": {
+                  "publicKey": "Sanitized",
+                  "privateKey": "Sanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\n"
+                }
+              }
+            }
+          },
+          "instanceCount": 2,
+          "diskConfiguration": {
+            "diskVolumeConfigurations": {
+              "hana/data": {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 128,
+                "count": 3
+              },
+              "hana/log": {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 128,
+                "count": 3
+              },
+              "hana/shared": {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 256,
+                "count": 1
+              },
+              "usr/sap": {
+                "sku": {
+                  "name": "Premium_LRS"
+                },
+                "sizeGB": 256,
+                "count": 1
+              },
+              "os": {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 64,
+                "count": 1
+              },
+              "backup": {
+                "sku": {
+                  "name": "StandardSSD_LRS"
+                },
+                "sizeGB": 512,
+                "count": 2
+              }
+            }
+          }
+        },
+        "highAvailabilityConfig": {
+          "highAvailabilityType": "AvailabilitySet"
+        },
+        "appResourceGroup": "sdk-testing-vis-app-rg-java"
+      },
+      "osSapConfiguration": {
+        "sapFqdn": "sap.bpaas.com"
+      }
+    }
+  },
+  "tags": {
+    "e2e-test": "SVIThreeTierHAAvSet"
+  },
+  "location": "eastus2"
+}

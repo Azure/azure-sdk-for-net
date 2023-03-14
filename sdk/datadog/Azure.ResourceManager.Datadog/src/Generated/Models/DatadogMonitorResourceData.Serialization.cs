@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Datadog
 
         internal static DatadogMonitorResourceData DeserializeDatadogMonitorResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceSku> sku = default;
             Optional<MonitorProperties> properties = default;
             Optional<ManagedServiceIdentity> identity = default;

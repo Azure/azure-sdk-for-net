@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FunctionAppStack DeserializeFunctionAppStack(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;

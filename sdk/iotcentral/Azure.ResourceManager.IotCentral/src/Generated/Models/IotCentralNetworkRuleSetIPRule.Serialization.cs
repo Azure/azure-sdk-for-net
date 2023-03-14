@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.IotCentral.Models
 
         internal static IotCentralNetworkRuleSetIPRule DeserializeIotCentralNetworkRuleSetIPRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> filterName = default;
             Optional<string> ipMask = default;
             foreach (var property in element.EnumerateObject())

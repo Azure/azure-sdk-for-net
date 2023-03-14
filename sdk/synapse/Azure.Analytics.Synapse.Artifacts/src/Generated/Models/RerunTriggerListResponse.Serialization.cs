@@ -31,6 +31,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RerunTriggerListResponse DeserializeRerunTriggerListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<RerunTriggerResource> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

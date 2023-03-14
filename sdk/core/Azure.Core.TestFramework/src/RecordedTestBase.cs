@@ -352,6 +352,12 @@ namespace Azure.Core.TestFramework
             // Clean up unused test files
             if (Mode == RecordedTestMode.Record)
             {
+                var testClassDirectory = new DirectoryInfo(GetSessionFileDirectory());
+                if (!testClassDirectory.Exists)
+                {
+                    return;
+                }
+
                 var knownMethods = new HashSet<string>();
 
                 // Management tests record in ctor
@@ -373,7 +379,7 @@ namespace Azure.Core.TestFramework
                     knownMethods.Add(method.Name);
                 }
 
-                foreach (var fileInfo in new DirectoryInfo(GetSessionFileDirectory()).EnumerateFiles())
+                foreach (var fileInfo in testClassDirectory.EnumerateFiles())
                 {
                     bool used = knownMethods.Any(knownMethod => fileInfo.Name.StartsWith(knownMethod, StringComparison.CurrentCulture));
 

@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsChatThreadDeletedEventData DeserializeAcsChatThreadDeletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CommunicationIdentifierModel> deletedByCommunicationIdentifier = default;
             Optional<DateTimeOffset> deleteTime = default;
             Optional<DateTimeOffset> createTime = default;

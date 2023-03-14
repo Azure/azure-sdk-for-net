@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CustomRolloutSpecificationProviderRegistration DeserializeCustomRolloutSpecificationProviderRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProviderRegistrationProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

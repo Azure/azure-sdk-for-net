@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static TumblingWindowTriggerDependencyReference DeserializeTumblingWindowTriggerDependencyReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> offset = default;
             Optional<string> size = default;
             FactoryTriggerReference referenceTrigger = default;

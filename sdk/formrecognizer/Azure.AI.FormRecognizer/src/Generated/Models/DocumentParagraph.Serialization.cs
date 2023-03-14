@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentParagraph DeserializeDocumentParagraph(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ParagraphRole> role = default;
             string content = default;
             Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;

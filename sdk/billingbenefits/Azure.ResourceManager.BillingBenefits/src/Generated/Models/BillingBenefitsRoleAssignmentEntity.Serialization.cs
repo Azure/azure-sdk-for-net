@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static BillingBenefitsRoleAssignmentEntity DeserializeBillingBenefitsRoleAssignmentEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<string> principalId = default;

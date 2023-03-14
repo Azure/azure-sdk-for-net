@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ResponseBasedOriginErrorDetectionSettings DeserializeResponseBasedOriginErrorDetectionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResponseBasedDetectedErrorType> responseBasedDetectedErrorTypes = default;
             Optional<int> responseBasedFailoverThresholdPercentage = default;
             Optional<IList<HttpErrorRange>> httpErrorRanges = default;

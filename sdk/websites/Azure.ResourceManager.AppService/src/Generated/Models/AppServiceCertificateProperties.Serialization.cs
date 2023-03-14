@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceCertificateProperties DeserializeAppServiceCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> keyVaultId = default;
             Optional<string> keyVaultSecretName = default;
             Optional<KeyVaultSecretStatus> provisioningState = default;

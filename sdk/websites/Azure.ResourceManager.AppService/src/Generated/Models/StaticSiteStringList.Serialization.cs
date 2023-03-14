@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSiteStringList DeserializeStaticSiteStringList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> properties = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;

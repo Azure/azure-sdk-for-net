@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static VCenterData DeserializeVCenterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VCenterProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

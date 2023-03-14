@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountAutoStorageBaseConfiguration DeserializeBatchAccountAutoStorageBaseConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier storageAccountId = default;
             Optional<BatchAutoStorageAuthenticationMode> authenticationMode = default;
             Optional<ComputeNodeIdentityReference> nodeIdentityReference = default;

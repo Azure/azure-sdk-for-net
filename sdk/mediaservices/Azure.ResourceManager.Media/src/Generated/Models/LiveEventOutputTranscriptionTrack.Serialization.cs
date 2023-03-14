@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventOutputTranscriptionTrack DeserializeLiveEventOutputTranscriptionTrack(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string trackName = default;
             foreach (var property in element.EnumerateObject())
             {

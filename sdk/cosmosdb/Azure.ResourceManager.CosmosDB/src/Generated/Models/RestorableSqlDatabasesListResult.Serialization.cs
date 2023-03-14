@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static RestorableSqlDatabasesListResult DeserializeRestorableSqlDatabasesListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RestorableSqlDatabase>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -36,6 +36,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TarGZipReadSettings DeserializeTarGZipReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> preserveCompressionFileNameAsFolder = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;

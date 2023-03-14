@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     {
         internal static AzureTrafficCollectorListResult DeserializeAzureTrafficCollectorListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AzureTrafficCollectorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
