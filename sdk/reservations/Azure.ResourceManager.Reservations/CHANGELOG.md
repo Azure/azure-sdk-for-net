@@ -1,8 +1,15 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2023-02-15)
 
 ### Features Added
+
+- Bumped API version to 2022-11-01 for Reservations
+
+### Other Changes
+
+- Reservation Return API is changed to be long running operation
+- Introduced new properties based on the 2022-11-01 version of swagger
 
 ### Breaking Changes
 
