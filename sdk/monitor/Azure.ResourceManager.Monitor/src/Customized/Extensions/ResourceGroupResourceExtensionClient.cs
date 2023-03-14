@@ -10,9 +10,9 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
 
-namespace Azure.ResourceManager.Monitor
+namespace Azure.ResourceManager.Monitor.Mock
 {
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _deprecatedActionGroupClientDiagnostics;
         private DeprecatedActionGroupsRestOperations _deprecatedActionGroupRestClient;

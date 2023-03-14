@@ -10,10 +10,10 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
 
-namespace Azure.ResourceManager.Monitor
+namespace Azure.ResourceManager.Monitor.Mock
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _deprecatedActionGroupClientDiagnostics;
         private DeprecatedActionGroupsRestOperations _deprecatedActionGroupRestClient;
