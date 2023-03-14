@@ -335,6 +335,48 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
+        /// <summary> Gets the result of a search </summary>
+        /// <param name="searchId"> The id of the search to retrieve the phone numbers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PhoneNumberSearchResult>> GetPhoneNumberSearchResultAsync(string searchId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(searchId, nameof(searchId));
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumberSearchResult)}");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.GetSearchResultAsync(searchId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the result of a search </summary>
+        /// <param name="searchId"> The id of the search to retrieve the phone numbers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PhoneNumberSearchResult> GetPhoneNumberSearchResult(string searchId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(searchId, nameof(searchId));
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumberSearchResult)}");
+            scope.Start();
+            try
+            {
+                var response =  RestClient.GetSearchResult(searchId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbersAsync(CancellationToken cancellationToken = default)
