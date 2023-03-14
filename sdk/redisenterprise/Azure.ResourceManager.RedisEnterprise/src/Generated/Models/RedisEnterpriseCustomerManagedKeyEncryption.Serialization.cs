@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class ClusterPropertiesEncryptionCustomerManagedKeyEncryption : IUtf8JsonSerializable
+    public partial class RedisEnterpriseCustomerManagedKeyEncryption : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteEndObject();
         }
 
-        internal static ClusterPropertiesEncryptionCustomerManagedKeyEncryption DeserializeClusterPropertiesEncryptionCustomerManagedKeyEncryption(JsonElement element)
+        internal static RedisEnterpriseCustomerManagedKeyEncryption DeserializeRedisEnterpriseCustomerManagedKeyEncryption(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity> keyEncryptionKeyIdentity = default;
+            Optional<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity> keyEncryptionKeyIdentity = default;
             Optional<Uri> keyEncryptionKeyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyEncryptionKeyIdentity = ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity.DeserializeClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity(property.Value);
+                    keyEncryptionKeyIdentity = RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity.DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyUrl"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new ClusterPropertiesEncryptionCustomerManagedKeyEncryption(keyEncryptionKeyIdentity.Value, keyEncryptionKeyUrl.Value);
+            return new RedisEnterpriseCustomerManagedKeyEncryption(keyEncryptionKeyIdentity.Value, keyEncryptionKeyUrl.Value);
         }
     }
 }

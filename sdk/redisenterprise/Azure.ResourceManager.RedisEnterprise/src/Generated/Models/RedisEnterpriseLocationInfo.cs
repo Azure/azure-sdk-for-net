@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Information about location (for example: features that it supports). </summary>
-    public partial class LocationInfo
+    public partial class RedisEnterpriseLocationInfo
     {
-        /// <summary> Initializes a new instance of LocationInfo. </summary>
-        internal LocationInfo()
+        /// <summary> Initializes a new instance of RedisEnterpriseLocationInfo. </summary>
+        internal RedisEnterpriseLocationInfo()
         {
-            Capabilities = new ChangeTrackingList<Capability>();
+            Capabilities = new ChangeTrackingList<RedisEnterpriseCapability>();
         }
 
-        /// <summary> Initializes a new instance of LocationInfo. </summary>
+        /// <summary> Initializes a new instance of RedisEnterpriseLocationInfo. </summary>
         /// <param name="location"> Location name. </param>
         /// <param name="capabilities"> List of capabilities. </param>
-        internal LocationInfo(AzureLocation? location, IReadOnlyList<Capability> capabilities)
+        internal RedisEnterpriseLocationInfo(AzureLocation? location, IReadOnlyList<RedisEnterpriseCapability> capabilities)
         {
             Location = location;
             Capabilities = capabilities;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Location name. </summary>
         public AzureLocation? Location { get; }
         /// <summary> List of capabilities. </summary>
-        public IReadOnlyList<Capability> Capabilities { get; }
+        public IReadOnlyList<RedisEnterpriseCapability> Capabilities { get; }
     }
 }

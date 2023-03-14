@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Initializes a new instance of ClusterPropertiesEncryption. </summary>
         /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </param>
-        internal ClusterPropertiesEncryption(ClusterPropertiesEncryptionCustomerManagedKeyEncryption customerManagedKeyEncryption)
+        internal ClusterPropertiesEncryption(RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption)
         {
             CustomerManagedKeyEncryption = customerManagedKeyEncryption;
         }
 
         /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
-        public ClusterPropertiesEncryptionCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get; set; }
+        public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get; set; }
     }
 }

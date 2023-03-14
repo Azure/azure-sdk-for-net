@@ -10,24 +10,24 @@ using System;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
-    public partial class ClusterPropertiesEncryptionCustomerManagedKeyEncryption
+    public partial class RedisEnterpriseCustomerManagedKeyEncryption
     {
-        /// <summary> Initializes a new instance of ClusterPropertiesEncryptionCustomerManagedKeyEncryption. </summary>
-        public ClusterPropertiesEncryptionCustomerManagedKeyEncryption()
+        /// <summary> Initializes a new instance of RedisEnterpriseCustomerManagedKeyEncryption. </summary>
+        public RedisEnterpriseCustomerManagedKeyEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterPropertiesEncryptionCustomerManagedKeyEncryption. </summary>
+        /// <summary> Initializes a new instance of RedisEnterpriseCustomerManagedKeyEncryption. </summary>
         /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
         /// <param name="keyEncryptionKeyUri"> Key encryption key Url, versioned only. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78. </param>
-        internal ClusterPropertiesEncryptionCustomerManagedKeyEncryption(ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, Uri keyEncryptionKeyUri)
+        internal RedisEnterpriseCustomerManagedKeyEncryption(RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, Uri keyEncryptionKeyUri)
         {
             KeyEncryptionKeyIdentity = keyEncryptionKeyIdentity;
             KeyEncryptionKeyUri = keyEncryptionKeyUri;
         }
 
         /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
-        public ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get; set; }
+        public RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get; set; }
         /// <summary> Key encryption key Url, versioned only. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78. </summary>
         public Uri KeyEncryptionKeyUri { get; set; }
     }

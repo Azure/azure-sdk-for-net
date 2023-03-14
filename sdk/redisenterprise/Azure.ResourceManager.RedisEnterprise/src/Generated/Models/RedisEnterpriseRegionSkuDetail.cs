@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Details about the location requested and the available skus in the location. </summary>
-    public partial class RegionSkuDetail
+    public partial class RedisEnterpriseRegionSkuDetail
     {
-        /// <summary> Initializes a new instance of RegionSkuDetail. </summary>
-        internal RegionSkuDetail()
+        /// <summary> Initializes a new instance of RedisEnterpriseRegionSkuDetail. </summary>
+        internal RedisEnterpriseRegionSkuDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of RegionSkuDetail. </summary>
+        /// <summary> Initializes a new instance of RedisEnterpriseRegionSkuDetail. </summary>
         /// <param name="resourceType"> Resource type which has the SKU, such as Microsoft.Cache/redisEnterprise. </param>
         /// <param name="locationInfo"> Details about location and its capabilities. </param>
         /// <param name="skuDetails"> Details about available skus. </param>
-        internal RegionSkuDetail(string resourceType, LocationInfo locationInfo, SkuDetail skuDetails)
+        internal RedisEnterpriseRegionSkuDetail(string resourceType, RedisEnterpriseLocationInfo locationInfo, SkuDetail skuDetails)
         {
             ResourceType = resourceType;
             LocationInfo = locationInfo;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Resource type which has the SKU, such as Microsoft.Cache/redisEnterprise. </summary>
         public string ResourceType { get; }
         /// <summary> Details about location and its capabilities. </summary>
-        public LocationInfo LocationInfo { get; }
+        public RedisEnterpriseLocationInfo LocationInfo { get; }
         /// <summary> Details about available skus. </summary>
         internal SkuDetail SkuDetails { get; }
         /// <summary> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </summary>

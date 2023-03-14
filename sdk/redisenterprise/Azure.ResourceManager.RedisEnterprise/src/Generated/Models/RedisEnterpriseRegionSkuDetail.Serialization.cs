@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RegionSkuDetail
+    public partial class RedisEnterpriseRegionSkuDetail
     {
-        internal static RegionSkuDetail DeserializeRegionSkuDetail(JsonElement element)
+        internal static RedisEnterpriseRegionSkuDetail DeserializeRedisEnterpriseRegionSkuDetail(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> resourceType = default;
-            Optional<LocationInfo> locationInfo = default;
+            Optional<RedisEnterpriseLocationInfo> locationInfo = default;
             Optional<SkuDetail> skuDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    locationInfo = LocationInfo.DeserializeLocationInfo(property.Value);
+                    locationInfo = RedisEnterpriseLocationInfo.DeserializeRedisEnterpriseLocationInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skuDetails"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RegionSkuDetail(resourceType.Value, locationInfo.Value, skuDetails.Value);
+            return new RedisEnterpriseRegionSkuDetail(resourceType.Value, locationInfo.Value, skuDetails.Value);
         }
     }
 }

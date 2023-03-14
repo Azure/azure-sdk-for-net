@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RegionSkuDetail>> value = default;
+            Optional<IReadOnlyList<RedisEnterpriseRegionSkuDetail>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RegionSkuDetail> array = new List<RegionSkuDetail>();
+                    List<RedisEnterpriseRegionSkuDetail> array = new List<RedisEnterpriseRegionSkuDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionSkuDetail.DeserializeRegionSkuDetail(item));
+                        array.Add(RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail(item));
                     }
                     value = array;
                     continue;

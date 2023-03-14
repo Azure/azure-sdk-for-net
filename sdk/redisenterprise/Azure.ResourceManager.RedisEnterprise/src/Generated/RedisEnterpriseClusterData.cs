@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Encryption-at-rest configuration for the cluster. </summary>
         internal ClusterPropertiesEncryption Encryption { get; set; }
         /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
-        public ClusterPropertiesEncryptionCustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption
         {
             get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
             set

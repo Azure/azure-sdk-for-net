@@ -25,6 +25,13 @@ rename-mapping:
   DatabaseList: RedisEnterpriseDatabaseList
   AccessKeys: RedisEnterpriseDataAccessKeys
   AccessKeyType: RedisEnterpriseAccessKeyType
+  Capability: RedisEnterpriseCapability
+  ClusterPropertiesEncryptionCustomerManagedKeyEncryption: RedisEnterpriseCustomerManagedKeyEncryption
+  ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity: RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity
+  CmkIdentityType: RedisEnterpriseCustomerManagedKeyIdentityType
+  LocationInfo: RedisEnterpriseLocationInfo
+  RegionSkuDetail: RedisEnterpriseRegionSkuDetail
+  FlushContent: RedisEnterpriseDatabaseResourceFlushContent
   ClusteringPolicy: RedisEnterpriseClusteringPolicy
   TlsVersion: RedisEnterpriseTlsVersion
   RegenerateKeyParameters: RedisEnterpriseRegenerateKeyParameters
@@ -95,6 +102,7 @@ rename-rules:
 
 override-operation-name:
   OperationsStatus_Get: GetRedisEnterpriseOperationsStatus
+  RegionSkuDetail_GetSkus: GetRedisEnterpriseSkus
 
 directive:
   - from: redisenterprise.json

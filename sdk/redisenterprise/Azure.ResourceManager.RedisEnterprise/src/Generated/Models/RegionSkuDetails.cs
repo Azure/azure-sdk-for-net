@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of RegionSkuDetails. </summary>
         internal RegionSkuDetails()
         {
-            Value = new ChangeTrackingList<RegionSkuDetail>();
+            Value = new ChangeTrackingList<RedisEnterpriseRegionSkuDetail>();
         }
 
         /// <summary> Initializes a new instance of RegionSkuDetails. </summary>
         /// <param name="value"> List of Sku Detail. </param>
-        internal RegionSkuDetails(IReadOnlyList<RegionSkuDetail> value)
+        internal RegionSkuDetails(IReadOnlyList<RedisEnterpriseRegionSkuDetail> value)
         {
             Value = value;
         }
 
         /// <summary> List of Sku Detail. </summary>
-        public IReadOnlyList<RegionSkuDetail> Value { get; }
+        public IReadOnlyList<RedisEnterpriseRegionSkuDetail> Value { get; }
     }
 }

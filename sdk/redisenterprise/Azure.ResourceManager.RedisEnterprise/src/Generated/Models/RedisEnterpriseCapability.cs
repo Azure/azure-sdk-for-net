@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Information about the features the location supports. </summary>
-    public partial class Capability
+    public partial class RedisEnterpriseCapability
     {
-        /// <summary> Initializes a new instance of Capability. </summary>
-        internal Capability()
+        /// <summary> Initializes a new instance of RedisEnterpriseCapability. </summary>
+        internal RedisEnterpriseCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of Capability. </summary>
+        /// <summary> Initializes a new instance of RedisEnterpriseCapability. </summary>
         /// <param name="name"> Feature name. </param>
         /// <param name="value"> Indicates whether feature is supported or not. </param>
-        internal Capability(string name, bool? value)
+        internal RedisEnterpriseCapability(string name, bool? value)
         {
             Name = name;
             Value = value;

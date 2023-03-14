@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class Capability
+    public partial class RedisEnterpriseCapability
     {
-        internal static Capability DeserializeCapability(JsonElement element)
+        internal static RedisEnterpriseCapability DeserializeRedisEnterpriseCapability(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new Capability(name.Value, Optional.ToNullable(value));
+            return new RedisEnterpriseCapability(name.Value, Optional.ToNullable(value));
         }
     }
 }

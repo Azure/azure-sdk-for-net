@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity : IUtf8JsonSerializable
+    public partial class RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteEndObject();
         }
 
-        internal static ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity DeserializeClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity(JsonElement element)
+        internal static RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> userAssignedIdentityResourceId = default;
-            Optional<CmkIdentityType> identityType = default;
+            Optional<RedisEnterpriseCustomerManagedKeyIdentityType> identityType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentityResourceId"u8))
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identityType = new CmkIdentityType(property.Value.GetString());
+                    identityType = new RedisEnterpriseCustomerManagedKeyIdentityType(property.Value.GetString());
                     continue;
                 }
             }
-            return new ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity(userAssignedIdentityResourceId.Value, Optional.ToNullable(identityType));
+            return new RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(userAssignedIdentityResourceId.Value, Optional.ToNullable(identityType));
         }
     }
 }

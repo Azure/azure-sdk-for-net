@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<ClusterPropertiesEncryptionCustomerManagedKeyEncryption> customerManagedKeyEncryption = default;
+            Optional<RedisEnterpriseCustomerManagedKeyEncryption> customerManagedKeyEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customerManagedKeyEncryption"u8))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    customerManagedKeyEncryption = ClusterPropertiesEncryptionCustomerManagedKeyEncryption.DeserializeClusterPropertiesEncryptionCustomerManagedKeyEncryption(property.Value);
+                    customerManagedKeyEncryption = RedisEnterpriseCustomerManagedKeyEncryption.DeserializeRedisEnterpriseCustomerManagedKeyEncryption(property.Value);
                     continue;
                 }
             }

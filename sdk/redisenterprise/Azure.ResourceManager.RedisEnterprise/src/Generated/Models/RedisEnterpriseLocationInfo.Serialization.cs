@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class LocationInfo
+    public partial class RedisEnterpriseLocationInfo
     {
-        internal static LocationInfo DeserializeLocationInfo(JsonElement element)
+        internal static RedisEnterpriseLocationInfo DeserializeRedisEnterpriseLocationInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<Capability>> capabilities = default;
+            Optional<IReadOnlyList<RedisEnterpriseCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Capability> array = new List<Capability>();
+                    List<RedisEnterpriseCapability> array = new List<RedisEnterpriseCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Capability.DeserializeCapability(item));
+                        array.Add(RedisEnterpriseCapability.DeserializeRedisEnterpriseCapability(item));
                     }
                     capabilities = array;
                     continue;
                 }
             }
-            return new LocationInfo(Optional.ToNullable(location), Optional.ToList(capabilities));
+            return new RedisEnterpriseLocationInfo(Optional.ToNullable(location), Optional.ToList(capabilities));
         }
     }
 }
