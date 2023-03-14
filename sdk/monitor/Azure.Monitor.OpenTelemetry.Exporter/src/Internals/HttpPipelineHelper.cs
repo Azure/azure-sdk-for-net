@@ -34,7 +34,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        internal static TimeSpan GetRetryInterval(Response httpResponse)
+        internal static int GetRetryInterval(Response httpResponse)
+        {
+            if (httpResponse != null && httpResponse.Headers.TryGetValue(RetryAfterHeaderName, out var retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out var delaySeconds))
+                {
+                    return (int)TimeSpan.FromSeconds(delaySeconds).TotalMilliseconds;
+                }
+                if (DateTimeOffset.TryParse(retryAfterValue, out DateTimeOffset delayTime))
+                {
+                    return (int)(delayTime - DateTimeOffset.Now).TotalMilliseconds;
+                }
+            }
+
+            return MinimumRetryInterval;
+        }
+
+        internal static TimeSpan GetRetryIntervalTimespan(Response httpResponse)
         {
             if (httpResponse != null && httpResponse.Headers.TryGetValue(RetryAfterHeaderName, out var retryAfterValue))
             {
