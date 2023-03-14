@@ -12,7 +12,7 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public partial class ConfigurationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_11_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
         /// <summary>
         /// The versions of the App Configuration service supported by this client library.
@@ -25,10 +25,10 @@ namespace Azure.Data.AppConfiguration
             /// </summary>
             V1_0 = 0,
 
-            /// <summary>
-            /// Version 2022-11-01-preview.
-            /// </summary>
-            V2022_11_01_Preview = 1,
+            ///// <summary>
+            ///// Version 2022-11-01-preview.
+            ///// </summary>
+            //V2022_11_01_Preview = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -47,7 +47,7 @@ namespace Azure.Data.AppConfiguration
             Version = version switch
             {
                 ServiceVersion.V1_0 => "1.0",
-                ServiceVersion.V2022_11_01_Preview => "2022-11-01-preview",
+                // ServiceVersion.V2022_11_01_Preview => "2022-11-01-preview",
 
                 _ => throw new NotSupportedException()
             };
