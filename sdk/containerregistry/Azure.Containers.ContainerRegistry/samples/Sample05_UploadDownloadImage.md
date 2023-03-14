@@ -12,16 +12,13 @@ Create a `ContainerRegistryBlobClient` for the registry, passing the repository,
 
 ```C# Snippet:ContainerRegistry_Samples_CreateBlobClient
 // Get the service endpoint from the environment
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 string repository = "sample-oci-image";
 string tag = "demo";
 
 // Create a new ContainerRegistryBlobClient
-ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-{
-    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-});
+ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
 ```
 
 ## Upload an OCI Image
