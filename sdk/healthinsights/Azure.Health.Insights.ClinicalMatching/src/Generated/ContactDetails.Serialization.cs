@@ -36,6 +36,10 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         internal static ContactDetails DeserializeContactDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> email = default;
             Optional<string> phone = default;

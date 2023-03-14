@@ -16,6 +16,10 @@ namespace Azure.Health.Insights.CancerProfiling
     {
         internal static OncoPhenotypeInference DeserializeOncoPhenotypeInference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OncoPhenotypeInferenceType type = default;
             string value = default;
             Optional<string> description = default;

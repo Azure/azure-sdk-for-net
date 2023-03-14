@@ -93,6 +93,10 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         internal static ClinicalTrialMetadata DeserializeClinicalTrialMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ClinicalTrialPhase>> phases = default;
             Optional<ClinicalTrialStudyType?> studyType = default;
             Optional<ClinicalTrialRecruitmentStatus?> recruitmentStatus = default;

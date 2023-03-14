@@ -28,17 +28,21 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            writer.WritePropertyName("country"u8);
-            writer.WriteStringValue(Country);
+            writer.WritePropertyName("countryOrRegion"u8);
+            writer.WriteStringValue(CountryOrRegion);
             writer.WriteEndObject();
         }
 
         internal static ClinicalTrialResearchFacility DeserializeClinicalTrialResearchFacility(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> city = default;
             Optional<string> state = default;
-            string country = default;
+            string countryOrRegion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -56,13 +60,13 @@ namespace Azure.Health.Insights.ClinicalMatching
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"u8))
+                if (property.NameEquals("countryOrRegion"u8))
                 {
-                    country = property.Value.GetString();
+                    countryOrRegion = property.Value.GetString();
                     continue;
                 }
             }
-            return new ClinicalTrialResearchFacility(name, city, state, country);
+            return new ClinicalTrialResearchFacility(name, city, state, countryOrRegion);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

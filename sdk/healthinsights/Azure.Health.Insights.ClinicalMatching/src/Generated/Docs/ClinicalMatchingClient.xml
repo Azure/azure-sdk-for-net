@@ -109,7 +109,7 @@ var data = new {
                                 name = "<name>",
                                 city = "<city>",
                                 state = "<state>",
-                                country = "<country>",
+                                countryOrRegion = "<countryOrRegion>",
                             }
                         },
                     },
@@ -148,7 +148,7 @@ var data = new {
                         new {
                             city = "<city>",
                             state = "<state>",
-                            country = "<country>",
+                            countryOrRegion = "<countryOrRegion>",
                         }
                     },
                     facilityAreas = new[] {
@@ -213,7 +213,7 @@ Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetPr
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("city").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("state").ToString());
-Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("country").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("countryOrRegion").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("system").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("name").ToString());
@@ -398,7 +398,7 @@ var data = new {
                                 name = "<name>",
                                 city = "<city>",
                                 state = "<state>",
-                                country = "<country>",
+                                countryOrRegion = "<countryOrRegion>",
                             }
                         },
                     },
@@ -437,7 +437,7 @@ var data = new {
                         new {
                             city = "<city>",
                             state = "<state>",
-                            country = "<country>",
+                            countryOrRegion = "<countryOrRegion>",
                         }
                     },
                     facilityAreas = new[] {
@@ -502,7 +502,7 @@ Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetPr
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("city").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("state").ToString());
-Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("country").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("countryOrRegion").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("system").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("name").ToString());

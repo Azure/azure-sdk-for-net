@@ -15,6 +15,10 @@ namespace Azure.Health.Insights.ClinicalMatching
     {
         internal static ClinicalNoteEvidence DeserializeClinicalNoteEvidence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<string> text = default;
             int offset = default;

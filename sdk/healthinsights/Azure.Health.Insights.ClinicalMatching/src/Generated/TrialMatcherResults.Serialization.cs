@@ -17,6 +17,10 @@ namespace Azure.Health.Insights.ClinicalMatching
     {
         internal static TrialMatcherResults DeserializeTrialMatcherResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<TrialMatcherPatientResult> patients = default;
             string modelVersion = default;
             Optional<DateTimeOffset?> knowledgeGraphLastUpdateDate = default;

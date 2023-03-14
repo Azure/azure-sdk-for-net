@@ -11,28 +11,27 @@ using Azure.Core;
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary>
-    /// A location given as a combination of city/state/country. It could specify a
-    /// city, a state or a country.<br />In case a city is specified, either state +
-    /// country or country (for countries where there are no states) should be added.
-    /// In case a state is specified (without a city), country should be added.
+    /// A location given as a combination of city, state and country/region. It could specify a city, a state or a country/region.
+    /// In case a city is specified, either state +country/region or country/region (for countries/regions where there are no states) should be added.
+    /// In case a state is specified (without a city), country/region should be added.
     /// </summary>
     public partial class GeographicLocation
     {
         /// <summary> Initializes a new instance of GeographicLocation. </summary>
-        /// <param name="country"> Country name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
-        public GeographicLocation(string country)
+        /// <param name="countryOrRegion"> Country/region name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="countryOrRegion"/> is null. </exception>
+        public GeographicLocation(string countryOrRegion)
         {
-            Argument.AssertNotNull(country, nameof(country));
+            Argument.AssertNotNull(countryOrRegion, nameof(countryOrRegion));
 
-            Country = country;
+            CountryOrRegion = countryOrRegion;
         }
 
         /// <summary> City name. </summary>
         public string City { get; set; }
         /// <summary> State name. </summary>
         public string State { get; set; }
-        /// <summary> Country name. </summary>
-        public string Country { get; }
+        /// <summary> Country/region name. </summary>
+        public string CountryOrRegion { get; }
     }
 }

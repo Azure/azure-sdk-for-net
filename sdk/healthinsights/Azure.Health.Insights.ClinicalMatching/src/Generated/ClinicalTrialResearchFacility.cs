@@ -15,28 +15,28 @@ namespace Azure.Health.Insights.ClinicalMatching
     {
         /// <summary> Initializes a new instance of ClinicalTrialResearchFacility. </summary>
         /// <param name="name"> The facility's name. </param>
-        /// <param name="country"> Country name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="country"/> is null. </exception>
-        public ClinicalTrialResearchFacility(string name, string country)
+        /// <param name="countryOrRegion"> Country/region name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="countryOrRegion"/> is null. </exception>
+        public ClinicalTrialResearchFacility(string name, string countryOrRegion)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(country, nameof(country));
+            Argument.AssertNotNull(countryOrRegion, nameof(countryOrRegion));
 
             Name = name;
-            Country = country;
+            CountryOrRegion = countryOrRegion;
         }
 
         /// <summary> Initializes a new instance of ClinicalTrialResearchFacility. </summary>
         /// <param name="name"> The facility's name. </param>
         /// <param name="city"> City name. </param>
         /// <param name="state"> State name. </param>
-        /// <param name="country"> Country name. </param>
-        internal ClinicalTrialResearchFacility(string name, string city, string state, string country)
+        /// <param name="countryOrRegion"> Country/region name. </param>
+        internal ClinicalTrialResearchFacility(string name, string city, string state, string countryOrRegion)
         {
             Name = name;
             City = city;
             State = state;
-            Country = country;
+            CountryOrRegion = countryOrRegion;
         }
 
         /// <summary> The facility's name. </summary>
@@ -45,7 +45,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public string City { get; set; }
         /// <summary> State name. </summary>
         public string State { get; set; }
-        /// <summary> Country name. </summary>
-        public string Country { get; set; }
+        /// <summary> Country/region name. </summary>
+        public string CountryOrRegion { get; set; }
     }
 }

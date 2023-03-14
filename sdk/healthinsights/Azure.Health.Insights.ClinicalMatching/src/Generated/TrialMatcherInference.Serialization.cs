@@ -16,6 +16,10 @@ namespace Azure.Health.Insights.ClinicalMatching
     {
         internal static TrialMatcherInference DeserializeTrialMatcherInference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TrialMatcherInferenceType type = default;
             string value = default;
             Optional<string> description = default;

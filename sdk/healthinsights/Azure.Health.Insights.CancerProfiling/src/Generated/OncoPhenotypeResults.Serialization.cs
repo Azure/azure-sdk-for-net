@@ -16,6 +16,10 @@ namespace Azure.Health.Insights.CancerProfiling
     {
         internal static OncoPhenotypeResults DeserializeOncoPhenotypeResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<OncoPhenotypePatientResult> patients = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())

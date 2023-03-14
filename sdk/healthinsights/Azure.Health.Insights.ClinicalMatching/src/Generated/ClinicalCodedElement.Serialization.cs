@@ -35,6 +35,10 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         internal static ClinicalCodedElement DeserializeClinicalCodedElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string system = default;
             string code = default;
             Optional<string> name = default;

@@ -15,6 +15,10 @@ namespace Azure.Health.Insights.CancerProfiling
     {
         internal static InferenceEvidence DeserializeInferenceEvidence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ClinicalNoteEvidence> patientDataEvidence = default;
             Optional<ClinicalCodedElement> patientInfoEvidence = default;
             Optional<float?> importance = default;

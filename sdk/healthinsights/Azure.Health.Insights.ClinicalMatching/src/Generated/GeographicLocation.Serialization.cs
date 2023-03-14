@@ -25,8 +25,8 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            writer.WritePropertyName("country"u8);
-            writer.WriteStringValue(Country);
+            writer.WritePropertyName("countryOrRegion"u8);
+            writer.WriteStringValue(CountryOrRegion);
             writer.WriteEndObject();
         }
 

@@ -17,6 +17,10 @@ namespace Azure.Health.Insights.ClinicalMatching
     {
         internal static TrialMatcherResult DeserializeTrialMatcherResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string jobId = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset expirationDateTime = default;

@@ -231,9 +231,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     }
     public partial class ClinicalTrialResearchFacility
     {
-        public ClinicalTrialResearchFacility(string name, string country) { }
+        public ClinicalTrialResearchFacility(string name, string countryOrRegion) { }
         public string City { get { throw null; } set { } }
-        public string Country { get { throw null; } set { } }
+        public string CountryOrRegion { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
     }
@@ -351,9 +351,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     }
     public partial class GeographicLocation
     {
-        public GeographicLocation(string country) { }
+        public GeographicLocation(string countryOrRegion) { }
         public string City { get { throw null; } set { } }
-        public string Country { get { throw null; } }
+        public string CountryOrRegion { get { throw null; } }
         public string State { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
