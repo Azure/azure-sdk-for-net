@@ -5,9 +5,9 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Compute.Tests
 {
-    public class ClientTestEnvironment : TestEnvironment
+    public class BatchClientTestEnvironment : TestEnvironment
     {
-        public string Endpoint => GetRecordedVariable("Batch_ENDPOINT");
+        public string Endpoint => GetRecordedVariable("BATCH_ACCOUNT_ENDPOINT");
 
         // Add other client paramters here as above.
     }
