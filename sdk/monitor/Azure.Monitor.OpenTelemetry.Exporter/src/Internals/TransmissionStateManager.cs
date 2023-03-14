@@ -20,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private DateTimeOffset _nextMinTimeToUpdateConsecutiveErrors = DateTimeOffset.MinValue;
 
-        private readonly System.Timers.Timer _timer;
+        private readonly System.Timers.Timer _backOffIntervalTimer;
 
         private double _syncBackOffIntervalCalculation;
 
@@ -28,9 +28,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private TransmissionStateManager()
         {
-            _timer = new();
-            _timer.Elapsed += RestartTransmission;
-            _timer.AutoReset = false;
+            _backOffIntervalTimer = new();
+            _backOffIntervalTimer.Elapsed += RestartTransmission;
+            _backOffIntervalTimer.AutoReset = false;
             State = TransmissionState.Closed;
         }
 
@@ -69,9 +69,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     OpenTransmission();
 
-                    _timer.Interval = backOffTimeInterval.TotalMilliseconds;
+                    _backOffIntervalTimer.Interval = backOffTimeInterval.TotalMilliseconds;
 
-                    _timer.Start();
+                    _backOffIntervalTimer.Start();
                 }
 
                 Interlocked.Exchange(ref _syncBackOffIntervalCalculation, 0);
