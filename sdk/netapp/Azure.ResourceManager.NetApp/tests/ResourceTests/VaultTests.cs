@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
         [Test]
         [RecordedTest]
-        public async Task GetVaultObsolteButWorksOn2022_05_01()
+        public async Task GetVaultObsolteButCustomCodeWorksOn2022_05_01()
         {
 #pragma warning disable 0618
             List<NetAppVault> _vaults;
