@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/1a0ed2b2-8f83-4b6c-b1da-01f912436358/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "510",
         "Content-Type": "application/json",
-        "traceparent": "00-5b377bb285e603489dd3d140b471fc92-cbc915c1212a3d40-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230307.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "ad85e19c25d3e8a39e4a8a39ea4466ba",
+        "traceparent": "00-03d175d3e210b844a34195aee585de8a-d88a80efdc003241-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "4f38431ddf85aa247dda6f4242deb901",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal, NullBool: bool, Dynamic: dynamic)[datetime(2015-12-31 23:59:59.9),false,guid(74be27de-1e4e-49d9-b579-fe0b331d3642),12345,1234567890123,12345.6789,\u0022string value\u0022,10s,decimal(0.10101),bool(null),dynamic({\u0022a\u0022:123, \u0022b\u0022:\u0022hello\u0022, \u0022c\u0022:[1,2,3], \u0022d\u0022:{}})]",
-        "timespan": "2023-02-20T00:00:00.0000000Z/P14D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -24,10 +24,10 @@
         "Connection": "keep-alive",
         "Content-Length": "621",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 22:49:40 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:30 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-85c67bc895-2bl52",
+        "Via": "1.1 draft-oms-85c67bc895-lhksd",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -102,9 +102,9 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "DateTimeOffsetNow": "2023-03-08T14:49:37.6908451-08:00",
+    "DateTimeOffsetNow": "2023-03-14T14:52:27.0212685-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "1861498217",
-    "WORKSPACE_ID": "1a0ed2b2-8f83-4b6c-b1da-01f912436358"
+    "RandomSeed": "1090841203",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

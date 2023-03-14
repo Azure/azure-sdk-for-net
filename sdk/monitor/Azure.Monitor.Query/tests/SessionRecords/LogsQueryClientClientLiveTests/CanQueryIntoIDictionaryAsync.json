@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/1a0ed2b2-8f83-4b6c-b1da-01f912436358/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "206",
         "Content-Type": "application/json",
-        "traceparent": "00-31a083d8eb3c5d42874d5b7fb31a5fca-af8f7d6b22c39049-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230307.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "93892e8cccf503fde53232e72a5429b0",
+        "traceparent": "00-ad7484d66956494eb1047045b15295a9-1b706c39be305145-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ece856e39b551271319289d45f3ff4a9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_51_CL | distinct StringColumn_s, IntColumn_d |project-rename Name = StringColumn_s, Age = IntColumn_d |project Name, Age |order by Name asc",
-        "timespan": "2023-02-20T00:00:00.0000000Z/P14D"
+        "query": "TableA1_59_CL | distinct StringColumn_s, IntColumn_d |project-rename Name = StringColumn_s, Age = IntColumn_d |project Name, Age |order by Name asc",
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -25,10 +25,10 @@
         "Connection": "keep-alive",
         "Content-Length": "143",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 22:51:37 GMT",
+        "Date": "Tue, 14 Mar 2023 22:24:49 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-85c67bc895-h4j4q",
+        "Via": "1.1 draft-oms-85c67bc895-zwjjn",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -52,11 +52,11 @@
               ],
               [
                 "b",
-                3
+                2
               ],
               [
                 "c",
-                1
+                3
               ]
             ]
           }
@@ -66,9 +66,9 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "DateTimeOffsetNow": "2023-03-08T14:51:36.1800745-08:00",
+    "DateTimeOffsetNow": "2023-03-14T15:24:46.8694347-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "923803132",
-    "WORKSPACE_ID": "1a0ed2b2-8f83-4b6c-b1da-01f912436358"
+    "RandomSeed": "255852111",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

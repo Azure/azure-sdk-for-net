@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "354",
         "Content-Type": "application/json",
-        "traceparent": "00-dcaef4dbb47bf7468f8a32c27d358e42-9e87f4d446106c4c-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230307.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "80ee05343978d9b5137364ed299f1508",
+        "traceparent": "00-77ad326e2da4934597f64e5fdf7090a1-0afef48a86a1c047-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "bf371dec710a029d55b7403bad3ce1fb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -19,21 +19,21 @@
             "id": "0",
             "body": {
               "query": "Heartbeat",
-              "timespan": "2023-02-20T00:00:00.0000000Z/P14D"
+              "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
             },
             "path": "/query",
             "method": "POST",
-            "workspace": "1a0ed2b2-8f83-4b6c-b1da-01f912436358"
+            "workspace": "314be15c-6065-462b-a0dc-8fe1213796f2"
           },
           {
             "id": "1",
             "body": {
               "query": "Heartbeat",
-              "timespan": "2023-02-20T00:00:00.0000000Z/P14D"
+              "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
             },
             "path": "/query",
             "method": "POST",
-            "workspace": "1a0ed2b2-8f83-4b6c-b1da-01f912436358"
+            "workspace": "314be15c-6065-462b-a0dc-8fe1213796f2"
           }
         ]
       },
@@ -43,17 +43,17 @@
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 22:49:47 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:35 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-85c67bc895-44hdw",
+        "Via": "1.1 draft-oms-85c67bc895-cv2q5",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
         "responses": [
           {
-            "id": "0",
+            "id": "1",
             "status": 200,
             "body": {
               "tables": [
@@ -191,7 +191,7 @@
             }
           },
           {
-            "id": "1",
+            "id": "0",
             "status": 200,
             "body": {
               "tables": [
@@ -334,9 +334,9 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "DateTimeOffsetNow": "2023-03-08T14:49:44.0857203-08:00",
+    "DateTimeOffsetNow": "2023-03-14T14:52:31.3922891-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "98388394",
-    "WORKSPACE_ID": "1a0ed2b2-8f83-4b6c-b1da-01f912436358"
+    "RandomSeed": "254932286",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

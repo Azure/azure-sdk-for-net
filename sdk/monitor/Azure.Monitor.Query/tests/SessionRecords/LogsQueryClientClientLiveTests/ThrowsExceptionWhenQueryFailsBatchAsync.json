@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "195",
         "Content-Type": "application/json",
-        "traceparent": "00-daa2a4ed7beee14bab77c5df1f2cd491-574b95ae3b770548-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230307.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "14b56c48570a1480a41cc5802ca4064f",
+        "traceparent": "00-ebef38f368c6c04283b5c5a34c10cbcf-c57360c82045684f-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "f87da0b4448909aec458809f23818ebf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -19,11 +19,11 @@
             "id": "0",
             "body": {
               "query": "this won\u0027t work",
-              "timespan": "2023-02-20T00:00:00.0000000Z/P14D"
+              "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
             },
             "path": "/query",
             "method": "POST",
-            "workspace": "1a0ed2b2-8f83-4b6c-b1da-01f912436358"
+            "workspace": "314be15c-6065-462b-a0dc-8fe1213796f2"
           }
         ]
       },
@@ -33,11 +33,11 @@
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 22:52:21 GMT",
+        "Date": "Tue, 14 Mar 2023 22:25:53 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-85c67bc895-96tbz",
+        "Via": "1.1 draft-oms-85c67bc895-xp9p4",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -49,7 +49,7 @@
               "error": {
                 "message": "The request had some invalid properties",
                 "code": "BadArgumentError",
-                "correlationId": "a9dfd129-4885-4ccf-897a-ae0e79490d57",
+                "correlationId": "55fd3913-af57-4ad2-bfbc-ef5725fb1d42",
                 "innererror": {
                   "code": "SyntaxError",
                   "message": "Request is invalid and cannot be processed: Syntax error: SYN0001: I could not parse that, sorry. [line:position=0:0]"
@@ -63,9 +63,9 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "DateTimeOffsetNow": "2023-03-08T14:52:19.9358379-08:00",
+    "DateTimeOffsetNow": "2023-03-14T15:25:49.9857702-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "803276659",
-    "WORKSPACE_ID": "1a0ed2b2-8f83-4b6c-b1da-01f912436358"
+    "RandomSeed": "817587611",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

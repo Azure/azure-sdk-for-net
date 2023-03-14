@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/1a0ed2b2-8f83-4b6c-b1da-01f912436358/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -9,26 +9,26 @@
         "Connection": "keep-alive",
         "Content-Length": "180",
         "Content-Type": "application/json",
-        "traceparent": "00-5637166193ce674daad18ae0346f36bc-382e6de688192a4b-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230307.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "ad24d5bf6dcf7ecb1d07e7ccfd97a37f",
+        "traceparent": "00-72e31de80edf564d81472aff04b47d78-7cca01ec1af57a48-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "79bc33c170af61273aa87f7736e2cf2f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_51_CL | distinct * |project StringColumn_s, IntColumn_d, BoolColumn_b, FloatColumn_d |order by StringColumn_s asc",
-        "timespan": "2023-02-20T00:00:00.0000000Z/P14D"
+        "query": "TableA1_59_CL | distinct * |project StringColumn_s, IntColumn_d, BoolColumn_b, FloatColumn_d |order by StringColumn_s asc",
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "316",
+        "Content-Length": "409",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 22:49:34 GMT",
+        "Date": "Tue, 14 Mar 2023 21:52:28 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-85c67bc895-5k5wt",
+        "Via": "1.1 draft-oms-85c67bc895-p2jb6",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -67,28 +67,46 @@
                 0
               ],
               [
-                "b",
-                3,
-                true,
-                1.2
+                "a",
+                1,
+                false,
+                0
               ],
               [
                 "b",
-                3,
+                2,
                 true,
-                1.2
+                1.20000005
+              ],
+              [
+                "b",
+                2,
+                true,
+                1.20000005
+              ],
+              [
+                "b",
+                2,
+                true,
+                1.20000005
               ],
               [
                 "c",
-                1,
+                3,
                 false,
-                1.1
+                1.10000002
               ],
               [
                 "c",
-                1,
+                3,
                 false,
-                1.1
+                1.10000002
+              ],
+              [
+                "c",
+                3,
+                false,
+                1.10000002
               ]
             ]
           }
@@ -98,12 +116,12 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "DateTimeOffsetNow": "2023-03-08T14:49:29.7206739-08:00",
+    "DateTimeOffsetNow": "2023-03-14T14:52:23.8136622-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "720946444",
-    "SECONDARY_WORKSPACE_ID": "72ecab51-3ee0-4872-8947-fab34f29c024",
+    "RandomSeed": "1868291951",
+    "SECONDARY_WORKSPACE_ID": "db3bd3a5-5caf-4700-8b68-14962531541d",
     "SECONDARY_WORKSPACE_KEY": "Kg==",
-    "WORKSPACE_ID": "1a0ed2b2-8f83-4b6c-b1da-01f912436358",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2",
     "WORKSPACE_KEY": "Kg=="
   }
 }

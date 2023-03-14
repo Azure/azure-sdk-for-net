@@ -1,34 +1,34 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/1a0ed2b2-8f83-4b6c-b1da-01f912436358/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "139",
         "Content-Type": "application/json",
-        "traceparent": "00-94cc72a68456ab40b8cddf519d65af9a-fa60cd2f449fab44-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230307.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "fdfd747b3c9ed78742724ffb80abe3eb",
+        "traceparent": "00-9406a45eb62527459daf60838a09bc3f-8bcc82a02ed86a45-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "33253bd76f3400c66e1d0b0b94efb1c0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "set truncationmaxrecords=1; datatable (s: string) [\u0027a\u0027, \u0027b\u0027]",
-        "timespan": "2023-02-20T00:00:00.0000000Z/P14D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "23",
+        "Age": "27",
         "Connection": "keep-alive",
         "Content-Length": "596",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 08 Mar 2023 22:50:11 GMT",
+        "Date": "Tue, 14 Mar 2023 21:53:03 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-85c67bc895-tp7zk",
+        "Via": "1.1 draft-oms-85c67bc895-pjrbk",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -69,9 +69,9 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "DateTimeOffsetNow": "2023-03-08T14:50:10.1014452-08:00",
+    "DateTimeOffsetNow": "2023-03-14T14:53:01.3729488-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "223305193",
-    "WORKSPACE_ID": "1a0ed2b2-8f83-4b6c-b1da-01f912436358"
+    "RandomSeed": "1466630465",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

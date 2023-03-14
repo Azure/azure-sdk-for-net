@@ -150,8 +150,8 @@ namespace Azure.Monitor.Query.Tests
                 _logsTestData.DataTimeRange);
 
             Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 1, Name = "a" }));
-            Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 3, Name = "b" }));
-            Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 1, Name = "c" }));
+            Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 2, Name = "b" }));
+            Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 3, Name = "c" }));
         }
 
         [RecordedTest]
@@ -169,8 +169,8 @@ namespace Azure.Monitor.Query.Tests
             CollectionAssert.AreEqual(new[]
             {
                 new Dictionary<string, object>() {{"Age", 1}, {"Name", "a"}},
-                new Dictionary<string, object>() {{"Age", 3}, {"Name", "b"}},
-                new Dictionary<string, object>() {{"Age", 1}, {"Name", "c"}}
+                new Dictionary<string, object>() {{"Age", 2}, {"Name", "b"}},
+                new Dictionary<string, object>() {{"Age", 3}, {"Name", "c"}}
             }, results.Value);
         }
 
@@ -189,8 +189,8 @@ namespace Azure.Monitor.Query.Tests
             CollectionAssert.AreEqual(new[]
             {
                 new Dictionary<string, object>() {{"Age", 1}, {"Name", "a"}},
-                new Dictionary<string, object>() {{"Age", 3}, {"Name", "b"}},
-                new Dictionary<string, object>() {{"Age", 1}, {"Name", "c"}}
+                new Dictionary<string, object>() {{"Age", 2}, {"Name", "b"}},
+                new Dictionary<string, object>() {{"Age", 3}, {"Name", "c"}}
             }, results.Value);
         }
 
