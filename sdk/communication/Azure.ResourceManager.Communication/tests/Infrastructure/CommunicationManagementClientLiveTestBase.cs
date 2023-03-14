@@ -10,6 +10,7 @@ using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.TestFramework;
 using System.Collections.Generic;
 using NUnit.Framework;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
@@ -71,6 +72,19 @@ namespace Azure.ResourceManager.Communication.Tests
             };
             var domainLro = await emailService.GetCommunicationDomainResources().CreateOrUpdateAsync(WaitUntil.Completed, domainName, data);
             return domainLro.Value;
+        }
+
+        internal async Task<SenderUsernameResource> CreateDefaultSenderUsernameResource(string username, string displayName, CommunicationDomainResource domain)
+        {
+            SenderUsernameResourceData data = new SenderUsernameResourceData()
+            {
+                Username = username,
+                DisplayName = displayName
+            };
+
+            ArmOperation<SenderUsernameResource> senderUsernameOp = await domain.GetSenderUsernameResources().CreateOrUpdateAsync(WaitUntil.Completed, username, data);
+            SenderUsernameResource senderUsername = senderUsernameOp.Value;
+            return senderUsername;
         }
 
         private void IgnoreTestInLiveMode()
