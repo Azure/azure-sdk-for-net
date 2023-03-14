@@ -13,8 +13,8 @@ description: Samples for the Azure.ResourceManager.Communication client library
 
 - [Managing Communication Service](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/samples/Sample1_ManagingCommunicationService.md)
 
-- [Managing Email Service](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/samples/Sample2_ManagingEmailService.md)
+- [Managing Email Service](https://github.com/Azure/azure-sdk-for-net/blob/7fafd3931405353e58ec15a03483c1ef5f49967d/sdk/communication/Azure.ResourceManager.Communication/samples/Sample2_ManagingEmailService.md)
 
-- [Managing Domains Resoures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/samples/Sample3_ManagingDomainsResource.md)
+- [Managing Domains Resoures](https://github.com/Azure/azure-sdk-for-net/blob/7fafd3931405353e58ec15a03483c1ef5f49967d/sdk/communication/Azure.ResourceManager.Communication/samples/Sample3_ManagingDomainsResource.md)
 
-- [Managing SenderUsername Resources](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/samples/Sample4_ManagingSenderUsernameResource.md)
+- [Managing SenderUsername Resources](https://github.com/Azure/azure-sdk-for-net/blob/7fafd3931405353e58ec15a03483c1ef5f49967d/sdk/communication/Azure.ResourceManager.Communication/samples/Sample4_ManagingSenderUsernameResource.md)
