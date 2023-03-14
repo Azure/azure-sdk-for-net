@@ -65,7 +65,7 @@ $innerFolder = Split-Path $specSubDirectory -Leaf
 
 $tempFolder = "$ProjectDirectory/TempTypespecFiles"
 $npmWorkingDir = Resolve-Path $tempFolder/$innerFolder
-$mainTypespecFile = If (Test-Path "$npmWorkingDir/client.tsp") { Resolve-Path "$npmWorkingDir/client.tsp" } Else { Resolve-Path "$npmWorkingDir/main.tsp"}
+$mainTypespecFile = If (Test-Path "$npmWorkingDir/client.*") { Resolve-Path "$npmWorkingDir/client.*" } Else { Resolve-Path "$npmWorkingDir/main.*"}
 
 try {
     Push-Location $npmWorkingDir
