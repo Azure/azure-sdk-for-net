@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Communication.Tests
             ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _emailServiceName = SessionRecording.GenerateAssetName("email-test");
-            _domainResourceName = SessionRecording.GenerateAssetName("domain-") + ".com";
+            _domainResourceName = Recording.GenerateAssetName("domain-") + ".com";
             _emailService = await CreateDefaultEmailServices(_emailServiceName, rg);
             _domainResource = await CreateDefaultDomain(_domainResourceName, _emailService);
             _location = ResourceLocation;
@@ -49,15 +49,14 @@ namespace Azure.ResourceManager.Communication.Tests
             ArmClient = GetArmClient();
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
             _emailService = await _resourceGroup.GetEmailServiceResourceAsync(_emailServiceName);
-            _domainResource = await _emailService.GetCommunicationDomainResourceAsync(_domainResourceName);
         }
 
         [TearDown]
         public async Task TearDown()
         {
-            await foreach (var username in _domainResource.GetSenderUsernameResources().GetAllAsync())
+            await foreach (var domain in _emailService.GetCommunicationDomainResources().GetAllAsync())
             {
-                await username.DeleteAsync(WaitUntil.Completed);
+                await domain.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -85,29 +84,27 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.AreEqual(displayName, senderUsername.Data.DisplayName);
         }
 
-        // todo: follow up on update bug. Updating a record with the same name results in 400 error a username already exists.
+        [Test]
+        public async Task Update()
+        {
+            string username = Recording.GenerateAssetName("un-");
+            string updatedUsername = Recording.GenerateAssetName("un-");
+            string displayName = Recording.GenerateAssetName("dn ");
+            string updatedDisplayName = Recording.GenerateAssetName("dn ");
 
-        //[Test]
-        //public async Task Update()
-        //{
-        //    string username = Recording.GenerateAssetName("un-");
-        //    // string updatedUsername = Recording.GenerateAssetName("updated-un-");
-        //    string displayName = Recording.GenerateAssetName("dn ");
-        //    string updatedDisplayName = Recording.GenerateAssetName("updated dn ");
+            var senderUsername1 = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
+            var patch = new SenderUsernameResourceData()
+            {
+                Username = updatedDisplayName,
+                DisplayName = updatedDisplayName
+            };
+            var senderUsername2 = (await senderUsername1.UpdateAsync(WaitUntil.Completed, patch)).Value;
 
-        //    var senderUsername1 = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
-        //    var patch = new SenderUsernameResourceData()
-        //    {
-        //        Username = senderUsername1.Data.Username,
-        //        DisplayName = updatedDisplayName
-        //    };
-        //    var senderUsername2 = (await senderUsername1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-
-        //    Assert.IsNotNull(senderUsername2);
-        //    Assert.AreEqual(senderUsername1.Data.Name, senderUsername2.Data.Name);
-        //    Assert.AreNotEqual(senderUsername1.Data.Username, senderUsername2.Data.Username);
-        //    Assert.AreNotEqual(senderUsername1.Data.DisplayName, senderUsername2.Data.DisplayName);
-        //}
+            Assert.IsNotNull(senderUsername2);
+            Assert.AreEqual(senderUsername1.Data.Name, senderUsername2.Data.Name);
+            Assert.AreNotEqual(senderUsername1.Data.Username, senderUsername2.Data.Username);
+            Assert.AreNotEqual(senderUsername1.Data.DisplayName, senderUsername2.Data.DisplayName);
+        }
 
         [Test]
         public async Task Delete()
@@ -118,7 +115,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _domainResource.GetSenderUsernameResources();
             var senderUsername = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
             await senderUsername.DeleteAsync(WaitUntil.Completed);
-            bool exists = await collection.ExistsAsync(username);
+            bool exists = collection.Exists(username);
             Assert.IsFalse(exists);
         }
 
@@ -133,8 +130,8 @@ namespace Azure.ResourceManager.Communication.Tests
 
             var actualSenderUsername = await collection.GetAsync(username);
             Assert.IsNotNull(actualSenderUsername);
-            Assert.AreEqual(actualSenderUsername.Value.Data.Username, username);
-            Assert.AreEqual(actualSenderUsername.Value.Data.DisplayName, displayName);
+            Assert.AreEqual(username, actualSenderUsername.Value.Data.Username);
+            Assert.AreEqual(displayName, actualSenderUsername.Value.Data.DisplayName);
         }
 
         [Test]
@@ -147,8 +144,8 @@ namespace Azure.ResourceManager.Communication.Tests
 
             var list = await _domainResource.GetSenderUsernameResources().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.IsTrue(list.Any(s=>s.HasData && s.Data.Username == username));
-            Assert.IsTrue(list.Any(s => s.HasData && s.Data.DisplayName == displayName));
+            Assert.AreEqual(username, list.FirstOrDefault().Data.Username);
+            Assert.AreEqual(displayName, list.FirstOrDefault().Data.DisplayName);
         }
     }
 }
