@@ -151,7 +151,6 @@ namespace Azure.Containers.ContainerRegistry
     {
         public ContainerRegistryClientOptions(Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions.ServiceVersion version = Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions.ServiceVersion.V2021_07_01) { }
         public Azure.Containers.ContainerRegistry.ContainerRegistryAudience? Audience { get { throw null; } set { } }
-        public int? MaxChunkSize { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2021_07_01 = 1,

@@ -45,10 +45,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 Audience = audience
             });
 
+            /*
             if (chunkSize.HasValue)
             {
                 options.MaxChunkSize = chunkSize.Value;
             }
+            */
 
             return InstrumentClient(new ContainerRegistryBlobClient(
                     new Uri(endpoint),

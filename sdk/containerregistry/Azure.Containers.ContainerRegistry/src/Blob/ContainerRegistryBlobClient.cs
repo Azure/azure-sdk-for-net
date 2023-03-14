@@ -6,7 +6,6 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -22,7 +21,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public class ContainerRegistryBlobClient
     {
         private const int DefaultChunkSize = 4 * 1024 * 1024; // 4MB
-        private readonly int _maxChunkSize;
 
         private readonly Uri _endpoint;
         private readonly string _registryName;
@@ -104,7 +102,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _repositoryName = repository;
-            _maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
@@ -363,7 +360,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     _blobRestClient.StartUpload(_repositoryName, cancellationToken);
 
-                var result = UploadInChunksInternalAsync(startUploadResult.Headers.Location, stream, _maxChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+                var result = UploadInChunksInternalAsync(startUploadResult.Headers.Location, stream, DefaultChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     _blobRestClient.CompleteUpload(result.Digest, result.Location, null, cancellationToken);
@@ -409,7 +406,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
-                var result = await UploadInChunksInternalAsync(startUploadResult.Headers.Location, stream, _maxChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var result = await UploadInChunksInternalAsync(startUploadResult.Headers.Location, stream, DefaultChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     await _blobRestClient.CompleteUploadAsync(result.Digest, result.Location, null, cancellationToken).ConfigureAwait(false);
@@ -842,7 +839,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         private async Task<Response> DownloadBlobToInternalAsync(string digest, Stream destination, bool async, CancellationToken cancellationToken)
         {
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(_maxChunkSize);
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultChunkSize);
             long bytesDownloaded = 0;
             using SHA256 sha256 = SHA256.Create();
             long? blobSize = default;
@@ -853,8 +850,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 do
                 {
                     int chunkSize = blobSize.HasValue ?
-                        (int)Math.Min(blobSize.Value - bytesDownloaded, _maxChunkSize) :
-                        _maxChunkSize;
+                        (int)Math.Min(blobSize.Value - bytesDownloaded, DefaultChunkSize) :
+                        DefaultChunkSize;
                     HttpRange range = new HttpRange(bytesDownloaded, chunkSize);
 
                     var chunkResult = async ?
