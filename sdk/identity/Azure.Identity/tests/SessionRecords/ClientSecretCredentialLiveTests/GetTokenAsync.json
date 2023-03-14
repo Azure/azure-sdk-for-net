@@ -108,7 +108,7 @@
         "x-ms-lib-capability": "retry-after, h429",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "client_id=Sanitized\u0026client_secret=Sanitized\u0026scope=Sanitized\u0026grant_type=Sanitized",
+      "RequestBody": "client_id=Sanitized\u0026client_secret=Sanitized\u0026scope=Sanitized\u0026claims=Sanitized\u0026grant_type=Sanitized",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
@@ -159,7 +159,7 @@
         "x-ms-lib-capability": "retry-after, h429",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "client_id=Sanitized\u0026client_secret=Sanitized\u0026scope=Sanitized\u0026grant_type=Sanitized",
+      "RequestBody": "client_id=Sanitized\u0026client_secret=Sanitized\u0026scope=Sanitized\u0026claims=Sanitized\u0026grant_type=Sanitized",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
