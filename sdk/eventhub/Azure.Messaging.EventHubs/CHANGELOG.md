@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 5.8.1 (2023-03-09)
+
+### Other Changes
+
+- Upgrading dependency on `Azure.Core` library.
+
 ## 5.8.0 (2023-03-07)
 
 ### Features Added
