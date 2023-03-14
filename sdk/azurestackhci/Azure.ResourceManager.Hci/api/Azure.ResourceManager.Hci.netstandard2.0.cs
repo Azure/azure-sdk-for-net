@@ -43,6 +43,8 @@ namespace Azure.ResourceManager.Hci
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Hci.ArcExtensionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.ArcExtensionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.ArcExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.ArcExtensionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.ArcExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Upgrade(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Models.ExtensionUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpgradeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Models.ExtensionUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ArcSettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Hci.ArcSettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.ArcSettingResource>, System.Collections.IEnumerable
     {
@@ -451,6 +453,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static Azure.ResourceManager.Hci.Models.ArcExtensionAggregateState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.Hci.Models.ArcExtensionAggregateState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Hci.Models.ArcExtensionAggregateState Updating { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.ArcExtensionAggregateState UpgradeFailedRollbackSucceeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Models.ArcExtensionAggregateState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -535,6 +538,28 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator !=(Azure.ResourceManager.Hci.Models.ClusterNodeType left, Azure.ResourceManager.Hci.Models.ClusterNodeType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ExtensionInstanceView
+    {
+        internal ExtensionInstanceView() { }
+        public string ExtensionInstanceViewType { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.Hci.Models.ExtensionInstanceViewStatus Status { get { throw null; } }
+        public string TypeHandlerVersion { get { throw null; } }
+    }
+    public partial class ExtensionInstanceViewStatus
+    {
+        internal ExtensionInstanceViewStatus() { }
+        public string Code { get { throw null; } }
+        public string DisplayStatus { get { throw null; } }
+        public Azure.ResourceManager.Hci.Models.StatusLevelType? Level { get { throw null; } }
+        public string Message { get { throw null; } }
+        public System.DateTimeOffset? Time { get { throw null; } }
+    }
+    public partial class ExtensionUpgradeContent
+    {
+        public ExtensionUpgradeContent() { }
+        public string TargetVersion { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HciAvailabilityType : System.IEquatable<Azure.ResourceManager.Hci.Models.HciAvailabilityType>
     {
@@ -598,6 +623,7 @@ namespace Azure.ResourceManager.Hci.Models
         public float? CoreCount { get { throw null; } }
         public string EhcResourceId { get { throw null; } }
         public float? Id { get { throw null; } }
+        public System.DateTimeOffset? LastLicensingTimestamp { get { throw null; } }
         public string Manufacturer { get { throw null; } }
         public float? MemoryInGiB { get { throw null; } }
         public string Model { get { throw null; } }
@@ -932,8 +958,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal PerNodeExtensionState() { }
         public string Extension { get { throw null; } }
+        public Azure.ResourceManager.Hci.Models.ExtensionInstanceView InstanceView { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.NodeExtensionState? State { get { throw null; } }
+        public string TypeHandlerVersion { get { throw null; } }
     }
     public partial class SoftwareAssuranceChangeContent
     {
@@ -981,6 +1009,25 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(Azure.ResourceManager.Hci.Models.SoftwareAssuranceStatus left, Azure.ResourceManager.Hci.Models.SoftwareAssuranceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Models.SoftwareAssuranceStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Models.SoftwareAssuranceStatus left, Azure.ResourceManager.Hci.Models.SoftwareAssuranceStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StatusLevelType : System.IEquatable<Azure.ResourceManager.Hci.Models.StatusLevelType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StatusLevelType(string value) { throw null; }
+        public static Azure.ResourceManager.Hci.Models.StatusLevelType Error { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.StatusLevelType Info { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.StatusLevelType Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Hci.Models.StatusLevelType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Hci.Models.StatusLevelType left, Azure.ResourceManager.Hci.Models.StatusLevelType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Models.StatusLevelType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Hci.Models.StatusLevelType left, Azure.ResourceManager.Hci.Models.StatusLevelType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class UpdatePrerequisite
