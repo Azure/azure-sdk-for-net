@@ -305,7 +305,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='UpdateSnapshotStatusAsync(String,RequestContent,MatchConditions,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateSnapshotStatusAsync(string name, RequestContent content, MatchConditions matchConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> UpdateSnapshotStatusAsync(string name, RequestContent content, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
@@ -334,7 +334,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='UpdateSnapshotStatus(String,RequestContent,MatchConditions,RequestContext)']/*" />
-        public virtual Response UpdateSnapshotStatus(string name, RequestContent content, MatchConditions matchConditions = null, RequestContext context = null)
+        internal virtual Response UpdateSnapshotStatus(string name, RequestContent content, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
