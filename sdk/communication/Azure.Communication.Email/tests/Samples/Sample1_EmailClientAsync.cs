@@ -25,10 +25,10 @@ namespace Azure.Communication.Email.Tests.Samples
             #region Snippet:Azure_Communication_Email_Send_Simple_AutoPolling_Async
             var emailSendOperation = await emailClient.SendAsync(
                 wait: WaitUntil.Completed,
-                //@@ from: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ to: "<recipient email address>"
-                /*@@*/ from: TestEnvironment.SenderAddress,
-                /*@@*/ to: TestEnvironment.RecipientAddress,
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 subject: "This is the subject",
                 htmlContent: "<html><body>This is the html body</body></html>");
             Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
@@ -51,10 +51,10 @@ namespace Azure.Communication.Email.Tests.Samples
             /// Send the email message with WaitUntil.Started
             var emailSendOperation = await emailClient.SendAsync(
                 wait: WaitUntil.Started,
-                //@@ from: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ to: "<recipient email address>"
-                /*@@*/ from: TestEnvironment.SenderAddress,
-                /*@@*/ to: TestEnvironment.RecipientAddress,
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 subject: "This is the subject",
                 htmlContent: "<html><body>This is the html body</body></html>");
 
@@ -97,8 +97,8 @@ namespace Azure.Communication.Email.Tests.Samples
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ fromAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ toAddress: "<recipient email address>"
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
                 /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                 /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 content: emailContent);
@@ -211,8 +211,8 @@ namespace Azure.Communication.Email.Tests.Samples
             #region Snippet:Azure_Communication_Email_Send_With_Attachments_Async
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ fromAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ toAddress: "<recipient email address>"
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
                 /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                 /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 content: emailContent);

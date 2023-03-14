@@ -120,16 +120,16 @@ namespace Azure.Communication.Email
         /// if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="from"> From address of the email. </param>
-        /// <param name="to"> Email address of the TO recipient. </param>
+        /// <param name="senderAddress"> From address of the email. </param>
+        /// <param name="recipientAddress"> Email address of the TO recipient. </param>
         /// <param name="subject"> Subject for the email. </param>
         /// <param name="htmlContent"> Email body in HTML format. </param>
         /// <param name="plainTextContent"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<EmailSendOperation> SendAsync(
             WaitUntil wait,
-            string from,
-            string to,
+            string senderAddress,
+            string recipientAddress,
             string subject,
             string htmlContent,
             string plainTextContent = default,
@@ -140,10 +140,10 @@ namespace Azure.Communication.Email
             try
             {
                 EmailMessage message = new EmailMessage(
-                    from,
+                    senderAddress,
                     new EmailRecipients(new List<EmailAddress>()
                     {
-                        new EmailAddress(to)
+                        new EmailAddress(recipientAddress)
                     }),
                     new EmailContent(subject)
                     {
@@ -189,16 +189,16 @@ namespace Azure.Communication.Email
         /// if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="from"> From address of the email. </param>
-        /// <param name="to"> Email address of the TO recipient. </param>
+        /// <param name="senderAddress"> From address of the email. </param>
+        /// <param name="recipientAddress"> Email address of the TO recipient. </param>
         /// <param name="subject"> Subject for the email. </param>
         /// <param name="htmlContent"> Email body in HTML format. </param>
         /// <param name="plainTextContent"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual EmailSendOperation Send(
             WaitUntil wait,
-            string from,
-            string to,
+            string senderAddress,
+            string recipientAddress,
             string subject,
             string htmlContent,
             string plainTextContent = default,
@@ -209,10 +209,10 @@ namespace Azure.Communication.Email
             try
             {
                 EmailMessage message = new EmailMessage(
-                    from,
+                    senderAddress,
                     new EmailRecipients(new List<EmailAddress>()
                     {
-                        new EmailAddress(to)
+                        new EmailAddress(recipientAddress)
                     }),
                                         new EmailContent(subject)
                     {

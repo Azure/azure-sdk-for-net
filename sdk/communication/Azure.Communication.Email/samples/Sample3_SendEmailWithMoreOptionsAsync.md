@@ -25,8 +25,8 @@ var emailContent = new EmailContent("This is the subject")
 
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    fromAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    toAddress: "<recipient email address>"
+    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>"
     content: emailContent);
 
 var emailSendOperation = await emailClient.SendAsync(

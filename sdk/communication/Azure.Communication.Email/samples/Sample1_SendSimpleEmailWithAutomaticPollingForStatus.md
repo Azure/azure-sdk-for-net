@@ -18,8 +18,8 @@ To send an email message, call the simple overload of `Send` or `SendAsync` func
 ```C# Snippet:Azure_Communication_Email_Send_Simple_AutoPolling
 var emailSendOperation = emailClient.Send(
     wait: WaitUntil.Completed,
-    from: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    to: "<recipient email address>"
+    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>"
     subject: "This is the subject",
     htmlContent: "<html><body>This is the html body</body></html>");
 Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");

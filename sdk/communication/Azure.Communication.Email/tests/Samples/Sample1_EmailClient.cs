@@ -29,10 +29,10 @@ namespace Azure.Communication.Email.Tests.Samples
             #region Snippet:Azure_Communication_Email_Send_Simple_AutoPolling
             var emailSendOperation = emailClient.Send(
                 wait: WaitUntil.Completed,
-                //@@ from: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ to: "<recipient email address>"
-                /*@@*/ from: TestEnvironment.SenderAddress,
-                /*@@*/ to: TestEnvironment.RecipientAddress,
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 subject: "This is the subject",
                 htmlContent: "<html><body>This is the html body</body></html>");
             Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");

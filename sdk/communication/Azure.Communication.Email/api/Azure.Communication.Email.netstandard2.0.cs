@@ -25,9 +25,9 @@ namespace Azure.Communication.Email
         public EmailClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.Email.EmailClientOptions options = null) { }
         public EmailClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Email.EmailClientOptions options = null) { }
         public virtual Azure.Communication.Email.EmailSendOperation Send(Azure.WaitUntil wait, Azure.Communication.Email.EmailMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Communication.Email.EmailSendOperation Send(Azure.WaitUntil wait, string from, string to, string subject, string htmlContent, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.Email.EmailSendOperation Send(Azure.WaitUntil wait, string senderAddress, string recipientAddress, string subject, string htmlContent, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.Email.EmailSendOperation> SendAsync(Azure.WaitUntil wait, Azure.Communication.Email.EmailMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Communication.Email.EmailSendOperation> SendAsync(Azure.WaitUntil wait, string from, string to, string subject, string htmlContent, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.Email.EmailSendOperation> SendAsync(Azure.WaitUntil wait, string senderAddress, string recipientAddress, string subject, string htmlContent, string plainTextContent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class EmailClientOptions : Azure.Core.ClientOptions
     {
