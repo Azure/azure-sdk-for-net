@@ -1,4 +1,4 @@
-# Update a Configuration If Unchanged
+# Working with configuration settings snapshot
 
 This sample illustrates how to create, retrieve, and modify the status of a `ConfigurationSettingSnapshot`. 
 
