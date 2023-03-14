@@ -1,8 +1,10 @@
 # Release History
 
-## 4.5.0 (2023-03-07)
+## 4.5.0 (2023-03-14)
 
 ### Breaking Changes
+
+The following changes are only breaking from the previous beta. They are not breaking since version 4.4.0 when those types and members did not exist.
 
 - Service version "7.4-preview.1" is not supported.
 - Removed `CreateOkpKeyOptions`.
