@@ -146,7 +146,7 @@ namespace SignalRServiceExtension.Tests
         public async void TestAddMessagePackHubProtocolViaConfiguration(ServiceTransportType serviceTransportType)
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
-            configuration["Azure:SignalR:HubProtocol:MessagePack"] = "enabled";
+            configuration["Azure:SignalR:HubProtocol:MessagePack:Enabled"] = "true";
             configuration["AzureSignalRConnectionString"] = FakeEndpointUtils.GetFakeConnectionString();
             configuration["AzureSignalRServiceTransportType"] = serviceTransportType.ToString();
             var managerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));

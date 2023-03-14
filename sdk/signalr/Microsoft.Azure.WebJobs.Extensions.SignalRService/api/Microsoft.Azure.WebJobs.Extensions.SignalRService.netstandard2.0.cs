@@ -237,6 +237,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         public SignalROptions() { }
         public Azure.Core.Serialization.ObjectSerializer JsonObjectSerializer { get { throw null; } set { } }
+        public Microsoft.AspNetCore.SignalR.Protocol.IHubProtocol MessagePackHubProtocol { get { throw null; } set { } }
         public System.Collections.Generic.IList<Microsoft.Azure.SignalR.ServiceEndpoint> ServiceEndpoints { get { throw null; } }
         public Microsoft.Azure.SignalR.Management.ServiceTransportType ServiceTransportType { get { throw null; } set { } }
         string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
