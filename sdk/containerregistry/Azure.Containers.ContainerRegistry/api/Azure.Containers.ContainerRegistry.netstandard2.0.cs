@@ -265,6 +265,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public System.BinaryData Content { get { throw null; } }
         public string Digest { get { throw null; } }
     }
+    public partial class DownloadBlobStreamingResult
+    {
+        internal DownloadBlobStreamingResult() { }
+        public System.IO.Stream Content { get { throw null; } }
+        public string Digest { get { throw null; } }
+    }
     public partial class DownloadManifestResult
     {
         internal DownloadManifestResult() { }

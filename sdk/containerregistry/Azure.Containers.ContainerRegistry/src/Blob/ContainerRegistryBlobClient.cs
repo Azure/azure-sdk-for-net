@@ -31,6 +31,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         private readonly ContainerRegistryRestClient _restClient;
         private readonly IContainerRegistryAuthenticationClient _acrAuthClient;
         private readonly ContainerRegistryBlobRestClient _blobRestClient;
+        private readonly int _maxRetries;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts,
@@ -111,6 +112,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
             _blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+
+            _maxRetries = options.Retry.MaxRetries;
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryBlobClient for mocking. </summary>
@@ -701,7 +704,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                return DownloadBlobInternalAsync(digest, false, cancellationToken).EnsureCompleted();
+                return DownloadBlobContentInternalAsync(digest, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -728,7 +731,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                return await DownloadBlobInternalAsync(digest, true, cancellationToken).ConfigureAwait(false);
+                return await DownloadBlobContentInternalAsync(digest, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -737,7 +740,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
-        private async Task<Response<DownloadBlobResult>> DownloadBlobInternalAsync(string digest, bool async, CancellationToken cancellationToken)
+        private async Task<Response<DownloadBlobResult>> DownloadBlobContentInternalAsync(string digest, bool async, CancellationToken cancellationToken)
         {
             ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = async ?
                 await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
@@ -751,6 +754,30 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 BinaryData.FromStream(blobResult.Value);
 
             return Response.FromValue(new DownloadBlobResult(digest, data), blobResult.GetRawResponse());
+        }
+
+        private async Task<Response<DownloadBlobStreamingResult>> DownloadBlobStreamingInternalAsync(string digest, bool async, CancellationToken cancellationToken)
+        {
+            ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = async ?
+                await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
+                _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
+
+            // TODO: We will either need a way to do this incrementally,
+            //     : or decide that it is the caller's responsibility to validate the digest.
+            //var contentDigest = BlobHelper.ComputeDigest(blobResult.Value);
+            //ValidateDigest(contentDigest, digest);
+
+            // Wrap the response Content in a RetriableStream so we
+            // can return it before it's finished downloading, but still
+            // allow retrying if it fails.
+            Stream stream = RetriableStream.Create(
+                blobResult.Value,
+                offset => _blobRestClient.GetChunk(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).Value,
+                async offset => await _blobRestClient.GetChunkAsync(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).ConfigureAwait(false),
+                _pipeline.ResponseClassifier,
+                _maxRetries);
+
+            return Response.FromValue(new DownloadBlobStreamingResult(digest, stream), blobResult.GetRawResponse());
         }
 
         /// <summary>

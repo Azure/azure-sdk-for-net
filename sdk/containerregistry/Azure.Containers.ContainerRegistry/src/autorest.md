@@ -161,3 +161,11 @@ directive:
   transform: >
     delete $["x-accessibility"]
 ```
+
+# Don't buffer downloads
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='ContainerRegistryBlob_GetBlob' || @.operationId=='ContainerRegistryBlob_GetChunk')]
+  transform: $["x-csharp-buffer-response"] = false;
+```
