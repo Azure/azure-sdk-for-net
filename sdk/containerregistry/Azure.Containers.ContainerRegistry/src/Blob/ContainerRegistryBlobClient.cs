@@ -691,16 +691,16 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// This API is a prefered way to fetch blobs that can fit into memory.
         /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
         /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
-        /// To download a blob that does not fit in memory, please use the <see cref="DownloadBlobTo"/> method instead.
+        /// To download a blob that does not fit in memory, consider using the <see cref="DownloadBlobTo(string, Stream, CancellationToken)"/> method instead.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<DownloadBlobResult> DownloadBlob(string digest, CancellationToken cancellationToken = default)
+        public virtual Response<DownloadBlobResult> DownloadBlobContent(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlobContent)}");
             scope.Start();
             try
             {
@@ -718,16 +718,16 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// This API is a prefered way to fetch blobs that can fit into memory.
         /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
         /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
-        /// To download a blob that does not fit in memory, please use the <see cref="DownloadBlobToAsync"/> method instead.
+        /// To download a blob that does not fit in memory, please use the <see cref="DownloadBlobToAsync(string, Stream, CancellationToken)"/> method instead.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<DownloadBlobResult>> DownloadBlobAsync(string digest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DownloadBlobResult>> DownloadBlobContentAsync(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlobContent)}");
             scope.Start();
             try
             {
@@ -760,6 +760,22 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// Download a blob to a passed-in destination stream.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="path">A file path to write the downloaded content to.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        public virtual Response DownloadBlobTo(string digest, string path, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(path, nameof(path));
+
+            using Stream destination = File.Create(path);
+            return DownloadBlobTo(digest, destination, cancellationToken);
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="destination">Destination for the downloaded blob.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
@@ -779,6 +795,23 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.  This approach will download the blob
+        /// to the destination stream in sequential chunks of bytes.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="path">A file path to write the downloaded content to.</param>
+        /// <param name="cancellationToken"> The cancellation token to use.</param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        public virtual async Task<Response> DownloadBlobToAsync(string digest, string path, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(path, nameof(path));
+
+            using Stream destination = File.Create(path);
+            return await DownloadBlobToAsync(digest, destination, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -369,7 +369,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(data.ToMemory().Length, uploadResult.SizeInBytes);
 
             // Assert
-            var downloadResult = await client.DownloadBlobAsync(digest);
+            var downloadResult = await client.DownloadBlobContentAsync(digest);
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             Assert.AreEqual(data.ToMemory().Length, downloadResult.Value.Content.ToMemory().Length);
 
@@ -401,7 +401,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Assert
-            var downloadResult = await client.DownloadBlobAsync(digest);
+            var downloadResult = await client.DownloadBlobContentAsync(digest);
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             Assert.AreEqual(streamLength, downloadResult.Value.Content.ToArray().Length);
 
@@ -540,7 +540,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var digest = uploadResult.Digest;
 
             // Act
-            Response<DownloadBlobResult> downloadResult = await client.DownloadBlobAsync(digest);
+            Response<DownloadBlobResult> downloadResult = await client.DownloadBlobContentAsync(digest);
 
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             Assert.AreEqual(stream.Length, downloadResult.Value.Content.ToArray().Length);
@@ -836,7 +836,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string configFileName = Path.Combine(path, "config.json");
             using (FileStream fs = File.Create(configFileName))
             {
-                DownloadBlobResult layerResult = await client.DownloadBlobAsync(manifest.Config.Digest);
+                DownloadBlobResult layerResult = await client.DownloadBlobContentAsync(manifest.Config.Digest);
                 await layerResult.Content.ToStream().CopyToAsync(fs);
             }
 
@@ -847,7 +847,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 using (FileStream fs = File.Create(fileName))
                 {
-                    DownloadBlobResult layerResult = await client.DownloadBlobAsync(manifest.Config.Digest);
+                    DownloadBlobResult layerResult = await client.DownloadBlobContentAsync(manifest.Config.Digest);
                     await layerResult.Content.ToStream().CopyToAsync(fs);
                 }
             }
