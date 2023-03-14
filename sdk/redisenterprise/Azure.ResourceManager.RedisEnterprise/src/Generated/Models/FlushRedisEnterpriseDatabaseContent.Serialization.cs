@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class FlushContent : IUtf8JsonSerializable
+    public partial class FlushRedisEnterpriseDatabaseContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

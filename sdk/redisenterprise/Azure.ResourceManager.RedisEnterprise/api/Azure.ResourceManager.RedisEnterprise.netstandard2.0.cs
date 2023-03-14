@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Export(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.ExportRedisEnterpriseDatabaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExportAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.ExportRedisEnterpriseDatabaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Flush(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.FlushContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FlushAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.FlushContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Flush(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.FlushRedisEnterpriseDatabaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FlushAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.FlushRedisEnterpriseDatabaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation ForceUnlink(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.ForceUnlinkRedisEnterpriseDatabaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ForceUnlinkAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.ForceUnlinkRedisEnterpriseDatabaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseDatabaseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public ExportRedisEnterpriseDatabaseContent(System.Uri sasUri) { }
         public System.Uri SasUri { get { throw null; } }
     }
-    public partial class FlushContent
+    public partial class FlushRedisEnterpriseDatabaseContent
     {
-        public FlushContent() { }
+        public FlushRedisEnterpriseDatabaseContent() { }
         public System.Collections.Generic.IList<string> Ids { get { throw null; } }
     }
     public partial class ForceUnlinkRedisEnterpriseDatabaseContent
@@ -184,29 +184,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         public ImportRedisEnterpriseDatabaseContent(System.Collections.Generic.IEnumerable<System.Uri> sasUris) { }
         public System.Collections.Generic.IList<System.Uri> SasUris { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Name : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.Name>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Name(string value) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.Name EnterpriseE10 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.Name EnterpriseE100 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.Name EnterpriseE20 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.Name EnterpriseE50 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.Name EnterpriseFlashF1500 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.Name EnterpriseFlashF300 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.Name EnterpriseFlashF700 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RedisEnterprise.Models.Name other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RedisEnterprise.Models.Name left, Azure.ResourceManager.RedisEnterprise.Models.Name right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RedisEnterprise.Models.Name (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RedisEnterprise.Models.Name left, Azure.ResourceManager.RedisEnterprise.Models.Name right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PersistenceSettingAofFrequency : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.PersistenceSettingAofFrequency>
@@ -548,13 +525,36 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         internal RedisEnterpriseRegionSkuDetail() { }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseLocationInfo LocationInfo { get { throw null; } }
         public string ResourceType { get { throw null; } }
-        public Azure.ResourceManager.RedisEnterprise.Models.Name? SkuDetailsName { get { throw null; } }
+        public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName? SkuDetailsName { get { throw null; } }
     }
     public partial class RedisEnterpriseSku
     {
         public RedisEnterpriseSku(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuName name) { }
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuName Name { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RedisEnterpriseSkuDetailsName : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RedisEnterpriseSkuDetailsName(string value) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseE10 { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseE100 { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseE20 { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseE50 { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseFlashF1500 { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseFlashF300 { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseFlashF700 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName left, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName left, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RedisEnterpriseSkuName : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuName>

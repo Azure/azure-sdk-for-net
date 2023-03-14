@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Parameters for a Redis Enterprise active geo-replication flush operation. </summary>
-    public partial class FlushContent
+    public partial class FlushRedisEnterpriseDatabaseContent
     {
-        /// <summary> Initializes a new instance of FlushContent. </summary>
-        public FlushContent()
+        /// <summary> Initializes a new instance of FlushRedisEnterpriseDatabaseContent. </summary>
+        public FlushRedisEnterpriseDatabaseContent()
         {
             Ids = new ChangeTrackingList<string>();
         }

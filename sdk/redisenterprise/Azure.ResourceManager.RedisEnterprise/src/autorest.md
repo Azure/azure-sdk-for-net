@@ -31,7 +31,8 @@ rename-mapping:
   CmkIdentityType: RedisEnterpriseCustomerManagedKeyIdentityType
   LocationInfo: RedisEnterpriseLocationInfo
   RegionSkuDetail: RedisEnterpriseRegionSkuDetail
-  FlushContent: RedisEnterpriseDatabaseResourceFlushContent
+  Name: RedisEnterpriseSkuDetailsName
+  FlushParameters: FlushRedisEnterpriseDatabaseParameters
   ClusteringPolicy: RedisEnterpriseClusteringPolicy
   TlsVersion: RedisEnterpriseTlsVersion
   RegenerateKeyParameters: RedisEnterpriseRegenerateKeyParameters

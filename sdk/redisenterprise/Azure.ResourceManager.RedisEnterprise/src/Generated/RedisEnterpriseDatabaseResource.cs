@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="content"> Information identifying the databases to be flushed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> FlushAsync(WaitUntil waitUntil, FlushContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> FlushAsync(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="content"> Information identifying the databases to be flushed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation Flush(WaitUntil waitUntil, FlushContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Flush(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

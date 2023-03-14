@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        internal HttpMessage CreateFlushRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, FlushContent content)
+        internal HttpMessage CreateFlushRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, FlushRedisEnterpriseDatabaseContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> FlushAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, FlushContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> FlushAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, FlushRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Flush(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, FlushContent content, CancellationToken cancellationToken = default)
+        public Response Flush(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, FlushRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

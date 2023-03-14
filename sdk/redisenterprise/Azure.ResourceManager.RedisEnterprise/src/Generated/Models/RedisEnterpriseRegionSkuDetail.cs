@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Details about available skus. </summary>
         internal SkuDetail SkuDetails { get; }
         /// <summary> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </summary>
-        public Name? SkuDetailsName
+        public RedisEnterpriseSkuDetailsName? SkuDetailsName
         {
             get => SkuDetails?.Name;
         }
