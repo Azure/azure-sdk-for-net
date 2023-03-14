@@ -63,7 +63,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, topic, retentionPolicy, cancellationToken).ConfigureAwait(false);
+                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, null, retentionPolicy, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -101,7 +101,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatThreadRestClient.UpdateChatThreadProperties(Id, topic, retentionPolicy, cancellationToken);
+                return _chatThreadRestClient.UpdateChatThreadProperties(Id, null, retentionPolicy, cancellationToken);
             }
             catch (Exception ex)
             {
