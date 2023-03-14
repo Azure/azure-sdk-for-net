@@ -42,7 +42,7 @@ namespace Azure.Monitor.Query.Tests
 
         private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
         public string TableAName => TableANameSent + "_CL";
-        public QueryTimeRange DataTimeRange => new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(14));
+        public QueryTimeRange DataTimeRange => new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(15));
 
         private readonly MonitorQueryTestEnvironment _testEnvironment;
 
@@ -51,7 +51,8 @@ namespace Azure.Monitor.Query.Tests
             _testEnvironment = test.TestEnvironment;
 
             var recordingUtcNow = DateTime.SpecifyKind(test.Recording.UtcNow.Date, DateTimeKind.Utc);
-            RetentionWindowStart = recordingUtcNow.AddDays(DayOfWeek.Monday - recordingUtcNow.DayOfWeek - 14);
+            //DateTime dateTime = DateTime.UtcNow.AddDays(-14);
+            RetentionWindowStart = recordingUtcNow.AddDays(-14);
 
             TableA = new()
             {
