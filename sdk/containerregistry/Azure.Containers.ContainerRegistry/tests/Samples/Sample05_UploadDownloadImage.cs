@@ -159,8 +159,6 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #endregion
         }
 
-        [Test]
-        [AsyncOnly]
         public async Task UploadDockerManifestAsync()
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
@@ -203,8 +201,10 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task DownloadCustomManifestAsync()
+        public async Task UploadDownloadDockerManifestAsync()
         {
+            await UploadDockerManifestAsync();
+
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             // Get the service endpoint from the environment
