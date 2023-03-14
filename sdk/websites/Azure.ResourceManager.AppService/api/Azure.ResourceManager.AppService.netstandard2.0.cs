@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.AppService
         public int? Port { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RelayArmId { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release, please use `RelayArmId` instead", false)]
         public System.Uri RelayArmUri { get { throw null; } set { } }
         public string RelayName { get { throw null; } set { } }
         public string SendKeyName { get { throw null; } set { } }
