@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 serviceManagerBuilder.AddHubProtocol(_options.MessagePackHubProtocol);
             }
             // Allow isolated-process runtimes such as JS, C#-isolated to enable MessagePack hub protocol
-            else if (string.Equals(_configuration[Constants.AzureSignalRMessagePackHubProtocolEnabled], bool.TrueString, StringComparison.OrdinalIgnoreCase))
+            else if (bool.TryParse(_configuration[Constants.AzureSignalRMessagePackHubProtocolEnabled], out var messagePackEnabled) && messagePackEnabled)
             {
                 serviceManagerBuilder.AddHubProtocol(new MessagePackHubProtocol());
             }

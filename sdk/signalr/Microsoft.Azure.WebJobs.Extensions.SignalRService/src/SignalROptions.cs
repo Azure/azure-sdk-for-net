@@ -46,9 +46,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             get => _messagePackHubProtocol; set
             {
-                if (value != null && value.Name.ToLowerInvariant() != "messagepack")
+                if (value != null && !string.Equals(value.Name, "messagepack", StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new ArgumentException("Only protocol named \"messagepack\"(case-insensitive) is allowed");
+                    throw new ArgumentException("Only protocol named \"messagepack\"(case-insensitive) is allowed.");
                 }
                 _messagePackHubProtocol = value;
             }

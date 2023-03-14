@@ -158,5 +158,39 @@ namespace SignalRServiceExtension.Tests
             Assert.Contains(hubProtocolResolver.AllProtocols, h => h.Name.Equals("messagepack", System.StringComparison.OrdinalIgnoreCase));
             Assert.Contains(hubProtocolResolver.AllProtocols, h => h.Name.Equals("json", System.StringComparison.OrdinalIgnoreCase));
         }
+
+        [Fact]
+        public async void TestTransientModeDefaultHubProtocl()
+        {
+            var emptyConfiguration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            var signalROptions = new SignalROptions
+            {
+                ServiceTransportType = ServiceTransportType.Transient,
+            };
+            signalROptions.ServiceEndpoints.Add(FakeEndpointUtils.GetFakeEndpoint(1).Single());
+            var managerStore = new ServiceManagerStore(emptyConfiguration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(signalROptions));
+            var hubContextStore = managerStore.GetOrAddByConnectionStringKey("doesn't matter");
+            var hubContext = await hubContextStore.GetAsync("hub") as ServiceHubContextImpl;
+            var serviceProvider = hubContext.ServiceProvider;
+            var hubProtocolResolver = serviceProvider.GetRequiredService<IHubProtocolResolver>();
+            Assert.IsType<JsonObjectSerializerHubProtocol>(hubProtocolResolver.AllProtocols.Single());
+        }
+
+        [Fact]
+        public async void TestHubProtocolDefaultSettings()
+        {
+            var emptyConfiguration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            var signalROptions = new SignalROptions
+            {
+                ServiceTransportType = ServiceTransportType.Persistent,
+            };
+            signalROptions.ServiceEndpoints.Add(FakeEndpointUtils.GetFakeEndpoint(1).Single());
+            var managerStore = new ServiceManagerStore(emptyConfiguration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(signalROptions));
+            var hubContextStore = managerStore.GetOrAddByConnectionStringKey("doesn't matter");
+            var hubContext = await hubContextStore.GetAsync("hub") as ServiceHubContextImpl;
+            var serviceProvider = hubContext.ServiceProvider;
+            var hubProtocolResolver = serviceProvider.GetRequiredService<IHubProtocolResolver>();
+            Assert.IsType<JsonHubProtocol>(hubProtocolResolver.AllProtocols.Single());
+        }
     }
 }
