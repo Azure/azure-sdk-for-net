@@ -1,0 +1,852 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages?api-version=2023-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "391fd058eeff3295ccd362b844096f1a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache",
+        "Content-Length": "20146",
+        "Content-Type": "application/json",
+        "Date": "Tue, 14 Mar 2023 23:35:34 GMT",
+        "MS-RequestId": "cEZCRRYYTkOpgdl79PUfbw.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fb1e830a-240c-4a47-9bc7-70b0d9b89bdb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "fb1e830a-240c-4a47-9bc7-70b0d9b89bdb",
+        "x-ms-routing-request-id": "WESTUS2:20230314T233535Z:fb1e830a-240c-4a47-9bc7-70b0d9b89bdb"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 2
+              },
+              "name": {
+                "value": "VirtualNetworks",
+                "localizedValue": "Virtual Networks"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/VirtualNetworks",
+            "type": "Microsoft.Quota/Usages",
+            "name": "VirtualNetworks"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 3
+              },
+              "name": {
+                "value": "StaticPublicIPAddresses",
+                "localizedValue": "Static Public IP Addresses"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/StaticPublicIPAddresses",
+            "type": "Microsoft.Quota/Usages",
+            "name": "StaticPublicIPAddresses"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 2
+              },
+              "name": {
+                "value": "NetworkSecurityGroups",
+                "localizedValue": "Network Security Groups"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/NetworkSecurityGroups",
+            "type": "Microsoft.Quota/Usages",
+            "name": "NetworkSecurityGroups"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 3
+              },
+              "name": {
+                "value": "PublicIPAddresses",
+                "localizedValue": "Public IP Addresses"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": true
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/PublicIPAddresses",
+            "type": "Microsoft.Quota/Usages",
+            "name": "PublicIPAddresses"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "CustomIpPrefixes",
+                "localizedValue": "Custom Ip Prefixes"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/CustomIpPrefixes",
+            "type": "Microsoft.Quota/Usages",
+            "name": "CustomIpPrefixes"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "PublicIpPrefixes",
+                "localizedValue": "Public Ip Prefixes"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/PublicIpPrefixes",
+            "type": "Microsoft.Quota/Usages",
+            "name": "PublicIpPrefixes"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "NatGateways",
+                "localizedValue": "Nat Gateways"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/NatGateways",
+            "type": "Microsoft.Quota/Usages",
+            "name": "NatGateways"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "NetworkInterfaces",
+                "localizedValue": "Network Interfaces"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/NetworkInterfaces",
+            "type": "Microsoft.Quota/Usages",
+            "name": "NetworkInterfaces"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "PrivateEndpoints",
+                "localizedValue": "Private Endpoints"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/PrivateEndpoints",
+            "type": "Microsoft.Quota/Usages",
+            "name": "PrivateEndpoints"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "PrivateEndpointRedirectMaps",
+                "localizedValue": "Private Endpoint Redirect Maps"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/PrivateEndpointRedirectMaps",
+            "type": "Microsoft.Quota/Usages",
+            "name": "PrivateEndpointRedirectMaps"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 2
+              },
+              "name": {
+                "value": "LoadBalancers",
+                "localizedValue": "Load Balancers"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/LoadBalancers",
+            "type": "Microsoft.Quota/Usages",
+            "name": "LoadBalancers"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "PrivateLinkServices",
+                "localizedValue": "Private Link Services"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/PrivateLinkServices",
+            "type": "Microsoft.Quota/Usages",
+            "name": "PrivateLinkServices"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "ApplicationGateways",
+                "localizedValue": "Application Gateways"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/ApplicationGateways",
+            "type": "Microsoft.Quota/Usages",
+            "name": "ApplicationGateways"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "RouteTables",
+                "localizedValue": "Route Tables"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/RouteTables",
+            "type": "Microsoft.Quota/Usages",
+            "name": "RouteTables"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "RouteFilters",
+                "localizedValue": "Route Filters"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/RouteFilters",
+            "type": "Microsoft.Quota/Usages",
+            "name": "RouteFilters"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 1
+              },
+              "name": {
+                "value": "NetworkWatchers",
+                "localizedValue": "Network Watchers"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/NetworkWatchers",
+            "type": "Microsoft.Quota/Usages",
+            "name": "NetworkWatchers"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "PacketCaptures",
+                "localizedValue": "Packet Captures"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/PacketCaptures",
+            "type": "Microsoft.Quota/Usages",
+            "name": "PacketCaptures"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "ApplicationSecurityGroups",
+                "localizedValue": "Application Security Groups."
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/ApplicationSecurityGroups",
+            "type": "Microsoft.Quota/Usages",
+            "name": "ApplicationSecurityGroups"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "DdosProtectionPlans",
+                "localizedValue": "DDoS Protection Plans."
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/DdosProtectionPlans",
+            "type": "Microsoft.Quota/Usages",
+            "name": "DdosProtectionPlans"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "DdosCustomPolicies",
+                "localizedValue": "DDoS customized policies"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/DdosCustomPolicies",
+            "type": "Microsoft.Quota/Usages",
+            "name": "DdosCustomPolicies"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "ServiceEndpointPolicies",
+                "localizedValue": "Service Endpoint Policies"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/ServiceEndpointPolicies",
+            "type": "Microsoft.Quota/Usages",
+            "name": "ServiceEndpointPolicies"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "NetworkIntentPolicies",
+                "localizedValue": "Network Intent Policies"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/NetworkIntentPolicies",
+            "type": "Microsoft.Quota/Usages",
+            "name": "NetworkIntentPolicies"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 2
+              },
+              "name": {
+                "value": "StandardSkuLoadBalancers",
+                "localizedValue": "Standard Sku Load Balancers"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/StandardSkuLoadBalancers",
+            "type": "Microsoft.Quota/Usages",
+            "name": "StandardSkuLoadBalancers"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 3
+              },
+              "name": {
+                "value": "StandardSkuPublicIpAddresses",
+                "localizedValue": "Public IP Addresses - Standard"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": true
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/StandardSkuPublicIpAddresses",
+            "type": "Microsoft.Quota/Usages",
+            "name": "StandardSkuPublicIpAddresses"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "AuxiliaryModeEnabledNetworkInterfaces",
+                "localizedValue": "Auxiliary Mode Enabled Network Interfaces"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/AuxiliaryModeEnabledNetworkInterfaces",
+            "type": "Microsoft.Quota/Usages",
+            "name": "AuxiliaryModeEnabledNetworkInterfaces"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "DnsServersPerVirtualNetwork",
+                "localizedValue": "DNS servers per Virtual Network"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/DnsServersPerVirtualNetwork",
+            "type": "Microsoft.Quota/Usages",
+            "name": "DnsServersPerVirtualNetwork"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "CustomDnsServersPerP2SVpnGateway",
+                "localizedValue": "Custom DNS servers per P2SVpnGateway"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/CustomDnsServersPerP2SVpnGateway",
+            "type": "Microsoft.Quota/Usages",
+            "name": "CustomDnsServersPerP2SVpnGateway"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "SubnetsPerVirtualNetwork",
+                "localizedValue": "Subnets per Virtual Network"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/SubnetsPerVirtualNetwork",
+            "type": "Microsoft.Quota/Usages",
+            "name": "SubnetsPerVirtualNetwork"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "IPConfigurationsPerVirtualNetwork",
+                "localizedValue": "IP Configurations per Virtual Network"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/IPConfigurationsPerVirtualNetwork",
+            "type": "Microsoft.Quota/Usages",
+            "name": "IPConfigurationsPerVirtualNetwork"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "PeeringsPerVirtualNetwork",
+                "localizedValue": "Peerings per Virtual Network"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/PeeringsPerVirtualNetwork",
+            "type": "Microsoft.Quota/Usages",
+            "name": "PeeringsPerVirtualNetwork"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "SecurityRulesPerNetworkSecurityGroup",
+                "localizedValue": "Security rules per Network Security Group"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/SecurityRulesPerNetworkSecurityGroup",
+            "type": "Microsoft.Quota/Usages",
+            "name": "SecurityRulesPerNetworkSecurityGroup"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "SecurityRulesPerNetworkIntentPolicy",
+                "localizedValue": "Security rules per Network Intent Policy"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/SecurityRulesPerNetworkIntentPolicy",
+            "type": "Microsoft.Quota/Usages",
+            "name": "SecurityRulesPerNetworkIntentPolicy"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "RoutesPerNetworkIntentPolicy",
+                "localizedValue": "Routes per Network Intent Policy"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/RoutesPerNetworkIntentPolicy",
+            "type": "Microsoft.Quota/Usages",
+            "name": "RoutesPerNetworkIntentPolicy"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "SecurityRuleAddressesOrPortsPerNetworkSecurityGroup",
+                "localizedValue": "Security rules addresses or ports per Network Security Group"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/SecurityRuleAddressesOrPortsPerNetworkSecurityGroup",
+            "type": "Microsoft.Quota/Usages",
+            "name": "SecurityRuleAddressesOrPortsPerNetworkSecurityGroup"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "InboundRulesPerLoadBalancer",
+                "localizedValue": "Inbound Rules per Load Balancer"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/InboundRulesPerLoadBalancer",
+            "type": "Microsoft.Quota/Usages",
+            "name": "InboundRulesPerLoadBalancer"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "FrontendIPConfigurationPerLoadBalancer",
+                "localizedValue": "Frontend IP Configurations per Load Balancer"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/FrontendIPConfigurationPerLoadBalancer",
+            "type": "Microsoft.Quota/Usages",
+            "name": "FrontendIPConfigurationPerLoadBalancer"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "OutboundRulesPerLoadBalancer",
+                "localizedValue": "Outbound Rules per Load Balancer"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/OutboundRulesPerLoadBalancer",
+            "type": "Microsoft.Quota/Usages",
+            "name": "OutboundRulesPerLoadBalancer"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "RoutesPerRouteTable",
+                "localizedValue": "Routes per Route Table"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/RoutesPerRouteTable",
+            "type": "Microsoft.Quota/Usages",
+            "name": "RoutesPerRouteTable"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "RoutesWithServiceTagPerRouteTable",
+                "localizedValue": "Routes with service tag per Route Table"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/RoutesWithServiceTagPerRouteTable",
+            "type": "Microsoft.Quota/Usages",
+            "name": "RoutesWithServiceTagPerRouteTable"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "SecondaryIPConfigurationsPerNetworkInterface",
+                "localizedValue": "Secondary IP Configurations per Network Interface"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/SecondaryIPConfigurationsPerNetworkInterface",
+            "type": "Microsoft.Quota/Usages",
+            "name": "SecondaryIPConfigurationsPerNetworkInterface"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "SecondaryIPConfigurationsPerPrivateEndpointNetworkInterface",
+                "localizedValue": "Secondary IP Configurations per PrivateEndpoint Network Interface"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/SecondaryIPConfigurationsPerPrivateEndpointNetworkInterface",
+            "type": "Microsoft.Quota/Usages",
+            "name": "SecondaryIPConfigurationsPerPrivateEndpointNetworkInterface"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "InboundNatOrLbRulesPerNetworkInterface",
+                "localizedValue": "Inbound rules per Network Interface"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/InboundNatOrLbRulesPerNetworkInterface",
+            "type": "Microsoft.Quota/Usages",
+            "name": "InboundNatOrLbRulesPerNetworkInterface"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "RouteFilterRulesPerRouteFilter",
+                "localizedValue": "Route filter rules per Route Filter"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/RouteFilterRulesPerRouteFilter",
+            "type": "Microsoft.Quota/Usages",
+            "name": "RouteFilterRulesPerRouteFilter"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "RouteFiltersPerExpressRouteBgpPeering",
+                "localizedValue": "Route filters per Express route BGP Peering"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/RouteFiltersPerExpressRouteBgpPeering",
+            "type": "Microsoft.Quota/Usages",
+            "name": "RouteFiltersPerExpressRouteBgpPeering"
+          },
+          {
+            "properties": {
+              "usages": {
+                "UsagesType": "Independent",
+                "Value": 0
+              },
+              "name": {
+                "value": "MinPublicIpInterNetworkPrefixLength",
+                "localizedValue": "Public IPv4 Prefix Length"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": true
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/MinPublicIpInterNetworkPrefixLength",
+            "type": "Microsoft.Quota/Usages",
+            "name": "MinPublicIpInterNetworkPrefixLength"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "862502647",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}

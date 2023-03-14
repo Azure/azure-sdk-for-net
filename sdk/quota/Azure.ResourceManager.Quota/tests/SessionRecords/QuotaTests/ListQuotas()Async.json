@@ -1,0 +1,897 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas?api-version=2023-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cdf2f42b27cea43f8c237244435fd0bf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache",
+        "Content-Length": "21559",
+        "Content-Type": "application/json",
+        "Date": "Tue, 14 Mar 2023 23:34:53 GMT",
+        "MS-RequestId": "9GuMlRceTEuGZHYobJRumg.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fa688e91-a603-4de4-aa86-4bf887eae69e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "fa688e91-a603-4de4-aa86-4bf887eae69e",
+        "x-ms-routing-request-id": "WESTUS2:20230314T233454Z:fa688e91-a603-4de4-aa86-4bf887eae69e"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1000
+              },
+              "name": {
+                "value": "VirtualNetworks",
+                "localizedValue": "Virtual Networks"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/VirtualNetworks",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "VirtualNetworks"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1003
+              },
+              "name": {
+                "value": "StaticPublicIPAddresses",
+                "localizedValue": "Static Public IP Addresses"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/StaticPublicIPAddresses",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "StaticPublicIPAddresses"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 5000
+              },
+              "name": {
+                "value": "NetworkSecurityGroups",
+                "localizedValue": "Network Security Groups"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/NetworkSecurityGroups",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "NetworkSecurityGroups"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1003
+              },
+              "name": {
+                "value": "PublicIPAddresses",
+                "localizedValue": "Public IP Addresses"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": true
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/PublicIPAddresses",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "PublicIPAddresses"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 5
+              },
+              "name": {
+                "value": "CustomIpPrefixes",
+                "localizedValue": "Custom Ip Prefixes"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/CustomIpPrefixes",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "CustomIpPrefixes"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 2147483647
+              },
+              "name": {
+                "value": "PublicIpPrefixes",
+                "localizedValue": "Public Ip Prefixes"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/PublicIpPrefixes",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "PublicIpPrefixes"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1000
+              },
+              "name": {
+                "value": "NatGateways",
+                "localizedValue": "Nat Gateways"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/NatGateways",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "NatGateways"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 65536
+              },
+              "name": {
+                "value": "NetworkInterfaces",
+                "localizedValue": "Network Interfaces"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/NetworkInterfaces",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "NetworkInterfaces"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 65536
+              },
+              "name": {
+                "value": "PrivateEndpoints",
+                "localizedValue": "Private Endpoints"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/PrivateEndpoints",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "PrivateEndpoints"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 2147483647
+              },
+              "name": {
+                "value": "PrivateEndpointRedirectMaps",
+                "localizedValue": "Private Endpoint Redirect Maps"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/PrivateEndpointRedirectMaps",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "PrivateEndpointRedirectMaps"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1000
+              },
+              "name": {
+                "value": "LoadBalancers",
+                "localizedValue": "Load Balancers"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/LoadBalancers",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "LoadBalancers"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 800
+              },
+              "name": {
+                "value": "PrivateLinkServices",
+                "localizedValue": "Private Link Services"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/PrivateLinkServices",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "PrivateLinkServices"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1000
+              },
+              "name": {
+                "value": "ApplicationGateways",
+                "localizedValue": "Application Gateways"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/ApplicationGateways",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "ApplicationGateways"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 200
+              },
+              "name": {
+                "value": "RouteTables",
+                "localizedValue": "Route Tables"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/RouteTables",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "RouteTables"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1000
+              },
+              "name": {
+                "value": "RouteFilters",
+                "localizedValue": "Route Filters"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/RouteFilters",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "RouteFilters"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1
+              },
+              "name": {
+                "value": "NetworkWatchers",
+                "localizedValue": "Network Watchers"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/NetworkWatchers",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "NetworkWatchers"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 10000
+              },
+              "name": {
+                "value": "PacketCaptures",
+                "localizedValue": "Packet Captures"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/PacketCaptures",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "PacketCaptures"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 3000
+              },
+              "name": {
+                "value": "ApplicationSecurityGroups",
+                "localizedValue": "Application Security Groups."
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/ApplicationSecurityGroups",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "ApplicationSecurityGroups"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1
+              },
+              "name": {
+                "value": "DdosProtectionPlans",
+                "localizedValue": "DDoS Protection Plans."
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/DdosProtectionPlans",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "DdosProtectionPlans"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 200
+              },
+              "name": {
+                "value": "DdosCustomPolicies",
+                "localizedValue": "DDoS customized policies"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/DdosCustomPolicies",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "DdosCustomPolicies"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 500
+              },
+              "name": {
+                "value": "ServiceEndpointPolicies",
+                "localizedValue": "Service Endpoint Policies"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/ServiceEndpointPolicies",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "ServiceEndpointPolicies"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 200
+              },
+              "name": {
+                "value": "NetworkIntentPolicies",
+                "localizedValue": "Network Intent Policies"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/NetworkIntentPolicies",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "NetworkIntentPolicies"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1000
+              },
+              "name": {
+                "value": "StandardSkuLoadBalancers",
+                "localizedValue": "Standard Sku Load Balancers"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/StandardSkuLoadBalancers",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "StandardSkuLoadBalancers"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1000
+              },
+              "name": {
+                "value": "StandardSkuPublicIpAddresses",
+                "localizedValue": "Public IP Addresses - Standard"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": true
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/StandardSkuPublicIpAddresses",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "StandardSkuPublicIpAddresses"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 10
+              },
+              "name": {
+                "value": "AuxiliaryModeEnabledNetworkInterfaces",
+                "localizedValue": "Auxiliary Mode Enabled Network Interfaces"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/AuxiliaryModeEnabledNetworkInterfaces",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "AuxiliaryModeEnabledNetworkInterfaces"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 20
+              },
+              "name": {
+                "value": "DnsServersPerVirtualNetwork",
+                "localizedValue": "DNS servers per Virtual Network"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/DnsServersPerVirtualNetwork",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "DnsServersPerVirtualNetwork"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 5
+              },
+              "name": {
+                "value": "CustomDnsServersPerP2SVpnGateway",
+                "localizedValue": "Custom DNS servers per P2SVpnGateway"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/CustomDnsServersPerP2SVpnGateway",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "CustomDnsServersPerP2SVpnGateway"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 3000
+              },
+              "name": {
+                "value": "SubnetsPerVirtualNetwork",
+                "localizedValue": "Subnets per Virtual Network"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/SubnetsPerVirtualNetwork",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "SubnetsPerVirtualNetwork"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 65536
+              },
+              "name": {
+                "value": "IPConfigurationsPerVirtualNetwork",
+                "localizedValue": "IP Configurations per Virtual Network"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/IPConfigurationsPerVirtualNetwork",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "IPConfigurationsPerVirtualNetwork"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 500
+              },
+              "name": {
+                "value": "PeeringsPerVirtualNetwork",
+                "localizedValue": "Peerings per Virtual Network"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/PeeringsPerVirtualNetwork",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "PeeringsPerVirtualNetwork"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1000
+              },
+              "name": {
+                "value": "SecurityRulesPerNetworkSecurityGroup",
+                "localizedValue": "Security rules per Network Security Group"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/SecurityRulesPerNetworkSecurityGroup",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "SecurityRulesPerNetworkSecurityGroup"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 100
+              },
+              "name": {
+                "value": "SecurityRulesPerNetworkIntentPolicy",
+                "localizedValue": "Security rules per Network Intent Policy"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/SecurityRulesPerNetworkIntentPolicy",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "SecurityRulesPerNetworkIntentPolicy"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 200
+              },
+              "name": {
+                "value": "RoutesPerNetworkIntentPolicy",
+                "localizedValue": "Routes per Network Intent Policy"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/RoutesPerNetworkIntentPolicy",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "RoutesPerNetworkIntentPolicy"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 4000
+              },
+              "name": {
+                "value": "SecurityRuleAddressesOrPortsPerNetworkSecurityGroup",
+                "localizedValue": "Security rules addresses or ports per Network Security Group"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/SecurityRuleAddressesOrPortsPerNetworkSecurityGroup",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "SecurityRuleAddressesOrPortsPerNetworkSecurityGroup"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 250
+              },
+              "name": {
+                "value": "InboundRulesPerLoadBalancer",
+                "localizedValue": "Inbound Rules per Load Balancer"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/InboundRulesPerLoadBalancer",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "InboundRulesPerLoadBalancer"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 200
+              },
+              "name": {
+                "value": "FrontendIPConfigurationPerLoadBalancer",
+                "localizedValue": "Frontend IP Configurations per Load Balancer"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/FrontendIPConfigurationPerLoadBalancer",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "FrontendIPConfigurationPerLoadBalancer"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 5
+              },
+              "name": {
+                "value": "OutboundRulesPerLoadBalancer",
+                "localizedValue": "Outbound Rules per Load Balancer"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/OutboundRulesPerLoadBalancer",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "OutboundRulesPerLoadBalancer"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 400
+              },
+              "name": {
+                "value": "RoutesPerRouteTable",
+                "localizedValue": "Routes per Route Table"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/RoutesPerRouteTable",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "RoutesPerRouteTable"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 25
+              },
+              "name": {
+                "value": "RoutesWithServiceTagPerRouteTable",
+                "localizedValue": "Routes with service tag per Route Table"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/RoutesWithServiceTagPerRouteTable",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "RoutesWithServiceTagPerRouteTable"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 256
+              },
+              "name": {
+                "value": "SecondaryIPConfigurationsPerNetworkInterface",
+                "localizedValue": "Secondary IP Configurations per Network Interface"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/SecondaryIPConfigurationsPerNetworkInterface",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "SecondaryIPConfigurationsPerNetworkInterface"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 500
+              },
+              "name": {
+                "value": "SecondaryIPConfigurationsPerPrivateEndpointNetworkInterface",
+                "localizedValue": "Secondary IP Configurations per PrivateEndpoint Network Interface"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/SecondaryIPConfigurationsPerPrivateEndpointNetworkInterface",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "SecondaryIPConfigurationsPerPrivateEndpointNetworkInterface"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 300
+              },
+              "name": {
+                "value": "InboundNatOrLbRulesPerNetworkInterface",
+                "localizedValue": "Inbound rules per Network Interface"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/InboundNatOrLbRulesPerNetworkInterface",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "InboundNatOrLbRulesPerNetworkInterface"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1
+              },
+              "name": {
+                "value": "RouteFilterRulesPerRouteFilter",
+                "localizedValue": "Route filter rules per Route Filter"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/RouteFilterRulesPerRouteFilter",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "RouteFilterRulesPerRouteFilter"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 1
+              },
+              "name": {
+                "value": "RouteFiltersPerExpressRouteBgpPeering",
+                "localizedValue": "Route filters per Express route BGP Peering"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": false
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/RouteFiltersPerExpressRouteBgpPeering",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "RouteFiltersPerExpressRouteBgpPeering"
+          },
+          {
+            "properties": {
+              "limit": {
+                "limitObjectType": "LimitValue",
+                "limitType": "Independent",
+                "value": 28
+              },
+              "name": {
+                "value": "MinPublicIpInterNetworkPrefixLength",
+                "localizedValue": "Public IPv4 Prefix Length"
+              },
+              "properties": {},
+              "unit": "Count",
+              "isQuotaApplicable": true
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/MinPublicIpInterNetworkPrefixLength",
+            "type": "Microsoft.Quota/Quotas",
+            "name": "MinPublicIpInterNetworkPrefixLength"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1348139235",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}

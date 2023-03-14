@@ -1,0 +1,57 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/PublicIPAddresses?api-version=2023-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6d4c07bf9e099dc6f4ecab94cd728a02-bd112517b5ece860-00",
+        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f8c8fc6a7104436b7f9398b2b4414f4b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache",
+        "Content-Length": "410",
+        "Content-Type": "application/json",
+        "Date": "Tue, 14 Mar 2023 23:34:42 GMT",
+        "MS-RequestId": "X7F54zwEHEWLtAHPFOPWAw.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2aefbaf2-8012-492f-b070-4eed478b0ecb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "2aefbaf2-8012-492f-b070-4eed478b0ecb",
+        "x-ms-routing-request-id": "WESTUS2:20230314T233442Z:2aefbaf2-8012-492f-b070-4eed478b0ecb"
+      },
+      "ResponseBody": {
+        "properties": {
+          "usages": {
+            "UsagesType": "Independent",
+            "Value": 3
+          },
+          "name": {
+            "value": "PublicIPAddresses",
+            "localizedValue": "Public IP Addresses"
+          },
+          "properties": {},
+          "unit": "Count",
+          "isQuotaApplicable": true
+        },
+        "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/usages/PublicIPAddresses",
+        "type": "Microsoft.Quota/Usages",
+        "name": "PublicIPAddresses"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1190917210",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}

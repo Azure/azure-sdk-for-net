@@ -1,0 +1,187 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotaRequests?api-version=2023-02-01\u0026$filter=provisioningState%20eq%20%27Failed%27\u0026$top=5",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fc95c04adba69999fdbf497225ad5de8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache",
+        "Content-Length": "3466",
+        "Content-Type": "application/json",
+        "Date": "Tue, 14 Mar 2023 23:27:17 GMT",
+        "MS-RequestId": "-XRwTlpjHE-XerwsfA8ljg.0",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d77fe910-6a2e-4b3e-a638-2595ca4b42f1",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "97",
+        "x-ms-request-id": "d77fe910-6a2e-4b3e-a638-2595ca4b42f1",
+        "x-ms-routing-request-id": "WESTUS2:20230314T232718Z:d77fe910-6a2e-4b3e-a638-2595ca4b42f1"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "error": {
+                "code": "QuotaReductionNotSupported",
+                "message": "Request failed."
+              },
+              "message": "Request failed.",
+              "provisioningState": "Failed",
+              "requestSubmitTime": "2022-11-15T20:00:49Z",
+              "value": [
+                {
+                  "limit": {
+                    "limitObjectType": "LimitValue",
+                    "limitType": "Independent",
+                    "value": 1002
+                  },
+                  "message": "Request failed.",
+                  "name": {
+                    "value": "PUBLICIPADDRESSES"
+                  },
+                  "provisioningState": "Failed",
+                  "subRequestId": "3be10d93-f815-431b-ad82-1af26550d4f7"
+                }
+              ]
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotaRequests/3be10d93-f815-431b-ad82-1af26550d4f7",
+            "type": "Microsoft.Quota/QuotaRequests",
+            "name": "3be10d93-f815-431b-ad82-1af26550d4f7"
+          },
+          {
+            "properties": {
+              "error": {
+                "code": "QuotaReductionNotSupported",
+                "message": "Request failed."
+              },
+              "message": "Request failed.",
+              "provisioningState": "Failed",
+              "requestSubmitTime": "2022-11-15T19:56:34Z",
+              "value": [
+                {
+                  "limit": {
+                    "limitObjectType": "LimitValue",
+                    "limitType": "Independent",
+                    "value": 1002
+                  },
+                  "message": "Request failed.",
+                  "name": {
+                    "value": "PUBLICIPADDRESSES"
+                  },
+                  "provisioningState": "Failed",
+                  "subRequestId": "409f6176-0f05-4d4e-b74b-36f2f369952f"
+                }
+              ]
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotaRequests/409f6176-0f05-4d4e-b74b-36f2f369952f",
+            "type": "Microsoft.Quota/QuotaRequests",
+            "name": "409f6176-0f05-4d4e-b74b-36f2f369952f"
+          },
+          {
+            "properties": {
+              "error": {
+                "code": "QuotaReductionNotSupported",
+                "message": "Request failed."
+              },
+              "message": "Request failed.",
+              "provisioningState": "Failed",
+              "requestSubmitTime": "2022-11-15T19:51:07Z",
+              "value": [
+                {
+                  "limit": {
+                    "limitObjectType": "LimitValue",
+                    "limitType": "Independent",
+                    "value": 1002
+                  },
+                  "message": "Request failed.",
+                  "name": {
+                    "value": "PUBLICIPADDRESSES"
+                  },
+                  "provisioningState": "Failed",
+                  "subRequestId": "8fbbb051-b0d2-4b13-8cfe-4da8f5d54cd2"
+                }
+              ]
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotaRequests/8fbbb051-b0d2-4b13-8cfe-4da8f5d54cd2",
+            "type": "Microsoft.Quota/QuotaRequests",
+            "name": "8fbbb051-b0d2-4b13-8cfe-4da8f5d54cd2"
+          },
+          {
+            "properties": {
+              "error": {
+                "code": "ContactSupport",
+                "message": "Request failed."
+              },
+              "message": "Request failed.",
+              "provisioningState": "Failed",
+              "requestSubmitTime": "2022-08-15T21:50:11Z",
+              "value": [
+                {
+                  "limit": {
+                    "limitObjectType": "LimitValue",
+                    "limitType": "Independent",
+                    "value": 0
+                  },
+                  "message": "Request failed.",
+                  "name": {
+                    "value": "PUBLICIPADDRESSES"
+                  },
+                  "provisioningState": "Failed",
+                  "subRequestId": "b03f89fb-9e1e-4c52-a91f-7f2be17b4866"
+                }
+              ]
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotaRequests/b03f89fb-9e1e-4c52-a91f-7f2be17b4866",
+            "type": "Microsoft.Quota/QuotaRequests",
+            "name": "b03f89fb-9e1e-4c52-a91f-7f2be17b4866"
+          },
+          {
+            "properties": {
+              "error": {
+                "code": "ContactSupport",
+                "message": "Request failed."
+              },
+              "message": "Request failed.",
+              "provisioningState": "Failed",
+              "requestSubmitTime": "2022-08-15T21:34:26Z",
+              "value": [
+                {
+                  "limit": {
+                    "limitObjectType": "LimitValue",
+                    "limitType": "Independent",
+                    "value": 0
+                  },
+                  "message": "Request failed.",
+                  "name": {
+                    "value": "PUBLICIPADDRESSES"
+                  },
+                  "provisioningState": "Failed",
+                  "subRequestId": "5192535d-69f1-48cb-a831-a8114272630f"
+                }
+              ]
+            },
+            "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotaRequests/5192535d-69f1-48cb-a831-a8114272630f",
+            "type": "Microsoft.Quota/QuotaRequests",
+            "name": "5192535d-69f1-48cb-a831-a8114272630f"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1577907831",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}
