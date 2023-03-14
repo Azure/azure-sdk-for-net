@@ -13,8 +13,6 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
     public partial class UploadDownloadImageSample : ContainerRegistrySamplesBase
     {
-        [Test]
-        [AsyncOnly]
         public async Task UploadOciImageAsync()
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
@@ -45,10 +43,10 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             UploadBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
 
             // Update manifest with config info
-            manifest.Config = new OciBlobDescriptor()
+            manifest.Config = new OciDescriptor()
             {
                 Digest = uploadConfigResult.Digest,
-                SizeInBytes = config.ToMemory().Length,
+                SizeInBytes = uploadConfigResult.SizeInBytes,
                 MediaType = "application/vnd.oci.image.config.v1+json"
             };
 
@@ -57,10 +55,10 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             UploadBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
 
             // Update manifest with layer info
-            manifest.Layers.Add(new OciBlobDescriptor()
+            manifest.Layers.Add(new OciDescriptor()
             {
                 Digest = uploadLayerResult.Digest,
-                SizeInBytes = layer.ToMemory().Length,
+                SizeInBytes = uploadLayerResult.SizeInBytes,
                 MediaType = "application/vnd.oci.image.layer.v1.tar"
             });
 
@@ -70,25 +68,24 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #endregion
         }
 
-        [Test]
-        [AsyncOnly]
         public async Task DownloadOciImageAsync()
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             // Get the service endpoint from the environment
-            Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             string repository = "sample-oci-image";
             string tag = "demo";
-            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
-            Directory.CreateDirectory(path);
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
+            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
             {
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             });
+
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
+            Directory.CreateDirectory(path);
 
             #region Snippet:ContainerRegistry_Samples_DownloadOciImageAsync
 
@@ -112,12 +109,12 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             }
 
             // Download and write out the layers
-            foreach (OciBlobDescriptor layer in manifest.Layers)
+            foreach (OciDescriptor layerInfo in manifest.Layers)
             {
-                string layerFile = Path.Combine(path, TrimSha(layer.Digest));
+                string layerFile = Path.Combine(path, TrimSha(layerInfo.Digest));
                 using (FileStream stream = File.Create(layerFile))
                 {
-                    await client.DownloadBlobToAsync(layer.Digest, stream);
+                    await client.DownloadBlobToAsync(layerInfo.Digest, stream);
                 }
             }
 
@@ -131,7 +128,43 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
                 return digest;
             }
+            #endregion
+        }
 
+        [Test]
+        [AsyncOnly]
+        public async Task UploadDownloadOciImageAsync()
+        {
+            await UploadOciImageAsync();
+            await DownloadOciImageAsync();
+
+            Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
+
+            // Get the service endpoint from the environment
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+            string repository = "sample-oci-image";
+            string tag = "demo";
+
+            // Create a new ContainerRegistryBlobClient
+            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
+            {
+                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+            });
+
+            #region Snippet:ContainerRegistry_Samples_DeleteBlob
+            DownloadManifestResult result = await client.DownloadManifestAsync(tag);
+            OciImageManifest manifest = result.AsOciManifest();
+
+            foreach (OciDescriptor layerInfo in manifest.Layers)
+            {
+                await client.DeleteBlobAsync(layerInfo.Digest);
+            }
+            #endregion
+
+            #region Snippet:ContainerRegistry_Samples_DeleteManifest
+            DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
+            await client.DeleteManifestAsync(downloadManifestResult.Digest);
             #endregion
         }
 
@@ -152,7 +185,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             });
 
-            #region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
+#region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
 
             // Create a manifest file in the Docker v2 Manifest List format
             var manifestList = new
@@ -177,7 +210,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             BinaryData content = BinaryData.FromObjectAsJson(manifestList);
             await client.UploadManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
 
-            #endregion
+#endregion
         }
 
         [Test]
@@ -199,7 +232,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             });
 
-            #region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
+#region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
 
             // Pass multiple media types if the media type of the manifest to download is unknown
             List<ManifestMediaType> mediaTypes = new() {
@@ -217,7 +250,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 Console.WriteLine("Manifest is an OCI index.");
             }
 
-            #endregion
+#endregion
         }
     }
 }
