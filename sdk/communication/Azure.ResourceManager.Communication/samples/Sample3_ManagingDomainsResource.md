@@ -3,7 +3,7 @@
 >Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
 
 Namespaces for this example:
-```C# Snippet:Manage_CommunicationDomain_Namespaces
+```C# Snippet:Manage_CommunicationDomainResource_Namespaces
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
