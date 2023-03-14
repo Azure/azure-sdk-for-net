@@ -202,6 +202,8 @@ begin {
         "azure-genomics",
         "azure-hdinsight",
         "azure-hdinsight-rserver",
+        "azure-health-insights-cancerprofiling",
+		"azure-health-insights-clinicalmatching",
         "azure-hpc-cache",
         "azure-immersive-reader",
         "azure-information-protection",
