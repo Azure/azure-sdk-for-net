@@ -1,16 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Communication.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using System.Collections.Generic;
 using NUnit.Framework;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
