@@ -12,14 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
-    <ProjectReference Include="..\..\Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj" />
     <ProjectReference Include="..\src\Azure.Communication.Identity.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Shared\src\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
+    <Compile Include="..\..\Shared\src\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\tests.yml" Link="\tests.yml" />
