@@ -40,56 +40,56 @@
       }
     },
     {
-        "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322?api-version=2023-03-01-preview",
-        "RequestMethod": "GET",
-        "RequestHeaders": {
-            "Accept": "application/json",
-            "Authorization": "Sanitized",
-            "traceparent": "00-145e651d5522c3c5ec4b77a912d41125-67a04ce7b79b6b81-00",
-            "User-Agent": "azsdk-net-ResourceManager.Communication/1.1.0-alpha.20220808.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-            "x-ms-client-request-id": "1dac49d12751b843f8e006362d0fa2bb",
-            "x-ms-return-client-request-id": "true"
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322?api-version=2021-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-145e651d5522c3c5ec4b77a912d41125-67a04ce7b79b6b81-00",
+        "User-Agent": "azsdk-net-ResourceManager.Communication/1.1.0-alpha.20220808.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1dac49d12751b843f8e006362d0fa2bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "616",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 09 Aug 2022 00:31:58 GMT",
+        "ETag": "\u002254004bb4-0000-0700-0000-62f1a9d90000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a2537dee-ad84-42b4-a32b-74e0a4f8463f",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11957",
+        "x-ms-request-id": "5ea9f610-35b5-4497-8fe4-e095925e58fa",
+        "x-ms-routing-request-id": "WESTUS2:20220809T003158Z:a2537dee-ad84-42b4-a32b-74e0a4f8463f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322",
+        "name": "email-test1322",
+        "type": "microsoft.communication/emailservices",
+        "location": "global",
+        "tags": {},
+        "systemData": {
+          "createdBy": "63113597-dbba-427d-82d3-94e4060d0e8b",
+          "createdByType": "Application",
+          "createdAt": "2022-08-09T00:26:57.1391364Z",
+          "lastModifiedBy": "63113597-dbba-427d-82d3-94e4060d0e8b",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-08-09T00:26:57.1391364Z"
         },
-        "RequestBody": null,
-        "StatusCode": 200,
-        "ResponseHeaders": {
-            "Cache-Control": "no-cache",
-            "Content-Length": "616",
-            "Content-Type": "application/json; charset=utf-8",
-            "Date": "Tue, 09 Aug 2022 00:31:58 GMT",
-            "ETag": "\u002254004bb4-0000-0700-0000-62f1a9d90000\u0022",
-            "Expires": "-1",
-            "Pragma": "no-cache",
-            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-            "X-Content-Type-Options": "nosniff",
-            "x-ms-correlation-request-id": "a2537dee-ad84-42b4-a32b-74e0a4f8463f",
-            "x-ms-providerhub-traffic": "True",
-            "x-ms-ratelimit-remaining-subscription-reads": "11957",
-            "x-ms-request-id": "5ea9f610-35b5-4497-8fe4-e095925e58fa",
-            "x-ms-routing-request-id": "WESTUS2:20220809T003158Z:a2537dee-ad84-42b4-a32b-74e0a4f8463f"
-        },
-        "ResponseBody": {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322",
-            "name": "email-test1322",
-            "type": "microsoft.communication/emailservices",
-            "location": "global",
-            "tags": {},
-            "systemData": {
-                "createdBy": "63113597-dbba-427d-82d3-94e4060d0e8b",
-                "createdByType": "Application",
-                "createdAt": "2022-08-09T00:26:57.1391364Z",
-                "lastModifiedBy": "63113597-dbba-427d-82d3-94e4060d0e8b",
-                "lastModifiedByType": "Application",
-                "lastModifiedAt": "2022-08-09T00:26:57.1391364Z"
-            },
-            "properties": {
-                "provisioningState": "Succeeded",
-                "dataLocation": "UnitedStates"
-            }
+        "properties": {
+          "provisioningState": "Succeeded",
+          "dataLocation": "UnitedStates"
         }
+      }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2021-10-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -112,7 +112,7 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "653",
         "Content-Type": "application/json; charset=utf-8",
@@ -155,7 +155,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -193,7 +193,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -231,7 +231,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -269,7 +269,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -307,7 +307,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -345,7 +345,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -383,7 +383,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -421,7 +421,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -459,7 +459,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/11413d18-db58-4acc-9260-bd0cbec1c69c*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -498,7 +498,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -596,7 +596,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -695,7 +695,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2021-10-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -805,7 +805,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -906,7 +906,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1010,7 +1010,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8796/providers/Microsoft.Communication/emailServices/email-test1322/domains/domain-8820.com?api-version=2021-10-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1023,14 +1023,14 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "4",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sat, 18 Mar 2023 23:04:42 GMT",
         "ETag": "\u002283001811-0000-0700-0000-6416438a0000\u0022",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
         "Pragma": "no-cache",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -1048,7 +1048,7 @@
       "ResponseBody": "null"
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1083,7 +1083,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1121,7 +1121,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1159,7 +1159,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1197,7 +1197,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1235,7 +1235,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1273,7 +1273,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1311,7 +1311,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1349,7 +1349,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2023-03-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/40457141-5094-4795-aac0-25347ade41e4*EC48F8FB7DFFCBC56438F335901DE6C8A9F630434BD5963A31F41DB80A8E726A?api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
