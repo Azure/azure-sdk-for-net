@@ -6,10 +6,10 @@ namespace Azure.ResourceManager
     /// <summary>
     /// Represent resource of data
     /// </summary>
-    public interface IResource
+    internal interface IResource
     {
         /// <summary>
-        /// Represent data for the resrouce
+        /// Represent data for the resrouce.
         /// </summary>
         ISerializable DataBag { get; }
     }
