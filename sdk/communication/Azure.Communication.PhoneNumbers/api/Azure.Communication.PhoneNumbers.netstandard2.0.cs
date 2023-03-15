@@ -281,10 +281,10 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     }
     public partial class SipRoutingClientOptions : Azure.Core.ClientOptions
     {
-        public SipRoutingClientOptions(Azure.Communication.PhoneNumbers.SipRouting.SipRoutingClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.SipRouting.SipRoutingClientOptions.ServiceVersion.V2021_05_01_Preview) { }
+        public SipRoutingClientOptions(Azure.Communication.PhoneNumbers.SipRouting.SipRoutingClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.SipRouting.SipRoutingClientOptions.ServiceVersion.V2023_03_01) { }
         public enum ServiceVersion
         {
-            V2021_05_01_Preview = 1,
+            V2023_03_01 = 1,
         }
     }
     public partial class SipTrunk

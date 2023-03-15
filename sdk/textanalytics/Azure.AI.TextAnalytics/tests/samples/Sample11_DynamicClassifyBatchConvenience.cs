@@ -10,6 +10,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
+        [Ignore("Disabled per request of the service team")]
         public void DynamicClassifyBatchConvenience()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
