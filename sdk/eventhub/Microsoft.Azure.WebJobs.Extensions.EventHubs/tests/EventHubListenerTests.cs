@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -90,6 +91,41 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 Times.Exactly(expected));
         }
 
+        [TestCase(1, 30)]
+        [TestCase(5, 6)]
+        [TestCase(10, 3)]
+        [TestCase(30, 1)]
+        [TestCase(35, 0)]
+        public async Task ProcessEvents_MultipleDispatch_MinBatch_CheckpointsCorrectly(int batchCheckpointFrequency, int expected)
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions
+            {
+                BatchCheckpointFrequency = batchCheckpointFrequency,
+                MinEventBatchSize = 10
+            };
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            partitionContext.ProcessorHost = processor.Object;
+
+            var loggerMock = new Mock<ILogger>();
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
+
+            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, false);
+
+            for (int i = 0; i < 60; i++)
+            {
+                List<EventData> events = new List<EventData>() { new EventData("event1"), new EventData("event2"), new EventData("event3"), new EventData("event4"), new EventData("event5") };
+                await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+            }
+
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(expected));
+        }
+
         /// <summary>
         /// Even if some events in a batch fail, we still checkpoint. Event error handling
         /// is the responsibility of user function code.
@@ -152,6 +188,30 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
                 Times.Never);
+        }
+
+        [Test]
+        public async Task Partition_OwnershipLost_DropsEvents()
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions();
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            partitionContext.ProcessorHost = processor.Object;
+
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            var loggerMock = new Mock<ILogger>();
+            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true);
+            var mockStoredEvents = new ConcurrentDictionary<string, List<EventData>>
+            {
+                ["0"] = new List<EventData> { new EventData("Event1") }
+            };
+            eventProcessor.StoredEventsManager.StoredEvents = mockStoredEvents;
+
+            await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.OwnershipLost);
+
+            Assert.IsFalse(eventProcessor.StoredEventsManager.HasStoredEvents);
         }
 
         [Test]

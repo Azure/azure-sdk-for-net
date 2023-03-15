@@ -158,9 +158,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private int _maxWaitTime;
 
         /// <summary>
-        /// Gets or sets the maximum time in seconds. This only applies when <see cref="MinEventBatchSize"/> is set. It denotes the maximum number of seconds
-        /// the processor will wait after receiving a batch of events less than <see cref="MinEventBatchSize"/> before invoking the function.
-        /// the function. Default 60 seconds.
+        /// Gets or sets the maximum time in seconds. This only applies when <see cref="MinEventBatchSize"/> is set. It denotes the
+        /// maximum number of seconds the processor will wait after receiving a batch of events less than <see cref="MinEventBatchSize"/>
+        /// before invoking the function. Default is 60 seconds, but only when <see cref="MinEventBatchSize"/> has been set.
         /// </summary>
         public int MaxWaitTime
         {

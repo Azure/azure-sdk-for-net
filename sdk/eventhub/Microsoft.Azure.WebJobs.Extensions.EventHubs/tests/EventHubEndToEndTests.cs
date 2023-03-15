@@ -341,7 +341,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(result);
             }
 
-            // TODO AssertMultipleDispatchLogs(host);
+            AssertMultipleDispatchLogs(host);
         }
 
         private static void AssertMultipleDispatchLogs(IHost host)
