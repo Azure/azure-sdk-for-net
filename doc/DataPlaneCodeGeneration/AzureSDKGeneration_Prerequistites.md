@@ -10,7 +10,12 @@
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.
 - Install [NodeJS](https://nodejs.org/) (16.x.x or above).
 
-## Setup your repository
+## Setup Typespec project
 
-- Fork and clone the [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repository. Instructions for doing so can be found in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md).
-- Create a branch to work in.
+Make sure you have typespec project in [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) repo or you can follow [Typespec Getting Start](https://github.com/microsoft/typespec/#using-node--npm) to initialize your typespec project, and refer to [Typespec Structure Guidelines](https://github.com/Azure/azure-rest-api-specs/blob/main/documentation/cadl-structure-guidelines.md) to configure your typespec project.
+
+## Setup SDK Project Folder
+
+We will generate SDK library under SDK project folder `sdk\<servie name>\<package name>` of `azure-sdk-for-net` repo. e.g. /home/azure-sdk-for-net/sdk/anomalydetector/Azure.AI.AnomalyDetector).
+
+Make sure that the SDK project folder exists in [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. If the SDK project folder does not exist, you can refer to [SDK project directory Set up](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKPackage_Setup.md) to create one.
