@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 },
                 },
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
-                CustomerManagedKeyEncryption = new ClusterPropertiesEncryptionCustomerManagedKeyEncryption()
+                CustomerManagedKeyEncryption = new RedisEnterpriseCustomerManagedKeyEncryption()
                 {
-                    KeyEncryptionKeyIdentity = new ClusterPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity()
+                    KeyEncryptionKeyIdentity = new RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity()
                     {
                         UserAssignedIdentityResourceId = "/subscriptions/your-subscription/resourceGroups/your-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/your-identity",
-                        IdentityType = CmkIdentityType.UserAssignedIdentity,
+                        IdentityType = RedisEnterpriseCustomerManagedKeyIdentityType.UserAssignedIdentity,
                     },
                     KeyEncryptionKeyUri = new Uri("https://your-kv.vault.azure.net/keys/your-key/your-key-version"),
                 },

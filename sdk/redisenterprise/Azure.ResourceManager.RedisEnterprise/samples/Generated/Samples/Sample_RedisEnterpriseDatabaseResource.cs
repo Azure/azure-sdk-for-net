@@ -295,7 +295,7 @@ new ResourceIdentifier("/subscriptions/subid2/resourceGroups/rg2/providers/Micro
             RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
 
             // invoke the operation
-            FlushContent content = new FlushContent()
+            FlushRedisEnterpriseDatabaseContent content = new FlushRedisEnterpriseDatabaseContent()
             {
                 Ids =
 {

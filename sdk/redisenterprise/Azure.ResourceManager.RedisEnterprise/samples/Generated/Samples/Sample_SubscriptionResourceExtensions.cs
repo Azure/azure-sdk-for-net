@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         // SkusList
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSkus_SkusList()
+        public async Task GetRedisEnterpriseSkus_SkusList()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2023-03-01-preview/examples/RedisEnterpriseSkusList.json
             // this example is just showing the usage of "Skus_List" operation, for the dependent resources, they will have to be created separately.
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westus2");
-            await foreach (RegionSkuDetail item in subscriptionResource.GetSkusAsync(location))
+            await foreach (RedisEnterpriseRegionSkuDetail item in subscriptionResource.GetRedisEnterpriseSkusAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
