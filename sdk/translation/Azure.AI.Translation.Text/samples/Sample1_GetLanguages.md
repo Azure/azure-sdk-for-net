@@ -4,14 +4,14 @@ This sample demonstrates how to get languages that are supported by other operat
 
 ## Create a `TextTranslationClient`
 
-For this operation you can create a new `TextTranslationClient` without any authentication. You will only need your endpoint:
+To create a new `TextTranslationClient`, you will need the service endpoint and credentials of your Translator resource. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
 
 ```C# Snippet:CreateTextTranslationClient
-Uri endpoint = new("<endpoint>");
-TextTranslationClient client = new(endpoint);
+AzureKeyCredential credential = new("<apiKey>");
+TextTranslationClient client = new(credential, "<region>");
 ```
 
-The values of the `endpoint` variable can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
+The values of the `apiKey` and `region` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Get Supported Languages for ALL other operations
 This will return language metadata from all supported scopes.

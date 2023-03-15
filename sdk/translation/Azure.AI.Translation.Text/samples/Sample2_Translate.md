@@ -2,15 +2,14 @@
 
 ## Create a `TextTranslationClient`
 
-To create a new `TextTranslationClient`, you will need the service endpoint and credentials of your Translator resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
+To create a new `TextTranslationClient`, you will need the service endpoint and credentials of your Translator resource. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
 
 ```C# Snippet:CreateTextTranslationClient
-Uri endpoint = new("<endpoint>");
 AzureKeyCredential credential = new("<apiKey>");
-TextTranslationClient client = new(endpoint, credential, "<region>");
+TextTranslationClient client = new(credential, "<region>");
 ```
 
-The values of the `endpoint`, `apiKey` and `region` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
+The values of the `apiKey` and `region` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ### Translate text
 Translate text from known source language to target language.
@@ -18,13 +17,10 @@ Translate text from known source language to target language.
 try
 {
     string from = "en";
-    IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<InputText> inputTextElements = new []
-    {
-        new InputText { Text = "This is a test." }
-    };
+    string targetLanguage = "cs";
+    string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, from: from).ConfigureAwait(false);
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguage, inputText, from: from).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextElement> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
@@ -48,13 +44,10 @@ You can ommit source languge of the input text. In this case, API will try to au
 ```C# Snippet:Sample2_TranslateDetection
 try
 {
-    IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<InputText> inputTextElements = new []
-    {
-        new InputText { Text = "This is a test." }
-    };
+    string targetLanguage = "cs";
+    string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextElement> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
@@ -78,9 +71,9 @@ try
     string fromLanguage = "ar";
     string toScript = "Latn";
     IEnumerable<string> targetLanguages = new[] { "zh-Hans" };
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "hudha akhtabar." }
+        "hudha akhtabar."
     };
 
     Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, from: fromLanguage, fromScript: fromScript, toScript: toScript).ConfigureAwait(false);
@@ -106,11 +99,11 @@ You can translate multiple text elements with a various length. Each input eleme
 try
 {
     IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "This is a test." },
-        new InputText { Text = "Esto es una prueba." },
-        new InputText { Text = "Dies ist ein Test." }
+        "This is a test.",
+        "Esto es una prueba.",
+        "Dies ist ein Test."
     };
 
     Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
@@ -136,9 +129,9 @@ You can provide multiple target languages which results to each input element be
 try
 {
     IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "This is a test." }
+        "This is a test."
     };
 
     Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
@@ -167,9 +160,9 @@ try
     TextTypes textType = TextTypes.Html;
 
     IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "<html><body>This <b>is</b> a test.</body></html>" }
+        "<html><body>This <b>is</b> a test.</body></html>"
     };
 
     Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: textType).ConfigureAwait(false);
@@ -196,9 +189,9 @@ try
 
     string from = "en";
     IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>" }
+        "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>"
     };
 
     Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: textType, from: from).ConfigureAwait(false);
@@ -225,9 +218,9 @@ try
 {
     string from = "en";
     IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry." }
+        "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry."
     };
 
     Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, from: from).ConfigureAwait(false);
@@ -256,9 +249,9 @@ try
     ProfanityMarkers profanityMarkers = ProfanityMarkers.Asterisk;
 
     IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "This is ***." }
+        "This is ***."
     };
 
     Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers).ConfigureAwait(false);
@@ -284,9 +277,9 @@ try
     bool includeAlignment = true;
 
     IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "The answer lies in machine translation." }
+        "The answer lies in machine translation."
     };
 
     Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, includeAlignment: includeAlignment).ConfigureAwait(false);
@@ -314,9 +307,9 @@ try
     bool includeSentenceLength = true;
 
     IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "The answer lies in machine translation. This is a test." }
+        "The answer lies in machine translation. This is a test."
     };
 
     Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, includeSentenceLength: includeSentenceLength).ConfigureAwait(false);
@@ -349,9 +342,9 @@ try
 {
     string category = "<<Category ID>>";
     IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "This is a test." }
+        "This is a test."
     };
 
     Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, category: category).ConfigureAwait(false);

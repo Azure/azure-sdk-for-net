@@ -2,15 +2,14 @@
 
 ## Create a `TextTranslationClient`
 
-To create a new `TextTranslationClient`, you will need the service endpoint and credentials of your Translator resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
+To create a new `TextTranslationClient`, you will need the service endpoint and credentials of your Translator resource. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
 
 ```C# Snippet:CreateTextTranslationClient
-Uri endpoint = new("<endpoint>");
 AzureKeyCredential credential = new("<apiKey>");
-TextTranslationClient client = new(endpoint, credential, "<region>");
+TextTranslationClient client = new(credential, "<region>");
 ```
 
-The values of the `endpoint`, `apiKey` and `region` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
+The values of the `apiKey` and `region` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ### Break Sentence with language and script parameters
 When the input language is known, you can provide those to the service call.
@@ -20,9 +19,9 @@ try
 {
     string sourceLanguage = "zh-Hans";
     string sourceScript = "Latn";
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "zhè shì gè cè shì。" }
+        "zhè shì gè cè shì。"
     };
 
     Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputTextElements, language: sourceLanguage, script: sourceScript).ConfigureAwait(false);
@@ -47,9 +46,9 @@ You can ommit source languge of the input text. In this case, API will try to au
 ```C# Snippet:Sample4_BreakSentenceWithAutoDetection
 try
 {
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "How are you? I am fine. What did you do today?" }
+        "How are you? I am fine. What did you do today?"
     };
 
     Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputTextElements).ConfigureAwait(false);

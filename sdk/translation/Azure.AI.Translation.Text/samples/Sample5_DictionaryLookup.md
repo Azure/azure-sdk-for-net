@@ -2,15 +2,14 @@
 
 ## Create a `TextTranslationClient`
 
-To create a new `TextTranslationClient`, you will need the service endpoint and credentials of your Translator resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
+To create a new `TextTranslationClient`, you will need the service endpoint and credentials of your Translator resource. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
 
 ```C# Snippet:CreateTextTranslationClient
-Uri endpoint = new("<endpoint>");
 AzureKeyCredential credential = new("<apiKey>");
-TextTranslationClient client = new(endpoint, credential, "<region>");
+TextTranslationClient client = new(credential, "<region>");
 ```
 
-The values of the `endpoint`, `apiKey` and `region` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
+The values of the `apiKey` and `region` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ### Dictionary Lookup
 
@@ -21,9 +20,9 @@ try
 {
     string sourceLanguage = "en";
     string targetLanguage = "es";
-    IEnumerable<InputText> inputTextElements = new[]
+    IEnumerable<string> inputTextElements = new[]
     {
-        new InputText { Text = "fly" }
+        "fly"
     };
 
     Response<IReadOnlyList<DictionaryLookupElement>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);

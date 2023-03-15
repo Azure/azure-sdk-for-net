@@ -8,19 +8,19 @@ Use the TextTranslator client library for .NET to:
 
 * Render single source-language text to multiple target-language texts with a single request.
 
-* Convert characters or letters of a source language to the corresponding characters or letters of a target language.
+* Convert text of a source language in letters of a different script.
 
 * Return equivalent words for the source term in the target language.
 
 * Return grammatical structure and context examples for the source term and target term pair.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Translation.Text) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Translation.Text) | [API reference documentation](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference) | [Product documentation](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/)
 
 ## Getting started
 
 ### Install the package
 
-Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
+Install the Azure Text Translation client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
 dotnet add package Azure.AI.Translation.Text --prerelease
@@ -35,27 +35,14 @@ This table shows the relationship between SDK versions and supported API version
 ### Prerequisites
 
 * An [Azure subscription][azure_sub].
-* An existing Cognitive Services or Translator service resource.
+* An existing Translator service or Cognitive Services resource.
 
-#### Create a Cognitive Services resource or a Translator service resource
-
-Text translation supports both [multi-service and single-service access][service_access]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint and API key. To access the features of the Text translation service only, create a Text translation service resource instead.
-
-You can create either resource via the [Azure portal][create_text_resource_azure_portal] or, alternatively, you can follow the steps in [this document][create_text_resource_azure_cli] to create it using the [Azure CLI][azure_cli].
+#### Create a Translator service resource
+You can create Translator resource following [Create a Translator resource][translator_resource_create].
 
 ### Authenticate the client
 
-Interaction with the service using the client library begins with creating an instance of the [TextTranslationClient][translator_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object for all operations except GET Languages.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Translator Service][translator_auth].
-
-#### Create a `TextTranslationClient` without any authentication
-For requests to get supported languages, you can create [TextTranslationClient][translator_client_class] without any authentication.
-
-> Note: only GET Languages operation will work without authentication. All other operations will fail with 401 response.
-
-```C# Snippet:CreateTextTranslationClientAnonymous
-Uri endpoint = new("<endpoint>");
-TextTranslationClient client = new(endpoint);
-```
+Interaction with the service using the client library begins with creating an instance of the [TextTranslationClient][translator_client_class] class. You will need an **API key** or ``TokenCredential`` to instantiate a client object. For more information regarding authenticating with cognitive services, see [Authenticate requests to Translator Service][translator_auth].
 
 #### Get an API key
 
@@ -75,32 +62,8 @@ update the API key without creating a new client.
 With the value of the endpoint, `AzureKeyCredential` and a `Region`, you can create the [TextTranslationClient][translator_client_class]:
 
 ```C# Snippet:CreateTextTranslationClient
-Uri endpoint = new("<endpoint>");
 AzureKeyCredential credential = new("<apiKey>");
-TextTranslationClient client = new(endpoint, credential, "<region>");
-```
-
-#### Create a `TextTranslationClient` using a Token Authentication
-
-Instead of API key and Region authentication you can use JWT token. For information on how to create token refer to [Authenticating with an access token][translator_token].
-
-Once you have the value for the token, create an class that extends `Azure.Core.TokenCredentials`. With the value of the endpoint, `AzureKeyCredential` and your service returning tokens, you can create the [TextTranslationClient][translator_client_class]:
-
-```C# Snippet:CreateTextTranslationClientToken
-Uri endpoint = new("<endpoint>");
-TokenCredential credential = new("<token>");
-TextTranslationClient client = new(endpoint, credential);
-```
-
-#### Create a `TextTranslationClient` using a Custom Endpoint and Api Key
-When Translator service is configured to use [Virtual Network (VNET)][translator_vnet] capability you need to use [custom subdomain][custom_subdomain].
-
-Once you have your resource configured and you have your custom endpoint value and your API key, you can create the [TextTranslationClient][translator_client_class]:
-
-```C# Snippet:CreateTextTranslationClientCustom
-Uri endpoint = new("<endpoint>");
-AzureKeyCredential credential = new("<apiKey>");
-TextTranslationClient client = new(endpoint, credential);
+TextTranslationClient client = new(credential, "<region>");
 ```
 
 ## Key concepts
@@ -111,12 +74,12 @@ A `TextTranslationClient` is the primary interface for developers using the Text
 
 ### Input
 
-A **text element**, is a single unit of input to be processed by the translation models in the Translator service. Operations on `TextTranslationClient` may take a single text element or a collection of text elements.
+A **text element** (`string`), is a single unit of input to be processed by the translation models in the Translator service. Operations on `TextTranslationClient` may take a single text element or a collection of text elements.
 For text element length limits, maximum requests size, and supported text encoding see [here][translator_limits].
 
 ### Return value
 
-Return values, such as `Response<IReadOnlyList<TranslatedTextElement>>`, is the result of a Text Translation operation, containing array with one result for each string in the input array.  An operation's return value also may optionally include information about the input text element (for example detected language).
+Return values, such as `Response<IReadOnlyList<TranslatedTextElement>>`, is the result of a Text Translation operation, It contains array with one result for each string in the input array.  An operation's return value also may optionally include information about the input text element (for example detected language).
 
 ### Thread safety
 
@@ -167,13 +130,10 @@ Renders single source-language text to multiple target-language texts with a sin
 ```C# Snippet:Sample2_Translate
 try
 {
-    IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<InputText> inputTextElements = new []
-    {
-        new InputText { Text = "This is a test." }
-    };
+    string targetLanguage = "cs";
+    string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextElement> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
@@ -202,12 +162,9 @@ try
     string fromScript = "Hans";
     string toScript = "Latn";
 
-    IEnumerable<InputText> inputTextElements = new[]
-    {
-        new InputText { Text = "这是个测试。" }
-    };
+    string inputText = "这是个测试。";
 
-    Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync(language, fromScript, toScript, inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync(language, fromScript, toScript, inputText).ConfigureAwait(false);
     IReadOnlyList<TransliteratedText> transliterations = response.Value;
     TransliteratedText transliteration = transliterations.FirstOrDefault();
 
@@ -231,12 +188,9 @@ Identifies the positioning of sentence boundaries in a piece of text.
 ```C# Snippet:Sample4_BreakSentence
 try
 {
-    IEnumerable<InputText> inputTextElements = new[]
-    {
-        new InputText { Text = "How are you? I am fine. What did you do today?" }
-    };
+    string inputText = "How are you? I am fine. What did you do today?";
 
-    Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputText).ConfigureAwait(false);
     IReadOnlyList<BreakSentenceElement> brokenSentences = response.Value;
     BreakSentenceElement brokenSentence = brokenSentences.FirstOrDefault();
 
@@ -264,12 +218,9 @@ try
 {
     string sourceLanguage = "en";
     string targetLanguage = "es";
-    IEnumerable<InputText> inputTextElements = new[]
-    {
-        new InputText { Text = "fly" }
-    };
+    string inputText = "fly";
 
-    Response<IReadOnlyList<DictionaryLookupElement>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<DictionaryLookupElement>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputText).ConfigureAwait(false);
     IReadOnlyList<DictionaryLookupElement> dictionaryEntries = response.Value;
     DictionaryLookupElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
@@ -324,7 +275,7 @@ Please refer to the service documentation for a conceptual discussion of [dictio
 
 ## Troubleshooting
 
-When you interact with the Translator Service using the .NET Text Translator SDK, errors returned by the Translator service correspond to the same HTTP status codes returned for REST API requests.
+When you interact with the Translator Service using the TextTranslator client library, errors returned by the Translator service correspond to the same HTTP status codes returned for REST API requests.
 
 For example, if you submit a translation request without a target translate language, a `400` error is returned, indicating "Bad Request".
 
@@ -376,6 +327,7 @@ To learn more about other logging mechanisms see [here][logging].
 Samples showing how to use this client library are available in this GitHub repository.
 Samples are provided for each main functional area, and for each area, samples are provided in both sync and async mode.
 
+* [Create TextTranslationClient][client_sample]
 * [Languages][languages_sample]
 * [Translate][translate_sample]
 * [Transliterate][transliterate_sample]
@@ -403,8 +355,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [translator_client_class]: https://github.com/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src/TextTranslationClient.cs
 
 [translator_auth]: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference#authentication
-[translator_token]: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference#authenticating-with-an-access-token
-[translator_vnet]: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference#virtual-network-support
 [translator_limits]: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/request-limits
 
 [languages_doc]: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-languages
@@ -414,6 +364,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [dictionarylookup_doc]: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-dictionary-lookup
 [dictionaryexamples_doc]: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-dictionary-examples
 
+[client_sample]: https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample0_CreateClient.md
 [languages_sample]: https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample1_GetLanguages.md
 [translate_sample]: https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample2_Translate.md
 [transliterate_sample]: https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample3_Transliterate.md
@@ -421,12 +372,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [dictionarylookup_sample]: https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample5_DictionaryLookup.md
 [dictionaryexamples_sample]: https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample6_DictionaryExamples.md
 
-[service_access]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
-[create_text_resource_azure_portal]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
-[create_text_resource_azure_cli]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
-[custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[translator_resource_create]: https://learn.microsoft.com/en-us/azure/cognitive-services/Translator/create-translator-resource
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
