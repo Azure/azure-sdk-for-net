@@ -26,12 +26,11 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         }
 
         [RecordedTest]
-        [Ignore("Deserialize Error: System.UriFormatException: Invalid URI: The URI is empty.")]
         public async Task GetAll()
         {
             var query = new PolicyQuerySettings()
             {
-                Top = 3, //The restricted parameter does not work, still return 800+ items
+                Top = 3, //The restricted parameter does not work, still return 8500+ items
             };
             var list = await _metadataCollection.GetAllAsync(query).ToEnumerableAsync();
             Assert.IsNotEmpty(list);
@@ -46,6 +45,18 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             Assert.AreEqual(metadataName, metadata.Value.Data.Name);
             Assert.AreEqual("Microsoft.PolicyInsights/policyMetadata", metadata.Value.Data.ResourceType.ToString());
             Assert.AreEqual("Shared", metadata.Value.Data.Owner);
+        }
+
+        [RecordedTest]
+        public async Task GetNZISM_Security_Benchmark()
+        {
+            string metadataName = "NZISM_Security_Benchmark_v1.1_SS-2";
+            var metadata = await _metadataCollection.GetAsync(metadataName);
+            Assert.IsNotNull(metadata);
+            Assert.IsNotEmpty(metadata.Value.Data.Id);
+            Assert.AreEqual(metadataName, metadata.Value.Data.Name);
+            Assert.AreEqual("7", metadata.Value.Data.AdditionalContentUriString);
+            Assert.AreEqual(null, metadata.Value.Data.AdditionalContentUri);
         }
     }
 }
