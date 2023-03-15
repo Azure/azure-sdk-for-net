@@ -1,4 +1,4 @@
-# For details see https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Typespec-Project-Scripts.md
+# For details see https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/TypeSpec-Project-Scripts.md
 
 [CmdletBinding()]
 param (
@@ -6,7 +6,7 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $ProjectDirectory,
     [Parameter(Position=1)]
-    [string] $TypespecAdditionalOptions ## addtional typespec emitter options, separated by semicolon if more than one, e.g. option1=value1;option2=value2
+    [string] $typespecAdditionalOptions ## addtional typespec emitter options, separated by semicolon if more than one, e.g. option1=value1;option2=value2
 )
 
 $ErrorActionPreference = "Stop"
@@ -55,7 +55,7 @@ function NpmInstallForProject([string]$workingDirectory) {
 
 $resolvedProjectDirectory = Resolve-Path $ProjectDirectory
 $emitterName = &$GetEmitterNameFn
-$typespecConfigurationFile = Resolve-Path "$ProjectDirectory/typespec-location.yaml"
+$typespecConfigurationFile = Resolve-Path "$ProjectDirectory/tsp-location.yaml"
 
 Write-Host "Reading configuration from $typespecConfigurationFile"
 $configuration = Get-Content -Path $typespecConfigurationFile -Raw | ConvertFrom-Yaml
@@ -63,9 +63,9 @@ $configuration = Get-Content -Path $typespecConfigurationFile -Raw | ConvertFrom
 $specSubDirectory = $configuration["directory"]
 $innerFolder = Split-Path $specSubDirectory -Leaf
 
-$tempFolder = "$ProjectDirectory/TempTypespecFiles"
+$tempFolder = "$ProjectDirectory/TempTypeSpecFiles"
 $npmWorkingDir = Resolve-Path $tempFolder/$innerFolder
-$mainTypespecFile = If (Test-Path "$npmWorkingDir/client.*") { Resolve-Path "$npmWorkingDir/client.*" } Else { Resolve-Path "$npmWorkingDir/main.*"}
+$mainTypeSpecFile = If (Test-Path "$npmWorkingDir/client.*") { Resolve-Path "$npmWorkingDir/client.*" } Else { Resolve-Path "$npmWorkingDir/main.*"}
 
 try {
     Push-Location $npmWorkingDir
@@ -79,9 +79,9 @@ try {
             $emitterAdditionalOptions = " $emitterAdditionalOptions"
         }
     }
-    $typespecCompileCommand = "npx tsp compile $mainTypespecFile --emit $emitterName$emitterAdditionalOptions"
-    if ($TypespecAdditionalOptions) {
-        $options = $TypespecAdditionalOptions.Split(";");
+    $typespecCompileCommand = "npx tsp compile $mainTypeSpecFile --emit $emitterName$emitterAdditionalOptions"
+    if ($typespecAdditionalOptions) {
+        $options = $typespecAdditionalOptions.Split(";");
         foreach ($option in $options) {
             $typespecCompileCommand += " --option $emitterName.$option"
         }

@@ -1,4 +1,4 @@
-# For details see https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Typespec-Project-Scripts.md
+# For details see https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/TypeSpec-Project-Scripts.md
 
 [CmdletBinding()]
 param (
@@ -86,7 +86,7 @@ function GetSpecCloneDir([string]$projectName) {
     return $createResult
 }
 
-$typespecConfigurationFile = Resolve-Path "$ProjectDirectory/typespec-location.yaml"
+$typespecConfigurationFile = Resolve-Path "$ProjectDirectory/tsp-location.yaml"
 Write-Host "Reading configuration from $typespecConfigurationFile"
 $configuration = Get-Content -Path $typespecConfigurationFile -Raw | ConvertFrom-Yaml
 
@@ -118,10 +118,10 @@ if ( $configuration["repo"] -and $configuration["commit"]) {
 }
 
 
-$tempTypespecDir = "$ProjectDirectory/TempTypespecFiles"
-New-Item $tempTypespecDir -Type Directory -Force | Out-Null
+$tempTypeSpecDir = "$ProjectDirectory/TempTypeSpecFiles"
+New-Item $tempTypeSpecDir -Type Directory -Force | Out-Null
 CopySpecToProjectIfNeeded `
     -specCloneRoot $specCloneDir `
     -mainSpecDir $specSubDirectory `
-    -dest $tempTypespecDir `
+    -dest $tempTypeSpecDir `
     -specAdditionalSubDirectories $configuration["additionalDirectories"]
