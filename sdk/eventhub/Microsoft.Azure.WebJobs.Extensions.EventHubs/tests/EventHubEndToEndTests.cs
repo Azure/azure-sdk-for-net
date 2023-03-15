@@ -341,7 +341,31 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(result);
             }
 
-            AssertMultipleDispatchLogs(host);
+            AssertMultipleDispatchLogsMinBatch(host);
+        }
+
+        private static void AssertMultipleDispatchLogsMinBatch(IHost host)
+        {
+            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
+                .GetAllLogMessages();
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("Trigger Details:")
+                && x.FormattedMessage.Contains("Offset:")).Any());
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("OpenAsync")).Any());
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("CheckpointAsync")
+                && x.FormattedMessage.Contains("lease")
+                && x.FormattedMessage.Contains("offset")
+                && x.FormattedMessage.Contains("sequenceNumber")).Any());
+
+            // Events are being sent in the EventHubTestMultipleDispatchMinBatchSizeJobs
+            // class directly for this test
+
+            AssertAzureSdkLogs(logMessages);
         }
 
         private static void AssertMultipleDispatchLogs(IHost host)
