@@ -31,7 +31,6 @@ namespace Azure.Data.AppConfiguration.Tests
 
             var retentionPeriod = settingSnapshot.RetentionPeriod;
             Assert.AreEqual(retentionPeriod, TimeSpan.FromSeconds(10675199));
-            Assert.AreEqual(settingSnapshot.RetentionPeriodLong, 10675199);
         }
 
         [Test]
@@ -43,7 +42,6 @@ namespace Azure.Data.AppConfiguration.Tests
             settingSnapshot.RetentionPeriod = TimeSpan.FromSeconds(10675199);
 
             Assert.AreEqual(settingSnapshot.RetentionPeriod, TimeSpan.FromSeconds(10675199));
-            Assert.AreEqual(settingSnapshot.RetentionPeriodLong, 10675199);
         }
     }
 }

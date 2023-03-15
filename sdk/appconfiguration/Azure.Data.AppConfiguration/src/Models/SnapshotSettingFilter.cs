@@ -7,7 +7,6 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Enables filtering of key-values. </summary>
-    [CodeGenModel("ConfigurationSettingFilter")]
     public partial class SnapshotSettingFilter
     {
         /// <summary> Initializes a new instance of KeyValueFilter. </summary>

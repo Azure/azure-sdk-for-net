@@ -998,6 +998,36 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
+        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+                SnapshotUpdateParameters snapshotUpdateParameters = new()
+                {
+                    Status = SnapshotStatus.Archived
+                };
+                using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
+
+                Response response = UpdateSnapshotStatus(name, content, new MatchConditions(), context);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
         /// <param name="snapshot"> The snapshot object of the configuration setting snapshot to archive. </param>
         /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
         /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
@@ -1025,36 +1055,6 @@ namespace Azure.Data.AppConfiguration
                 MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.Etag } : default;
 
                 Response response = await UpdateSnapshotStatusAsync(snapshot.Name, content, requestOptions, context).ConfigureAwait(false);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
-                return Response.FromValue(value, response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
-            scope.Start();
-            try
-            {
-                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-
-                SnapshotUpdateParameters snapshotUpdateParameters = new()
-                {
-                    Status = SnapshotStatus.Archived
-                };
-                using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
-
-                Response response = UpdateSnapshotStatus(name, content, new MatchConditions(), context);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1132,6 +1132,36 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
+        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+                SnapshotUpdateParameters snapshotUpdateParameters = new()
+                {
+                    Status = SnapshotStatus.Ready
+                };
+                using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
+
+                Response response = UpdateSnapshotStatus(name, content, new MatchConditions(), context);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
         /// <param name="snapshot"> The name of the configuration setting snapshot to delete. </param>
         /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
         /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
@@ -1157,36 +1187,6 @@ namespace Azure.Data.AppConfiguration
                 MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.Etag } : default;
 
                 Response response = await UpdateSnapshotStatusAsync(snapshot.Name, content, requestOptions, context).ConfigureAwait(false);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
-                return Response.FromValue(value, response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
-        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
-            scope.Start();
-            try
-            {
-                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-
-                SnapshotUpdateParameters snapshotUpdateParameters = new()
-                {
-                    Status = SnapshotStatus.Ready
-                };
-                using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
-
-                Response response = UpdateSnapshotStatus(name, content, new MatchConditions(), context);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }

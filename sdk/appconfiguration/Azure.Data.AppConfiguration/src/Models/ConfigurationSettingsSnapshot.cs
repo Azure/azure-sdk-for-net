@@ -44,7 +44,7 @@ namespace Azure.Data.AppConfiguration
             CompositionType = compositionType;
             Created = created;
             Expires = expires;
-            RetentionPeriodLong = retentionPeriod;
+            _retentionPeriod = retentionPeriod;
             Size = size;
             ItemCount = itemCount;
             Tags = tags;
@@ -66,9 +66,6 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The time that the snapshot will expire. </summary>
         public DateTimeOffset? Expires { get; }
         private long? _retentionPeriod;
-        /// <summary> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
-        [CodeGenMember("RetentionPeriod")]
-        internal long? RetentionPeriodLong { get { return _retentionPeriod; } set { _retentionPeriod = value; } }
         /// <summary> The amount of time that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
         public TimeSpan? RetentionPeriod {
             get {return TimeSpan.FromSeconds((double)_retentionPeriod); }
