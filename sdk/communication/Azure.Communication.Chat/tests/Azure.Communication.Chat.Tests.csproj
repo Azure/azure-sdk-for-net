@@ -11,7 +11,6 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\Azure.Communication.Identity\src\Azure.Communication.Identity.csproj" />
-    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
     <ProjectReference Include="..\src\Azure.Communication.Chat.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -21,6 +20,8 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Shared\tests\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
+    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
     <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializerTest.cs" LinkBase="Shared\Communication" />
   </ItemGroup>
 </Project>
