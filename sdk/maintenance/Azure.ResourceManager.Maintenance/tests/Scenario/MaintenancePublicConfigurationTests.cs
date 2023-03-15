@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -15,23 +16,16 @@ namespace Azure.ResourceManager.Maintenance.Tests
 {
     public sealed class MaintenancePublicConfigurationTests : MaintenanceManagementTestBase
     {
-        private SubscriptionResource _subscription;
-
         public MaintenancePublicConfigurationTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         { }
-
-        [SetUp]
-        public async Task Setup()
-        {
-            _subscription = await Client.GetDefaultSubscriptionAsync();
-        }
 
         [RecordedTest]
         public async Task MaintenancePublicConfigurationGetForResourceTest()
         {
-            string assetName = "resource";
-            string resourceName = Recording.GenerateAssetName(assetName);
-            ResourceIdentifier maintenanceConfigurationResourceId = MaintenancePublicConfigurationResource.CreateResourceIdentifier(_subscription.Id, resourceName);
+            //string assetName = "maintenance-config-";
+            string subscriptionId = "eee2cef4-bc47-4278-b4f8-cfc65f25dfd8";
+            string resourceName = "aks-mrp-cfg-weekday_utc-7-eastus2euap";
+            ResourceIdentifier maintenanceConfigurationResourceId = MaintenancePublicConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceName);
             MaintenancePublicConfigurationResource maintenancePublicConfiguration = Client.GetMaintenancePublicConfigurationResource(maintenanceConfigurationResourceId);
 
             MaintenancePublicConfigurationResource result = await maintenancePublicConfiguration.GetAsync();
@@ -39,6 +33,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             MaintenanceConfigurationData resourceData = result.Data;
 
             Assert.IsNotNull(resourceData);
+            Assert.IsTrue(resourceData.MaintenanceScope.Equals(MaintenanceScope.Resource));
         }
     }
 }

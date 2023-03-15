@@ -83,8 +83,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             Assert.IsNotEmpty(retrieveConfig.Value.Data.Id);
         }
 
-        [RecordedTest]
-        public async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration()
+        private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration()
         {
             string resourceName = Recording.GenerateAssetName("maintenance-config-");
             MaintenanceConfigurationData data = new MaintenanceConfigurationData(Location)

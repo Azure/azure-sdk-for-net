@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/eee2cef4-bc47-4278-b4f8-cfc65f25dfd8/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/aks-mrp-cfg-weekday_utc-7-eastus2euap?api-version=2023-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-34116734de4b1106701ac4a69e89d1a9-9b2ea12539d3187e-00",
+        "User-Agent": "azsdk-net-ResourceManager.Maintenance/1.2.0-alpha.20230315.1 (.NET 6.0.15; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "b5377c9eeaa93dd9ff9c626b44cc2bb1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "793",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 15 Mar 2023 14:34:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b28f8870-8c4f-4cb8-abd3-ef86697fe139",
+        "x-ms-ratelimit-remaining-subscription-reads": "11882",
+        "x-ms-request-id": "b28f8870-8c4f-4cb8-abd3-ef86697fe139",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20230315T143409Z:b28f8870-8c4f-4cb8-abd3-ef86697fe139"
+      },
+      "ResponseBody": {
+        "location": "eastus2euap",
+        "tags": {},
+        "properties": {
+          "namespace": "Microsoft.Maintenance",
+          "extensionProperties": {
+            "maintenanceSubScope": "AKS"
+          },
+          "maintenanceScope": "Resource",
+          "maintenanceWindow": {
+            "startDateTime": "2022-08-01 22:00",
+            "duration": "08:00",
+            "timeZone": "Mountain Standard Time",
+            "recurEvery": "Week Monday,Tuesday,Wednesday,Thursday"
+          },
+          "visibility": "Public",
+          "configurationType": "Regular"
+        },
+        "id": "/subscriptions/eee2cef4-bc47-4278-b4f8-cfc65f25dfd8/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/aks-mrp-cfg-weekday_utc-7-eastus2euap",
+        "name": "aks-mrp-cfg-weekday_utc-7-eastus2euap",
+        "type": "Microsoft.Maintenance/publicMaintenanceConfigurations"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "496200321",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "eee2cef4-bc47-4278-b4f8-cfc65f25dfd8"
+  }
+}
