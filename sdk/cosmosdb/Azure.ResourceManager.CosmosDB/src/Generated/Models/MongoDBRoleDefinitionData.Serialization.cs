@@ -58,5 +58,113 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
+
+        internal static MongoDBRoleDefinitionData DeserializeMongoDBRoleDefinitionData(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> roleName = default;
+            Optional<MongoDBRoleDefinitionType> type0 = default;
+            Optional<string> databaseName = default;
+            Optional<IList<MongoDBPrivilege>> privileges = default;
+            Optional<IList<MongoDBRole>> roles = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("roleName"u8))
+                        {
+                            roleName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("type"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            type0 = property0.Value.GetString().ToMongoDBRoleDefinitionType();
+                            continue;
+                        }
+                        if (property0.NameEquals("databaseName"u8))
+                        {
+                            databaseName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("privileges"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<MongoDBPrivilege> array = new List<MongoDBPrivilege>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item));
+                            }
+                            privileges = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("roles"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<MongoDBRole> array = new List<MongoDBRole>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(MongoDBRole.DeserializeMongoDBRole(item));
+                            }
+                            roles = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+            }
+            return new MongoDBRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, Optional.ToNullable(type0), databaseName.Value, Optional.ToList(privileges), Optional.ToList(roles));
+        }
     }
 }
