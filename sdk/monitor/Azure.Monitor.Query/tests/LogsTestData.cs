@@ -51,7 +51,6 @@ namespace Azure.Monitor.Query.Tests
             _testEnvironment = test.TestEnvironment;
 
             var recordingUtcNow = DateTime.SpecifyKind(test.Recording.UtcNow.Date, DateTimeKind.Utc);
-            //DateTime dateTime = DateTime.UtcNow.AddDays(-14);
             RetentionWindowStart = recordingUtcNow.AddDays(-14);
 
             TableA = new()
