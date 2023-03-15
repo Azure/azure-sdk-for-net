@@ -16,6 +16,7 @@ namespace Azure.AI.Translation.Text
         private const string KEY_HEADER_NAME = "Ocp-Apim-Subscription-Key";
         private const string TOKEN_SCOPE = "https://cognitiveservices.azure.com/.default";
         private const string PLATFORM_PATH = "/translator/text/v3.0";
+        private const string DEFAULT_REGION = "global";
 
         private static readonly Uri DEFAULT_ENDPOINT = new Uri("https://api.cognitive.microsofttranslator.com");
 
@@ -23,22 +24,10 @@ namespace Azure.AI.Translation.Text
         /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
         /// </summary>
         /// <param name="credential">Azure Key Credential</param>
+        /// <param name="region">Azure Resource Region</param>
         /// <param name="options">Translate Client Options</param>
-        public TextTranslationClient(AzureKeyCredential credential, TextTranslationClientOptions options = null) : this(DEFAULT_ENDPOINT, options)
+        public TextTranslationClient(AzureKeyCredential credential, string region = DEFAULT_REGION, TextTranslationClientOptions options = null) : this(DEFAULT_ENDPOINT, credential, region, options)
         {
-            options = options ?? new TextTranslationClientOptions();
-
-            List<HttpPipelinePolicy> authenticationPolicies = new List<HttpPipelinePolicy>()
-            {
-                new AzureKeyCredentialPolicy(credential, KEY_HEADER_NAME)
-            };
-
-            if (!string.IsNullOrWhiteSpace(options.Region) && string.Equals(TextTranslationClientOptions.DefaultRegion, options.Region, StringComparison.InvariantCultureIgnoreCase))
-            {
-                authenticationPolicies.Add(new TranslatorRegionalEndpointAuthenticationPolicy(options.Region));
-            }
-
-            this._pipeline = HttpPipelineBuilder.Build(options, authenticationPolicies.ToArray(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
         /// <summary>
@@ -46,8 +35,9 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         /// <param name="endpoint">Service Endpoint</param>
         /// <param name="credential">Azure Key Credential</param>
+        /// <param name="region">Azure Resource Region</param>
         /// <param name="options">Translate Client Options</param>
-        public TextTranslationClient(Uri endpoint, AzureKeyCredential credential, TextTranslationClientOptions options = null) : this(endpoint, options)
+        public TextTranslationClient(Uri endpoint, AzureKeyCredential credential, string region = DEFAULT_REGION, TextTranslationClientOptions options = null) : this(endpoint, options)
         {
             options = options ?? new TextTranslationClientOptions();
 
@@ -56,9 +46,9 @@ namespace Azure.AI.Translation.Text
                 new AzureKeyCredentialPolicy(credential, KEY_HEADER_NAME)
             };
 
-            if (!string.IsNullOrWhiteSpace(options.Region) && string.Equals(TextTranslationClientOptions.DefaultRegion, options.Region, StringComparison.InvariantCultureIgnoreCase))
+            if (!string.IsNullOrWhiteSpace(region) && !string.Equals(DEFAULT_REGION, region, StringComparison.InvariantCultureIgnoreCase))
             {
-                authenticationPolicies.Add(new TranslatorRegionalEndpointAuthenticationPolicy(options.Region));
+                authenticationPolicies.Add(new TranslatorRegionalEndpointAuthenticationPolicy(region));
             }
 
             this._pipeline = HttpPipelineBuilder.Build(options, authenticationPolicies.ToArray(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
@@ -74,12 +64,8 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         /// <param name="credential">Cognitive Services Token</param>
         /// <param name="options">Translate Client Options</param>
-        public TextTranslationClient(TokenCredential credential, TextTranslationClientOptions options = null) : this(DEFAULT_ENDPOINT, options)
+        public TextTranslationClient(TokenCredential credential, TextTranslationClientOptions options = null) : this(DEFAULT_ENDPOINT, credential, options)
         {
-            var policy = new BearerTokenAuthenticationPolicy(credential, TOKEN_SCOPE);
-            options = options ?? new TextTranslationClientOptions();
-
-            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
         /// <summary>
