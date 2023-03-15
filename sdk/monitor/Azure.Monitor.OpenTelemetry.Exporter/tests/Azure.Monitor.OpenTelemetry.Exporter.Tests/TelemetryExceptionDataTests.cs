@@ -233,12 +233,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal(3, exceptionData.Exceptions.Count);
 
-#if NET461
-            Assert.Equal("AggregateException", exceptionData.Exceptions[0].Message);
-#else
-            Assert.Equal("AggregateException (Inner1) (Inner2)", exceptionData.Exceptions[0].Message);
-#endif
+            var test = aggregateException.Message.ToString();
+            //#if NET461
+            //            Assert.Equal("AggregateException", exceptionData.Exceptions[0].Message);
+            //#else
+            //            Assert.Equal("AggregateException (Inner1) (Inner2)", exceptionData.Exceptions[0].Message);
+            //#endif
 
+            Assert.Equal(aggregateException.Message, exceptionData.Exceptions[0].Message);
             Assert.Equal("Inner1", exceptionData.Exceptions[1].Message);
             Assert.Equal("Inner2", exceptionData.Exceptions[2].Message);
         }
