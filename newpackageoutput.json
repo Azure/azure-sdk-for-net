@@ -1,8 +1,0 @@
-{
-  "service": "batch",
-  "packageName": "Azure.Compute.Batch",
-  "projectFolder": "C:\\git\\azure-sdk-for-net\\sdk\\batch\\Azure.Compute.Batch",
-  "path": [
-    ".\\sdk\\batch\\Azure.Compute.Batch"
-  ]
-}
