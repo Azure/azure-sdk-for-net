@@ -8,70 +8,92 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal class TransmissionStateManager
     {
-        private int _consecutiveErrors;
+        private const int MaxDelayInSeconds = 3600;
 
-        private const long MaxDelayInMilliseconds = 3600000;
-
-        internal const long MinDelayInMilliseconds = 10000;
+        private const int MinDelayInSeconds = 10;
 
         private readonly Random _random = new();
 
-        private readonly TimeSpan _minIntervalToUpdateConsecutiveErrors = TimeSpan.FromMilliseconds(20000);
+        /// <summary>
+        /// Minimum time interval between failures to increment consecutive error count.
+        /// </summary>
+        private TimeSpan _minIntervalToUpdateConsecutiveErrors = TimeSpan.FromSeconds(20);
 
+        /// <summary>
+        /// Time threshold after which consecutive error count can be incremented.
+        /// </summary>
         private DateTimeOffset _nextMinTimeToUpdateConsecutiveErrors = DateTimeOffset.MinValue;
 
         private readonly System.Timers.Timer _backOffIntervalTimer;
 
         private double _syncBackOffIntervalCalculation;
 
+        private int _consecutiveErrors;
+
         internal TransmissionState State { get; private set; }
 
-        private TransmissionStateManager()
+        internal TransmissionStateManager()
         {
             _backOffIntervalTimer = new();
-            _backOffIntervalTimer.Elapsed += RestartTransmission;
+            _backOffIntervalTimer.Elapsed += ResetTransmission;
             _backOffIntervalTimer.AutoReset = false;
             State = TransmissionState.Closed;
         }
 
         /// <summary>
-        /// Prevents transmitting data to backend.
+        /// Stops transmitting data to backend.
         /// </summary>
         private void OpenTransmission()
         {
             State = TransmissionState.Open;
         }
 
-        internal void RestartTransmission(Object source, System.Timers.ElapsedEventArgs e)
+        /// <summary>
+        /// Enable transmitting data to backend.
+        /// To be called for each successful request or after back-off interval expiration.
+        /// </summary>
+        internal void CloseTransmision()
         {
-            _consecutiveErrors = 0;
-
-            // Reset _sync so that the threads can open the transmission again if needed.
-            _syncBackOffIntervalCalculation = 0;
             State = TransmissionState.Closed;
+        }
+
+        /// <summary>
+        /// Resets consecutive error count.
+        /// To be called for each successful request.
+        /// </summary>
+        internal void ResetConsecutiveErrors()
+        {
+            Interlocked.Exchange(ref _consecutiveErrors, 0);
+        }
+
+        internal void ResetTransmission(object source, System.Timers.ElapsedEventArgs e)
+        {
+            CloseTransmision();
         }
 
         internal void EnableBackOff(Response? response)
         {
             if (Interlocked.Exchange(ref _syncBackOffIntervalCalculation, 1) == 0)
             {
-                // Do not increase number of errors more often than minimum interval (MinDelayInMilliseconds).
+                // Do not increase number of errors more often than minimum interval.
                 // since we can have 4 parallel transmissions (logs, metrics, traces and offline storage tranmission) and all of them most likely would fail if we have intermittent error.
                 if (DateTimeOffset.UtcNow > _nextMinTimeToUpdateConsecutiveErrors)
                 {
-                    _consecutiveErrors++;
+                    Interlocked.Increment(ref _consecutiveErrors);
                     _nextMinTimeToUpdateConsecutiveErrors = DateTimeOffset.UtcNow + _minIntervalToUpdateConsecutiveErrors;
 
                     // If backend responded with a retryAfter header we will use it
                     // else we will calculate by increasing time interval exponentially.
-                    var retryAfterInterval = HttpPipelineHelper.GetRetryIntervalTimespan(response);
-                    var backOffTimeInterval = retryAfterInterval != TimeSpan.MinValue ? retryAfterInterval : GetBackOffTimeInterval();
+                    var backOffTimeInterval = HttpPipelineHelper.TryGetRetryIntervalTimespan(response, out var retryAfterInterval) ? retryAfterInterval : GetBackOffTimeInterval();
 
-                    OpenTransmission();
+                    if (backOffTimeInterval > TimeSpan.Zero)
+                    {
+                        OpenTransmission();
 
-                    _backOffIntervalTimer.Interval = backOffTimeInterval.TotalMilliseconds;
+                        _backOffIntervalTimer.Interval = backOffTimeInterval.TotalMilliseconds;
 
-                    _backOffIntervalTimer.Start();
+                        _backOffIntervalTimer.Start();
+                    }
                 }
 
                 Interlocked.Exchange(ref _syncBackOffIntervalCalculation, 0);
@@ -80,15 +102,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal TimeSpan GetBackOffTimeInterval()
         {
-            double delayInMilliseconds = MinDelayInMilliseconds;
-            if (_consecutiveErrors > 1)
+            double delayInSeconds = 0;
+            if (_consecutiveErrors > 0)
             {
                 double backOffSlot = (Math.Pow(2, _consecutiveErrors) - 1) / 2;
-                var backOffDelay = _random.Next(1, (int)Math.Min(backOffSlot * MinDelayInMilliseconds, int.MaxValue));
-                delayInMilliseconds = Math.Max(Math.Min(backOffDelay, MaxDelayInMilliseconds), MinDelayInMilliseconds);
+                var backOffDelay = _random.Next(1, (int)Math.Min(backOffSlot * MinDelayInSeconds, int.MaxValue));
+                delayInSeconds = Math.Max(Math.Min(backOffDelay, MaxDelayInSeconds), MinDelayInSeconds);
             }
 
-            return TimeSpan.FromMilliseconds(delayInMilliseconds);
+            return TimeSpan.FromSeconds(delayInSeconds);
         }
     }
 }
