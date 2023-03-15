@@ -291,6 +291,7 @@ rename-mapping:
   AccountKeyMetadata.generationTime: GeneratedOn
   PrivilegeResource: MongoDBPrivilegeResourceInfo
   PrivilegeResource.db: DBName
+  MinimalTlsVersion: CosmosDBMinimalTlsVersion
 
 prepend-rp-prefix:
 - UniqueKey

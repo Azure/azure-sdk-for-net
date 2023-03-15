@@ -126,6 +126,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
         public bool? EnablePartitionMerge { get; set; }
         /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API&apos;s, which only work with Tls 1.2. </summary>
-        public MinimalTlsVersion? MinimalTlsVersion { get; set; }
+        public CosmosDBMinimalTlsVersion? MinimalTlsVersion { get; set; }
     }
 }

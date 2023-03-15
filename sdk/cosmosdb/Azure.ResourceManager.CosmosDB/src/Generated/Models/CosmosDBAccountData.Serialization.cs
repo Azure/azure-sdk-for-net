@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<CosmosDBAccountCapacity> capacity = default;
             Optional<DatabaseAccountKeysMetadata> keysMetadata = default;
             Optional<bool> enablePartitionMerge = default;
-            Optional<MinimalTlsVersion> minimalTlsVersion = default;
+            Optional<CosmosDBMinimalTlsVersion> minimalTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            minimalTlsVersion = new MinimalTlsVersion(property0.Value.GetString());
+                            minimalTlsVersion = new CosmosDBMinimalTlsVersion(property0.Value.GetString());
                             continue;
                         }
                     }
