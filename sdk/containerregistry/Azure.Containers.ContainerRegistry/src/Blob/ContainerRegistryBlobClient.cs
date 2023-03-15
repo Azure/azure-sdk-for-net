@@ -841,6 +841,23 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(path, nameof(path));
 
+            return DownloadBlobTo(digest, path, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken);
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="path">A file path to write the downloaded content to.</param>
+        /// <param name="options">Options to configure the operation behavior.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        public virtual Response DownloadBlobTo(string digest, string path, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(path, nameof(path));
+            Argument.AssertNotNull(options, nameof(options));
+
             using Stream destination = File.Create(path);
             return DownloadBlobTo(digest, destination, cancellationToken);
         }
@@ -857,11 +874,28 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(destination, nameof(destination));
 
+            return DownloadBlobTo(digest, destination, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken);
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="destination">Destination for the downloaded blob.</param>
+        /// <param name="options">Options to configure the operation behavior.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        public virtual Response DownloadBlobTo(string digest, Stream destination, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(destination, nameof(destination));
+            Argument.AssertNotNull(options, nameof(options));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlobTo)}");
             scope.Start();
             try
             {
-                return DownloadBlobToInternalAsync(digest, destination, false, cancellationToken).EnsureCompleted();
+                return DownloadBlobToInternalAsync(digest, destination, options, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -883,8 +917,26 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(path, nameof(path));
 
+            return await DownloadBlobToAsync(digest, path, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.  This approach will download the blob
+        /// to the destination stream in sequential chunks of bytes.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="path">A file path to write the downloaded content to.</param>
+        /// <param name="options">Options to configure the operation behavior.</param>
+        /// <param name="cancellationToken"> The cancellation token to use.</param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        public virtual async Task<Response> DownloadBlobToAsync(string digest, string path, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(path, nameof(path));
+            Argument.AssertNotNull(options, nameof(options));
+
             using Stream destination = File.Create(path);
-            return await DownloadBlobToAsync(digest, destination, cancellationToken).ConfigureAwait(false);
+            return await DownloadBlobToAsync(digest, destination, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -900,11 +952,28 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(destination, nameof(destination));
 
+            return await DownloadBlobToAsync(digest, destination, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.  This approach will download the blob
+        /// to the destination stream in sequential chunks of bytes.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="destination">Destination for the downloaded blob.</param>
+        /// <param name="options">Options to configure the operation behavior.</param>
+        /// <param name="cancellationToken"> The cancellation token to use.</param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        public virtual async Task<Response> DownloadBlobToAsync(string digest, Stream destination, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(destination, nameof(destination));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlobTo)}");
             scope.Start();
             try
             {
-                return await DownloadBlobToInternalAsync(digest, destination, true, cancellationToken).ConfigureAwait(false);
+                return await DownloadBlobToInternalAsync(digest, destination, options, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -913,9 +982,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
-        private async Task<Response> DownloadBlobToInternalAsync(string digest, Stream destination, bool async, CancellationToken cancellationToken)
+        private async Task<Response> DownloadBlobToInternalAsync(string digest, Stream destination, DownloadBlobToOptions options, bool async, CancellationToken cancellationToken)
         {
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultChunkSize);
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(options.MaxChunkSize);
             long bytesDownloaded = 0;
             using SHA256 sha256 = SHA256.Create();
             long? blobSize = default;
@@ -926,8 +995,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 do
                 {
                     int chunkSize = blobSize.HasValue ?
-                        (int)Math.Min(blobSize.Value - bytesDownloaded, DefaultChunkSize) :
-                        DefaultChunkSize;
+                        (int)Math.Min(blobSize.Value - bytesDownloaded, options.MaxChunkSize) :
+                        options.MaxChunkSize;
                     HttpRange range = new HttpRange(bytesDownloaded, chunkSize);
 
                     var chunkResult = async ?
