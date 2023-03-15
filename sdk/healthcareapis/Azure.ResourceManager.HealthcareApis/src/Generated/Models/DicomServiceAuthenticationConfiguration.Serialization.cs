@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static DicomServiceAuthenticationConfiguration DeserializeDicomServiceAuthenticationConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> authority = default;
             Optional<IReadOnlyList<string>> audiences = default;
             foreach (var property in element.EnumerateObject())

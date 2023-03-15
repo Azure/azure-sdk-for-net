@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public static PathGetPropertiesAction ToPathGetPropertiesAction(this string value)
         {
-            if (string.Equals(value, "getAccessControl", StringComparison.InvariantCultureIgnoreCase)) return PathGetPropertiesAction.GetAccessControl;
-            if (string.Equals(value, "getStatus", StringComparison.InvariantCultureIgnoreCase)) return PathGetPropertiesAction.GetStatus;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "getAccessControl")) return PathGetPropertiesAction.GetAccessControl;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "getStatus")) return PathGetPropertiesAction.GetStatus;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathGetPropertiesAction value.");
         }
     }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Maps.Models
     {
         internal static MapsAccounts DeserializeMapsAccounts(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MapsAccountData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

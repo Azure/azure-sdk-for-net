@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverResourceProperties DeserializeMoverResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MoverProvisioningState> provisioningState = default;
             ResourceIdentifier sourceId = default;
             Optional<ResourceIdentifier> targetId = default;

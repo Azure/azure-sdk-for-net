@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ScriptStatus DeserializeScriptStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> containerInstanceId = default;
             Optional<string> storageAccountId = default;
             Optional<DateTimeOffset> startTime = default;

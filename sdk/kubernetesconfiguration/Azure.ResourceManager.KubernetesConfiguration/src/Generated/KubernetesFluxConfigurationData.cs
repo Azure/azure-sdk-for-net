@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    /// <summary> A class representing the KubernetesFluxConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the KubernetesFluxConfiguration data model.
+    /// The Flux Configuration object returned in Get &amp; Put response.
+    /// </summary>
     public partial class KubernetesFluxConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of KubernetesFluxConfigurationData. </summary>

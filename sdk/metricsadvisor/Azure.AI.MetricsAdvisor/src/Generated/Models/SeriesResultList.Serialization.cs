@@ -15,6 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static SeriesResultList DeserializeSeriesResultList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<MetricEnrichedSeriesData> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightPrivateLinkConfiguration DeserializeHDInsightPrivateLinkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             string name = default;
             Optional<ResourceType> type = default;

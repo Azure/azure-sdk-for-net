@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static ProvisionedClustersCommonPropertiesStatus DeserializeProvisionedClustersCommonPropertiesStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisionedClustersCommonPropertiesStatusFeaturesStatus> featuresStatus = default;
             Optional<IReadOnlyDictionary<string, AddonStatus>> addonStatus = default;
             Optional<string> errorMessage = default;

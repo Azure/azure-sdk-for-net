@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static VolumeQuotaRulesList DeserializeVolumeQuotaRulesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetAppVolumeQuotaRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

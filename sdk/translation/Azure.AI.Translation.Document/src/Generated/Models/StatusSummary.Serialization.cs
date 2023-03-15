@@ -14,6 +14,10 @@ namespace Azure.AI.Translation.Document.Models
     {
         internal static StatusSummary DeserializeStatusSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int total = default;
             int failed = default;
             int success = default;

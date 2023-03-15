@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationPrivateEndpointConnectionData DeserializeAutomationPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

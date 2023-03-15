@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowReference DeserializeLogicWorkflowReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;

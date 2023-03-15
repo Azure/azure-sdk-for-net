@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static OfflineConfiguration DeserializeOfflineConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> offline = default;
             Optional<string> lastBackupName = default;
             foreach (var property in element.EnumerateObject())

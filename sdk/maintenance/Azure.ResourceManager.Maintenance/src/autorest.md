@@ -51,6 +51,7 @@ override-operation-name:
   ConfigurationAssignments_DeleteParent: DeleteConfigurationAssignmentByParent
   ConfigurationAssignments_ListParent:  GetConfigurationAssignmentsByParent
   Updates_ListParent: GetUpdatesByParent
+  MaintenanceConfigurations_Delete: DeleteEx
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}
@@ -93,4 +94,9 @@ directive:
     transform: >
       $.MaintenanceWindow.properties.duration['x-ms-format'] = 'duration-constant';
 
+  # Sevice doesn't return the the `MaintenanceConfiguration` for the delete operation, use `directive` to fix the swagger and custom code to keep backward compatibility as this lib has already GAed. 
+  - from: Maintenance.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}']
+    transform: >
+      delete $.delete.responses['200']['schema'];
 ```

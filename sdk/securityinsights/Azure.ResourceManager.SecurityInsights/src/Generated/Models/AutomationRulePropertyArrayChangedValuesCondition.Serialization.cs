@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ArrayType))
             {
-                writer.WritePropertyName("arrayType");
+                writer.WritePropertyName("arrayType"u8);
                 writer.WriteStringValue(ArrayType.Value.ToString());
             }
             if (Optional.IsDefined(ChangeType))
             {
-                writer.WritePropertyName("changeType");
+                writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRulePropertyArrayChangedValuesCondition DeserializeAutomationRulePropertyArrayChangedValuesCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationRulePropertyArrayChangedConditionSupportedArrayType> arrayType = default;
             Optional<AutomationRulePropertyArrayChangedConditionSupportedChangeType> changeType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("arrayType"))
+                if (property.NameEquals("arrayType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     arrayType = new AutomationRulePropertyArrayChangedConditionSupportedArrayType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("changeType"))
+                if (property.NameEquals("changeType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static ShareablePrivateLinkType DeserializeShareablePrivateLinkType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ShareablePrivateLinkProperties> properties = default;
             foreach (var property in element.EnumerateObject())

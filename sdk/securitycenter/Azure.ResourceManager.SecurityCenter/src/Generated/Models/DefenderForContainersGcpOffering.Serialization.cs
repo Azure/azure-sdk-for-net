@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForContainersGcpOffering DeserializeDefenderForContainersGcpOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DefenderForContainersGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
             Optional<DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection> dataPipelineNativeCloudConnection = default;
             Optional<bool> auditLogsAutoProvisioningFlag = default;

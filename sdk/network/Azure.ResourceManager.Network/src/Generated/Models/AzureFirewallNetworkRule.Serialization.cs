@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallNetworkRule DeserializeAzureFirewallNetworkRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> description = default;
             Optional<IList<AzureFirewallNetworkRuleProtocol>> protocols = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static ListWorkspaceQuotas DeserializeListWorkspaceQuotas(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MachineLearningResourceQuota>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

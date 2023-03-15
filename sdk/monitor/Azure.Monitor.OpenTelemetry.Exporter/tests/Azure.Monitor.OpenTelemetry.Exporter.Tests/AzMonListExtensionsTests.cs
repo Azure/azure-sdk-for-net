@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System.Collections.Generic;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
@@ -562,7 +560,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerIp, netPeerIp));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, netPeerPort));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object>(SemanticConventions.AttributeDbName, "DbName"));
-            string hostName = null;
+            string? hostName = null;
             if (peerService != null)
             {
                 hostName = peerService;

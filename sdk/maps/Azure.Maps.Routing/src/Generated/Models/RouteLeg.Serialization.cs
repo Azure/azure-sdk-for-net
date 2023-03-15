@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteLeg DeserializeRouteLeg(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RouteLegSummary> summary = default;
             Optional<IReadOnlyList<LatLongPair>> points = default;
             foreach (var property in element.EnumerateObject())

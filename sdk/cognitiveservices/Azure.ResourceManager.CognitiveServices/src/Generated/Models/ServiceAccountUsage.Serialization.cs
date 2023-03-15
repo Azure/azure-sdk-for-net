@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static ServiceAccountUsage DeserializeServiceAccountUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceAccountUsageUnitType> unit = default;
             Optional<ServiceAccountUsageMetricName> name = default;
             Optional<string> quotaPeriod = default;

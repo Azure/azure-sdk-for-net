@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StackMinorVersion DeserializeStackMinorVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayVersion = default;
             Optional<string> runtimeVersion = default;
             Optional<bool> isDefault = default;

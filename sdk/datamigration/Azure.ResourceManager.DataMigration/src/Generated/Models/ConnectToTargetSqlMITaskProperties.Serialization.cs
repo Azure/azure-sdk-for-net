@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToTargetSqlMITaskProperties DeserializeConnectToTargetSqlMITaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectToTargetSqlMITaskInput> input = default;
             Optional<IReadOnlyList<ConnectToTargetSqlMITaskOutput>> output = default;
             TaskType taskType = default;

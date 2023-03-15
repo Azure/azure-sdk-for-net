@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseEncryptionProtector data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseEncryptionProtector data model.
+    /// The server encryption protector.
+    /// </summary>
     public partial class SynapseEncryptionProtectorData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseEncryptionProtectorData. </summary>

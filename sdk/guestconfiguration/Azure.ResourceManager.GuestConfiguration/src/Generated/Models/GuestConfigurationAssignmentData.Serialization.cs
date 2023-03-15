@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         internal static GuestConfigurationAssignmentData DeserializeGuestConfigurationAssignmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GuestConfigurationAssignmentProperties> properties = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;

@@ -78,6 +78,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static TextTranslationSkill DeserializeTextTranslationSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TextTranslationSkillLanguage defaultToLanguageCode = default;
             Optional<TextTranslationSkillLanguage?> defaultFromLanguageCode = default;
             Optional<TextTranslationSkillLanguage?> suggestedFrom = default;

@@ -106,6 +106,10 @@ namespace Azure.ResourceManager.ServiceFabric
 
         internal static ServiceFabricApplicationData DeserializeServiceFabricApplicationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;

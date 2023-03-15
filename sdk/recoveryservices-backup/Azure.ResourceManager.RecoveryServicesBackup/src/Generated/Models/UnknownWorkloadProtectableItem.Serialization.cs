@@ -42,11 +42,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownWorkloadProtectableItem DeserializeUnknownWorkloadProtectableItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> backupManagementType = default;
             Optional<string> workloadType = default;
             string protectableItemType = "Unknown";
             Optional<string> friendlyName = default;
-            Optional<ProtectionStatus> protectionState = default;
+            Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupManagementType"u8))
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectionState = new ProtectionStatus(property.Value.GetString());
+                    protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
             }

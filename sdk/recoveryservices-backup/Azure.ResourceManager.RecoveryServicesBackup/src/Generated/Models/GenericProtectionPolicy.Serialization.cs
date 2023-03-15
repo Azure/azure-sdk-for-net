@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static GenericProtectionPolicy DeserializeGenericProtectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SubProtectionPolicy>> subProtectionPolicy = default;
             Optional<string> timeZone = default;
             Optional<string> fabricName = default;

@@ -14,6 +14,10 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static TextAnswer DeserializeTextAnswer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> answer = default;
             Optional<double> confidenceScore = default;
             Optional<string> id = default;

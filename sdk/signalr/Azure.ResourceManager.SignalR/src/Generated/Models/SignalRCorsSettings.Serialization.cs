@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRCorsSettings DeserializeSignalRCorsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> allowedOrigins = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverResourceSetProperties DeserializeMoverResourceSetProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureLocation sourceRegion = default;
             AzureLocation targetRegion = default;
             Optional<MoverProvisioningState> provisioningState = default;

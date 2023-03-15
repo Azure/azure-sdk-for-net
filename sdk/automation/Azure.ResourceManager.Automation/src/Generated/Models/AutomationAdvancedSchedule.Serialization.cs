@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationAdvancedSchedule DeserializeAutomationAdvancedSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> weekDays = default;
             Optional<IList<int>> monthDays = default;
             Optional<IList<AutomationAdvancedScheduleMonthlyOccurrence>> monthlyOccurrences = default;

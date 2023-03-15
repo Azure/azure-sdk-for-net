@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary> A class representing the ContainerRegistryPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerRegistryPrivateLinkResource data model.
+    /// A resource that supports private link capabilities.
+    /// </summary>
     public partial class ContainerRegistryPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerRegistryPrivateLinkResourceData. </summary>

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    /// <summary> A class representing the ServiceAlert data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceAlert data model.
+    /// An alert created in alert management service.
+    /// </summary>
     public partial class ServiceAlertData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceAlertData. </summary>

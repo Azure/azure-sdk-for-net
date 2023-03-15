@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static JsonFieldWithDefault DeserializeJsonFieldWithDefault(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sourceField = default;
             Optional<string> defaultValue = default;
             foreach (var property in element.EnumerateObject())

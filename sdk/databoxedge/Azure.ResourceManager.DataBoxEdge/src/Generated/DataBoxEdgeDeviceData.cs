@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the DataBoxEdgeDevice data model. </summary>
+    /// <summary>
+    /// A class representing the DataBoxEdgeDevice data model.
+    /// The Data Box Edge/Gateway device.
+    /// </summary>
     public partial class DataBoxEdgeDeviceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceData. </summary>

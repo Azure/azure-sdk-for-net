@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static PagedImages DeserializePagedImages(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LabVirtualMachineImageData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

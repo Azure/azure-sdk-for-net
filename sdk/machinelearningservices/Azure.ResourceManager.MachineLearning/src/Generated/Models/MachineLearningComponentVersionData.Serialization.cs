@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningComponentVersionData DeserializeMachineLearningComponentVersionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningComponentVersionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

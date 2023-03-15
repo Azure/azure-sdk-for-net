@@ -12,7 +12,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the IotSecurityAggregatedRecommendation data model. </summary>
+    /// <summary>
+    /// A class representing the IotSecurityAggregatedRecommendation data model.
+    /// IoT Security solution recommendation information.
+    /// </summary>
     public partial class IotSecurityAggregatedRecommendationData : ResourceData
     {
         /// <summary> Initializes a new instance of IotSecurityAggregatedRecommendationData. </summary>

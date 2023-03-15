@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static KafkaRestProperties DeserializeKafkaRestProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ClientGroupInfo> clientGroupInfo = default;
             Optional<IDictionary<string, string>> configurationOverride = default;
             foreach (var property in element.EnumerateObject())

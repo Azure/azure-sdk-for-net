@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static PreconfiguredEndpointList DeserializePreconfiguredEndpointList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PreconfiguredEndpoint>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

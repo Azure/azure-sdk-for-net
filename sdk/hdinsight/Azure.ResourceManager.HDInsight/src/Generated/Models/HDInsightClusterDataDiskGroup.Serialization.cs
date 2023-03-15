@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightClusterDataDiskGroup DeserializeHDInsightClusterDataDiskGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> disksPerNode = default;
             Optional<string> storageAccountType = default;
             Optional<int> diskSizeGB = default;

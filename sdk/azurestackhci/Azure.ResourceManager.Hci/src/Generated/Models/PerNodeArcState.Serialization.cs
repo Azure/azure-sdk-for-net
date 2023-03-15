@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static PerNodeArcState DeserializePerNodeArcState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> arcInstance = default;
             Optional<NodeArcState> state = default;

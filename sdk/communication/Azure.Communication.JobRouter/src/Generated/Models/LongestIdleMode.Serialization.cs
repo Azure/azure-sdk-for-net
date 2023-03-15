@@ -31,6 +31,10 @@ namespace Azure.Communication.JobRouter
 
         internal static LongestIdleMode DeserializeLongestIdleMode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string kind = default;
             int minConcurrentOffers = default;
             int maxConcurrentOffers = default;

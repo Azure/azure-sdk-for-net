@@ -14,9 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static TokenInformation DeserializeTokenInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> token = default;
             Optional<long> expiryTimeInUtcTicks = default;
-            Optional<string> securityPIN = default;
+            Optional<string> securityPin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("token"u8))
@@ -36,11 +40,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("securityPIN"u8))
                 {
-                    securityPIN = property.Value.GetString();
+                    securityPin = property.Value.GetString();
                     continue;
                 }
             }
-            return new TokenInformation(token.Value, Optional.ToNullable(expiryTimeInUtcTicks), securityPIN.Value);
+            return new TokenInformation(token.Value, Optional.ToNullable(expiryTimeInUtcTicks), securityPin.Value);
         }
     }
 }

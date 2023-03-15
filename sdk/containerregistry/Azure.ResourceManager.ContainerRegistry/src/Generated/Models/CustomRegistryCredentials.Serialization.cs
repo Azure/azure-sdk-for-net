@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static CustomRegistryCredentials DeserializeCustomRegistryCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerRegistrySecretObject> userName = default;
             Optional<ContainerRegistrySecretObject> password = default;
             Optional<string> identity = default;

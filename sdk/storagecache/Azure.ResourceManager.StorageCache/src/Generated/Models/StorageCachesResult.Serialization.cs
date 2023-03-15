@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCachesResult DeserializeStorageCachesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<StorageCacheData>> value = default;
             foreach (var property in element.EnumerateObject())

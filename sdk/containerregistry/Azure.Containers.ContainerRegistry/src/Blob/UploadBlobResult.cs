@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         internal UploadBlobResult(string digest, long size)
         {
             Digest = digest;
-            Size = size;
+            SizeInBytes = size;
         }
 
         /// <summary>
@@ -22,6 +22,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// The size of the uploaded blob.
         /// </summary>
-        public long Size { get; }
+        public long SizeInBytes { get; }
     }
 }

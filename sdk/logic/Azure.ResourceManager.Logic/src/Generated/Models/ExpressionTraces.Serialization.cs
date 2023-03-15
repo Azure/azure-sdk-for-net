@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static ExpressionTraces DeserializeExpressionTraces(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LogicExpressionRoot>> inputs = default;
             foreach (var property in element.EnumerateObject())
             {

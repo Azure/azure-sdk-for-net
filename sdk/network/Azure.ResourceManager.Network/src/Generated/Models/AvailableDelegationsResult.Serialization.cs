@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableDelegationsResult DeserializeAvailableDelegationsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AvailableDelegation>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

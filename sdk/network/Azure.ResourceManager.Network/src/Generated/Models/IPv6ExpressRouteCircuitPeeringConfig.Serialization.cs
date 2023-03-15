@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static IPv6ExpressRouteCircuitPeeringConfig DeserializeIPv6ExpressRouteCircuitPeeringConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryPeerAddressPrefix = default;
             Optional<string> secondaryPeerAddressPrefix = default;
             Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;

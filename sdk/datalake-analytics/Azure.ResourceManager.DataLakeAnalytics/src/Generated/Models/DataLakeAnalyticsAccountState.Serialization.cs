@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         public static DataLakeAnalyticsAccountState ToDataLakeAnalyticsAccountState(this string value)
         {
-            if (string.Equals(value, "Active", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountState.Active;
-            if (string.Equals(value, "Suspended", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountState.Suspended;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Active")) return DataLakeAnalyticsAccountState.Active;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Suspended")) return DataLakeAnalyticsAccountState.Suspended;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeAnalyticsAccountState value.");
         }
     }

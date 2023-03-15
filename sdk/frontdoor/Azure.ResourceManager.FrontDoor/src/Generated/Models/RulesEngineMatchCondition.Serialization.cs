@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RulesEngineMatchCondition DeserializeRulesEngineMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RulesEngineMatchVariable rulesEngineMatchVariable = default;
             Optional<string> selector = default;
             RulesEngineOperator rulesEngineOperator = default;

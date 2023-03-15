@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventEndpoint DeserializeLiveEventEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> protocol = default;
             Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())

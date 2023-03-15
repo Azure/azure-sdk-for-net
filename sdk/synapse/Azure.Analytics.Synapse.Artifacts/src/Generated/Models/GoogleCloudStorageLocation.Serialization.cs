@@ -51,6 +51,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static GoogleCloudStorageLocation DeserializeGoogleCloudStorageLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> bucketName = default;
             Optional<object> version = default;
             string type = default;

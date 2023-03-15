@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseMaintenanceWindowData DeserializeSynapseMaintenanceWindowData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

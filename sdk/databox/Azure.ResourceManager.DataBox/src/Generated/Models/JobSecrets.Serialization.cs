@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static JobSecrets DeserializeJobSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("jobSecretsType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

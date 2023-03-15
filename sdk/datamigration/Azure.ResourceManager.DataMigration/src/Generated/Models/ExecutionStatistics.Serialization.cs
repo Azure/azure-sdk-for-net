@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ExecutionStatistics DeserializeExecutionStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> executionCount = default;
             Optional<float> cpuTimeMs = default;
             Optional<float> elapsedTimeMs = default;

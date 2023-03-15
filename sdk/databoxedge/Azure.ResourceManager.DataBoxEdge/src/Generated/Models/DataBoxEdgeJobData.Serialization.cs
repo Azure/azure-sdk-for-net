@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.DataBoxEdge
     {
         internal static DataBoxEdgeJobData DeserializeDataBoxEdgeJobData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeJobStatus> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;

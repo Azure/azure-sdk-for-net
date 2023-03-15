@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SnowflakeSink DeserializeSnowflakeSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> preCopyScript = default;
             Optional<SnowflakeImportCopyCommand> importSettings = default;
             string type = default;

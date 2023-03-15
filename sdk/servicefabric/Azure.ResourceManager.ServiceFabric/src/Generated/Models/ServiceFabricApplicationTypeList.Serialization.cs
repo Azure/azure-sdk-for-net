@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     {
         internal static ServiceFabricApplicationTypeList DeserializeServiceFabricApplicationTypeList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ServiceFabricApplicationTypeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

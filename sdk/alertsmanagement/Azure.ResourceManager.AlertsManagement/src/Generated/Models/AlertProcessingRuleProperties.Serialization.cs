@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleProperties DeserializeAlertProcessingRuleProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> scopes = default;
             Optional<IList<AlertProcessingRuleCondition>> conditions = default;
             Optional<AlertProcessingRuleSchedule> schedule = default;

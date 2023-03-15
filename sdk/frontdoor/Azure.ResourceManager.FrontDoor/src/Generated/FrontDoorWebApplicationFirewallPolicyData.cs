@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    /// <summary> A class representing the FrontDoorWebApplicationFirewallPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoorWebApplicationFirewallPolicy data model.
+    /// Defines web application firewall policy.
+    /// </summary>
     public partial class FrontDoorWebApplicationFirewallPolicyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicyData. </summary>

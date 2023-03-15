@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static TrafficRegions DeserializeTrafficRegions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> regions = default;
             foreach (var property in element.EnumerateObject())
             {

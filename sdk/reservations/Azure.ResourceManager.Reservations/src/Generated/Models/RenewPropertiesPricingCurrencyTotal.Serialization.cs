@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static RenewPropertiesPricingCurrencyTotal DeserializeRenewPropertiesPricingCurrencyTotal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currencyCode = default;
             Optional<float> amount = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static LinkedStorageAccountsListResult DeserializeLinkedStorageAccountsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OperationalInsightsLinkedStorageAccountsData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

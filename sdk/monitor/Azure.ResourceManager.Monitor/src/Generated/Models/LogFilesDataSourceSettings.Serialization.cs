@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LogFilesDataSourceSettings DeserializeLogFilesDataSourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogFileSettingsText> text = default;
             foreach (var property in element.EnumerateObject())
             {

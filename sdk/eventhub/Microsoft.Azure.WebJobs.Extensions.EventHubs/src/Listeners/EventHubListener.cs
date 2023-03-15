@@ -13,6 +13,7 @@ using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
+using Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -27,7 +28,7 @@ using System.Diagnostics.Tracing;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
-    internal sealed class EventHubListener : IListener, IEventProcessorFactory, IScaleMonitorProvider
+    internal sealed class EventHubListener : IListener, IEventProcessorFactory, IScaleMonitorProvider, ITargetScalerProvider
     {
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly EventProcessorHost _eventProcessorHost;
@@ -36,6 +37,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         private readonly EventHubOptions _options;
 
         private Lazy<EventHubsScaleMonitor> _scaleMonitor;
+        private Lazy<EventHubsTargetScaler> _targetScaler;
         private readonly ILoggerFactory _loggerFactory;
         private readonly ILogger _logger;
         private string _details;
@@ -58,12 +60,22 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             _options = options;
             _logger = _loggerFactory.CreateLogger<EventHubListener>();
 
+            EventHubMetricsProvider metricsProvider = new EventHubMetricsProvider(functionId, consumerClient, checkpointStore, _loggerFactory.CreateLogger<EventHubMetricsProvider>());
+
             _scaleMonitor = new Lazy<EventHubsScaleMonitor>(
                 () => new EventHubsScaleMonitor(
                     functionId,
                     consumerClient,
                     checkpointStore,
                     _loggerFactory.CreateLogger<EventHubsScaleMonitor>()));
+
+            _targetScaler = new Lazy<EventHubsTargetScaler>(
+                () => new EventHubsTargetScaler(
+                    functionId,
+                    consumerClient,
+                    options,
+                    metricsProvider,
+                    _loggerFactory.CreateLogger<EventHubsTargetScaler>()));
 
             _details = $"'namespace='{eventProcessorHost?.FullyQualifiedNamespace}', eventHub='{eventProcessorHost?.EventHubName}', " +
                 $"consumerGroup='{eventProcessorHost?.ConsumerGroup}', functionId='{functionId}', singleDispatch='{singleDispatch}'";
@@ -110,7 +122,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         {
             return _scaleMonitor.Value;
         }
-
+        
+        public ITargetScaler GetTargetScaler()
+        {
+            return _targetScaler.Value;
+        }
+        
         internal class EventProcessorStoredEventsManager : IDisposable
         {
             private SemaphoreSlim _storedEventsGuard;

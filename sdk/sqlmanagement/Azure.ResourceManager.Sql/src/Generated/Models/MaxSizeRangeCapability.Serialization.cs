@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static MaxSizeRangeCapability DeserializeMaxSizeRangeCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MaxSizeCapability> minValue = default;
             Optional<MaxSizeCapability> maxValue = default;
             Optional<MaxSizeCapability> scaleSize = default;

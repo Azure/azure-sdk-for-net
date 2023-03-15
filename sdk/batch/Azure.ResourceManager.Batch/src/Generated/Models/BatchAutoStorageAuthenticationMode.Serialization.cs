@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchAutoStorageAuthenticationMode ToBatchAutoStorageAuthenticationMode(this string value)
         {
-            if (string.Equals(value, "StorageKeys", StringComparison.InvariantCultureIgnoreCase)) return BatchAutoStorageAuthenticationMode.StorageKeys;
-            if (string.Equals(value, "BatchAccountManagedIdentity", StringComparison.InvariantCultureIgnoreCase)) return BatchAutoStorageAuthenticationMode.BatchAccountManagedIdentity;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StorageKeys")) return BatchAutoStorageAuthenticationMode.StorageKeys;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BatchAccountManagedIdentity")) return BatchAutoStorageAuthenticationMode.BatchAccountManagedIdentity;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAutoStorageAuthenticationMode value.");
         }
     }

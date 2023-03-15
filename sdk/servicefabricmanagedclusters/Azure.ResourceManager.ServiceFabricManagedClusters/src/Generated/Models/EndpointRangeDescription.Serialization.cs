@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static EndpointRangeDescription DeserializeEndpointRangeDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int startPort = default;
             int endPort = default;
             foreach (var property in element.EnumerateObject())

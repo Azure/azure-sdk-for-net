@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static BatchConfigurationCollection DeserializeBatchConfigurationCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IntegrationAccountBatchConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

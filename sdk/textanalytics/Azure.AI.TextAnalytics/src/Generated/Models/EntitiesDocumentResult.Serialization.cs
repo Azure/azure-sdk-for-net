@@ -43,6 +43,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static EntitiesDocumentResult DeserializeEntitiesDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<EntityWithResolution> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;

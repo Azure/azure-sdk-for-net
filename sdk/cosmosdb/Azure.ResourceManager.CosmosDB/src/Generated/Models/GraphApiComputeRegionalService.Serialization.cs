@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static GraphApiComputeRegionalService DeserializeGraphApiComputeRegionalService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> graphApiComputeEndpoint = default;
             Optional<string> name = default;
             Optional<AzureLocation> location = default;

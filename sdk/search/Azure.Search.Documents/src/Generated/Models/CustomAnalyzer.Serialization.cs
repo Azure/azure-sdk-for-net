@@ -47,6 +47,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CustomAnalyzer DeserializeCustomAnalyzer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LexicalTokenizerName tokenizer = default;
             Optional<IList<TokenFilterName>> tokenFilters = default;
             Optional<IList<string>> charFilters = default;

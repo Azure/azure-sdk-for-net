@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamAnalyticsPrivateEndpointData DeserializeStreamAnalyticsPrivateEndpointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamAnalyticsPrivateEndpointProperties> properties = default;
             Optional<ETag?> etag = default;
             ResourceIdentifier id = default;

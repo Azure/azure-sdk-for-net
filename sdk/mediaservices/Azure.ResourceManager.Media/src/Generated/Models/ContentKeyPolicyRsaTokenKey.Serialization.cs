@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyRsaTokenKey DeserializeContentKeyPolicyRsaTokenKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             byte[] exponent = default;
             byte[] modulus = default;
             string odataType = default;

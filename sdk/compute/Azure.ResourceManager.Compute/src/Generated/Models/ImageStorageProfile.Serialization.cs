@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageStorageProfile DeserializeImageStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImageOSDisk> osDisk = default;
             Optional<IList<ImageDataDisk>> dataDisks = default;
             Optional<bool> zoneResilient = default;

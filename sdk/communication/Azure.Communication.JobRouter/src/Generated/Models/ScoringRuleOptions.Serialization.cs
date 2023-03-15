@@ -46,6 +46,10 @@ namespace Azure.Communication.JobRouter
 
         internal static ScoringRuleOptions DeserializeScoringRuleOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> batchSize = default;
             Optional<IList<ScoringRuleParameterSelector>> scoringParameters = default;
             Optional<bool> allowScoringBatchOfWorkers = default;

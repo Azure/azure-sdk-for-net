@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("severity");
+                writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
             writer.WriteEndObject();
@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsAlert DeserializeSecurityInsightsAlert(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SecurityInsightsEntityKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -67,37 +71,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IReadOnlyList<BinaryData>> resourceIdentifiers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new SecurityInsightsEntityKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("additionalData"))
+                        if (property0.NameEquals("additionalData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -116,32 +120,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             additionalData = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("alertDisplayName"))
+                        if (property0.NameEquals("alertDisplayName"u8))
                         {
                             alertDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("alertType"))
+                        if (property0.NameEquals("alertType"u8))
                         {
                             alertType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("compromisedEntity"))
+                        if (property0.NameEquals("compromisedEntity"u8))
                         {
                             compromisedEntity = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("confidenceLevel"))
+                        if (property0.NameEquals("confidenceLevel"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             confidenceLevel = new SecurityInsightsAlertConfidenceLevel(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("confidenceReasons"))
+                        if (property0.NameEquals("confidenceReasons"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -166,7 +177,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             confidenceReasons = array;
                             continue;
                         }
-                        if (property0.NameEquals("confidenceScore"))
+                        if (property0.NameEquals("confidenceScore"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -176,7 +187,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             confidenceScore = property0.Value.GetDouble();
                             continue;
                         }
-                        if (property0.NameEquals("confidenceScoreStatus"))
+                        if (property0.NameEquals("confidenceScoreStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -186,12 +197,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             confidenceScoreStatus = new SecurityInsightsAlertConfidenceScoreStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endTimeUtc"))
+                        if (property0.NameEquals("endTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -201,7 +212,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             endTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("intent"))
+                        if (property0.NameEquals("intent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -211,12 +222,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             intent = new SecurityInsightsKillChainIntent(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("providerAlertId"))
+                        if (property0.NameEquals("providerAlertId"u8))
                         {
                             providerAlertId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("processingEndTime"))
+                        if (property0.NameEquals("processingEndTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -226,22 +237,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             processingEndTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("productComponentName"))
+                        if (property0.NameEquals("productComponentName"u8))
                         {
                             productComponentName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("productName"))
+                        if (property0.NameEquals("productName"u8))
                         {
                             productName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("productVersion"))
+                        if (property0.NameEquals("productVersion"u8))
                         {
                             productVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("remediationSteps"))
+                        if (property0.NameEquals("remediationSteps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -256,7 +267,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             remediationSteps = array;
                             continue;
                         }
-                        if (property0.NameEquals("severity"))
+                        if (property0.NameEquals("severity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -266,7 +277,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             severity = new SecurityInsightsAlertSeverity(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("startTimeUtc"))
+                        if (property0.NameEquals("startTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -276,7 +287,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             startTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -286,12 +297,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             status = new SecurityInsightsAlertStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("systemAlertId"))
+                        if (property0.NameEquals("systemAlertId"u8))
                         {
                             systemAlertId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tactics"))
+                        if (property0.NameEquals("tactics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -306,7 +317,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             tactics = array;
                             continue;
                         }
-                        if (property0.NameEquals("timeGenerated"))
+                        if (property0.NameEquals("timeGenerated"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -316,17 +327,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             timeGenerated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("vendorName"))
+                        if (property0.NameEquals("vendorName"u8))
                         {
                             vendorName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("alertLink"))
+                        if (property0.NameEquals("alertLink"u8))
                         {
                             alertLink = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceIdentifiers"))
+                        if (property0.NameEquals("resourceIdentifiers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -336,7 +347,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BinaryData.FromString(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BinaryData.FromString(item.GetRawText()));
+                                }
                             }
                             resourceIdentifiers = array;
                             continue;

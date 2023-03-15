@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Redis.Models
 
         public static RedisRegenerateKeyType ToRedisRegenerateKeyType(this string value)
         {
-            if (string.Equals(value, "Primary", StringComparison.InvariantCultureIgnoreCase)) return RedisRegenerateKeyType.Primary;
-            if (string.Equals(value, "Secondary", StringComparison.InvariantCultureIgnoreCase)) return RedisRegenerateKeyType.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return RedisRegenerateKeyType.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return RedisRegenerateKeyType.Secondary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedisRegenerateKeyType value.");
         }
     }

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static ResourceTypeTemplateDeploymentPolicy DeserializeResourceTypeTemplateDeploymentPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TemplateDeploymentCapability capabilities = default;
             TemplateDeploymentPreflightOption preflightOptions = default;
             foreach (var property in element.EnumerateObject())
