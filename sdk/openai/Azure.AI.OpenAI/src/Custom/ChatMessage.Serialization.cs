@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("role"u8))
                 {
-                    result.Role = (ChatRole)System.Enum.Parse(typeof(ChatRole), property.Value.GetString(), ignoreCase: true);
+                    result.Role = property.Value.GetString();
                 }
                 else if (property.NameEquals("content"u8))
                 {

@@ -36,11 +36,25 @@ namespace Azure.AI.OpenAI
         public string Content { get { throw null; } }
         public Azure.AI.OpenAI.ChatRole Role { get { throw null; } }
     }
-    public enum ChatRole
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ChatRole : System.IEquatable<Azure.AI.OpenAI.ChatRole>
     {
-        System = 0,
-        Assistant = 1,
-        User = 2,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static readonly Azure.AI.OpenAI.ChatRole Assistant;
+        public static readonly Azure.AI.OpenAI.ChatRole System;
+        public static readonly Azure.AI.OpenAI.ChatRole User;
+        public ChatRole(string label) { throw null; }
+        public string Label { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.ChatRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.ChatRole left, Azure.AI.OpenAI.ChatRole right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.ChatRole (string label) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.ChatRole left, Azure.AI.OpenAI.ChatRole right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class Choice
     {
