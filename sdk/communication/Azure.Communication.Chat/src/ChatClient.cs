@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.Chat.Notifications;
+using Azure.Communication.Chat.Notifications.Models;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -22,6 +24,9 @@ namespace Azure.Communication.Chat
         private readonly Uri _endpointUrl;
         private readonly CommunicationTokenCredential _communicationTokenCredential;
         private readonly ChatClientOptions _chatClientOptions;
+        private readonly CommunicationSignalingClient _communicationSignalingClient;
+
+        private RealTimeNotificationEventHandler _realtimeNotificationEventHandler;
 
         /// <summary> Initializes a new instance of <see cref="ChatClient"/>.</summary>
         /// <param name="endpoint">The uri for the Azure Communication Services Chat.</param>
@@ -37,6 +42,7 @@ namespace Azure.Communication.Chat
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
             HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationTokenCredential);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, _chatClientOptions.ApiVersion);
+            _communicationSignalingClient = new CommunicationSignalingClient();
         }
 
         /// <summary>Initializes a new instance of <see cref="ChatClient"/> for mocking.</summary>
@@ -243,6 +249,43 @@ namespace Azure.Communication.Chat
             var bearerTokenCredential = new CommunicationBearerTokenCredential(communicationTokenCredential);
             var authenticationPolicy = new BearerTokenAuthenticationPolicy(bearerTokenCredential, "");
             return HttpPipelineBuilder.Build(options, authenticationPolicy);
+        }
+        /// <summary>
+        /// Start trouter client
+        /// </summary>
+        /// <returns></returns>
+        public async Task<RealTimeNotificationEventHandler> StartRealTimeNotifications()
+        {
+            _realtimeNotificationEventHandler = new RealTimeNotificationEventHandler();
+            await _communicationSignalingClient.Start().ConfigureAwait(false);
+            return _realtimeNotificationEventHandler;
+        }
+
+        /// <summary>
+        /// Stop trouter stop
+        /// </summary>
+        /// <returns></returns>
+        public async Task StopRealTimeNotifications()
+        {
+            await _communicationSignalingClient.Stop().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Set the custom Handler
+        /// </summary>
+        /// <param name="chatEventType"></param>
+        public void On(ChatEventType chatEventType)
+        {
+            _communicationSignalingClient.on(chatEventType, _realtimeNotificationEventHandler);
+        }
+
+        /// <summary>
+        /// Set the custom Handler
+        /// </summary>
+        /// <param name="chatEventType"></param>
+        public void Off(ChatEventType chatEventType)
+        {
+            _communicationSignalingClient.on(chatEventType, _realtimeNotificationEventHandler);
         }
     }
 }
