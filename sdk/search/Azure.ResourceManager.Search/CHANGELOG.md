@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2023-03-14)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for '2022-09-01' management plane API version.
+- Added support for enabling RBAC authentication on search services.
 
 ## 1.0.1 (2023-02-20)
 
