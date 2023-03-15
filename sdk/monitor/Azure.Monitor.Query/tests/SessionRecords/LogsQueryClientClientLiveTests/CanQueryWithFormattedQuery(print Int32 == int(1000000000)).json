@@ -1,24 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/0a1f6b9a-caa1-4e5a-ac9a-54aa9b2fb131/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "98",
+        "Content-Length": "99",
         "Content-Type": "application/json",
-        "traceparent": "00-d3e892a1ae0c4440a67050131075aacc-f63a74581c039a4c-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210615.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "97d56fa021780c27983688cceb5a5aa7",
+        "traceparent": "00-b159c84c31e51842a0532b50c0e93988-1d3a9dae3f64b84d-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a63da7fb4fea4373394336bdcb6f4733",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "print int(1000000000) == int(1000000000)",
-        "timespan": "2021-06-07T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -27,10 +24,10 @@
         "Connection": "keep-alive",
         "Content-Length": "98",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 17:30:37 GMT",
+        "Date": "Tue, 14 Mar 2023 21:54:00 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-7d56d985c5-lv7pb",
+        "Via": "1.1 draft-oms-85c67bc895-zkj7d",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -54,9 +51,10 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-06-15T10:30:36.2335653-07:00",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DateTimeOffsetNow": "2023-03-14T14:53:56.6999256-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "1489464403",
-    "WORKSPACE_ID": "0a1f6b9a-caa1-4e5a-ac9a-54aa9b2fb131"
+    "RandomSeed": "924999562",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

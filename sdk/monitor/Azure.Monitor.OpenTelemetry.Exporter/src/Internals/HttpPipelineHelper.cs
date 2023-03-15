@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.IO;
 using System.Text;
@@ -70,8 +68,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return false;
         }
 
-        internal static byte[] GetRequestContent(RequestContent content)
+        internal static byte[]? GetRequestContent(RequestContent? content)
         {
+            if (content == null)
+            {
+                return null;
+            }
+
             using MemoryStream st = new MemoryStream();
 
             content.WriteTo(st, CancellationToken.None);
@@ -79,25 +82,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return st.ToArray();
         }
 
-        internal static byte[] GetPartialContentForRetry(TrackResponse trackResponse, RequestContent content)
+        internal static byte[]? GetPartialContentForRetry(TrackResponse trackResponse, RequestContent? content)
         {
-            string partialContent = null;
-            var fullContent = Encoding.UTF8.GetString(GetRequestContent(content))?.Split('\n');
+            if (content == null)
+            {
+                return null;
+            }
+
+            string? partialContent = null;
+            var fullContent = Encoding.UTF8.GetString(GetRequestContent(content)).Split('\n');
             foreach (var error in trackResponse.Errors)
             {
-                if (error != null)
+                if (error != null && error.Index != null)
                 {
-                    if (error.Index != null && error.Index >= fullContent.Length || error.Index < 0)
+                    if (error.Index >= fullContent.Length || error.Index < 0)
                     {
-                        // log
+                        // TODO: log
                         continue;
                     }
 
-                    if (error.StatusCode == ResponseStatusCodes.RequestTimeout ||
-                    error.StatusCode == ResponseStatusCodes.ServiceUnavailable ||
-                    error.StatusCode == ResponseStatusCodes.InternalServerError ||
-                    error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequests ||
-                    error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache)
+                    if (error.StatusCode == ResponseStatusCodes.RequestTimeout
+                        || error.StatusCode == ResponseStatusCodes.ServiceUnavailable
+                        || error.StatusCode == ResponseStatusCodes.InternalServerError
+                        || error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequests
+                        || error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache)
                     {
                         if (string.IsNullOrEmpty(partialContent))
                         {
