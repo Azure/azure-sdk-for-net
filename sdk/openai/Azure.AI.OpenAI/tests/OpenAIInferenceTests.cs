@@ -186,7 +186,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task ChatCompletions()
         {
             OpenAIClient client = GetChatCompletionsClient();
-            ChatCompletionsOptions requestOptions = new ChatCompletionsOptions()
+            var requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
                 {
@@ -216,7 +216,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task StreamingChatCompletions()
         {
             OpenAIClient client = GetChatCompletionsClient();
-            ChatCompletionsOptions requestOptions = new ChatCompletionsOptions()
+            var requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
                 {
@@ -227,13 +227,15 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 512,
             };
-            Response<StreamingChatCompletions> streamingResponse = await client.GetChatCompletionsStreamingAsync(requestOptions);
+            Response<StreamingChatCompletions> streamingResponse
+                = await client.GetChatCompletionsStreamingAsync(requestOptions);
             Assert.That(streamingResponse, Is.Not.Null);
-            Assert.That(streamingResponse.Value, Is.InstanceOf<StreamingChatCompletions>());
+            using StreamingChatCompletions streamingChatCompletions = streamingResponse.Value;
+            Assert.That(streamingChatCompletions, Is.InstanceOf<StreamingChatCompletions>());
 
             int totalMessages = 0;
 
-            await foreach (StreamingChatChoice streamingChoice in streamingResponse.Value.GetChoicesStreaming())
+            await foreach (StreamingChatChoice streamingChoice in streamingChatCompletions.GetChoicesStreaming())
             {
                 Assert.That(streamingChoice, Is.Not.Null);
                 await foreach (ChatMessage streamingMessage in streamingChoice.GetMessageStreaming())

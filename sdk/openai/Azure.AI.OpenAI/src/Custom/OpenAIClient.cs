@@ -20,70 +20,109 @@ namespace Azure.AI.OpenAI
         private const string publicOpenAIVersion = "1";
         private const string publicOpenAIEndpoint = $"https://api.openai.com/v{publicOpenAIVersion}";
 
-        /// <remarks> This is the deployment id for all Azure OpenAI operations (completions and embeddings) </remarks>
+        /// <summary> Gets the deployment or model name used for all operations on this client. </summary>
+        /// <remarks>
+        ///     When using an <see cref="OpenAIClient"/> to connect to Azure OpenAI, <see cref="DeploymentId"/>
+        ///     should match an Azure deployment name that may differ from the name of the model in that deployment.
+        ///     When using an <see cref="OpenAIClient"/> to connect to the non-Azure OpenAI endpoint,
+        ///     <see cref="DeploymentId"/> should instead match the name of the model intended for use.
+        /// </remarks>
         private string DeploymentId { get; }
 
-        /// <remarks> This key is used to connect to a non-Azure OpenAI resource created directly with OpenAI.
-        /// For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that provides
-        /// an Azure resource endpoint and credential, instead. </remarks>
+        /// <remarks>
+        ///     This key is used to connect to a non-Azure OpenAI resource created directly with OpenAI.
+        ///     For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that
+        ///     provides an Azure resource endpoint and credential, instead.
+        /// </remarks>
         private string PublicOpenAIToken { get; }
 
         /// <summary> Initializes a instance of OpenAIClient using the public OpenAI endpoint. </summary>
-        /// <param name="openAIAuthToken "> String token to generate a token credential.
-        /// This string is used to connect to a non-Azure OpenAI resource created directly with OpenAI.
-        /// For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that provides
-        /// an Azure resource endpoint and credential, instead. </param>
+        /// <param name="openAIAuthToken ">
+        ///     String token to generate a token credential.
+        ///     This string is used to connect to a non-Azure OpenAI resource created directly with OpenAI.
+        ///     For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that
+        ///     provides an Azure resource endpoint and credential, instead.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openAIAuthToken"/> is null. </exception>
         public OpenAIClient(string openAIAuthToken) : this(openAIAuthToken, new OpenAIClientOptions())
         {
         }
 
         /// <summary> Initializes a instance of OpenAIClient using the public OpenAI endpoint. </summary>
-        /// <param name="openAIAuthToken "> String token to generate a token credential.
-        /// This string is used to connect to a non-Azure OpenAI resource created directly with OpenAI.
-        /// For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that provides
-        /// an Azure resource endpoint and credential, instead. </param>
+        /// <param name="openAIAuthToken ">
+        ///     String token to generate a token credential.
+        ///     This string is used to connect to a non-Azure OpenAI resource created directly with OpenAI.
+        ///     For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that
+        ///     provides an Azure resource endpoint and credential, instead.
+        /// </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openAIAuthToken"/> is null. </exception>
-        public OpenAIClient(string openAIAuthToken, OpenAIClientOptions options) : this(new Uri(publicOpenAIEndpoint), "", CreateDelegatedToken(openAIAuthToken), options)
+        public OpenAIClient(string openAIAuthToken, OpenAIClientOptions options)
+            : this(new Uri(publicOpenAIEndpoint), string.Empty, CreateDelegatedToken(openAIAuthToken), options)
         {
             PublicOpenAIToken = openAIAuthToken;
         }
 
         /// <summary> Initializes a new instance of OpenAIClient. </summary>
         /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://westus.api.cognitive.microsoft.com).
+        ///     Supported Cognitive Services endpoints (protocol and hostname, for example:
+        ///     https://westus.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="deploymentId"> The deployment id for all operations (completions and embeddings) initiated using this client instance </param>
+        /// <param name="deploymentId">
+        ///     The deployment id for all operations (completions and embeddings) initiated using this client
+        ///     instance.
+        /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, string deploymentId, AzureKeyCredential credential) : this(endpoint, deploymentId, credential, new OpenAIClientOptions())
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/> is null.
+        /// </exception>
+        public OpenAIClient(Uri endpoint, string deploymentId, AzureKeyCredential credential)
+            : this(endpoint, deploymentId, credential, new OpenAIClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of OpenAIClient. </summary>
         /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://westus.api.cognitive.microsoft.com).
+        ///     Supported Cognitive Services endpoints (protocol and hostname, for example:
+        ///     https://westus.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="deploymentId"> The deployment id for all operations (completions and embeddings) initiated using this client instance </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential) : this(endpoint, deploymentId, credential, new OpenAIClientOptions())
+        /// <param name="deploymentId">
+        ///     The deployment id for all operations (completions and embeddings) initiated using this client
+        ///     instance.
+        /// </param>
+        /// <param name="credential">
+        ///     A credential used to authenticate to an Azure Service.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/> is
+        ///     null.
+        /// </exception>
+        public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential)
+            : this(endpoint, deploymentId, credential, new OpenAIClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of OpenAIClient. </summary>
         /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://westus.api.cognitive.microsoft.com).
+        ///     Supported Cognitive Services endpoints (protocol and hostname, for example:
+        ///     https://westus.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="deploymentId"> The deployment id for all operations (completions and embeddings) initiated using this client instance </param>
+        /// <param name="deploymentId">
+        ///     The deployment id for all operations (completions and embeddings) initiated using this client
+        ///     instance.
+        /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, string deploymentId, AzureKeyCredential credential, OpenAIClientOptions options) : this(endpoint, credential, options)
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/>
+        ///     is null.
+        /// </exception>
+        public OpenAIClient(
+            Uri endpoint,
+            string deploymentId,
+            AzureKeyCredential credential,
+            OpenAIClientOptions options)
+            : this(endpoint, credential, options)
         {
             Argument.AssertNotNull(deploymentId, nameof(deploymentId));
             DeploymentId = deploymentId;
@@ -94,11 +133,22 @@ namespace Azure.AI.OpenAI
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://westus.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="deploymentId"> The deployment id for all operations (completions and embeddings) initiated using this client instance </param>
+        /// <param name="deploymentId">
+        ///     The deployment id for all operations (completions and embeddings) initiated using this client
+        ///     instance.
+        /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential, OpenAIClientOptions options) : this(endpoint, credential, options)
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="endpoint"/> or <paramref name="credential"/>
+        ///     or <paramref name="deploymentId"/> is null.
+        /// </exception>
+        public OpenAIClient(
+            Uri endpoint,
+            string deploymentId,
+            TokenCredential credential,
+            OpenAIClientOptions options)
+            : this(endpoint, credential, options)
         {
             Argument.AssertNotNull(deploymentId, nameof(deploymentId));
             DeploymentId = deploymentId;
@@ -108,7 +158,9 @@ namespace Azure.AI.OpenAI
         /// <param name="prompt"> Input string prompt to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
-        public virtual async Task<Response<Completions>> GetCompletionsAsync(string prompt, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Completions>> GetCompletionsAsync(
+            string prompt,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
 
@@ -118,15 +170,21 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Return the completions for a given prompt. </summary>
-        /// <param name="completionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
+        /// <param name="completionsOptions">
+        ///     Post body schema to create a prompt completion from a deployment.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
-        public virtual async Task<Response<Completions>> GetCompletionsAsync(CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Completions>> GetCompletionsAsync(
+            CompletionsOptions completionsOptions,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCompletionsAsync(completionsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await GetCompletionsAsync(
+                completionsOptions.ToRequestContent(),
+                context).ConfigureAwait(false);
             return Response.FromValue(Completions.FromResponse(response), response);
         }
 
@@ -134,7 +192,9 @@ namespace Azure.AI.OpenAI
         /// <param name="prompt"> Input string prompt to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
-        public virtual Response<Completions> GetCompletions(string prompt, CancellationToken cancellationToken = default)
+        public virtual Response<Completions> GetCompletions(
+            string prompt,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
             CompletionsOptions completionsOptions = new CompletionsOptions();
@@ -146,12 +206,16 @@ namespace Azure.AI.OpenAI
         /// <param name="embeddingsOptions"> Schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="embeddingsOptions"/> is null. </exception>
-        public virtual async Task<Response<Embeddings>> GetEmbeddingsAsync(EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Embeddings>> GetEmbeddingsAsync(
+            EmbeddingsOptions embeddingsOptions,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEmbeddingsAsync(embeddingsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await GetEmbeddingsAsync(
+                embeddingsOptions.ToRequestContent(),
+                context).ConfigureAwait(false);
             return Response.FromValue(Embeddings.FromResponse(response), response);
         }
 
@@ -159,7 +223,9 @@ namespace Azure.AI.OpenAI
         /// <param name="embeddingsOptions"> Schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="embeddingsOptions"/> is null. </exception>
-        public virtual Response<Embeddings> GetEmbeddings(EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
+        public virtual Response<Embeddings> GetEmbeddings(
+            EmbeddingsOptions embeddingsOptions,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
 
@@ -169,13 +235,28 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Return the embeddings for a given prompt. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="../Generated/Docs/OpenAIClient.xml" path="doc/members/member[@name='GetEmbeddingsAsync(String,RequestContent,RequestContext)']/*" />
+        /// <param name="content">
+        ///     The content to send as the body of the request. Details of the request body schema are in the
+        ///     Remarks section below.
+        /// </param>
+        /// <param name="context">
+        ///     The request context, which can override default behaviors of the client pipeline on a per-call
+        ///     basis.
+        /// </param>
+        /// <exception cref="RequestFailedException">
+        ///     Service returned a non-success status code.
+        /// </exception>
+        /// <returns>
+        ///     The response returned from the service. Details of the response body schema are in the Remarks
+        ///     section below.
+        /// </returns>
+        /// <include
+        ///     file="../Generated/Docs/OpenAIClient.xml"
+        ///     path="doc/members/member[@name='GetEmbeddingsAsync(String,RequestContent,RequestContext)']/*" />
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> GetEmbeddingsAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetEmbeddingsAsync(
+            RequestContent content,
+            RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -194,17 +275,25 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Return the embeddings for a given prompt. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="content">
+        ///     The content to send as the body of the request. Details of the request body schema are in the
+        ///     Remarks section below.
+        /// </param>
+        /// <param name="context">
+        ///     The request context, which can override default behaviors of the client pipeline on a per-call
+        ///     basis.
+        /// </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="../Generated/Docs/OpenAIClient.xml" path="doc/members/member[@name='GetEmbeddings(String,RequestContent,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include
+        ///     file="../Generated/Docs/OpenAIClient.xml"
+        ///     path="doc/members/member[@name='GetEmbeddings(String,RequestContent,RequestContext)']/*" />
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response GetEmbeddings(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
             scope.Start();
             try
             {
@@ -219,10 +308,14 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Return the completions for a given prompt. </summary>
-        /// <param name="completionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
+        /// <param name="completionsOptions">
+        ///     The options for this completions request.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
-        public virtual Response<Completions> GetCompletions(CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
+        public virtual Response<Completions> GetCompletions(
+            CompletionsOptions completionsOptions,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
@@ -232,13 +325,26 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Return the completions for a given prompt. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="content">
+        ///     The content to send as the body of the request. Details of the request body schema are in the
+        ///     Remarks section below.
+        /// </param>
+        /// <param name="context">
+        ///     The request context, which can override default behaviors of the client pipeline on a per-call
+        ///     basis.
+        /// </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="../Generated/Docs/OpenAIClient.xml" path="doc/members/member[@name='GetCompletionsAsync(String,RequestContent,RequestContext)']/*" />
+        /// <returns>
+        ///     The response returned from the service. Details of the response body schema are in the Remarks
+        ///     section below.
+        /// </returns>
+        /// <include
+        ///     file="../Generated/Docs/OpenAIClient.xml"
+        ///     path="doc/members/member[@name='GetCompletionsAsync(String,RequestContent,RequestContext)']/*" />
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> GetCompletionsAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetCompletionsAsync(
+            RequestContent content,
+            RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -257,11 +363,22 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Return the completions for a given prompt. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="content">
+        ///     The content to send as the body of the request. Details of the request body schema are in the
+        ///     Remarks section below.
+        /// </param>
+        /// <param name="context">
+        ///     The request context, which can override default behaviors of the client pipeline on a per-call
+        ///     basis.
+        /// </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="../Generated/Docs/OpenAIClient.xml" path="doc/members/member[@name='GetCompletions(String,RequestContent,RequestContext)']/*" />
+        /// <returns>
+        ///     The response returned from the service. Details of the response body schema are in the Remarks
+        ///     section below.
+        /// </returns>
+        /// <include
+        ///     file="../Generated/Docs/OpenAIClient.xml"
+        ///     path="doc/members/member[@name='GetCompletions(String,RequestContent,RequestContext)']/*" />
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response GetCompletions(RequestContent content, RequestContext context = null)
         {
@@ -281,9 +398,13 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <summary> Begin a completions request and get an object that can stream response data as it becomes available. </summary>
+        /// <summary>
+        ///     Begin a completions request and get an object that can stream response data as it becomes available.
+        /// </summary>
         /// <param name="completionsOptions"> the chat completions options for this completions request. </param>
-        /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation. </param>
+        /// <param name="cancellationToken">
+        ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns>
@@ -317,15 +438,18 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <summary> Begin a completions request and get an object that can stream response data as it becomes available. </summary>
+        /// <summary>
+        ///     Begin a completions request and get an object that can stream response data as it becomes available.
+        /// </summary>
         /// <param name="completionsOptions"> the chat completions options for this completions request. </param>
-        /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation. </param>
+        /// <param name="cancellationToken">
+        ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns>
-        /// A response that, if the request was successful, includes a <see cref="StreamingCompletions"/> instance.
+        /// A response that, if the request was successful, wraps a <see cref="StreamingCompletions"/> instance.
         /// </returns>
-
         public virtual async Task<Response<StreamingCompletions>> GetCompletionsStreamingAsync(
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
@@ -358,7 +482,7 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Get chat completions for provided chat context messages. </summary>
-        /// <param name="chatCompletionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
+        /// <param name="chatCompletionsOptions"> The options for this chat completions request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
         public virtual async Task<Response<ChatCompletions>> GetChatCompletionsAsync(
@@ -375,7 +499,7 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Get chat completions for provided chat context messages. </summary>
-        /// <param name="chatCompletionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
+        /// <param name="chatCompletionsOptions"> The options for this chat completions request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
         public virtual Response<Completions> GetChatCompletions(
@@ -390,11 +514,14 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Get chat completions for provided chat context messages. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context">
+        ///     The request context, which can override default behaviors of the client pipeline on a per-call
+        ///     basis.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetChatCompletionsAsync(
             RequestContent content,
             RequestContext context = null)
@@ -416,8 +543,11 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Get chat completions for provided chat context messages. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context">
+        ///     The request context, which can override default behaviors of the client pipeline on a per-call
+        ///     basis.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -439,9 +569,16 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <summary> Begin a chat completions request and get an object that can stream response data as it becomes available. </summary>
-        /// <param name="completionsOptions"> the chat completions options for this chat completions request </param>
-        /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation </param>
+        /// <summary>
+        ///     Begin a chat completions request and get an object that can stream response data as it becomes
+        ///     available.
+        /// </summary>
+        /// <param name="completionsOptions">
+        ///     the chat completions options for this chat completions request.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -473,12 +610,19 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <summary> Begin a chat completions request and return an object that can stream response data as it becomes available. </summary>
-        /// <param name="completionsOptions"> the chat completions options for this chat completions request </param>
-        /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation </param>
+        /// <summary>
+        ///     Begin a chat completions request and return an object that can stream response data as it becomes
+        ///     available.
+        /// </summary>
+        /// <param name="completionsOptions">
+        ///     the chat completions options for this chat completions request.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
             ChatCompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
@@ -584,10 +728,13 @@ namespace Azure.AI.OpenAI
             return message;
         }
 
-        internal HttpMessage CreateGetEmbeddingsRequest(string deploymentId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetEmbeddingsRequest(
+            string deploymentId,
+            RequestContent content,
+            RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
+            HttpMessage message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            Request request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
