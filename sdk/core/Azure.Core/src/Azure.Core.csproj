@@ -66,6 +66,7 @@
     <Compile Include="Shared\OperationInternal.cs" />
     <Compile Include="Shared\OperationInternalOfT.cs" />
     <Compile Include="Shared\RetryAfterDelayStrategy.cs" />
+    <Compile Include="Shared\RetriableStream.cs" />
     <Compile Include="Shared\SerializationConstructorAttribute.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
     <Compile Include="Shared\CancellationHelper.cs" />

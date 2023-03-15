@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     [NonParallelizable]
     public class ContainerRegistryBlobClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync)
+        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -395,7 +395,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 digest = BlobHelper.ComputeDigest(stream);
                 UploadBlobResult uploadResult = await client.UploadBlobAsync(stream);
-                streamLength = stream.Length;
+                streamLength = uploadResult.SizeInBytes;
 
                 Assert.AreEqual(digest, uploadResult.Digest);
             }
@@ -526,7 +526,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         #region Download Blob Tests
 
         [RecordedTest]
-        public async Task CanDownloadBlob()
+        public async Task CanDownloadBlobContent()
         {
             // Arrange
             var repositoryId = Recording.Random.NewGuid().ToString();
@@ -544,6 +544,35 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             Assert.AreEqual(stream.Length, downloadResult.Value.Content.ToArray().Length);
+
+            // Clean up
+            await client.DeleteBlobAsync(digest);
+        }
+
+        [RecordedTest]
+        public async Task CanDownloadBlobStreaming()
+        {
+            // Arrange
+            var repositoryId = Recording.Random.NewGuid().ToString();
+            var client = CreateBlobClient(repositoryId);
+
+            int blobSize = 1024;
+            var data = GetConstantBuffer(blobSize, 1);
+
+            using var stream = new MemoryStream(data);
+            UploadBlobResult uploadResult = await client.UploadBlobAsync(stream);
+            var digest = uploadResult.Digest;
+
+            // Act
+            Response<DownloadBlobStreamingResult> downloadResult = await client.DownloadBlobStreamingAsync(digest);
+            Stream downloadedStream = downloadResult.Value.Content;
+
+            Assert.AreEqual(digest, downloadResult.Value.Digest);
+            Assert.AreEqual(stream.Length, downloadedStream.Length);
+            Assert.AreEqual(BinaryData.FromStream(stream), BinaryData.FromStream(downloadedStream));
+
+            // Clean up
+            downloadedStream.Dispose();
 
             // Clean up
             await client.DeleteBlobAsync(digest);

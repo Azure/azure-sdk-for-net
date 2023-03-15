@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -27,6 +28,13 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 stream.Position = position;
             }
+        }
+
+        internal static string ComputeDigest(BinaryData data)
+        {
+            using SHA256 sha256 = SHA256.Create();
+            var hashValue = sha256.ComputeHash(data.ToArray());
+            return FormatDigest(hashValue);
         }
 
         internal static string FormatDigest(byte[] hash)
