@@ -29,14 +29,20 @@ namespace Azure.AI.OpenAI
         private string PublicOpenAIToken { get; }
 
         /// <summary> Initializes a instance of OpenAIClient using the public OpenAI endpoint. </summary>
-        /// <param name="openAIAuthToken "> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="openAIAuthToken "> String token to generate a token credential.
+        /// This string is used to connect to a non-Azure OpenAI resource created directly with OpenAI.
+        /// For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that provides
+        /// an Azure resource endpoint and credential, instead. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openAIAuthToken"/> is null. </exception>
         public OpenAIClient(string openAIAuthToken) : this(openAIAuthToken, new OpenAIClientOptions())
         {
         }
 
         /// <summary> Initializes a instance of OpenAIClient using the public OpenAI endpoint. </summary>
-        /// <param name="openAIAuthToken "> String token to generate a token credential </param>
+        /// <param name="openAIAuthToken "> String token to generate a token credential.
+        /// This string is used to connect to a non-Azure OpenAI resource created directly with OpenAI.
+        /// For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that provides
+        /// an Azure resource endpoint and credential, instead. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openAIAuthToken"/> is null. </exception>
         public OpenAIClient(string openAIAuthToken, OpenAIClientOptions options) : this(new Uri(publicOpenAIEndpoint), "", CreateDelegatedToken(openAIAuthToken), options)
@@ -49,9 +55,9 @@ namespace Azure.AI.OpenAI
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://westus.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="deploymentId"> The deployment id for operations initiated using this client instance </param>
+        /// <param name="deploymentId"> The deployment id for all operations (completions and embeddings) initiated using this client instance </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/> is null. </exception>
         public OpenAIClient(Uri endpoint, string deploymentId, AzureKeyCredential credential) : this(endpoint, deploymentId, credential, new OpenAIClientOptions())
         {
         }
@@ -61,9 +67,9 @@ namespace Azure.AI.OpenAI
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://westus.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="deploymentId"> The deployment id for operations initiated using this client instance </param>
+        /// <param name="deploymentId"> The deployment id for all operations (completions and embeddings) initiated using this client instance </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/> is null. </exception>
         public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential) : this(endpoint, deploymentId, credential, new OpenAIClientOptions())
         {
         }
@@ -73,12 +79,13 @@ namespace Azure.AI.OpenAI
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://westus.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="deploymentId"> The deployment id for operations initiated using this client instance </param>
+        /// <param name="deploymentId"> The deployment id for all operations (completions and embeddings) initiated using this client instance </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/> is null. </exception>
         public OpenAIClient(Uri endpoint, string deploymentId, AzureKeyCredential credential, OpenAIClientOptions options) : this(endpoint, credential, options)
         {
+            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
             DeploymentId = deploymentId;
         }
 
@@ -87,12 +94,13 @@ namespace Azure.AI.OpenAI
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://westus.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="deploymentId"> The deployment id for operations initiated using this client instance </param>
+        /// <param name="deploymentId"> The deployment id for all operations (completions and embeddings) initiated using this client instance </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/> is null. </exception>
         public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential, OpenAIClientOptions options) : this(endpoint, credential, options)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             DeploymentId = deploymentId;
         }
 
