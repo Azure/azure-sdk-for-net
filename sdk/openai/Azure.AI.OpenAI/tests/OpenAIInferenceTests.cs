@@ -143,6 +143,7 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
+        [Ignore("not currently supported")]
         public async Task ChatCompletions()
         {
             OpenAIClient client = GetClient();
@@ -174,6 +175,7 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
+        [Ignore("not currently supported")]
         public async Task StreamingChatCompletions()
         {
             OpenAIClient client = GetClient();

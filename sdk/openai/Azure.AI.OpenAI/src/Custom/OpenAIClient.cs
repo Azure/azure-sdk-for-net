@@ -45,6 +45,16 @@ namespace Azure.AI.OpenAI
             return GetCompletions(deploymentId, completionsOptions, cancellationToken);
         }
 
+        /// <summary> Begin a completions request and get an object that can stream response data as it becomes available. </summary>
+        /// <param name="deploymentId"> deployment id of the deployed model. </param>
+        /// <param name="completionsOptions"> the chat completions options for this completions request. </param>
+        /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns>
+        /// A response that, if the request was successful, includes a <see cref="StreamingCompletions"/> instance.
+        /// </returns>
         public virtual Response<StreamingCompletions> GetCompletionsStreaming(
             string deploymentId,
             CompletionsOptions completionsOptions,
@@ -53,8 +63,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
-                "OpenAIClient.GetCompletionsStreaming");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletionsStreaming");
             scope.Start();
 
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -76,6 +85,17 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <summary> Begin a completions request and get an object that can stream response data as it becomes available. </summary>
+        /// <param name="deploymentId"> deployment id of the deployed model. </param>
+        /// <param name="completionsOptions"> the chat completions options for this completions request. </param>
+        /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns>
+        /// A response that, if the request was successful, includes a <see cref="StreamingCompletions"/> instance.
+        /// </returns>
+
         public virtual async Task<Response<StreamingCompletions>> GetCompletionsStreamingAsync(
             string deploymentId,
             CompletionsOptions completionsOptions,
@@ -84,8 +104,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
-                "OpenAIClient.GetCompletionsStreaming");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletionsStreaming");
             scope.Start();
 
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -110,7 +129,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <summary> Return the chat completions for provided chat messages. </summary>
+        /// <summary> Get chat completions for provided chat context messages. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="chatCompletionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,7 +151,7 @@ namespace Azure.AI.OpenAI
             return Response.FromValue(ChatCompletions.FromResponse(response), response);
         }
 
-        /// <summary> Return the completions for a given prompt. </summary>
+        /// <summary> Get chat completions for provided chat context messages. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="chatCompletionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,7 +170,7 @@ namespace Azure.AI.OpenAI
             return Response.FromValue(Completions.FromResponse(response), response);
         }
 
-        /// <summary> Return the completions for a given prompt. </summary>
+        /// <summary> Get chat completions for provided chat context messages. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -181,7 +200,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <summary> Return the chat completions for a given prompt. </summary>
+        /// <summary> Get chat completions for provided chat context messages. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -208,7 +227,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <summary> Begin a chat completions request and return an object that can stream response data as it becomes available. </summary>
+        /// <summary> Begin a chat completions request and get an object that can stream response data as it becomes available. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="completionsOptions"> the chat completions options for this chat completions request </param>
         /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation </param>
@@ -224,8 +243,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
-                "OpenAIClient.GetChatCompletionsStreaming");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
             scope.Start();
 
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -263,8 +281,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
-                "OpenAIClient.GetChatCompletionsStreaming");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
             scope.Start();
 
             RequestContext context = FromCancellationToken(cancellationToken);
