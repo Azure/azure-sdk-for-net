@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
@@ -74,7 +73,6 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
@@ -107,7 +105,6 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
@@ -140,7 +137,6 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
@@ -177,7 +173,6 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
@@ -214,7 +209,6 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
@@ -250,7 +244,6 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -286,7 +279,6 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -324,7 +316,6 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -352,7 +343,6 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -378,7 +368,6 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -404,7 +393,6 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignments(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {

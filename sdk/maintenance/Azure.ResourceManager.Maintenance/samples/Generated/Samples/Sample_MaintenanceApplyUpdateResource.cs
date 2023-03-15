@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetApplyUpdatesByParent_ApplyUpdatesGetParent()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ApplyUpdates_GetParent.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ApplyUpdates_GetParent.json
             // this example is just showing the usage of "ApplyUpdates_GetParent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ApplyUpdatesGet()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ApplyUpdates_Get.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ApplyUpdates_Get.json
             // this example is just showing the usage of "ApplyUpdates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdateApplyUpdateByParent_ApplyUpdatesCreateOrUpdateParent()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ApplyUpdates_CreateOrUpdateParent.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ApplyUpdates_CreateOrUpdateParent.json
             // this example is just showing the usage of "ApplyUpdates_CreateOrUpdateParent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdateApplyUpdate_ApplyUpdatesCreateOrUpdate()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ApplyUpdates_CreateOrUpdate.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ApplyUpdates_CreateOrUpdate.json
             // this example is just showing the usage of "ApplyUpdates_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMaintenanceApplyUpdates_ApplyUpdatesList()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ApplyUpdates_List.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ApplyUpdates_List.json
             // this example is just showing the usage of "ApplyUpdates_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

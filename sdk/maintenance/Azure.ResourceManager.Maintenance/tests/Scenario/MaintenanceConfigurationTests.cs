@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         }
 
         [RecordedTest]
-        private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration()
+        public async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration()
         {
             string resourceName = Recording.GenerateAssetName("maintenance-config-");
             MaintenanceConfigurationData data = new MaintenanceConfigurationData(Location)

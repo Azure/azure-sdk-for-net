@@ -11,13 +11,14 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Maintenance.Tests.Scenario
+namespace Azure.ResourceManager.Maintenance.Tests
 {
     public sealed class MaintenancePublicConfigurationTests : MaintenanceManagementTestBase
     {
         private SubscriptionResource _subscription;
 
-        public MaintenancePublicConfigurationTests(bool isAsync) : base(isAsync) { }
+        public MaintenancePublicConfigurationTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
+        { }
 
         [SetUp]
         public async Task Setup()

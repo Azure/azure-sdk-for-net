@@ -15,7 +15,7 @@ using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Maintenance.Tests.Scenario
+namespace Azure.ResourceManager.Maintenance.Tests
 {
     public sealed class MaintenanceApplyUpdateTests : MaintenanceManagementTestBase
     {
@@ -27,9 +27,8 @@ namespace Azure.ResourceManager.Maintenance.Tests.Scenario
         private string applyUpdateName;
         private string resourceParentType;
 
-        public MaintenanceApplyUpdateTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-        }
+        public MaintenanceApplyUpdateTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
+        { }
 
         [SetUp]
         public async Task Setup()
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.Maintenance.Tests.Scenario
             _subscription = await Client.GetDefaultSubscriptionAsync();
             rgGroupNamePrefix = "testRg";
             assetName = "resource";
-            providerName = "Microsoft.Compute";
+            providerName = "Microsoft.Maintenance";
             resourceType = "virtualNMachineScaleSets";
             applyUpdateName = "e9b9685d-78e4-44c4-a81c-64a14f9b87b6";
             resourceParentType = "virtualMachineScaleSets";
