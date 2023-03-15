@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class TransmissionStateManager
+    internal class TransmissionStateManager : IDisposable
     {
         private const int MaxDelayInSeconds = 3600;
 
@@ -29,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private double _syncBackOffIntervalCalculation;
 
         private int _consecutiveErrors;
+        private bool _disposed;
 
         internal TransmissionState State { get; private set; }
 
@@ -139,6 +140,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return TimeSpan.FromSeconds(delayInSeconds);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _backOffIntervalTimer?.Dispose();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

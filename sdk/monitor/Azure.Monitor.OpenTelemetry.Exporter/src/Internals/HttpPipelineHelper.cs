@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return MinimumRetryInterval;
         }
 
-        internal static bool TryGetRetryIntervalTimespan(Response httpResponse, out TimeSpan retryAfter)
+        internal static bool TryGetRetryIntervalTimespan(Response? httpResponse, out TimeSpan retryAfter)
         {
             if (httpResponse != null && httpResponse.Headers.TryGetValue(RetryAfterHeaderName, out var retryAfterValue))
             {
