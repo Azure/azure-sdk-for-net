@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class TranslatedTextElement
+    public partial class TranslatedTextItem
     {
-        internal static TranslatedTextElement DeserializeTranslatedTextElement(JsonElement element)
+        internal static TranslatedTextItem DeserializeTranslatedTextItem(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -56,15 +56,15 @@ namespace Azure.AI.Translation.Text
                     continue;
                 }
             }
-            return new TranslatedTextElement(detectedLanguage, translations, sourceText);
+            return new TranslatedTextItem(detectedLanguage, translations, sourceText);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TranslatedTextElement FromResponse(Response response)
+        internal static TranslatedTextItem FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTranslatedTextElement(document.RootElement);
+            return DeserializeTranslatedTextItem(document.RootElement);
         }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class Example
+    public partial class DictionaryExample
     {
-        internal static Example DeserializeExample(JsonElement element)
+        internal static DictionaryExample DeserializeDictionaryExample(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -58,15 +58,15 @@ namespace Azure.AI.Translation.Text
                     continue;
                 }
             }
-            return new Example(sourcePrefix, sourceTerm, sourceSuffix, targetPrefix, targetTerm, targetSuffix);
+            return new DictionaryExample(sourcePrefix, sourceTerm, sourceSuffix, targetPrefix, targetTerm, targetSuffix);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Example FromResponse(Response response)
+        internal static DictionaryExample FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeExample(document.RootElement);
+            return DeserializeDictionaryExample(document.RootElement);
         }
     }
 }

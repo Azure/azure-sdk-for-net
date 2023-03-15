@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Dictionary Example element. </summary>
-    public partial class DictionaryExampleElement
+    public partial class DictionaryExampleItem
     {
-        /// <summary> Initializes a new instance of DictionaryExampleElement. </summary>
+        /// <summary> Initializes a new instance of DictionaryExampleItem. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term. Generally, this should be identical
         /// to the value of the Text field at the matching list index in the body of the request.
@@ -26,7 +26,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="examples"> A list of examples for the (source term, target term) pair. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="normalizedSource"/>, <paramref name="normalizedTarget"/> or <paramref name="examples"/> is null. </exception>
-        internal DictionaryExampleElement(string normalizedSource, string normalizedTarget, IEnumerable<Example> examples)
+        internal DictionaryExampleItem(string normalizedSource, string normalizedTarget, IEnumerable<DictionaryExample> examples)
         {
             Argument.AssertNotNull(normalizedSource, nameof(normalizedSource));
             Argument.AssertNotNull(normalizedTarget, nameof(normalizedTarget));
@@ -37,7 +37,7 @@ namespace Azure.AI.Translation.Text
             Examples = examples.ToList();
         }
 
-        /// <summary> Initializes a new instance of DictionaryExampleElement. </summary>
+        /// <summary> Initializes a new instance of DictionaryExampleItem. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term. Generally, this should be identical
         /// to the value of the Text field at the matching list index in the body of the request.
@@ -47,7 +47,7 @@ namespace Azure.AI.Translation.Text
         /// to the value of the Translation field at the matching list index in the body of the request.
         /// </param>
         /// <param name="examples"> A list of examples for the (source term, target term) pair. </param>
-        internal DictionaryExampleElement(string normalizedSource, string normalizedTarget, IReadOnlyList<Example> examples)
+        internal DictionaryExampleItem(string normalizedSource, string normalizedTarget, IReadOnlyList<DictionaryExample> examples)
         {
             NormalizedSource = normalizedSource;
             NormalizedTarget = normalizedTarget;
@@ -65,6 +65,6 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         public string NormalizedTarget { get; }
         /// <summary> A list of examples for the (source term, target term) pair. </summary>
-        public IReadOnlyList<Example> Examples { get; }
+        public IReadOnlyList<DictionaryExample> Examples { get; }
     }
 }

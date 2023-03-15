@@ -165,7 +165,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>InputTextElement</c>:
+Schema for <c>InputTextItem</c>:
 <code>{
   text: string, # Required. Text to translate.
 }
@@ -173,7 +173,7 @@ Schema for <c>InputTextElement</c>:
 
 Response Body:
 
-Schema for <c>TranslatedTextElement</c>:
+Schema for <c>TranslatedTextItem</c>:
 <code>{
   detectedLanguage: {
     language: string, # Required. A string representing the code of the detected language.
@@ -266,7 +266,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>InputTextElement</c>:
+Schema for <c>InputTextItem</c>:
 <code>{
   text: string, # Required. Text to translate.
 }
@@ -274,7 +274,7 @@ Schema for <c>InputTextElement</c>:
 
 Response Body:
 
-Schema for <c>TranslatedTextElement</c>:
+Schema for <c>TranslatedTextItem</c>:
 <code>{
   detectedLanguage: {
     language: string, # Required. A string representing the code of the detected language.
@@ -359,7 +359,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>InputTextElement</c>:
+Schema for <c>InputTextItem</c>:
 <code>{
   text: string, # Required. Text to translate.
 }
@@ -418,7 +418,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>InputTextElement</c>:
+Schema for <c>InputTextItem</c>:
 <code>{
   text: string, # Required. Text to translate.
 }
@@ -477,7 +477,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>InputTextElement</c>:
+Schema for <c>InputTextItem</c>:
 <code>{
   text: string, # Required. Text to translate.
 }
@@ -485,7 +485,7 @@ Schema for <c>InputTextElement</c>:
 
 Response Body:
 
-Schema for <c>BreakSentenceElement</c>:
+Schema for <c>BreakSentenceItem</c>:
 <code>{
   detectedLanguage: {
     language: string, # Required. A string representing the code of the detected language.
@@ -541,7 +541,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>InputTextElement</c>:
+Schema for <c>InputTextItem</c>:
 <code>{
   text: string, # Required. Text to translate.
 }
@@ -549,7 +549,7 @@ Schema for <c>InputTextElement</c>:
 
 Response Body:
 
-Schema for <c>BreakSentenceElement</c>:
+Schema for <c>BreakSentenceItem</c>:
 <code>{
   detectedLanguage: {
     language: string, # Required. A string representing the code of the detected language.
@@ -623,7 +623,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>InputTextElement</c>:
+Schema for <c>InputTextItem</c>:
 <code>{
   text: string, # Required. Text to translate.
 }
@@ -631,7 +631,7 @@ Schema for <c>InputTextElement</c>:
 
 Response Body:
 
-Schema for <c>DictionaryLookupElement</c>:
+Schema for <c>DictionaryLookupItem</c>:
 <code>{
   normalizedSource: string, # Required. A string giving the normalized form of the source term.
 For example, if the request is &quot;JOHN&quot;, the normalized form will be &quot;john&quot;.
@@ -727,7 +727,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>InputTextElement</c>:
+Schema for <c>InputTextItem</c>:
 <code>{
   text: string, # Required. Text to translate.
 }
@@ -735,7 +735,7 @@ Schema for <c>InputTextElement</c>:
 
 Response Body:
 
-Schema for <c>DictionaryLookupElement</c>:
+Schema for <c>DictionaryLookupItem</c>:
 <code>{
   normalizedSource: string, # Required. A string giving the normalized form of the source term.
 For example, if the request is &quot;JOHN&quot;, the normalized form will be &quot;john&quot;.
@@ -827,7 +827,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>DictionaryExampleTextElement</c>:
+Schema for <c>DictionaryExampleTextItem</c>:
 <code>{
   translation: string, # Required. A string specifying the translated text previously returned by the Dictionary lookup operation. 
 This should be the value from the normalizedTarget field in the translations list of the Dictionary 
@@ -838,7 +838,7 @@ lookup response. The service will return examples for the specific source-target
 
 Response Body:
 
-Schema for <c>DictionaryExampleElement</c>:
+Schema for <c>DictionaryExampleItem</c>:
 <code>{
   normalizedSource: string, # Required. A string giving the normalized form of the source term. Generally, this should be identical
 to the value of the Text field at the matching list index in the body of the request.
@@ -921,7 +921,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>DictionaryExampleTextElement</c>:
+Schema for <c>DictionaryExampleTextItem</c>:
 <code>{
   translation: string, # Required. A string specifying the translated text previously returned by the Dictionary lookup operation. 
 This should be the value from the normalizedTarget field in the translations list of the Dictionary 
@@ -932,7 +932,7 @@ lookup response. The service will return examples for the specific source-target
 
 Response Body:
 
-Schema for <c>DictionaryExampleElement</c>:
+Schema for <c>DictionaryExampleItem</c>:
 <code>{
   normalizedSource: string, # Required. A string giving the normalized form of the source term. Generally, this should be identical
 to the value of the Text field at the matching list index in the body of the request.

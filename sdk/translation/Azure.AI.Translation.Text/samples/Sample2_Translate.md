@@ -20,8 +20,8 @@ try
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguage, inputText, from: from).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText, from: from).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -47,8 +47,8 @@ try
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -76,8 +76,8 @@ try
         "hudha akhtabar."
     };
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, from: fromLanguage, fromScript: fromScript, toScript: toScript).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, from: fromLanguage, fromScript: fromScript, toScript: toScript).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Source Text: {translation.SourceText.Text}");
@@ -106,8 +106,8 @@ try
         "Dies ist ein Test."
     };
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
     foreach (TranslatedTextElement translation in translations)
     {
@@ -134,8 +134,8 @@ try
         "This is a test."
     };
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
     foreach (TranslatedTextElement translation in translations)
     {
@@ -165,8 +165,8 @@ try
         "<html><body>This <b>is</b> a test.</body></html>"
     };
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: textType).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: textType).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -194,8 +194,8 @@ try
         "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>"
     };
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: textType, from: from).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: textType, from: from).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -223,8 +223,8 @@ try
         "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry."
     };
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, from: from).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, from: from).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -254,8 +254,8 @@ try
         "This is ***."
     };
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -282,8 +282,8 @@ try
         "The answer lies in machine translation."
     };
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, includeAlignment: includeAlignment).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, includeAlignment: includeAlignment).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -312,8 +312,8 @@ try
         "The answer lies in machine translation. This is a test."
     };
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, includeSentenceLength: includeSentenceLength).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, includeSentenceLength: includeSentenceLength).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -347,8 +347,8 @@ try
         "This is a test."
     };
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, category: category).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, category: category).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");

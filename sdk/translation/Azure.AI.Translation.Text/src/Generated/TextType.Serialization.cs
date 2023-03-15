@@ -18,7 +18,7 @@ namespace Azure.AI.Translation.Text
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TextType value.")
         };
 
-        public static TextType ToTextTypes(this string value)
+        public static TextType ToTextType(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "plain")) return TextType.Plain;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "html")) return TextType.Html;

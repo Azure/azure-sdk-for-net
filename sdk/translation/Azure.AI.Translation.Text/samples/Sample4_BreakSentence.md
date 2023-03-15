@@ -24,8 +24,8 @@ try
         "zhè shì gè cè shì。"
     };
 
-    Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputTextElements, language: sourceLanguage, script: sourceScript).ConfigureAwait(false);
-    IReadOnlyList<BreakSentenceElement> brokenSentences = response.Value;
+    Response<IReadOnlyList<BreakSentenceItem>> response = await client.FindSentenceBoundariesAsync(inputTextElements, language: sourceLanguage, script: sourceScript).ConfigureAwait(false);
+    IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
     BreakSentenceElement brokenSentence = brokenSentences.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
@@ -51,8 +51,8 @@ try
         "How are you? I am fine. What did you do today?"
     };
 
-    Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputTextElements).ConfigureAwait(false);
-    IReadOnlyList<BreakSentenceElement> brokenSentences = response.Value;
+    Response<IReadOnlyList<BreakSentenceItem>> response = await client.FindSentenceBoundariesAsync(inputTextElements).ConfigureAwait(false);
+    IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
     BreakSentenceElement brokenSentence = brokenSentences.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");

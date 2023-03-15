@@ -18,7 +18,7 @@ namespace Azure.AI.Translation.Text
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityMarker value.")
         };
 
-        public static ProfanityMarker ToProfanityMarkers(this string value)
+        public static ProfanityMarker ToProfanityMarker(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Asterisk")) return ProfanityMarker.Asterisk;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tag")) return ProfanityMarker.Tag;

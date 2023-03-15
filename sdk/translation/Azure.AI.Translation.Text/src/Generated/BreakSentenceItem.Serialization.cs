@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class BreakSentenceElement
+    public partial class BreakSentenceItem
     {
-        internal static BreakSentenceElement DeserializeBreakSentenceElement(JsonElement element)
+        internal static BreakSentenceItem DeserializeBreakSentenceItem(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -45,15 +45,15 @@ namespace Azure.AI.Translation.Text
                     continue;
                 }
             }
-            return new BreakSentenceElement(detectedLanguage, sentLen);
+            return new BreakSentenceItem(detectedLanguage, sentLen);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BreakSentenceElement FromResponse(Response response)
+        internal static BreakSentenceItem FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeBreakSentenceElement(document.RootElement);
+            return DeserializeBreakSentenceItem(document.RootElement);
         }
     }
 }

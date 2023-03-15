@@ -25,8 +25,8 @@ try
         new InputTextWithTranslation { Text = "fly", Translation = "volar" }
     };
 
-    Response<IReadOnlyList<DictionaryExampleElement>> response = await client.LookupDictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
-    IReadOnlyList<DictionaryExampleElement> dictionaryEntries = response.Value;
+    Response<IReadOnlyList<DictionaryExampleItem>> response = await client.LookupDictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
+    IReadOnlyList<DictionaryExampleItem> dictionaryEntries = response.Value;
     DictionaryExampleElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
     Console.WriteLine($"For the given input {dictionaryEntry?.Examples?.Count} examples were found in the dictionary.");

@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class DictionaryExampleElement
+    public partial class DictionaryExampleItem
     {
-        internal static DictionaryExampleElement DeserializeDictionaryExampleElement(JsonElement element)
+        internal static DictionaryExampleItem DeserializeDictionaryExampleItem(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,7 +22,7 @@ namespace Azure.AI.Translation.Text
             }
             string normalizedSource = default;
             string normalizedTarget = default;
-            IReadOnlyList<Example> examples = default;
+            IReadOnlyList<DictionaryExample> examples = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("normalizedSource"u8))
@@ -37,24 +37,24 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("examples"u8))
                 {
-                    List<Example> array = new List<Example>();
+                    List<DictionaryExample> array = new List<DictionaryExample>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Example.DeserializeExample(item));
+                        array.Add(DictionaryExample.DeserializeDictionaryExample(item));
                     }
                     examples = array;
                     continue;
                 }
             }
-            return new DictionaryExampleElement(normalizedSource, normalizedTarget, examples);
+            return new DictionaryExampleItem(normalizedSource, normalizedTarget, examples);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DictionaryExampleElement FromResponse(Response response)
+        internal static DictionaryExampleItem FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDictionaryExampleElement(document.RootElement);
+            return DeserializeDictionaryExampleItem(document.RootElement);
         }
     }
 }

@@ -66,6 +66,7 @@ namespace Azure.AI.Translation.Text
             options ??= new TextTranslationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -283,19 +284,19 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        internal virtual async Task<Response<IReadOnlyList<TranslatedTextElement>>> TranslateAsync(IEnumerable<string> to, object content, string clientTraceId = null, string @from = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(IEnumerable<string> to, object content, string clientTraceId = null, string @from = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await TranslateAsync(to, RequestContent.Create(content), clientTraceId, @from, textType?.ToSerialString(), category, profanityAction?.ToSerialString(), profanityMarker?.ToSerialString(), includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, context).ConfigureAwait(false);
-            IReadOnlyList<TranslatedTextElement> value = default;
+            IReadOnlyList<TranslatedTextItem> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            List<TranslatedTextElement> array = new List<TranslatedTextElement>();
+            List<TranslatedTextItem> array = new List<TranslatedTextItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(TranslatedTextElement.DeserializeTranslatedTextElement(item));
+                array.Add(TranslatedTextItem.DeserializeTranslatedTextItem(item));
             }
             value = array;
             return Response.FromValue(value, response);
@@ -362,19 +363,19 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        internal virtual Response<IReadOnlyList<TranslatedTextElement>> Translate(IEnumerable<string> to, object content, string clientTraceId = null, string @from = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(IEnumerable<string> to, object content, string clientTraceId = null, string @from = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Translate(to, RequestContent.Create(content), clientTraceId, @from, textType?.ToSerialString(), category, profanityAction?.ToSerialString(), profanityMarker?.ToSerialString(), includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, context);
-            IReadOnlyList<TranslatedTextElement> value = default;
+            IReadOnlyList<TranslatedTextItem> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
-            List<TranslatedTextElement> array = new List<TranslatedTextElement>();
+            List<TranslatedTextItem> array = new List<TranslatedTextItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(TranslatedTextElement.DeserializeTranslatedTextElement(item));
+                array.Add(TranslatedTextItem.DeserializeTranslatedTextItem(item));
             }
             value = array;
             return Response.FromValue(value, response);
@@ -719,18 +720,18 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal virtual async Task<Response<IReadOnlyList<BreakSentenceElement>>> FindSentenceBoundariesAsync(object content, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(object content, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await FindSentenceBoundariesAsync(RequestContent.Create(content), clientTraceId, language, script, context).ConfigureAwait(false);
-            IReadOnlyList<BreakSentenceElement> value = default;
+            IReadOnlyList<BreakSentenceItem> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            List<BreakSentenceElement> array = new List<BreakSentenceElement>();
+            List<BreakSentenceItem> array = new List<BreakSentenceItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(BreakSentenceElement.DeserializeBreakSentenceElement(item));
+                array.Add(BreakSentenceItem.DeserializeBreakSentenceItem(item));
             }
             value = array;
             return Response.FromValue(value, response);
@@ -749,18 +750,18 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal virtual Response<IReadOnlyList<BreakSentenceElement>> FindSentenceBoundaries(object content, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(object content, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = FindSentenceBoundaries(RequestContent.Create(content), clientTraceId, language, script, context);
-            IReadOnlyList<BreakSentenceElement> value = default;
+            IReadOnlyList<BreakSentenceItem> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
-            List<BreakSentenceElement> array = new List<BreakSentenceElement>();
+            List<BreakSentenceItem> array = new List<BreakSentenceItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(BreakSentenceElement.DeserializeBreakSentenceElement(item));
+                array.Add(BreakSentenceItem.DeserializeBreakSentenceItem(item));
             }
             value = array;
             return Response.FromValue(value, response);
@@ -847,7 +848,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        internal virtual async Task<Response<IReadOnlyList<DictionaryLookupElement>>> LookupDictionaryEntriesAsync(string @from, string to, object content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyList<DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string @from, string to, object content, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -855,12 +856,12 @@ namespace Azure.AI.Translation.Text
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await LookupDictionaryEntriesAsync(@from, to, RequestContent.Create(content), clientTraceId, context).ConfigureAwait(false);
-            IReadOnlyList<DictionaryLookupElement> value = default;
+            IReadOnlyList<DictionaryLookupItem> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            List<DictionaryLookupElement> array = new List<DictionaryLookupElement>();
+            List<DictionaryLookupItem> array = new List<DictionaryLookupItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(DictionaryLookupElement.DeserializeDictionaryLookupElement(item));
+                array.Add(DictionaryLookupItem.DeserializeDictionaryLookupItem(item));
             }
             value = array;
             return Response.FromValue(value, response);
@@ -879,7 +880,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        internal virtual Response<IReadOnlyList<DictionaryLookupElement>> LookupDictionaryEntries(string @from, string to, object content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyList<DictionaryLookupItem>> LookupDictionaryEntries(string @from, string to, object content, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -887,12 +888,12 @@ namespace Azure.AI.Translation.Text
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = LookupDictionaryEntries(@from, to, RequestContent.Create(content), clientTraceId, context);
-            IReadOnlyList<DictionaryLookupElement> value = default;
+            IReadOnlyList<DictionaryLookupItem> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
-            List<DictionaryLookupElement> array = new List<DictionaryLookupElement>();
+            List<DictionaryLookupItem> array = new List<DictionaryLookupItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(DictionaryLookupElement.DeserializeDictionaryLookupElement(item));
+                array.Add(DictionaryLookupItem.DeserializeDictionaryLookupItem(item));
             }
             value = array;
             return Response.FromValue(value, response);
@@ -983,7 +984,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        internal virtual async Task<Response<IReadOnlyList<DictionaryExampleElement>>> LookupDictionaryExamplesAsync(string @from, string to, object content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyList<DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string @from, string to, object content, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -991,12 +992,12 @@ namespace Azure.AI.Translation.Text
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await LookupDictionaryExamplesAsync(@from, to, RequestContent.Create(content), clientTraceId, context).ConfigureAwait(false);
-            IReadOnlyList<DictionaryExampleElement> value = default;
+            IReadOnlyList<DictionaryExampleItem> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            List<DictionaryExampleElement> array = new List<DictionaryExampleElement>();
+            List<DictionaryExampleItem> array = new List<DictionaryExampleItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(DictionaryExampleElement.DeserializeDictionaryExampleElement(item));
+                array.Add(DictionaryExampleItem.DeserializeDictionaryExampleItem(item));
             }
             value = array;
             return Response.FromValue(value, response);
@@ -1015,7 +1016,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        internal virtual Response<IReadOnlyList<DictionaryExampleElement>> LookupDictionaryExamples(string @from, string to, object content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyList<DictionaryExampleItem>> LookupDictionaryExamples(string @from, string to, object content, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -1023,12 +1024,12 @@ namespace Azure.AI.Translation.Text
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = LookupDictionaryExamples(@from, to, RequestContent.Create(content), clientTraceId, context);
-            IReadOnlyList<DictionaryExampleElement> value = default;
+            IReadOnlyList<DictionaryExampleItem> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
-            List<DictionaryExampleElement> array = new List<DictionaryExampleElement>();
+            List<DictionaryExampleItem> array = new List<DictionaryExampleItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(DictionaryExampleElement.DeserializeDictionaryExampleElement(item));
+                array.Add(DictionaryExampleItem.DeserializeDictionaryExampleItem(item));
             }
             value = array;
             return Response.FromValue(value, response);

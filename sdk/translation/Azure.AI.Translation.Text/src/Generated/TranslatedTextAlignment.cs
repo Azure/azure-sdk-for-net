@@ -11,9 +11,9 @@ using Azure.Core;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Alignment information object. </summary>
-    public partial class Alignment
+    public partial class TranslatedTextAlignment
     {
-        /// <summary> Initializes a new instance of Alignment. </summary>
+        /// <summary> Initializes a new instance of TranslatedTextAlignment. </summary>
         /// <param name="proj">
         /// Maps input text to translated text. The alignment information is only provided when the request 
         /// parameter includeAlignment is true. Alignment is returned as a string value of the following 
@@ -23,7 +23,7 @@ namespace Azure.AI.Translation.Text
         /// be non-contiguous. When no alignment information is available, the alignment element will be empty.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="proj"/> is null. </exception>
-        internal Alignment(string proj)
+        internal TranslatedTextAlignment(string proj)
         {
             Argument.AssertNotNull(proj, nameof(proj));
 

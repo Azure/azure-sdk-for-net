@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Dictionary Lookup Element. </summary>
-    public partial class DictionaryLookupElement
+    public partial class DictionaryLookupItem
     {
-        /// <summary> Initializes a new instance of DictionaryLookupElement. </summary>
+        /// <summary> Initializes a new instance of DictionaryLookupItem. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term.
         /// For example, if the request is "JOHN", the normalized form will be "john".
@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="translations"> A list of translations for the source term. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="normalizedSource"/>, <paramref name="displaySource"/> or <paramref name="translations"/> is null. </exception>
-        internal DictionaryLookupElement(string normalizedSource, string displaySource, IEnumerable<DictionaryTranslation> translations)
+        internal DictionaryLookupItem(string normalizedSource, string displaySource, IEnumerable<DictionaryTranslation> translations)
         {
             Argument.AssertNotNull(normalizedSource, nameof(normalizedSource));
             Argument.AssertNotNull(displaySource, nameof(displaySource));
@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Text
             Translations = translations.ToList();
         }
 
-        /// <summary> Initializes a new instance of DictionaryLookupElement. </summary>
+        /// <summary> Initializes a new instance of DictionaryLookupItem. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term.
         /// For example, if the request is "JOHN", the normalized form will be "john".
@@ -51,7 +51,7 @@ namespace Azure.AI.Translation.Text
         /// spelling of the name: "John".
         /// </param>
         /// <param name="translations"> A list of translations for the source term. </param>
-        internal DictionaryLookupElement(string normalizedSource, string displaySource, IReadOnlyList<DictionaryTranslation> translations)
+        internal DictionaryLookupItem(string normalizedSource, string displaySource, IReadOnlyList<DictionaryTranslation> translations)
         {
             NormalizedSource = normalizedSource;
             DisplaySource = displaySource;

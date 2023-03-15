@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class DictionaryLookupElement
+    public partial class DictionaryLookupItem
     {
-        internal static DictionaryLookupElement DeserializeDictionaryLookupElement(JsonElement element)
+        internal static DictionaryLookupItem DeserializeDictionaryLookupItem(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -46,15 +46,15 @@ namespace Azure.AI.Translation.Text
                     continue;
                 }
             }
-            return new DictionaryLookupElement(normalizedSource, displaySource, translations);
+            return new DictionaryLookupItem(normalizedSource, displaySource, translations);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DictionaryLookupElement FromResponse(Response response)
+        internal static DictionaryLookupItem FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDictionaryLookupElement(document.RootElement);
+            return DeserializeDictionaryLookupItem(document.RootElement);
         }
     }
 }

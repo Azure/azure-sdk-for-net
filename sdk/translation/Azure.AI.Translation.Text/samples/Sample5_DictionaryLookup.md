@@ -25,8 +25,8 @@ try
         "fly"
     };
 
-    Response<IReadOnlyList<DictionaryLookupElement>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
-    IReadOnlyList<DictionaryLookupElement> dictionaryEntries = response.Value;
+    Response<IReadOnlyList<DictionaryLookupItem>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
+    IReadOnlyList<DictionaryLookupItem> dictionaryEntries = response.Value;
     DictionaryLookupElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
     Console.WriteLine($"For the given input {dictionaryEntry?.Translations?.Count} entries were found in the dictionary.");

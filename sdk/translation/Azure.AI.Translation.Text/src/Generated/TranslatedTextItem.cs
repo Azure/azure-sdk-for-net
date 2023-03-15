@@ -13,22 +13,22 @@ using Azure.Core;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Element containing the translated text. </summary>
-    public partial class TranslatedTextElement
+    public partial class TranslatedTextItem
     {
-        /// <summary> Initializes a new instance of TranslatedTextElement. </summary>
+        /// <summary> Initializes a new instance of TranslatedTextItem. </summary>
         /// <param name="translations">
         /// An array of translation results. The size of the array matches the number of target 
         /// languages specified through the to query parameter.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="translations"/> is null. </exception>
-        internal TranslatedTextElement(IEnumerable<Translation> translations)
+        internal TranslatedTextItem(IEnumerable<Translation> translations)
         {
             Argument.AssertNotNull(translations, nameof(translations));
 
             Translations = translations.ToList();
         }
 
-        /// <summary> Initializes a new instance of TranslatedTextElement. </summary>
+        /// <summary> Initializes a new instance of TranslatedTextItem. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
         /// <param name="translations">
         /// An array of translation results. The size of the array matches the number of target 
@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Text
         /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text 
         /// converted into Arab script.
         /// </param>
-        internal TranslatedTextElement(DetectedLanguage detectedLanguage, IReadOnlyList<Translation> translations, SourceText sourceText)
+        internal TranslatedTextItem(DetectedLanguage detectedLanguage, IReadOnlyList<Translation> translations, SourceText sourceText)
         {
             DetectedLanguage = detectedLanguage;
             Translations = translations.ToList();

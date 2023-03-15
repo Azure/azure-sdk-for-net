@@ -79,7 +79,7 @@ For text element length limits, maximum requests size, and supported text encodi
 
 ### Return value
 
-Return values, such as `Response<IReadOnlyList<TranslatedTextElement>>`, is the result of a Text Translation operation, It contains array with one result for each string in the input array.  An operation's return value also may optionally include information about the input text element (for example detected language).
+Return values, such as `Response<IReadOnlyList<TranslatedTextItem>>`, is the result of a Text Translation operation, It contains array with one result for each string in the input array.  An operation's return value also may optionally include information about the input text element (for example detected language).
 
 ### Thread safety
 
@@ -133,8 +133,8 @@ try
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -190,8 +190,8 @@ try
 {
     string inputText = "How are you? I am fine. What did you do today?";
 
-    Response<IReadOnlyList<BreakSentenceElement>> response = await client.FindSentenceBoundariesAsync(inputText).ConfigureAwait(false);
-    IReadOnlyList<BreakSentenceElement> brokenSentences = response.Value;
+    Response<IReadOnlyList<BreakSentenceItem>> response = await client.FindSentenceBoundariesAsync(inputText).ConfigureAwait(false);
+    IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
     BreakSentenceElement brokenSentence = brokenSentences.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
@@ -220,8 +220,8 @@ try
     string targetLanguage = "es";
     string inputText = "fly";
 
-    Response<IReadOnlyList<DictionaryLookupElement>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputText).ConfigureAwait(false);
-    IReadOnlyList<DictionaryLookupElement> dictionaryEntries = response.Value;
+    Response<IReadOnlyList<DictionaryLookupItem>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputText).ConfigureAwait(false);
+    IReadOnlyList<DictionaryLookupItem> dictionaryEntries = response.Value;
     DictionaryLookupElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
     Console.WriteLine($"For the given input {dictionaryEntry?.Translations?.Count} entries were found in the dictionary.");
@@ -253,8 +253,8 @@ try
         new InputTextWithTranslation { Text = "fly", Translation = "volar" }
     };
 
-    Response<IReadOnlyList<DictionaryExampleElement>> response = await client.LookupDictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
-    IReadOnlyList<DictionaryExampleElement> dictionaryEntries = response.Value;
+    Response<IReadOnlyList<DictionaryExampleItem>> response = await client.LookupDictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
+    IReadOnlyList<DictionaryExampleItem> dictionaryEntries = response.Value;
     DictionaryExampleElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
     Console.WriteLine($"For the given input {dictionaryEntry?.Examples?.Count} examples were found in the dictionary.");

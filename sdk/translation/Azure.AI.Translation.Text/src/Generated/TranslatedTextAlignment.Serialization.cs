@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class Alignment
+    public partial class TranslatedTextAlignment
     {
-        internal static Alignment DeserializeAlignment(JsonElement element)
+        internal static TranslatedTextAlignment DeserializeTranslatedTextAlignment(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -28,15 +28,15 @@ namespace Azure.AI.Translation.Text
                     continue;
                 }
             }
-            return new Alignment(proj);
+            return new TranslatedTextAlignment(proj);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Alignment FromResponse(Response response)
+        internal static TranslatedTextAlignment FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAlignment(document.RootElement);
+            return DeserializeTranslatedTextAlignment(document.RootElement);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.AI.Translation.Text
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityAction value.")
         };
 
-        public static ProfanityAction ToProfanityActions(this string value)
+        public static ProfanityAction ToProfanityAction(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoAction")) return ProfanityAction.NoAction;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Marked")) return ProfanityAction.Marked;

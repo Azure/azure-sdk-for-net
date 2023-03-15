@@ -13,28 +13,28 @@ using Azure.Core;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Elemented containing break sentence result. </summary>
-    public partial class BreakSentenceElement
+    public partial class BreakSentenceItem
     {
-        /// <summary> Initializes a new instance of BreakSentenceElement. </summary>
+        /// <summary> Initializes a new instance of BreakSentenceItem. </summary>
         /// <param name="sentLen">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentLen"/> is null. </exception>
-        internal BreakSentenceElement(IEnumerable<int> sentLen)
+        internal BreakSentenceItem(IEnumerable<int> sentLen)
         {
             Argument.AssertNotNull(sentLen, nameof(sentLen));
 
             SentLen = sentLen.ToList();
         }
 
-        /// <summary> Initializes a new instance of BreakSentenceElement. </summary>
+        /// <summary> Initializes a new instance of BreakSentenceItem. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
         /// <param name="sentLen">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        internal BreakSentenceElement(DetectedLanguage detectedLanguage, IReadOnlyList<int> sentLen)
+        internal BreakSentenceItem(DetectedLanguage detectedLanguage, IReadOnlyList<int> sentLen)
         {
             DetectedLanguage = detectedLanguage;
             SentLen = sentLen.ToList();

@@ -11,9 +11,9 @@ using Azure.Core;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Dictionary Example. </summary>
-    public partial class Example
+    public partial class DictionaryExample
     {
-        /// <summary> Initializes a new instance of Example. </summary>
+        /// <summary> Initializes a new instance of DictionaryExample. </summary>
         /// <param name="sourcePrefix">
         /// The string to concatenate before the value of sourceTerm to form a complete example.
         /// Do not add a space character, since it is already there when it should be.
@@ -33,7 +33,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="targetTerm"> A string similar to sourceTerm but for the target. </param>
         /// <param name="targetSuffix"> A string similar to sourceSuffix but for the target. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePrefix"/>, <paramref name="sourceTerm"/>, <paramref name="sourceSuffix"/>, <paramref name="targetPrefix"/>, <paramref name="targetTerm"/> or <paramref name="targetSuffix"/> is null. </exception>
-        internal Example(string sourcePrefix, string sourceTerm, string sourceSuffix, string targetPrefix, string targetTerm, string targetSuffix)
+        internal DictionaryExample(string sourcePrefix, string sourceTerm, string sourceSuffix, string targetPrefix, string targetTerm, string targetSuffix)
         {
             Argument.AssertNotNull(sourcePrefix, nameof(sourcePrefix));
             Argument.AssertNotNull(sourceTerm, nameof(sourceTerm));
