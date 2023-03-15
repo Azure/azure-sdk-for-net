@@ -410,7 +410,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        [Ignore(reason:"We don't currently support configurable chunk size on upload.")]
+        [Ignore(reason: "We don't currently support configurable chunk size on upload.")]
         public async Task CanUploadBlobInEqualSizeChunks()
         {
             // Arrange
@@ -554,28 +554,28 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanDownloadBlobStreaming()
         {
             // Arrange
-            var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId);
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryBlobClient client = CreateBlobClient(repositoryId);
 
             int blobSize = 1024;
-            var data = GetConstantBuffer(blobSize, 1);
+            byte[] data = GetConstantBuffer(blobSize, 1);
 
-            using var stream = new MemoryStream(data);
+            using Stream stream = new MemoryStream(data);
             UploadBlobResult uploadResult = await client.UploadBlobAsync(stream);
-            var digest = uploadResult.Digest;
+            string digest = uploadResult.Digest;
 
             // Act
             Response<DownloadBlobStreamingResult> downloadResult = await client.DownloadBlobStreamingAsync(digest);
             Stream downloadedStream = downloadResult.Value.Content;
+            BinaryData content = BinaryData.FromStream(downloadedStream);
 
+            // Assert
             Assert.AreEqual(digest, downloadResult.Value.Digest);
-            Assert.AreEqual(stream.Length, downloadedStream.Length);
-            Assert.AreEqual(BinaryData.FromStream(stream), BinaryData.FromStream(downloadedStream));
+            Assert.AreEqual(stream.Length, content.ToMemory().Length);
+            Assert.AreEqual(data, content.ToArray());
 
             // Clean up
             downloadedStream.Dispose();
-
-            // Clean up
             await client.DeleteBlobAsync(digest);
         }
 

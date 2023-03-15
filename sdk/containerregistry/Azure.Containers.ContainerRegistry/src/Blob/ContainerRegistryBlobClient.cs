@@ -43,7 +43,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="repository"/> is null. </exception>
         public ContainerRegistryBlobClient(Uri endpoint, string repository) :
-            this(endpoint,  repository, new ContainerRegistryAnonymousAccessCredential(), new ContainerRegistryClientOptions())
+            this(endpoint, repository, new ContainerRegistryAnonymousAccessCredential(), new ContainerRegistryClientOptions())
         {
         }
 
@@ -682,7 +682,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             if (!clientDigest.Equals(serverDigest, StringComparison.OrdinalIgnoreCase))
             {
-                throw new RequestFailedException(message);
+                throw new RequestFailedException(200, message);
             }
         }
 
@@ -817,14 +817,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 async offset => await _blobRestClient.GetChunkAsync(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).ConfigureAwait(false),
                 _pipeline.ResponseClassifier,
                 _maxRetries,
-                (buffer, offset, count) => { sha256.TransformBlock(buffer, 0, count - offset, buffer, 0); },
+                (buffer, offset, count) => sha256.TransformBlock(buffer, offset, count - offset, buffer, 0),
                 () =>
                 {
                     sha256.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
                     string computedDigest = BlobHelper.FormatDigest(sha256.Hash);
                     ValidateDigest(computedDigest, digest);
-                    sha256.Dispose();
-                });
+                },
+                sha256.Dispose);
 
             return Response.FromValue(new DownloadBlobStreamingResult(digest, stream), blobResult.GetRawResponse());
         }

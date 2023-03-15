@@ -50,9 +50,10 @@ namespace Azure.Core.Pipeline
             ResponseClassifier responseClassifier,
             int maxRetries,
             Action<byte[], int, int> onRead,
-            Action onReadComplete)
+            Action onReadComplete,
+            Action onDispose)
         {
-            return new RetriableStreamImpl(initialResponse, streamFactory, asyncStreamFactory, responseClassifier, maxRetries, onRead, onReadComplete);
+            return new RetriableStreamImpl(initialResponse, streamFactory, asyncStreamFactory, responseClassifier, maxRetries, onRead, onReadComplete, onDispose);
         }
 
         private class RetriableStreamImpl : Stream
@@ -66,6 +67,8 @@ namespace Azure.Core.Pipeline
             private readonly Action<byte[], int, int> _onRead;
 
             private readonly Action _onReadComplete;
+
+            private readonly Action _onDispose;
 
             private readonly int _maxRetries;
 
@@ -85,7 +88,8 @@ namespace Azure.Core.Pipeline
                 ResponseClassifier responseClassifier,
                 int maxRetries,
                 Action<byte[], int, int> onRead = default,
-                Action onReadComplete = default)
+                Action onReadComplete = default,
+                Action onDispose = default)
             {
                 if (initialStream.CanSeek)
                 {
@@ -106,6 +110,7 @@ namespace Azure.Core.Pipeline
                 _maxRetries = maxRetries;
                 _onRead = onRead;
                 _onReadComplete = onReadComplete;
+                _onDispose = onDispose;
             }
 
             public override long Seek(long offset, SeekOrigin origin)
@@ -120,15 +125,15 @@ namespace Azure.Core.Pipeline
                     try
                     {
                         int result = await _currentStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
-                        _position += result;
 
                         _onRead?.Invoke(buffer, offset, count);
 
-                        if (result < count || result == 0)
+                        if (result == 0)
                         {
                             _onReadComplete?.Invoke();
                         }
 
+                        _position += result;
                         return result;
                     }
                     catch (Exception e)
@@ -180,16 +185,16 @@ namespace Azure.Core.Pipeline
                 {
                     try
                     {
-                        var result = _currentStream.Read(buffer, offset, count);
-                        _position += result;
+                        int result = _currentStream.Read(buffer, offset, count);
 
-                        _onRead?.Invoke(buffer, offset, count);
+                        _onRead?.Invoke(buffer, offset, result);
 
-                        if (result < count || result == 0)
+                        if (result == 0)
                         {
                             _onReadComplete?.Invoke();
                         }
 
+                        _position += result;
                         return result;
                     }
                     catch (Exception e)
@@ -238,6 +243,7 @@ namespace Azure.Core.Pipeline
 
             protected override void Dispose(bool disposing)
             {
+                _onDispose?.Invoke();
                 base.Dispose(disposing);
                 _currentStream?.Dispose();
             }
