@@ -100,6 +100,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
+        /// <summary>
+        /// Calculates the time interval for which the transmission should be halted.
+        /// Number of consecutive errors are taken in to account to increase the time.
+        /// Random variation is introduced in order to avoid collision.
+        /// </summary>
+        /// <returns>BackOff time interval</returns>
         internal TimeSpan GetBackOffTimeInterval()
         {
             double delayInSeconds = 0;
