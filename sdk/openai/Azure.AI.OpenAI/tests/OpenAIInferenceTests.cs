@@ -185,7 +185,7 @@ namespace Azure.AI.OpenAI.Tests
         [Ignore("not currently supported")]
         public async Task ChatCompletions()
         {
-            OpenAIClient client = GetClient();
+            OpenAIClient client = GetChatCompletionsClient();
             ChatCompletionsOptions requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
@@ -197,9 +197,7 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 512,
             };
-            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
-                ChatCompletionsDeploymentId,
-                requestOptions);
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
@@ -217,7 +215,7 @@ namespace Azure.AI.OpenAI.Tests
         [Ignore("not currently supported")]
         public async Task StreamingChatCompletions()
         {
-            OpenAIClient client = GetClient();
+            OpenAIClient client = GetChatCompletionsClient();
             ChatCompletionsOptions requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
@@ -229,9 +227,7 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 512,
             };
-            Response<StreamingChatCompletions> streamingResponse = await client.GetChatCompletionsStreamingAsync(
-                ChatCompletionsDeploymentId,
-                requestOptions);
+            Response<StreamingChatCompletions> streamingResponse = await client.GetChatCompletionsStreamingAsync(requestOptions);
             Assert.That(streamingResponse, Is.Not.Null);
             Assert.That(streamingResponse.Value, Is.InstanceOf<StreamingChatCompletions>());
 

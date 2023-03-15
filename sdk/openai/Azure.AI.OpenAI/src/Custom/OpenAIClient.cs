@@ -246,7 +246,7 @@ namespace Azure.AI.OpenAI
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCompletionsRequest(DeploymentId, content, context);
+                using HttpMessage message = CreateGetCompletionsRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.AI.OpenAI
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCompletionsRequest(DeploymentId, content, context);
+                using HttpMessage message = CreateGetCompletionsRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -282,11 +282,9 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Begin a completions request and get an object that can stream response data as it becomes available. </summary>
-        /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="completionsOptions"> the chat completions options for this completions request. </param>
         /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns>
         /// A response that, if the request was successful, includes a <see cref="StreamingCompletions"/> instance.
@@ -307,7 +305,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetCompletionsRequest(DeploymentId, streamingContent, context);
+                HttpMessage message = CreateGetCompletionsRequest(streamingContent, context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
@@ -320,11 +318,9 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Begin a completions request and get an object that can stream response data as it becomes available. </summary>
-        /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="completionsOptions"> the chat completions options for this completions request. </param>
         /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns>
         /// A response that, if the request was successful, includes a <see cref="StreamingCompletions"/> instance.
@@ -346,7 +342,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetCompletionsRequest(DeploymentId, streamingContent, context);
+                HttpMessage message = CreateGetCompletionsRequest(streamingContent, context);
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(
                     message,
@@ -362,67 +358,54 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Get chat completions for provided chat context messages. </summary>
-        /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="chatCompletionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="chatCompletionsOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
         public virtual async Task<Response<ChatCompletions>> GetChatCompletionsAsync(
-            string deploymentId,
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetChatCompletionsAsync(
-                deploymentId,
                 chatCompletionsOptions.ToRequestContent(),
                 context).ConfigureAwait(false);
             return Response.FromValue(ChatCompletions.FromResponse(response), response);
         }
 
         /// <summary> Get chat completions for provided chat context messages. </summary>
-        /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="chatCompletionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="chatCompletionsOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
         public virtual Response<Completions> GetChatCompletions(
-            string deploymentId,
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetChatCompletions(deploymentId, chatCompletionsOptions.ToRequestContent(), context);
+            Response response = GetChatCompletions(chatCompletionsOptions.ToRequestContent(), context);
             return Response.FromValue(Completions.FromResponse(response), response);
         }
 
         /// <summary> Get chat completions for provided chat context messages. </summary>
-        /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         public virtual async Task<Response> GetChatCompletionsAsync(
-            string deploymentId,
             RequestContent content,
             RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCompletionsRequest(deploymentId, content, context);
+                using HttpMessage message = CreateGetCompletionsRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -433,23 +416,20 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Get chat completions for provided chat context messages. </summary>
-        /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual Response GetChatCompletions(string deploymentId, RequestContent content, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetChatCompletions(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetChatCompletionsRequest(deploymentId, content, context);
+                using HttpMessage message = CreateGetChatCompletionsRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -460,19 +440,15 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Begin a chat completions request and get an object that can stream response data as it becomes available. </summary>
-        /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="completionsOptions"> the chat completions options for this chat completions request </param>
         /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         public virtual Response<StreamingChatCompletions> GetChatCompletionsStreaming(
-            string deploymentId,
             ChatCompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
@@ -485,7 +461,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetCompletionsRequest(deploymentId, streamingContent, context);
+                HttpMessage message = CreateGetCompletionsRequest(streamingContent, context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(new StreamingChatCompletions(baseResponse), baseResponse);
@@ -498,19 +474,15 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Begin a chat completions request and return an object that can stream response data as it becomes available. </summary>
-        /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="completionsOptions"> the chat completions options for this chat completions request </param>
         /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         public virtual async Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
-            string deploymentId,
             ChatCompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
@@ -523,7 +495,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetChatCompletionsRequest(deploymentId, streamingContent, context);
+                HttpMessage message = CreateGetChatCompletionsRequest(streamingContent, context);
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(
                     message,
@@ -538,19 +510,16 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        internal HttpMessage CreateGetChatCompletionsRequest(
-            string deploymentId,
-            RequestContent content,
-            RequestContext context)
+        internal HttpMessage CreateGetChatCompletionsRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
+            HttpMessage message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            Request request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/openai", false);
             uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentId, true);
+            uri.AppendPath(DeploymentId, true);
             uri.AppendPath("/chat/completions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -589,18 +558,18 @@ namespace Azure.AI.OpenAI
             return augmentedContent;
         }
 
-        internal HttpMessage CreateGetCompletionsRequest(string deploymentId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetCompletionsRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            if (!string.IsNullOrEmpty(deploymentId))
+            if (!string.IsNullOrEmpty(DeploymentId))
             {
                 uri.AppendRaw("/openai", false);
                 uri.AppendPath("/deployments/", false);
-                uri.AppendPath(deploymentId, true);
+                uri.AppendPath(DeploymentId, true);
                 uri.AppendPath("/completions", false);
                 uri.AppendQuery("api-version", _apiVersion, true);
             }

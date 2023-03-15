@@ -52,6 +52,9 @@ namespace Azure.AI.OpenAI.Tests
         protected OpenAIClient GetCompletionsClient() => InstrumentClient(
             new OpenAIClient(_endpoint, _completionsDeploymentId, _apiKey, GetInstrumentedClientOptions()));
 
+        protected OpenAIClient GetChatCompletionsClient() => InstrumentClient(
+            new OpenAIClient(_endpoint, _chatCompletionsDeploymentId, _apiKey, GetInstrumentedClientOptions()));
+
         protected OpenAIClient GetEmbeddingsClient() => InstrumentClient(
             new OpenAIClient(_endpoint, _embeddingsDeploymentId, _apiKey, GetInstrumentedClientOptions()));
 
