@@ -88,35 +88,6 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("n");
                 }
             }
-            if (Optional.IsDefined(LogProbability))
-            {
-                if (LogProbability != null)
-                {
-                    writer.WritePropertyName("logprobs"u8);
-                    writer.WriteNumberValue(LogProbability.Value);
-                }
-                else
-                {
-                    writer.WriteNull("logprobs");
-                }
-            }
-            if (Optional.IsDefined(Model))
-            {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(Model);
-            }
-            if (Optional.IsDefined(Echo))
-            {
-                if (Echo != null)
-                {
-                    writer.WritePropertyName("echo"u8);
-                    writer.WriteBooleanValue(Echo.Value);
-                }
-                else
-                {
-                    writer.WriteNull("echo");
-                }
-            }
             if (Optional.IsCollectionDefined(Stop))
             {
                 writer.WritePropertyName("stop"u8);
@@ -126,23 +97,6 @@ namespace Azure.AI.OpenAI
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(CompletionConfig))
-            {
-                writer.WritePropertyName("completion_config"u8);
-                writer.WriteStringValue(CompletionConfig);
-            }
-            if (Optional.IsDefined(CacheLevel))
-            {
-                if (CacheLevel != null)
-                {
-                    writer.WritePropertyName("cache_level"u8);
-                    writer.WriteNumberValue(CacheLevel.Value);
-                }
-                else
-                {
-                    writer.WriteNull("cache_level");
-                }
             }
             if (Optional.IsDefined(PresencePenalty))
             {
@@ -166,18 +120,6 @@ namespace Azure.AI.OpenAI
                 else
                 {
                     writer.WriteNull("frequency_penalty");
-                }
-            }
-            if (Optional.IsDefined(GenerationSampleCount))
-            {
-                if (GenerationSampleCount != null)
-                {
-                    writer.WritePropertyName("best_of"u8);
-                    writer.WriteNumberValue(GenerationSampleCount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("best_of");
                 }
             }
             writer.WriteEndObject();

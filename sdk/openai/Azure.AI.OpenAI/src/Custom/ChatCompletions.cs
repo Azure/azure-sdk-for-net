@@ -22,11 +22,10 @@ namespace Azure.AI.OpenAI
     /// </remarks>
     public partial class ChatCompletions
     {
-        internal ChatCompletions(string id, int? created, string model, IReadOnlyList<ChatChoice> choices, CompletionsUsage usage)
+        internal ChatCompletions(string id, int? created, IReadOnlyList<ChatChoice> choices, CompletionsUsage usage)
         {
             Id = id;
             Created = TimeConverters.DateTimeFromUnixEpoch(created.Value);
-            Model = model;
             Choices = choices.ToList();
             Usage = usage;
         }
@@ -39,10 +38,6 @@ namespace Azure.AI.OpenAI
         /// Gets the UTC timestamp at which this chat completions response was generated.
         /// </summary>
         public DateTime Created { get; }
-        /// <summary>
-        /// Gets the model used in the generation of this chat completions response.
-        /// </summary>
-        public string Model { get; }
         /// <summary>
         /// Gets the collection of chat choices generated in a chat completions request.
         /// </summary>

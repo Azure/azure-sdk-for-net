@@ -5,7 +5,6 @@ namespace Azure.AI.OpenAI
         internal ChatChoice() { }
         public string FinishReason { get { throw null; } }
         public int? Index { get { throw null; } }
-        public Azure.AI.OpenAI.CompletionsLogProbability Logprobs { get { throw null; } }
         public Azure.AI.OpenAI.ChatMessage Message { get { throw null; } }
     }
     public partial class ChatCompletions
@@ -14,19 +13,13 @@ namespace Azure.AI.OpenAI
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ChatChoice> Choices { get { throw null; } }
         public System.DateTime Created { get { throw null; } }
         public string Id { get { throw null; } }
-        public string Model { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsUsage Usage { get { throw null; } }
     }
     public partial class ChatCompletionsOptions
     {
         public ChatCompletionsOptions() { }
-        public int? CacheLevel { get { throw null; } set { } }
-        public string CompletionConfig { get { throw null; } set { } }
-        public bool? Echo { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
-        public int? GenerationSampleCount { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, int> LogitBias { get { throw null; } }
-        public int? LogProbability { get { throw null; } set { } }
         public int? MaxTokens { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessage> Messages { get { throw null; } }
         public string Model { get { throw null; } set { } }
@@ -168,7 +161,6 @@ namespace Azure.AI.OpenAI
         internal StreamingChatChoice() { }
         public string FinishReason { get { throw null; } }
         public int? Index { get { throw null; } }
-        public Azure.AI.OpenAI.CompletionsLogProbability Logprobs { get { throw null; } }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.ChatMessage> GetMessageStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StreamingChatCompletions : System.IDisposable

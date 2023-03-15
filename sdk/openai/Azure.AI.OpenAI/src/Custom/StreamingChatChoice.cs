@@ -35,11 +35,6 @@ namespace Azure.AI.OpenAI
         /// </remarks>
         public string FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
 
-        /// <summary>
-        /// Gets the log probabilities associated with tokens in this Choice.
-        /// </summary>
-        public CompletionsLogProbability Logprobs => GetLocked(() => _baseChoices.Last().Logprobs);
-
         internal ChatMessage StreamingDeltaMessage { get; set; }
 
         internal StreamingChatChoice(ChatChoice originalBaseChoice)

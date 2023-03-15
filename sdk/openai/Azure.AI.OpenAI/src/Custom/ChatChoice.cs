@@ -18,8 +18,6 @@ namespace Azure.AI.OpenAI
         public ChatMessage Message { get; }
         /// <summary> Gets the ordered index associated with this chat choice. </summary>
         public int? Index { get; }
-        /// <summary> Gets the log probabilities associated with this chat choice. </summary>
-        public CompletionsLogProbability Logprobs { get; }
         /// <summary> Gets a description of how evaluation of this chat choice ended. </summary>
         public string FinishReason { get; }
 
@@ -33,13 +31,11 @@ namespace Azure.AI.OpenAI
             ChatMessage message,
             ChatMessage streamingDeltaMessage,
             int? index,
-            CompletionsLogProbability logprobs,
             string finishReason)
         {
             Message = message;
             StreamingDeltaMessage = streamingDeltaMessage;
             Index = index;
-            Logprobs = logprobs;
             FinishReason = finishReason;
         }
     }

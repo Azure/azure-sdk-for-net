@@ -14,22 +14,10 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatCompletionsOptions
     {
-        /// <inheritdoc cref="CompletionsOptions.CacheLevel"/>
-        public int? CacheLevel { get; set; }
-        /// <inheritdoc cref="CompletionsOptions.CompletionConfig"/>
-        public string CompletionConfig { get; set; }
-        /// <inheritdoc cref="CompletionsOptions.Echo"/>
-        public bool? Echo { get; set; }
         /// <inheritdoc cref="CompletionsOptions.FrequencyPenalty"/>
         public float? FrequencyPenalty { get; set; }
-        /// <inheritdoc cref="CompletionsOptions.GenerationSampleCount"/>
-        [CodeGenMember("BestOf")]
-        public int? GenerationSampleCount { get; set; }
         /// <inheritdoc cref="CompletionsOptions.LogitBias"/>
         public IDictionary<string, int> LogitBias { get; }
-        /// <inheritdoc cref="CompletionsOptions.LogProbability"/>
-        [CodeGenMember("Logprobs")]
-        public int? LogProbability { get; set; }
         /// <inheritdoc cref="CompletionsOptions.MaxTokens"/>
         public int? MaxTokens { get; set; }
         /// <summary>
@@ -66,7 +54,17 @@ namespace Azure.AI.OpenAI
             Stop = new ChangeTrackingList<string>();
         }
 
-        internal ChatCompletionsOptions(IList<ChatMessage> messages, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> logitBias, string user, int? snippetCount, int? logProbability, string model, bool? echo, IList<string> stop, string completionConfig, int? cacheLevel, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount)
+        internal ChatCompletionsOptions(
+            IList<ChatMessage> messages,
+            int? maxTokens,
+            float? temperature,
+            float? nucleusSamplingFactor,
+            IDictionary<string, int> logitBias,
+            string user,
+            int? snippetCount,
+            IList<string> stop,
+            float? presencePenalty,
+            float? frequencyPenalty)
         {
             Messages = messages.ToList();
             MaxTokens = maxTokens;
@@ -75,15 +73,9 @@ namespace Azure.AI.OpenAI
             LogitBias = logitBias;
             User = user;
             SnippetCount = snippetCount;
-            LogProbability = logProbability;
-            Model = model;
-            Echo = echo;
             Stop = stop.ToList();
-            CompletionConfig = completionConfig;
-            CacheLevel = cacheLevel;
             PresencePenalty = presencePenalty;
             FrequencyPenalty = frequencyPenalty;
-            GenerationSampleCount = generationSampleCount;
         }
     }
 }

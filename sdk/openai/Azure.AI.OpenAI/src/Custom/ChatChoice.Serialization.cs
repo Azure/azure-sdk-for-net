@@ -17,7 +17,6 @@ namespace Azure.AI.OpenAI
             ChatMessage message = default;
             ChatMessage streamingDeltaMessage = default;
             Optional<int?> index = default;
-            Optional<CompletionsLogProbability> logprobs = default;
             Optional<string> finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,26 +50,13 @@ namespace Azure.AI.OpenAI
                     index = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("logprobs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        logprobs = null;
-                        continue;
-                    }
-                    else
-                    {
-                        logprobs = CompletionsLogProbability.DeserializeCompletionsLogProbability(property.Value);
-                        continue;
-                    }
-                }
                 if (property.NameEquals("finish_reason"u8))
                 {
                     finishReason = property.Value.GetString();
                     continue;
                 }
             }
-            return new ChatChoice(message, streamingDeltaMessage, Optional.ToNullable(index), logprobs, finishReason);
+            return new ChatChoice(message, streamingDeltaMessage, Optional.ToNullable(index), finishReason);
         }
     }
 }

@@ -181,7 +181,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <summary> Return the completions for a given prompt. </summary>
+        /// <summary> Return the chat completions for a given prompt. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -208,6 +208,14 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <summary> Begin a chat completions request and return an object that can stream response data as it becomes available. </summary>
+        /// <param name="deploymentId"> deployment id of the deployed model. </param>
+        /// <param name="completionsOptions"> the chat completions options for this chat completions request </param>
+        /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         public virtual Response<StreamingChatCompletions> GetChatCompletionsStreaming(
             string deploymentId,
             ChatCompletionsOptions completionsOptions,
@@ -239,6 +247,14 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <summary> Begin a chat completions request and return an object that can stream response data as it becomes available. </summary>
+        /// <param name="deploymentId"> deployment id of the deployed model. </param>
+        /// <param name="completionsOptions"> the chat completions options for this chat completions request </param>
+        /// <param name="cancellationToken"> a cancellation token that can be used to cancel the initial request or ongoing streaming operation </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         public virtual async Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
             string deploymentId,
             ChatCompletionsOptions completionsOptions,

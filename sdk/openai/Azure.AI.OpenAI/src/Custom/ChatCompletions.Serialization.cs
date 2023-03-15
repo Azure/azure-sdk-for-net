@@ -22,7 +22,6 @@ namespace Azure.AI.OpenAI
             }
             Optional<string> id = default;
             Optional<int?> created = default;
-            Optional<string> model = default;
             Optional<IReadOnlyList<ChatChoice>> choices = default;
             CompletionsUsage usage = default;
             foreach (var property in element.EnumerateObject())
@@ -40,11 +39,6 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     created = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("model"u8))
-                {
-                    model = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("choices"u8))
@@ -68,7 +62,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ChatCompletions(id, Optional.ToNullable(created), model, Optional.ToList(choices), usage);
+            return new ChatCompletions(id, Optional.ToNullable(created), Optional.ToList(choices), usage);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
