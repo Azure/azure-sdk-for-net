@@ -52,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// Enable transmitting data to backend.
         /// To be called for each successful request or after back-off interval expiration.
         /// </summary>
-        internal void CloseTransmision()
+        internal void CloseTransmission()
         {
             State = TransmissionState.Closed;
         }
@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal void ResetTransmission(object source, System.Timers.ElapsedEventArgs e)
         {
-            CloseTransmision();
+            CloseTransmission();
         }
 
         internal void EnableBackOff(Response? response)
