@@ -7,6 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
+
     /// <summary> Function key info. </summary>
     public partial class WebAppKeyInfo
     {
@@ -18,15 +19,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of WebAppKeyInfo. </summary>
         /// <param name="name"> Key name. </param>
         /// <param name="value"> Key value. </param>
-        internal WebAppKeyInfo(string name, string value)
+        public WebAppKeyInfo(string name, string value = null)
         {
-            Name = name;
-            Value = value;
+            Properties = new WebAppKeyProperties(name, value);
         }
 
-        /// <summary> Key name. </summary>
-        public string Name { get; set; }
-        /// <summary> Key value. </summary>
-        public string Value { get; set; }
+        /// <summary> Initializes a new instance of WebAppKeyInfo. </summary>
+        /// <param name="properties"> Key properties. </param>
+        internal WebAppKeyInfo(WebAppKeyProperties properties)
+        {
+            Properties = properties;
+        }
+
+        /// <summary> Key properties. </summary>
+        public WebAppKeyProperties Properties { get; set; }
     }
 }
