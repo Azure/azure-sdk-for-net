@@ -45,7 +45,7 @@ namespace Azure.AI.OpenAI.Tests
             HeaderRegexSanitizers.Add(new Core.TestFramework.Models.HeaderRegexSanitizer("api-key", "***********"));
         }
 
-        protected OpenAIClient GetClient() => InstrumentClient(
+        protected OpenAIClient GetCompletionsClient() => InstrumentClient(
             new OpenAIClient(_endpoint, _completionsDeploymentId, _apiKey, GetInstrumentedClientOptions()));
 
         protected OpenAIClient GetEmbeddingsClient() => InstrumentClient(
@@ -54,7 +54,7 @@ namespace Azure.AI.OpenAI.Tests
         protected OpenAIClient GetBadDeploymentClient() => InstrumentClient(
             new OpenAIClient(_endpoint, "BAD_DEPLOYMENT_ID", _apiKey, GetInstrumentedClientOptions()));
 
-        protected OpenAIClient GetClientWithCredential() => InstrumentClient(
+        protected OpenAIClient GetCompletionsClientWithCredential() => InstrumentClient(
             new OpenAIClient(_endpoint, _completionsDeploymentId, TestEnvironment.Credential, GetInstrumentedClientOptions()));
 
         protected OpenAIClient GetPublicOpenAIClient() => InstrumentClient(

@@ -24,9 +24,9 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public void InstanceTest()
         {
-            OpenAIClient client = GetClient();
+            OpenAIClient client = GetCompletionsClient();
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
-            OpenAIClient tokenClient = GetClientWithCredential();
+            OpenAIClient tokenClient = GetCompletionsClientWithCredential();
             Assert.That(tokenClient, Is.InstanceOf<OpenAIClient>());
         }
 
@@ -76,7 +76,7 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task CompletionTest()
         {
-            OpenAIClient client = GetClient();
+            OpenAIClient client = GetCompletionsClient();
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
                 Prompt =
@@ -101,7 +101,7 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task CompletionTestWithTokenCredential()
         {
-            OpenAIClient client = GetClientWithCredential();
+            OpenAIClient client = GetCompletionsClientWithCredential();
             CompletionsOptions requestOptions = new CompletionsOptions();
             requestOptions.Prompt.Add("Hello, world!");
             requestOptions.Prompt.Add("I can have multiple prompts");
@@ -118,7 +118,7 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task SimpleCompletionTest()
         {
-            OpenAIClient client = GetClientWithCredential();
+            OpenAIClient client = GetCompletionsClientWithCredential();
             Response<Completions> response = await client.GetCompletionsAsync("Hello World!");
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
         }
@@ -143,7 +143,7 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task CompletionUsageTest()
         {
-            OpenAIClient client = GetClient();
+            OpenAIClient client = GetCompletionsClient();
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
                 Prompt =
@@ -183,7 +183,7 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task TestLogProbs()
         {
-            OpenAIClient client = GetClient();
+            OpenAIClient client = GetCompletionsClient();
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
                 Prompt = { "Hello world" },
@@ -196,7 +196,7 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task TestAdvancedCompletionsOptions()
         {
-            OpenAIClient client = GetClient();
+            OpenAIClient client = GetCompletionsClient();
             string promptText = "Are bananas especially radioactive?";
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
@@ -244,7 +244,7 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task TestTokenCutoff()
         {
-            OpenAIClient client = GetClient();
+            OpenAIClient client = GetCompletionsClient();
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
                 Prompt =
@@ -264,7 +264,7 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task StreamingCompletionsTest()
         {
-            OpenAIClient client = GetClient();
+            OpenAIClient client = GetCompletionsClient();
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
                 Prompt =

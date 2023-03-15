@@ -100,13 +100,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> or <paramref name="deploymentId"/> is null. </exception>
         public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential, OpenAIClientOptions options) : this(endpoint, credential, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
             DeploymentId = deploymentId;
         }
 
         /// <summary> Return the completion for a given prompt. </summary>
         /// <param name="prompt"> Input string prompt to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
         public virtual async Task<Response<Completions>> GetCompletionsAsync(string prompt, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
@@ -119,6 +120,7 @@ namespace Azure.AI.OpenAI
         /// <summary> Return the completions for a given prompt. </summary>
         /// <param name="completionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
         public virtual async Task<Response<Completions>> GetCompletionsAsync(CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
@@ -131,6 +133,7 @@ namespace Azure.AI.OpenAI
         /// <summary> Return the completions for a given prompt. </summary>
         /// <param name="prompt"> Input string prompt to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
         public virtual Response<Completions> GetCompletions(string prompt, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
@@ -142,6 +145,7 @@ namespace Azure.AI.OpenAI
         /// <summary> Return the embeddings for a given prompt. </summary>
         /// <param name="embeddingsOptions"> Schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="embeddingsOptions"/> is null. </exception>
         public virtual async Task<Response<Embeddings>> GetEmbeddingsAsync(EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
@@ -154,6 +158,7 @@ namespace Azure.AI.OpenAI
         /// <summary> Return the embeddings for a given prompt. </summary>
         /// <param name="embeddingsOptions"> Schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="embeddingsOptions"/> is null. </exception>
         public virtual Response<Embeddings> GetEmbeddings(EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
@@ -169,6 +174,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="../Generated/Docs/OpenAIClient.xml" path="doc/members/member[@name='GetEmbeddingsAsync(String,RequestContent,RequestContext)']/*" />
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> GetEmbeddingsAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -193,6 +199,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="../Generated/Docs/OpenAIClient.xml" path="doc/members/member[@name='GetEmbeddings(String,RequestContent,RequestContext)']/*" />
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response GetEmbeddings(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -214,6 +221,7 @@ namespace Azure.AI.OpenAI
         /// <summary> Return the completions for a given prompt. </summary>
         /// <param name="completionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
         public virtual Response<Completions> GetCompletions(CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
@@ -229,6 +237,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="../Generated/Docs/OpenAIClient.xml" path="doc/members/member[@name='GetCompletionsAsync(String,RequestContent,RequestContext)']/*" />
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> GetCompletionsAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -253,6 +262,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="../Generated/Docs/OpenAIClient.xml" path="doc/members/member[@name='GetCompletions(String,RequestContent,RequestContext)']/*" />
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response GetCompletions(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
