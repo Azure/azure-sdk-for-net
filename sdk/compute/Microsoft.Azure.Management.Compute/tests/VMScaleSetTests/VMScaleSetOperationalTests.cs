@@ -490,7 +490,7 @@ namespace Compute.Tests
             {
                 string rgName = TestUtilities.GenerateName("VMSSReapplyTestRG");
                 string vmssName = TestUtilities.GenerateName("ReapplyTestVMSS");
-                string storageAccountName = TestUtilities.GenerateName("ReapllyTestVMSS-SA");
+                string storageAccountName = TestUtilities.GenerateName("ReapplyTestVMSSSA");
                 VirtualMachineScaleSet inputVMScaleSet;
                 bool passed = false;
 
