@@ -41,6 +41,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         /// <summary>
+        /// For test purposes.
+        /// </summary>
+        /// <param name="random"></param>
+        /// <param name="minIntervalToUpdateConsecutiveErrors"></param>
+        /// <param name="nextMinTimeToUpdateConsecutiveErrors"></param>
+        /// <param name="backOffIntervalTimer"></param>
+        /// <param name="state"></param>
+        internal TransmissionStateManager(
+            Random random,
+            TimeSpan minIntervalToUpdateConsecutiveErrors,
+            DateTimeOffset nextMinTimeToUpdateConsecutiveErrors,
+            System.Timers.Timer backOffIntervalTimer,
+            TransmissionState state)
+        {
+            _random = random;
+            _minIntervalToUpdateConsecutiveErrors = minIntervalToUpdateConsecutiveErrors;
+            _nextMinTimeToUpdateConsecutiveErrors = nextMinTimeToUpdateConsecutiveErrors;
+            _backOffIntervalTimer = backOffIntervalTimer;
+            State = state;
+        }
+
+        /// <summary>
         /// Stops transmitting data to backend.
         /// </summary>
         private void OpenTransmission()
