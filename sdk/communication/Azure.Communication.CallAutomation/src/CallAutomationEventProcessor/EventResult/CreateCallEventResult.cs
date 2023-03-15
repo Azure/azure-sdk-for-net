@@ -4,8 +4,13 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary><see cref="CreateCallEventResult"/> is returned from WaitForEvent of <see cref="CreateCallResult"/>.</summary>
-    public class CreateCallEventResult : EventResultBase
+    public class CreateCallEventResult
     {
+        /// <summary>
+        /// Indicates whether the returned event is considered successful or not.
+        /// </summary>
+        public bool IsSuccessEvent { get; internal set; }
+
         /// <summary>
         /// <see cref="CallConnected"/> event will be returned once the call is established with CreateCall.
         /// </summary>

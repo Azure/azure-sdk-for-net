@@ -4,8 +4,13 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary><see cref="StartRecognizingEventResult"/> is returned from WaitForEvent of <see cref="StartRecognizingResult"/>.</summary>
-    public class StartRecognizingEventResult : EventResultBase
+    public class StartRecognizingEventResult
     {
+        /// <summary>
+        /// Indicates whether the returned event is considered successful or not.
+        /// </summary>
+        public bool IsSuccessEvent { get; internal set; }
+
         /// <summary>
         /// <see cref="RecognizeCompleted"/> event will be returned once the recognize is completed successfully.
         /// </summary>
