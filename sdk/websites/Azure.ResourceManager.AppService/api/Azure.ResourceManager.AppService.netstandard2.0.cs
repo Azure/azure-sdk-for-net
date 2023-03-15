@@ -7459,6 +7459,12 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class WebAppKeyInfo
     {
         public WebAppKeyInfo() { }
+        public WebAppKeyInfo(string name, string value = null) { }
+        public Azure.ResourceManager.AppService.Models.WebAppKeyProperties Properties { get { throw null; } set { } }
+    }
+    public partial class WebAppKeyProperties
+    {
+        public WebAppKeyProperties() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
