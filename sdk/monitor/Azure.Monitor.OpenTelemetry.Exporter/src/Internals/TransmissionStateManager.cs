@@ -105,7 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// Number of consecutive errors are taken in to account to increase the time.
         /// Random variation is introduced in order to avoid collision.
         /// </summary>
-        /// <returns>BackOff time interval</returns>
+        /// <returns>BackOff time interval.</returns>
         internal TimeSpan GetBackOffTimeInterval()
         {
             double delayInSeconds = 0;
