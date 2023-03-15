@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static ApplicationListResult DeserializeApplicationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<Application>> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())

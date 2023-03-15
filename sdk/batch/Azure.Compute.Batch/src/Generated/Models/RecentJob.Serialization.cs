@@ -31,6 +31,10 @@ namespace BatchService.Models
 
         internal static RecentJob DeserializeRecentJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> url = default;
             foreach (var property in element.EnumerateObject())

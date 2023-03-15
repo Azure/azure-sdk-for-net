@@ -48,6 +48,10 @@ namespace BatchService.Models
 
         internal static ResourceStatistics DeserializeResourceStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
             float avgCPUPercentage = default;

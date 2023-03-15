@@ -32,6 +32,10 @@ namespace BatchService.Models
 
         internal static DiskEncryptionConfiguration DeserializeDiskEncryptionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DiskEncryptionTarget>> targets = default;
             foreach (var property in element.EnumerateObject())
             {

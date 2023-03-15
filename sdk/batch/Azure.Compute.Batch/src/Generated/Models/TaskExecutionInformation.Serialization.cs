@@ -108,6 +108,10 @@ namespace BatchService.Models
 
         internal static TaskExecutionInformation DeserializeTaskExecutionInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
             Optional<int?> exitCode = default;

@@ -70,6 +70,10 @@ namespace BatchService.Models
 
         internal static Schedule DeserializeSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> doNotRunUntil = default;
             Optional<DateTimeOffset?> doNotRunAfter = default;
             Optional<TimeSpan?> startWindow = default;

@@ -28,6 +28,10 @@ namespace BatchService.Models
 
         internal static HttpHeader DeserializeHttpHeader(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

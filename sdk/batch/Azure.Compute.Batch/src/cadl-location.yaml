@@ -1,0 +1,4 @@
+commit: 832024c05d39bad1dfda0bbee6c0f1045d204ff2
+repo: Azure/azure-rest-api-specs
+directory: specification\batch\data-plane\Microsoft.Batch\stable\cadl
+

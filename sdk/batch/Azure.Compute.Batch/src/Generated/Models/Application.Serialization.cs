@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static Application DeserializeApplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string displayName = default;
             IReadOnlyList<string> versions = default;

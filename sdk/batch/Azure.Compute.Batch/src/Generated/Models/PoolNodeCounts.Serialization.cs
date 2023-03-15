@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static PoolNodeCounts DeserializePoolNodeCounts(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string poolId = default;
             Optional<NodeCounts> dedicated = default;
             Optional<NodeCounts> lowPriority = default;

@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static ComputeNodeGetRemoteLoginSettingsResult DeserializeComputeNodeGetRemoteLoginSettingsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string remoteLoginIPAddress = default;
             int remoteLoginPort = default;
             foreach (var property in element.EnumerateObject())

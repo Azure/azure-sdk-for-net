@@ -47,6 +47,10 @@ namespace BatchService.Models
 
         internal static UserAccount DeserializeUserAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string password = default;
             Optional<ElevationLevel?> elevationLevel = default;

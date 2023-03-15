@@ -49,6 +49,10 @@ namespace BatchService.Models
 
         internal static DataDisk DeserializeDataDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int lun = default;
             Optional<CachingType?> caching = default;
             int diskSizeGB = default;

@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static InboundEndpoint DeserializeInboundEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             InboundEndpointProtocol protocol = default;
             string publicIPAddress = default;

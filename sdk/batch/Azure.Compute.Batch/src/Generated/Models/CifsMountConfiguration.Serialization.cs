@@ -34,6 +34,10 @@ namespace BatchService.Models
 
         internal static CifsMountConfiguration DeserializeCifsMountConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string username = default;
             string source = default;
             string relativeMountPath = default;

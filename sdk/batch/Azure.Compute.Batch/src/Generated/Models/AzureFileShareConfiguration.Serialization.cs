@@ -34,6 +34,10 @@ namespace BatchService.Models
 
         internal static AzureFileShareConfiguration DeserializeAzureFileShareConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string accountName = default;
             string azureFileUrl = default;
             string accountKey = default;

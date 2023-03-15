@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static ComputeNodeEndpointConfiguration DeserializeComputeNodeEndpointConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<InboundEndpoint> inboundEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static BatchTaskListSubtasksResult DeserializeBatchTaskListSubtasksResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SubtaskInformation>> value = default;
             foreach (var property in element.EnumerateObject())
             {

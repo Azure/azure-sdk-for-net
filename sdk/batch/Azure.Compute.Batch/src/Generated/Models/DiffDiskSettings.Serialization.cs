@@ -33,6 +33,10 @@ namespace BatchService.Models
 
         internal static DiffDiskSettings DeserializeDiffDiskSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DiffDiskPlacement?> placement = default;
             foreach (var property in element.EnumerateObject())
             {

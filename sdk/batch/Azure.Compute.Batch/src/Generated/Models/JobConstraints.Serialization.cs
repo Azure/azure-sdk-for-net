@@ -46,6 +46,10 @@ namespace BatchService.Models
 
         internal static JobConstraints DeserializeJobConstraints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan?> maxWallClockTime = default;
             Optional<int?> maxTaskRetryCount = default;
             foreach (var property in element.EnumerateObject())

@@ -50,6 +50,10 @@ namespace BatchService.Models
 
         internal static JobScheduleStatistics DeserializeJobScheduleStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string url = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;

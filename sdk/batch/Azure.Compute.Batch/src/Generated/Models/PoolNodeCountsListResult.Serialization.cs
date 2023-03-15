@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static PoolNodeCountsListResult DeserializePoolNodeCountsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PoolNodeCounts>> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -48,6 +48,10 @@ namespace BatchService.Models
 
         internal static NetworkConfiguration DeserializeNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subnetId = default;
             Optional<DynamicVNetAssignmentScope?> dynamicVNetAssignmentScope = default;
             Optional<PoolEndpointConfiguration> endpointConfiguration = default;

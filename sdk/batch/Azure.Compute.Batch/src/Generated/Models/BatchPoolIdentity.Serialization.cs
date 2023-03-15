@@ -34,6 +34,10 @@ namespace BatchService.Models
 
         internal static BatchPoolIdentity DeserializeBatchPoolIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PoolIdentityType type = default;
             Optional<IList<UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())

@@ -33,6 +33,10 @@ namespace BatchService.Models
 
         internal static WindowsUserConfiguration DeserializeWindowsUserConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LoginMode?> loginMode = default;
             foreach (var property in element.EnumerateObject())
             {

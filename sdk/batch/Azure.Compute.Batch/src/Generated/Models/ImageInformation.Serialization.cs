@@ -17,6 +17,10 @@ namespace BatchService.Models
     {
         internal static ImageInformation DeserializeImageInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string nodeAgentSKUId = default;
             ImageReference imageReference = default;
             OSType osType = default;

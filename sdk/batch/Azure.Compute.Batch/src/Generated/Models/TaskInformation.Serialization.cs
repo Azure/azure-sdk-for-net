@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static TaskInformation DeserializeTaskInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> taskUrl = default;
             Optional<string> jobId = default;
             Optional<string> taskId = default;

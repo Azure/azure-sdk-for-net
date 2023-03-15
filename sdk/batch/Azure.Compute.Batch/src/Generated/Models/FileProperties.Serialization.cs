@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static FileProperties DeserializeFileProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> creationTime = default;
             DateTimeOffset lastModified = default;
             int contentLength = default;

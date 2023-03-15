@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static VirtualMachineInfo DeserializeVirtualMachineInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImageReference> imageReference = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -33,6 +33,10 @@ namespace BatchService.Models
 
         internal static NodePlacementConfiguration DeserializeNodePlacementConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NodePlacementPolicyType?> policy = default;
             foreach (var property in element.EnumerateObject())
             {

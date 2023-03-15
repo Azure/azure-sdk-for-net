@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static SubtaskInformation DeserializeSubtaskInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> id = default;
             Optional<ComputeNodeInformation> nodeInfo = default;
             Optional<DateTimeOffset?> startTime = default;

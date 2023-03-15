@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static NodeVMExtension DeserializeNodeVMExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provisioningState = default;
             Optional<VMExtension> vmExtension = default;
             Optional<VMExtensionInstanceView> instanceView = default;

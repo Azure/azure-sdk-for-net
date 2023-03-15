@@ -45,6 +45,10 @@ namespace BatchService.Models
 
         internal static AutoUserSpecification DeserializeAutoUserSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutoUserScope?> scope = default;
             Optional<ElevationLevel?> elevationLevel = default;
             foreach (var property in element.EnumerateObject())

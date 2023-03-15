@@ -216,6 +216,10 @@ namespace BatchService.Models
 
         internal static PoolSpecification DeserializePoolSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayName = default;
             string vmSize = default;
             Optional<CloudServiceConfiguration> cloudServiceConfiguration = default;

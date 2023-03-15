@@ -58,6 +58,10 @@ namespace BatchService.Models
 
         internal static TaskConstraints DeserializeTaskConstraints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan?> maxWallClockTime = default;
             Optional<TimeSpan?> retentionTime = default;
             Optional<int?> maxTaskRetryCount = default;

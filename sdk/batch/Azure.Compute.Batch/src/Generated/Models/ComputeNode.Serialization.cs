@@ -17,6 +17,10 @@ namespace BatchService.Models
     {
         internal static ComputeNode DeserializeComputeNode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> url = default;
             Optional<ComputeNodeState?> state = default;

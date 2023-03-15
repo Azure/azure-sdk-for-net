@@ -31,6 +31,10 @@ namespace BatchService.Models
 
         internal static PoolInformation DeserializePoolInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> poolId = default;
             Optional<AutoPoolSpecification> autoPoolSpecification = default;
             foreach (var property in element.EnumerateObject())

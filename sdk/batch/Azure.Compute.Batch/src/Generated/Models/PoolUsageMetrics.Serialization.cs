@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static PoolUsageMetrics DeserializePoolUsageMetrics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string poolId = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;

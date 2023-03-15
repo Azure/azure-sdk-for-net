@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static TaskAddCollectionResult DeserializeTaskAddCollectionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TaskAddResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -146,6 +146,10 @@ namespace BatchService.Models
 
         internal static JobSpecification DeserializeJobSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> priority = default;
             Optional<bool?> allowTaskPreemption = default;
             Optional<int?> maxParallelTasks = default;

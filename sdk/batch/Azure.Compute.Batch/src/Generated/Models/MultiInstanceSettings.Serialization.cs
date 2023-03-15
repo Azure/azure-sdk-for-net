@@ -46,6 +46,10 @@ namespace BatchService.Models
 
         internal static MultiInstanceSettings DeserializeMultiInstanceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> numberOfInstances = default;
             string coordinationCommandLine = default;
             Optional<IList<ResourceFile>> commonResourceFiles = default;

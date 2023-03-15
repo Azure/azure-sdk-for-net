@@ -84,6 +84,10 @@ namespace BatchService.Models
 
         internal static JobReleaseTask DeserializeJobReleaseTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             string commandLine = default;
             Optional<TaskContainerSettings> containerSettings = default;

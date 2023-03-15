@@ -30,6 +30,10 @@ namespace BatchService.Models
 
         internal static NFSMountConfiguration DeserializeNFSMountConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string source = default;
             string relativeMountPath = default;
             Optional<string> mountOptions = default;

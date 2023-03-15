@@ -26,6 +26,10 @@ namespace BatchService.Models
 
         internal static OutputFileDestination DeserializeOutputFileDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OutputFileBlobContainerDestination> container = default;
             foreach (var property in element.EnumerateObject())
             {

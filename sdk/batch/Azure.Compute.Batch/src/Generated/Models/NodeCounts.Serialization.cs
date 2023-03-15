@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static NodeCounts DeserializeNodeCounts(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int creating = default;
             int idle = default;
             int offline = default;

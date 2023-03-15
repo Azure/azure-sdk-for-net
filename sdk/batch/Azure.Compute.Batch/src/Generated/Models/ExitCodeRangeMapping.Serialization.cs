@@ -27,6 +27,10 @@ namespace BatchService.Models
 
         internal static ExitCodeRangeMapping DeserializeExitCodeRangeMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int start = default;
             int end = default;
             ExitOptions exitOptions = default;

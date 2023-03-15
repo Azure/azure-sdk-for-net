@@ -44,6 +44,10 @@ namespace BatchService.Models
 
         internal static OutputFileBlobContainerDestination DeserializeOutputFileBlobContainerDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             string containerUrl = default;
             Optional<ComputeNodeIdentityReference> identityReference = default;

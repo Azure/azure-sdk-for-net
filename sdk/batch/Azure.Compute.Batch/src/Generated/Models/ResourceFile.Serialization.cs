@@ -56,6 +56,10 @@ namespace BatchService.Models
 
         internal static ResourceFile DeserializeResourceFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> autoStorageContainerName = default;
             Optional<string> storageContainerUrl = default;
             Optional<string> httpUrl = default;

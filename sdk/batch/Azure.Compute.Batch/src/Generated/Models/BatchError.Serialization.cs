@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static BatchError DeserializeBatchError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<ErrorMessage> message = default;
             Optional<IReadOnlyList<BatchErrorDetail>> values = default;

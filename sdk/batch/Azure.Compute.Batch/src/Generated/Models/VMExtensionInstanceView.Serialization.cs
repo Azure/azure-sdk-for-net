@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static VMExtensionInstanceView DeserializeVMExtensionInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             Optional<IReadOnlyList<InstanceViewStatus>> subStatuses = default;

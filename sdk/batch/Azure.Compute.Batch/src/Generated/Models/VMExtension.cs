@@ -51,7 +51,7 @@ namespace BatchService.Models
         /// Collection of extension names after which this extension needs to be
         /// provisioned.
         /// </param>
-        internal VMExtension(string name, string publisher, string type, string typeHandlerVersion, bool? autoUpgradeMinorVersion, object settings, object protectedSettings, IList<string> provisionAfterExtensions)
+        internal VMExtension(string name, string publisher, string type, string typeHandlerVersion, bool? autoUpgradeMinorVersion, Models.object settings, Models.object protectedSettings, IList<string> provisionAfterExtensions)
         {
             Name = name;
             Publisher = publisher;
@@ -78,12 +78,12 @@ namespace BatchService.Models
         /// </summary>
         public bool? AutoUpgradeMinorVersion { get; set; }
         /// <summary> JSON formatted public settings for the extension. </summary>
-        public object Settings { get; set; }
+        public Models.object Settings { get; set; }
         /// <summary>
         /// The extension can contain either protectedSettings or
         /// protectedSettingsFromKeyVault or no protected settings at all. 
         /// </summary>
-        public object ProtectedSettings { get; set; }
+        public Models.object ProtectedSettings { get; set; }
         /// <summary>
         /// Collection of extension names after which this extension needs to be
         /// provisioned.

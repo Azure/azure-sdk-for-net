@@ -23,6 +23,10 @@ namespace BatchService.Models
 
         internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceId = default;
             Optional<string> clientId = default;
             Optional<string> principalId = default;

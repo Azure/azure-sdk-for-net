@@ -23,6 +23,10 @@ namespace BatchService.Models
 
         internal static TaskSchedulingPolicy DeserializeTaskSchedulingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ComputeNodeFillType nodeFillType = default;
             foreach (var property in element.EnumerateObject())
             {

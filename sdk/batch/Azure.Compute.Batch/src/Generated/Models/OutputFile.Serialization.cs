@@ -27,6 +27,10 @@ namespace BatchService.Models
 
         internal static OutputFile DeserializeOutputFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string filePattern = default;
             OutputFileDestination destination = default;
             OutputFileUploadOptions uploadOptions = default;

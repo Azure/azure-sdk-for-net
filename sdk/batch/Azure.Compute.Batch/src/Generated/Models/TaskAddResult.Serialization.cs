@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static TaskAddResult DeserializeTaskAddResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TaskAddStatus status = default;
             string taskId = default;
             Optional<string> eTag = default;

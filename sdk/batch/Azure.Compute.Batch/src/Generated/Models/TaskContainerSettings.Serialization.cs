@@ -45,6 +45,10 @@ namespace BatchService.Models
 
         internal static TaskContainerSettings DeserializeTaskContainerSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> containerRunOptions = default;
             string imageName = default;
             Optional<ContainerRegistry> registry = default;

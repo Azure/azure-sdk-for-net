@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static ComputeNodeError DeserializeComputeNodeError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<IReadOnlyList<NameValuePair>> errorDetails = default;

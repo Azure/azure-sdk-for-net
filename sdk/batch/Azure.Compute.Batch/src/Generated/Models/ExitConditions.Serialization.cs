@@ -57,6 +57,10 @@ namespace BatchService.Models
 
         internal static ExitConditions DeserializeExitConditions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ExitCodeMapping>> exitCodes = default;
             Optional<IList<ExitCodeRangeMapping>> exitCodeRanges = default;
             Optional<ExitOptions> preProcessingError = default;

@@ -41,6 +41,10 @@ namespace BatchService.Models
 
         internal static MountConfiguration DeserializeMountConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureBlobFileSystemConfiguration> azureBlobFileSystemConfiguration = default;
             Optional<NFSMountConfiguration> nfsMountConfiguration = default;
             Optional<CifsMountConfiguration> cifsMountConfiguration = default;

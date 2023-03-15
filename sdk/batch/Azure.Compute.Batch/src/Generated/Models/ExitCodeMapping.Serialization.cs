@@ -25,6 +25,10 @@ namespace BatchService.Models
 
         internal static ExitCodeMapping DeserializeExitCodeMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int code = default;
             ExitOptions exitOptions = default;
             foreach (var property in element.EnumerateObject())

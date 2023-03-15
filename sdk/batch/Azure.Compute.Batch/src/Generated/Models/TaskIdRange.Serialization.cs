@@ -25,6 +25,10 @@ namespace BatchService.Models
 
         internal static TaskIdRange DeserializeTaskIdRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int start = default;
             int end = default;
             foreach (var property in element.EnumerateObject())

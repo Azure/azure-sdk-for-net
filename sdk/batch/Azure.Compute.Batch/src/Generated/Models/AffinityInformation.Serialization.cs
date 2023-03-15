@@ -23,6 +23,10 @@ namespace BatchService.Models
 
         internal static AffinityInformation DeserializeAffinityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string affinityId = default;
             foreach (var property in element.EnumerateObject())
             {

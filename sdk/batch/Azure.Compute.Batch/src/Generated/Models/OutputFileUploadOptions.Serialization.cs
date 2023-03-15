@@ -23,6 +23,10 @@ namespace BatchService.Models
 
         internal static OutputFileUploadOptions DeserializeOutputFileUploadOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OutputFileUploadCondition uploadCondition = default;
             foreach (var property in element.EnumerateObject())
             {

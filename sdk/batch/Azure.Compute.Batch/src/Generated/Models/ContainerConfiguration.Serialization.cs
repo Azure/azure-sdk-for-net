@@ -44,6 +44,10 @@ namespace BatchService.Models
 
         internal static ContainerConfiguration DeserializeContainerConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ContainerType type = default;
             Optional<IList<string>> containerImageNames = default;
             Optional<IList<ContainerRegistry>> containerRegistries = default;

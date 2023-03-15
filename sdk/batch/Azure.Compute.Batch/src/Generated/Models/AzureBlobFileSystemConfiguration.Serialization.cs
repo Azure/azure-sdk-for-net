@@ -47,6 +47,10 @@ namespace BatchService.Models
 
         internal static AzureBlobFileSystemConfiguration DeserializeAzureBlobFileSystemConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string accountName = default;
             string containerName = default;
             Optional<string> accountKey = default;

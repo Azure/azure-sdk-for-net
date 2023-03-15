@@ -42,6 +42,10 @@ namespace BatchService.Models
 
         internal static ResizeError DeserializeResizeError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<IList<NameValuePair>> values = default;

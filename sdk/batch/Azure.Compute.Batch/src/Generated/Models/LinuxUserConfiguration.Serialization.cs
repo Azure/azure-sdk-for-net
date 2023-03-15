@@ -50,6 +50,10 @@ namespace BatchService.Models
 
         internal static LinuxUserConfiguration DeserializeLinuxUserConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> uid = default;
             Optional<int?> gid = default;
             Optional<string> sshPrivateKey = default;

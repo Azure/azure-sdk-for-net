@@ -76,6 +76,10 @@ namespace BatchService.Models
 
         internal static VirtualMachineConfiguration DeserializeVirtualMachineConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ImageReference imageReference = default;
             string nodeAgentSKUId = default;
             Optional<WindowsConfiguration> windowsConfiguration = default;

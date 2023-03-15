@@ -88,6 +88,10 @@ namespace BatchService.Models
 
         internal static JobPreparationTask DeserializeJobPreparationTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             string commandLine = default;
             Optional<TaskContainerSettings> containerSettings = default;

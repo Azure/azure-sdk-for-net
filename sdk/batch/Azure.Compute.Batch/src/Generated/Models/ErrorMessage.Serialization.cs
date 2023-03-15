@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static ErrorMessage DeserializeErrorMessage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> lang = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

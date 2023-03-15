@@ -28,6 +28,10 @@ namespace BatchService.Models
 
         internal static ApplicationPackageReference DeserializeApplicationPackageReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string applicationId = default;
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())

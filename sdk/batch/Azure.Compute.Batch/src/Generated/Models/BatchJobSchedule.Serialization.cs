@@ -53,6 +53,10 @@ namespace BatchService.Models
 
         internal static BatchJobSchedule DeserializeBatchJobSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> displayName = default;
             Optional<string> url = default;

@@ -51,6 +51,10 @@ namespace BatchService.Models
 
         internal static ComputeNodeInformation DeserializeComputeNodeInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> affinityId = default;
             Optional<string> nodeUrl = default;
             Optional<string> poolId = default;

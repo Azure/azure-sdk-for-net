@@ -155,6 +155,10 @@ namespace BatchService.Models
 
         internal static BatchJob DeserializeBatchJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> displayName = default;
             Optional<bool?> usesTaskDependencies = default;

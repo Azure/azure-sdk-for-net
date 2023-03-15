@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static JobPreparationAndReleaseTaskExecutionInformation DeserializeJobPreparationAndReleaseTaskExecutionInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> poolId = default;
             Optional<string> nodeId = default;
             Optional<string> nodeUrl = default;

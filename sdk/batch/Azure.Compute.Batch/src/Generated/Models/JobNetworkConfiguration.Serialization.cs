@@ -23,6 +23,10 @@ namespace BatchService.Models
 
         internal static JobNetworkConfiguration DeserializeJobNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string subnetId = default;
             foreach (var property in element.EnumerateObject())
             {

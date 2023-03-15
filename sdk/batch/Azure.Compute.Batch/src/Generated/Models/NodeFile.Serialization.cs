@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static NodeFile DeserializeNodeFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> url = default;
             Optional<bool?> isDirectory = default;

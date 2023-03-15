@@ -45,6 +45,10 @@ namespace BatchService.Models
 
         internal static AutoPoolSpecification DeserializeAutoPoolSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> autoPoolIdPrefix = default;
             PoolLifetimeOption poolLifetimeOption = default;
             Optional<bool?> keepAlive = default;

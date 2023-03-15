@@ -1414,7 +1414,7 @@ namespace BatchService
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
                 Response response = await GetRemoteDesktopAsync(poolId, nodeId, timeOut, clientRequestId, returnClientRequestId, ocpDate, context).ConfigureAwait(false);
-                return Response.FromValue(new BinaryData(response), response);
+                return Response.FromValue(BinaryData.FromResponse(response), response);
             }
             catch (Exception e)
             {
@@ -1463,7 +1463,7 @@ namespace BatchService
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
                 Response response = GetRemoteDesktop(poolId, nodeId, timeOut, clientRequestId, returnClientRequestId, ocpDate, context);
-                return Response.FromValue(new BinaryData(response), response);
+                return Response.FromValue(BinaryData.FromResponse(response), response);
             }
             catch (Exception e)
             {

@@ -46,6 +46,10 @@ namespace BatchService.Models
 
         internal static ImageReference DeserializeImageReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> publisher = default;
             Optional<string> offer = default;
             Optional<string> sku = default;

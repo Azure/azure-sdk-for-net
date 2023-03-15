@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static JobPreparationTaskExecutionInformation DeserializeJobPreparationTaskExecutionInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset startTime = default;
             Optional<DateTimeOffset?> endTime = default;
             JobPreparationTaskState state = default;

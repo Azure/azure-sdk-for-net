@@ -42,6 +42,10 @@ namespace BatchService.Models
 
         internal static TaskDependencies DeserializeTaskDependencies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> taskIds = default;
             Optional<IList<TaskIdRange>> taskIdRanges = default;
             foreach (var property in element.EnumerateObject())

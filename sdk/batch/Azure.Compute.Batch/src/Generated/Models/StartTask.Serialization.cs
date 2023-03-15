@@ -78,6 +78,10 @@ namespace BatchService.Models
 
         internal static StartTask DeserializeStartTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string commandLine = default;
             Optional<TaskContainerSettings> containerSettings = default;
             Optional<IList<ResourceFile>> resourceFiles = default;

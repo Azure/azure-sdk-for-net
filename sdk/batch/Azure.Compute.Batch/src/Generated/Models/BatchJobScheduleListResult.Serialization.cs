@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static BatchJobScheduleListResult DeserializeBatchJobScheduleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BatchJobSchedule>> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -32,6 +32,10 @@ namespace BatchService.Models
 
         internal static AutoScaleRun DeserializeAutoScaleRun(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset timestamp = default;
             Optional<string> results = default;
             Optional<AutoScaleRunError> error = default;

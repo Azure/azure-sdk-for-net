@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static TaskSlotCounts DeserializeTaskSlotCounts(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int active = default;
             int running = default;
             int completed = default;

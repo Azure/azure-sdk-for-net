@@ -38,6 +38,10 @@ namespace BatchService.Models
 
         internal static NetworkSecurityGroupRule DeserializeNetworkSecurityGroupRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int priority = default;
             NetworkSecurityGroupRuleAccess access = default;
             string sourceAddressPrefix = default;

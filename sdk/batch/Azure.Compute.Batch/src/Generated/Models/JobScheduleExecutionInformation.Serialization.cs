@@ -51,6 +51,10 @@ namespace BatchService.Models
 
         internal static JobScheduleExecutionInformation DeserializeJobScheduleExecutionInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> nextRunTime = default;
             Optional<RecentJob> recentJob = default;
             Optional<DateTimeOffset?> endTime = default;

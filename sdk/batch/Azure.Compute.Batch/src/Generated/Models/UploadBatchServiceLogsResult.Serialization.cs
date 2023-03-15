@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static UploadBatchServiceLogsResult DeserializeUploadBatchServiceLogsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string virtualDirectoryName = default;
             int numberOfFilesUploaded = default;
             foreach (var property in element.EnumerateObject())

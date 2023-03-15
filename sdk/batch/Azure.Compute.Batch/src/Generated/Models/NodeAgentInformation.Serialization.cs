@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static NodeAgentInformation DeserializeNodeAgentInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string version = default;
             DateTimeOffset lastUpdateTime = default;
             foreach (var property in element.EnumerateObject())

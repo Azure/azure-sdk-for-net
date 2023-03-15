@@ -44,6 +44,10 @@ namespace BatchService.Models
 
         internal static PublicIPAddressConfiguration DeserializePublicIPAddressConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddressProvisioningType?> provision = default;
             Optional<IList<string>> ipAddressIds = default;
             foreach (var property in element.EnumerateObject())

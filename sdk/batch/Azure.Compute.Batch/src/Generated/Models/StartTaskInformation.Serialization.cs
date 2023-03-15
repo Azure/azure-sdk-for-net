@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static StartTaskInformation DeserializeStartTaskInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             StartTaskState state = default;
             DateTimeOffset startTime = default;
             Optional<DateTimeOffset?> endTime = default;

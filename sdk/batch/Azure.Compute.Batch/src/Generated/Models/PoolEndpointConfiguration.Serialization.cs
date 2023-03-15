@@ -29,6 +29,10 @@ namespace BatchService.Models
 
         internal static PoolEndpointConfiguration DeserializePoolEndpointConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<InboundNATPool> inboundNATPools = default;
             foreach (var property in element.EnumerateObject())
             {

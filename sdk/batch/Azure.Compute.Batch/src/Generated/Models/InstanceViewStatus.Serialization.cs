@@ -15,6 +15,10 @@ namespace BatchService.Models
     {
         internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> displayStatus = default;
             Optional<StatusLevelTypes?> level = default;

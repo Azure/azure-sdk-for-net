@@ -51,6 +51,10 @@ namespace BatchService.Models
 
         internal static JobExecutionInformation DeserializeJobExecutionInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset startTime = default;
             Optional<DateTimeOffset?> endTime = default;
             Optional<string> poolId = default;

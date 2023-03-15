@@ -44,6 +44,10 @@ namespace BatchService.Models
 
         internal static TaskFailureInformation DeserializeTaskFailureInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ErrorCategory category = default;
             Optional<string> code = default;
             Optional<string> message = default;

@@ -65,13 +65,17 @@ namespace BatchService.Models
 
         internal static VMExtension DeserializeVMExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string publisher = default;
             string type = default;
             Optional<string> typeHandlerVersion = default;
             Optional<bool?> autoUpgradeMinorVersion = default;
-            Azure.Core.Optional < object> settings = default;
-            Azure.Core.Optional < object> protectedSettings = default;
+            Azure.Core.Optional < Models.object> settings = default;
+            Azure.Core.Optional < Models.object> protectedSettings = default;
             Optional<IList<string>> provisionAfterExtensions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -112,7 +116,7 @@ namespace BatchService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    settings = property.Value;
+                    settings = Models.object.Deserializeobject(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectedSettings"u8))
@@ -122,7 +126,7 @@ namespace BatchService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectedSettings = property.Value;
+                    protectedSettings = Models.object.Deserializeobject(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisionAfterExtensions"u8))

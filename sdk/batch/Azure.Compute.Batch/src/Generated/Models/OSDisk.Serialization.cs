@@ -26,6 +26,10 @@ namespace BatchService.Models
 
         internal static OSDisk DeserializeOSDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DiffDiskSettings> ephemeralOSDiskSettings = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -139,6 +139,10 @@ namespace BatchService.Models
 
         internal static JobManagerTask DeserializeJobManagerTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<string> displayName = default;
             string commandLine = default;

@@ -16,6 +16,10 @@ namespace BatchService.Models
     {
         internal static CertificateListResult DeserializeCertificateListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<Certificate>> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())

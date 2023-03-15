@@ -53,6 +53,10 @@ namespace BatchService.Models
 
         internal static CertificateReference DeserializeCertificateReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string thumbprint = default;
             string thumbprintAlgorithm = default;
             Optional<CertificateStoreLocation?> storeLocation = default;

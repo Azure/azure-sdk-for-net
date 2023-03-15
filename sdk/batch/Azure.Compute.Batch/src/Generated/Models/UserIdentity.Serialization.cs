@@ -31,6 +31,10 @@ namespace BatchService.Models
 
         internal static UserIdentity DeserializeUserIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> username = default;
             Optional<AutoUserSpecification> autoUser = default;
             foreach (var property in element.EnumerateObject())

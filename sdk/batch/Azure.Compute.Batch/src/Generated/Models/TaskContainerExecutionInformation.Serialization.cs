@@ -36,6 +36,10 @@ namespace BatchService.Models
 
         internal static TaskContainerExecutionInformation DeserializeTaskContainerExecutionInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> containerId = default;
             Optional<string> state = default;
             Optional<string> error = default;

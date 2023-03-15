@@ -28,6 +28,10 @@ namespace BatchService.Models
 
         internal static UsageStatistics DeserializeUsageStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
             TimeSpan dedicatedCoreTime = default;

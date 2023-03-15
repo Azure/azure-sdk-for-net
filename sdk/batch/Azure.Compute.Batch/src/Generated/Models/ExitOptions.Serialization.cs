@@ -45,6 +45,10 @@ namespace BatchService.Models
 
         internal static ExitOptions DeserializeExitOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JobAction?> jobAction = default;
             Optional<DependencyAction?> dependencyAction = default;
             foreach (var property in element.EnumerateObject())

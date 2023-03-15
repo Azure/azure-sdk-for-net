@@ -32,6 +32,10 @@ namespace BatchService.Models
 
         internal static AuthenticationTokenSettings DeserializeAuthenticationTokenSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AccessScope>> access = default;
             foreach (var property in element.EnumerateObject())
             {

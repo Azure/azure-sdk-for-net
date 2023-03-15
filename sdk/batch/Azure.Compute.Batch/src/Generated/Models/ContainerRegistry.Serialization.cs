@@ -41,6 +41,10 @@ namespace BatchService.Models
 
         internal static ContainerRegistry DeserializeContainerRegistry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> username = default;
             Optional<string> password = default;
             Optional<string> registryServer = default;
