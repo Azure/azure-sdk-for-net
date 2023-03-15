@@ -41,12 +41,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions ? options = default)
         {
-            if (options == default)
-            {
-                options = new CallAutomationClientOptions();
-                options.EventProcessorOptions.EventTimeout = TimeSpan.FromSeconds(defaultTestTimeout);
-            }
-
             var mockResponse = new MockResponse(responseCode);
 
             if (responseContent != null)
@@ -103,7 +97,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         }
 
         protected void SendAndProcessEvent(
-            EventProcessor eventProcessor,
+            CallAutomationEventProcessor eventProcessor,
             CallAutomationEventBase eventToBeSent)
         {
             eventProcessor.ProcessEvents(new List<CallAutomationEventBase>() { eventToBeSent });

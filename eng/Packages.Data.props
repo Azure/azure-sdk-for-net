@@ -83,14 +83,14 @@
     <!-- Azure SDK packages -->
 	  <PackageReference Update="Azure.Communication.Identity" Version="1.2.0" />
     <PackageReference Update="Azure.Communication.Common" Version="1.2.1" />
-    <PackageReference Update="Azure.Core" Version="1.29.0" />
+    <PackageReference Update="Azure.Core" Version="1.30.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.25" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.5.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.7.5" />
-    <PackageReference Update="Azure.Messaging.EventGrid" Version="4.12.0" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.11.1" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.8.1" />
+    <PackageReference Update="Azure.Messaging.EventGrid" Version="4.14.1" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.13.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.7.0" />
@@ -151,7 +151,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.6.0" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.6.3" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
@@ -165,7 +165,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230306.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230309.2" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230131.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
@@ -186,9 +186,9 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Identity" Version="1.7.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.2.0" />
-    <PackageReference Update="Azure.Messaging.EventGrid" Version="4.0.0" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.11.1" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.8.1" />
+    <PackageReference Update="Azure.Messaging.EventGrid" Version="4.14.1" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.13.1" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.1.0" />
 		<PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.0.0" />
