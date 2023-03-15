@@ -26,8 +26,60 @@ namespace Azure.Communication.Chat
         private readonly ChatClientOptions _chatClientOptions;
         private readonly CommunicationSignalingClient _communicationSignalingClient;
 
-        private RealTimeNotificationEventHandler _realtimeNotificationEventHandler;
+        ///// <summary>
+        ///// EventHandler
+        ///// </summary>
+#pragma warning disable CS0067
 
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<ChatMessageReceivedEvent> ChatMessageReceived;
+
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<ChatMessageEditedEvent> ChatMessageEdited;
+
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<ChatMessageDeletedEvent> ChatMessageDeleted;
+
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<TypingIndicatorReceivedEvent> TypingIndicatorReceived;
+
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<ReadReceiptReceivedEvent> ReadReceiptReceived;
+
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<ChatThreadCreatedEvent> ChatThreadCreated;
+
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<ChatThreadDeletedEvent> ChatThreadDeleted;
+
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<ChatThreadPropertiesUpdatedEvent> ChatThreadPropertiesUpdated;
+
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<ParticipantsAddedEvent> ParticipantsAdded;
+
+        /// <summary>
+        /// EventHandler
+        /// </summary>
+        public event SyncAsyncEventHandler<ParticipantsRemovedEvent> ParticipantsRemoved;
         /// <summary> Initializes a new instance of <see cref="ChatClient"/>.</summary>
         /// <param name="endpoint">The uri for the Azure Communication Services Chat.</param>
         /// <param name="communicationTokenCredential">Instance of <see cref="CommunicationTokenCredential"/>.</param>
@@ -254,11 +306,9 @@ namespace Azure.Communication.Chat
         /// Start trouter client
         /// </summary>
         /// <returns></returns>
-        public async Task<RealTimeNotificationEventHandler> StartRealTimeNotifications()
+        public async Task StartRealTimeNotifications()
         {
-            _realtimeNotificationEventHandler = new RealTimeNotificationEventHandler();
             await _communicationSignalingClient.Start().ConfigureAwait(false);
-            return _realtimeNotificationEventHandler;
         }
 
         /// <summary>
@@ -276,7 +326,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatEventType"></param>
         public void On(ChatEventType chatEventType)
         {
-            _communicationSignalingClient.on(chatEventType, _realtimeNotificationEventHandler);
+            _communicationSignalingClient.on(chatEventType, ChatMessageReceived);
         }
 
         /// <summary>
@@ -285,7 +335,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatEventType"></param>
         public void Off(ChatEventType chatEventType)
         {
-            _communicationSignalingClient.on(chatEventType, _realtimeNotificationEventHandler);
+            _communicationSignalingClient.on(chatEventType, ChatMessageReceived);
         }
     }
 }

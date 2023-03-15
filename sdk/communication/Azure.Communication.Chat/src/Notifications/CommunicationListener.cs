@@ -12,17 +12,24 @@ namespace Azure.Communication.Chat.Notifications
     internal class CommunicationListener
     {
         private ChatEventType _eventType;
-        private RealTimeNotificationEventHandler _realTimeNotificationEventHandler;
+        private SyncAsyncEventHandler<ChatMessageReceivedEvent> _eventHandler;
 
         /// <summary>
         /// Implementation of TrouterListener
         /// </summary>
         /// <param name="chatEventType"></param>
-        /// <param name="realTimeNotificationEventHandler"></param>
-        public CommunicationListener(ChatEventType chatEventType, RealTimeNotificationEventHandler realTimeNotificationEventHandler)
+        /// <param name="eventHandler"></param>
+        public CommunicationListener(ChatEventType chatEventType, SyncAsyncEventHandler<ChatMessageReceivedEvent> eventHandler)
         {
             _eventType = chatEventType;
-            _realTimeNotificationEventHandler = realTimeNotificationEventHandler;
+            _eventHandler = eventHandler;
+        }
+
+        private void ProcessRequest()
+        {
+            var s = new ChatMessageReceivedEvent(false);
+
+            _eventHandler(s);
         }
 
         //public override async Task<TrouterResponse> ProcessRequestAsync(TrouterRequest request, CancellationToken cancellationToken = default)

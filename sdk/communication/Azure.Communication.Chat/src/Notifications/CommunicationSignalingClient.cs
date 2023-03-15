@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Communication.Chat.Notifications.Models;
+using Azure.Core;
 
 namespace Azure.Communication.Chat.Notifications
 {
@@ -12,7 +13,7 @@ namespace Azure.Communication.Chat.Notifications
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private TrouterClient _trouterClient;
-        private bool _isRealTimeNotificationsStarted;
+        private bool _isRealTimeNotificationsStarted = true;
 
         /// <summary>
         ///
@@ -21,7 +22,6 @@ namespace Azure.Communication.Chat.Notifications
         public async Task Start()
         {
             await _trouterClient.StartAsync().ConfigureAwait(false);
-            _isRealTimeNotificationsStarted = true;
             CreateTrouterService();
         }
 
@@ -46,11 +46,11 @@ namespace Azure.Communication.Chat.Notifications
             _trouterClient = new TrouterClient();
         }
 #pragma warning disable CA1822 // Mark members as static
-        public void on(ChatEventType chatEventType, RealTimeNotificationEventHandler realTimeNotificationEventHandler)
+        public void on(ChatEventType chatEventType, SyncAsyncEventHandler<ChatMessageReceivedEvent> eventHandler)
         {
             if (chatEventType == ChatEventType.ChatMessageReceived)
             {
-                var listener = new CommunicationListener(chatEventType, realTimeNotificationEventHandler);
+                var listener = new CommunicationListener(chatEventType, eventHandler);
 
                 //_trouterClient.RegisterListener("", listener);
             }
