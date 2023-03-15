@@ -5,7 +5,7 @@ languages:
 products:
 - azure
 - azure-cognitive-services
-- azure-health-insights-cancerprofiling
+- azure-health-insights
 name: Azure Health Insights - Cancer Profiling samples for .NET
 description: Samples for the Azure.Health.Insights.CancerProfiling client library
 ---

@@ -5,7 +5,7 @@ languages:
 products:
 - azure
 - azure-cognitive-services
-- azure-health-insights-clinicalmatching
+- azure-health-insights
 name: Azure Health Insights - Clinical Matching samples for .NET
 description: Samples for the Azure.Health.Insights.ClinicalMatching client library
 ---
