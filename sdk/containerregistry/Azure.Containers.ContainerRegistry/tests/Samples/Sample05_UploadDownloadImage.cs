@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             UploadBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
 
             // Update manifest with config info
-            manifest.Config = new OciDescriptor()
+            manifest.Configuration = new OciDescriptor()
             {
                 Digest = uploadConfigResult.Digest,
                 SizeInBytes = uploadConfigResult.SizeInBytes,
@@ -93,7 +93,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             }
 
             // Download and write out the config
-            DownloadBlobResult configBlob = await client.DownloadBlobAsync(manifest.Config.Digest);
+            DownloadBlobResult configBlob = await client.DownloadBlobAsync(manifest.Configuration.Digest);
 
             string configFile = Path.Combine(path, "config.json");
             using (FileStream stream = File.Create(configFile))

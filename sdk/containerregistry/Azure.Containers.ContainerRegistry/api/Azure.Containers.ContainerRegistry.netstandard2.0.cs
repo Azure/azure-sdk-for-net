@@ -291,7 +291,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         public OciImageManifest(int schemaVersion = 2) { }
         public Azure.Containers.ContainerRegistry.OciAnnotations Annotations { get { throw null; } set { } }
-        public Azure.Containers.ContainerRegistry.OciDescriptor Config { get { throw null; } set { } }
+        public Azure.Containers.ContainerRegistry.OciDescriptor Configuration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.OciDescriptor> Layers { get { throw null; } }
         public int SchemaVersion { get { throw null; } set { } }
     }

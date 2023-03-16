@@ -24,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             BinaryData config = BinaryData.FromString("Sample config");
             var uploadConfigResult = await client.UploadBlobAsync(config);
 
-            manifest.Config = new OciDescriptor()
+            manifest.Configuration = new OciDescriptor()
             {
                 Digest = uploadConfigResult.Value.Digest,
                 SizeInBytes = uploadConfigResult.Value.SizeInBytes,

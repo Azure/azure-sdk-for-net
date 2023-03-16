@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             OciImageManifest manifest = new OciImageManifest()
             {
                 SchemaVersion = 2,
-                Config = new OciDescriptor()
+                Configuration = new OciDescriptor()
                 {
                     MediaType = "application/vnd.acme.rocket.config",
                     Digest = "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",

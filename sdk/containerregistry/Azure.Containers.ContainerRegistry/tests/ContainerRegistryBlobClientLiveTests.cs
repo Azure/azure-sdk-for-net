@@ -336,10 +336,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // These are from the values in the Data\oci-artifact\manifest.json file.
             Assert.IsNotNull(manifest);
 
-            Assert.IsNotNull(manifest.Config);
-            Assert.AreEqual("application/vnd.acme.rocket.config", manifest.Config.MediaType);
-            Assert.AreEqual("sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8", manifest.Config.Digest);
-            Assert.AreEqual(171, manifest.Config.SizeInBytes);
+            Assert.IsNotNull(manifest.Configuration);
+            Assert.AreEqual("application/vnd.acme.rocket.config", manifest.Configuration.MediaType);
+            Assert.AreEqual("sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8", manifest.Configuration.Digest);
+            Assert.AreEqual(171, manifest.Configuration.SizeInBytes);
 
             Assert.IsNotNull(manifest.Layers);
             Assert.AreEqual(1, manifest.Layers.Count);
@@ -781,7 +781,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     descriptor.SizeInBytes = uploadResult.Value.SizeInBytes;
                     descriptor.MediaType = "application/vnd.acme.rocket.config";
 
-                    manifest.Config = descriptor;
+                    manifest.Configuration = descriptor;
                 }
             }
 
@@ -835,7 +835,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string configFileName = Path.Combine(path, "config.json");
             using (FileStream fs = File.Create(configFileName))
             {
-                DownloadBlobResult layerResult = await client.DownloadBlobAsync(manifest.Config.Digest);
+                DownloadBlobResult layerResult = await client.DownloadBlobAsync(manifest.Configuration.Digest);
                 await layerResult.Content.ToStream().CopyToAsync(fs);
             }
 
@@ -846,7 +846,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 using (FileStream fs = File.Create(fileName))
                 {
-                    DownloadBlobResult layerResult = await client.DownloadBlobAsync(manifest.Config.Digest);
+                    DownloadBlobResult layerResult = await client.DownloadBlobAsync(manifest.Configuration.Digest);
                     await layerResult.Content.ToStream().CopyToAsync(fs);
                 }
             }

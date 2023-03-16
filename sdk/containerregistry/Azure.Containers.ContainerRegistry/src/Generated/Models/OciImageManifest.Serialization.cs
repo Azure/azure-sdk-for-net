@@ -19,10 +19,10 @@ namespace Azure.Containers.ContainerRegistry
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Config))
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Config);
+                writer.WriteObjectValue(Configuration);
             }
             if (Optional.IsCollectionDefined(Layers))
             {
