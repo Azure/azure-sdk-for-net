@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
@@ -8,7 +9,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// <summary>
     /// The result from downloading a blob from the registry.
     /// </summary>
-    public class DownloadBlobStreamingResult
+    public class DownloadBlobStreamingResult : IDisposable
     {
         internal DownloadBlobStreamingResult(string digest, Stream content)
         {
@@ -25,5 +26,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// The blob content.
         /// </summary>
         public Stream Content { get; }
+
+        /// <summary>
+        /// Disposes the <see cref="DownloadBlobStreamingResult"/> by calling Dispose on the underlying <see cref="Content"/> stream.
+        /// </summary>
+        public void Dispose()
+        {
+            Content?.Dispose();
+            GC.SuppressFinalize(this);
+        }
     }
 }
