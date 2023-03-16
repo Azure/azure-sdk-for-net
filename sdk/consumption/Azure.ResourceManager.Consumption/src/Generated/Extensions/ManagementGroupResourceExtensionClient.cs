@@ -104,5 +104,67 @@ namespace Azure.ResourceManager.Consumption
                 throw;
             }
         }
+
+        /// <summary>
+        /// Provides the aggregate cost of a management group and all child management groups by specified billing period
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetForBillingPeriodByManagementGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(string billingPeriodName, CancellationToken cancellationToken = default)
+        {
+            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetAggregatedCost");
+            scope.Start();
+            try
+            {
+                var response = await AggregatedCostRestClient.GetForBillingPeriodByManagementGroupAsync(Id.Name, billingPeriodName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Provides the aggregate cost of a management group and all child management groups by specified billing period
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetForBillingPeriodByManagementGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConsumptionAggregatedCostResult> GetAggregatedCost(string billingPeriodName, CancellationToken cancellationToken = default)
+        {
+            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetAggregatedCost");
+            scope.Start();
+            try
+            {
+                var response = AggregatedCostRestClient.GetForBillingPeriodByManagementGroup(Id.Name, billingPeriodName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

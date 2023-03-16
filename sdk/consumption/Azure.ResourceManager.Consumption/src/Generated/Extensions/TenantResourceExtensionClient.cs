@@ -5,14 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _balancesClientDiagnostics;
+        private BalancesRestOperations _balancesRestClient;
+        private ClientDiagnostics _reservationsSummariesClientDiagnostics;
+        private ReservationsSummariesRestOperations _reservationsSummariesRestClient;
+        private ClientDiagnostics _reservationsDetailsClientDiagnostics;
+        private ReservationsDetailsRestOperations _reservationsDetailsRestClient;
+        private ClientDiagnostics _reservationTransactionsClientDiagnostics;
+        private ReservationTransactionsRestOperations _reservationTransactionsRestClient;
+        private ClientDiagnostics _eventsClientDiagnostics;
+        private EventsRestOperations _eventsRestClient;
+        private ClientDiagnostics _lotsClientDiagnostics;
+        private LotsRestOperations _lotsRestClient;
+        private ClientDiagnostics _creditsClientDiagnostics;
+        private CreditsRestOperations _creditsRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
         {
@@ -25,10 +46,759 @@ namespace Azure.ResourceManager.Consumption
         {
         }
 
+        private ClientDiagnostics BalancesClientDiagnostics => _balancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BalancesRestOperations BalancesRestClient => _balancesRestClient ??= new BalancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ReservationsSummariesClientDiagnostics => _reservationsSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ReservationsSummariesRestOperations ReservationsSummariesRestClient => _reservationsSummariesRestClient ??= new ReservationsSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ReservationsDetailsClientDiagnostics => _reservationsDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ReservationsDetailsRestOperations ReservationsDetailsRestClient => _reservationsDetailsRestClient ??= new ReservationsDetailsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ReservationTransactionsClientDiagnostics => _reservationTransactionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ReservationTransactionsRestOperations ReservationTransactionsRestClient => _reservationTransactionsRestClient ??= new ReservationTransactionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics EventsClientDiagnostics => _eventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private EventsRestOperations EventsRestClient => _eventsRestClient ??= new EventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics LotsClientDiagnostics => _lotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private LotsRestOperations LotsRestClient => _lotsRestClient ??= new LotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CreditsClientDiagnostics => _creditsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CreditsRestOperations CreditsRestClient => _creditsRestClient ??= new CreditsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary>
+        /// Gets the balances for a scope by billingAccountId. Balances are available via this API only for May 1, 2014 or later.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Balances_GetByBillingAccount</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ConsumptionBalanceResult>> GetBalanceAsync(string billingAccountId, CancellationToken cancellationToken = default)
+        {
+            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetBalance");
+            scope.Start();
+            try
+            {
+                var response = await BalancesRestClient.GetByBillingAccountAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the balances for a scope by billingAccountId. Balances are available via this API only for May 1, 2014 or later.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Balances_GetByBillingAccount</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConsumptionBalanceResult> GetBalance(string billingAccountId, CancellationToken cancellationToken = default)
+        {
+            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetBalance");
+            scope.Start();
+            try
+            {
+                var response = BalancesRestClient.GetByBillingAccount(billingAccountId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the balances for a scope by billing period and billingAccountId. Balances are available via this API only for May 1, 2014 or later.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Balances_GetForBillingPeriodByBillingAccount</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ConsumptionBalanceResult>> GetBalanceAsync(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
+        {
+            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetBalance");
+            scope.Start();
+            try
+            {
+                var response = await BalancesRestClient.GetForBillingPeriodByBillingAccountAsync(billingAccountId, billingPeriodName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the balances for a scope by billing period and billingAccountId. Balances are available via this API only for May 1, 2014 or later.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Balances_GetForBillingPeriodByBillingAccount</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConsumptionBalanceResult> GetBalance(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
+        {
+            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetBalance");
+            scope.Start();
+            try
+            {
+                var response = BalancesRestClient.GetForBillingPeriodByBillingAccount(billingAccountId, billingPeriodName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists the reservations summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsSummaries_ListByReservationOrder</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="grain"> Can be daily or monthly. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationSummary> GetReservationSummariesAsync(string reservationOrderId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsSummariesRestClient.CreateListByReservationOrderRequest(reservationOrderId, grain, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsSummariesRestClient.CreateListByReservationOrderNextPageRequest(nextLink, reservationOrderId, grain, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, ReservationsSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationSummaries", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the reservations summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsSummaries_ListByReservationOrder</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="grain"> Can be daily or monthly. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationSummary> GetReservationSummaries(string reservationOrderId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsSummariesRestClient.CreateListByReservationOrderRequest(reservationOrderId, grain, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsSummariesRestClient.CreateListByReservationOrderNextPageRequest(nextLink, reservationOrderId, grain, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, ReservationsSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationSummaries", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the reservations summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsSummaries_ListByReservationOrderAndReservation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the reservation. </param>
+        /// <param name="grain"> Can be daily or monthly. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationSummary> GetReservationSummariesAsync(string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsSummariesRestClient.CreateListByReservationOrderAndReservationRequest(reservationOrderId, reservationId, grain, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsSummariesRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, reservationOrderId, reservationId, grain, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, ReservationsSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationSummaries", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the reservations summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsSummaries_ListByReservationOrderAndReservation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the reservation. </param>
+        /// <param name="grain"> Can be daily or monthly. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationSummary> GetReservationSummaries(string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsSummariesRestClient.CreateListByReservationOrderAndReservationRequest(reservationOrderId, reservationId, grain, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsSummariesRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, reservationOrderId, reservationId, grain, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, ReservationsSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationSummaries", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 502 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsDetails_ListByReservationOrder</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationDetail> GetReservationDetailsAsync(string reservationOrderId, string filter, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsDetailsRestClient.CreateListByReservationOrderRequest(reservationOrderId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsDetailsRestClient.CreateListByReservationOrderNextPageRequest(nextLink, reservationOrderId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, ReservationsDetailsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 502 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsDetails_ListByReservationOrder</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationDetail> GetReservationDetails(string reservationOrderId, string filter, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsDetailsRestClient.CreateListByReservationOrderRequest(reservationOrderId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsDetailsRestClient.CreateListByReservationOrderNextPageRequest(nextLink, reservationOrderId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, ReservationsDetailsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 502 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsDetails_ListByReservationOrderAndReservation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the reservation. </param>
+        /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationDetail> GetReservationDetailsAsync(string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsDetailsRestClient.CreateListByReservationOrderAndReservationRequest(reservationOrderId, reservationId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsDetailsRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, reservationOrderId, reservationId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, ReservationsDetailsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 502 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsDetails_ListByReservationOrderAndReservation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the reservation. </param>
+        /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationDetail> GetReservationDetails(string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsDetailsRestClient.CreateListByReservationOrderAndReservationRequest(reservationOrderId, reservationId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsDetailsRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, reservationOrderId, reservationId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, ReservationsDetailsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List of transactions for reserved instances on billing account scope. Note: The refund transactions are posted along with its purchase transaction (i.e. in the purchase billing month). For example, The refund is requested in May 2021. This refund transaction will have event date as May 2021 but the billing month as April 2020 when the reservation purchase was made.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationTransactions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Note: API returns data for the entire start date&apos;s and end date&apos;s billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for the entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationTransaction> GetReservationTransactionsAsync(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationTransactionsRestClient.CreateListRequest(billingAccountId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationTransactionsRestClient.CreateListNextPageRequest(nextLink, billingAccountId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationTransaction.DeserializeConsumptionReservationTransaction, ReservationTransactionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationTransactions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List of transactions for reserved instances on billing account scope. Note: The refund transactions are posted along with its purchase transaction (i.e. in the purchase billing month). For example, The refund is requested in May 2021. This refund transaction will have event date as May 2021 but the billing month as April 2020 when the reservation purchase was made.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationTransactions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Note: API returns data for the entire start date&apos;s and end date&apos;s billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for the entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationTransaction> GetReservationTransactions(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationTransactionsRestClient.CreateListRequest(billingAccountId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationTransactionsRestClient.CreateListNextPageRequest(nextLink, billingAccountId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationTransaction.DeserializeConsumptionReservationTransaction, ReservationTransactionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationTransactions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List of transactions for reserved instances on billing profile scope. The refund transactions are posted along with its purchase transaction (i.e. in the purchase billing month). For example, The refund is requested in May 2021. This refund transaction will have event date as May 2021 but the billing month as April 2020 when the reservation purchase was made.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/reservationTransactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationTransactions_ListByBillingProfile</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
+        /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Note: API returns data for the entire start date&apos;s and end date&apos;s billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionModernReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionModernReservationTransaction> GetReservationTransactionsAsync(string billingAccountId, string billingProfileId, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationTransactionsRestClient.CreateListByBillingProfileRequest(billingAccountId, billingProfileId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationTransactionsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, billingAccountId, billingProfileId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction, ReservationTransactionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationTransactions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List of transactions for reserved instances on billing profile scope. The refund transactions are posted along with its purchase transaction (i.e. in the purchase billing month). For example, The refund is requested in May 2021. This refund transaction will have event date as May 2021 but the billing month as April 2020 when the reservation purchase was made.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/reservationTransactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationTransactions_ListByBillingProfile</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
+        /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Note: API returns data for the entire start date&apos;s and end date&apos;s billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionModernReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionModernReservationTransaction> GetReservationTransactions(string billingAccountId, string billingProfileId, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationTransactionsRestClient.CreateListByBillingProfileRequest(billingAccountId, billingProfileId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationTransactionsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, billingAccountId, billingProfileId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction, ReservationTransactionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationTransactions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the events that decrements Azure credits or Microsoft Azure consumption commitment for a billing account or a billing profile for a given start and end date.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/events</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Events_ListByBillingProfile</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
+        /// <param name="startDate"> Start date. </param>
+        /// <param name="endDate"> End date. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionEventSummary> GetEventsAsync(string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListByBillingProfileRequest(billingAccountId, billingProfileId, startDate, endDate);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, billingAccountId, billingProfileId, startDate, endDate);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionEventSummary.DeserializeConsumptionEventSummary, EventsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEvents", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the events that decrements Azure credits or Microsoft Azure consumption commitment for a billing account or a billing profile for a given start and end date.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/events</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Events_ListByBillingProfile</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
+        /// <param name="startDate"> Start date. </param>
+        /// <param name="endDate"> End date. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionEventSummary> GetEvents(string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListByBillingProfileRequest(billingAccountId, billingProfileId, startDate, endDate);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, billingAccountId, billingProfileId, startDate, endDate);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionEventSummary.DeserializeConsumptionEventSummary, EventsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEvents", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the events that decrements Azure credits or Microsoft Azure consumption commitment for a billing account or a billing profile for a given start and end date.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Events_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="filter"> May be used to filter the events by lotId, lotSource etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionEventSummary> GetEventsAsync(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListByBillingAccountRequest(billingAccountId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, billingAccountId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionEventSummary.DeserializeConsumptionEventSummary, EventsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEvents", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the events that decrements Azure credits or Microsoft Azure consumption commitment for a billing account or a billing profile for a given start and end date.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Events_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="filter"> May be used to filter the events by lotId, lotSource etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionEventSummary> GetEvents(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListByBillingAccountRequest(billingAccountId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, billingAccountId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionEventSummary.DeserializeConsumptionEventSummary, EventsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEvents", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all Azure credits for a billing account or a billing profile. The API is only supported for Microsoft Customer Agreements (MCA) billing accounts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/lots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Lots_ListByBillingProfile</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionLotSummary> GetLotsAsync(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LotsRestClient.CreateListByBillingProfileRequest(billingAccountId, billingProfileId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LotsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, billingAccountId, billingProfileId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, LotsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetLots", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all Azure credits for a billing account or a billing profile. The API is only supported for Microsoft Customer Agreements (MCA) billing accounts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/lots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Lots_ListByBillingProfile</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionLotSummary> GetLots(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LotsRestClient.CreateListByBillingProfileRequest(billingAccountId, billingProfileId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LotsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, billingAccountId, billingProfileId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, LotsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetLots", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all Microsoft Azure consumption commitments for a billing account. The API is only supported for Microsoft Customer Agreements (MCA) and Direct Enterprise Agreement (EA)  billing accounts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Lots_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionLotSummary> GetLotsAsync(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LotsRestClient.CreateListByBillingAccountRequest(billingAccountId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LotsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, billingAccountId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, LotsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetLots", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all Microsoft Azure consumption commitments for a billing account. The API is only supported for Microsoft Customer Agreements (MCA) and Direct Enterprise Agreement (EA)  billing accounts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Lots_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionLotSummary> GetLots(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LotsRestClient.CreateListByBillingAccountRequest(billingAccountId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LotsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, billingAccountId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, LotsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetLots", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all Azure credits for a customer. The API is only supported for Microsoft Partner  Agreements (MPA) billing accounts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}/providers/Microsoft.Consumption/lots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Lots_ListByCustomer</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="customerId"> Customer ID. </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionLotSummary> GetLotsAsync(string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LotsRestClient.CreateListByCustomerRequest(billingAccountId, customerId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LotsRestClient.CreateListByCustomerNextPageRequest(nextLink, billingAccountId, customerId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, LotsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetLots", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all Azure credits for a customer. The API is only supported for Microsoft Partner  Agreements (MPA) billing accounts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}/providers/Microsoft.Consumption/lots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Lots_ListByCustomer</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="customerId"> Customer ID. </param>
+        /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionLotSummary> GetLots(string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LotsRestClient.CreateListByCustomerRequest(billingAccountId, customerId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LotsRestClient.CreateListByCustomerNextPageRequest(nextLink, billingAccountId, customerId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, LotsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetLots", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// The credit summary by billingAccountId and billingProfileId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/credits/balanceSummary</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Credits_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ConsumptionCreditSummary>> GetCreditAsync(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        {
+            using var scope = CreditsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetCredit");
+            scope.Start();
+            try
+            {
+                var response = await CreditsRestClient.GetAsync(billingAccountId, billingProfileId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The credit summary by billingAccountId and billingProfileId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/credits/balanceSummary</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Credits_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConsumptionCreditSummary> GetCredit(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        {
+            using var scope = CreditsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetCredit");
+            scope.Start();
+            try
+            {
+                var response = CreditsRestClient.Get(billingAccountId, billingProfileId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
