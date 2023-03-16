@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiContactInformation DeserializeApiContactInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<Uri> uri = default;
             Optional<string> email = default;

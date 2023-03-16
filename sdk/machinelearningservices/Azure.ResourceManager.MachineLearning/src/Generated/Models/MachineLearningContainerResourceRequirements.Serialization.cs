@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningContainerResourceRequirements DeserializeMachineLearningContainerResourceRequirements(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningContainerResourceSettings> containerResourceLimits = default;
             Optional<MachineLearningContainerResourceSettings> containerResourceRequests = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ReadScaleCapability DeserializeReadScaleCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxNumberOfReplicas = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;

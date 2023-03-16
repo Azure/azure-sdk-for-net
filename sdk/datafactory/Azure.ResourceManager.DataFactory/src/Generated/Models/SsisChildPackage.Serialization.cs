@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisChildPackage DeserializeSsisChildPackage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData packagePath = default;
             Optional<string> packageName = default;
             BinaryData packageContent = default;

@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         internal static DeviceProvisioningServiceData DeserializeDeviceProvisioningServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             DeviceProvisioningServiceProperties properties = default;
             DeviceProvisioningServicesSkuInfo sku = default;

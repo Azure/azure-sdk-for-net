@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxValidationInputResult DeserializeDataBoxValidationInputResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("validationType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

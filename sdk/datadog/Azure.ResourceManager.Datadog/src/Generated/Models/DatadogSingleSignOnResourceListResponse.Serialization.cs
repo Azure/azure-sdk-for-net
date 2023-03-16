@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static DatadogSingleSignOnResourceListResponse DeserializeDatadogSingleSignOnResourceListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DatadogSingleSignOnResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

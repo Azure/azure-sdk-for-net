@@ -32,6 +32,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SelfDependencyTumblingWindowTriggerReference DeserializeSelfDependencyTumblingWindowTriggerReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string offset = default;
             Optional<string> size = default;
             string type = default;

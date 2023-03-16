@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PortReuseHoldTimes DeserializePortReuseHoldTimes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> tcp = default;
             Optional<int> udp = default;
             foreach (var property in element.EnumerateObject())

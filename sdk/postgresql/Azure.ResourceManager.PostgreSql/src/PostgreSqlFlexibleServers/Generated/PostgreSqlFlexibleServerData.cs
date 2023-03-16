@@ -13,7 +13,10 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary> A class representing the PostgreSqlFlexibleServer data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlFlexibleServer data model.
+    /// Represents a server.
+    /// </summary>
     public partial class PostgreSqlFlexibleServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerData. </summary>

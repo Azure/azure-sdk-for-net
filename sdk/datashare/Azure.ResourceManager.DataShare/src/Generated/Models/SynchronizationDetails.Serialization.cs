@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static SynchronizationDetails DeserializeSynchronizationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> dataSetId = default;
             Optional<ShareDataSetType> dataSetType = default;
             Optional<int> durationMs = default;

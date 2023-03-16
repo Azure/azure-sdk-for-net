@@ -13,7 +13,10 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    /// <summary> A class representing the TrafficController data model. </summary>
+    /// <summary>
+    /// A class representing the TrafficController data model.
+    /// Concrete tracked resource types can be created by aliasing this type using a specific property type.
+    /// </summary>
     public partial class TrafficControllerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of TrafficControllerData. </summary>

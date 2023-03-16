@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionRetentionRule DeserializeDataProtectionRetentionRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isDefault = default;
             IList<SourceLifeCycle> lifecycles = default;
             string name = default;

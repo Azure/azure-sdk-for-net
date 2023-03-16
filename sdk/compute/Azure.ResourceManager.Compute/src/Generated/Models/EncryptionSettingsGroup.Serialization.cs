@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static EncryptionSettingsGroup DeserializeEncryptionSettingsGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             Optional<IList<EncryptionSettingsElement>> encryptionSettings = default;
             Optional<string> encryptionSettingsVersion = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static DataSetList DeserializeDataSetList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<ShareDataSetData> value = default;
             foreach (var property in element.EnumerateObject())

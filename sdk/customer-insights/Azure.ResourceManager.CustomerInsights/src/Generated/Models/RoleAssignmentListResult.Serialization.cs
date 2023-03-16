@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static RoleAssignmentListResult DeserializeRoleAssignmentListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RoleAssignmentResourceFormatData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

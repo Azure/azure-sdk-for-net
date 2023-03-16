@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Search.Models
 
         public static SharedSearchServicePrivateLinkResourceProvisioningState ToSharedSearchServicePrivateLinkResourceProvisioningState(this string value)
         {
-            if (string.Equals(value, "Updating", StringComparison.InvariantCultureIgnoreCase)) return SharedSearchServicePrivateLinkResourceProvisioningState.Updating;
-            if (string.Equals(value, "Deleting", StringComparison.InvariantCultureIgnoreCase)) return SharedSearchServicePrivateLinkResourceProvisioningState.Deleting;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return SharedSearchServicePrivateLinkResourceProvisioningState.Failed;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return SharedSearchServicePrivateLinkResourceProvisioningState.Succeeded;
-            if (string.Equals(value, "Incomplete", StringComparison.InvariantCultureIgnoreCase)) return SharedSearchServicePrivateLinkResourceProvisioningState.Incomplete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Updating")) return SharedSearchServicePrivateLinkResourceProvisioningState.Updating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return SharedSearchServicePrivateLinkResourceProvisioningState.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return SharedSearchServicePrivateLinkResourceProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return SharedSearchServicePrivateLinkResourceProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Incomplete")) return SharedSearchServicePrivateLinkResourceProvisioningState.Incomplete;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SharedSearchServicePrivateLinkResourceProvisioningState value.");
         }
     }

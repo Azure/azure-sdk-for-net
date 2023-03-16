@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppKeyVaultProperties DeserializeNetAppKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyVaultId = default;
             Uri keyVaultUri = default;
             string keyName = default;

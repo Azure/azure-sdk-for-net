@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AgentRegistration DeserializeAgentRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dscMetaConfiguration = default;
             Optional<Uri> endpoint = default;
             Optional<AgentRegistrationKeys> keys = default;

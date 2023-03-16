@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubCertificateWithNonceDescription DeserializeIotHubCertificateWithNonceDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IotHubCertificatePropertiesWithNonce> properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

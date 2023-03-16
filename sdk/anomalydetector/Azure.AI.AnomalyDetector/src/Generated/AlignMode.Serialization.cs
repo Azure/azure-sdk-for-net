@@ -20,8 +20,8 @@ namespace Azure.AI.AnomalyDetector
 
         public static AlignMode ToAlignMode(this string value)
         {
-            if (string.Equals(value, "Inner", StringComparison.InvariantCultureIgnoreCase)) return AlignMode.Inner;
-            if (string.Equals(value, "Outer", StringComparison.InvariantCultureIgnoreCase)) return AlignMode.Outer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Inner")) return AlignMode.Inner;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Outer")) return AlignMode.Outer;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AlignMode value.");
         }
     }

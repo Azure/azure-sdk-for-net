@@ -32,6 +32,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static SentenceAssessment DeserializeSentenceAssessment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string sentiment = default;
             TargetConfidenceScoreLabel confidenceScores = default;
             int offset = default;

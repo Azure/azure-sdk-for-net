@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsTableData DeserializeOperationalInsightsTableData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

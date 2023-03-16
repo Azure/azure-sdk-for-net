@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryMetadataItemInfo DeserializeFactoryMetadataItemInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> name = default;
             Optional<BinaryData> value = default;
             foreach (var property in element.EnumerateObject())

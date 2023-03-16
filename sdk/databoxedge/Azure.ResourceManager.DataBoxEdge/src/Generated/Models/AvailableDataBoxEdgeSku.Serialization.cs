@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static AvailableDataBoxEdgeSku DeserializeAvailableDataBoxEdgeSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<DataBoxEdgeSkuName> name = default;
             Optional<string> kind = default;

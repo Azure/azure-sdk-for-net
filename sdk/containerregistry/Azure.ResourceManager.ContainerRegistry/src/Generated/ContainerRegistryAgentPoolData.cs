@@ -12,7 +12,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary> A class representing the ContainerRegistryAgentPool data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerRegistryAgentPool data model.
+    /// The agentpool that has the ARM resource and properties. 
+    /// The agentpool will have all information to create an agent pool.
+    /// </summary>
     public partial class ContainerRegistryAgentPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerRegistryAgentPoolData. </summary>

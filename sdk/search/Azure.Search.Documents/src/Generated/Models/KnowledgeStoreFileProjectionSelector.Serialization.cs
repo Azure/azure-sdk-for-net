@@ -53,6 +53,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static KnowledgeStoreFileProjectionSelector DeserializeKnowledgeStoreFileProjectionSelector(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string storageContainer = default;
             Optional<string> referenceKeyName = default;
             Optional<string> generatedKeyName = default;

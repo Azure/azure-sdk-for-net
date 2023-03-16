@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static AppServiceCertificateOrderData DeserializeAppServiceCertificateOrderData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

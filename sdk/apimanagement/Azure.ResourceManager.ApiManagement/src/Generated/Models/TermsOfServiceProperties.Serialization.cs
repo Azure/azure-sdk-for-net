@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static TermsOfServiceProperties DeserializeTermsOfServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> text = default;
             Optional<bool> enabled = default;
             Optional<bool> consentRequired = default;

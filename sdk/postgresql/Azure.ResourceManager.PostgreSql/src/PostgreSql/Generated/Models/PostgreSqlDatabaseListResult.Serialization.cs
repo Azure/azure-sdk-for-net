@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         internal static PostgreSqlDatabaseListResult DeserializePostgreSqlDatabaseListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PostgreSqlDatabaseData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

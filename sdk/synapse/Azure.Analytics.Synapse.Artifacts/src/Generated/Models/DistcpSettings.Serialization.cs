@@ -32,6 +32,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DistcpSettings DeserializeDistcpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object resourceManagerEndpoint = default;
             object tempScriptPath = default;
             Optional<object> distcpOptions = default;

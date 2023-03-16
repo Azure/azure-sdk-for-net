@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static SearchMetadataSchema DeserializeSearchMetadataSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> version = default;
             foreach (var property in element.EnumerateObject())

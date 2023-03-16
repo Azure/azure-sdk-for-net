@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RedshiftUnloadSettings DeserializeRedshiftUnloadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactoryLinkedServiceReference s3LinkedServiceName = default;
             BinaryData bucketName = default;
             foreach (var property in element.EnumerateObject())

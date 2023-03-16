@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.Network
 
         internal static BastionHostData DeserializeBastionHostData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<NetworkSku> sku = default;
             Optional<ResourceIdentifier> id = default;

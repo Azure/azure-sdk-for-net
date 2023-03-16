@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupIPAddress DeserializeContainerGroupIPAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ContainerGroupPort> ports = default;
             ContainerGroupIPAddressType type = default;
             Optional<IPAddress> ip = default;

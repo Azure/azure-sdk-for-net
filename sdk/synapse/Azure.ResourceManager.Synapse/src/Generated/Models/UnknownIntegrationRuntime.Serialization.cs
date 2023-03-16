@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static UnknownIntegrationRuntime DeserializeUnknownIntegrationRuntime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = "Unknown";
             Optional<string> description = default;
             IDictionary<string, BinaryData> additionalProperties = default;

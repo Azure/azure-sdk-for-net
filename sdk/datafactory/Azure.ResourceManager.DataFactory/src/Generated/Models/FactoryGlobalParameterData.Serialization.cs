@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static FactoryGlobalParameterData DeserializeFactoryGlobalParameterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IDictionary<string, FactoryGlobalParameterSpecification> properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

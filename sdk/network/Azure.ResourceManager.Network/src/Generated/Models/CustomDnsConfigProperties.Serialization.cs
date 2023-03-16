@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static CustomDnsConfigProperties DeserializeCustomDnsConfigProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fqdn = default;
             Optional<IList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())

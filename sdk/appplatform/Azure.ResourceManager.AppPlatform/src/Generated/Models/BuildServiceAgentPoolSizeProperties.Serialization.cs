@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static BuildServiceAgentPoolSizeProperties DeserializeBuildServiceAgentPoolSizeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> cpu = default;
             Optional<string> memory = default;

@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static PrivateLinkServiceProxy DeserializePrivateLinkServiceProxy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<DeviceUpdatePrivateLinkServiceConnectionState> remotePrivateLinkServiceConnectionState = default;
             Optional<SubResource> remotePrivateEndpointConnection = default;

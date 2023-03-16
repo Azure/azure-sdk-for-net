@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static ResourceGuardOperationDetail DeserializeResourceGuardOperationDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vaultCriticalOperation = default;
             Optional<ResourceIdentifier> defaultResourceRequest = default;
             foreach (var property in element.EnumerateObject())

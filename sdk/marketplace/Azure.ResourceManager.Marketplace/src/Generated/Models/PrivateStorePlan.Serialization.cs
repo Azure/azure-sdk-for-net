@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static PrivateStorePlan DeserializePrivateStorePlan(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> skuId = default;
             Optional<string> planId = default;
             Optional<string> planDisplayName = default;

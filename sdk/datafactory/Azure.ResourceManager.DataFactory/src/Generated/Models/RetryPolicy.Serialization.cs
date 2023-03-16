@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RetryPolicy DeserializeRetryPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> count = default;
             Optional<int> intervalInSeconds = default;
             foreach (var property in element.EnumerateObject())

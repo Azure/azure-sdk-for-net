@@ -74,6 +74,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static DatabaseMigrationSqlDBProperties DeserializeDatabaseMigrationSqlDBProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlDBMigrationStatusDetails> migrationStatusDetails = default;
             Optional<SqlConnectionInformation> targetSqlConnection = default;
             Optional<SqlDBOfflineConfiguration> offlineConfiguration = default;

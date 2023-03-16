@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.0.0-beta.10 (Unreleased)
 
 ### Features Added
 
@@ -8,19 +8,53 @@
 
 ### Bugs Fixed
 
+- Fixed an issue of when using ILogger to log an Exception a custom message would override the exception message.
+  ([#33860](https://github.com/Azure/azure-sdk-for-net/pull/33860))
+
+### Other Changes
+
+## 1.0.0-beta.9 (2023-03-14)
+
+### Other Changes
+
+- Changed Attach Statsbeat name as per spec
+- Upgraded dependent `Azure.Core` to `1.30.0` due to an [issue in `ArrayBackedPropertyBag`](https://github.com/Azure/azure-sdk-for-net/pull/34800) in `Azure.Core` version `1.29.0`.
+
+## 1.0.0-beta.8 (2023-03-07)
+
+### Features Added
+
+* AAD can now be configured via `AzureMonitorExporterOptions`
+  ([#34555](https://github.com/Azure/azure-sdk-for-net/pull/34555))
+
+* Connection String can now be provided via
+  `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable
+  ([#34275](https://github.com/Azure/azure-sdk-for-net/pull/34275))
+
+* `dependencies\duration` and `requests\duration` standard metrics will now be
+  exported by default when trace exporter is used alongside metric exporter
+  ([#34010](https://github.com/Azure/azure-sdk-for-net/pull/34010))
+  ([#33955](https://github.com/Azure/azure-sdk-for-net/pull/33955))
+
+* Added support for named options ([#33803](https://github.com/Azure/azure-sdk-for-net/pull/33803))
+
+### Bugs Fixed
+
+* Fixed an issue of missing logs due to unhandled exception. ([#34423](https://github.com/Azure/azure-sdk-for-net/pull/34423))
+
 ### Other Changes
 
 * Update OpenTelemetry dependencies
-  ([#34128](https://github.com/Azure/azure-sdk-for-net/pull/34128)
-  - OpenTelemetry 1.4.0-rc.4
+  ([#34551](https://github.com/Azure/azure-sdk-for-net/pull/34551))
+  - OpenTelemetry 1.4.0
 
 ## 1.0.0-beta.7 (2023-02-07)
 
 ### Features Added
 
 * Added support for parsing AADAudience from ConnectionString ([#33593](https://github.com/Azure/azure-sdk-for-net/pull/33593))
-* Activity Events (SpanEvents), except those representing Exception, will be exported to TraceTelemetry table([#32980](https://github.com/Azure/azure-sdk-for-net/pull/32980))
-Exceptions reported via ActivityEvents will continue to be exported to ExceptionTelemetry table
+* Activity Events (SpanEvents), except those representing Exception, will be exported to TraceTelemetry table ([#32980](https://github.com/Azure/azure-sdk-for-net/pull/32980))
+  Exceptions reported via ActivityEvents will continue to be exported to ExceptionTelemetry table
 
 ### Bugs Fixed
 
@@ -55,7 +89,7 @@ Exceptions reported via ActivityEvents will continue to be exported to Exception
 
 * Update OpenTelemetry dependencies ([#32047](https://github.com/Azure/azure-sdk-for-net/pull/32047))
   - OpenTelemetry v1.4.0-beta.2
-* Debugging Output now includes Telemetry sent from storage. ([#32172](https://github.com/Azure/azure-sdk-for-net/pull/32172))
+* Debugging Output now includes Telemetry sent from storage ([#32172](https://github.com/Azure/azure-sdk-for-net/pull/32172))
 
 ## 1.0.0-beta.4 (2022-10-07)
 
@@ -71,7 +105,7 @@ Exceptions reported via ActivityEvents will continue to be exported to Exception
   - Users may disable by setting `AzureMonitorExporterOptions.DisableOfflineStorage` ([#28446](https://github.com/Azure/azure-sdk-for-net/pull/28446))
 * Added support for exception telemetry from ILogger ([#26670](https://github.com/Azure/azure-sdk-for-net/pull/26670))
 * Support for exporting Activity exception event ([#29676](https://github.com/Azure/azure-sdk-for-net/pull/29676))
-* Added support for sampling using [Application Insights based sampler](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.Extensions.AzureMonitor).  ([#31118](https://github.com/Azure/azure-sdk-for-net/pull/31118))
+* Added support for sampling using [Application Insights based sampler](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.Extensions.AzureMonitor) ([#31118](https://github.com/Azure/azure-sdk-for-net/pull/31118))
 
 ### Breaking Changes
 

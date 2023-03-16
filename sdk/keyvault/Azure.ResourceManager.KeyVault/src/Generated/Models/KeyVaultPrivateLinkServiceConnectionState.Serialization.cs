@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultPrivateLinkServiceConnectionState DeserializeKeyVaultPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KeyVaultPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<KeyVaultActionsRequiredMessage> actionsRequired = default;

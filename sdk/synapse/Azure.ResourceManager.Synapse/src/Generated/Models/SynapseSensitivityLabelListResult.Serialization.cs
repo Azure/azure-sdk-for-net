@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseSensitivityLabelListResult DeserializeSynapseSensitivityLabelListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SynapseSensitivityLabelData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

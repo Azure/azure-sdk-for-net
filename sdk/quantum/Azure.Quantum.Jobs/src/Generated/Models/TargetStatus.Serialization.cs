@@ -14,6 +14,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static TargetStatus DeserializeTargetStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<TargetAvailability> currentAvailability = default;
             Optional<long> averageQueueTime = default;

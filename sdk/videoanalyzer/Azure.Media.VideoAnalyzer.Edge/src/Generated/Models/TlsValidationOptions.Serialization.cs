@@ -30,6 +30,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static TlsValidationOptions DeserializeTlsValidationOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ignoreHostname = default;
             Optional<string> ignoreSignature = default;
             foreach (var property in element.EnumerateObject())

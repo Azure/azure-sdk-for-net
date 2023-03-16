@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static ScheduleAvailabilityResponse DeserializeScheduleAvailabilityResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DateTimeOffset>> availableDates = default;
             foreach (var property in element.EnumerateObject())
             {

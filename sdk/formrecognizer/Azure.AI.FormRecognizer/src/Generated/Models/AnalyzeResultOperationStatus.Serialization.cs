@@ -22,10 +22,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         public static AnalyzeResultOperationStatus ToAnalyzeResultOperationStatus(this string value)
         {
-            if (string.Equals(value, "notStarted", StringComparison.InvariantCultureIgnoreCase)) return AnalyzeResultOperationStatus.NotStarted;
-            if (string.Equals(value, "running", StringComparison.InvariantCultureIgnoreCase)) return AnalyzeResultOperationStatus.Running;
-            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return AnalyzeResultOperationStatus.Failed;
-            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return AnalyzeResultOperationStatus.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "notStarted")) return AnalyzeResultOperationStatus.NotStarted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return AnalyzeResultOperationStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return AnalyzeResultOperationStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "succeeded")) return AnalyzeResultOperationStatus.Succeeded;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AnalyzeResultOperationStatus value.");
         }
     }

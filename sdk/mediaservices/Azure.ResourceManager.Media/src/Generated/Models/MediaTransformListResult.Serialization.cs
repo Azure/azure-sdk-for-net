@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaTransformListResult DeserializeMediaTransformListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MediaTransformData>> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())

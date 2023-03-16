@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static RoutingEndpoints DeserializeRoutingEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<RoutingServiceBusQueueEndpointProperties>> serviceBusQueues = default;
             Optional<IList<RoutingServiceBusTopicEndpointProperties>> serviceBusTopics = default;
             Optional<IList<RoutingEventHubProperties>> eventHubs = default;

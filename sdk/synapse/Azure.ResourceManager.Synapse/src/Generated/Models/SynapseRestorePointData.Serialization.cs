@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseRestorePointData DeserializeSynapseRestorePointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AddonArcProperties DeserializeAddonArcProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vCenter = default;
             AddonType addonType = default;
             Optional<AddonProvisioningState> provisioningState = default;

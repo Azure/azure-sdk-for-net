@@ -27,6 +27,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static UnknownVariable DeserializeUnknownVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string kind = "Unknown";
             Optional<TimeSeriesExpression> filter = default;
             foreach (var property in element.EnumerateObject())

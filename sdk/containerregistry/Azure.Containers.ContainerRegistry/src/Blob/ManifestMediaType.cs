@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// The media type for an OCI Image Manifest.  This format is described at https://github.com/opencontainers/image-spec/blob/main/manifest.md.
         /// </summary>
-        public static readonly ManifestMediaType OciManifest = new ManifestMediaType("application/vnd.oci.image.manifest.v1+json");
+        public static readonly ManifestMediaType OciImageManifest = new ManifestMediaType("application/vnd.oci.image.manifest.v1+json");
 
         /// <summary>
         /// The media type for a Docker Image Manifest, Version 2, Schema 2.  This format is described at https://docs.docker.com/registry/spec/manifest-v2-2/.

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static ElasticSanSkuLocationInfo DeserializeElasticSanSkuLocationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
             foreach (var property in element.EnumerateObject())

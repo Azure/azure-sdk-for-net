@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationAccountAssemblyDefinitionData DeserializeIntegrationAccountAssemblyDefinitionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationAccountAssemblyProperties properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

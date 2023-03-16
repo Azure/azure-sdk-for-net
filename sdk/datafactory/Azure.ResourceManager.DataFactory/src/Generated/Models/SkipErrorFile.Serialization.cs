@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SkipErrorFile DeserializeSkipErrorFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> fileMissing = default;
             Optional<BinaryData> dataInconsistency = default;
             foreach (var property in element.EnumerateObject())

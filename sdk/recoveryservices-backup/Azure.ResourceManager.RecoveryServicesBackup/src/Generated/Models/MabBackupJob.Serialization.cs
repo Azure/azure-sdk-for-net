@@ -104,6 +104,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static MabBackupJob DeserializeMabBackupJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> duration = default;
             Optional<IList<JobSupportedAction>> actionsInfo = default;
             Optional<string> mabServerName = default;

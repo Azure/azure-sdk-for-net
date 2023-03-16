@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static ImageDefinition DeserializeImageDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> imageExists = default;
             Optional<Uri> contentUrl = default;
             Optional<string> relativePath = default;

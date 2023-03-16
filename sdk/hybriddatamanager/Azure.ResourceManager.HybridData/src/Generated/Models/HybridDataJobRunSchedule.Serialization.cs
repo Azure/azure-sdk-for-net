@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataJobRunSchedule DeserializeHybridDataJobRunSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<string>> policyList = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryTriggerListResult DeserializeFactoryTriggerListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<FactoryTriggerData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.25 (Unreleased)
+## 0.1.0-preview.26 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.1.0-preview.25 (2023-03-02)
+
+### Features Added
+
+- Made `DynamicJson` and `MutableJsonDocument` disposable.
+- Enabled enumerating over object properties in `DynamicJson` and `MutableJsonElement`.
+- Made it possible to use PascalCase accessors with `DynamicJson` properties.
+- Enabled checking for null to determine if property is present in `DynamicJson`.
+
+### Breaking Changes
+
+- Moved `MutableJsonDocument` and `MutableJsonElement` into namespace `Azure.Core.Json`.
 
 ## 0.1.0-preview.24 (2023-02-06)
 

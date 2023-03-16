@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static DeleteNode DeserializeDeleteNode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nodeName = default;
             Optional<string> integrationRuntimeName = default;
             foreach (var property in element.EnumerateObject())

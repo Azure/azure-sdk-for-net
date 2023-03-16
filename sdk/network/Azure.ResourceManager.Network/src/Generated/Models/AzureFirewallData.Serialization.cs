@@ -139,6 +139,10 @@ namespace Azure.ResourceManager.Network
 
         internal static AzureFirewallData DeserializeAzureFirewallData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> zones = default;
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;

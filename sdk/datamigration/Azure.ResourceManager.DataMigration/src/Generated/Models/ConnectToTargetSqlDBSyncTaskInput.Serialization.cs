@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToTargetSqlDBSyncTaskInput DeserializeConnectToTargetSqlDBSyncTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             foreach (var property in element.EnumerateObject())

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         public static HealthcareApisKind ToHealthcareApisKind(this string value)
         {
-            if (string.Equals(value, "fhir", StringComparison.InvariantCultureIgnoreCase)) return HealthcareApisKind.Fhir;
-            if (string.Equals(value, "fhir-Stu3", StringComparison.InvariantCultureIgnoreCase)) return HealthcareApisKind.FhirStu3;
-            if (string.Equals(value, "fhir-R4", StringComparison.InvariantCultureIgnoreCase)) return HealthcareApisKind.FhirR4;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fhir")) return HealthcareApisKind.Fhir;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fhir-Stu3")) return HealthcareApisKind.FhirStu3;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fhir-R4")) return HealthcareApisKind.FhirR4;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareApisKind value.");
         }
     }

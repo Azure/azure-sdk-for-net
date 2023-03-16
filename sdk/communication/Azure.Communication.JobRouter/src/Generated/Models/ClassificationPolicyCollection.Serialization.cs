@@ -15,6 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static ClassificationPolicyCollection DeserializeClassificationPolicyCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ClassificationPolicyItem> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

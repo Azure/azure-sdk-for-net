@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static AvailableApiManagementServiceSkuResult DeserializeAvailableApiManagementServiceSkuResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceType> resourceType = default;
             Optional<ResourceSku> sku = default;
             Optional<ApiManagementResourceSkuCapacity> capacity = default;

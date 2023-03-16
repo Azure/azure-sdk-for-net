@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static QueryMetricInterval DeserializeQueryMetricInterval(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> intervalStartTime = default;
             Optional<QueryTimeGrainType> intervalType = default;
             Optional<long> executionCount = default;

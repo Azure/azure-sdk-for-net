@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static StorageProfile DeserializeStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualDisk>> disks = default;
             Optional<IReadOnlyList<VirtualScsiController>> scsiControllers = default;
             foreach (var property in element.EnumerateObject())

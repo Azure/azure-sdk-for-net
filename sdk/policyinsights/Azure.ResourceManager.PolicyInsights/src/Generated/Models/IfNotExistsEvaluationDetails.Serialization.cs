@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static IfNotExistsEvaluationDetails DeserializeIfNotExistsEvaluationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<int> totalResources = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityMLAnalyticsSettingData DeserializeSecurityMLAnalyticsSettingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

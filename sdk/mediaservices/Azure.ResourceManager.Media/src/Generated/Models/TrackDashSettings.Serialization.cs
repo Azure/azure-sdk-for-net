@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static TrackDashSettings DeserializeTrackDashSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> role = default;
             foreach (var property in element.EnumerateObject())
             {

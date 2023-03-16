@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayProbeHealthResponseMatch DeserializeApplicationGatewayProbeHealthResponseMatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> body = default;
             Optional<IList<string>> statusCodes = default;
             foreach (var property in element.EnumerateObject())

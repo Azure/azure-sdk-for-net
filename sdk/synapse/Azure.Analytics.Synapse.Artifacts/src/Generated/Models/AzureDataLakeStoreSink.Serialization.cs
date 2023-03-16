@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureDataLakeStoreSink DeserializeAzureDataLakeStoreSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> copyBehavior = default;
             Optional<object> enableAdlsSingleFileParallel = default;
             string type = default;

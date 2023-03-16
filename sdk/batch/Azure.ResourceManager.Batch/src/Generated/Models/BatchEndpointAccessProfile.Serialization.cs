@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchEndpointAccessProfile DeserializeBatchEndpointAccessProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BatchEndpointAccessDefaultAction defaultAction = default;
             Optional<IList<BatchIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())

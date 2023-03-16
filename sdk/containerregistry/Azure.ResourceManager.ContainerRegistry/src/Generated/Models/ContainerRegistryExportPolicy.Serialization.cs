@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryExportPolicy DeserializeContainerRegistryExportPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerRegistryExportPolicyStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {

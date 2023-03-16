@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiIssueAttachment data model. </summary>
+    /// <summary>
+    /// A class representing the ApiIssueAttachment data model.
+    /// Issue Attachment Contract details.
+    /// </summary>
     public partial class ApiIssueAttachmentData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiIssueAttachmentData. </summary>

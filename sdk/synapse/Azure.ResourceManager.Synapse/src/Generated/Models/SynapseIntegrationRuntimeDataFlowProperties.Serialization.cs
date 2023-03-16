@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeDataFlowProperties DeserializeSynapseIntegrationRuntimeDataFlowProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapseDataFlowComputeType> computeType = default;
             Optional<int> coreCount = default;
             Optional<int> timeToLive = default;

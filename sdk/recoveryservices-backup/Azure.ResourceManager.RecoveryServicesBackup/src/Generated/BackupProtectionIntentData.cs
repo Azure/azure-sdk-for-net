@@ -13,7 +13,10 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    /// <summary> A class representing the BackupProtectionIntent data model. </summary>
+    /// <summary>
+    /// A class representing the BackupProtectionIntent data model.
+    /// Base class for backup ProtectionIntent.
+    /// </summary>
     public partial class BackupProtectionIntentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of BackupProtectionIntentData. </summary>

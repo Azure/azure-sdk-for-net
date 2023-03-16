@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static DataFlowListResponse DeserializeDataFlowListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DataFlowResource> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

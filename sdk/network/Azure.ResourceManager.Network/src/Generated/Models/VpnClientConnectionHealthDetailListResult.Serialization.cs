@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnClientConnectionHealthDetailListResult DeserializeVpnClientConnectionHealthDetailListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<VpnClientConnectionHealthDetail>> value = default;
             foreach (var property in element.EnumerateObject())
             {

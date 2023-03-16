@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static GetUserTablesSqlSyncTaskOutput DeserializeGetUserTablesSqlSyncTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databasesToSourceTables = default;
             Optional<string> databasesToTargetTables = default;
             Optional<string> tableValidationErrors = default;

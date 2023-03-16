@@ -27,6 +27,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static TemperatureResolution DeserializeTemperatureResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TemperatureUnit unit = default;
             double value = default;
             ResolutionKind resolutionKind = default;

@@ -74,6 +74,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyPlayReadyPlayRight DeserializeContentKeyPolicyPlayReadyPlayRight(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> firstPlayExpiration = default;
             Optional<int> scmsRestriction = default;
             Optional<int> agcAndColorStripeRestriction = default;

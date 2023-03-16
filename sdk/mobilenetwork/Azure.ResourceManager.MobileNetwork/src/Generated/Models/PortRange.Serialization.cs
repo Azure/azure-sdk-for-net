@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PortRange DeserializePortRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minPort = default;
             Optional<int> maxPort = default;
             foreach (var property in element.EnumerateObject())

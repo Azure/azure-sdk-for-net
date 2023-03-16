@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAssessmentPartner DeserializeSecurityAssessmentPartner(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string partnerName = default;
             string secret = default;
             foreach (var property in element.EnumerateObject())

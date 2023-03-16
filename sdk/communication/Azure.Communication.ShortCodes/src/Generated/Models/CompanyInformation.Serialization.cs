@@ -46,6 +46,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static CompanyInformation DeserializeCompanyInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<Uri> url = default;
             Optional<string> address = default;

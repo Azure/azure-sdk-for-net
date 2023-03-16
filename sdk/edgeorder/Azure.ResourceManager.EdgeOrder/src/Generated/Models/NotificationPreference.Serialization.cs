@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static NotificationPreference DeserializeNotificationPreference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NotificationStageName stageName = default;
             bool sendNotification = default;
             foreach (var property in element.EnumerateObject())

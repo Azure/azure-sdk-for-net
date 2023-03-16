@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareV2FabricSpecificDetails DeserializeVMwareV2FabricSpecificDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmwareSiteId = default;
             Optional<string> physicalSiteId = default;
             Optional<string> migrationSolutionId = default;

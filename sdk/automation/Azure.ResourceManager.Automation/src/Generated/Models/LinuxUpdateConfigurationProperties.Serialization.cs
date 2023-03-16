@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static LinuxUpdateConfigurationProperties DeserializeLinuxUpdateConfigurationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinuxUpdateClassification> includedPackageClassifications = default;
             Optional<IList<string>> excludedPackageNameMasks = default;
             Optional<IList<string>> includedPackageNameMasks = default;

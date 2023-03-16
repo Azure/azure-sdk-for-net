@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerMaintenanceWindow DeserializePostgreSqlFlexibleServerMaintenanceWindow(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customWindow = default;
             Optional<int> startHour = default;
             Optional<int> startMinute = default;

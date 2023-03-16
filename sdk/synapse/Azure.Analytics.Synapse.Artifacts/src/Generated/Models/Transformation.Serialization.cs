@@ -45,6 +45,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static Transformation DeserializeTransformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             Optional<DatasetReference> dataset = default;

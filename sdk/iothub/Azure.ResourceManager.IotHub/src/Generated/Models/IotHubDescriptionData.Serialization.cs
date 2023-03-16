@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.IotHub
 
         internal static IotHubDescriptionData DeserializeIotHubDescriptionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IotHubProperties> properties = default;
             IotHubSkuInfo sku = default;

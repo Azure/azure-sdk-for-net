@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorEndpoint DeserializeConnectionMonitorEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<ConnectionMonitorEndpointType> type = default;
             Optional<ResourceIdentifier> resourceId = default;

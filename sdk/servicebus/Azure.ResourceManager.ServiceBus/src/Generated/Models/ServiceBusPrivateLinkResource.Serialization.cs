@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static ServiceBusPrivateLinkResource DeserializeServiceBusPrivateLinkResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

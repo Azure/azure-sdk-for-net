@@ -29,6 +29,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static TimeSeriesHierarchy DeserializeTimeSeriesHierarchy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             string name = default;
             TimeSeriesHierarchySource source = default;

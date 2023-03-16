@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static TriggerRun DeserializeTriggerRun(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> triggerRunId = default;
             Optional<string> triggerName = default;
             Optional<string> triggerType = default;

@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ServiceBusDeadletterMessagesAvailableWithNoListenersEventData DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> namespaceName = default;
             Optional<string> requestUri = default;
             Optional<string> entityType = default;

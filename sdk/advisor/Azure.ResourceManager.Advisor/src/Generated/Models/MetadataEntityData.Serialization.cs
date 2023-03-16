@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Advisor
     {
         internal static MetadataEntityData DeserializeMetadataEntityData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
