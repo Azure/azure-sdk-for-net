@@ -10,18 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class ExternalStorageInternal : IUtf8JsonSerializable
+    public partial class StopDialogRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageType"u8);
-            writer.WriteStringValue(StorageType.ToString());
-            if (Optional.IsDefined(BlobStorage))
-            {
-                writer.WritePropertyName("blobStorage"u8);
-                writer.WriteObjectValue(BlobStorage);
-            }
+            writer.WritePropertyName("dialogSessionId"u8);
+            writer.WriteStringValue(DialogSessionId);
             writer.WriteEndObject();
         }
     }

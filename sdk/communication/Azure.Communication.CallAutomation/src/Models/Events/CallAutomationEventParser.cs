@@ -104,6 +104,18 @@ namespace Azure.Communication.CallAutomation
                     return CallTransferAccepted.Deserialize(eventData);
                 case nameof(CallTransferFailed):
                     return CallTransferFailed.Deserialize(eventData);
+                case nameof(DialogCompleted):
+                    return DialogCompleted.Deserialize(eventData);
+                case nameof(DialogConsent):
+                    return DialogConsent.Deserialize(eventData);
+                case nameof(DialogFailed):
+                    return DialogFailed.Deserialize(eventData);
+                case nameof(DialogHangup):
+                    return DialogHangup.Deserialize(eventData);
+                case nameof(DialogStarted):
+                    return DialogStarted.Deserialize(eventData);
+                case nameof(DialogTransfer):
+                    return DialogTransfer.Deserialize(eventData);
                 case nameof(ParticipantsUpdated):
                     return ParticipantsUpdated.Deserialize(eventData);
                 case nameof(RecordingStateChanged):

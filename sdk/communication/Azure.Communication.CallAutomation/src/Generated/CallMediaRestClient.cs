@@ -244,5 +244,155 @@ namespace Azure.Communication.CallAutomation
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateStartDialogRequest(string callConnectionId, StartDialogRequest startDialogRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":startDialog", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(startDialogRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Start a dialog targeting a particular participant on the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="startDialogRequest"> The start dialog request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startDialogRequest"/> is null. </exception>
+        /// <remarks> Start a dialog. </remarks>
+        public async Task<Response> StartDialogAsync(string callConnectionId, StartDialogRequest startDialogRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (startDialogRequest == null)
+            {
+                throw new ArgumentNullException(nameof(startDialogRequest));
+            }
+
+            using var message = CreateStartDialogRequest(callConnectionId, startDialogRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Start a dialog targeting a particular participant on the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="startDialogRequest"> The start dialog request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startDialogRequest"/> is null. </exception>
+        /// <remarks> Start a dialog. </remarks>
+        public Response StartDialog(string callConnectionId, StartDialogRequest startDialogRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (startDialogRequest == null)
+            {
+                throw new ArgumentNullException(nameof(startDialogRequest));
+            }
+
+            using var message = CreateStartDialogRequest(callConnectionId, startDialogRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStopDialogRequest(string callConnectionId, StopDialogRequest stopDialogRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":stopDialog", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(stopDialogRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Stop a dialog. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="stopDialogRequest"> The StopDialogRequest to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopDialogRequest"/> is null. </exception>
+        public async Task<Response> StopDialogAsync(string callConnectionId, StopDialogRequest stopDialogRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (stopDialogRequest == null)
+            {
+                throw new ArgumentNullException(nameof(stopDialogRequest));
+            }
+
+            using var message = CreateStopDialogRequest(callConnectionId, stopDialogRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Stop a dialog. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="stopDialogRequest"> The StopDialogRequest to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopDialogRequest"/> is null. </exception>
+        public Response StopDialog(string callConnectionId, StopDialogRequest stopDialogRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (stopDialogRequest == null)
+            {
+                throw new ArgumentNullException(nameof(stopDialogRequest));
+            }
+
+            using var message = CreateStopDialogRequest(callConnectionId, stopDialogRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }
