@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry
         internal ManifestWrapper()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
-            Layers = new ChangeTrackingList<OciBlobDescriptor>();
+            Layers = new ChangeTrackingList<OciDescriptor>();
             FsLayers = new ChangeTrackingList<FsLayer>();
             History = new ChangeTrackingList<History>();
             Signatures = new ChangeTrackingList<ImageSignature>();
@@ -37,7 +37,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="fsLayers"> (V1) List of layer information. </param>
         /// <param name="history"> (V1) Image history. </param>
         /// <param name="signatures"> (V1) Image signature. </param>
-        internal ManifestWrapper(int? schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, OciBlobDescriptor config, IReadOnlyList<OciBlobDescriptor> layers, OciAnnotations annotations, string architecture, string name, string tag, IReadOnlyList<FsLayer> fsLayers, IReadOnlyList<History> history, IReadOnlyList<ImageSignature> signatures) : base(schemaVersion)
+        internal ManifestWrapper(int? schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, OciDescriptor config, IReadOnlyList<OciDescriptor> layers, OciAnnotations annotations, string architecture, string name, string tag, IReadOnlyList<FsLayer> fsLayers, IReadOnlyList<History> history, IReadOnlyList<ImageSignature> signatures) : base(schemaVersion)
         {
             MediaType = mediaType;
             Manifests = manifests;
@@ -57,9 +57,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> (ManifestList, OCIIndex) List of V2 image layer information. </summary>
         public IReadOnlyList<ManifestListAttributes> Manifests { get; }
         /// <summary> (V2, OCI) Image config descriptor. </summary>
-        public OciBlobDescriptor Config { get; }
+        public OciDescriptor Config { get; }
         /// <summary> (V2, OCI) List of V2 image layer information. </summary>
-        public IReadOnlyList<OciBlobDescriptor> Layers { get; }
+        public IReadOnlyList<OciDescriptor> Layers { get; }
         /// <summary> (OCI, OCIIndex) Additional metadata. </summary>
         public OciAnnotations Annotations { get; }
         /// <summary> (V1) CPU architecture. </summary>

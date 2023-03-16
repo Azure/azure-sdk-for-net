@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
         internal AzureCommunicationServicesRestClient AzureCommunicationServicesRestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
         internal CallRecordingRestClient CallRecordingRestClient { get; }
-        internal EventProcessor EventProcessor { get; }
+        internal CallAutomationEventProcessor EventProcessor { get; }
         internal CommunicationUserIdentifier Source { get; }
 
         #region public constructors
@@ -87,7 +87,7 @@ namespace Azure.Communication.CallAutomation
             CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsoluteUri, options.ApiVersion);
             CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsoluteUri, options.ApiVersion);
             CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsoluteUri, options.ApiVersion);
-            EventProcessor = new EventProcessor(options.EventProcessorOptions);
+            EventProcessor = new CallAutomationEventProcessor();
             Source = options.Source;
         }
 
@@ -731,7 +731,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>Get CallAtumation's EventProcessor for handling Call Automation's event more easily.</summary>
-        public virtual EventProcessor GetEventProcessor()
+        public virtual CallAutomationEventProcessor GetEventProcessor()
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetEventProcessor)}");
             scope.Start();
