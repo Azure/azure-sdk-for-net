@@ -5,15 +5,15 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class ParticipantsUpdatedInternal
+    internal partial class RemoveParticipantSucceededInternal
     {
-        internal static ParticipantsUpdatedInternal DeserializeParticipantsUpdatedInternal(JsonElement element)
+        internal static RemoveParticipantSucceededInternal DeserializeRemoveParticipantSucceededInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,8 +22,9 @@ namespace Azure.Communication.CallAutomation
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
-            Optional<IReadOnlyList<CallParticipantInternal>> participants = default;
-            Optional<int> sequenceNumber = default;
+            Optional<string> operationContext = default;
+            Optional<ResultInformation> resultInformation = default;
+            Optional<CommunicationIdentifierModel> participant = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -41,33 +42,33 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("participants"u8))
+                if (property.NameEquals("operationContext"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<CallParticipantInternal> array = new List<CallParticipantInternal>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(CallParticipantInternal.DeserializeCallParticipantInternal(item));
-                    }
-                    participants = array;
+                    operationContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sequenceNumber"u8))
+                if (property.NameEquals("resultInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sequenceNumber = property.Value.GetInt32();
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("participant"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    participant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
             }
-            return new ParticipantsUpdatedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, Optional.ToList(participants), Optional.ToNullable(sequenceNumber));
+            return new RemoveParticipantSucceededInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, participant.Value);
         }
     }
 }
