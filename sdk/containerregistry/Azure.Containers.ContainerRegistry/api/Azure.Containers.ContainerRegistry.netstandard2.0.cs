@@ -269,13 +269,13 @@ namespace Azure.Containers.ContainerRegistry
         public string Authors { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public string Documentation { get { throw null; } set { } }
+        public System.Uri Documentation { get { throw null; } set { } }
         public string Licenses { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Revision { get { throw null; } set { } }
-        public string Source { get { throw null; } set { } }
+        public System.Uri Source { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
-        public string Url { get { throw null; } set { } }
+        public System.Uri Url { get { throw null; } set { } }
         public string Vendor { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
