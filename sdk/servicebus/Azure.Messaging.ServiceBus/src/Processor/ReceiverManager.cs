@@ -128,7 +128,8 @@ namespace Azure.Messaging.ServiceBus
         {
             var capturedReceiver = Receiver;
 
-            // If the Receiver property is set to null after we have captured a non-null instance, the Prefetch setter will no-op.
+            // If the Receiver property is set to null after we have captured a non-null instance, the Prefetch setter will essentially
+            // no-op as the underlying link has been closed.
             if (capturedReceiver != null && capturedReceiver.PrefetchCount != prefetchCount)
             {
                 capturedReceiver.PrefetchCount = prefetchCount;
