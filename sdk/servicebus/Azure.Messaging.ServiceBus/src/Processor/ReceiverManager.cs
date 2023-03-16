@@ -126,9 +126,12 @@ namespace Azure.Messaging.ServiceBus
 
         public virtual void UpdatePrefetchCount(int prefetchCount)
         {
-            if (Receiver != null && Receiver.PrefetchCount != prefetchCount)
+            var capturedReceiver = Receiver;
+
+            // If the Receiver property is set to null after we have captured a non-null instance, the Prefetch setter will no-op.
+            if (capturedReceiver != null && capturedReceiver.PrefetchCount != prefetchCount)
             {
-                Receiver.PrefetchCount = prefetchCount;
+                capturedReceiver.PrefetchCount = prefetchCount;
             }
         }
 
