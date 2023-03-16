@@ -26,10 +26,7 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task VerifyTransliterationTest()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<string> inputText = new[]
-            {
-                "这里怎么一回事?"
-            };
+            string inputText = "这里怎么一回事?";
             Response<IReadOnlyList<TransliteratedText>> response =
                 await client.TransliterateAsync("zh-Hans", "Hans", "Latn", inputText).ConfigureAwait(false);
             Assert.AreEqual(200, response.GetRawResponse().Status);

@@ -52,7 +52,7 @@
     "variables": {
         "txtUniqueSubDomainName": "[format('{0}', parameters('baseName'))]",
         "txtEndpointValue": "[format('https://api.cognitive.microsofttranslator.com')]",
-        "txtCustomEndpointValue": "[format('https://{0}.cognitiveservices.azure.com/translator/text/v3.0', parameters('baseName'))]",
+        "txtCustomEndpointValue": "[format('https://{0}.cognitiveservices.azure.com', parameters('baseName'))]",
         "txtRegionValue": "[format('{0}', parameters('location'))]",
         "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",

@@ -25,10 +25,7 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task BreakSentenceWithAutoDetect()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<string> inputText = new[]
-            {
-                "hello world"
-            };
+            string inputText = "hello world";
             var response = await client.FindSentenceBoundariesAsync(inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);

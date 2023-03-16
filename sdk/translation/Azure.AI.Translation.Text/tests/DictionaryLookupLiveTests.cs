@@ -26,10 +26,7 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task DictionaryLookupSingleInputElement()
         {
             TextTranslationClient client = GetClient();
-            IEnumerable<string> inputText = new[]
-            {
-                    "fly"
-            };
+            string inputText = "fly";
             var response = await client.LookupDictionaryEntriesAsync("en", "es", inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);

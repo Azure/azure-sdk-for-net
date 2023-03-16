@@ -27,8 +27,8 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task TranslateBasic()
         {
             string fromLanguage = "es";
-            IEnumerable<string> targetLanguages = new[] { "cs" };
-            IEnumerable<string> inputText = new[] { "Hola mundo" };
+            string targetLanguages = "cs";
+            string inputText = "Hola mundo";
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(targetLanguages, inputText, sourceLanguage: fromLanguage).ConfigureAwait(false);
 
