@@ -25,7 +25,7 @@ param(
     # Renders chart templates locally without deployment
     [Parameter(Mandatory=$False)][switch]$Template,
 
-    [Parameter(Mandatory=$False)][switch]$RerunFailedJobs,
+    [Parameter(Mandatory=$False)][switch]$RetryFailedTests,
 
     # Matrix generation parameters
     [Parameter(Mandatory=$False)][string]$MatrixFileName,

@@ -98,7 +98,7 @@ function DeployStressTests(
     })]
     [System.IO.FileInfo]$LocalAddonsPath,
     [Parameter(Mandatory=$False)][switch]$Template,
-    [Parameter(Mandatory=$False)][switch]$RerunFailedJobs,
+    [Parameter(Mandatory=$False)][switch]$RetryFailedTests,
     [Parameter(Mandatory=$False)][string]$MatrixFileName,
     [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
@@ -220,11 +220,30 @@ function DeployStressPackage(
     $genValFile = Join-Path $pkg.Directory "generatedValues.yaml"
     $genVal = Get-Content $genValFile -Raw | ConvertFrom-Yaml -Ordered
     $releaseName = $pkg.ReleaseName
-    if ($RerunFailedJobs) {
+    if ($RetryFailedTests) {
         $pods = kubectl get pods -n $pkg.namespace -o json | ConvertFrom-Json
 
         # Get all jobs within this helm release
         $helmResources = helm status -n $pkg.Namespace $pkg.ReleaseName --show-resources
+        # -----Example output-----
+        # NAME: <Release Name>
+        # LAST DEPLOYED: Mon Jan 01 12:12:12 2020
+        # NAMESPACE: <namespace>
+        # STATUS: deployed
+        # REVISION: 10
+        # RESOURCES:
+        # ==> v1alpha1/Schedule
+        # NAME                          AGE
+        # <schedule resource name 1>    5h5m
+        # <schedule resource name 2>    5h5m
+
+        # ==> v1/SecretProviderClass
+        # <secret provider name 1>   7d4h
+
+        # ==> v1/Job
+        # NAME          COMPLETIONS   DURATION   AGE
+        # <job name 1>   0/1          5h5m       5h5m
+        # <job name 2>   0/1          5h5m       5h5m
         $discoveredJob = $False
         $jobs = @()
         foreach ($helmResource in $helmResources) {
@@ -253,17 +272,17 @@ function DeployStressPackage(
         
         $releaseName = "$($pkg.ReleaseName)-$revision-retry"
 
-        $genValRerun = @{"scenarios"=@()}
+        $genValRetry = @{"scenarios"=@()}
         foreach ($failedScenario in $failedJobsScenario) {
             $failedScenarioObject = $genVal.scenarios | Where {$_.Scenario -eq $failedScenario}
-            $genValRerun.scenarios += $failedScenarioObject
+            $genValRetry.scenarios += $failedScenarioObject
         }
 
-        if (!$genValRerun.scenarios.length) {
-            Write-Host "There are no failed jobs to rerun."
+        if (!$genValRetry.scenarios.length) {
+            Write-Host "There are no failed pods to retry."
             return
         }
-        $genVal = $genValRerun
+        $genVal = $genValRetry
     }
 
     if (Test-Path $genValFile) {
