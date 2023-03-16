@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static ResourceGroupDefinition DeserializeResourceGroupDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             Optional<IList<string>> dependsOn = default;

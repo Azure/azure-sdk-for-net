@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static SecretStoreBasedAuthCredentials DeserializeSecretStoreBasedAuthCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecretStoreResourceInfo> secretStoreResource = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())

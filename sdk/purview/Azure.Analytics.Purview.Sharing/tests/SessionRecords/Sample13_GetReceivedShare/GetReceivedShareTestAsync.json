@@ -1,0 +1,63 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://myaccountname.purview.azure.com/share/receivedShares/bb00baac-b768-4004-a712-c5b942dc9e83?api-version=2023-02-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1e63a42bcc1d454dcb0780e7caf44d87-014542c1918b116f-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "843a01df33662128de458de4bf62702d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "870",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 24 Feb 2023 08:22:34 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "924959f9-3cc5-4d60-8c73-8a817ef52ab2"
+      },
+      "ResponseBody": {
+        "properties": {
+          "createdAt": "2023-02-24T08:13:53.4805496Z",
+          "sharedAt": "2023-02-24T08:13:53.4805496Z",
+          "displayName": "testDisplayName1",
+          "state": "Succeeded",
+          "shareStatus": "Attached",
+          "sentShareDescription": "updatedDescription",
+          "receiverName": "SyMS",
+          "receiverTenantName": "Microsoft",
+          "senderName": "SyMS",
+          "senderTenantName": "Microsoft",
+          "assetLocation": "southafricanorth",
+          "assetStoreKind": "AdlsGen2Account",
+          "sink": {
+            "properties": {
+              "containerName": "container2241218",
+              "folder": "folder2241218",
+              "mountPath": "",
+              "location": "southafricanorth"
+            },
+            "storeKind": "AdlsGen2Account",
+            "storeReference": {
+              "referenceName": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.Storage/storageAccounts/consumerTestStorageAccount",
+              "type": "ArmResourceReference"
+            }
+          }
+        },
+        "shareKind": "InPlace",
+        "id": "bb00baac-b768-4004-a712-c5b942dc9e83",
+        "type": "ReceivedShare"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://myaccountname.purview.azure.com/share",
+    "RandomSeed": "1094976577"
+  }
+}

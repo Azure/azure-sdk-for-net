@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SalesforceSource DeserializeSalesforceSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> query = default;
             Optional<SalesforceSourceReadBehavior> readBehavior = default;
             Optional<object> queryTimeout = default;

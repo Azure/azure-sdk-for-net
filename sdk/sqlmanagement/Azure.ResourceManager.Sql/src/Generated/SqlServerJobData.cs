@@ -11,7 +11,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerJob data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerJob data model.
+    /// A job.
+    /// </summary>
     public partial class SqlServerJobData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerJobData. </summary>

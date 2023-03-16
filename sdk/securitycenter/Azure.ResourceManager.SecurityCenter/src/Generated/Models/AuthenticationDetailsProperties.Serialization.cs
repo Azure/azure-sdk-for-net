@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AuthenticationDetailsProperties DeserializeAuthenticationDetailsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("authenticationType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

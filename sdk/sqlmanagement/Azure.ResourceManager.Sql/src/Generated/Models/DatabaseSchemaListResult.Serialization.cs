@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static DatabaseSchemaListResult DeserializeDatabaseSchemaListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DatabaseSchemaData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

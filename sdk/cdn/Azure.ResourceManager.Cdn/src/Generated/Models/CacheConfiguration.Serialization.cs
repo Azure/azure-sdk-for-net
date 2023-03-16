@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CacheConfiguration DeserializeCacheConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RuleQueryStringCachingBehavior> queryStringCachingBehavior = default;
             Optional<string> queryParameters = default;
             Optional<RuleIsCompressionEnabled> isCompressionEnabled = default;

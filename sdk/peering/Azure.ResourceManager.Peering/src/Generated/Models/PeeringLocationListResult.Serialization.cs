@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static PeeringLocationListResult DeserializePeeringLocationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PeeringLocation>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

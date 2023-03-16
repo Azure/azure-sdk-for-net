@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Redis.Models
     {
         internal static RedisPatchScheduleListResult DeserializeRedisPatchScheduleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RedisPatchScheduleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceCreationData DeserializeContainerServiceCreationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> sourceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {

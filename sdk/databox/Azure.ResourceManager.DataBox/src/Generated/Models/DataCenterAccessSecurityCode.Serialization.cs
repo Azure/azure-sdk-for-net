@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataCenterAccessSecurityCode DeserializeDataCenterAccessSecurityCode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> reverseDCAccessCode = default;
             Optional<string> forwardDCAccessCode = default;
             foreach (var property in element.EnumerateObject())

@@ -71,6 +71,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static OracleSource DeserializeOracleSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> oracleReaderQuery = default;
             Optional<object> queryTimeout = default;
             Optional<OraclePartitionOption> partitionOption = default;

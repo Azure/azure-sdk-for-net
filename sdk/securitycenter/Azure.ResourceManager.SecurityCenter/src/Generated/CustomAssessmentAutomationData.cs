@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the CustomAssessmentAutomation data model. </summary>
+    /// <summary>
+    /// A class representing the CustomAssessmentAutomation data model.
+    /// Custom Assessment Automation
+    /// </summary>
     public partial class CustomAssessmentAutomationData : ResourceData
     {
         /// <summary> Initializes a new instance of CustomAssessmentAutomationData. </summary>

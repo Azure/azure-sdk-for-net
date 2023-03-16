@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HttpReadSettings DeserializeHttpReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> requestMethod = default;
             Optional<BinaryData> requestBody = default;
             Optional<BinaryData> additionalHeaders = default;

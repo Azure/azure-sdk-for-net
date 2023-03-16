@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseManagedIntegrationRuntimeNode DeserializeSynapseManagedIntegrationRuntimeNode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nodeId = default;
             Optional<SynapseManagedIntegrationRuntimeNodeStatus> status = default;
             Optional<IReadOnlyList<SynapseManagedIntegrationRuntimeError>> errors = default;

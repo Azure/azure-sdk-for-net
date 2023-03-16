@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
-    /// <summary> A class representing the ConsumptionBudget data model. </summary>
+    /// <summary>
+    /// A class representing the ConsumptionBudget data model.
+    /// A budget resource.
+    /// </summary>
     public partial class ConsumptionBudgetData : ResourceData
     {
         /// <summary> Initializes a new instance of ConsumptionBudgetData. </summary>

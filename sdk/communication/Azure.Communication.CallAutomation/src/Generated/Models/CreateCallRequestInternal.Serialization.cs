@@ -22,8 +22,21 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            if (Optional.IsDefined(SourceCallerIdNumber))
+            {
+                writer.WritePropertyName("sourceCallerIdNumber"u8);
+                writer.WriteObjectValue(SourceCallerIdNumber);
+            }
+            if (Optional.IsDefined(SourceDisplayName))
+            {
+                writer.WritePropertyName("sourceDisplayName"u8);
+                writer.WriteStringValue(SourceDisplayName);
+            }
+            if (Optional.IsDefined(SourceIdentity))
+            {
+                writer.WritePropertyName("sourceIdentity"u8);
+                writer.WriteObjectValue(SourceIdentity);
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
@@ -40,6 +53,11 @@ namespace Azure.Communication.CallAutomation
             {
                 writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
                 writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+            }
+            if (Optional.IsDefined(CustomContext))
+            {
+                writer.WritePropertyName("customContext"u8);
+                writer.WriteObjectValue(CustomContext);
             }
             writer.WriteEndObject();
         }

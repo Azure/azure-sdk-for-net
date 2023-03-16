@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorEmailReceiver DeserializeMonitorEmailReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string emailAddress = default;
             Optional<bool> useCommonAlertSchema = default;

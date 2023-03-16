@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static ClusterQuotaConfigurationProperties DeserializeClusterQuotaConfigurationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> settings = default;
             foreach (var property in element.EnumerateObject())
             {

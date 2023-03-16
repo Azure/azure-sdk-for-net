@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ReplicaCollection DeserializeReplicaCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContainerAppReplicaData> value = default;
             foreach (var property in element.EnumerateObject())
             {

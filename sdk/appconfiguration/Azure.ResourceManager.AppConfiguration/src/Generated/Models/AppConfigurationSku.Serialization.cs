@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static AppConfigurationSku DeserializeAppConfigurationSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             foreach (var property in element.EnumerateObject())
             {

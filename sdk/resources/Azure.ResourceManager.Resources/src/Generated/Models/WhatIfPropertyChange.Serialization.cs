@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static WhatIfPropertyChange DeserializeWhatIfPropertyChange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string path = default;
             WhatIfPropertyChangeType propertyChangeType = default;
             Optional<BinaryData> before = default;

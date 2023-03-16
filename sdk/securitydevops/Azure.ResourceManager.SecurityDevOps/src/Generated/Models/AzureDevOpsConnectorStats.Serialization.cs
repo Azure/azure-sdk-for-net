@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsConnectorStats DeserializeAzureDevOpsConnectorStats(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureDevOpsConnectorStatsProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

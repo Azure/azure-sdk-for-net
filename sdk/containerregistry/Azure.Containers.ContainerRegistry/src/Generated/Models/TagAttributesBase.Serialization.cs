@@ -15,6 +15,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static TagAttributesBase DeserializeTagAttributesBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string digest = default;
             DateTimeOffset createdTime = default;

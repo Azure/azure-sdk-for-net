@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> migrationId = default;
             Optional<string> sourceDatabaseName = default;
             Optional<string> targetDatabaseName = default;

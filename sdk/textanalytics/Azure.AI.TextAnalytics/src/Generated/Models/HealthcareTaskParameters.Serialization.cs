@@ -46,7 +46,11 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareTaskParameters DeserializeHealthcareTaskParameters(JsonElement element)
         {
-            Optional<WellKnownFhirVersion> fhirVersion = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<FhirVersion> fhirVersion = default;
             Optional<HealthcareDocumentType> documentType = default;
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
@@ -60,7 +64,7 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fhirVersion = new WellKnownFhirVersion(property.Value.GetString());
+                    fhirVersion = new FhirVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("documentType"u8))

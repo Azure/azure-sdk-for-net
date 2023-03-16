@@ -36,6 +36,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static LivePipelineCollection DeserializeLivePipelineCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<LivePipeline>> value = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())

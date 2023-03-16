@@ -8,11 +8,15 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the SapCentralServerInstance data model. </summary>
+    /// <summary>
+    /// A class representing the SapCentralServerInstance data model.
+    /// Define the SAP Central Services Instance resource.
+    /// </summary>
     public partial class SapCentralServerInstanceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SapCentralServerInstanceData. </summary>
@@ -29,20 +33,21 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="instanceNo"> The central server instance id. </param>
-        /// <param name="subnetId"> The central server subnet. </param>
-        /// <param name="messageServerProperties"> Defines the SAP message server properties. </param>
-        /// <param name="enqueueServerProperties"> Defines the SAP enqueue server properties. </param>
+        /// <param name="instanceNo"> The central services instance number. </param>
+        /// <param name="subnetId"> The central services instance subnet. </param>
+        /// <param name="messageServerProperties"> Defines the SAP Message Server properties. </param>
+        /// <param name="enqueueServerProperties"> Defines the SAP Enqueue Server properties. </param>
         /// <param name="gatewayServerProperties"> Defines the SAP Gateway Server properties. </param>
-        /// <param name="enqueueReplicationServerProperties"> Defines the SAP ERS Server properties. </param>
-        /// <param name="kernelVersion"> The central server kernel version. </param>
-        /// <param name="kernelPatch"> The central server kernel patch. </param>
-        /// <param name="vmDetails"> The list of virtual machines. </param>
+        /// <param name="enqueueReplicationServerProperties"> Defines the SAP Enqueue Replication Server (ERS) properties. </param>
+        /// <param name="kernelVersion"> The central services instance Kernel Version. </param>
+        /// <param name="kernelPatch"> The central services instance Kernel Patch level. </param>
+        /// <param name="loadBalancerDetails"> The Load Balancer details such as LoadBalancer ID attached to ASCS Virtual Machines. </param>
+        /// <param name="vmDetails"> The list of virtual machines corresponding to the Central Services instance. </param>
         /// <param name="status"> Defines the SAP Instance status. </param>
-        /// <param name="health"> Defines the SAP Instance health. </param>
+        /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Defines the Central Instance errors. </param>
-        internal SapCentralServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, MessageServerProperties messageServerProperties, EnqueueServerProperties enqueueServerProperties, GatewayServerProperties gatewayServerProperties, EnqueueReplicationServerProperties enqueueReplicationServerProperties, string kernelVersion, string kernelPatch, IReadOnlyList<CentralServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="errors"> Defines the errors related to SAP Central Services Instance resource. </param>
+        internal SapCentralServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, MessageServerProperties messageServerProperties, EnqueueServerProperties enqueueServerProperties, GatewayServerProperties gatewayServerProperties, EnqueueReplicationServerProperties enqueueReplicationServerProperties, string kernelVersion, string kernelPatch, SubResource loadBalancerDetails, IReadOnlyList<CentralServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
         {
             InstanceNo = instanceNo;
             SubnetId = subnetId;
@@ -52,6 +57,7 @@ namespace Azure.ResourceManager.Workloads
             EnqueueReplicationServerProperties = enqueueReplicationServerProperties;
             KernelVersion = kernelVersion;
             KernelPatch = kernelPatch;
+            LoadBalancerDetails = loadBalancerDetails;
             VmDetails = vmDetails;
             Status = status;
             Health = health;
@@ -59,31 +65,39 @@ namespace Azure.ResourceManager.Workloads
             Errors = errors;
         }
 
-        /// <summary> The central server instance id. </summary>
+        /// <summary> The central services instance number. </summary>
         public string InstanceNo { get; }
-        /// <summary> The central server subnet. </summary>
+        /// <summary> The central services instance subnet. </summary>
         public ResourceIdentifier SubnetId { get; }
-        /// <summary> Defines the SAP message server properties. </summary>
+        /// <summary> Defines the SAP Message Server properties. </summary>
         public MessageServerProperties MessageServerProperties { get; set; }
-        /// <summary> Defines the SAP enqueue server properties. </summary>
+        /// <summary> Defines the SAP Enqueue Server properties. </summary>
         public EnqueueServerProperties EnqueueServerProperties { get; set; }
         /// <summary> Defines the SAP Gateway Server properties. </summary>
         public GatewayServerProperties GatewayServerProperties { get; set; }
-        /// <summary> Defines the SAP ERS Server properties. </summary>
+        /// <summary> Defines the SAP Enqueue Replication Server (ERS) properties. </summary>
         public EnqueueReplicationServerProperties EnqueueReplicationServerProperties { get; set; }
-        /// <summary> The central server kernel version. </summary>
+        /// <summary> The central services instance Kernel Version. </summary>
         public string KernelVersion { get; }
-        /// <summary> The central server kernel patch. </summary>
+        /// <summary> The central services instance Kernel Patch level. </summary>
         public string KernelPatch { get; }
-        /// <summary> The list of virtual machines. </summary>
+        /// <summary> The Load Balancer details such as LoadBalancer ID attached to ASCS Virtual Machines. </summary>
+        internal SubResource LoadBalancerDetails { get; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier LoadBalancerDetailsId
+        {
+            get => LoadBalancerDetails?.Id;
+        }
+
+        /// <summary> The list of virtual machines corresponding to the Central Services instance. </summary>
         public IReadOnlyList<CentralServerVmDetails> VmDetails { get; }
         /// <summary> Defines the SAP Instance status. </summary>
         public SapVirtualInstanceStatus? Status { get; }
-        /// <summary> Defines the SAP Instance health. </summary>
+        /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
         /// <summary> Defines the provisioning states. </summary>
         public SapVirtualInstanceProvisioningState? ProvisioningState { get; }
-        /// <summary> Defines the Central Instance errors. </summary>
+        /// <summary> Defines the errors related to SAP Central Services Instance resource. </summary>
         internal SapVirtualInstanceError Errors { get; }
         /// <summary> The Virtual Instance for SAP error body. </summary>
         public SapVirtualInstanceErrorDetail ErrorsProperties

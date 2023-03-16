@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static PremierAddOnOfferListResult DeserializePremierAddOnOfferListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<PremierAddOnOffer> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

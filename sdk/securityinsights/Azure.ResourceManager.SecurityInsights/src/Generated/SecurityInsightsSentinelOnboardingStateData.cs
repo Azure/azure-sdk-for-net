@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> A class representing the SecurityInsightsSentinelOnboardingState data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityInsightsSentinelOnboardingState data model.
+    /// Sentinel onboarding state
+    /// </summary>
     public partial class SecurityInsightsSentinelOnboardingStateData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityInsightsSentinelOnboardingStateData. </summary>

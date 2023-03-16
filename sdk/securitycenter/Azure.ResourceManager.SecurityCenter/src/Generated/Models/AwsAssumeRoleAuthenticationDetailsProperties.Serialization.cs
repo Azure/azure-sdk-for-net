@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AwsAssumeRoleAuthenticationDetailsProperties DeserializeAwsAssumeRoleAuthenticationDetailsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountId = default;
             string awsAssumeRoleArn = default;
             Guid awsExternalId = default;

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBUniqueKey DeserializeCosmosDBUniqueKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> paths = default;
             foreach (var property in element.EnumerateObject())
             {

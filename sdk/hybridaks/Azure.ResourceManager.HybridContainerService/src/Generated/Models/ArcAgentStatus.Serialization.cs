@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static ArcAgentStatus DeserializeArcAgentStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeploymentState> deploymentState = default;
             Optional<string> errorMessage = default;
             Optional<string> onboardingPublicKey = default;

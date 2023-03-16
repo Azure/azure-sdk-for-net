@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorTimeWindow DeserializeMonitorTimeWindow(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timeZone = default;
             DateTimeOffset start = default;
             DateTimeOffset end = default;

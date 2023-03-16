@@ -11,7 +11,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseDataMaskingRule data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseDataMaskingRule data model.
+    /// Represents a Sql pool data masking rule.
+    /// </summary>
     public partial class SynapseDataMaskingRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseDataMaskingRuleData. </summary>

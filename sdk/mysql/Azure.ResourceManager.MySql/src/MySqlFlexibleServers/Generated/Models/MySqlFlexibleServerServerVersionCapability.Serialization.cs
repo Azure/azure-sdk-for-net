@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerServerVersionCapability DeserializeMySqlFlexibleServerServerVersionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<MySqlFlexibleServerSkuCapability>> supportedSkus = default;
             foreach (var property in element.EnumerateObject())

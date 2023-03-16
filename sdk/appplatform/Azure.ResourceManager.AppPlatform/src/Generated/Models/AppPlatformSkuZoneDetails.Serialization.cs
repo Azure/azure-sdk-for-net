@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformSkuZoneDetails DeserializeAppPlatformSkuZoneDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> name = default;
             Optional<IReadOnlyList<AppPlatformSkuCapabilities>> capabilities = default;
             foreach (var property in element.EnumerateObject())

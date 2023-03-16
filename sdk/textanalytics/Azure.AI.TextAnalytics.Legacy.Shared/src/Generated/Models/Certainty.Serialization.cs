@@ -23,11 +23,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
 
         public static Certainty ToCertainty(this string value)
         {
-            if (string.Equals(value, "positive", StringComparison.InvariantCultureIgnoreCase)) return Certainty.Positive;
-            if (string.Equals(value, "positivePossible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.PositivePossible;
-            if (string.Equals(value, "neutralPossible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.NeutralPossible;
-            if (string.Equals(value, "negativePossible", StringComparison.InvariantCultureIgnoreCase)) return Certainty.NegativePossible;
-            if (string.Equals(value, "negative", StringComparison.InvariantCultureIgnoreCase)) return Certainty.Negative;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positive")) return Certainty.Positive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positivePossible")) return Certainty.PositivePossible;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "neutralPossible")) return Certainty.NeutralPossible;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negativePossible")) return Certainty.NegativePossible;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negative")) return Certainty.Negative;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Certainty value.");
         }
     }

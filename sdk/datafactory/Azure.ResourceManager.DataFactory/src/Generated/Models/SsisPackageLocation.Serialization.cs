@@ -92,6 +92,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisPackageLocation DeserializeSsisPackageLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> packagePath = default;
             Optional<SsisPackageLocationType> type = default;
             Optional<FactorySecretBaseDefinition> packagePassword = default;

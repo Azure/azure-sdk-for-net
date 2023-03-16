@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static KekDetails DeserializeKekDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> keyUrl = default;
             Optional<ResourceIdentifier> keyVaultId = default;
             Optional<string> keyBackupData = default;

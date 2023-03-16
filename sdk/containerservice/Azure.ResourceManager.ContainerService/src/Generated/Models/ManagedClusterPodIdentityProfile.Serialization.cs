@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterPodIdentityProfile DeserializeManagedClusterPodIdentityProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<bool> allowNetworkPluginKubenet = default;
             Optional<IList<ManagedClusterPodIdentity>> userAssignedIdentities = default;

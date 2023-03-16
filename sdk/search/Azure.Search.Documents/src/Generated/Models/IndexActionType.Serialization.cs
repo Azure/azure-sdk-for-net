@@ -22,10 +22,10 @@ namespace Azure.Search.Documents.Models
 
         public static IndexActionType ToIndexActionType(this string value)
         {
-            if (string.Equals(value, "upload", StringComparison.InvariantCultureIgnoreCase)) return IndexActionType.Upload;
-            if (string.Equals(value, "merge", StringComparison.InvariantCultureIgnoreCase)) return IndexActionType.Merge;
-            if (string.Equals(value, "mergeOrUpload", StringComparison.InvariantCultureIgnoreCase)) return IndexActionType.MergeOrUpload;
-            if (string.Equals(value, "delete", StringComparison.InvariantCultureIgnoreCase)) return IndexActionType.Delete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "upload")) return IndexActionType.Upload;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "merge")) return IndexActionType.Merge;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "mergeOrUpload")) return IndexActionType.MergeOrUpload;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "delete")) return IndexActionType.Delete;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexActionType value.");
         }
     }

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlSku DeserializeSqlSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> tier = default;
             Optional<string> size = default;

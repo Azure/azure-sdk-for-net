@@ -24,6 +24,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static SummaryContextInternal DeserializeSummaryContextInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int offset = default;
             int length = default;
             foreach (var property in element.EnumerateObject())

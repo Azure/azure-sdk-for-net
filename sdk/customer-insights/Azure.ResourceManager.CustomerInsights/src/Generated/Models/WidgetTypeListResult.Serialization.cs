@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static WidgetTypeListResult DeserializeWidgetTypeListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<WidgetTypeResourceFormatData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

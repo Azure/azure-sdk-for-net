@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the Project data model. </summary>
+    /// <summary>
+    /// A class representing the Project data model.
+    /// Represents a project resource.
+    /// </summary>
     public partial class ProjectData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ProjectData. </summary>

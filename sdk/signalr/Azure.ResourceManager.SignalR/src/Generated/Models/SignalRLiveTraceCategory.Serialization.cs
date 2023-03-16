@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRLiveTraceCategory DeserializeSignalRLiveTraceCategory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> enabled = default;
             foreach (var property in element.EnumerateObject())

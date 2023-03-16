@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.HybridData.Models
 
         public static HybridDataJobStatus ToHybridDataJobStatus(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobStatus.None;
-            if (string.Equals(value, "InProgress", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobStatus.InProgress;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobStatus.Succeeded;
-            if (string.Equals(value, "WaitingForAction", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobStatus.WaitingForAction;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobStatus.Failed;
-            if (string.Equals(value, "Cancelled", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobStatus.Cancelled;
-            if (string.Equals(value, "Cancelling", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobStatus.Cancelling;
-            if (string.Equals(value, "PartiallySucceeded", StringComparison.InvariantCultureIgnoreCase)) return HybridDataJobStatus.PartiallySucceeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return HybridDataJobStatus.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return HybridDataJobStatus.InProgress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return HybridDataJobStatus.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WaitingForAction")) return HybridDataJobStatus.WaitingForAction;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return HybridDataJobStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled")) return HybridDataJobStatus.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelling")) return HybridDataJobStatus.Cancelling;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PartiallySucceeded")) return HybridDataJobStatus.PartiallySucceeded;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HybridDataJobStatus value.");
         }
     }

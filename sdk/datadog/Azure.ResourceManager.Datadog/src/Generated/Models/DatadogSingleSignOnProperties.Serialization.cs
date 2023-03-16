@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogSingleSignOnProperties DeserializeDatadogSingleSignOnProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<SingleSignOnState> singleSignOnState = default;
             Optional<string> enterpriseAppId = default;

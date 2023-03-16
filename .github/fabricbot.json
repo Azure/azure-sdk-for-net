@@ -1086,6 +1086,12 @@
           ]
         },
         {
+          "label": "Communication - Rooms",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Rooms/"
+          ]
+        },
+        {
           "label": "Mixed Reality",
           "pathFilter": [
             "/sdk/mixedreality/",
@@ -1643,77 +1649,83 @@
             "Service Attention",
             "Compute"
           ],
-          "mentionees": [
-            "Drewm3",
-            "TravisCragg-MSFT",
-            "nikhilpatel909",
-            "jaylabell",
-            "sandeepraichura",
-            "hilaryw29",
-            "MsGabsta"
-          ]
-        },
-        {
-          "labels": [
-            "Service Attention",
-            "Compute - Extensions"
-          ],
-          "mentionees": [
-            "Drewm3",
-            "amjads1"
-          ]
-        },
-        {
-          "labels": [
-            "Service Attention",
-            "Compute - Images"
-          ],
-          "mentionees": [
-            "Drewm3",
-            "vaibhav-agar"
-          ]
-        },
-        {
-          "labels": [
-            "Service Attention",
-            "Compute - Managed Disks"
-          ],
-          "mentionees": [
-            "Drewm3",
-            "vaibhav-agar"
-          ]
-        },
-        {
-          "labels": [
-            "Service Attention",
-            "Compute - RDFE"
-          ],
-          "mentionees": [
-            "Drewm3",
-            "avirishuv"
-          ]
-        },
-        {
-          "labels": [
-            "Service Attention",
-            "Compute - VM"
-          ],
-          "mentionees": [
-            "Drewm3",
-            "avirishuv"
-          ]
-        },
-        {
-          "labels": [
-            "Service Attention",
-            "Compute - VMSS"
-          ],
-          "mentionees": [
-            "Drewm3",
-            "avirishuv"
-          ]
-        },
-        {
+            "mentionees": [
+              "Drewm3",
+              "TravisCragg-MSFT",
+              "nikhilpatel909",
+              "sandeepraichura",
+              "hilaryw29",
+              "GabstaMSFT",
+              "ramankumarlive",
+              "ushnaarshadkhan"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - Extensions"
+            ],
+            "mentionees": [
+              "TravisCragg-MSFT",
+              "GabstaMSFT"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - Images"
+            ],
+            "mentionees": [
+              "TravisCragg-MSFT",
+              "sandeepraichura"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - Managed Disks"
+            ],
+            "mentionees": [
+              "TravisCragg-MSFT",
+              "ramankumarlive",
+              "ushnaarshadkhan"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - RDFE"
+            ],
+            "mentionees": [
+              "Drewm3",
+              "TravisCragg-MSFT"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - VM"
+            ],
+            "mentionees": [
+              "Drewm3",
+              "TravisCragg-MSFT",
+              "nikhilpatel909",
+              "sandeepraichura",
+              "hilaryw29",
+              "GabstaMSFT"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - VMSS"
+            ],
+            "mentionees": [
+              "TravisCragg-MSFT",
+              "hilaryw29"
+            ]
+          },
+          {
           "labels": [
             "Service Attention",
             "Connected Kubernetes"

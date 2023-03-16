@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static BgpPeerStatusListResult DeserializeBgpPeerStatusListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BgpPeerStatus>> value = default;
             foreach (var property in element.EnumerateObject())
             {

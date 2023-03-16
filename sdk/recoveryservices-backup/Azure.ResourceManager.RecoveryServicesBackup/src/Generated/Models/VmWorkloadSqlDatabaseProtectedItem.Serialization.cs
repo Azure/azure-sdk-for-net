@@ -165,6 +165,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadSqlDatabaseProtectedItem DeserializeVmWorkloadSqlDatabaseProtectedItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<string> serverName = default;
             Optional<string> parentName = default;

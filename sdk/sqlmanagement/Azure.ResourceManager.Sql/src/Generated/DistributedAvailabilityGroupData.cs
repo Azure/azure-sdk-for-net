@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the DistributedAvailabilityGroup data model. </summary>
+    /// <summary>
+    /// A class representing the DistributedAvailabilityGroup data model.
+    /// Distributed availability group between box and Sql Managed Instance.
+    /// </summary>
     public partial class DistributedAvailabilityGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of DistributedAvailabilityGroupData. </summary>

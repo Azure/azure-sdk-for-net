@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Storage
 
         internal static FileShareData DeserializeFileShareData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;

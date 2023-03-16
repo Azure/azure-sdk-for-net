@@ -176,6 +176,10 @@ namespace Azure.ResourceManager.Compute
 
         internal static VirtualMachineData DeserializeVirtualMachineData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ComputePlan> plan = default;
             Optional<IReadOnlyList<VirtualMachineExtensionData>> resources = default;
             Optional<ManagedServiceIdentity> identity = default;

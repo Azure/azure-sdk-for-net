@@ -278,16 +278,12 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             List<string> documents = s_batchConvenienceDocuments;
             Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
-            AnalyzeActionsOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
             TextAnalyticsActions actions = new()
             {
                 RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto", options);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
             await operation.WaitForCompletionAsync();
 
             // Take the first page.

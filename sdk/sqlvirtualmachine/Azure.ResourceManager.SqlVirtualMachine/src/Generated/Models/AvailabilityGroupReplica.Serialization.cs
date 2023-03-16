@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static AvailabilityGroupReplica DeserializeAvailabilityGroupReplica(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> sqlVmInstanceId = default;
             Optional<AvailabilityGroupReplicaRole> role = default;
             Optional<AvailabilityGroupReplicaCommitMode> commit = default;

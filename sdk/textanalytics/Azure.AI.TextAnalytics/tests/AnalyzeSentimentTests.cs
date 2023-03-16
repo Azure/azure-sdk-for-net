@@ -538,16 +538,12 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 "The park was clean and pretty. The bathrooms and restaurant were not clean.",
             };
-            AnalyzeActionsOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
             TextAnalyticsActions actions = new()
             {
                 AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto", options);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
             await operation.WaitForCompletionAsync();
 
             // Take the first page.

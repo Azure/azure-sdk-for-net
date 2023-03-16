@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadSapHanaPointInTimeRecoveryPoint DeserializeWorkloadSapHanaPointInTimeRecoveryPoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PointInTimeRange>> timeRanges = default;
             Optional<DateTimeOffset> recoveryPointTimeInUTC = default;
             Optional<RestorePointType> type = default;

@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppConfiguration DeserializeContainerAppConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ContainerAppWritableSecret>> secrets = default;
             Optional<ContainerAppActiveRevisionsMode> activeRevisionsMode = default;
             Optional<ContainerAppIngressConfiguration> ingress = default;

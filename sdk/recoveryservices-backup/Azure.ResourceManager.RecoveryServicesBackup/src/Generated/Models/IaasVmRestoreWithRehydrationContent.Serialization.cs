@@ -138,6 +138,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmRestoreWithRehydrationContent DeserializeIaasVmRestoreWithRehydrationContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
             Optional<string> recoveryPointId = default;
             Optional<FileShareRecoveryType> recoveryType = default;

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppVnetAddons DeserializeAppVnetAddons(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> publicEndpoint = default;
             Optional<Uri> publicEndpointUri = default;
             foreach (var property in element.EnumerateObject())

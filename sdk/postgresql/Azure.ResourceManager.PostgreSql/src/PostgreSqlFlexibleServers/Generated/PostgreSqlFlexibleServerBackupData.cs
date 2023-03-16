@@ -12,7 +12,10 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary> A class representing the PostgreSqlFlexibleServerBackup data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlFlexibleServerBackup data model.
+    /// Server backup properties
+    /// </summary>
     public partial class PostgreSqlFlexibleServerBackupData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupData. </summary>

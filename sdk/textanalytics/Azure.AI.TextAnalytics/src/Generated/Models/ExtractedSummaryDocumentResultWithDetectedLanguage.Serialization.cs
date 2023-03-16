@@ -48,6 +48,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static ExtractedSummaryDocumentResultWithDetectedLanguage DeserializeExtractedSummaryDocumentResultWithDetectedLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectedLanguageInternal> detectedLanguage = default;
             IList<ExtractedSummarySentence> sentences = default;
             string id = default;

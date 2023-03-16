@@ -12,7 +12,10 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> A class representing the WebPubSubPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the WebPubSubPrivateEndpointConnection data model.
+    /// A private endpoint connection to an azure resource
+    /// </summary>
     public partial class WebPubSubPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of WebPubSubPrivateEndpointConnectionData. </summary>

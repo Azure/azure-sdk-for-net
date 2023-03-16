@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    /// <summary> A class representing the ManagedNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedNetwork data model.
+    /// The Managed Network resource
+    /// </summary>
     public partial class ManagedNetworkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedNetworkData. </summary>

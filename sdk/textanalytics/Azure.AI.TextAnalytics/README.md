@@ -33,7 +33,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version  |Supported API version of service
 |-------------|-----------------------------------------------------|
-|5.3.0-beta.1 | 3.0, 3.1, 2022-05-01, 2022-10-01-preview (default)
+|5.3.0-beta.2 | 3.0, 3.1, 2022-05-01, 2022-10-01-preview (default)
 |5.2.0        | 3.0, 3.1, 2022-05-01 (default)
 |5.1.X        | 3.0, 3.1 (default)
 |5.0.0        | 3.0
@@ -758,14 +758,16 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Custom Single Label Classification][single_category_classify_sample]
 * [Custom Multi Label Classification][multi_category_classify_sample]
 * [Dynamic Classification][dynamic_classify_sample]
-* [Extractive Summarization][extractive_summarize_sample]
-* [Abstractive Summarization][abstractive_summarize_sample]
+* [Extractive Summarization][extract_summary_sample]
+* [Abstractive Summarization][abstract_summary_sample]
 
 ### Advanced samples
 
+* [Understand how to work with long-running operations][lro_sample]
+* [Running multiple actions in one or more documents][analyze_operation_sample]
 * [Analyze Sentiment with Opinion Mining][analyze_sentiment_opinion_mining_sample]
-* [Run multiple actions][analyze_operation_sample]
-* [Create a mock client][mock_client_sample] for testing using the [Moq][moq] library.
+* [Resolve entities to standard formats with NER resolutions][ner_resolutions_sample]
+* [Mock a client for testing][mock_client_sample] using the [Moq][moq] library
 
 ## Contributing
 
@@ -786,9 +788,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
 [textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/README.md
 [dotnet_lro]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt
+
+[lro_sample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_LROPolling.md
+[analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeActions.md
+[analyze_sentiment_opinion_mining_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md
+[ner_resolutions_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeEntitiesWithResolutions.md
 [mock_client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md
 
-[analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeActions.md
 [healthcare]: https://docs.microsoft.com/azure/cognitive-services/language-service/text-analytics-for-health/overview?tabs=ner
 [language_detection]: https://docs.microsoft.com/azure/cognitive-services/language-service/language-detection/overview
 [sentiment_analysis]: https://docs.microsoft.com/azure/cognitive-services/language-service/sentiment-opinion-mining/overview
@@ -811,7 +817,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [detect_language_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample1_DetectLanguage.md
 [analyze_sentiment_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2_AnalyzeSentiment.md
-[analyze_sentiment_opinion_mining_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md
 [extract_key_phrases_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample3_ExtractKeyPhrases.md
 [recognize_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md
 [recognize_pii_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md
@@ -821,8 +826,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [single_category_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample9_SingleLabelClassify.md
 [multi_category_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample10_MultiLabelClassify.md
 [dynamic_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample11_DynamicClassify.md
-[extractive_summarize_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample12_ExtractiveSummarize.md
-[abstractive_summarize_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample13_AbstractiveSummarize.md
+[extract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample12_ExtractSummary.md
+[abstract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample13_AbstractSummary.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/

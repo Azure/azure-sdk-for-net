@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceStaticWebAppsRegistration DeserializeAppServiceStaticWebAppsRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             foreach (var property in element.EnumerateObject())
             {

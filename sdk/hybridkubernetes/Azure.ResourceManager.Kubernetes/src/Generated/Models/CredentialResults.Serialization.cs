@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
     {
         internal static CredentialResults DeserializeCredentialResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HybridConnectionConfig> hybridConnectionConfig = default;
             Optional<IReadOnlyList<CredentialResult>> kubeconfigs = default;
             foreach (var property in element.EnumerateObject())

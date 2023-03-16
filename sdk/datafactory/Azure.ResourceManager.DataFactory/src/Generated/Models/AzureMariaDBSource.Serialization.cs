@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureMariaDBSource DeserializeAzureMariaDBSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<BinaryData> queryTimeout = default;
             Optional<BinaryData> additionalColumns = default;

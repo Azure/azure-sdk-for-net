@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ForwardShippingDetails DeserializeForwardShippingDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> carrierName = default;
             Optional<string> carrierDisplayName = default;
             Optional<string> trackingId = default;

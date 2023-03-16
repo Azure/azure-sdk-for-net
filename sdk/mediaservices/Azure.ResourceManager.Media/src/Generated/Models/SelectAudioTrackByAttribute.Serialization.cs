@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static SelectAudioTrackByAttribute DeserializeSelectAudioTrackByAttribute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TrackAttribute attribute = default;
             TrackAttributeFilter filter = default;
             Optional<string> filterValue = default;

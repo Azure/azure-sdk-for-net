@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VmmToVmmNetworkMappingSettings DeserializeVmmToVmmNetworkMappingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

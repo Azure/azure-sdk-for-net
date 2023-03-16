@@ -24,6 +24,10 @@ namespace Azure.Communication.MediaComposition.Models
 
         internal static InputPosition DeserializeInputPosition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int x = default;
             int y = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static MachineLearningStudioOutputColumn DeserializeMachineLearningStudioOutputColumn(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> dataType = default;
             foreach (var property in element.EnumerateObject())

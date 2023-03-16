@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ScheduledQueryRuleActions DeserializeScheduledQueryRuleActions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> actionGroups = default;
             Optional<IDictionary<string, string>> customProperties = default;
             foreach (var property in element.EnumerateObject())

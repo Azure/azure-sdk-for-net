@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static StorageSpacesPropertiesStatus DeserializeStorageSpacesPropertiesStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageSpacesPropertiesStatusProvisioningStatus> provisioningStatus = default;
             foreach (var property in element.EnumerateObject())
             {

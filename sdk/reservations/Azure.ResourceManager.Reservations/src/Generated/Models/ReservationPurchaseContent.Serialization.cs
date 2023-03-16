@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationPurchaseContent DeserializeReservationPurchaseContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReservationsSkuName> sku = default;
             Optional<AzureLocation> location = default;
             Optional<ReservedResourceType> reservedResourceType = default;

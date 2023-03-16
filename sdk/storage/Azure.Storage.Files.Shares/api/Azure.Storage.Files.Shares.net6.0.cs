@@ -6,6 +6,7 @@ namespace Azure.Storage.Files.Shares
         public ShareClient(string connectionString, string shareName) { }
         public ShareClient(string connectionString, string shareName, Azure.Storage.Files.Shares.ShareClientOptions options) { }
         public ShareClient(System.Uri shareUri, Azure.AzureSasCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
+        public ShareClient(System.Uri shareUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareClient(System.Uri shareUri, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareClient(System.Uri shareUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
@@ -96,7 +97,10 @@ namespace Azure.Storage.Files.Shares
     }
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
-        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2021_12_02) { }
+        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2022_11_02) { }
+        public bool? AllowSourceTrailingDot { get { throw null; } set { } }
+        public bool? AllowTrailingDot { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareTokenIntent? ShareTokenIntent { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -116,6 +120,7 @@ namespace Azure.Storage.Files.Shares
             V2021_08_06 = 13,
             V2021_10_04 = 14,
             V2021_12_02 = 15,
+            V2022_11_02 = 16,
         }
     }
     public partial class ShareDirectoryClient
@@ -124,6 +129,7 @@ namespace Azure.Storage.Files.Shares
         public ShareDirectoryClient(string connectionString, string shareName, string directoryPath) { }
         public ShareDirectoryClient(string connectionString, string shareName, string directoryPath, Azure.Storage.Files.Shares.ShareClientOptions options) { }
         public ShareDirectoryClient(System.Uri directoryUri, Azure.AzureSasCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
+        public ShareDirectoryClient(System.Uri directoryUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareDirectoryClient(System.Uri directoryUri, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareDirectoryClient(System.Uri directoryUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
@@ -190,6 +196,7 @@ namespace Azure.Storage.Files.Shares
         public ShareFileClient(string connectionString, string shareName, string filePath) { }
         public ShareFileClient(string connectionString, string shareName, string filePath, Azure.Storage.Files.Shares.ShareClientOptions options) { }
         public ShareFileClient(System.Uri fileUri, Azure.AzureSasCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
+        public ShareFileClient(System.Uri fileUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareFileClient(System.Uri fileUri, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareFileClient(System.Uri fileUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
@@ -334,6 +341,7 @@ namespace Azure.Storage.Files.Shares
         public ShareServiceClient(string connectionString) { }
         public ShareServiceClient(string connectionString, Azure.Storage.Files.Shares.ShareClientOptions options) { }
         public ShareServiceClient(System.Uri serviceUri, Azure.AzureSasCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
+        public ShareServiceClient(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareServiceClient(System.Uri serviceUri, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public ShareServiceClient(System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
@@ -1074,6 +1082,23 @@ namespace Azure.Storage.Files.Shares.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int ShareUsageBytes { get { throw null; } }
         public long ShareUsageInBytes { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ShareTokenIntent : System.IEquatable<Azure.Storage.Files.Shares.Models.ShareTokenIntent>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ShareTokenIntent(string value) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareTokenIntent Backup { get { throw null; } }
+        public bool Equals(Azure.Storage.Files.Shares.Models.ShareTokenIntent other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Files.Shares.Models.ShareTokenIntent left, Azure.Storage.Files.Shares.Models.ShareTokenIntent right) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.Models.ShareTokenIntent (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareTokenIntent left, Azure.Storage.Files.Shares.Models.ShareTokenIntent right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.FlagsAttribute]
     public enum ShareTraits

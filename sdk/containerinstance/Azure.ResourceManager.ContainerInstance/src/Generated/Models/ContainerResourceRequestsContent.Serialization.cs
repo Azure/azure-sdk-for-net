@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerResourceRequestsContent DeserializeContainerResourceRequestsContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double memoryInGB = default;
             double cpu = default;
             Optional<ContainerGpuResourceInfo> gpu = default;

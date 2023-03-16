@@ -92,10 +92,10 @@ namespace Azure.Communication.CallAutomation
             var eventType = type.Replace(EventPrefix, "");
             switch (eventType)
             {
-                case nameof(AddParticipantsFailed):
-                    return AddParticipantsFailed.Deserialize(eventData);
-                case nameof(AddParticipantsSucceeded):
-                    return AddParticipantsSucceeded.Deserialize(eventData);
+                case nameof(AddParticipantFailed):
+                    return AddParticipantFailed.Deserialize(eventData);
+                case nameof(AddParticipantSucceeded):
+                    return AddParticipantSucceeded.Deserialize(eventData);
                 case nameof(CallConnected):
                     return CallConnected.Deserialize(eventData);
                 case nameof(CallDisconnected):

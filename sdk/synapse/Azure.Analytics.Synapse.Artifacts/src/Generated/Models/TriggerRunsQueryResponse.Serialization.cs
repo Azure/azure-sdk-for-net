@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static TriggerRunsQueryResponse DeserializeTriggerRunsQueryResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<TriggerRun> value = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())

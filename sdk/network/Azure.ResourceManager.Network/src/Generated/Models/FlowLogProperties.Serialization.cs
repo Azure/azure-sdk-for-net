@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FlowLogProperties DeserializeFlowLogProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FlowLogFormatType> type = default;
             Optional<int> version = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryPipelineRunInfo DeserializeFactoryPipelineRunInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> runId = default;
             Optional<string> runGroupId = default;
             Optional<bool> isLatest = default;

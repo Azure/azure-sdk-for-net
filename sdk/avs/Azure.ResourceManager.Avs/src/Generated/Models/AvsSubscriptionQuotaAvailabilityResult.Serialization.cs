@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static AvsSubscriptionQuotaAvailabilityResult DeserializeAvsSubscriptionQuotaAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, int>> hostsRemaining = default;
             Optional<AvsSubscriptionQuotaEnabled> quotaEnabled = default;
             foreach (var property in element.EnumerateObject())

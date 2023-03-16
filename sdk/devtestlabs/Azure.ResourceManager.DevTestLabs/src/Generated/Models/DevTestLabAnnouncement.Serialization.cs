@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabAnnouncement DeserializeDevTestLabAnnouncement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> title = default;
             Optional<string> markdown = default;
             Optional<DevTestLabEnableStatus> enabled = default;

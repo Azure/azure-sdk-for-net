@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ExchangePolicyErrors DeserializeExchangePolicyErrors(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ExchangePolicyError>> policyErrors = default;
             foreach (var property in element.EnumerateObject())
             {

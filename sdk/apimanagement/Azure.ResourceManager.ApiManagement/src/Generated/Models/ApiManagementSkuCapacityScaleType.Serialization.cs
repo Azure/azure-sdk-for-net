@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static ApiManagementSkuCapacityScaleType ToApiManagementSkuCapacityScaleType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementSkuCapacityScaleType.None;
-            if (string.Equals(value, "Automatic", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementSkuCapacityScaleType.Automatic;
-            if (string.Equals(value, "Manual", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementSkuCapacityScaleType.Manual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ApiManagementSkuCapacityScaleType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic")) return ApiManagementSkuCapacityScaleType.Automatic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual")) return ApiManagementSkuCapacityScaleType.Manual;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementSkuCapacityScaleType value.");
         }
     }

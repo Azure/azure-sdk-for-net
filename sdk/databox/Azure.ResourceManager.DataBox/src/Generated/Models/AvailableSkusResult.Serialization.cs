@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static AvailableSkusResult DeserializeAvailableSkusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxSkuInformation>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

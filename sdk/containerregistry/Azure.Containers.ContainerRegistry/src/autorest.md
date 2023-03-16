@@ -111,7 +111,7 @@ directive:
     $["x-ms-client-name"] = "nextLink"
 ```
 
-# Updates to OciManifest
+# Updates to OciImageManifest
 ``` yaml
 directive:
   from: swagger-document
@@ -119,11 +119,14 @@ directive:
   transform: >
     $["x-csharp-usage"] = "model,input,output,converter";
     $["x-csharp-formats"] = "json";
+    $["x-ms-client-name"] = "OciImageManifest";
+    $["required"] = ["schemaVersion"];
     delete $["x-accessibility"];
     delete $["allOf"];
     $.properties["schemaVersion"] = {
           "type": "integer",
-          "description": "Schema version"
+          "description": "Schema version",
+          "x-ms-client-default": 2
         };
 ```
 
@@ -139,12 +142,14 @@ directive:
       }
 ```
 
-# Make ArtifactBlobDescriptor a public type
+# Descriptor Updates
 ``` yaml
 directive:
   from: swagger-document
   where: $.definitions.Descriptor
   transform: >
+    $["x-ms-client-name"] = "OciDescriptor";
+    $.properties.size["x-ms-client-name"] = "sizeInBytes";
     delete $["x-accessibility"]
 ```
 
@@ -155,48 +160,4 @@ directive:
   where: $.definitions.Annotations
   transform: >
     delete $["x-accessibility"]
-```
-
-# Add OciMediaType extensible enum
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions
-  transform: >
-    $["OciMediaType"] = {
-        "type": "string",
-        "enum": [
-            "application/vnd.oci.descriptor.v1+json",
-            "application/vnd.oci.image.manifest.v1+json",
-            "application/vnd.oci.image.config.v1+json",
-            "application/vnd.oci.image.layer.v1.tar",
-        ],
-        "x-ms-enum": {
-            "name": "OciMediaType",
-            "modelAsString": true,
-            "values": [
-            {
-                "value": "application/vnd.oci.descriptor.v1+json",
-                "name": "ContentDescriptor",
-                "description": ""
-            },
-            {
-                "value": "application/vnd.oci.image.manifest.v1+json",
-                "name": "ImageManifest",
-                "description": ""
-            },
-            {
-                "value": "application/vnd.oci.image.config.v1+json",
-                "name": "ImageConfig",
-                "description": ""
-            },
-            {
-                "value": "application/vnd.oci.image.layer.v1.tar",
-                "name": "ImageLayer",
-                "description": ""
-            }
-            ]
-        },
-        "x-accessibility": "public"
-        };
 ```

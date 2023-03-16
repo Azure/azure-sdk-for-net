@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static UnknownAwsOrganizationalData DeserializeUnknownAwsOrganizationalData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OrganizationMembershipType organizationMembershipType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
