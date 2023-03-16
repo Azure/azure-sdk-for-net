@@ -15,18 +15,20 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsBookmarkResource" /> and their operations.
-    /// Each <see cref="SecurityInsightsBookmarkResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
-    /// To get a <see cref="SecurityInsightsBookmarkCollection" /> instance call the GetSecurityInsightsBookmarks method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
+    /// Each <see cref="SecurityInsightsBookmarkResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="SecurityInsightsBookmarkCollection" /> instance call the GetSecurityInsightsBookmarks method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
     public partial class SecurityInsightsBookmarkCollection : ArmCollection, IEnumerable<SecurityInsightsBookmarkResource>, IAsyncEnumerable<SecurityInsightsBookmarkResource>
     {
         private readonly ClientDiagnostics _securityInsightsBookmarkBookmarksClientDiagnostics;
         private readonly BookmarksRestOperations _securityInsightsBookmarkBookmarksRestClient;
+        private readonly string _workspaceName;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsBookmarkCollection"/> class for mocking. </summary>
         protected SecurityInsightsBookmarkCollection()
@@ -36,8 +38,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsBookmarkCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SecurityInsightsBookmarkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal SecurityInsightsBookmarkCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
+            _workspaceName = workspaceName;
             _securityInsightsBookmarkBookmarksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsBookmarkResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecurityInsightsBookmarkResource.ResourceType, out string securityInsightsBookmarkBookmarksApiVersion);
             _securityInsightsBookmarkBookmarksRestClient = new BookmarksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsBookmarkBookmarksApiVersion);
@@ -48,8 +54,8 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -80,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = await _securityInsightsBookmarkBookmarksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bookmarkId, data, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsBookmarkBookmarksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, bookmarkId, data, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityInsightsArmOperation<SecurityInsightsBookmarkResource>(Response.FromValue(new SecurityInsightsBookmarkResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -121,7 +127,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = _securityInsightsBookmarkBookmarksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bookmarkId, data, cancellationToken);
+                var response = _securityInsightsBookmarkBookmarksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, bookmarkId, data, cancellationToken);
                 var operation = new SecurityInsightsArmOperation<SecurityInsightsBookmarkResource>(Response.FromValue(new SecurityInsightsBookmarkResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = await _securityInsightsBookmarkBookmarksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bookmarkId, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsBookmarkBookmarksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, bookmarkId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SecurityInsightsBookmarkResource(Client, response.Value), response.GetRawResponse());
@@ -196,7 +202,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = _securityInsightsBookmarkBookmarksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bookmarkId, cancellationToken);
+                var response = _securityInsightsBookmarkBookmarksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, bookmarkId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SecurityInsightsBookmarkResource(Client, response.Value), response.GetRawResponse());
@@ -225,8 +231,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> An async collection of <see cref="SecurityInsightsBookmarkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsBookmarkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkBookmarksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkBookmarksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkBookmarksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkBookmarksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkResource(Client, SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(e)), _securityInsightsBookmarkBookmarksClientDiagnostics, Pipeline, "SecurityInsightsBookmarkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -247,8 +253,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> A collection of <see cref="SecurityInsightsBookmarkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsBookmarkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkBookmarksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkBookmarksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkBookmarksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkBookmarksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkResource(Client, SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(e)), _securityInsightsBookmarkBookmarksClientDiagnostics, Pipeline, "SecurityInsightsBookmarkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -277,7 +283,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = await _securityInsightsBookmarkBookmarksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bookmarkId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsBookmarkBookmarksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, bookmarkId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -312,7 +318,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = _securityInsightsBookmarkBookmarksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bookmarkId, cancellationToken: cancellationToken);
+                var response = _securityInsightsBookmarkBookmarksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, bookmarkId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

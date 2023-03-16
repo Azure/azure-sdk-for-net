@@ -15,18 +15,20 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityMLAnalyticsSettingResource" /> and their operations.
-    /// Each <see cref="SecurityMLAnalyticsSettingResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
-    /// To get a <see cref="SecurityMLAnalyticsSettingCollection" /> instance call the GetSecurityMLAnalyticsSettings method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
+    /// Each <see cref="SecurityMLAnalyticsSettingResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="SecurityMLAnalyticsSettingCollection" /> instance call the GetSecurityMLAnalyticsSettings method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
     public partial class SecurityMLAnalyticsSettingCollection : ArmCollection, IEnumerable<SecurityMLAnalyticsSettingResource>, IAsyncEnumerable<SecurityMLAnalyticsSettingResource>
     {
         private readonly ClientDiagnostics _securityMLAnalyticsSettingClientDiagnostics;
         private readonly SecurityMLAnalyticsSettingsRestOperations _securityMLAnalyticsSettingRestClient;
+        private readonly string _workspaceName;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityMLAnalyticsSettingCollection"/> class for mocking. </summary>
         protected SecurityMLAnalyticsSettingCollection()
@@ -36,8 +38,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of the <see cref="SecurityMLAnalyticsSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SecurityMLAnalyticsSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal SecurityMLAnalyticsSettingCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
+            _workspaceName = workspaceName;
             _securityMLAnalyticsSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityMLAnalyticsSettingResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecurityMLAnalyticsSettingResource.ResourceType, out string securityMLAnalyticsSettingApiVersion);
             _securityMLAnalyticsSettingRestClient = new SecurityMLAnalyticsSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityMLAnalyticsSettingApiVersion);
@@ -48,8 +54,8 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -80,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = await _securityMLAnalyticsSettingRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsResourceName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _securityMLAnalyticsSettingRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, settingsResourceName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityInsightsArmOperation<SecurityMLAnalyticsSettingResource>(Response.FromValue(new SecurityMLAnalyticsSettingResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -121,7 +127,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = _securityMLAnalyticsSettingRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsResourceName, data, cancellationToken);
+                var response = _securityMLAnalyticsSettingRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, settingsResourceName, data, cancellationToken);
                 var operation = new SecurityInsightsArmOperation<SecurityMLAnalyticsSettingResource>(Response.FromValue(new SecurityMLAnalyticsSettingResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = await _securityMLAnalyticsSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsResourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _securityMLAnalyticsSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, settingsResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SecurityMLAnalyticsSettingResource(Client, response.Value), response.GetRawResponse());
@@ -196,7 +202,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = _securityMLAnalyticsSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsResourceName, cancellationToken);
+                var response = _securityMLAnalyticsSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, settingsResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SecurityMLAnalyticsSettingResource(Client, response.Value), response.GetRawResponse());
@@ -225,8 +231,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> An async collection of <see cref="SecurityMLAnalyticsSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityMLAnalyticsSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityMLAnalyticsSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityMLAnalyticsSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityMLAnalyticsSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityMLAnalyticsSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityMLAnalyticsSettingResource(Client, SecurityMLAnalyticsSettingData.DeserializeSecurityMLAnalyticsSettingData(e)), _securityMLAnalyticsSettingClientDiagnostics, Pipeline, "SecurityMLAnalyticsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -247,8 +253,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> A collection of <see cref="SecurityMLAnalyticsSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityMLAnalyticsSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityMLAnalyticsSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityMLAnalyticsSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityMLAnalyticsSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityMLAnalyticsSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityMLAnalyticsSettingResource(Client, SecurityMLAnalyticsSettingData.DeserializeSecurityMLAnalyticsSettingData(e)), _securityMLAnalyticsSettingClientDiagnostics, Pipeline, "SecurityMLAnalyticsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -277,7 +283,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = await _securityMLAnalyticsSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityMLAnalyticsSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, settingsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -312,7 +318,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-                var response = _securityMLAnalyticsSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsResourceName, cancellationToken: cancellationToken);
+                var response = _securityMLAnalyticsSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, settingsResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
