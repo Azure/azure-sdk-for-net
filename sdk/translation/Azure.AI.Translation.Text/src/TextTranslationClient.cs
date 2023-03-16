@@ -7,6 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Linq;
+using Azure.AI.Translation.Text.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Azure.AI.Translation.Text
 {
@@ -153,7 +156,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(targetLanguages, nameof(targetLanguages));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.TranslateAsync(targetLanguages, content as object, clientTraceId, sourceLanguage, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, cancellationToken);
+            return this.TranslateAsync(targetLanguages, content.Select(input => new InputText(input)) as object, clientTraceId, sourceLanguage, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, cancellationToken);
         }
 
         /// <summary> Translate Text. </summary>
@@ -179,7 +182,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.TranslateAsync(new[] { targetLanguage }, content as object, from: sourceLanguage, cancellationToken: cancellationToken);
+            return this.TranslateAsync(new[] { targetLanguage }, content.Select(input => new InputText(input)) as object, from: sourceLanguage, cancellationToken: cancellationToken);
         }
 
         /// <summary> Translate Text. </summary>
@@ -205,7 +208,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(text, nameof(text));
 
-            return this.TranslateAsync(new[] { targetLanguage }, new[] { text } as object, from: sourceLanguage, cancellationToken: cancellationToken);
+            return this.TranslateAsync(new[] { targetLanguage }, new[] { new InputText(text) } as object, from: sourceLanguage, cancellationToken: cancellationToken);
         }
 
         /// <summary> Translate Text. </summary>
@@ -274,7 +277,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(targetLanguages, nameof(targetLanguages));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.Translate(targetLanguages, content as object, clientTraceId, sourceLanguage, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, cancellationToken);
+            return this.Translate(targetLanguages, content.Select(input => new InputText(input)) as object, clientTraceId, sourceLanguage, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, cancellationToken);
         }
 
         /// <summary> Translate Text. </summary>
@@ -300,7 +303,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.Translate(new[] { targetLanguage }, content as object, from: sourceLanguage, cancellationToken: cancellationToken);
+            return this.Translate(new[] { targetLanguage }, content.Select(input => new InputText(input)) as object, from: sourceLanguage, cancellationToken: cancellationToken);
         }
 
         /// <summary> Translate Text. </summary>
@@ -326,7 +329,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(text, nameof(text));
 
-            return this.Translate(new[] { targetLanguage }, new[] { text } as object, from: sourceLanguage, cancellationToken: cancellationToken);
+            return this.Translate(new[] { targetLanguage }, new[] { new InputText(text) } as object, from: sourceLanguage, cancellationToken: cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -354,7 +357,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(toScript, nameof(toScript));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.TransliterateAsync(language, fromScript, toScript, content as object, clientTraceId, cancellationToken);
+            return this.TransliterateAsync(language, fromScript, toScript, content.Select(input => new InputText(input)) as object, clientTraceId, cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -381,7 +384,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(toScript, nameof(toScript));
             Argument.AssertNotNull(text, nameof(text));
 
-            return this.TransliterateAsync(language, fromScript, toScript, new[] { text } as object, cancellationToken: cancellationToken);
+            return this.TransliterateAsync(language, fromScript, toScript, new[] { new InputText(text) } as object, cancellationToken: cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -409,7 +412,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(toScript, nameof(toScript));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.Transliterate(language, fromScript, toScript, content as object, clientTraceId, cancellationToken);
+            return this.Transliterate(language, fromScript, toScript, content.Select(input => new InputText(input)) as object, clientTraceId, cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -436,7 +439,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(toScript, nameof(toScript));
             Argument.AssertNotNull(text, nameof(text));
 
-            return this.Transliterate(language, fromScript, toScript, new[] { text } as object, cancellationToken: cancellationToken);
+            return this.Transliterate(language, fromScript, toScript, new[] { new InputText(text) } as object, cancellationToken: cancellationToken);
         }
 
         /// <summary> Break Sentence. </summary>
@@ -456,7 +459,7 @@ namespace Azure.AI.Translation.Text
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.FindSentenceBoundariesAsync(content as object, clientTraceId, language, script, cancellationToken);
+            return this.FindSentenceBoundariesAsync(content.Select(input => new InputText(input)) as object, clientTraceId, language, script, cancellationToken);
         }
 
         /// <summary> Break Sentence. </summary>
@@ -476,7 +479,7 @@ namespace Azure.AI.Translation.Text
         {
             Argument.AssertNotNull(text, nameof(text));
 
-            return this.FindSentenceBoundariesAsync(new[] { text } as object, clientTraceId, language, script, cancellationToken);
+            return this.FindSentenceBoundariesAsync(new[] { new InputText(text) } as object, clientTraceId, language, script, cancellationToken);
         }
 
         /// <summary> Break Sentence. </summary>
@@ -496,7 +499,7 @@ namespace Azure.AI.Translation.Text
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.FindSentenceBoundaries(content as object, clientTraceId, language, script, cancellationToken);
+            return this.FindSentenceBoundaries(content.Select(input => new InputText(input)) as object, clientTraceId, language, script, cancellationToken);
         }
 
         /// <summary> Break Sentence. </summary>
@@ -516,7 +519,7 @@ namespace Azure.AI.Translation.Text
         {
             Argument.AssertNotNull(text, nameof(text));
 
-            return this.FindSentenceBoundaries(new[] { text } as object, clientTraceId, language, script, cancellationToken);
+            return this.FindSentenceBoundaries(new[] { new InputText(text) } as object, clientTraceId, language, script, cancellationToken);
         }
 
         /// <summary> Dictionary Lookup. </summary>
@@ -538,7 +541,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(words, nameof(words));
 
-            return this.LookupDictionaryEntriesAsync(from, to, words as object, clientTraceId, cancellationToken);
+            return this.LookupDictionaryEntriesAsync(from, to, words.Select(input => new InputText(input)) as object, clientTraceId, cancellationToken);
         }
 
         /// <summary> Dictionary Lookup. </summary>
@@ -560,7 +563,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(word, nameof(word));
 
-            return this.LookupDictionaryEntriesAsync(from, to, new[] { word } as object, clientTraceId, cancellationToken);
+            return this.LookupDictionaryEntriesAsync(from, to, new[] { new InputText(word) } as object, clientTraceId, cancellationToken);
         }
 
         /// <summary> Dictionary Lookup. </summary>
@@ -582,7 +585,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(words, nameof(words));
 
-            return this.LookupDictionaryEntries(from, to, words as object, clientTraceId, cancellationToken);
+            return this.LookupDictionaryEntries(from, to, words.Select(input => new InputText(input)) as object, clientTraceId, cancellationToken);
         }
 
         /// <summary> Dictionary Lookup. </summary>
@@ -604,7 +607,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(word, nameof(word));
 
-            return this.LookupDictionaryEntries(from, to, new[] { word } as object, clientTraceId, cancellationToken);
+            return this.LookupDictionaryEntries(from, to, new[] { new InputText(word) } as object, clientTraceId, cancellationToken);
         }
 
         /// <summary> Dictionary Examples. </summary>

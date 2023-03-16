@@ -17,12 +17,12 @@ namespace Azure.AI.Translation.Text
         /// <param name="translation">Translation of the word.</param>
         public InputTextWithTranslation(string word, string translation)
         {
-            this.Word = word;
+            this.Text = word;
             this.Translation = translation;
         }
 
         /// <summary> Gets or Sets the Text to be translated. </summary>
-        public string Word { get; }
+        public string Text { get; }
 
         /// <summary> Gets or Sets the Translation of the Text. </summary>
         public string Translation { get; }
