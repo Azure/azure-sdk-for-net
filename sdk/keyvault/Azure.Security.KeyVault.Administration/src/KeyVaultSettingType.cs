@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration
 {
     [CodeGenModel("SettingTypeEnum")]
-    public readonly partial struct SettingType
+    public readonly partial struct KeyVaultSettingType
     {
     }
 }
