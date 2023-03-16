@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e5bcaace1adf44ca3671dc5a3a40457f-1c546de96c32a2a7-00",
-        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "74b0ead17978b01feb311778f0f8478f",
+        "traceparent": "00-831bc7547720e846b3f440a9b9440ffc-f1bae1bc8b031047-00",
+        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "344f5617e313e6ca2d8c3a3aba7a9dc9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,17 +17,17 @@
         "Cache-Control": "no-store, must-revalidate, no-cache",
         "Content-Length": "684",
         "Content-Type": "application/json",
-        "Date": "Tue, 14 Mar 2023 23:27:16 GMT",
+        "Date": "Wed, 15 Mar 2023 22:22:52 GMT",
         "Location": "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotaRequests/2779d9c5-f58a-4163-8f5d-8de32a546c25?api-version=2023-02-01",
-        "MS-RequestId": "nHc-c6TjrkOScpM7Zaa7pQ.0",
+        "MS-RequestId": "K2HqKEiQcUS5Ly78Bp55-g.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c97a0d63-950c-4688-b945-065fad591be4",
+        "x-ms-correlation-request-id": "770609a0-c7e9-416d-a208-8f21f6ac3260",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "99",
-        "x-ms-request-id": "c97a0d63-950c-4688-b945-065fad591be4",
-        "x-ms-routing-request-id": "WESTUS2:20230314T232716Z:c97a0d63-950c-4688-b945-065fad591be4"
+        "x-ms-request-id": "770609a0-c7e9-416d-a208-8f21f6ac3260",
+        "x-ms-routing-request-id": "WESTUS2:20230315T222253Z:770609a0-c7e9-416d-a208-8f21f6ac3260"
       },
       "ResponseBody": {
         "properties": {
@@ -62,7 +62,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "2002749370",
+    "RandomSeed": "209685585",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
   }

@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "391fd058eeff3295ccd362b844096f1a",
+        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "4fcc2d1bd1aad4831fdaf30a66f3c503",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,16 +16,16 @@
         "Cache-Control": "no-store, must-revalidate, no-cache",
         "Content-Length": "20146",
         "Content-Type": "application/json",
-        "Date": "Tue, 14 Mar 2023 23:35:34 GMT",
-        "MS-RequestId": "cEZCRRYYTkOpgdl79PUfbw.0",
+        "Date": "Wed, 15 Mar 2023 22:22:57 GMT",
+        "MS-RequestId": "3f5FJmkj80iDDSiv5dhW0g.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fb1e830a-240c-4a47-9bc7-70b0d9b89bdb",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "fb1e830a-240c-4a47-9bc7-70b0d9b89bdb",
-        "x-ms-routing-request-id": "WESTUS2:20230314T233535Z:fb1e830a-240c-4a47-9bc7-70b0d9b89bdb"
+        "x-ms-correlation-request-id": "547c0159-f184-4ad8-9132-fef6db2cc1e7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "547c0159-f184-4ad8-9132-fef6db2cc1e7",
+        "x-ms-routing-request-id": "WESTUS2:20230315T222257Z:547c0159-f184-4ad8-9132-fef6db2cc1e7"
       },
       "ResponseBody": {
         "value": [
@@ -845,7 +845,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "862502647",
+    "RandomSeed": "1514169382",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
   }

@@ -6,9 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f61e5a26e35ccd663b56af8603731847-d0b0b9cf5b3b73b8-00",
-        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "fb0effabf06f5137478ec662293ec5f8",
+        "Connection": "keep-alive",
+        "traceparent": "00-d949d33a0e90bd4d9dd5d92a37451f96-e24740ca2d54144e-00",
+        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "639927625e8759e6484ff679d1a8d099",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,16 +18,16 @@
         "Cache-Control": "no-store, must-revalidate, no-cache",
         "Content-Length": "442",
         "Content-Type": "application/json",
-        "Date": "Tue, 14 Mar 2023 23:27:15 GMT",
-        "MS-RequestId": "NnxgGEwe2EKpbgxq20tKIg.0",
+        "Date": "Wed, 15 Mar 2023 22:22:51 GMT",
+        "MS-RequestId": "CzJU4L9a0U-P9Eaqh2-TaQ.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "418e9ff0-cb1b-4f8b-b2bd-279efba74561",
+        "x-ms-correlation-request-id": "b76c606b-3385-470b-862e-76671e1296cc",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "418e9ff0-cb1b-4f8b-b2bd-279efba74561",
-        "x-ms-routing-request-id": "WESTUS2:20230314T232716Z:418e9ff0-cb1b-4f8b-b2bd-279efba74561"
+        "x-ms-request-id": "b76c606b-3385-470b-862e-76671e1296cc",
+        "x-ms-routing-request-id": "WESTUS2:20230315T222251Z:b76c606b-3385-470b-862e-76671e1296cc"
       },
       "ResponseBody": {
         "properties": {
@@ -51,7 +52,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "358567462",
+    "RandomSeed": "1478764292",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
   }

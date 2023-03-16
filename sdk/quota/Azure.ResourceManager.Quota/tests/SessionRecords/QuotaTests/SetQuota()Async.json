@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotas/PublicIPAddresses?api-version=2023-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "140",
+        "Content-Type": "application/json",
+        "traceparent": "00-03643a18ca6a70f992c6c1acf5c7b1a7-4d42f5274d179691-00",
+        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "67b2243dc9084ce4c7e35a7d3ca0414b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "limit": {
+            "value": 10,
+            "limitObjectType": "LimitValue"
+          },
+          "name": {
+            "value": "PublicIPAddresses"
+          },
+          "resourceType": "PublicIPAddresses"
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/operationsStatus/48bd8308-5874-4e04-a9a6-5f5864e984ef?api-version=2023-02-01",
+        "Cache-Control": "no-store, must-revalidate, no-cache",
+        "Content-Length": "464",
+        "Content-Type": "application/json",
+        "Date": "Wed, 15 Mar 2023 23:00:00 GMT",
+        "Location": "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/operationsStatus/48bd8308-5874-4e04-a9a6-5f5864e984ef?api-version=2023-02-01",
+        "MS-RequestId": "-s9KVydn6UygVoEVrO8y8g.0",
+        "Operation-Location": "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/operationsStatus/48bd8308-5874-4e04-a9a6-5f5864e984ef?api-version=2023-02-01",
+        "Retry-After": "30",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ca19442e-db2c-485c-94f7-660f11295545",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "24",
+        "x-ms-request-id": "ca19442e-db2c-485c-94f7-660f11295545",
+        "x-ms-routing-request-id": "WESTUS2:20230315T230001Z:ca19442e-db2c-485c-94f7-660f11295545"
+      },
+      "ResponseBody": {
+        "properties": {
+          "limit": {
+            "limitObjectType": "LimitValue",
+            "limitType": "Independent",
+            "value": 10
+          },
+          "name": {
+            "value": "PUBLICIPADDRESSES"
+          },
+          "properties": {},
+          "provisioningState": "InProgress",
+          "isQuotaApplicable": true
+        },
+        "id": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Network/locations/westus/providers/Microsoft.Quota/quotaRequests/48bd8308-5874-4e04-a9a6-5f5864e984ef",
+        "type": "Microsoft.Quota/Quotas",
+        "name": "48bd8308-5874-4e04-a9a6-5f5864e984ef"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "605972966",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}

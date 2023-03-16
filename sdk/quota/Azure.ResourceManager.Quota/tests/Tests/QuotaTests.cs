@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Quota.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quota.Tests.Tests
@@ -85,6 +86,58 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             var response = await this.Client.GetCurrentUsagesBases(new ResourceIdentifier(Scope)).GetAllAsync().ToEnumerableAsync();
 
             Assert.IsTrue(response.All(x => string.Equals(x.Data.ResourceType, "Microsoft.Quota/usages", StringComparison.OrdinalIgnoreCase)));
+        }
+
+        [TestCase]
+        public async Task SetQuota()
+        {
+            CurrentQuotaLimitBaseData data = new CurrentQuotaLimitBaseData()
+            {
+                Properties = new QuotaProperties()
+                {
+                    Limit = new LimitObject(10),
+                    Name = new ResourceName()
+                    {
+                        Value = ResourceName,
+                    },
+                    ResourceType = ResourceName,
+                },
+            };
+
+            var response = await Client.GetCurrentQuotaLimitBases(new ResourceIdentifier(Scope)).CreateOrUpdateAsync(WaitUntil.Started, ResourceName, data);
+
+            Assert.IsNotNull(response);
+        }
+
+        [TestCase]
+        public async Task SetQuota_InvalidResourceName()
+        {
+            CurrentQuotaLimitBaseData data = new CurrentQuotaLimitBaseData()
+            {
+                Properties = new QuotaProperties()
+                {
+                    Limit = new LimitObject(10),
+                    Name = new ResourceName()
+                    {
+                        Value = "Invalid",
+                    },
+                    ResourceType = "Invalid",
+                },
+            };
+
+            try
+            {
+                var response = await Client.GetCurrentQuotaLimitBases(new ResourceIdentifier(Scope)).CreateOrUpdateAsync(WaitUntil.Started, "Invalid", data);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.AreEqual(400, ex.Status);
+                Assert.AreEqual("InvalidResourceName", ex.ErrorCode);
+                return;
+            }
+
+            // fail if request doesn't fail
+            Assert.Fail();
         }
     }
 }

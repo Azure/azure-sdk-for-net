@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-6d4c07bf9e099dc6f4ecab94cd728a02-bd112517b5ece860-00",
-        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "f8c8fc6a7104436b7f9398b2b4414f4b",
+        "traceparent": "00-2503efb280aa2345b25341655cb9dfba-2b2c32b41186a04b-00",
+        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d41824b46da6ad178c08bf31f9e4ccf6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,16 +17,16 @@
         "Cache-Control": "no-store, must-revalidate, no-cache",
         "Content-Length": "410",
         "Content-Type": "application/json",
-        "Date": "Tue, 14 Mar 2023 23:34:42 GMT",
-        "MS-RequestId": "X7F54zwEHEWLtAHPFOPWAw.0",
+        "Date": "Wed, 15 Mar 2023 22:22:53 GMT",
+        "MS-RequestId": "4YjHIKLG-UONcrstxYnfcg.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2aefbaf2-8012-492f-b070-4eed478b0ecb",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "2aefbaf2-8012-492f-b070-4eed478b0ecb",
-        "x-ms-routing-request-id": "WESTUS2:20230314T233442Z:2aefbaf2-8012-492f-b070-4eed478b0ecb"
+        "x-ms-correlation-request-id": "d771155d-835a-45de-b84b-4f3cf9a6efc7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "d771155d-835a-45de-b84b-4f3cf9a6efc7",
+        "x-ms-routing-request-id": "WESTUS2:20230315T222254Z:d771155d-835a-45de-b84b-4f3cf9a6efc7"
       },
       "ResponseBody": {
         "properties": {
@@ -50,7 +50,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1190917210",
+    "RandomSeed": "1242528459",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
   }

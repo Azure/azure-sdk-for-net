@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "784b0763198dc6144bca3eb5297b4ac1",
+        "User-Agent": "azsdk-net-ResourceManager.Quota/1.0.0-alpha.20230308.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "839d54b51e1e97b74a3cad9c855aad83",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,16 +16,16 @@
         "Cache-Control": "no-store, must-revalidate, no-cache",
         "Content-Length": "13553",
         "Content-Type": "application/json",
-        "Date": "Tue, 14 Mar 2023 23:27:17 GMT",
-        "MS-RequestId": "GI9zgVyKikS3Yofo6_wzTg.0",
+        "Date": "Wed, 15 Mar 2023 22:22:54 GMT",
+        "MS-RequestId": "MAUG6-yVJUGsZ4oNTY26MQ.0",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "48938187-3a71-4118-ba05-d3f64afc9749",
+        "x-ms-correlation-request-id": "b8b525a5-96fe-4b56-b772-355b8478435f",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "98",
-        "x-ms-request-id": "48938187-3a71-4118-ba05-d3f64afc9749",
-        "x-ms-routing-request-id": "WESTUS2:20230314T232717Z:48938187-3a71-4118-ba05-d3f64afc9749"
+        "x-ms-request-id": "b8b525a5-96fe-4b56-b772-355b8478435f",
+        "x-ms-routing-request-id": "WESTUS2:20230315T222255Z:b8b525a5-96fe-4b56-b772-355b8478435f"
       },
       "ResponseBody": {
         "value": [
@@ -591,7 +591,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1117395613",
+    "RandomSeed": "1272959122",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
   }
