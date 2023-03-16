@@ -564,25 +564,38 @@
         "description": "Start a dialog.",
         "operationId": "CallMedia_StartDialog",
         "parameters": [
-          {
-            "name": "callConnectionId",
-            "in": "path",
-            "description": "The call connection id",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "startDialogRequest",
-            "in": "body",
-            "description": "The start dialog request",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/StartDialogRequest"
+            {
+                "name": "callConnectionId",
+                "in": "path",
+                "description": "The call connection id",
+                "required": true,
+                "type": "string"
+            },
+            {
+                "name": "startDialogRequest",
+                "in": "body",
+                "description": "The start dialog request",
+                "required": true,
+                "schema": {
+                    "$ref": "#/definitions/StartDialogRequest"
+                }
+            },
+            {
+                "$ref": "#/parameters/ApiVersionParameter"
+            },
+            {
+                "name": "Repeatability-Request-ID",
+                "in": "header",
+                "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+                "type": "string",
+                "format": "uuid"
+            },
+            {
+                "name": "Repeatability-First-Sent",
+                "in": "header",
+                "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+                "type": "string"
             }
-          },
-          {
-            "$ref": "#/parameters/ApiVersionParameter"
-          }
         ],
         "responses": {
           "202": {
@@ -611,24 +624,37 @@
         "description": "Stop a dialog.",
         "operationId": "CallMedia_StopDialog",
         "parameters": [
-          {
-            "name": "callConnectionId",
-            "in": "path",
-            "description": "The call connection id",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "stopDialogRequest",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/StopDialogRequest"
+            {
+                "name": "callConnectionId",
+                "in": "path",
+                "description": "The call connection id",
+                "required": true,
+                "type": "string"
+            },
+            {
+                "name": "stopDialogRequest",
+                "in": "body",
+                "required": true,
+                "schema": {
+                    "$ref": "#/definitions/StopDialogRequest"
+                }
+            },
+            {
+                "$ref": "#/parameters/ApiVersionParameter"
+            },
+            {
+                "name": "Repeatability-Request-ID",
+                "in": "header",
+                "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+                "type": "string",
+                "format": "uuid"
+            },
+            {
+                "name": "Repeatability-First-Sent",
+                "in": "header",
+                "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+                "type": "string"
             }
-          },
-          {
-            "$ref": "#/parameters/ApiVersionParameter"
-          }
         ],
         "responses": {
           "202": {

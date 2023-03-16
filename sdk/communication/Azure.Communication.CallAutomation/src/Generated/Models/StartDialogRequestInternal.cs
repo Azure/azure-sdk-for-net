@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The StartDialogRequest. </summary>
-    public partial class StartDialogRequest
+    internal partial class StartDialogRequestInternal
     {
-        /// <summary> Initializes a new instance of StartDialogRequest. </summary>
+        /// <summary> Initializes a new instance of StartDialogRequestInternal. </summary>
         /// <param name="dialogOptions"> Defines options for dialog. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dialogOptions"/> is null. </exception>
-        public StartDialogRequest(DialogOptions dialogOptions, DialogInputType dialogInputType)
+        public StartDialogRequestInternal(DialogOptionsInternal dialogOptions, DialogInputType dialogInputType)
         {
             Argument.AssertNotNull(dialogOptions, nameof(dialogOptions));
 
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Defines options for dialog. </summary>
-        public DialogOptions DialogOptions { get; }
+        public DialogOptionsInternal DialogOptions { get; }
         /// <summary> Determines the type of the dialog. </summary>
         public DialogInputType DialogInputType { get; }
         /// <summary> The value to identify context of the operation. </summary>

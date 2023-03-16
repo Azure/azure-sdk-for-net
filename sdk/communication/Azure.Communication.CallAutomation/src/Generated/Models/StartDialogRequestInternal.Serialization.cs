@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class StartDialogRequest : IUtf8JsonSerializable
+    internal partial class StartDialogRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

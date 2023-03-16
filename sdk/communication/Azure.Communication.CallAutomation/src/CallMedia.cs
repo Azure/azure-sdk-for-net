@@ -360,5 +360,151 @@ namespace Azure.Communication.CallAutomation
             else
             { return null; }
         }
+
+        /// <summary>
+        /// Start Dialog.
+        /// </summary>
+        /// <param name="startDialogOptions">Configuration attributes for starting dialog.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
+        public virtual async Task<Response<DialogResult>> StartDialogAsync(StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartDialog)}");
+            scope.Start();
+            try
+            {
+                StartDialogRequestInternal request = CreateStartDialogRequest(startDialogOptions);
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                var response = await CallMediaRestClient.StartDialogAsync
+                    (CallConnectionId,
+                    request,
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken).ConfigureAwait(false);
+
+                var result = new DialogResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Start Dialog.
+        /// </summary>
+        /// <param name="startDialogOptions">Configuration attributes for starting dialog.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
+        public virtual Response<DialogResult> StartDialog(StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartRecognizing)}");
+            scope.Start();
+            try
+            {
+                StartDialogRequestInternal request = CreateStartDialogRequest(startDialogOptions);
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                var response = CallMediaRestClient.StartDialog
+                    (CallConnectionId,
+                    request,
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken);
+
+                var result = new DialogResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private static StartDialogRequestInternal CreateStartDialogRequest(StartDialogOptions startDialogOptions)
+        {
+            DialogOptionsInternal dialogOptionsInternal = new DialogOptionsInternal(CommunicationIdentifierSerializer.Serialize(startDialogOptions.TargetParticipant),
+                startDialogOptions.BotId,
+                startDialogOptions.DialogContext);
+            StartDialogRequestInternal startDialogRequestInternal = new StartDialogRequestInternal(dialogOptionsInternal, startDialogOptions.DialogInputType)
+            {
+                OperationContext = startDialogOptions.OperationContext
+            };
+            return startDialogRequestInternal;
+        }
+
+        /// <summary>
+        /// Stop Dialog.
+        /// </summary>
+        /// <param name="dialogSessionId">Session ID</param>
+        /// <param name="cancellationToken"></param>
+        public virtual async Task<Response<DialogResult>> StopDialogAsync(string dialogSessionId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopDialog)}");
+            scope.Start();
+            try
+            {
+                StopDialogRequestInternal request = new StopDialogRequestInternal(dialogSessionId);
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                var response = await CallMediaRestClient.StopDialogAsync
+                    (CallConnectionId,
+                    request,
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken).ConfigureAwait(false);
+
+                var result = new DialogResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, null);
+
+                return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stop Dialog.
+        /// </summary>
+        /// <param name="dialogSessionId">Session ID</param>
+        /// <param name="cancellationToken"></param>
+        public virtual Response<DialogResult> StopDialog(string dialogSessionId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopDialog)}");
+            scope.Start();
+            try
+            {
+                StopDialogRequestInternal request = new StopDialogRequestInternal(dialogSessionId);
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                var response = CallMediaRestClient.StopDialog
+                    (CallConnectionId,
+                    request,
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken);
+
+                var result = new DialogResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, null);
+
+                return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

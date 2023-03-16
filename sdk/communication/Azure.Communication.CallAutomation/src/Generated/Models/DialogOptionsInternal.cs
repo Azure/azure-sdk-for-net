@@ -13,14 +13,14 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DialogOptions. </summary>
-    public partial class DialogOptions
+    internal partial class DialogOptionsInternal
     {
-        /// <summary> Initializes a new instance of DialogOptions. </summary>
+        /// <summary> Initializes a new instance of DialogOptionsInternal. </summary>
         /// <param name="targetParticipant"> Target participant of dialog. </param>
         /// <param name="botId"> Bot identifier. </param>
         /// <param name="dialogContext"> Dialog context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> or <paramref name="dialogContext"/> is null. </exception>
-        public DialogOptions(CommunicationIdentifierModel targetParticipant, Guid botId, IDictionary<string, string> dialogContext)
+        public DialogOptionsInternal(CommunicationIdentifierModel targetParticipant, Guid botId, IDictionary<string, string> dialogContext)
         {
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
             Argument.AssertNotNull(dialogContext, nameof(dialogContext));

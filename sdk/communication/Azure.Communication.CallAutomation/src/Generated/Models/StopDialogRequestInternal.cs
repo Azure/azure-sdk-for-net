@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The StopDialogRequest. </summary>
-    public partial class StopDialogRequest
+    internal partial class StopDialogRequestInternal
     {
-        /// <summary> Initializes a new instance of StopDialogRequest. </summary>
+        /// <summary> Initializes a new instance of StopDialogRequestInternal. </summary>
         /// <param name="dialogSessionId"> The value to the dialog session Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dialogSessionId"/> is null. </exception>
-        public StopDialogRequest(string dialogSessionId)
+        public StopDialogRequestInternal(string dialogSessionId)
         {
             Argument.AssertNotNull(dialogSessionId, nameof(dialogSessionId));
 
