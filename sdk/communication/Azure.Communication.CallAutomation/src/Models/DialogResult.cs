@@ -4,29 +4,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>AddParticipantsResult Result.</summary>
-    public class DialogResult : ResultWithWaitForEventBase
+    public class DialogResult
     {
+        private CallAutomationEventProcessor _evHandler;
+        private string _callConnectionId;
+        private string _operationContext;
         internal DialogResult()
         {
         }
 
+        internal void SetEventProcessor(CallAutomationEventProcessor evHandler, string callConnectionId, string operationContext)
+        {
+            _evHandler = evHandler;
+            _callConnectionId = callConnectionId;
+            _operationContext = operationContext;
+        }
+
         /// <summary>
-        /// Wait for <see cref="DialogEventResult"/> using <see cref="EventProcessor"/>.
+        /// Wait for <see cref="DialogEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <returns>Returns <see cref="DialogEventResult"/> which contains either <see cref="DialogCompleted"/> event, <see cref="DialogConsent"/> event, <see cref="DialogFailed"/> event, <see cref="DialogHangup"/> event, <see cref="DialogStarted"/> event, <see cref="DialogTransfer"/> event.</returns>
-        public async Task<DialogEventResult> WaitForEvent(TimeSpan eventTimeout = default)
+        public DialogEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
             {
                 throw new NullReferenceException(nameof(_evHandler));
             }
 
-            var returnedEvent = await _evHandler.WaitForSingleEvent(filter
+            var returnedEvent = _evHandler.WaitForEventProcessor(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(DialogCompleted)
@@ -35,8 +46,38 @@ namespace Azure.Communication.CallAutomation
                 || filter.GetType() == typeof(DialogHangup)
                 || filter.GetType() == typeof(DialogStarted)
                 || filter.GetType() == typeof(DialogTransfer)),
-                eventTimeout).ConfigureAwait(false);
+                cancellationToken);
 
+            return SetReturnedEvent(returnedEvent);
+        }
+
+        /// <summary>
+        /// Wait for <see cref="DialogEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
+        /// </summary>
+        /// <returns>Returns <see cref="DialogEventResult"/> which contains either <see cref="DialogCompleted"/> event, <see cref="DialogConsent"/> event, <see cref="DialogFailed"/> event, <see cref="DialogHangup"/> event, <see cref="DialogStarted"/> event, <see cref="DialogTransfer"/> event.</returns>
+        public async Task<DialogEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
+        {
+            if (_evHandler is null)
+            {
+                throw new NullReferenceException(nameof(_evHandler));
+            }
+
+            var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
+                => filter.CallConnectionId == _callConnectionId
+                && (filter.OperationContext == _operationContext || _operationContext is null)
+                && (filter.GetType() == typeof(DialogCompleted)
+                || filter.GetType() == typeof(DialogConsent)
+                || filter.GetType() == typeof(DialogFailed)
+                || filter.GetType() == typeof(DialogHangup)
+                || filter.GetType() == typeof(DialogStarted)
+                || filter.GetType() == typeof(DialogTransfer)),
+                cancellationToken).ConfigureAwait(false);
+
+            return SetReturnedEvent(returnedEvent);
+        }
+
+        private static DialogEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
+        {
             DialogEventResult result = default;
             switch (returnedEvent)
             {

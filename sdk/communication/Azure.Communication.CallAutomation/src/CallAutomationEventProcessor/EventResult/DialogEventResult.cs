@@ -3,9 +3,13 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary><see cref="DialogEventResult"/> is returned from WaitForEvent of <see cref="PlayResult"/>.</summary>
-    public class DialogEventResult : EventResultBase
+    /// <summary><see cref="DialogEventResult"/> is returned from WaitForEvent of <see cref="DialogResult"/>.</summary>
+    public class DialogEventResult
     {
+        /// <summary>
+        /// Indicates whether the returned event is considered successful or not.
+        /// </summary>
+        public bool IsSuccessEvent { get; internal set; }
         /// <summary>
         /// <see cref="DialogCompleted"/> event will be returned once the dialog is completed successfully.
         /// </summary>

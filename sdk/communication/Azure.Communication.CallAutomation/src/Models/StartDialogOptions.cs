@@ -9,7 +9,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The Dialog Options.
     /// </summary>
-    public abstract class StartDialogOptions
+    public class StartDialogOptions
     {
         /// <summary>
         /// Creates a new instance of the DialogOptions.
@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="targetParticipant"></param>
         /// <param name="botId"></param>
         /// <param name="dialogContext"></param>
-        protected StartDialogOptions(DialogInputType dialogInputType, CommunicationIdentifier targetParticipant, Guid botId, IDictionary<string, string> dialogContext)
+        public StartDialogOptions(DialogInputType dialogInputType, CommunicationIdentifier targetParticipant, Guid botId, IDictionary<string, string> dialogContext)
         {
             DialogInputType = dialogInputType;
             TargetParticipant = targetParticipant;
