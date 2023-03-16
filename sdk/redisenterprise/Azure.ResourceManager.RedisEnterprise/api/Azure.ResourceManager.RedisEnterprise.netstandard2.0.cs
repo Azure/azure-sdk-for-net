@@ -525,36 +525,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         internal RedisEnterpriseRegionSkuDetail() { }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseLocationInfo LocationInfo { get { throw null; } }
         public string ResourceType { get { throw null; } }
-        public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName? SkuDetailsName { get { throw null; } }
+        public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuName? SkuDetailsName { get { throw null; } }
     }
     public partial class RedisEnterpriseSku
     {
         public RedisEnterpriseSku(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuName name) { }
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuName Name { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RedisEnterpriseSkuDetailsName : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RedisEnterpriseSkuDetailsName(string value) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseE10 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseE100 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseE20 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseE50 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseFlashF1500 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseFlashF300 { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName EnterpriseFlashF700 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName left, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName left, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsName right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RedisEnterpriseSkuName : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuName>

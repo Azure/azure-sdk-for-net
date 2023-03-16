@@ -9,7 +9,7 @@ generate-model-factory: false
 csharp: true
 library-name: RedisEnterprise
 namespace: Azure.ResourceManager.RedisEnterprise
-require: https://github.com/Azure/azure-rest-api-specs/blob/a54263176acce91199a19333d6c4717367a3317e/specification/redisenterprise/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7f5ff3f2011f2f8019ff5db4b6cc00a128c01eb5/specification/redisenterprise/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -31,7 +31,6 @@ rename-mapping:
   CmkIdentityType: RedisEnterpriseCustomerManagedKeyIdentityType
   LocationInfo: RedisEnterpriseLocationInfo
   RegionSkuDetail: RedisEnterpriseRegionSkuDetail
-  Name: RedisEnterpriseSkuDetailsName
   FlushParameters: FlushRedisEnterpriseDatabaseParameters
   ClusteringPolicy: RedisEnterpriseClusteringPolicy
   TlsVersion: RedisEnterpriseTlsVersion

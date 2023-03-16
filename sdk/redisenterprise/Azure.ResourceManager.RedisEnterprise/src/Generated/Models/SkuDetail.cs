@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Initializes a new instance of SkuDetail. </summary>
         /// <param name="name"> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </param>
-        internal SkuDetail(RedisEnterpriseSkuDetailsName? name)
+        internal SkuDetail(RedisEnterpriseSkuName? name)
         {
             Name = name;
         }
 
         /// <summary> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </summary>
-        public RedisEnterpriseSkuDetailsName? Name { get; }
+        public RedisEnterpriseSkuName? Name { get; }
     }
 }
