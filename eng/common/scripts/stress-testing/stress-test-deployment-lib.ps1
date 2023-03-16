@@ -216,9 +216,56 @@ function DeployStressPackage(
     if ($LASTEXITCODE) {exit $LASTEXITCODE}
 
     $dockerBuildConfigs = @()
-    
+
     $genValFile = Join-Path $pkg.Directory "generatedValues.yaml"
     $genVal = Get-Content $genValFile -Raw | ConvertFrom-Yaml -Ordered
+    $releaseName = $pkg.ReleaseName
+    if ($RerunFailedJobs) {
+        $pods = kubectl get pods -n $pkg.namespace -o json | ConvertFrom-Json
+
+        # Get all jobs within this helm release
+        $helmResources = helm status -n $pkg.Namespace $pkg.ReleaseName --show-resources
+        $discoveredJob = $False
+        $jobs = @()
+        foreach ($helmResource in $helmResources) {
+            if ($discoveredJob -and $helmResource -match "==>") {break}
+            if ($discoveredJob) {
+                $jobs += ($helmResource -split '\s+')[0] | where{($_ -ne "NAME") -and ($_)}
+            }
+            if ($helmResource -match "==> v1/Job") {
+                $discoveredJob = $True
+            }
+        }
+
+        $failedJobsScenario = @()
+        $revision = 0
+        foreach ($job in $jobs) {
+            $jobRevision = [int]$job.split('-')[-1]
+            if ($jobRevision -gt $revision) {
+                $revision = $jobRevision
+            }
+
+            $podPhase = kubectl describe jobs -n $pkg.Namespace $job | Select-String "0 Failed"
+            if ([System.String]::IsNullOrEmpty($podPhase)) {
+                $failedJobsScenario += $job.split("-$($pkg.ReleaseName)")[0]
+            }
+        }
+        
+        $releaseName = "$($pkg.ReleaseName)-$revision-retry"
+
+        $genValRerun = @{"scenarios"=@()}
+        foreach ($failedScenario in $failedJobsScenario) {
+            $failedScenarioObject = $genVal.scenarios | Where {$_.Scenario -eq $failedScenario}
+            $genValRerun.scenarios += $failedScenarioObject
+        }
+
+        if (!$genValRerun.scenarios.length) {
+            Write-Host "There are no failed jobs to rerun."
+            return
+        }
+        $genVal = $genValRerun
+    }
+
     if (Test-Path $genValFile) {
         $scenarios = $genVal.Scenarios
         foreach ($scenario in $scenarios) {
@@ -302,12 +349,12 @@ function DeployStressPackage(
         $genVal | ConvertTo-Yaml | Out-File -FilePath $genValFile
     }
 
-    Write-Host "Installing or upgrading stress test $($pkg.ReleaseName) from $($pkg.Directory)"
+    Write-Host "Installing or upgrading stress test $releaseName from $($pkg.Directory)"
 
     $generatedConfigPath = Join-Path $pkg.Directory generatedValues.yaml
     $subCommand = $Template ? "template" : "upgrade"
     $installFlag = $Template ? "" : "--install"
-    $helmCommandArg = "helm", $subCommand, $pkg.ReleaseName, $pkg.Directory, "-n", $pkg.Namespace, $installFlag, "--set", "stress-test-addons.env=$environment", "--values", $generatedConfigPath
+    $helmCommandArg = "helm", $subCommand, $releaseName, $pkg.Directory, "-n", $pkg.Namespace, $installFlag, "--set", "stress-test-addons.env=$environment", "--values", $generatedConfigPath
 
     $result = (Run @helmCommandArg) 2>&1 | Write-Host
 
@@ -323,7 +370,7 @@ function DeployStressPackage(
           # Issues like 'UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress'
           # can be the result of cancelled `upgrade` operations (e.g. ctrl-c).
           # See https://github.com/helm/helm/issues/4558
-          Write-Warning "The issue may be fixable by first running 'helm rollback -n $($pkg.Namespace) $($pkg.ReleaseName)'"
+          Write-Warning "The issue may be fixable by first running 'helm rollback -n $($pkg.Namespace) $releaseName'"
           return
         }
     }
@@ -334,7 +381,7 @@ function DeployStressPackage(
     if(!$Template) {
         $helmReleaseConfig = RunOrExitOnFailure kubectl get secrets `
                                                 -n $pkg.Namespace `
-                                                -l "status=deployed,name=$($pkg.ReleaseName)" `
+                                                -l "status=deployed,name=$releaseName" `
                                                 -o jsonpath='{.items[0].metadata.name}'
         Run kubectl label secret -n $pkg.Namespace --overwrite $helmReleaseConfig deployId=$deployId
     }
