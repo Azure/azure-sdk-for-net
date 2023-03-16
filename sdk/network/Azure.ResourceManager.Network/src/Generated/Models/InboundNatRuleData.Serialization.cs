@@ -65,6 +65,21 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enableTcpReset"u8);
                 writer.WriteBooleanValue(EnableTcpReset.Value);
             }
+            if (Optional.IsDefined(FrontendPortRangeStart))
+            {
+                writer.WritePropertyName("frontendPortRangeStart"u8);
+                writer.WriteNumberValue(FrontendPortRangeStart.Value);
+            }
+            if (Optional.IsDefined(FrontendPortRangeEnd))
+            {
+                writer.WritePropertyName("frontendPortRangeEnd"u8);
+                writer.WriteNumberValue(FrontendPortRangeEnd.Value);
+            }
+            if (Optional.IsDefined(BackendAddressPool))
+            {
+                writer.WritePropertyName("backendAddressPool"u8);
+                JsonSerializer.Serialize(writer, BackendAddressPool);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -87,6 +102,9 @@ namespace Azure.ResourceManager.Network
             Optional<int> idleTimeoutInMinutes = default;
             Optional<bool> enableFloatingIP = default;
             Optional<bool> enableTcpReset = default;
+            Optional<int> frontendPortRangeStart = default;
+            Optional<int> frontendPortRangeEnd = default;
+            Optional<WritableSubResource> backendAddressPool = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -214,6 +232,36 @@ namespace Azure.ResourceManager.Network
                             enableTcpReset = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("frontendPortRangeStart"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            frontendPortRangeStart = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("frontendPortRangeEnd"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            frontendPortRangeEnd = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("backendAddressPool"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -228,7 +276,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new InboundNatRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, backendIPConfiguration.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(provisioningState));
+            return new InboundNatRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, backendIPConfiguration.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), backendAddressPool, Optional.ToNullable(provisioningState));
         }
     }
 }

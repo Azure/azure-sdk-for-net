@@ -36,13 +36,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
         /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
-        internal ExpressRouteGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IReadOnlyList<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags)
+        /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
+        internal ExpressRouteGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, WritableSubResource virtualHub, bool? allowNonVirtualWanTraffic) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
             AutoScaleConfiguration = autoScaleConfiguration;
             ExpressRouteConnections = expressRouteConnections;
             ProvisioningState = provisioningState;
             VirtualHub = virtualHub;
+            AllowNonVirtualWanTraffic = allowNonVirtualWanTraffic;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -62,7 +64,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List of ExpressRoute connections to the ExpressRoute gateway. </summary>
-        public IReadOnlyList<ExpressRouteConnectionData> ExpressRouteConnections { get; }
+        public IList<ExpressRouteConnectionData> ExpressRouteConnections { get; }
         /// <summary> The provisioning state of the express route gateway resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </summary>
@@ -78,5 +80,8 @@ namespace Azure.ResourceManager.Network
                 VirtualHub.Id = value;
             }
         }
+
+        /// <summary> Configures this gateway to accept traffic from non Virtual WAN networks. </summary>
+        public bool? AllowNonVirtualWanTraffic { get; set; }
     }
 }

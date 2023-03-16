@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Network
             BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
             LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
             OutboundRules = new ChangeTrackingList<WritableSubResource>();
+            InboundNatRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
@@ -41,8 +42,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancingRules"> An array of references to load balancing rules that use this backend address pool. </param>
         /// <param name="outboundRule"> A reference to an outbound rule that uses this backend address pool. </param>
         /// <param name="outboundRules"> An array of references to outbound rules that use this backend address pool. </param>
+        /// <param name="inboundNatRules"> An array of references to inbound NAT rules that use this backend address pool. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="drainPeriodInSeconds"> Amount of seconds Load Balancer waits for before sending RESET to client and backend address. </param>
+        /// <param name="virtualNetwork"> A reference to a virtual network. </param>
+        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, WritableSubResource virtualNetwork) : base(id, name, resourceType)
         {
             ETag = etag;
             Location = location;
@@ -52,7 +56,10 @@ namespace Azure.ResourceManager.Network
             LoadBalancingRules = loadBalancingRules;
             OutboundRule = outboundRule;
             OutboundRules = outboundRules;
+            InboundNatRules = inboundNatRules;
             ProvisioningState = provisioningState;
+            DrainPeriodInSeconds = drainPeriodInSeconds;
+            VirtualNetwork = virtualNetwork;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -77,7 +84,24 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> An array of references to outbound rules that use this backend address pool. </summary>
         public IReadOnlyList<WritableSubResource> OutboundRules { get; }
+        /// <summary> An array of references to inbound NAT rules that use this backend address pool. </summary>
+        public IReadOnlyList<WritableSubResource> InboundNatRules { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> Amount of seconds Load Balancer waits for before sending RESET to client and backend address. </summary>
+        public int? DrainPeriodInSeconds { get; set; }
+        /// <summary> A reference to a virtual network. </summary>
+        internal WritableSubResource VirtualNetwork { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get => VirtualNetwork is null ? default : VirtualNetwork.Id;
+            set
+            {
+                if (VirtualNetwork is null)
+                    VirtualNetwork = new WritableSubResource();
+                VirtualNetwork.Id = value;
+            }
+        }
     }
 }

@@ -16,20 +16,15 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DdosCustomPolicy))
+            if (Optional.IsDefined(ProtectionMode))
             {
-                writer.WritePropertyName("ddosCustomPolicy"u8);
-                JsonSerializer.Serialize(writer, DdosCustomPolicy);
+                writer.WritePropertyName("protectionMode"u8);
+                writer.WriteStringValue(ProtectionMode.Value.ToString());
             }
-            if (Optional.IsDefined(ProtectionCoverage))
+            if (Optional.IsDefined(DdosProtectionPlan))
             {
-                writer.WritePropertyName("protectionCoverage"u8);
-                writer.WriteStringValue(ProtectionCoverage.Value.ToString());
-            }
-            if (Optional.IsDefined(ProtectedIP))
-            {
-                writer.WritePropertyName("protectedIP"u8);
-                writer.WriteBooleanValue(ProtectedIP.Value);
+                writer.WritePropertyName("ddosProtectionPlan"u8);
+                JsonSerializer.Serialize(writer, DdosProtectionPlan);
             }
             writer.WriteEndObject();
         }
@@ -40,43 +35,32 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> ddosCustomPolicy = default;
-            Optional<DdosSettingsProtectionCoverage> protectionCoverage = default;
-            Optional<bool> protectedIP = default;
+            Optional<DdosSettingsProtectionMode> protectionMode = default;
+            Optional<WritableSubResource> ddosProtectionPlan = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ddosCustomPolicy"u8))
+                if (property.NameEquals("protectionMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ddosCustomPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    protectionMode = new DdosSettingsProtectionMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protectionCoverage"u8))
+                if (property.NameEquals("ddosProtectionPlan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectionCoverage = new DdosSettingsProtectionCoverage(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("protectedIP"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    protectedIP = property.Value.GetBoolean();
+                    ddosProtectionPlan = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new DdosSettings(ddosCustomPolicy, Optional.ToNullable(protectionCoverage), Optional.ToNullable(protectedIP));
+            return new DdosSettings(Optional.ToNullable(protectionMode), ddosProtectionPlan);
         }
     }
 }

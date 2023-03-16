@@ -17,6 +17,21 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId"u8);
             writer.WriteNumberValue(RuleId);
+            if (Optional.IsDefined(RuleIdString))
+            {
+                writer.WritePropertyName("ruleIdString"u8);
+                writer.WriteStringValue(RuleIdString);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action.Value.ToString());
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -32,6 +47,9 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             int ruleId = default;
+            Optional<string> ruleIdString = default;
+            Optional<ApplicationGatewayWafRuleStateType> state = default;
+            Optional<ApplicationGatewayWafRuleActionType> action = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -40,13 +58,38 @@ namespace Azure.ResourceManager.Network.Models
                     ruleId = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("ruleIdString"u8))
+                {
+                    ruleIdString = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    state = new ApplicationGatewayWafRuleStateType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("action"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    action = new ApplicationGatewayWafRuleActionType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApplicationGatewayFirewallRule(ruleId, description.Value);
+            return new ApplicationGatewayFirewallRule(ruleId, ruleIdString.Value, Optional.ToNullable(state), Optional.ToNullable(action), description.Value);
         }
     }
 }

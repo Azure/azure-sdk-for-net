@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.Network
             Optional<AddressSpace> remoteAddressSpace = default;
             Optional<AddressSpace> remoteVirtualNetworkAddressSpace = default;
             Optional<VirtualNetworkBgpCommunities> remoteBgpCommunities = default;
+            Optional<VirtualNetworkEncryption> remoteVirtualNetworkEncryption = default;
             Optional<VirtualNetworkPeeringState> peeringState = default;
             Optional<VirtualNetworkPeeringLevel> peeringSyncLevel = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -244,6 +245,16 @@ namespace Azure.ResourceManager.Network
                             remoteBgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("remoteVirtualNetworkEncryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            remoteVirtualNetworkEncryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("peeringState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -298,7 +309,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualNetworkPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(allowVirtualNetworkAccess), Optional.ToNullable(allowForwardedTraffic), Optional.ToNullable(allowGatewayTransit), Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork, remoteAddressSpace.Value, remoteVirtualNetworkAddressSpace.Value, remoteBgpCommunities.Value, Optional.ToNullable(peeringState), Optional.ToNullable(peeringSyncLevel), Optional.ToNullable(provisioningState), Optional.ToNullable(doNotVerifyRemoteGateways), Optional.ToNullable(resourceGuid));
+            return new VirtualNetworkPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(allowVirtualNetworkAccess), Optional.ToNullable(allowForwardedTraffic), Optional.ToNullable(allowGatewayTransit), Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork, remoteAddressSpace.Value, remoteVirtualNetworkAddressSpace.Value, remoteBgpCommunities.Value, remoteVirtualNetworkEncryption.Value, Optional.ToNullable(peeringState), Optional.ToNullable(peeringSyncLevel), Optional.ToNullable(provisioningState), Optional.ToNullable(doNotVerifyRemoteGateways), Optional.ToNullable(resourceGuid));
         }
     }
 }

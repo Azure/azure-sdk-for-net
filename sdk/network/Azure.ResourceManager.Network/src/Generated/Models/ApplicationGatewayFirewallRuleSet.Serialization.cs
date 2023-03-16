@@ -59,6 +59,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Tiers))
+            {
+                writer.WritePropertyName("tiers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tiers)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -78,6 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> ruleSetType = default;
             Optional<string> ruleSetVersion = default;
             Optional<IList<ApplicationGatewayFirewallRuleGroup>> ruleGroups = default;
+            Optional<IList<ApplicationGatewayTierType>> tiers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -174,11 +185,26 @@ namespace Azure.ResourceManager.Network.Models
                             ruleGroups = array;
                             continue;
                         }
+                        if (property0.NameEquals("tiers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ApplicationGatewayTierType> array = new List<ApplicationGatewayTierType>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ApplicationGatewayTierType(item.GetString()));
+                            }
+                            tiers = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ApplicationGatewayFirewallRuleSet(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups));
+            return new ApplicationGatewayFirewallRuleSet(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups), Optional.ToList(tiers));
         }
     }
 }

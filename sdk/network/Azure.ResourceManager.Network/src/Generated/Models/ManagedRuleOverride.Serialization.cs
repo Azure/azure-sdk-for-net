@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -33,6 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string ruleId = default;
             Optional<ManagedRuleEnabledState> state = default;
+            Optional<ActionType> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -50,8 +56,18 @@ namespace Azure.ResourceManager.Network.Models
                     state = new ManagedRuleEnabledState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("action"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    action = new ActionType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ManagedRuleOverride(ruleId, Optional.ToNullable(state));
+            return new ManagedRuleOverride(ruleId, Optional.ToNullable(state), Optional.ToNullable(action));
         }
     }
 }

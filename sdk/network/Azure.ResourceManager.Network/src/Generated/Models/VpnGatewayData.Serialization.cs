@@ -67,6 +67,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("vpnGatewayScaleUnit"u8);
                 writer.WriteNumberValue(VpnGatewayScaleUnit.Value);
             }
+            if (Optional.IsDefined(EnableBgpRouteTranslationForNat))
+            {
+                writer.WritePropertyName("enableBgpRouteTranslationForNat"u8);
+                writer.WriteBooleanValue(EnableBgpRouteTranslationForNat.Value);
+            }
             if (Optional.IsDefined(IsRoutingPreferenceInternet))
             {
                 writer.WritePropertyName("isRoutingPreferenceInternet"u8);
@@ -104,6 +109,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<int> vpnGatewayScaleUnit = default;
             Optional<IReadOnlyList<VpnGatewayIPConfiguration>> ipConfigurations = default;
+            Optional<bool> enableBgpRouteTranslationForNat = default;
             Optional<bool> isRoutingPreferenceInternet = default;
             Optional<IList<VpnGatewayNatRuleData>> natRules = default;
             foreach (var property in element.EnumerateObject())
@@ -247,6 +253,16 @@ namespace Azure.ResourceManager.Network
                             ipConfigurations = array;
                             continue;
                         }
+                        if (property0.NameEquals("enableBgpRouteTranslationForNat"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enableBgpRouteTranslationForNat = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("isRoutingPreferenceInternet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -276,7 +292,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), virtualHub, Optional.ToList(connections), bgpSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), Optional.ToList(ipConfigurations), Optional.ToNullable(isRoutingPreferenceInternet), Optional.ToList(natRules));
+            return new VpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), virtualHub, Optional.ToList(connections), bgpSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), Optional.ToList(ipConfigurations), Optional.ToNullable(enableBgpRouteTranslationForNat), Optional.ToNullable(isRoutingPreferenceInternet), Optional.ToList(natRules));
         }
     }
 }

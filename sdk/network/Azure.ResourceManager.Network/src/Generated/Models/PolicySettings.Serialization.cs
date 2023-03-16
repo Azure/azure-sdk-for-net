@@ -40,6 +40,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
+            if (Optional.IsDefined(CustomBlockResponseStatusCode))
+            {
+                writer.WritePropertyName("customBlockResponseStatusCode"u8);
+                writer.WriteNumberValue(CustomBlockResponseStatusCode.Value);
+            }
+            if (Optional.IsDefined(CustomBlockResponseBody))
+            {
+                writer.WritePropertyName("customBlockResponseBody"u8);
+                writer.WriteStringValue(CustomBlockResponseBody);
+            }
             writer.WriteEndObject();
         }
 
@@ -54,6 +64,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> requestBodyCheck = default;
             Optional<int> maxRequestBodySizeInKb = default;
             Optional<int> fileUploadLimitInMb = default;
+            Optional<int> customBlockResponseStatusCode = default;
+            Optional<string> customBlockResponseBody = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -106,8 +118,23 @@ namespace Azure.ResourceManager.Network.Models
                     fileUploadLimitInMb = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("customBlockResponseStatusCode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    customBlockResponseStatusCode = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("customBlockResponseBody"u8))
+                {
+                    customBlockResponseBody = property.Value.GetString();
+                    continue;
+                }
             }
-            return new PolicySettings(Optional.ToNullable(state), Optional.ToNullable(mode), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadLimitInMb));
+            return new PolicySettings(Optional.ToNullable(state), Optional.ToNullable(mode), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadLimitInMb), Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value);
         }
     }
 }

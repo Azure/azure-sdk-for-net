@@ -40,9 +40,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the VPN gateway resource. </param>
         /// <param name="vpnGatewayScaleUnit"> The scale unit for this vpn gateway. </param>
         /// <param name="ipConfigurations"> List of all IPs configured on the gateway. </param>
+        /// <param name="enableBgpRouteTranslationForNat"> Enable BGP routes translation for NAT on this VpnGateway. </param>
         /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the VpnGateway. </param>
         /// <param name="natRules"> List of all the nat Rules associated with the gateway. </param>
-        internal VpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, WritableSubResource virtualHub, IList<VpnConnectionData> connections, BgpSettings bgpSettings, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, resourceType, location, tags)
+        internal VpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, WritableSubResource virtualHub, IList<VpnConnectionData> connections, BgpSettings bgpSettings, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations, bool? enableBgpRouteTranslationForNat, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
             VirtualHub = virtualHub;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
             VpnGatewayScaleUnit = vpnGatewayScaleUnit;
             IPConfigurations = ipConfigurations;
+            EnableBgpRouteTranslationForNat = enableBgpRouteTranslationForNat;
             IsRoutingPreferenceInternet = isRoutingPreferenceInternet;
             NatRules = natRules;
         }
@@ -81,6 +83,8 @@ namespace Azure.ResourceManager.Network
         public int? VpnGatewayScaleUnit { get; set; }
         /// <summary> List of all IPs configured on the gateway. </summary>
         public IReadOnlyList<VpnGatewayIPConfiguration> IPConfigurations { get; }
+        /// <summary> Enable BGP routes translation for NAT on this VpnGateway. </summary>
+        public bool? EnableBgpRouteTranslationForNat { get; set; }
         /// <summary> Enable Routing Preference property for the Public IP Interface of the VpnGateway. </summary>
         public bool? IsRoutingPreferenceInternet { get; set; }
         /// <summary> List of all the nat Rules associated with the gateway. </summary>

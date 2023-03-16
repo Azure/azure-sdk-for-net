@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ServiceTagInformationPropertiesFormat> properties = default;
             Optional<string> name = default;
             Optional<string> id = default;
+            Optional<string> serviceTagChangeNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -43,8 +44,13 @@ namespace Azure.ResourceManager.Network.Models
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("serviceTagChangeNumber"u8))
+                {
+                    serviceTagChangeNumber = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ServiceTagInformation(properties.Value, name.Value, id.Value);
+            return new ServiceTagInformation(properties.Value, name.Value, id.Value, serviceTagChangeNumber.Value);
         }
     }
 }

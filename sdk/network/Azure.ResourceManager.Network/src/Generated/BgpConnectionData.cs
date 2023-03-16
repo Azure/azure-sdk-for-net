@@ -8,6 +8,7 @@
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="peerAsn"> Peer ASN. </param>
         /// <param name="peerIP"> Peer IP. </param>
+        /// <param name="hubVirtualNetworkConnection"> The reference to the HubVirtualNetworkConnection resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="connectionState"> The current state of the VirtualHub to Peer. </param>
-        internal BgpConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id, name, resourceType)
+        internal BgpConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, long? peerAsn, string peerIP, WritableSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id, name, resourceType)
         {
             ETag = etag;
             PeerAsn = peerAsn;
             PeerIP = peerIP;
+            HubVirtualNetworkConnection = hubVirtualNetworkConnection;
             ProvisioningState = provisioningState;
             ConnectionState = connectionState;
         }
@@ -46,6 +49,20 @@ namespace Azure.ResourceManager.Network
         public long? PeerAsn { get; set; }
         /// <summary> Peer IP. </summary>
         public string PeerIP { get; set; }
+        /// <summary> The reference to the HubVirtualNetworkConnection resource. </summary>
+        internal WritableSubResource HubVirtualNetworkConnection { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier HubVirtualNetworkConnectionId
+        {
+            get => HubVirtualNetworkConnection is null ? default : HubVirtualNetworkConnection.Id;
+            set
+            {
+                if (HubVirtualNetworkConnection is null)
+                    HubVirtualNetworkConnection = new WritableSubResource();
+                HubVirtualNetworkConnection.Id = value;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The current state of the VirtualHub to Peer. </summary>

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class FirewallPolicySnat : IUtf8JsonSerializable
+    public partial class FirewallPolicySnat : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AutoLearnPrivateRanges))
+            {
+                writer.WritePropertyName("autoLearnPrivateRanges"u8);
+                writer.WriteStringValue(AutoLearnPrivateRanges.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<IList<string>> privateRanges = default;
+            Optional<AutoLearnPrivateRangesMode> autoLearnPrivateRanges = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateRanges"u8))
@@ -53,8 +59,18 @@ namespace Azure.ResourceManager.Network.Models
                     privateRanges = array;
                     continue;
                 }
+                if (property.NameEquals("autoLearnPrivateRanges"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    autoLearnPrivateRanges = new AutoLearnPrivateRangesMode(property.Value.GetString());
+                    continue;
+                }
             }
-            return new FirewallPolicySnat(Optional.ToList(privateRanges));
+            return new FirewallPolicySnat(Optional.ToList(privateRanges), Optional.ToNullable(autoLearnPrivateRanges));
         }
     }
 }

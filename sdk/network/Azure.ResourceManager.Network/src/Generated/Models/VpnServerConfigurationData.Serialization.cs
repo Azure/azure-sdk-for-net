@@ -136,6 +136,16 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("aadAuthenticationParameters"u8);
                 writer.WriteObjectValue(AadAuthenticationParameters);
             }
+            if (Optional.IsCollectionDefined(ConfigurationPolicyGroups))
+            {
+                writer.WritePropertyName("configurationPolicyGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConfigurationPolicyGroups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -165,6 +175,7 @@ namespace Azure.ResourceManager.Network
             Optional<AadAuthenticationParameters> aadAuthenticationParameters = default;
             Optional<string> provisioningState = default;
             Optional<IReadOnlyList<P2SVpnGatewayData>> p2sVpnGateways = default;
+            Optional<IList<VpnServerConfigurationPolicyGroupData>> configurationPolicyGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -396,11 +407,26 @@ namespace Azure.ResourceManager.Network
                             p2sVpnGateways = array;
                             continue;
                         }
+                        if (property0.NameEquals("configurationPolicyGroups"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<VpnServerConfigurationPolicyGroupData> array = new List<VpnServerConfigurationPolicyGroupData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(item));
+                            }
+                            configurationPolicyGroups = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VpnServerConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(vpnProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(radiusServerRootCertificates), Optional.ToList(radiusClientRootCertificates), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadAuthenticationParameters.Value, provisioningState.Value, Optional.ToList(p2sVpnGateways));
+            return new VpnServerConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(vpnProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(radiusServerRootCertificates), Optional.ToList(radiusClientRootCertificates), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadAuthenticationParameters.Value, provisioningState.Value, Optional.ToList(p2sVpnGateways), Optional.ToList(configurationPolicyGroups));
         }
     }
 }

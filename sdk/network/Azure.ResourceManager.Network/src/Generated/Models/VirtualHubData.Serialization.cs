@@ -127,6 +127,16 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("preferredRoutingGateway"u8);
                 writer.WriteStringValue(PreferredRoutingGateway.Value.ToString());
             }
+            if (Optional.IsDefined(HubRoutingPreference))
+            {
+                writer.WritePropertyName("hubRoutingPreference"u8);
+                writer.WriteStringValue(HubRoutingPreference.Value.ToString());
+            }
+            if (Optional.IsDefined(VirtualRouterAutoScaleConfiguration))
+            {
+                writer.WritePropertyName("virtualRouterAutoScaleConfiguration"u8);
+                writer.WriteObjectValue(VirtualRouterAutoScaleConfiguration);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -138,6 +148,7 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             Optional<ETag> etag = default;
+            Optional<string> kind = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -158,10 +169,13 @@ namespace Azure.ResourceManager.Network
             Optional<RoutingState> routingState = default;
             Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
             Optional<IReadOnlyList<WritableSubResource>> ipConfigurations = default;
+            Optional<IReadOnlyList<WritableSubResource>> routeMaps = default;
             Optional<long> virtualRouterAsn = default;
             Optional<IList<string>> virtualRouterIPs = default;
             Optional<bool> allowBranchToBranchTraffic = default;
             Optional<PreferredRoutingGateway> preferredRoutingGateway = default;
+            Optional<HubRoutingPreference> hubRoutingPreference = default;
+            Optional<VirtualRouterAutoScaleConfiguration> virtualRouterAutoScaleConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -172,6 +186,11 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -383,6 +402,21 @@ namespace Azure.ResourceManager.Network
                             ipConfigurations = array;
                             continue;
                         }
+                        if (property0.NameEquals("routeMaps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                            }
+                            routeMaps = array;
+                            continue;
+                        }
                         if (property0.NameEquals("virtualRouterAsn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -428,11 +462,31 @@ namespace Azure.ResourceManager.Network
                             preferredRoutingGateway = new PreferredRoutingGateway(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("hubRoutingPreference"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            hubRoutingPreference = new HubRoutingPreference(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualRouterAutoScaleConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            virtualRouterAutoScaleConfiguration = VirtualRouterAutoScaleConfiguration.DeserializeVirtualRouterAutoScaleConfiguration(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway));
+            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToList(routeMaps), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
         }
     }
 }
