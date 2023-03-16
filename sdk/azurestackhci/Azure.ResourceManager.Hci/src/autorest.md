@@ -9,7 +9,7 @@ generate-model-factory: false
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-require: https://github.com/Azure/azure-rest-api-specs/blob/d82babc9bd0fa25260d04e52d841c2a6f59792c8/specification/azurestackhci/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/51b8f2084b05e705baf30f24ea0a40a346e2c5a5/specification/azurestackhci/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
