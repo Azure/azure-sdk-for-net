@@ -883,6 +883,12 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallRejectReason CallRejectReason { get { throw null; } set { } }
         public string IncomingCallContext { get { throw null; } }
     }
+    public partial class RemoveParticipantFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal RemoveParticipantFailed() { }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RemoveParticipantFailed Deserialize(string content) { throw null; }
+    }
     public partial class RemoveParticipantOptions
     {
         public RemoveParticipantOptions(Azure.Communication.CommunicationIdentifier participantToRemove) { }
@@ -893,6 +899,12 @@ namespace Azure.Communication.CallAutomation
     {
         internal RemoveParticipantResult() { }
         public string OperationContext { get { throw null; } }
+    }
+    public partial class RemoveParticipantSucceeded : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal RemoveParticipantSucceeded() { }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RemoveParticipantSucceeded Deserialize(string content) { throw null; }
     }
     public partial class ResultInformation
     {
