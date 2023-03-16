@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The participant removed event internal.
+    /// The remove participant succeeded event internal.
     /// </summary>
     [CodeGenModel("RemoveParticipantSucceeded", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     internal partial class RemoveParticipantSucceededInternal
