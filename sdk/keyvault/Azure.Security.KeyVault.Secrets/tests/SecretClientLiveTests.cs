@@ -497,10 +497,10 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             {
                 // Unregister listener before enumerating scopes.
                 trace.Dispose();
-
-                var scope = trace.AssertScope($"{nameof(SecretClient)}.{nameof(SecretClient.GetSecretIfExists)}");
-                Assert.IsFalse(scope.IsFailed);
             }
+
+            var scope = trace.AssertScope($"{nameof(SecretClient)}.{nameof(SecretClient.GetSecretIfExists)}");
+            Assert.IsFalse(scope.IsFailed);
         }
     }
 }
