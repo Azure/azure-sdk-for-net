@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class DiagnosticSettingsCollectionTests : MonitorTestBase
     {
         public DiagnosticSettingsCollectionTests(bool isAsync)
-           : base(isAsync)
+           : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

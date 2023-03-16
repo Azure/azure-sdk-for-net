@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 5.8.1 (2023-03-09)
+
+### Bugs Fixed
+
+- Fix null reference exception when using the `EventProcessorClient`.
+
 ## 5.8.0 (2023-03-07)
 
 ### Features Added

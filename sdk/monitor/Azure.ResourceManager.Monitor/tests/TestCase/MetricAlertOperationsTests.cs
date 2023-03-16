@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class MetricAlertOperationsTests : MonitorTestBase
     {
         public MetricAlertOperationsTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
