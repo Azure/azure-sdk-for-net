@@ -344,6 +344,48 @@ namespace Azure.Core.Tests
             await reliableStream.FlushAsync();
         }
 
+        [Test]
+        public async Task CanThrowOnRead()
+        {
+            int length = 100;
+
+            var stream = new MockReadStream(length);
+
+            MockTransport mockTransport = CreateMockTransport(
+                new MockResponse(200) { ContentStream = stream }
+            );
+            var pipeline = new HttpPipeline(mockTransport);
+
+            Stream responseStream = IsAsync ? await SendTestRequestAsync(pipeline, 0) : SendTestRequest(pipeline, 0);
+
+            int received = 0;
+
+            Stream reliableStream = RetriableStream.Create(
+                responseStream,
+                offset => SendTestRequest(pipeline, offset),
+                offset => SendTestRequestAsync(pipeline, offset),
+                ResponseClassifier.Shared, maxRetries: 5,
+                (buffer, offset, count) => {
+                    received += count;
+                    if (received == length)
+                    {
+                        throw new RequestFailedException(200, "Request failed.");
+                    }
+                });
+
+            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
+            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
+
+            if (IsAsync)
+            {
+                Assert.ThrowsAsync<RequestFailedException>(() => reliableStream.ReadAsync(_buffer, 50, 50));
+            }
+            else
+            {
+                Assert.Throws<RequestFailedException>(() => reliableStream.Read(_buffer, 50, 50));
+            }
+        }
+
         private void AssertReads(byte[] buffer, int length)
         {
             for (int i = 0; i < length; i++)
@@ -440,7 +482,7 @@ namespace Azure.Core.Tests
 
                 if (Position > _throwAfter)
                 {
-                    throw (Exception) Activator.CreateInstance(_exceptionType, $"Failed at {_offset}");
+                    throw (Exception)Activator.CreateInstance(_exceptionType, $"Failed at {_offset}");
                 }
 
                 for (int i = 0; i < left; i++)

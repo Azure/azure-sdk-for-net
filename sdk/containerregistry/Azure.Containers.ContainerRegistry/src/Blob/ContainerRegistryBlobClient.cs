@@ -103,6 +103,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _repositoryName = repository;
+            _maxRetries = options.Retry.MaxRetries;
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
@@ -112,8 +113,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
             _blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
-
-            _maxRetries = options.Retry.MaxRetries;
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryBlobClient for mocking. </summary>
@@ -718,7 +717,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// This API is a prefered way to fetch blobs that can fit into memory.
         /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
         /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
-        /// To download a blob that does not fit in memory, please use the <see cref="DownloadBlobToAsync(string, Stream, CancellationToken)"/> method instead.
+        /// To download a blob that does not fit in memory, consider using the <see cref="DownloadBlobToAsync(string, Stream, CancellationToken)"/> method instead.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -807,6 +806,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
 
             SHA256 sha256 = SHA256.Create();
+            int contentLength = (int)blobResult.Headers.ContentLength.Value;
+            int received = 0;
+            bool validated = false;
 
             // Wrap the response Content in a RetriableStream so we
             // can return it before it's finished downloading, but still
@@ -817,12 +819,21 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 async offset => await _blobRestClient.GetChunkAsync(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).ConfigureAwait(false),
                 _pipeline.ResponseClassifier,
                 _maxRetries,
-                (buffer, offset, count) => sha256.TransformBlock(buffer, offset, count - offset, buffer, 0),
-                () =>
+                (buffer, offset, length) =>
                 {
-                    sha256.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
-                    string computedDigest = BlobHelper.FormatDigest(sha256.Hash);
-                    ValidateDigest(computedDigest, digest);
+                    if (validated)
+                        return;
+
+                    received += length;
+                    sha256.TransformBlock(buffer, offset, length, buffer, 0);
+
+                    if (received == contentLength)
+                    {
+                        sha256.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+                        string computedDigest = BlobHelper.FormatDigest(sha256.Hash);
+                        ValidateDigest(computedDigest, digest);
+                        validated = true;
+                    }
                 },
                 sha256.Dispose);
 

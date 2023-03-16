@@ -50,10 +50,9 @@ namespace Azure.Core.Pipeline
             ResponseClassifier responseClassifier,
             int maxRetries,
             Action<byte[], int, int> onRead,
-            Action onReadComplete,
-            Action onDispose)
+            Action onDispose = default)
         {
-            return new RetriableStreamImpl(initialResponse, streamFactory, asyncStreamFactory, responseClassifier, maxRetries, onRead, onReadComplete, onDispose);
+            return new RetriableStreamImpl(initialResponse, streamFactory, asyncStreamFactory, responseClassifier, maxRetries, onRead, onDispose);
         }
 
         private class RetriableStreamImpl : Stream
@@ -65,8 +64,6 @@ namespace Azure.Core.Pipeline
             private readonly Func<long, ValueTask<Stream>> _asyncStreamFactory;
 
             private readonly Action<byte[], int, int> _onRead;
-
-            private readonly Action _onReadComplete;
 
             private readonly Action _onDispose;
 
@@ -88,7 +85,6 @@ namespace Azure.Core.Pipeline
                 ResponseClassifier responseClassifier,
                 int maxRetries,
                 Action<byte[], int, int> onRead = default,
-                Action onReadComplete = default,
                 Action onDispose = default)
             {
                 if (initialStream.CanSeek)
@@ -109,7 +105,6 @@ namespace Azure.Core.Pipeline
                 _asyncStreamFactory = asyncStreamFactory;
                 _maxRetries = maxRetries;
                 _onRead = onRead;
-                _onReadComplete = onReadComplete;
                 _onDispose = onDispose;
             }
 
@@ -126,12 +121,7 @@ namespace Azure.Core.Pipeline
                     {
                         int result = await _currentStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
 
-                        _onRead?.Invoke(buffer, offset, count);
-
-                        if (result == 0)
-                        {
-                            _onReadComplete?.Invoke();
-                        }
+                        _onRead?.Invoke(buffer, offset, result);
 
                         _position += result;
                         return result;
@@ -188,11 +178,6 @@ namespace Azure.Core.Pipeline
                         int result = _currentStream.Read(buffer, offset, count);
 
                         _onRead?.Invoke(buffer, offset, result);
-
-                        if (result == 0)
-                        {
-                            _onReadComplete?.Invoke();
-                        }
 
                         _position += result;
                         return result;
