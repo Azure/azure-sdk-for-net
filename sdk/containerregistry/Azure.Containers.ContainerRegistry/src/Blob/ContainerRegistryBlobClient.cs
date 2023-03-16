@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The Azure Container Registry blob client, responsible for uploading and downloading
     /// blobs and manifests, the building blocks of artifacts. </summary>

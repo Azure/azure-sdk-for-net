@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

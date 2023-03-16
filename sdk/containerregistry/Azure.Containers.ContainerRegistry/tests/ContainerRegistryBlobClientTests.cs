@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;

@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry.Specialized;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {

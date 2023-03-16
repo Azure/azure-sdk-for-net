@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     [CodeGenModel("Annotations")]
     public partial class OciAnnotations

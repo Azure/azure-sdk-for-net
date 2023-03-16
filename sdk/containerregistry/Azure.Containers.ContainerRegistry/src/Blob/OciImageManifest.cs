@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     [CodeGenModel("OciImageManifest")]
     public partial class OciImageManifest
