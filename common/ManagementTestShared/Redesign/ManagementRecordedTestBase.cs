@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.TestFramework
                 return new ArmClient(
                     TestEnvironment.Credential,
                     TestEnvironment.SubscriptionId,
-                    new ArmClientOptions() { Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl, TestEnvironment.ServiceManagementUrl) });
+                    new ArmClientOptions() { Environment = GetArmEnvironment(TestEnvironment) });
             }
             return null;
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.TestFramework
         protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default, bool enableDeleteAfter = false)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
-            options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl, TestEnvironment.ServiceManagementUrl);
+            options.Environment = GetArmEnvironment(TestEnvironment);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
@@ -138,8 +138,9 @@ namespace Azure.ResourceManager.TestFramework
                 options), new IInterceptor[] { new ManagementInterceptor(this) });
         }
 
-        private ArmEnvironment GetEnvironment(string endpoint, string fallbackServiceManagementUrl)
+        private ArmEnvironment GetArmEnvironment(TestEnvironment environment)
         {
+            var endpoint = environment.ResourceManagerUrl;
             if (string.IsNullOrEmpty(endpoint))
             {
                 return ArmEnvironment.AzurePublicCloud;
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.TestFramework
             if (baseUri == ArmEnvironment.AzureGovernment.Endpoint)
                 return ArmEnvironment.AzureGovernment;
 
-            return new ArmEnvironment(new Uri(endpoint), fallbackServiceManagementUrl ?? $"{endpoint}/.default");
+            return new ArmEnvironment(new Uri(endpoint), environment.ServiceManagementUrl ?? $"{endpoint}/.default");
         }
 
         [SetUp]
@@ -242,7 +243,7 @@ namespace Azure.ResourceManager.TestFramework
             var options = InstrumentClientOptions(new ArmClientOptions(), SessionRecording);
             options.AddPolicy(OneTimeResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(OneTimeManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
-            options.Environment = GetEnvironment(SessionEnvironment.ResourceManagerUrl, SessionEnvironment.ServiceManagementUrl);
+            options.Environment = GetArmEnvironment(SessionEnvironment);
 
             GlobalClient = InstrumentClient(new ArmClient(
                 SessionEnvironment.Credential,
