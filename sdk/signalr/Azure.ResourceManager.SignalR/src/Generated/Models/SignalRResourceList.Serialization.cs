@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SignalR.Models
     {
         internal static SignalRResourceList DeserializeSignalRResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SignalRData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

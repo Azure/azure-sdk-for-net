@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildServiceProperties DeserializeAppPlatformBuildServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kPackVersion = default;
             Optional<AppPlatformBuildServiceProvisioningState> provisioningState = default;
             Optional<AppPlatformBuildServiceResourceRequirements> resourceRequests = default;

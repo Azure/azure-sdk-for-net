@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionReseller DeserializeConsumptionReseller(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resellerId = default;
             Optional<string> resellerDescription = default;
             foreach (var property in element.EnumerateObject())

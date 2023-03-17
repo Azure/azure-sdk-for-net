@@ -11,7 +11,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the MigrationRecoveryPoint data model. </summary>
+    /// <summary>
+    /// A class representing the MigrationRecoveryPoint data model.
+    /// Recovery point for a migration item.
+    /// Serialized Name: MigrationRecoveryPoint
+    /// </summary>
     public partial class MigrationRecoveryPointData : ResourceData
     {
         /// <summary> Initializes a new instance of MigrationRecoveryPointData. </summary>

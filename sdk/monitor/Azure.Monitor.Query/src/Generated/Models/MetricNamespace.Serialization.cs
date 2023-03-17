@@ -14,6 +14,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricNamespace DeserializeMetricNamespace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> type = default;
             Optional<string> name = default;

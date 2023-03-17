@@ -11,7 +11,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the ReplicationProtectionIntent data model. </summary>
+    /// <summary>
+    /// A class representing the ReplicationProtectionIntent data model.
+    /// Replication protection intent.
+    /// Serialized Name: ReplicationProtectionIntent
+    /// </summary>
     public partial class ReplicationProtectionIntentData : ResourceData
     {
         /// <summary> Initializes a new instance of ReplicationProtectionIntentData. </summary>

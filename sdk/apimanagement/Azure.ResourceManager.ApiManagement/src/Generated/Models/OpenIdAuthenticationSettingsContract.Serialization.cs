@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static OpenIdAuthenticationSettingsContract DeserializeOpenIdAuthenticationSettingsContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> openidProviderId = default;
             Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
             foreach (var property in element.EnumerateObject())

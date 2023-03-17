@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static ProvisioningState ToProvisioningState(this string value)
         {
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningState.Succeeded;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningState.Failed;
-            if (string.Equals(value, "Canceled", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningState.Canceled;
-            if (string.Equals(value, "InProgress", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningState.InProgress;
-            if (string.Equals(value, "Deleting", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningState.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return ProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return ProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return ProvisioningState.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return ProvisioningState.InProgress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return ProvisioningState.Deleting;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProvisioningState value.");
         }
     }

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the CsmPublishingCredentialsPoliciesEntity data model. </summary>
+    /// <summary>
+    /// A class representing the CsmPublishingCredentialsPoliciesEntity data model.
+    /// Publishing Credentials Policies parameters.
+    /// </summary>
     public partial class CsmPublishingCredentialsPoliciesEntityData : ResourceData
     {
         /// <summary> Initializes a new instance of CsmPublishingCredentialsPoliciesEntityData. </summary>

@@ -390,6 +390,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageModelSettings DeserializeImageModelSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> advancedSettings = default;
             Optional<bool?> amsGradient = default;
             Optional<string> augmentations = default;

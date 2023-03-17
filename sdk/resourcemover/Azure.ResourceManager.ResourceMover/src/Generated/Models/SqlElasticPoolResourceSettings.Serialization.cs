@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static SqlElasticPoolResourceSettings DeserializeSqlElasticPoolResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<ResourceZoneRedundantSetting> zoneRedundant = default;
             string resourceType = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static AsrTask DeserializeAsrTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> taskId = default;
             Optional<string> name = default;
             Optional<DateTimeOffset> startTime = default;

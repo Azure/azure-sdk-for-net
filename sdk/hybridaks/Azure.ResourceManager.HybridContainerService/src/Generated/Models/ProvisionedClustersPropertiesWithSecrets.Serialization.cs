@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClustersPropertiesWithSecrets DeserializeProvisionedClustersPropertiesWithSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AADProfile> aadProfile = default;
             Optional<WindowsProfile> windowsProfile = default;
             Optional<HttpProxyConfig> httpProxyConfig = default;

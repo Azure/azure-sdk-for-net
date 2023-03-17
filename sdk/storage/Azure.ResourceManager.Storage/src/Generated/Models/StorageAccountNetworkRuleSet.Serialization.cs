@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountNetworkRuleSet DeserializeStorageAccountNetworkRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageNetworkBypass> bypass = default;
             Optional<IList<StorageAccountResourceAccessRule>> resourceAccessRules = default;
             Optional<IList<StorageAccountVirtualNetworkRule>> virtualNetworkRules = default;

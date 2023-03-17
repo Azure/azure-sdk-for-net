@@ -11,7 +11,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the ReplicationPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the ReplicationPolicy data model.
+    /// Protection profile details.
+    /// Serialized Name: Policy
+    /// </summary>
     public partial class ReplicationPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ReplicationPolicyData. </summary>

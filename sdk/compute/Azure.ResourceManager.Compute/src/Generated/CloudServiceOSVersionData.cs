@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the CloudServiceOSVersion data model. </summary>
+    /// <summary>
+    /// A class representing the CloudServiceOSVersion data model.
+    /// Describes a cloud service OS version.
+    /// </summary>
     public partial class CloudServiceOSVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of CloudServiceOSVersionData. </summary>

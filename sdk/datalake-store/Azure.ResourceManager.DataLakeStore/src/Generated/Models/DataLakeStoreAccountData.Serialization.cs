@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.DataLakeStore
     {
         internal static DataLakeStoreAccountData DeserializeDataLakeStoreAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;

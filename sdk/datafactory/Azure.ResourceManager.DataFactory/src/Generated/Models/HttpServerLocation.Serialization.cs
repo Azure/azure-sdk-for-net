@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HttpServerLocation DeserializeHttpServerLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> relativeUrl = default;
             string type = default;
             Optional<BinaryData> folderPath = default;

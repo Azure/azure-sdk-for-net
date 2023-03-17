@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static LinkedServiceListResponse DeserializeLinkedServiceListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<FactoryLinkedServiceData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ResourceSkusResult DeserializeResourceSkusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ResourceSku> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

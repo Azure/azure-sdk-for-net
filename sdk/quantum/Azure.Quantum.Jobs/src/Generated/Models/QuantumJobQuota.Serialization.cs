@@ -14,6 +14,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static QuantumJobQuota DeserializeQuantumJobQuota(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dimension = default;
             Optional<DimensionScope> scope = default;
             Optional<string> providerId = default;

@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of SapSizingRecommendationResult. </summary>
-        /// <param name="deploymentType"> The deployment Type. </param>
+        /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         internal SapSizingRecommendationResult(SapDeploymentType deploymentType)
         {
             DeploymentType = deploymentType;
         }
 
-        /// <summary> The deployment Type. </summary>
+        /// <summary> The type of SAP deployment, single server or Three tier. </summary>
         internal SapDeploymentType DeploymentType { get; set; }
     }
 }

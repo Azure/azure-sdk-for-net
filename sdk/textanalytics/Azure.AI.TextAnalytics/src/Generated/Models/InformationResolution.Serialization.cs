@@ -27,6 +27,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static InformationResolution DeserializeInformationResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             InformationUnit unit = default;
             double value = default;
             ResolutionKind resolutionKind = default;

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.MySql
 
         internal static MySqlServerKeyData DeserializeMySqlServerKeyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;

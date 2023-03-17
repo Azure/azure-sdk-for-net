@@ -32,6 +32,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SoftDeleteColumnDeletionDetectionPolicy DeserializeSoftDeleteColumnDeletionDetectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> softDeleteColumnName = default;
             Optional<string> softDeleteMarkerValue = default;
             string odataType = default;

@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxBasicJobDetails DeserializeDataBoxBasicJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("jobDetailsType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

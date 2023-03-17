@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static ReplicationNetworkMappingData DeserializeReplicationNetworkMappingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetworkMappingProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

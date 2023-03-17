@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// being reimaged or having its OS upgraded will have to potentially
         /// approve the OS Image Scheduled Event before the event is auto
         /// approved (timed out). The configuration is specified in ISO 8601
-        /// format, with the value set to 15 minutes (PT15M)</param>
+        /// format, and the value must be 15 minutes (PT15M)</param>
         /// <param name="enable">Specifies whether the OS Image Scheduled event
         /// is enabled or disabled.</param>
         public OSImageNotificationProfile(string notBeforeTimeout = default(string), bool? enable = default(bool?))
@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets length of time a Virtual Machine being reimaged or
         /// having its OS upgraded will have to potentially approve the OS
         /// Image Scheduled Event before the event is auto approved (timed
-        /// out). The configuration is specified in ISO 8601 format, with the
-        /// value set to 15 minutes (PT15M)
+        /// out). The configuration is specified in ISO 8601 format, and the
+        /// value must be 15 minutes (PT15M)
         /// </summary>
         [JsonProperty(PropertyName = "notBeforeTimeout")]
         public string NotBeforeTimeout { get; set; }

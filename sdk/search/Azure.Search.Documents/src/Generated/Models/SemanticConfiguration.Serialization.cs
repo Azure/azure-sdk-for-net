@@ -24,6 +24,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SemanticConfiguration DeserializeSemanticConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             PrioritizedFields prioritizedFields = default;
             foreach (var property in element.EnumerateObject())

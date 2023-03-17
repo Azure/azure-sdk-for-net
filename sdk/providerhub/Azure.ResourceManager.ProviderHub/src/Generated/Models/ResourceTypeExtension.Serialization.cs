@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceTypeExtension DeserializeResourceTypeExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> endpointUri = default;
             Optional<IList<ExtensionCategory>> extensionCategories = default;
             Optional<TimeSpan> timeout = default;

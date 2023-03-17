@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeepCreatedOriginGroup DeserializeDeepCreatedOriginGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<HealthProbeSettings> healthProbeSettings = default;
             Optional<IList<WritableSubResource>> origins = default;

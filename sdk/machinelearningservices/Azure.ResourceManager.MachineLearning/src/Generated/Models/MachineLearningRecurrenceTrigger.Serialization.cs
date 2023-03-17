@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningRecurrenceTrigger DeserializeMachineLearningRecurrenceTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningRecurrenceFrequency frequency = default;
             int interval = default;
             Optional<MachineLearningRecurrenceSchedule> schedule = default;

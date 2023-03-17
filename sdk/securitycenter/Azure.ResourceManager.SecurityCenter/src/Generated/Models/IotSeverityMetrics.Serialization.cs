@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static IotSeverityMetrics DeserializeIotSeverityMetrics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> high = default;
             Optional<long> medium = default;
             Optional<long> low = default;

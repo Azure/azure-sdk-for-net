@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningDefaultScaleSettings DeserializeMachineLearningDefaultScaleSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ScaleType scaleType = default;
             foreach (var property in element.EnumerateObject())
             {

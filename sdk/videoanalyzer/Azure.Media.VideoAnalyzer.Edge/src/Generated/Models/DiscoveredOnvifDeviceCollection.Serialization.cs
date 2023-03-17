@@ -31,6 +31,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static DiscoveredOnvifDeviceCollection DeserializeDiscoveredOnvifDeviceCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DiscoveredOnvifDevice>> value = default;
             foreach (var property in element.EnumerateObject())
             {

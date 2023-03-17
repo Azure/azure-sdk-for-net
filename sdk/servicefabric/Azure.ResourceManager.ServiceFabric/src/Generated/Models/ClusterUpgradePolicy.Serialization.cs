@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterUpgradePolicy DeserializeClusterUpgradePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> forceRestart = default;
             TimeSpan upgradeReplicaSetCheckTimeout = default;
             TimeSpan healthCheckWaitDuration = default;

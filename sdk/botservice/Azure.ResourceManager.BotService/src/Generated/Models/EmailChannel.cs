@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Email channel definition. </summary>
-    public partial class EmailChannel : Channel
+    public partial class EmailChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of EmailChannel. </summary>
         public EmailChannel()

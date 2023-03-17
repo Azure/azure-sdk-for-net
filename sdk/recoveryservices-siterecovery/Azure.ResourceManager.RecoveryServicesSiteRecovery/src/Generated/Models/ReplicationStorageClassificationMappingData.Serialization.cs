@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static ReplicationStorageClassificationMappingData DeserializeReplicationStorageClassificationMappingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageClassificationMappingProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

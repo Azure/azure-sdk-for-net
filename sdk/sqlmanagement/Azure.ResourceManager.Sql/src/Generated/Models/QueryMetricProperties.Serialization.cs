@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static QueryMetricProperties DeserializeQueryMetricProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> displayName = default;
             Optional<QueryMetricUnitType> unit = default;

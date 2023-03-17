@@ -13,7 +13,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the PacketCapture data model. </summary>
+    /// <summary>
+    /// A class representing the PacketCapture data model.
+    /// Information about packet capture session.
+    /// </summary>
     public partial class PacketCaptureData : ResourceData
     {
         /// <summary> Initializes a new instance of PacketCaptureData. </summary>

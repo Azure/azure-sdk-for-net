@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static StorageSyncGroupCreateOrUpdateContent DeserializeStorageSyncGroupCreateOrUpdateContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> properties = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InlineWorkflowTaskDetails DeserializeInlineWorkflowTaskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> workflowIds = default;
             string instanceType = default;
             Optional<IReadOnlyList<AsrTask>> childTasks = default;

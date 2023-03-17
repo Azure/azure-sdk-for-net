@@ -11,7 +11,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the ReplicationLogicalNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the ReplicationLogicalNetwork data model.
+    /// Logical network data model.
+    /// Serialized Name: LogicalNetwork
+    /// </summary>
     public partial class ReplicationLogicalNetworkData : ResourceData
     {
         /// <summary> Initializes a new instance of ReplicationLogicalNetworkData. </summary>

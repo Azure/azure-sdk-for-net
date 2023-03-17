@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamAnalyticsClusterSku DeserializeStreamAnalyticsClusterSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamAnalyticsClusterSkuName> name = default;
             Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())

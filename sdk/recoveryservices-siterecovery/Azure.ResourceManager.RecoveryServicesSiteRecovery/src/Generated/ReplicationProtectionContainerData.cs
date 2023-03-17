@@ -11,7 +11,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the ReplicationProtectionContainer data model. </summary>
+    /// <summary>
+    /// A class representing the ReplicationProtectionContainer data model.
+    /// Protection container details.
+    /// Serialized Name: ProtectionContainer
+    /// </summary>
     public partial class ReplicationProtectionContainerData : ResourceData
     {
         /// <summary> Initializes a new instance of ReplicationProtectionContainerData. </summary>

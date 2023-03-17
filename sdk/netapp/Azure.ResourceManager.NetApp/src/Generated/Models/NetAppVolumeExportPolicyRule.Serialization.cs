@@ -95,6 +95,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumeExportPolicyRule DeserializeNetAppVolumeExportPolicyRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> ruleIndex = default;
             Optional<bool> unixReadOnly = default;
             Optional<bool> unixReadWrite = default;

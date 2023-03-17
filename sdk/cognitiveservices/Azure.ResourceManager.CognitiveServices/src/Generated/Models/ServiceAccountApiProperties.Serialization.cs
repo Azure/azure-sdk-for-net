@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static ServiceAccountApiProperties DeserializeServiceAccountApiProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> qnaRuntimeEndpoint = default;
             Optional<string> qnaAzureSearchEndpointKey = default;
             Optional<ResourceIdentifier> qnaAzureSearchEndpointId = default;

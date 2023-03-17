@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesClusterExtensionScope DeserializeKubernetesClusterExtensionScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ScopeCluster> cluster = default;
             Optional<ScopeNamespace> @namespace = default;
             foreach (var property in element.EnumerateObject())

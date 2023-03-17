@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     {
         internal static AssociationListResult DeserializeAssociationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AssociationData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

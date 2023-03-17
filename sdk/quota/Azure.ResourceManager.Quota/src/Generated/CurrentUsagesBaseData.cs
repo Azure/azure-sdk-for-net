@@ -11,7 +11,10 @@ using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
-    /// <summary> A class representing the CurrentUsagesBase data model. </summary>
+    /// <summary>
+    /// A class representing the CurrentUsagesBase data model.
+    /// Resource usage.
+    /// </summary>
     public partial class CurrentUsagesBaseData : ResourceData
     {
         /// <summary> Initializes a new instance of CurrentUsagesBaseData. </summary>

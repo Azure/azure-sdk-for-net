@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the WorkloadNetworkPortMirroringProfile data model. </summary>
+    /// <summary>
+    /// A class representing the WorkloadNetworkPortMirroringProfile data model.
+    /// NSX Port Mirroring
+    /// </summary>
     public partial class WorkloadNetworkPortMirroringProfileData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadNetworkPortMirroringProfileData. </summary>

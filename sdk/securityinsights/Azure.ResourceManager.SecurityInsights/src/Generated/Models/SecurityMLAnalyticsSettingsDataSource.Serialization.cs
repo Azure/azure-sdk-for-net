@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityMLAnalyticsSettingsDataSource DeserializeSecurityMLAnalyticsSettingsDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectorId = default;
             Optional<IList<string>> dataTypes = default;
             foreach (var property in element.EnumerateObject())

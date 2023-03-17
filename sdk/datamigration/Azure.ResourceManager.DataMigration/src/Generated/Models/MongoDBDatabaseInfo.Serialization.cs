@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MongoDBDatabaseInfo DeserializeMongoDBDatabaseInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<MongoDBCollectionInfo> collections = default;
             bool supportsSharding = default;
             long averageDocumentSize = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static RecoverableDatabaseListResult DeserializeRecoverableDatabaseListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<RecoverableDatabaseData> value = default;
             foreach (var property in element.EnumerateObject())
             {

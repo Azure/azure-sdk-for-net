@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBPrivateEndpointConnectionListResult DeserializeCosmosDBPrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CosmosDBPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

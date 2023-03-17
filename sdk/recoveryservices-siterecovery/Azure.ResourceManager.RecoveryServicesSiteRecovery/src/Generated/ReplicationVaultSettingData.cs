@@ -11,7 +11,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the ReplicationVaultSetting data model. </summary>
+    /// <summary>
+    /// A class representing the ReplicationVaultSetting data model.
+    /// Vault setting.
+    /// Serialized Name: VaultSetting
+    /// </summary>
     public partial class ReplicationVaultSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of ReplicationVaultSettingData. </summary>

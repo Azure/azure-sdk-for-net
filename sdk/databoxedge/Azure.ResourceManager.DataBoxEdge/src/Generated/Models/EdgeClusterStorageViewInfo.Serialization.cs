@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeClusterStorageViewInfo DeserializeEdgeClusterStorageViewInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> clusterTotalStorageMb = default;
             Optional<double> clusterFreeStorageMb = default;
             foreach (var property in element.EnumerateObject())

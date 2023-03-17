@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal static BranchStatus DeserializeBranchStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> branchName = default;
             Optional<string> branchId = default;
             Optional<string> status = default;

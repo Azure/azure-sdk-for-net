@@ -11,7 +11,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the SiteRecoveryEvent data model. </summary>
+    /// <summary>
+    /// A class representing the SiteRecoveryEvent data model.
+    /// Implements the Event class.
+    /// Serialized Name: Event
+    /// </summary>
     public partial class SiteRecoveryEventData : ResourceData
     {
         /// <summary> Initializes a new instance of SiteRecoveryEventData. </summary>

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static AlertRuleTemplatesList DeserializeAlertRuleTemplatesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<SecurityInsightsAlertRuleTemplateData> value = default;
             foreach (var property in element.EnumerateObject())

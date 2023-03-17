@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static ReplicationPolicyData DeserializeReplicationPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReplicationPolicyProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

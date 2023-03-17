@@ -16,6 +16,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberSearchResult DeserializePhoneNumberSearchResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string searchId = default;
             IReadOnlyList<string> phoneNumbers = default;
             PhoneNumberType phoneNumberType = default;

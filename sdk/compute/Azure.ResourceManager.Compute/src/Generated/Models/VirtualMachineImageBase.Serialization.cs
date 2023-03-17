@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineImageBase DeserializeVirtualMachineImageBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;

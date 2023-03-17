@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         private string SubnetId;
 
         public ManagedInstanceTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

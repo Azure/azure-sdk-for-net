@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageSkuRestriction DeserializeStorageSkuRestriction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<StorageRestrictionReasonCode> reasonCode = default;

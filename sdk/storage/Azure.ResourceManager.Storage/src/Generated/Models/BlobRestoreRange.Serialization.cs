@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static BlobRestoreRange DeserializeBlobRestoreRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string startRange = default;
             string endRange = default;
             foreach (var property in element.EnumerateObject())

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ServiceTreeInfo DeserializeServiceTreeInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceId = default;
             Optional<string> componentId = default;
             Optional<Readiness> readiness = default;

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static NamespaceJunction DeserializeNamespaceJunction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> namespacePath = default;
             Optional<string> targetPath = default;
             Optional<string> nfsExport = default;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static OpenApiConfiguration DeserializeOpenApiConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OpenApiValidation> validation = default;
             foreach (var property in element.EnumerateObject())
             {

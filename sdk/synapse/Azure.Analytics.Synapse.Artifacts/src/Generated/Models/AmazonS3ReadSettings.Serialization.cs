@@ -86,6 +86,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AmazonS3ReadSettings DeserializeAmazonS3ReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> recursive = default;
             Optional<object> wildcardFolderPath = default;
             Optional<object> wildcardFileName = default;

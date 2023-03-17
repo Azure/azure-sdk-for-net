@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationAccountBatchConfigurationData DeserializeIntegrationAccountBatchConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationAccountBatchConfigurationProperties properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

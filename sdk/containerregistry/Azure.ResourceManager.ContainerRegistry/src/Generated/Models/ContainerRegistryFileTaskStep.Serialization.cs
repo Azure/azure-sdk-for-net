@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryFileTaskStep DeserializeContainerRegistryFileTaskStep(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string taskFilePath = default;
             Optional<string> valuesFilePath = default;
             Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;

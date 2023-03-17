@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RemoteAddressMatchCondition DeserializeRemoteAddressMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RemoteAddressMatchConditionType typeName = default;
             RemoteAddressOperator @operator = default;
             Optional<bool> negateCondition = default;

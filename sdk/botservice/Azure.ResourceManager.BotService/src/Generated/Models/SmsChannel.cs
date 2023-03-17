@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Sms channel definition. </summary>
-    public partial class SmsChannel : Channel
+    public partial class SmsChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of SmsChannel. </summary>
         public SmsChannel()

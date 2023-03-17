@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static EmailTemplateListResult DeserializeEmailTemplateListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiManagementEmailTemplateData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

@@ -1,0 +1,11 @@
+{
+    "appLocation": "eastus2",
+    "environment": "Prod",
+    "sapProduct": "S4HANA",
+    "deploymentType": "ThreeTier",
+    "saps": 23622,
+    "dbMemory": 1024,
+    "databaseType": "HANA",
+    "dbScaleMethod": "ScaleUp",
+    "highAvailabilityType": "AvailabilitySet"
+}

@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static RestorableSqlContainerPropertiesResourceContainer DeserializeRestorableSqlContainerPropertiesResourceContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> self = default;
             Optional<string> rid = default;
             Optional<float> ts = default;

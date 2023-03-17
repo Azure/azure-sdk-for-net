@@ -35,6 +35,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LogSettings DeserializeLogSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> enableCopyActivityLog = default;
             Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;

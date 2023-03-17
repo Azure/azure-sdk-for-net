@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ParticipantProfilePropertyReference DeserializeParticipantProfilePropertyReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string interactionPropertyName = default;
             string profilePropertyName = default;
             foreach (var property in element.EnumerateObject())

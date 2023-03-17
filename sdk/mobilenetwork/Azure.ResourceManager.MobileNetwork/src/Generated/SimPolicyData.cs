@@ -15,7 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    /// <summary> A class representing the SimPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the SimPolicy data model.
+    /// SIM policy resource.
+    /// </summary>
     public partial class SimPolicyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SimPolicyData. </summary>

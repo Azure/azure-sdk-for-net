@@ -11,7 +11,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the ReplicationStorageClassification data model. </summary>
+    /// <summary>
+    /// A class representing the ReplicationStorageClassification data model.
+    /// Storage object definition.
+    /// Serialized Name: StorageClassification
+    /// </summary>
     public partial class ReplicationStorageClassificationData : ResourceData
     {
         /// <summary> Initializes a new instance of ReplicationStorageClassificationData. </summary>

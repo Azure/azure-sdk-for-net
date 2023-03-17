@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource" /> object. </returns>
         public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting()
         {
-            return new AdvancedThreatProtectionSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Security/advancedThreatProtectionSettings/current"));
+            return new AdvancedThreatProtectionSettingResource(Client, Id.AppendProviderResource("Microsoft.Security", "advancedThreatProtectionSettings", "current"));
         }
 
         /// <summary> Gets a collection of DeviceSecurityGroupResources in the ArmResource. </summary>

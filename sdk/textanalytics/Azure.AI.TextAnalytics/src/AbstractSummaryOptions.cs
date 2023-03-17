@@ -1,0 +1,35 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.AI.TextAnalytics
+{
+    /// <summary>
+    /// A set of options used to configure abstractive summarization, including the display name to use, the maximum
+    /// number of sentences that the resulting summary can have, and more.
+    /// </summary>
+    public class AbstractSummaryOptions : TextAnalyticsRequestOptions
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractSummaryOptions"/> class.
+        /// </summary>
+        public AbstractSummaryOptions()
+        {
+        }
+
+        /// <summary>
+        /// The optional display name of the operation.
+        /// </summary>
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// The two-letter ISO 639-1 representation of the default language to consider for automatic language
+        /// detection (for example, "en" for English or "fr" for French).
+        /// </summary>
+        public string AutoDetectionDefaultLanguage { get; set; }
+
+        /// <summary>
+        /// The desired number of sentences in the resulting summaries, which the service will attempt to approximate.
+        /// </summary>
+        public int? SentenceCount { get; set; }
+    }
+}

@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static HealthcareApisIotConnectorData DeserializeHealthcareApisIotConnectorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;

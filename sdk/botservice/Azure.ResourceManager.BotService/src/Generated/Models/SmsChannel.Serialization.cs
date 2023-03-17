@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static SmsChannel DeserializeSmsChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SmsChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

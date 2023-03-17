@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayFirewallRuleGroup DeserializeApplicationGatewayFirewallRuleGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleGroupName = default;
             Optional<string> description = default;
             IList<ApplicationGatewayFirewallRule> rules = default;

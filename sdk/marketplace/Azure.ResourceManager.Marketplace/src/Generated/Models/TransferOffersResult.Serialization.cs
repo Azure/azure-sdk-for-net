@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static TransferOffersResult DeserializeTransferOffersResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PrivateStoreCollectionDetails>> succeeded = default;
             Optional<IReadOnlyList<PrivateStoreCollectionDetails>> failed = default;
             foreach (var property in element.EnumerateObject())

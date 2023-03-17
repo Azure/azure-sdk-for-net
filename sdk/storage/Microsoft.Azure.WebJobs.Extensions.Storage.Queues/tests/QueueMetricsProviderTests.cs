@@ -33,6 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
             _mockQueue = new Mock<QueueClient>(new Uri("https://test.queue.core.windows.net/testqueue"), new QueueClientOptions());
+            _mockQueue.Setup(x => x.Name).Returns("testqueue");
             _metricsProvider = new QueueMetricsProvider(_mockQueue.Object, _loggerFactory);
         }
 
@@ -53,7 +54,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
         [Test]
         public async Task GetMetrics_ReturnsExpectedResult()
         {
-            var metrics = await _metricsProvider.GetMetricsAsync();
+            QueueMetricsProvider _provider = new QueueMetricsProvider(Fixture.Queue, _loggerFactory);
+            var metrics = await _provider.GetMetricsAsync();
 
             Assert.AreEqual(0, metrics.QueueLength);
             Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
@@ -67,14 +69,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
             await Task.Delay(TimeSpan.FromSeconds(5));
 
-            metrics = await _metricsProvider.GetMetricsAsync();
+            metrics = await _provider.GetMetricsAsync();
 
             Assert.AreEqual(5, metrics.QueueLength);
             Assert.True(metrics.QueueTime.Ticks > 0);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // verify non-generic interface works as expected
-            metrics = (QueueTriggerMetrics)(await _metricsProvider.GetMetricsAsync());
+            metrics = (QueueTriggerMetrics)(await _provider.GetMetricsAsync());
             Assert.AreEqual(5, metrics.QueueLength);
         }
 
@@ -101,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
         public class TestFixture : IDisposable
         {
-            private const string TestQueuePrefix = "queuelistenertests";
+            private const string TestQueuePrefix = "metrictests";
 
             public TestFixture()
             {

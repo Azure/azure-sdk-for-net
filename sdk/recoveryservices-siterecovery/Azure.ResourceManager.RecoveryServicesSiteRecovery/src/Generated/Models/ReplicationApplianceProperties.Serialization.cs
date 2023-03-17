@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ReplicationApplianceProperties DeserializeReplicationApplianceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReplicationApplianceSpecificDetails> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {

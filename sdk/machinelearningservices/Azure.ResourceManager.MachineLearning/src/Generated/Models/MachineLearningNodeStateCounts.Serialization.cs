@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningNodeStateCounts DeserializeMachineLearningNodeStateCounts(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> idleNodeCount = default;
             Optional<int> runningNodeCount = default;
             Optional<int> preparingNodeCount = default;

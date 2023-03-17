@@ -317,6 +317,11 @@ namespace Azure.Communication.CallAutomation
                 recognizeChoiceOptions.RecognizeChoices
                     .ToList().ForEach(t => recognizeConfigurationsInternal.Choices.Add(t));
 
+                if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechLanguage))
+                {
+                    recognizeConfigurationsInternal.SpeechLanguage = recognizeChoiceOptions.SpeechLanguage;
+                }
+
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeChoiceOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeChoiceOptions.Prompt);

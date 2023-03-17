@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
 
         internal static Scope DeserializeScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WritableSubResource>> managementGroups = default;
             Optional<IList<WritableSubResource>> subscriptions = default;
             Optional<IList<WritableSubResource>> virtualNetworks = default;

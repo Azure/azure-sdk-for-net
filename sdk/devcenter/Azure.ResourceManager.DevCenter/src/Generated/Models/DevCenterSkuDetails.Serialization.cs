@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static DevCenterSkuDetails DeserializeDevCenterSkuDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<IReadOnlyList<string>> locations = default;
             Optional<IReadOnlyList<Capability>> capabilities = default;
