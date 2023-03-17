@@ -26,23 +26,32 @@ namespace Azure.ResourceManager.StorageCache.Tests.TestCase
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var storageCeollection = resourceGroup.GetStorageAccounts();
-            string accountName = Recording.GenerateAssetName("metrictests");
+            string accountName = Recording.GenerateAssetName("storagetargettests");
+            string containerName = Recording.GenerateAssetName("testblob");
             var storageContent = ResourceDataHelpers.GetContent();
-            //var storageAccount = await storageCeollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageContent);
-            string storageAccountId;
+            /*var storageAccount = (await storageCeollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageContent)).Value;
+            var blobService = storageAccount.GetBlobService();
+            blobService = await blobService.GetAsync();
+            var blobContainerCollection = blobService.GetBlobContainers();
+            BlobContainerResource container1 = (await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData())).Value;*/
+            string blobContainerId;
             if (Mode == RecordedTestMode.Playback)
             {
-                storageAccountId = StorageAccountResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, accountName).ToString();
+                blobContainerId = BlobContainerResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, accountName, containerName).ToString();
             }
             else
             {
                 using (Recording.DisableRecording())
                 {
-                    var storageAccount = await storageCeollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageContent);
-                    storageAccountId = storageAccount.Value.Data.Id;
+                    var storageAccount = (await storageCeollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageContent)).Value;
+                    var blobService = storageAccount.GetBlobService();
+                    blobService = await blobService.GetAsync();
+                    var blobContainerCollection = blobService.GetBlobContainers();
+                    BlobContainerResource container1 = (await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData())).Value;
+                    blobContainerId = container1.Data.Id;
                 }
             }
-            return storageAccountId;
+            return blobContainerId;
         }
 
         #endregion

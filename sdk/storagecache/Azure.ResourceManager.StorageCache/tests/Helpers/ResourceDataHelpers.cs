@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.StorageCache.Models;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Helpers
             var subnet = new SubnetData()
             {
                 Name = subnetName,
-                AddressPrefix = "10.0.1.0/24"
+                AddressPrefix = "10.0.1.0/24",
             };
             return subnet;
         }
@@ -70,11 +71,12 @@ namespace Azure.ResourceManager.StorageCache.Tests.Helpers
             {
                 Sku = new StorageCacheSkuInfo()
                 {
-                    Name = "Standard_2G",
+                    Name= "Standard_2G",
                 },
-                CacheSizeGB = 3072,
+                CacheSizeGB= 3072,
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Subnet = subnetID
+                //Subnet = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Storage-EastUS/providers/Microsoft.Network/virtualNetworks/storagecachetest/subnets/default")
             };
             return data;
         }
