@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 
-using ChecksumCallback = Azure.Storage.ChecksumCalculatingStream.AppendChecksumCalculation;
-
 namespace Azure.Storage.Tests
 {
     [TestFixture(true)]
