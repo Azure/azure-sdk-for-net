@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     [CodeGenModel("RemoveParticipantResponse")]
-    public partial class RemoveParticipantResult
+    internal partial class RemoveParticipantResponseInternal
     {
     }
 }
