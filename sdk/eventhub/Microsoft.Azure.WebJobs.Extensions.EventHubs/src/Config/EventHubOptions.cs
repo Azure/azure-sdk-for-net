@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         {
             MaxEventBatchSize = 10;
             MinEventBatchSize = 1;
-            MaxWaitTime = 60;
+            MaxWaitTime = TimeSpan.FromSeconds(60);
             ConnectionOptions = new EventHubConnectionOptions()
             {
                 TransportType = EventHubsTransportType.AmqpTcp
@@ -155,26 +155,30 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
         }
 
-        private int _maxWaitTime;
+        private TimeSpan _maxWaitTime;
 
         /// <summary>
         /// Gets or sets the maximum time in seconds. This only applies when <see cref="MinEventBatchSize"/> is set. It denotes the
         /// maximum number of seconds the processor will wait after receiving a batch of events less than <see cref="MinEventBatchSize"/>
         /// before invoking the function. Default is 60 seconds, but only when <see cref="MinEventBatchSize"/> has been set.
         /// </summary>
-        public int MaxWaitTime
+        public TimeSpan MaxWaitTime
         {
             get => _maxWaitTime;
 
             set
             {
-                if (value < 0)
+                if (value < TimeSpan.Zero)
                 {
                     throw new ArgumentException("Max Wait Time must be larger than or equal to 0.");
                 }
+                if (value > TimeSpan.FromMinutes(10))
+                {
+                    throw new ArgumentException("Max Wait Time must be less than or equal to 10 minutes.");
+                }
                 _maxWaitTime = value;
             }
-        }  
+        }
 
         private int? _targetUnprocessedEventThreshold;
 

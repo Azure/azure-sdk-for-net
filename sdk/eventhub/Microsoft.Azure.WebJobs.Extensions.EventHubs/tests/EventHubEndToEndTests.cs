@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             CollectionAssert.Contains(logs, $"PocoValues(foo,data)");
 
             var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
-            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.EventProcessor");
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.PartitionProcessor");
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 CollectionAssert.Contains(logs, $"Input(data)");
 
                 var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
-                CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.EventProcessor");
+                CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.PartitionProcessor");
             }
         }
 
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         services.Configure<EventHubOptions>(options =>
                         {
                             options.MinEventBatchSize = 5; // Increase from 1 to 5
-                            options.MaxWaitTime = 10; // Decrease from 60 seconds to 10 seconds
+                            options.MaxWaitTime = TimeSpan.FromSeconds(10); // Decrease from 60 seconds to 10 seconds
                         });
                     });
                     ConfigureTestEventHub(builder);

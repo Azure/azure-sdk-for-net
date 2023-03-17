@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             Assert.AreEqual(123, options.MaxEventBatchSize);
             Assert.AreEqual(100, options.MinEventBatchSize);
-            Assert.AreEqual(60, options.MaxWaitTime);
+            Assert.AreEqual(TimeSpan.FromSeconds(60), options.MaxWaitTime);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             Assert.AreEqual(123, result.MaxEventBatchSize);
             Assert.AreEqual(100, options.MinEventBatchSize);
-            Assert.AreEqual(60, options.MaxWaitTime);
+            Assert.AreEqual(TimeSpan.FromSeconds(60), options.MaxWaitTime);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, result.PrefetchCount);
