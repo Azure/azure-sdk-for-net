@@ -5,5 +5,5 @@ if ($TestProxyTrustCertFn -and (Test-Path "Function:$TestProxyTrustCertFn"))
     &$TestProxyTrustCertFn
 }
 else {
-    Write-Host "No implementation of TestProxyTrustCertFn provided in eng/scripts/Language-Settings.ps1"
+    Write-Host "No implementation of Import-Dev-Cert-<language> provided in eng/scripts/Language-Settings.ps1."
 }
