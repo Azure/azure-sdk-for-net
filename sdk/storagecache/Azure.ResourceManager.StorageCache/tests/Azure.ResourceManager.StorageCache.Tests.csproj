@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.StorageCache.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
+    <PackageReference Include="Azure.ResourceManager.Storage" />
   </ItemGroup>
 </Project>
