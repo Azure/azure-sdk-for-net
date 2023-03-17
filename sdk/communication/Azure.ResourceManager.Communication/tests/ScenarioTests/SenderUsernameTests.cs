@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Communication.Tests
         [TearDown]
         public async Task TearDown()
         {
-            await foreach (var domain in _emailService.GetCommunicationDomainResources().GetAllAsync())
+            await foreach (var username in _domainResource.GetSenderUsernameResources().GetAllAsync())
             {
-                await domain.DeleteAsync(WaitUntil.Completed);
+                await username.DeleteAsync(WaitUntil.Completed);
             }
         }
 
