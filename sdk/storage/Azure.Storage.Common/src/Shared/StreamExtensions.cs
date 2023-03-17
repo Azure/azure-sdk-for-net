@@ -16,7 +16,7 @@ namespace Azure.Storage
     /// <summary>
     /// Extension methods for working with Streams.
     /// </summary>
-    internal static class StreamExtensions
+    internal static partial class StreamExtensions
     {
         public static async Task<int> ReadInternal(
             this Stream stream,

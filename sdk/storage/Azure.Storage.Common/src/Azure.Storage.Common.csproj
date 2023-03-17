@@ -33,7 +33,6 @@
     <Compile Remove="Shared\*.cs" />
     <Compile Remove="Shared\ClientsideEncryption\*.cs;Shared\ClientsideEncryption\Models\*.cs" />
     <Compile Remove="Shared\AesGcm\**\*.cs" />
-    <Compile Include="Shared\ChecksumCalculatingStream.cs" />
     <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
     <Compile Include="Shared\Constants.cs" />
     <Compile Include="Shared\Errors.cs" />
@@ -46,7 +45,6 @@
     <Compile Include="Shared\StorageResponseClassifier.cs" />
     <Compile Include="Shared\StorageSharedKeyCredentialInternals.cs" />
     <Compile Include="Shared\StorageSharedKeyPipelinePolicy.cs" />
-    <Compile Include="Shared\StreamExtensions.cs" />
     <Compile Include="Shared\UriExtensions.cs" />
     <Compile Include="Shared\UriQueryParamsCollection.cs" />
     <Compile Include="Shared\StorageBearerTokenChallengeAuthorizationPolicy.cs" />
