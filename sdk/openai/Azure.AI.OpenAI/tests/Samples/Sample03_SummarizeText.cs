@@ -16,10 +16,10 @@ namespace Azure.AI.OpenAI.Tests.Samples
         {
             #region Snippet:SummarizeText
             string endpoint = "https://myaccount.openai.azure.com/";
-            var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential())
+            var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), new OpenAIClientOptions()
             {
-                DefaultDeploymentOrModelName = "myDeploymentId",
-            };
+                DefaultDeploymentOrModelName = "myDeploymentId"
+            });
 
             string textToSummarize = @"
                 Two independent experiments reported their results this morning at CERN, Europe's high-energy physics laboratory near Geneva in Switzerland. Both show convincing evidence of a new boson particle weighing around 125 gigaelectronvolts, which so far fits predictions of the Higgs previously made by theoretical physicists.

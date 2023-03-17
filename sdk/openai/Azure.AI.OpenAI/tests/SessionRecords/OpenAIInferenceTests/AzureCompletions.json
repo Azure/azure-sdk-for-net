@@ -5,12 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "Sanitized",
+        "api-key": "***********",
         "Content-Length": "61",
         "Content-Type": "application/json",
-        "traceparent": "00-0b245d736e4e41a88e47fa85faaf218f-1b1022b1410c341c-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "da33b36f6c8592c586d02e081e9ade06",
+        "traceparent": "00-0a5f18d808b145438528d18b92b7b449-c267dec75f3b197d-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.3; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "474175bf75969ff093a84fb42baf1512",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,43 +22,43 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "a7c4a0b6-2132-499b-8755-e7792aa4e0f5",
+        "apim-request-id": "2709d074-acf4-45c0-b51e-f843e4d0c5e1",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "406",
+        "Content-Length": "435",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 16:26:20 GMT",
+        "Date": "Fri, 17 Mar 2023 22:27:35 GMT",
         "openai-model": "text-davinci-002",
-        "openai-processing-ms": "659.3704",
+        "openai-processing-ms": "507.7974",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "da33b36f6c8592c586d02e081e9ade06",
+        "x-ms-client-request-id": "474175bf75969ff093a84fb42baf1512",
         "x-ms-region": "East US",
-        "X-Request-ID": "f776751d-189a-4869-bf3f-117a27ddf32b"
+        "X-Request-ID": "8290c72e-f02c-484f-9fd3-4589b45ac011"
       },
       "ResponseBody": {
-        "id": "cmpl-6v7CGh2SkAonBkkjjQuwF08x2SaEW",
+        "id": "cmpl-6vCprl0lDXRA029qoUZ62ZbA4X7N2",
         "object": "text_completion",
-        "created": 1679070380,
+        "created": 1679092055,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "!\n\nThis is a test.",
+            "text": "!\n\nHello all,\n\nI\u0027m a new member of this community",
             "index": 0,
-            "finish_reason": "stop",
+            "finish_reason": "length",
             "logprobs": null
           },
           {
-            "text": "... Chorus: In Review It ain\u0027t being honest if you don\u0027t check",
+            "text": "\u00BB; \u00ABcovering old territory\u00BB ...\n\nThefreedictionary.",
             "index": 1,
             "finish_reason": "length",
             "logprobs": null
           }
         ],
         "usage": {
-          "completion_tokens": 24,
+          "completion_tokens": 32,
           "prompt_tokens": 8,
-          "total_tokens": 32
+          "total_tokens": 40
         }
       }
     }
@@ -68,6 +68,7 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1254213518"
+    "RandomSeed": "1013100899",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

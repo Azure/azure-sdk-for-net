@@ -18,10 +18,10 @@ namespace Azure.AI.OpenAI.Tests.Samples
             // Replace with your Azure OpenAI key
             string key = "YOUR_AZURE_OPENAI_KEY";
             string endpoint = "https://myaccount.openai.azure.com/";
-            var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key))
+            var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key), new OpenAIClientOptions()
             {
                 DefaultDeploymentOrModelName = "myModelDeploymentId",
-            };
+            });
             #endregion
 
             List<string> examplePrompts = new(){

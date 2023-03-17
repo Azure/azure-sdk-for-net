@@ -57,7 +57,7 @@ namespace Azure.AI.OpenAI
                     SseLine? sseEvent = await _baseResponseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
                     if (sseEvent == null)
                     {
-                        _baseResponse.ContentStream.Dispose();
+                        _baseResponse.ContentStream?.Dispose();
                         break;
                     }
 
@@ -68,7 +68,7 @@ namespace Azure.AI.OpenAI
                     ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
                     if (value.Span.SequenceEqual("[DONE]".AsSpan()))
                     {
-                        _baseResponse.ContentStream.Dispose();
+                        _baseResponse.ContentStream?.Dispose();
                         break;
                     }
 

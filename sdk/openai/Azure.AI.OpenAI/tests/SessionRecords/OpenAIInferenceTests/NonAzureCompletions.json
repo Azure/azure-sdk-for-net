@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "88",
         "Content-Type": "application/json",
-        "traceparent": "00-360b96ce13053489f302fb8c05b1b77f-9810818b20c77ab0-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "8630928611d1b71ce2530cabf6cb1142",
+        "traceparent": "00-553a800888c1edc0ea5c57f576e073e5-9bf827c2071368d4-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.3; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "6ecccd5465481e62f1361b919a7508f7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,52 +18,52 @@
           "Hello world",
           "running over the same old ground"
         ],
-        "model": "text-davinci-003"
+        "model": "text-davinci-002"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Cache-Control": "must-revalidate, no-cache",
         "Connection": "keep-alive",
-        "Content-Length": "452",
+        "Content-Length": "402",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 16:26:33 GMT",
-        "Openai-Model": "text-davinci-003",
+        "Date": "Fri, 17 Mar 2023 22:29:41 GMT",
+        "Openai-Model": "text-davinci-002",
         "Openai-Organization": "msft-finetuning-2",
-        "Openai-Processing-Ms": "478",
+        "Openai-Processing-Ms": "542",
         "Openai-Version": "2020-10-01",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Ratelimit-Limit-Requests": "3000",
         "X-Ratelimit-Limit-Tokens": "250000",
-        "X-Ratelimit-Remaining-Requests": "2999",
+        "X-Ratelimit-Remaining-Requests": "3004",
         "X-Ratelimit-Remaining-Tokens": "249968",
-        "X-Ratelimit-Reset-Requests": "59.98",
+        "X-Ratelimit-Reset-Requests": "60.09",
         "X-Ratelimit-Reset-Tokens": "59.99",
-        "X-Request-ID": "02d17c40ca942f21b950c15dbed4b982"
+        "X-Request-ID": "3ceb6f386ed34aabae8f2b2d72dbd0d6"
       },
       "ResponseBody": {
-        "id": "cmpl-6v7CTCiboc19qsQT1zVJNwc6CMWGR",
+        "id": "cmpl-6vCrt2QJuKUD1P46C8uoVMsAGYNHj",
         "object": "text_completion",
-        "created": 1679070393,
-        "model": "text-davinci-003",
+        "created": 1679092181,
+        "model": "text-davinci-002",
         "choices": [
           {
-            "text": "\n\nHello world is a phrase that is used as a test for new systems",
+            "text": "!\n\nMy name is Jeff. I live in Atlanta, Georgia.",
             "index": 0,
             "logprobs": null,
-            "finish_reason": "length"
+            "finish_reason": "stop"
           },
           {
-            "text": "\n\nthe story had been told\na thousand times or more\nbut I",
+            "text": "\n\nWe\u0027ve covered it for years.",
             "index": 1,
             "logprobs": null,
-            "finish_reason": "length"
+            "finish_reason": "stop"
           }
         ],
         "usage": {
           "prompt_tokens": 8,
-          "completion_tokens": 32,
-          "total_tokens": 40
+          "completion_tokens": 24,
+          "total_tokens": 32
         }
       }
     }
@@ -72,6 +72,6 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1190829692"
+    "RandomSeed": "1675610257"
   }
 }

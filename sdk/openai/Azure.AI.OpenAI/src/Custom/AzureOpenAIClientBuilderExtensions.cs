@@ -19,15 +19,14 @@ namespace Microsoft.Extensions.Azure
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://westus.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="deploymentId"> Default deployment id to perform operations against </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<OpenAIClient, OpenAIClientOptions> AddOpenAIClient<TBuilder>(this TBuilder builder, Uri endpoint, string deploymentId, AzureKeyCredential credential)
+        public static IAzureClientBuilder<OpenAIClient, OpenAIClientOptions> AddOpenAIClient<TBuilder>(
+            this TBuilder builder,
+            Uri endpoint,
+            AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<OpenAIClient, OpenAIClientOptions>((options) => new OpenAIClient(endpoint, credential, options)
-            {
-                DefaultDeploymentOrModelName = deploymentId,
-            });
+            return builder.RegisterClientFactory<OpenAIClient, OpenAIClientOptions>((options) => new OpenAIClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="OpenAIClient"/> instance. </summary>
@@ -36,14 +35,12 @@ namespace Microsoft.Extensions.Azure
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
         /// https://westus.api.cognitive.microsoft.com).
         /// </param>
-        /// <param name="deploymentId"> Default deployment id to perform operations against </param>
-        public static IAzureClientBuilder<OpenAIClient, OpenAIClientOptions> AddOpenAIClient<TBuilder>(this TBuilder builder, Uri endpoint, string deploymentId)
+        public static IAzureClientBuilder<OpenAIClient, OpenAIClientOptions> AddOpenAIClient<TBuilder>(
+            this TBuilder builder,
+            Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<OpenAIClient, OpenAIClientOptions>((options, cred) => new OpenAIClient(endpoint, cred, options)
-            {
-                DefaultDeploymentOrModelName = deploymentId,
-            });
+            return builder.RegisterClientFactory<OpenAIClient, OpenAIClientOptions>((options, cred) => new OpenAIClient(endpoint, cred, options));
         }
     }
 }

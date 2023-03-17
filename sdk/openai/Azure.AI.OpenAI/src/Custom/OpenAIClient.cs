@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Specialized;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -20,26 +21,80 @@ namespace Azure.AI.OpenAI
         private const string PublicOpenAIApiVersion = "1";
         private const string PublicOpenAIEndpoint = $"https://api.openai.com/v{PublicOpenAIApiVersion}";
 
+        private readonly string _defaultDeploymentOrModelName;
+        private readonly string _nonAzureOpenAIApiKey;
+
+        /// <summary> Initializes a new instance of <see cref="OpenAIClient"/>. </summary>
+        /// <param name="endpoint">
+        ///     The URI for an Azure OpenAI resource as retrieved from, for example, Azure Portal.
+        ///     This should include protocol and hostname. An example could be:
+        ///     https://my-resource.openai.azure.com .
+        /// </param>
+        /// <param name="keyCredential"> A key credential used to authenticate to an Azure OpenAI resource. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null.
+        /// </exception>
+        public OpenAIClient(Uri endpoint, AzureKeyCredential keyCredential, OpenAIClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(keyCredential, nameof(keyCredential));
+            options ??= new OpenAIClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _keyCredential = keyCredential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+            _defaultDeploymentOrModelName = options.DefaultDeploymentOrModelName;
+        }
+
+        /// <inheritdoc cref="OpenAIClient(Uri, AzureKeyCredential, OpenAIClientOptions)"/>
+        public OpenAIClient(Uri endpoint, AzureKeyCredential keyCredential)
+            : this(endpoint, keyCredential, new OpenAIClientOptions())
+        {
+        }
+
         /// <summary>
-        ///     Gets or sets the model or deployment name used by default when not provided to a request method.
+        ///     <inheritdoc
+        ///         cref="OpenAIClient(Uri, AzureKeyCredential, OpenAIClientOptions)"
+        ///         path="/summary"/>
         /// </summary>
-        /// <remarks>
-        ///     When using an <see cref="OpenAIClient"/> to connect to Azure OpenAI,
-        ///     <see cref="DefaultDeploymentOrModelName"/> should match an Azure deployment name that may differ
-        ///     from the name of the model in that deployment.
-        ///     When using an <see cref="OpenAIClient"/> to connect to the non-Azure OpenAI endpoint,
-        ///     <see cref="DefaultDeploymentOrModelName"/> should instead match the name of the model intended for use.
-        /// </remarks>
-        public string DefaultDeploymentOrModelName { get; set; }
+        /// <param name="endpoint">
+        ///     <inheritdoc
+        ///         cref="OpenAIClient(Uri, AzureKeyCredential, OpenAIClientOptions)"
+        ///         path="/param[@name='endpoint']"/>
+        /// </param>
+        /// <param name="options">
+        ///     <inheritdoc
+        ///         cref="OpenAIClient(Uri, AzureKeyCredential, OpenAIClientOptions)"
+        ///         path="/param[@name='options']"/>
+        /// </param>
+        /// <param name="tokenCredential"> A token credential used to authenticate with an Azure OpenAI resource. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.
+        /// </exception>
+        public OpenAIClient(Uri endpoint, TokenCredential tokenCredential, OpenAIClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+            options ??= new OpenAIClientOptions();
 
-        /// <remarks>
-        ///     This key is used to connect to the non-Azure OpenAI endpoint.
-        ///     For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that
-        ///     provides an Azure resource endpoint and credential, instead.
-        /// </remarks>
-        private string PublicOpenAIApiKey { get; }
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = tokenCredential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+            _defaultDeploymentOrModelName = options.DefaultDeploymentOrModelName;
+        }
 
-        /// <summary> Initializes a instance of OpenAIClient using the public OpenAI endpoint. </summary>
+        /// <inheritdoc cref="OpenAIClient(Uri, TokenCredential, OpenAIClientOptions)"/>
+        public OpenAIClient(Uri endpoint, TokenCredential tokenCredential)
+            : this(endpoint, tokenCredential, new OpenAIClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a instance of OpenAIClient using the public, non-Azure OpenAI endpoint. </summary>
         /// <param name="openAIApiKey">
         ///     The API key to use when connecting to the non-Azure OpenAI endpoint.
         ///     For Azure OpenAI resources as created and maintained in Azure Portal, use a constructor that
@@ -50,14 +105,14 @@ namespace Azure.AI.OpenAI
         public OpenAIClient(string openAIApiKey, OpenAIClientOptions options)
             : this(new Uri(PublicOpenAIEndpoint), CreateDelegatedToken(openAIApiKey), options)
         {
-            PublicOpenAIApiKey = openAIApiKey;
+            _nonAzureOpenAIApiKey = openAIApiKey;
         }
 
         /// <inheritdoc cref="OpenAIClient(string, OpenAIClientOptions)"/>
         public OpenAIClient(string openAIApiKey)
             : this(new Uri(PublicOpenAIEndpoint), CreateDelegatedToken(openAIApiKey), new OpenAIClientOptions())
         {
-            PublicOpenAIApiKey = openAIApiKey;
+            _nonAzureOpenAIApiKey = openAIApiKey;
         }
 
         /// <summary> Return textual completions as configured for a given prompt. </summary>
@@ -79,7 +134,7 @@ namespace Azure.AI.OpenAI
         {
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            if (!string.IsNullOrEmpty(PublicOpenAIApiKey))
+            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
             {
                 completionsOptions.NonAzureModel = deploymentOrModelName;
             }
@@ -92,7 +147,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                using HttpMessage message = CreateGetCompletionsRequest(deploymentOrModelName, content, context);
+                using HttpMessage message = CreatePostRequestMessage(deploymentOrModelName, "completions", content, context);
                 Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(Completions.FromResponse(response), response);
             }
@@ -107,7 +162,7 @@ namespace Azure.AI.OpenAI
         public virtual Response<Completions> GetCompletions(
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
-            => GetCompletions(DefaultDeploymentOrModelName, completionsOptions, cancellationToken);
+            => GetCompletions(_defaultDeploymentOrModelName, completionsOptions, cancellationToken);
 
         /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
         public virtual Response<Completions> GetCompletions(
@@ -120,7 +175,7 @@ namespace Azure.AI.OpenAI
         public virtual Response<Completions> GetCompletions(
             string prompt,
             CancellationToken cancellationToken = default)
-            => GetCompletions(DefaultDeploymentOrModelName, GetDefaultCompletionsOptions(prompt), cancellationToken);
+            => GetCompletions(_defaultDeploymentOrModelName, GetDefaultCompletionsOptions(prompt), cancellationToken);
 
         /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
         public virtual async Task<Response<Completions>> GetCompletionsAsync(
@@ -130,7 +185,7 @@ namespace Azure.AI.OpenAI
         {
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            if (!string.IsNullOrEmpty(PublicOpenAIApiKey))
+            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
             {
                 completionsOptions.NonAzureModel = deploymentOrModelName;
             }
@@ -143,7 +198,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                using HttpMessage message = CreateGetCompletionsRequest(deploymentOrModelName, content, context);
+                using HttpMessage message = CreatePostRequestMessage(deploymentOrModelName, "completions", content, context);
                 Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(Completions.FromResponse(response), response);
@@ -159,7 +214,7 @@ namespace Azure.AI.OpenAI
         public virtual Task<Response<Completions>> GetCompletionsAsync(
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
-            => GetCompletionsAsync(DefaultDeploymentOrModelName, completionsOptions, cancellationToken);
+            => GetCompletionsAsync(_defaultDeploymentOrModelName, completionsOptions, cancellationToken);
 
         /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
         public virtual Task<Response<Completions>> GetCompletionsAsync(
@@ -172,7 +227,7 @@ namespace Azure.AI.OpenAI
         public virtual Task<Response<Completions>> GetCompletionsAsync(
             string prompt,
             CancellationToken cancellationToken = default)
-            => GetCompletionsAsync(DefaultDeploymentOrModelName, GetDefaultCompletionsOptions(prompt), cancellationToken);
+            => GetCompletionsAsync(_defaultDeploymentOrModelName, GetDefaultCompletionsOptions(prompt), cancellationToken);
 
         /// <summary>
         ///     Begin a completions request and get an object that can stream response data as it becomes available.
@@ -198,7 +253,7 @@ namespace Azure.AI.OpenAI
         {
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            if (!string.IsNullOrEmpty(PublicOpenAIApiKey))
+            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
             {
                 completionsOptions.NonAzureModel = deploymentOrModelName;
             }
@@ -212,7 +267,12 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetCompletionsRequest(deploymentOrModelName, streamingContent, context);
+                // Response value object takes IDisposable ownership of message
+                HttpMessage message = CreatePostRequestMessage(
+                    deploymentOrModelName,
+                    "completions",
+                    streamingContent,
+                    context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
@@ -228,7 +288,7 @@ namespace Azure.AI.OpenAI
         public virtual Response<StreamingCompletions> GetCompletionsStreaming(
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
-            => GetCompletionsStreaming(DefaultDeploymentOrModelName, completionsOptions, cancellationToken);
+            => GetCompletionsStreaming(_defaultDeploymentOrModelName, completionsOptions, cancellationToken);
 
         /// <inheritdoc cref="GetCompletionsStreaming(string, CompletionsOptions, CancellationToken)"/>
         public virtual async Task<Response<StreamingCompletions>> GetCompletionsStreamingAsync(
@@ -238,7 +298,7 @@ namespace Azure.AI.OpenAI
         {
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            if (!string.IsNullOrEmpty(PublicOpenAIApiKey))
+            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
             {
                 completionsOptions.NonAzureModel = deploymentOrModelName;
             }
@@ -253,7 +313,12 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetCompletionsRequest(deploymentOrModelName, streamingContent, context);
+                // Response value object takes IDisposable ownership of message
+                HttpMessage message = CreatePostRequestMessage(
+                    deploymentOrModelName,
+                    "completions",
+                    streamingContent,
+                    context);
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
@@ -270,7 +335,7 @@ namespace Azure.AI.OpenAI
         public virtual Task<Response<StreamingCompletions>> GetCompletionsStreamingAsync(
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
-            => GetCompletionsStreamingAsync(DefaultDeploymentOrModelName, completionsOptions, cancellationToken);
+            => GetCompletionsStreamingAsync(_defaultDeploymentOrModelName, completionsOptions, cancellationToken);
 
         /// <summary> Get chat completions for provided chat context messages. </summary>
         /// <param name="deploymentOrModelName">
@@ -288,7 +353,7 @@ namespace Azure.AI.OpenAI
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            if (!string.IsNullOrEmpty(PublicOpenAIApiKey))
+            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
             {
                 chatCompletionsOptions.NonAzureModel = deploymentOrModelName;
             }
@@ -301,7 +366,11 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                using HttpMessage message = CreateGetChatCompletionsRequest(deploymentOrModelName, content, context);
+                using HttpMessage message = CreatePostRequestMessage(
+                    deploymentOrModelName,
+                    "chat/completions",
+                    content,
+                    context);
                 Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(ChatCompletions.FromResponse(response), response);
             }
@@ -316,7 +385,7 @@ namespace Azure.AI.OpenAI
         public virtual Response<ChatCompletions> GetChatCompletions(
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
-            => GetChatCompletions(DefaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
+            => GetChatCompletions(_defaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
 
         /// <inheritdoc cref="GetChatCompletions(string, ChatCompletionsOptions, CancellationToken)"/>
         public virtual async Task<Response<ChatCompletions>> GetChatCompletionsAsync(
@@ -326,7 +395,7 @@ namespace Azure.AI.OpenAI
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            if (!string.IsNullOrEmpty(PublicOpenAIApiKey))
+            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
             {
                 chatCompletionsOptions.NonAzureModel = deploymentOrModelName;
             }
@@ -339,7 +408,11 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                using HttpMessage message = CreateGetChatCompletionsRequest(deploymentOrModelName, content, context);
+                using HttpMessage message = CreatePostRequestMessage(
+                    deploymentOrModelName,
+                    "chat/completions",
+                    content,
+                    context);
                 Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(ChatCompletions.FromResponse(response), response);
@@ -355,7 +428,7 @@ namespace Azure.AI.OpenAI
         public virtual Task<Response<ChatCompletions>> GetChatCompletionsAsync(
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
-            => GetChatCompletionsAsync(DefaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
+            => GetChatCompletionsAsync(_defaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
 
         /// <summary>
         ///     Begin a chat completions request and get an object that can stream response data as it becomes
@@ -382,7 +455,7 @@ namespace Azure.AI.OpenAI
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            if (!string.IsNullOrEmpty(PublicOpenAIApiKey))
+            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
             {
                 chatCompletionsOptions.NonAzureModel = deploymentOrModelName;
             }
@@ -396,7 +469,12 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetChatCompletionsRequest(deploymentOrModelName, streamingContent, context);
+                // Response value object takes IDisposable ownership of message
+                HttpMessage message = CreatePostRequestMessage(
+                    deploymentOrModelName,
+                    "chat/completions",
+                    streamingContent,
+                    context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(new StreamingChatCompletions(baseResponse), baseResponse);
@@ -412,7 +490,7 @@ namespace Azure.AI.OpenAI
         public virtual Response<StreamingChatCompletions> GetChatCompletionsStreaming(
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
-            => GetChatCompletionsStreaming(DefaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
+            => GetChatCompletionsStreaming(_defaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
 
         /// <inheritdoc cref="GetChatCompletionsStreaming(string, ChatCompletionsOptions, CancellationToken)"/>
         public virtual async Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
@@ -422,7 +500,7 @@ namespace Azure.AI.OpenAI
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            if (!string.IsNullOrEmpty(PublicOpenAIApiKey))
+            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
             {
                 chatCompletionsOptions.NonAzureModel = deploymentOrModelName;
             }
@@ -437,7 +515,12 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetChatCompletionsRequest(deploymentOrModelName, streamingContent, context);
+                // Response value object takes IDisposable ownership of message
+                HttpMessage message = CreatePostRequestMessage(
+                    deploymentOrModelName,
+                    "chat/completions",
+                    streamingContent,
+                    context);
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(
                     message,
@@ -456,7 +539,7 @@ namespace Azure.AI.OpenAI
         public virtual Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
-            => GetChatCompletionsStreamingAsync(DefaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
+            => GetChatCompletionsStreamingAsync(_defaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
 
         /// <summary> Return the computed embeddings for a given prompt. </summary>
         /// <param name="deploymentOrModelName">
@@ -483,7 +566,7 @@ namespace Azure.AI.OpenAI
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
             scope.Start();
 
-            if (!string.IsNullOrEmpty(PublicOpenAIApiKey))
+            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
             {
                 embeddingsOptions.NonAzureModel = deploymentOrModelName;
             }
@@ -493,7 +576,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetEmbeddingsRequest(deploymentOrModelName, content, context);
+                HttpMessage message = CreatePostRequestMessage(deploymentOrModelName, "embeddings", content, context);
                 Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(Embeddings.FromResponse(response), response);
             }
@@ -508,7 +591,7 @@ namespace Azure.AI.OpenAI
         public virtual Response<Embeddings> GetEmbeddings(
             EmbeddingsOptions embeddingsOptions,
             CancellationToken cancellationToken = default)
-            => GetEmbeddings(DefaultDeploymentOrModelName, embeddingsOptions, cancellationToken);
+            => GetEmbeddings(_defaultDeploymentOrModelName, embeddingsOptions, cancellationToken);
 
         /// <inheritdoc cref="GetEmbeddings(string, EmbeddingsOptions, CancellationToken)"/>
         public virtual async Task<Response<Embeddings>> GetEmbeddingsAsync(
@@ -522,7 +605,7 @@ namespace Azure.AI.OpenAI
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
             scope.Start();
 
-            if (!string.IsNullOrEmpty(PublicOpenAIApiKey))
+            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
             {
                 embeddingsOptions.NonAzureModel = deploymentOrModelName;
             }
@@ -532,7 +615,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetEmbeddingsRequest(deploymentOrModelName, content, context);
+                HttpMessage message = CreatePostRequestMessage(deploymentOrModelName, "embeddings", content, context);
                 Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(Embeddings.FromResponse(response), response);
@@ -548,7 +631,7 @@ namespace Azure.AI.OpenAI
         public virtual Task<Response<Embeddings>> GetEmbeddingsAsync(
             EmbeddingsOptions embeddingsOptions,
             CancellationToken cancellationToken = default)
-            => GetEmbeddingsAsync(DefaultDeploymentOrModelName, embeddingsOptions, cancellationToken);
+            => GetEmbeddingsAsync(_defaultDeploymentOrModelName, embeddingsOptions, cancellationToken);
 
         private static RequestContent GetStreamingEnabledRequestContent(RequestContent originalRequestContent)
         {
@@ -583,7 +666,7 @@ namespace Azure.AI.OpenAI
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            if (string.IsNullOrEmpty(PublicOpenAIApiKey))
+            if (string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
             {
                 uri.AppendRaw("/openai", false);
                 uri.AppendPath("/deployments/", false);
@@ -598,45 +681,16 @@ namespace Azure.AI.OpenAI
             return uri;
         }
 
-        internal HttpMessage CreateGetCompletionsRequest(
+        internal HttpMessage CreatePostRequestMessage(
             string deploymentOrModelName,
-            RequestContent content,
-            RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            request.Uri = GetUri(deploymentOrModelName, "completions");
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetChatCompletionsRequest(
-            string deploymentOrModelName,
+            string operationPath,
             RequestContent content,
             RequestContext context)
         {
             HttpMessage message = _pipeline.CreateMessage(context, ResponseClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = GetUri(deploymentOrModelName, "chat/completions");
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetEmbeddingsRequest(
-            string deploymentOrModelName,
-            RequestContent content,
-            RequestContext context)
-        {
-            HttpMessage message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
-            request.Uri = GetUri(deploymentOrModelName, "embeddings");
+            request.Uri = GetUri(deploymentOrModelName, operationPath);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
