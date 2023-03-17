@@ -1,6 +1,6 @@
 # Release History
 
-## 1.30.0-beta.1 (Unreleased)
+## 1.31.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.30.0 (2023-03-09)
+
+### Bugs Fixed
+
+- Fixed the issue with empty header names and values, caused by `ArrayBackedPropertyBag` keeping reference to the array after returning it to array pool [in (https://github.com/Azure/azure-sdk-for-net/pull/34800)  `Dispose` method]. 
 
 ## 1.29.0 (2023-03-02)
 
