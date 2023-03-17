@@ -179,7 +179,7 @@ namespace Azure.AI.OpenAI
         /// </summary>
         /// <param name="deploymentOrModelName">
         ///     <inheritdoc
-        ///         cref="GetCompletions(CompletionsOptions, CancellationToken)"
+        ///         cref="GetCompletions(string, CompletionsOptions, CancellationToken)"
         ///         path="/param[@name='deploymentOrModelName']" />
         /// </param>
         /// <param name="completionsOptions"> the chat completions options for this completions request. </param>
