@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The analysis request of the image. </summary>
     public partial class ImageDetectRequest
@@ -17,7 +17,7 @@ namespace ContentSafety
         /// <summary> Initializes a new instance of ImageDetectRequest. </summary>
         /// <param name="image"> The image needs to be scanned. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
-        public ImageDetectRequest(Image image)
+        public ImageDetectRequest(ImageInfo image)
         {
             Argument.AssertNotNull(image, nameof(image));
 
@@ -26,7 +26,7 @@ namespace ContentSafety
         }
 
         /// <summary> The image needs to be scanned. </summary>
-        public Image Image { get; }
+        public ImageInfo Image { get; }
         /// <summary>
         /// The categories will be analyzed, if not assigned, default categories will be
         /// analyzed

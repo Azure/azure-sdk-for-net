@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
     public partial class ImageDetectMultiSeverityResult
     {

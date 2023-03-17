@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The analysis response of the text. </summary>
     public partial class TextDetectResponse

@@ -7,13 +7,13 @@
 
 using System;
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The content or url of image, if both given, the content field will be used. The maxinum size of image is 4MB, and the image should not be smaller than 50*50. </summary>
-    public partial class Image
+    public partial class ImageInfo
     {
         /// <summary> Initializes a new instance of Image. </summary>
-        public Image()
+        public ImageInfo()
         {
         }
 

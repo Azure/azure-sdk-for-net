@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
-    public partial class Image : IUtf8JsonSerializable
+    public partial class ImageInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

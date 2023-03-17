@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The analysis response of the image. </summary>
     public partial class ImageDetectResponse

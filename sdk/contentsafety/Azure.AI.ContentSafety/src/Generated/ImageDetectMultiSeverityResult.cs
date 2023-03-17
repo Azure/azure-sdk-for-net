@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The ImageDetectMultiSeverityResult. </summary>
     public partial class ImageDetectMultiSeverityResult

@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
     // Data plane generated client.
     /// <summary> The ContentSafety service client. </summary>

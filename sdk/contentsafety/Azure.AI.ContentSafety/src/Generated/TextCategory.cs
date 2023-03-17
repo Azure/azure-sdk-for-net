@@ -8,8 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
+    /// <summary> The supported categories for image analyze. </summary>
     public readonly partial struct TextCategory : IEquatable<TextCategory>
     {
         private readonly string _value;

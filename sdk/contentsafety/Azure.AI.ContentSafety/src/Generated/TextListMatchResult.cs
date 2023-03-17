@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
     /// <summary> The result of custom list match. </summary>
     public partial class TextListMatchResult

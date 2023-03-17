@@ -8,7 +8,7 @@
 using System;
 using Azure;
 using Azure.Core.Extensions;
-using ContentSafety;
+using Azure.AI.ContentSafety;
 
 namespace Microsoft.Extensions.Azure
 {

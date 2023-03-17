@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
     /// <summary> Text List. </summary>
     public partial class TextList

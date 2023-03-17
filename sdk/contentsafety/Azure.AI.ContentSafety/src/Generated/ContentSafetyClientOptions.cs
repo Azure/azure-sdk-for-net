@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace ContentSafety
+namespace Azure.AI.ContentSafety
 {
     /// <summary> Client options for ContentSafetyClient. </summary>
     public partial class ContentSafetyClientOptions : ClientOptions
