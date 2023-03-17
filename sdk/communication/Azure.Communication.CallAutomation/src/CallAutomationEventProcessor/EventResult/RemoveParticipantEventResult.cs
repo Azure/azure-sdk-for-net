@@ -12,12 +12,12 @@ namespace Azure.Communication.CallAutomation
         public bool IsSuccessEvent { get; internal set; }
 
         /// <summary>
-        /// <see cref="RemoveParticipantSucceeded"/> event will be returned when the participant joined the call successfully.
+        /// <see cref="RemoveParticipantSucceeded"/> event will be returned when the participant was removed from the call successfully.
         /// </summary>
         public RemoveParticipantSucceeded SuccessEvent { get; }
 
         /// <summary>
-        /// <see cref="RemoveParticipantFailed"/> event will be returned when the participant did not join the call.
+        /// <see cref="RemoveParticipantFailed"/> event will be returned when the participant could not be removed from the call.
         /// </summary>
         public RemoveParticipantFailed FailureEvent { get; }
 
