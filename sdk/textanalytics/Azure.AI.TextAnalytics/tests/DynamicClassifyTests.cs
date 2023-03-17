@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [Ignore("Disabled per request of the service team")]
     [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
     public class DynamicClassifyTests : TextAnalyticsClientLiveTestBase
     {

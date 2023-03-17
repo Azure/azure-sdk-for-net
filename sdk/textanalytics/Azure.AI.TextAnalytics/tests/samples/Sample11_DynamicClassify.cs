@@ -10,6 +10,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
+        [Ignore("Disabled per request of the service team")]
         public void DynamicClassify()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
