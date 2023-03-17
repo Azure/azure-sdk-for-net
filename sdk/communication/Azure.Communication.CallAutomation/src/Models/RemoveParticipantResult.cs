@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>RemoveParticipantsResult Result.</summary>
+    /// <summary>RemoveParticipantResult Result.</summary>
     public class RemoveParticipantResult
     {
         private CallAutomationEventProcessor _evHandler;

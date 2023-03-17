@@ -200,7 +200,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
-            AddParticipantsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+            AddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -227,7 +227,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
-            AddParticipantsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+            AddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
