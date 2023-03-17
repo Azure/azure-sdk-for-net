@@ -18,6 +18,9 @@ namespace Azure.ResourceManager.NetApp
         private VaultsRestOperations _vaultsRestClient;
         private ClientDiagnostics _vaultsClientDiagnostics;
 
+        private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
+        private VaultsRestOperations VaultsRestClient => _vaultsRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetAppAccountResource.ResourceType));
+
         //        //
         //        /// <summary> Initializes a new instance of the <see cref="NetAppAccountResource"/> class. </summary>
         //        /// <param name="client"> The client parameters to use in these operations. </param>
@@ -36,6 +39,11 @@ namespace Azure.ResourceManager.NetApp
         //            ValidateResourceId(Id);
         //#endif
         //        }
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
 
         /// <summary>
         /// List vaults for a Netapp Account
@@ -55,23 +63,8 @@ namespace Azure.ResourceManager.NetApp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetAppVault> GetVaultsAsync(CancellationToken cancellationToken = default)
         {
-            if (_vaultsRestClient == null)
-            {
-                _vaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-                _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            }
-            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.GetVaults");
-            scope.Start();
-            try
-            {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVault.DeserializeNetAppVault, _vaultsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVaults", "value", null, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVault.DeserializeNetAppVault, VaultsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVaults", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -92,13 +85,8 @@ namespace Azure.ResourceManager.NetApp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetAppVault> GetVaults(CancellationToken cancellationToken = default)
         {
-            if (_vaultsRestClient == null)
-            {
-                _vaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-                _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            }
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVault.DeserializeNetAppVault, _vaultsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVaults", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVault.DeserializeNetAppVault, VaultsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVaults", "value", null, cancellationToken);
         }
     }
 }

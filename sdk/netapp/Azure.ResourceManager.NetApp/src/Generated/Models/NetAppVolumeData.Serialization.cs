@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<Guid> fileSystemId = default;
             string creationToken = default;
             Optional<NetAppFileServiceLevel> serviceLevel = default;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<int?> cloneProgress = default;
             Optional<FileAccessLog> fileAccessLogs = default;
             Optional<NetAppAvsDataStore> avsDataStore = default;
-            Optional<IReadOnlyList<string>> dataStoreResourceId = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> dataStoreResourceId = default;
             Optional<bool> isDefaultQuotaEnabled = default;
             Optional<long> defaultUserQuotaInKiBs = default;
             Optional<long> defaultGroupQuotaInKiBs = default;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.NetApp
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -756,10 +756,17 @@ namespace Azure.ResourceManager.NetApp
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             dataStoreResourceId = array;
                             continue;

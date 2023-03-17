@@ -15,8 +15,6 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    [EditorBrowsable(EditorBrowsableState.Never)]
-   // [Obsolete("This class is obsolete and will be removed in a future release", false)]
     internal partial class VaultsRestOperations
     {
         private readonly TelemetryDetails _userAgent;
@@ -30,7 +28,6 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public VaultsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -67,7 +64,6 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and not needed anymore and will be removed in a future release", false)]
         public async Task<Response<VaultList>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
@@ -98,8 +94,6 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and not needed anymore and will be removed in a future release", false)]
         public Response<VaultList> List(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

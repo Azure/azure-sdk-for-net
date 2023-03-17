@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="quotaSizeInKiBs"> Size of quota. </param>
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name=&apos;user-name&apos; get sid&gt;. </param>
-        internal NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             QuotaSizeInKiBs = quotaSizeInKiBs;

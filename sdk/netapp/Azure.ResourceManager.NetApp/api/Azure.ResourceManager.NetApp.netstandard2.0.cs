@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.NetApp
         public int? CoolnessPeriod { get { throw null; } set { } }
         public string CreationToken { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection DataProtection { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> DataStoreResourceId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> DataStoreResourceId { get { throw null; } }
         public long? DefaultGroupQuotaInKiBs { get { throw null; } set { } }
         public long? DefaultUserQuotaInKiBs { get { throw null; } set { } }
         public bool? DeleteBaseSnapshot { get { throw null; } set { } }
@@ -1210,7 +1210,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public Azure.Core.ResourceIdentifier BackupPolicyId { get { throw null; } set { } }
         public bool? IsBackupEnabled { get { throw null; } set { } }
         public bool? IsPolicyEnforced { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier VaultId { get { throw null; } set { } }
     }
     public partial class NetAppVolumeBackupDetail
@@ -1307,7 +1306,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public int? CoolnessPeriod { get { throw null; } set { } }
         public string CreationToken { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection DataProtection { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> DataStoreResourceId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> DataStoreResourceId { get { throw null; } }
         public long? DefaultGroupQuotaInKiBs { get { throw null; } set { } }
         public long? DefaultUserQuotaInKiBs { get { throw null; } set { } }
         public bool? DeleteBaseSnapshot { get { throw null; } set { } }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="groupMetaData"> Volume group details. </param>
         /// <param name="volumes"> List of volumes from group. </param>
-        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IList<NetAppVolumeGroupVolume> volumes) : base(id, name, resourceType, systemData)
+        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IList<NetAppVolumeGroupVolume> volumes) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;

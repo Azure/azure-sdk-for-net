@@ -11,8 +11,6 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> List of Vaults. </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-
     internal partial class VaultList
     {
         /// <summary> Initializes a new instance of VaultList. </summary>
@@ -29,7 +27,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> A list of vaults. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<NetAppVault> Value { get; }
     }
 }

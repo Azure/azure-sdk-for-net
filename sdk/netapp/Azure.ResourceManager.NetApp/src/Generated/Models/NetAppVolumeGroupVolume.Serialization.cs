@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<int?> cloneProgress = default;
             Optional<FileAccessLog> fileAccessLogs = default;
             Optional<NetAppAvsDataStore> avsDataStore = default;
-            Optional<IReadOnlyList<string>> dataStoreResourceId = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> dataStoreResourceId = default;
             Optional<bool> isDefaultQuotaEnabled = default;
             Optional<long> defaultUserQuotaInKiBs = default;
             Optional<long> defaultGroupQuotaInKiBs = default;
@@ -712,10 +712,17 @@ namespace Azure.ResourceManager.NetApp.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             dataStoreResourceId = array;
                             continue;

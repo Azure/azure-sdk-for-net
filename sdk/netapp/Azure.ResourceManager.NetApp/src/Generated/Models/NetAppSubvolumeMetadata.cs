@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="modifiedOn"> Most recent modification time and date. </param>
         /// <param name="changedOn"> Most recent change time and date. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        internal NetAppSubvolumeMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, string parentPath, long? size, long? bytesUsed, string permissions, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? modifiedOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData)
+        internal NetAppSubvolumeMetadata(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string path, string parentPath, long? size, long? bytesUsed, string permissions, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? modifiedOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData)
         {
             Path = path;
             ParentPath = parentPath;

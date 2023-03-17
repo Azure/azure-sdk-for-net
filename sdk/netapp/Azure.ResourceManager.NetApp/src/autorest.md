@@ -215,6 +215,7 @@ rename-mapping:
   RegionInfoAvailabilityZoneMappingsItem: AvailabilityZoneMapping
   VolumeRelocationProperties.readyToBeFinalized: IsReadyToBeFinalized
   VolumeRelocationProperties.relocationRequested: IsRelocationRequested
+  Volume.properties.dataStoreResourceId: -|arm-id
 
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
