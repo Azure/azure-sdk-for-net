@@ -123,9 +123,10 @@ namespace Azure.Storage
                 int alreadyChecksummedDataLength = (int)(_nextToBeChecksummedPosition - startingPosition);
                 _appendChecksumCalculation(new ReadOnlySpan<byte>(
                     buffer, offset + alreadyChecksummedDataLength, read - alreadyChecksummedDataLength));
+
+                _nextToBeChecksummedPosition += read - alreadyChecksummedDataLength;
             }
 
-            _nextToBeChecksummedPosition += read;
             return read;
         }
 
