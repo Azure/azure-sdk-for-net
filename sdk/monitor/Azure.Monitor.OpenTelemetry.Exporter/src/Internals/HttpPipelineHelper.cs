@@ -49,6 +49,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return MinimumRetryInterval;
         }
 
+        internal static bool TryGetRetryIntervalTimespan(Response? httpResponse, out TimeSpan retryAfter)
+        {
+            if (httpResponse != null && httpResponse.Headers.TryGetValue(RetryAfterHeaderName, out var retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out var delaySeconds))
+                {
+                    retryAfter = TimeSpan.FromSeconds(delaySeconds);
+                    return true;
+                }
+                if (DateTimeOffset.TryParse(retryAfterValue, out DateTimeOffset delayTime))
+                {
+                    retryAfter = (delayTime - DateTimeOffset.Now);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         internal static byte[]? GetRequestContent(RequestContent? content)
         {
             if (content == null)
