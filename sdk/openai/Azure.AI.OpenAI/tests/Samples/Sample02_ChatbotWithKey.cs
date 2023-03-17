@@ -18,7 +18,10 @@ namespace Azure.AI.OpenAI.Tests.Samples
             // Replace with your Azure OpenAI key
             string key = "YOUR_AZURE_OPENAI_KEY";
             string endpoint = "https://myaccount.openai.azure.com/";
-            OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myModelDeploymentId", new AzureKeyCredential(key));
+            var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key))
+            {
+                DefaultDeploymentOrModelName = "myModelDeploymentId",
+            };
             #endregion
 
             List<string> examplePrompts = new(){
@@ -33,7 +36,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             {
                 Console.Write($"Input: {prompt}");
                 CompletionsOptions completionsOptions = new CompletionsOptions();
-                completionsOptions.Prompt.Add(prompt);
+                completionsOptions.Prompts.Add(prompt);
 
                 Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
                 string completion = completionsResponse.Value.Choices[0].Text;

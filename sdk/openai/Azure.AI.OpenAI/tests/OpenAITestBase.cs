@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -50,22 +49,40 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         protected OpenAIClient GetCompletionsClient() => InstrumentClient(
-            new OpenAIClient(_endpoint, _completionsDeploymentId, _apiKey, GetInstrumentedClientOptions()));
+            new OpenAIClient(_endpoint, GetAzureApiKey(), GetInstrumentedClientOptions())
+            {
+                DefaultDeploymentOrModelName = _completionsDeploymentId,
+            });
 
         protected OpenAIClient GetChatCompletionsClient() => InstrumentClient(
-            new OpenAIClient(_endpoint, _chatCompletionsDeploymentId, _apiKey, GetInstrumentedClientOptions()));
+            new OpenAIClient(_endpoint, GetAzureApiKey(), GetInstrumentedClientOptions())
+            {
+                DefaultDeploymentOrModelName = _chatCompletionsDeploymentId,
+            });
 
         protected OpenAIClient GetEmbeddingsClient() => InstrumentClient(
-            new OpenAIClient(_endpoint, _embeddingsDeploymentId, _apiKey, GetInstrumentedClientOptions()));
+            new OpenAIClient(_endpoint, GetAzureApiKey(), GetInstrumentedClientOptions())
+            {
+                DefaultDeploymentOrModelName = _embeddingsDeploymentId,
+            });
 
         protected OpenAIClient GetBadDeploymentClient() => InstrumentClient(
-            new OpenAIClient(_endpoint, "BAD_DEPLOYMENT_ID", _apiKey, GetInstrumentedClientOptions()));
+            new OpenAIClient(_endpoint, GetAzureApiKey(), GetInstrumentedClientOptions())
+            {
+                DefaultDeploymentOrModelName = "BAD_DEPLOYMENT_ID",
+            });
 
         protected OpenAIClient GetCompletionsClientWithCredential() => InstrumentClient(
-            new OpenAIClient(_endpoint, _completionsDeploymentId, TestEnvironment.Credential, GetInstrumentedClientOptions()));
+            new OpenAIClient(_endpoint, TestEnvironment.Credential, GetInstrumentedClientOptions())
+            {
+                DefaultDeploymentOrModelName = _completionsDeploymentId,
+            });
 
         protected OpenAIClient GetPublicOpenAIClient() => InstrumentClient(
-            new OpenAIClient(_openAIAuthToken, InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01))) );
+            new OpenAIClient(GetNonAzureApiKey(), InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01))) );
+
+        protected AzureKeyCredential GetAzureApiKey() => _apiKey ?? new AzureKeyCredential("placeholder");
+        protected string GetNonAzureApiKey() => string.IsNullOrEmpty(_openAIAuthToken) ? "placeholder" : _openAIAuthToken;
 
         [SetUp]
         public void CreateDeployment()
@@ -76,8 +93,6 @@ namespace Azure.AI.OpenAI.Tests
                 _endpoint = new Uri(Recording.GetVariable(Constants.EndpointVariable, null));
                 _completionsDeploymentId = Recording.GetVariable(Constants.CompletionsDeploymentIdVariable, null);
                 _embeddingsDeploymentId = Recording.GetVariable(Constants.EmbeddingsDeploymentIdVariable, null);
-                _openAIAuthToken = Recording.GetVariable(Constants.OpenAIAuthTokenVariable, null);
-                _apiKey = new AzureKeyCredential("unused placeholder value for recordings");
             }
             else if (_apiKey is not null)
             {
@@ -142,6 +157,7 @@ namespace Azure.AI.OpenAI.Tests
 
                         ServiceAccountApiKeys keys = openAIResource.GetKeys();
                         _apiKey = new AzureKeyCredential(keys.Key1);
+                        _openAIAuthToken = TestEnvironment.PublicOpenAiApiKey;
                     }
                 }
             }

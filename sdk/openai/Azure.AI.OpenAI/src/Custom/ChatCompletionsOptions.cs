@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI
         /// <inheritdoc cref="CompletionsOptions.FrequencyPenalty"/>
         public float? FrequencyPenalty { get; set; }
         /// <inheritdoc cref="CompletionsOptions.LogitBias"/>
-        public IDictionary<string, int> LogitBias { get; }
+        public IDictionary<int, int> LogitBias { get; }
         /// <inheritdoc cref="CompletionsOptions.MaxTokens"/>
         public int? MaxTokens { get; set; }
         /// <summary>
@@ -29,8 +29,6 @@ namespace Azure.AI.OpenAI
         /// of the assistant followed by alternating messages between the User role and Assistant role.
         /// </remarks>
         public IList<ChatMessage> Messages { get; }
-        /// <inheritdoc cref="CompletionsOptions.Model"/>
-        public string Model { get; set; }
         /// <inheritdoc cref="CompletionsOptions.NucleusSamplingFactor"/>
         [CodeGenMember("TopP")]
         public float? NucleusSamplingFactor { get; set; }
@@ -39,18 +37,20 @@ namespace Azure.AI.OpenAI
         /// <inheritdoc cref="CompletionsOptions.SnippetCount"/>
         [CodeGenMember("N")]
         public int? SnippetCount { get; set; }
-        /// <inheritdoc cref="CompletionsOptions.Stop"/>
+        /// <inheritdoc cref="CompletionsOptions.StopSequences"/>
         public IList<string> Stop { get; }
         /// <inheritdoc cref="CompletionsOptions.Temperature"/>
         public float? Temperature { get; set; }
         /// <inheritdoc cref="CompletionsOptions.User"/>
         public string User { get; set; }
 
+        internal string NonAzureModel { get; set; }
+
         /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
         public ChatCompletionsOptions()
         {
             Messages = new ChangeTrackingList<ChatMessage>();
-            LogitBias = new ChangeTrackingDictionary<string, int>();
+            LogitBias = new ChangeTrackingDictionary<int, int>();
             Stop = new ChangeTrackingList<string>();
         }
 
@@ -59,7 +59,7 @@ namespace Azure.AI.OpenAI
             int? maxTokens,
             float? temperature,
             float? nucleusSamplingFactor,
-            IDictionary<string, int> logitBias,
+            IDictionary<int, int> logitBias,
             string user,
             int? snippetCount,
             IList<string> stop,

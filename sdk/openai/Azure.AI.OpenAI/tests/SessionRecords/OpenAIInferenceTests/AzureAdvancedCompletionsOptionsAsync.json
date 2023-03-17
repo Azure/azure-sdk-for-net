@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk2319.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
-        "Content-Length": "205",
+        "Content-Length": "135",
         "Content-Type": "application/json",
-        "traceparent": "00-101601e20905ceb746d8e51f3694431a-5f4d05a17a55466a-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
-        "x-ms-client-request-id": "674c0213d8ac059da4fdcec23ec77316",
+        "traceparent": "00-855d1f3eef8a77ad3b2da62d857b5b90-2009cab96831a640-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "d9ee6dd0baa336da179bdcb1decc7489",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -20,37 +20,36 @@
         "temperature": 0.75,
         "user": "AzureSDKOpenAITests",
         "logprobs": 1,
-        "model": "this is a bogus model parameter in the body",
         "echo": true,
-        "cache_level": 0,
         "best_of": 3
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "eeed481f-92a8-48fe-890d-2e2a6a063266",
+        "apim-request-id": "22aedaa7-70a9-436c-a918-39a81b43125f",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "1417",
+        "Content-Length": "1445",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Feb 2023 18:47:27 GMT",
+        "Date": "Fri, 17 Mar 2023 03:50:31 GMT",
         "openai-model": "text-davinci-002",
-        "openai-processing-ms": "437.5479",
+        "openai-processing-ms": "870.0749",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "674c0213d8ac059da4fdcec23ec77316",
-        "x-ms-region": "West Europe",
-        "X-Request-ID": "90819e8c-b27a-4a67-b1df-753efaf1fcbf"
+        "x-ms-client-request-id": "d9ee6dd0baa336da179bdcb1decc7489",
+        "x-ms-region": "East US",
+        "X-Request-ID": "03443fbb-59d2-4c7e-a20d-388a669a7a3d"
       },
       "ResponseBody": {
-        "id": "cmpl-6l03TNLpDJt2vpOMyP82lnPorYZ7Y",
+        "id": "cmpl-6uvOpg4UFWZ10hhWcff92shAZim8M",
         "object": "text_completion",
-        "created": 1676659647,
+        "created": 1679025031,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "Are bananas especially radioactive?\n\nThere is no scientific evidence to suggest that bananas are radioactive. While bananas",
+            "text": "Are bananas especially radioactive?\n\nThere is no scientific evidence to suggest that bananas are especially radioactive.",
             "index": 0,
+            "finish_reason": "stop",
             "logprobs": {
               "tokens": [
                 "Are",
@@ -70,95 +69,95 @@
                 " that",
                 " bananas",
                 " are",
+                " especially",
                 " radioactive",
                 ".",
-                " While",
-                " bananas"
+                "\u003C|endoftext|\u003E"
               ],
               "token_logprobs": [
-                null,
-                -14.24502,
-                -11.104932,
-                -6.384836,
-                -0.06387941,
-                -0.00042090964,
-                -8.296486e-6,
-                -0.7865527,
-                -0.0007318678,
-                -0.00069768965,
-                -0.5150181,
-                -0.0021184618,
-                -0.07509388,
-                -0.43065464,
-                -0.0023568186,
-                -0.00024036579,
-                -0.012792068,
-                -1.5214678,
-                -0.00002272356,
-                -0.5551019,
-                -0.5472735
+                0,
+                -14.245149,
+                -11.099685,
+                -6.3892307,
+                -0.06434352,
+                -0.0004186447,
+                -0.0000084157,
+                -0.78614634,
+                -0.00071307976,
+                -0.00068731094,
+                -0.52006805,
+                -0.0020825032,
+                -0.07519206,
+                -0.42742088,
+                -0.00234254,
+                -0.0002389362,
+                -0.012846767,
+                -0.7402037,
+                -0.00022457016,
+                -0.000039292627,
+                -1.1889347
               ],
               "top_logprobs": [
                 null,
                 {
-                  " you": -0.5478203
+                  " you": -0.54792994
                 },
                 {
-                  " good": -1.2670707
+                  " good": -1.269073
                 },
                 {
-                  " good": -0.6982347
+                  " good": -0.69604325
                 },
                 {
-                  "?": -0.06387941
+                  "?": -0.06434352
                 },
                 {
-                  "\n": -0.00042090964
+                  "\n": -0.0004186447
                 },
                 {
-                  "\n": -8.296486e-6
+                  "\n": -0.0000084157
                 },
                 {
-                  "There": -0.7865527
+                  "There": -0.78614634
                 },
                 {
-                  " is": -0.0007318678
+                  " is": -0.00071307976
                 },
                 {
-                  " no": -0.00069768965
+                  " no": -0.00068731094
                 },
                 {
-                  " scientific": -0.5150181
+                  " scientific": -0.52006805
                 },
                 {
-                  " evidence": -0.0021184618
+                  " evidence": -0.0020825032
                 },
                 {
-                  " to": -0.07509388
+                  " to": -0.07519206
                 },
                 {
-                  " suggest": -0.43065464
+                  " suggest": -0.42742088
                 },
                 {
-                  " that": -0.0023568186
+                  " that": -0.00234254
                 },
                 {
-                  " bananas": -0.00024036579
+                  " bananas": -0.0002389362
                 },
                 {
-                  " are": -0.012792068
+                  " are": -0.012846767
                 },
                 {
-                  " especially": -0.74213463
+                  " especially": -0.7402037
                 },
                 {
-                  ".": -0.00002272356
+                  " radioactive": -0.00022457016
                 },
                 {
-                  " While": -0.5551019
+                  ".": -0.000039292627
                 },
                 {
-                  " bananas": -0.5472735
+                  " While": -0.8093742
                 }
               ],
               "text_offset": [
@@ -180,18 +179,17 @@
                 84,
                 92,
                 96,
-                108,
-                109,
-                115
+                107,
+                119,
+                120
               ]
-            },
-            "finish_reason": "length"
+            }
           }
         ],
         "usage": {
+          "completion_tokens": 40,
           "prompt_tokens": 5,
-          "completion_tokens": 42,
-          "total_tokens": 47
+          "total_tokens": 45
         }
       }
     }
@@ -199,9 +197,9 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
-    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
-    "OPENAI_ENDPOINT": "https://sdk2319.openai.azure.com/",
-    "RandomSeed": "12066190",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "1245125069",
     "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

@@ -24,7 +24,10 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<OpenAIClient, OpenAIClientOptions> AddOpenAIClient<TBuilder>(this TBuilder builder, Uri endpoint, string deploymentId, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<OpenAIClient, OpenAIClientOptions>((options) => new OpenAIClient(endpoint, deploymentId, credential, options));
+            return builder.RegisterClientFactory<OpenAIClient, OpenAIClientOptions>((options) => new OpenAIClient(endpoint, credential, options)
+            {
+                DefaultDeploymentOrModelName = deploymentId,
+            });
         }
 
         /// <summary> Registers a <see cref="OpenAIClient"/> instance. </summary>
@@ -37,7 +40,10 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<OpenAIClient, OpenAIClientOptions> AddOpenAIClient<TBuilder>(this TBuilder builder, Uri endpoint, string deploymentId)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<OpenAIClient, OpenAIClientOptions>((options, cred) => new OpenAIClient(endpoint, deploymentId, cred, options));
+            return builder.RegisterClientFactory<OpenAIClient, OpenAIClientOptions>((options, cred) => new OpenAIClient(endpoint, cred, options)
+            {
+                DefaultDeploymentOrModelName = deploymentId,
+            });
         }
     }
 }

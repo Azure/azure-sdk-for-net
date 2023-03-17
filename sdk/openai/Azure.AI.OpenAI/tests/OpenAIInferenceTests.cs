@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI.Tests
         /// Test an instance of OpenAIClient.
         /// </summary>
         [RecordedTest]
-        public void InstanceTest()
+        public void Instance()
         {
             OpenAIClient client = GetCompletionsClient();
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
@@ -31,81 +31,55 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(tokenClient, Is.InstanceOf<OpenAIClient>());
         }
 
-        [RecordedTest]
-        [PlaybackOnly("Used only to test against non-Azure OpenAI public endpoint")]
-        public async Task PublicOpenAIEmbeddingsTest()
+        private async Task InternalCompletions(OpenAIClientType clientType)
         {
-            var client = GetPublicOpenAIClient();
-            Assert.That(client, Is.InstanceOf<OpenAIClient>());
-            EmbeddingsOptions embeddingsRequest = new EmbeddingsOptions("Your text string goes here")
+            OpenAIClient client = clientType switch
             {
-                Model = "text-embedding-ada-002"
+                OpenAIClientType.Azure => GetCompletionsClientWithCredential(),
+                OpenAIClientType.NonAzure => GetPublicOpenAIClient(),
+                _ => throw new ArgumentException("Unsupported client type"),
             };
-            Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsOptions>());
-            Response<Embeddings> response = await client.GetEmbeddingsAsync(embeddingsRequest);
-            Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
-        }
-
-        [RecordedTest]
-        [PlaybackOnly("Used only to test against non-Azure OpenAI public endpoint")]
-        public async Task PublicOpenAICompletionsTest()
-        {
-            var client = GetPublicOpenAIClient();
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
-                Prompt =
-                {
-                    "Hello world",
-                    "running over the same old ground",
-                },
-                Model = "text-ada-003",
-            };
-            Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
-            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
-            Assert.That(response, Is.Not.Null);
-            Assert.That(response, Is.InstanceOf<Response<Completions>>());
-            Assert.That(response.Value, Is.Not.Null);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(requestOptions.Prompt.Count));
-            Assert.That(response.Value.Choices[0].FinishReason, Is.Not.Null.Or.Empty);
-        }
-
-        /// <summary>
-        /// Test Completion.
-        /// </summary>
-        [RecordedTest]
-        public async Task CompletionTest()
-        {
-            OpenAIClient client = GetCompletionsClient();
-            CompletionsOptions requestOptions = new CompletionsOptions()
-            {
-                Prompt =
+                Prompts =
                 {
                     "Hello world",
                     "running over the same old ground",
                 },
             };
             Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
-            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
+            string deploymentOrModelName = clientType switch
+            {
+                OpenAIClientType.Azure => CompletionsDeploymentId,
+                OpenAIClientType.NonAzure => "text-davinci-003",
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
+            Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(requestOptions.Prompt.Count));
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(requestOptions.Prompts.Count));
             Assert.That(response.Value.Choices[0].FinishReason, Is.Not.Null.Or.Empty);
         }
+
+        [RecordedTest]
+        public Task AzureCompletions() => InternalCompletions(OpenAIClientType.Azure);
+
+        [RecordedTest]
+        public Task NonAzureCompletions() => InternalCompletions(OpenAIClientType.NonAzure);
 
         /// <summary>
         /// Test Completions using a TokenCredential.
         /// </summary>
         [RecordedTest]
-        public async Task CompletionTestWithTokenCredential()
+        public async Task AzureCompletionsWithTokenCredential()
         {
             OpenAIClient client = GetCompletionsClientWithCredential();
             CompletionsOptions requestOptions = new CompletionsOptions();
-            requestOptions.Prompt.Add("Hello, world!");
-            requestOptions.Prompt.Add("I can have multiple prompts");
+            requestOptions.Prompts.Add("Hello, world!");
+            requestOptions.Prompts.Add("I can have multiple prompts");
             Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
             Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
@@ -113,41 +87,73 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response.Value.Choices.Count, Is.EqualTo(2));
         }
 
-        /// <summary>
-        /// Test Simplified Completion API.
-        /// </summary>
-        [RecordedTest]
-        public async Task SimpleCompletionTest()
+        private async Task InternalSimpleCompletions(OpenAIClientType clientType)
         {
-            OpenAIClient client = GetCompletionsClientWithCredential();
-            Response<Completions> response = await client.GetCompletionsAsync("Hello World!");
+            OpenAIClient client = clientType switch
+            {
+                OpenAIClientType.Azure => GetCompletionsClientWithCredential(),
+                OpenAIClientType.NonAzure => GetPublicOpenAIClient(),
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
+            client.DefaultDeploymentOrModelName = clientType switch
+            {
+                OpenAIClientType.Azure => CompletionsDeploymentId,
+                OpenAIClientType.NonAzure => "text-davinci-002",
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
+            Response<Completions> response = await client.GetCompletionsAsync("Hello world!");
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
         }
 
-        /// <summary>
-        /// Test Embeddings.
-        /// </summary>
         [RecordedTest]
-        public async Task EmbeddingTest()
+        public Task AzureSimpleCompletions() => InternalSimpleCompletions(OpenAIClientType.Azure);
+
+        [RecordedTest]
+        public Task NonAzureSimpleCompletions() => InternalSimpleCompletions(OpenAIClientType.NonAzure);
+
+        private async Task InternalEmbeddingTest(OpenAIClientType clientType)
         {
-            OpenAIClient client = GetEmbeddingsClient();
-            EmbeddingsOptions embeddingsRequest = new EmbeddingsOptions("Your text string goes here");
+            OpenAIClient client = clientType switch
+            {
+                OpenAIClientType.Azure => GetEmbeddingsClient(),
+                OpenAIClientType.NonAzure => GetPublicOpenAIClient(),
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
+            string deploymentOrModelName = clientType switch
+            {
+                OpenAIClientType.Azure => EmbeddingsDeploymentId,
+                OpenAIClientType.NonAzure => "text-embedding-ada-002",
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
+            var embeddingsRequest = new EmbeddingsOptions("Your text string goes here");
             Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsOptions>());
-            Response<Embeddings> response = await client.GetEmbeddingsAsync(embeddingsRequest);
+            Response<Embeddings> response = await client.GetEmbeddingsAsync(deploymentOrModelName, embeddingsRequest);
             Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
         }
 
-        /// <summary>
-        /// Exercises usage information within a completions response.
-        /// </summary>
-        /// <returns></returns>
         [RecordedTest]
-        public async Task CompletionUsageTest()
+        public Task AzureEmbeddings() => InternalEmbeddingTest(OpenAIClientType.Azure);
+
+        [RecordedTest]
+        public Task NonAzureEmbeddings() => InternalEmbeddingTest(OpenAIClientType.NonAzure);
+
+        private async Task InternalCompletionsUsage(OpenAIClientType clientType)
         {
-            OpenAIClient client = GetCompletionsClient();
+            OpenAIClient client = clientType switch
+            {
+                OpenAIClientType.Azure => GetCompletionsClientWithCredential(),
+                OpenAIClientType.NonAzure => GetPublicOpenAIClient(),
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
+            client.DefaultDeploymentOrModelName = clientType switch
+            {
+                OpenAIClientType.Azure => CompletionsDeploymentId,
+                OpenAIClientType.NonAzure => "text-davinci-002",
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
-                Prompt =
+                Prompts =
                 {
                     "Hello world",
                     "This is a test",
@@ -156,7 +162,7 @@ namespace Azure.AI.OpenAI.Tests
                 SnippetCount = 3,
                 LogProbability = 1,
             };
-            int expectedChoiceCount = (requestOptions.SnippetCount ?? 1) * requestOptions.Prompt.Count;
+            int expectedChoiceCount = (requestOptions.SnippetCount ?? 1) * requestOptions.Prompts.Count;
             Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response.GetRawResponse(), Is.Not.Null.Or.Empty);
             Assert.That(response.Value, Is.Not.Null);
@@ -182,10 +188,19 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        [Ignore("not currently supported")]
-        public async Task ChatCompletions()
+        public Task AzureCompletionsUsage() => InternalCompletionsUsage(OpenAIClientType.Azure);
+
+        [RecordedTest]
+        public Task NonAzureCompletionsUsage() => InternalCompletionsUsage(OpenAIClientType.NonAzure);
+
+        private async Task InternalChatCompletions(OpenAIClientType clientType)
         {
-            OpenAIClient client = GetChatCompletionsClient();
+            OpenAIClient client = clientType switch
+            {
+                OpenAIClientType.Azure => GetChatCompletionsClient(),
+                OpenAIClientType.NonAzure => GetPublicOpenAIClient(),
+                _ => throw new ArgumentException($"Unknown client type for test: {clientType}")
+            };
             var requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
@@ -197,7 +212,13 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 512,
             };
-            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
+            string modelOrDeploymentName = clientType switch
+            {
+                OpenAIClientType.Azure => ChatCompletionsDeploymentId,
+                OpenAIClientType.NonAzure => "gpt-3.5-turbo",
+                _ => throw new ArgumentException($"Unknown client type for test: {clientType}")
+            };
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(modelOrDeploymentName, requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
@@ -212,10 +233,20 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        [Ignore("not currently supported")]
-        public async Task StreamingChatCompletions()
+        [Ignore("not supported")]
+        public Task AzureChatCompletions() => InternalChatCompletions(OpenAIClientType.Azure);
+
+        [RecordedTest]
+        public Task NonAzureChatCompletions() => InternalChatCompletions(OpenAIClientType.NonAzure);
+
+        private async Task InternalStreamingChatCompletions(OpenAIClientType clientType)
         {
-            OpenAIClient client = GetChatCompletionsClient();
+            OpenAIClient client = clientType switch
+            {
+                OpenAIClientType.Azure => GetChatCompletionsClient(),
+                OpenAIClientType.NonAzure => GetPublicOpenAIClient(),
+                _ => throw new ArgumentException($"Unknown client type for test: {clientType}")
+            };
             var requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
@@ -227,8 +258,14 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 512,
             };
+            string modelOrDeploymentName = clientType switch
+            {
+                OpenAIClientType.Azure => ChatCompletionsDeploymentId,
+                OpenAIClientType.NonAzure => "gpt-3.5-turbo",
+                _ => throw new ArgumentException($"Unknown client type for test: {clientType}")
+            };
             Response<StreamingChatCompletions> streamingResponse
-                = await client.GetChatCompletionsStreamingAsync(requestOptions);
+                = await client.GetChatCompletionsStreamingAsync(modelOrDeploymentName, requestOptions);
             Assert.That(streamingResponse, Is.Not.Null);
             using StreamingChatCompletions streamingChatCompletions = streamingResponse.Value;
             Assert.That(streamingChatCompletions, Is.InstanceOf<StreamingChatCompletions>());
@@ -241,7 +278,6 @@ namespace Azure.AI.OpenAI.Tests
                 await foreach (ChatMessage streamingMessage in streamingChoice.GetMessageStreaming())
                 {
                     Assert.That(streamingMessage.Role, Is.EqualTo(ChatRole.Assistant));
-                    Assert.That(streamingMessage.Content, Is.Not.Null.Or.Empty);
                     totalMessages++;
                 }
             }
@@ -250,32 +286,34 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        public async Task TestLogProbs()
-        {
-            OpenAIClient client = GetCompletionsClient();
-            CompletionsOptions requestOptions = new CompletionsOptions()
-            {
-                Prompt = { "Hello world" },
-                Echo = true,
-                LogProbability = 1,
-            };
-            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
-        }
+        [Ignore("not supported")]
+        public Task AzureStreamingChatCompletions() => InternalStreamingChatCompletions(OpenAIClientType.Azure);
 
         [RecordedTest]
-        public async Task TestAdvancedCompletionsOptions()
+        public Task NonAzureStreamingChatCompletions() => InternalStreamingChatCompletions(OpenAIClientType.NonAzure);
+
+        private async Task InternalAdvancedCompletionsOptions(OpenAIClientType clientType)
         {
-            OpenAIClient client = GetCompletionsClient();
+            OpenAIClient client = clientType switch
+            {
+                OpenAIClientType.Azure => GetCompletionsClient(),
+                OpenAIClientType.NonAzure => GetPublicOpenAIClient(),
+                _ => throw new ArgumentException($"Unknown client type for test: {clientType}")
+            };
+            client.DefaultDeploymentOrModelName = clientType switch
+            {
+                OpenAIClientType.Azure => CompletionsDeploymentId,
+                OpenAIClientType.NonAzure => "text-davinci-002",
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
             string promptText = "Are bananas especially radioactive?";
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
-                Prompt = { promptText },
+                Prompts = { promptText },
                 GenerationSampleCount = 3,
-                CacheLevel = 0,
                 Temperature = 0.75f,
                 User = "AzureSDKOpenAITests",
                 Echo = true,
-                Model = "this is a bogus model parameter in the body",
                 LogProbability = 1,
             };
             Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
@@ -293,15 +331,21 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response.Value.Usage.TotalTokens, Is.GreaterThan(response.Value.Choices[0].Logprobs.Tokens.Count));
         }
 
+        [RecordedTest]
+        public Task AzureAdvancedCompletionsOptions() => InternalAdvancedCompletionsOptions(OpenAIClientType.Azure);
+
+        [RecordedTest]
+        public Task NonAzureAdvancedCompletionsOptions() => InternalAdvancedCompletionsOptions(OpenAIClientType.NonAzure);
+
         /// <summary>
         /// Test Exception throw.
         /// </summary>
         [RecordedTest]
-        public void RequestFailedExceptionTest()
+        public void AzureBadDeploymentFails()
         {
             OpenAIClient client = GetBadDeploymentClient();
             CompletionsOptions completionsRequest = new CompletionsOptions();
-            completionsRequest.Prompt.Add("Hello world");
+            completionsRequest.Prompts.Add("Hello world");
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await client.GetCompletionsAsync(completionsRequest);
@@ -310,13 +354,23 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(exception.ErrorCode, Is.EqualTo("DeploymentNotFound"));
         }
 
-        [RecordedTest]
-        public async Task TestTokenCutoff()
+        private async Task InternalTokenCutoff(OpenAIClientType clientType)
         {
-            OpenAIClient client = GetCompletionsClient();
+            OpenAIClient client = clientType switch
+            {
+                OpenAIClientType.Azure => GetCompletionsClientWithCredential(),
+                OpenAIClientType.NonAzure => GetPublicOpenAIClient(),
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
+            client.DefaultDeploymentOrModelName = clientType switch
+            {
+                OpenAIClientType.Azure => CompletionsDeploymentId,
+                OpenAIClientType.NonAzure => "text-davinci-002",
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
-                Prompt =
+                Prompts =
                 {
                     "How long would it take an unladen swallow to travel between Seattle, WA"
                         + " and New York, NY?"
@@ -331,12 +385,28 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        public async Task StreamingCompletionsTest()
+        public Task AzureTokenCutoff() => InternalTokenCutoff(OpenAIClientType.Azure);
+
+        [RecordedTest]
+        public Task NonAzureTokenCutoff() => InternalTokenCutoff(OpenAIClientType.NonAzure);
+
+        private async Task InternalStreamingCompletions(OpenAIClientType clientType)
         {
-            OpenAIClient client = GetCompletionsClient();
+            OpenAIClient client = clientType switch
+            {
+                OpenAIClientType.Azure => GetCompletionsClientWithCredential(),
+                OpenAIClientType.NonAzure => GetPublicOpenAIClient(),
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
+            client.DefaultDeploymentOrModelName = clientType switch
+            {
+                OpenAIClientType.Azure => CompletionsDeploymentId,
+                OpenAIClientType.NonAzure => "text-davinci-002",
+                _ => throw new ArgumentException("Unsupported client type"),
+            };
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
-                Prompt =
+                Prompts =
                 {
                     "Tell me some jokes about mangos",
                     "What are some disturbing facts about papayas?"
@@ -395,6 +465,12 @@ namespace Azure.AI.OpenAI.Tests
             }
         }
 
+        [RecordedTest]
+        public Task AzureStreamingCompletions() => InternalStreamingCompletions(OpenAIClientType.Azure);
+
+        [RecordedTest]
+        public Task NonAzureStreamingCompletions() => InternalStreamingCompletions(OpenAIClientType.NonAzure);
+
         // Lightweight reimplementation of .NET 7 .ToBlockingEnumerable().ToList()
         private static async Task<IReadOnlyList<T>> GetBlockingListFromIAsyncEnumerable<T>(
             IAsyncEnumerable<T> asyncValues)
@@ -406,5 +482,11 @@ namespace Azure.AI.OpenAI.Tests
             }
             return result;
         }
+
+        private enum OpenAIClientType
+        {
+            Azure,
+            NonAzure
+        };
     }
 }

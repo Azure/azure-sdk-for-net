@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "61",
+        "Content-Type": "application/json",
+        "traceparent": "00-5f1e44216722572a714f722b8ee0c1fd-38d1ce2c70a0b023-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "8cd2dbf707c050d5583ae758f40d34b4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world",
+          "running over the same old ground"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "f2fffaae-76f6-4319-84cf-a4d2dc5cf8ab",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "440",
+        "Content-Type": "application/json",
+        "Date": "Fri, 17 Mar 2023 03:52:39 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "837.2734",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8cd2dbf707c050d5583ae758f40d34b4",
+        "x-ms-region": "East US",
+        "X-Request-ID": "e6aeae89-cf27-47e9-8f1c-ee819e286ea2"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6uvQsFWLM8apL7ZUaITb5e6MW1J9E",
+        "object": "text_completion",
+        "created": 1679025158,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": " chinese\u003Ejava Korean one two three\n four\n Korean_\uC785",
+            "index": 0,
+            "finish_reason": "length",
+            "logprobs": null
+          },
+          {
+            "text": "/gaps\u0022);\n\n\t\t\t/* re-initialise, including clearing",
+            "index": 1,
+            "finish_reason": "length",
+            "logprobs": null
+          }
+        ],
+        "usage": {
+          "completion_tokens": 32,
+          "prompt_tokens": 8,
+          "total_tokens": 40
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "725788199"
+  }
+}

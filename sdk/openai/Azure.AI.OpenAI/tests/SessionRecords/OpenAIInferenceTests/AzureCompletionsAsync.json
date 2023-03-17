@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "61",
+        "Content-Type": "application/json",
+        "traceparent": "00-0845714e531c230f9fdca1b31895e4b4-04d69830daf28317-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "d90c184236af5c5a533efa80e58817cc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world",
+          "running over the same old ground"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "9381654f-e5c4-4560-9c2a-fd372e2ea5c6",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "457",
+        "Content-Type": "application/json",
+        "Date": "Fri, 17 Mar 2023 03:50:33 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "1116.0586",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d90c184236af5c5a533efa80e58817cc",
+        "x-ms-region": "East US",
+        "X-Request-ID": "f04e3b8d-fc32-4dde-90e9-423d9218cb00"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6uvOqvgMn5fLj7FcKe4h7nOUAJrc8",
+        "object": "text_completion",
+        "created": 1679025032,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": " Hello world\n\nHello world\n\nHello, world!\n\nGreetings",
+            "index": 0,
+            "finish_reason": "length",
+            "logprobs": null
+          },
+          {
+            "text": "! There\u0027s more excitement ahead than we\u0027ve found in this glum little world",
+            "index": 1,
+            "finish_reason": "length",
+            "logprobs": null
+          }
+        ],
+        "usage": {
+          "completion_tokens": 32,
+          "prompt_tokens": 8,
+          "total_tokens": 40
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "1217873748"
+  }
+}

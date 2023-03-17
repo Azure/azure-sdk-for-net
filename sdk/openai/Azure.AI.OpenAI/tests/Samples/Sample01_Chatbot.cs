@@ -17,7 +17,10 @@ namespace Azure.AI.OpenAI.Tests.Samples
             #region Snippet:GenerateChatbotResponse
             #region Snippet:CreateOpenAIClientTokenCredential
             string endpoint = "https://myaccount.openai.azure.com/";
-            OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
+            var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential())
+            {
+                DefaultDeploymentOrModelName = "myDeploymentId",
+            };
             #endregion
 
             string prompt = "What is Azure OpenAI?";

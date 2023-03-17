@@ -66,15 +66,18 @@ namespace Azure.AI.OpenAI
         /// <returns> true if left and right are both null or have equivalent labels; false otherwise </returns>
         public static bool operator ==(ChatRole left, ChatRole right)
         {
-            if (left == null && right == null)
-            {
-                return true;
-            }
-            else if ((left == null && right != null) || (left != null && right == null))
+            if (Object.ReferenceEquals(left, null) != Object.ReferenceEquals(right, null))
             {
                 return false;
             }
-            return left.Label.Equals(right.Label, StringComparison.InvariantCultureIgnoreCase);
+            else if (Object.ReferenceEquals(left, null))
+            {
+                return true;
+            }
+            else
+            {
+                return left.Equals(right);
+            }
         }
 
         /// <summary>
@@ -98,7 +101,9 @@ namespace Azure.AI.OpenAI
             => Label.GetHashCode();
 
         /// <inheritdoc/>
-        public bool Equals(ChatRole other) => this == other;
+        public bool Equals(ChatRole other)
+            => !Object.ReferenceEquals(other, null)
+                && string.Equals(Label, other.Label, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         public override string ToString() => Label;

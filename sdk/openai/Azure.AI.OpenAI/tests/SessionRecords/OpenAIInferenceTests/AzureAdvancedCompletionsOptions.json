@@ -1,0 +1,205 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "135",
+        "Content-Type": "application/json",
+        "traceparent": "00-b04bea366231ef2aca00515734d0771c-d68cb81eb1b3a665-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "3425af61fdcbe406c44a4a6eb56c4696",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Are bananas especially radioactive?"
+        ],
+        "temperature": 0.75,
+        "user": "AzureSDKOpenAITests",
+        "logprobs": 1,
+        "echo": true,
+        "best_of": 3
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "dc301746-5a95-45a6-873c-4ab45fbcfe7e",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "1425",
+        "Content-Type": "application/json",
+        "Date": "Fri, 17 Mar 2023 03:52:38 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "903.6528",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3425af61fdcbe406c44a4a6eb56c4696",
+        "x-ms-region": "East US",
+        "X-Request-ID": "3caf5637-fde1-41f6-bac2-37dd5d938695"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6uvQrEZ38GEWOLAsLhPA6VIsbnebJ",
+        "object": "text_completion",
+        "created": 1679025157,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "Are bananas especially radioactive?\n\nThere is no evidence to suggest that bananas are more radioactive than other fruits",
+            "index": 0,
+            "finish_reason": "length",
+            "logprobs": {
+              "tokens": [
+                "Are",
+                " bananas",
+                " especially",
+                " radioactive",
+                "?",
+                "\n",
+                "\n",
+                "There",
+                " is",
+                " no",
+                " evidence",
+                " to",
+                " suggest",
+                " that",
+                " bananas",
+                " are",
+                " more",
+                " radioactive",
+                " than",
+                " other",
+                " fruits"
+              ],
+              "token_logprobs": [
+                0,
+                -14.245047,
+                -11.104123,
+                -6.3803124,
+                -0.06380749,
+                -0.0004268729,
+                -0.0000085358415,
+                -0.7821788,
+                -0.00070914207,
+                -0.0006937529,
+                -2.0346055,
+                -1.2077317,
+                -0.01057844,
+                -0.0048412625,
+                -0.00015696288,
+                -0.009978461,
+                -1.46018,
+                -0.008742008,
+                -0.000053477528,
+                -0.36772797,
+                -0.24489456
+              ],
+              "top_logprobs": [
+                null,
+                {
+                  " you": -0.5477331
+                },
+                {
+                  " good": -1.2680556
+                },
+                {
+                  " good": -0.69675505
+                },
+                {
+                  "?": -0.06380749
+                },
+                {
+                  "\n": -0.0004268729
+                },
+                {
+                  "\n": -0.0000085358415
+                },
+                {
+                  "There": -0.7821788
+                },
+                {
+                  " is": -0.00070914207
+                },
+                {
+                  " no": -0.0006937529
+                },
+                {
+                  " scientific": -0.5149321
+                },
+                {
+                  " that": -0.35537004
+                },
+                {
+                  " suggest": -0.01057844
+                },
+                {
+                  " that": -0.0048412625
+                },
+                {
+                  " bananas": -0.00015696288
+                },
+                {
+                  " are": -0.009978461
+                },
+                {
+                  " especially": -0.9375322
+                },
+                {
+                  " radioactive": -0.008742008
+                },
+                {
+                  " than": -0.000053477528
+                },
+                {
+                  " other": -0.36772797
+                },
+                {
+                  " fruits": -0.24489456
+                }
+              ],
+              "text_offset": [
+                0,
+                3,
+                11,
+                22,
+                34,
+                35,
+                36,
+                37,
+                42,
+                45,
+                48,
+                57,
+                60,
+                68,
+                73,
+                81,
+                85,
+                90,
+                102,
+                107,
+                113
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "completion_tokens": 36,
+          "prompt_tokens": 5,
+          "total_tokens": 41
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "1855647946",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

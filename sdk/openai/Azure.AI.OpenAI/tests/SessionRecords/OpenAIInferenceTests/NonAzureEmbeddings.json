@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "71",
         "Content-Type": "application/json",
-        "traceparent": "00-80ed679740274840895d4ce913288719-f0370f70af4db348-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230303.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "e901333d835faf594461174022ff756f",
+        "traceparent": "00-2f81afe7a54f718b77dfdd78fa6d2328-ce0e30220f291c1a-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "218e2ccd7fbe4efcc892a9aa257d2ddd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,12 +23,15 @@
         "Connection": "keep-alive",
         "Content-Length": "33521",
         "Content-Type": "application/json",
-        "Date": "Fri, 03 Mar 2023 17:08:47 GMT",
-        "Openai-Organization": "microsoft",
-        "Openai-Processing-Ms": "157",
+        "Date": "Fri, 17 Mar 2023 03:53:09 GMT",
+        "Openai-Organization": "msft-finetuning-2",
+        "Openai-Processing-Ms": "147",
         "Openai-Version": "2020-10-01",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "X-Request-ID": "8c57616938c2a1682328c0845ce44c73"
+        "X-Ratelimit-Limit-Requests": "3000",
+        "X-Ratelimit-Remaining-Requests": "2999",
+        "X-Ratelimit-Reset-Requests": "59.98",
+        "X-Request-ID": "6c2a9d1ac817c540cf91cd813d47bca1"
       },
       "ResponseBody": {
         "object": "list",
@@ -1586,9 +1589,8 @@
   ],
   "Variables": {
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
-    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-embedding-ada-002",
-    "OPENAI_ENDPOINT": "https://api.openai.com/v1",
-    "OPENAI_AUTH_TOKEN": "fake_token",
-    "RandomSeed": "1290187265"
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "172593221"
   }
 }

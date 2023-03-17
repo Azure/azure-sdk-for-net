@@ -66,7 +66,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartObject();
                 foreach (var item in LogitBias)
                 {
-                    writer.WritePropertyName(item.Key);
+                    writer.WritePropertyName(item.Key.ToString());
                     writer.WriteNumberValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -121,6 +121,11 @@ namespace Azure.AI.OpenAI
                 {
                     writer.WriteNull("frequency_penalty");
                 }
+            }
+            if (!string.IsNullOrEmpty(NonAzureModel))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(NonAzureModel);
             }
             writer.WriteEndObject();
         }

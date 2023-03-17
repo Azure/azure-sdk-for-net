@@ -1,0 +1,77 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.openai.com/v1/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "88",
+        "Content-Type": "application/json",
+        "traceparent": "00-67f40ed652603ec1b5ce67a440b34db5-7c6a6e899635cbf3-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "2dc49fe2cb68f748d9d7b4a035d4736c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world",
+          "running over the same old ground"
+        ],
+        "model": "text-davinci-003"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Connection": "keep-alive",
+        "Content-Length": "407",
+        "Content-Type": "application/json",
+        "Date": "Fri, 17 Mar 2023 03:53:08 GMT",
+        "Openai-Model": "text-davinci-003",
+        "Openai-Organization": "msft-finetuning-2",
+        "Openai-Processing-Ms": "544",
+        "Openai-Version": "2020-10-01",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Ratelimit-Limit-Requests": "3000",
+        "X-Ratelimit-Limit-Tokens": "250000",
+        "X-Ratelimit-Remaining-Requests": "2999",
+        "X-Ratelimit-Remaining-Tokens": "249968",
+        "X-Ratelimit-Reset-Requests": "59.98",
+        "X-Ratelimit-Reset-Tokens": "59.99",
+        "X-Request-ID": "58e8c5530bfdf6517ad130674f73828c"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6uvRMigSjzbYjQfJ3PZsP1B8iao94",
+        "object": "text_completion",
+        "created": 1679025188,
+        "model": "text-davinci-003",
+        "choices": [
+          {
+            "text": "\n\nUpdated file",
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop"
+          },
+          {
+            "text": "\n\nWhat is used to refer to rehashing a conversation or revisiting",
+            "index": 1,
+            "logprobs": null,
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 8,
+          "completion_tokens": 20,
+          "total_tokens": 28
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "47577112"
+  }
+}
