@@ -124,6 +124,7 @@ namespace Azure.ResourceManager.TestFramework
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
+            options.SetApiVersion(new ResourceType("Microsoft.Compute/test"), "2022-09-01");
             if (enableDeleteAfter)
             {
                 AddDeleteAfterTagPolicy deleteAfterTagPolicy = new AddDeleteAfterTagPolicy(Recording.UtcNow);

@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.Resources
             }
             if (!resourceVersions.TryGetValue(resourceType.Type, out version))
             {
-                throw new InvalidOperationException($"Invalid resource type {resourceType}");
+                if (!Client.ApiVersionOverrides.TryGetValue(resourceType, out version))
+                {
+                    throw new InvalidOperationException($"Invalid resource type {resourceType}");
+                }
             }
             return version;
         }
@@ -66,7 +69,10 @@ namespace Azure.ResourceManager.Resources
             }
             if (!resourceVersions.TryGetValue(resourceType.Type, out version))
             {
-                throw new InvalidOperationException($"Invalid resource type {resourceType}");
+                if (!Client.ApiVersionOverrides.TryGetValue(resourceType, out version))
+                {
+                    throw new InvalidOperationException($"Invalid resource type {resourceType}");
+                }
             }
             return version;
         }
