@@ -1,37 +1,37 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/Communication-RG-278?api-version=**",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/Communication-RG-7488?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e339ca0821075e49881a78d3ad8b2294-94ab4257fa477046-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "44197cb31f726a95bed749a2bfb6223a",
+        "traceparent": "00-59f1e8da3a8243d946631eb8ea0fd337-cf7688d3afbc6c97-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "01701bcd9935dbf5f6445ebd68452af8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "238",
+        "Content-Length": "240",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:23:42 GMT",
+        "Date": "Fri, 17 Mar 2023 08:19:43 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "880eaecd-0a44-4a12-922d-a6b7db62e603",
-        "x-ms-ratelimit-remaining-subscription-reads": "14908",
-        "x-ms-request-id": "880eaecd-0a44-4a12-922d-a6b7db62e603",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032343Z:880eaecd-0a44-4a12-922d-a6b7db62e603",
-        "X-MSEdge-Ref": "Ref A: 471162F583BC4671BE40143BC73C81EE Ref B: STBEDGE0212 Ref C: 2023-03-17T03:23:42Z"
+        "x-ms-correlation-request-id": "325bffa8-95b3-452b-adc5-d03122841136",
+        "x-ms-ratelimit-remaining-subscription-reads": "14885",
+        "x-ms-request-id": "325bffa8-95b3-452b-adc5-d03122841136",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T081943Z:325bffa8-95b3-452b-adc5-d03122841136",
+        "X-MSEdge-Ref": "Ref A: 058EBCB03E7641F9BD1E64BEA30417EC Ref B: STBEDGE0514 Ref C: 2023-03-17T08:19:43Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278",
-        "name": "Communication-RG-278",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488",
+        "name": "Communication-RG-7488",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "properties": {
@@ -40,16 +40,16 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442?api-version=2023-03-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "76",
         "Content-Type": "application/json",
-        "traceparent": "00-02bb0b9d7eec244ca8f14f0b31b4b795-e4413ac8372cba46-00",
-        "User-Agent": "azsdk-net-ResourceManager.Communication/1.1.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "177518c6150abd19c53c415e3786e7f3",
+        "traceparent": "00-2339f358d943aecb3be36c80a333571e-8387f6af3d7c8d48-00",
+        "User-Agent": "azsdk-net-ResourceManager.Communication/1.1.0-alpha.20230316.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "17195b58d9d698325847c094cd47dfdf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -62,41 +62,41 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+        "Azure-AsyncOperation": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
         "Cache-Control": "no-cache",
-        "Content-Length": "622",
+        "Content-Length": "623",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:23:43 GMT",
-        "ETag": "\u0022f700d9e4-0000-0700-0000-6413dd400000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:19:44 GMT",
+        "ETag": "\u0022fd00cdcf-0000-0700-0000-641422a00000\u0022",
         "Expires": "-1",
-        "mise-correlation-id": "ded724e2-609d-4ee9-a766-fed0480ae6a7",
+        "mise-correlation-id": "b601d024-3c0b-4b19-85b5-8ce4433fca39",
         "Pragma": "no-cache",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "177518c6150abd19c53c415e3786e7f3",
-        "x-ms-correlation-request-id": "8418de96-aec2-46cc-8038-a3c4dddfaf33",
+        "x-ms-client-request-id": "17195b58d9d698325847c094cd47dfdf",
+        "x-ms-correlation-request-id": "545c8a7d-782e-4d05-a059-2164bb370cf1",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-writes": "1192",
-        "x-ms-request-id": "3066a359-46ed-4a9e-a037-620e16fc98c6",
+        "x-ms-ratelimit-remaining-subscription-writes": "1191",
+        "x-ms-request-id": "2e015e47-c6f5-42bd-8c94-dd45d81d4260",
         "x-ms-resource-provider-hint": "noPolling",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032344Z:8418de96-aec2-46cc-8038-a3c4dddfaf33",
-        "X-MSEdge-Ref": "Ref A: 289C2D9B7BF04D54A4A282C59EAEF03E Ref B: STBEDGE0212 Ref C: 2023-03-17T03:23:43Z"
+        "x-ms-routing-request-id": "CENTRALUS:20230317T081944Z:545c8a7d-782e-4d05-a059-2164bb370cf1",
+        "X-MSEdge-Ref": "Ref A: EFA18E72778747309F22D51C99DED287 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:19:44Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "name": "email-service-1743",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "name": "email-service-5442",
         "type": "microsoft.communication/emailservices",
         "location": "global",
         "tags": {},
         "systemData": {
           "createdBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
           "createdByType": "Application",
-          "createdAt": "2023-03-17T03:23:43.2801304Z",
+          "createdAt": "2023-03-17T08:19:44.4282475Z",
           "lastModifiedBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-03-17T03:23:43.2801304Z"
+          "lastModifiedAt": "2023-03-17T08:19:44.4282475Z"
         },
         "properties": {
           "dataLocation": "UnitedStates",
@@ -105,497 +105,497 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-02bb0b9d7eec244ca8f14f0b31b4b795-ccc57e502fd2b74f-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "38c67bf3e10e66a8ff87ace3540c8751",
+        "traceparent": "00-2339f358d943aecb3be36c80a333571e-356d8264ed6ad73e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f6561623d6ab41f63e69dc52344729fc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "578",
+        "Content-Length": "579",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:23:43 GMT",
-        "ETag": "\u002220036dc9-0000-0700-0000-6413dd3f0000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:19:44 GMT",
+        "ETag": "\u0022ee004910-0000-0700-0000-641422a00000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "38c67bf3e10e66a8ff87ace3540c8751",
-        "x-ms-correlation-request-id": "ecacc8bc-b3d6-4cf1-a823-409a06384160",
-        "x-ms-ratelimit-remaining-subscription-reads": "14907",
-        "x-ms-request-id": "4f2a5589-aa4e-425b-bcd7-c69addae7dcf",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032344Z:ecacc8bc-b3d6-4cf1-a823-409a06384160",
-        "X-MSEdge-Ref": "Ref A: 4EF48F8A32A7467CB2902CDC133A72D7 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:23:44Z"
+        "x-ms-client-request-id": "f6561623d6ab41f63e69dc52344729fc",
+        "x-ms-correlation-request-id": "2c4d12e6-ec0c-474d-8156-2ee2d3f35955",
+        "x-ms-ratelimit-remaining-subscription-reads": "14884",
+        "x-ms-request-id": "b8c046df-73bb-4763-8baf-dda0e44576ba",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T081945Z:2c4d12e6-ec0c-474d-8156-2ee2d3f35955",
+        "X-MSEdge-Ref": "Ref A: 05AF1E51029449BB9396EB564CAF1209 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:19:45Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
         "status": "Accepted",
-        "startTime": "2023-03-17T03:23:43.6828895Z"
+        "startTime": "2023-03-17T08:19:44.5337177Z"
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-02bb0b9d7eec244ca8f14f0b31b4b795-d761875cbfa08643-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "cd4aae61048dfe39e2c5102e62a3d589",
+        "traceparent": "00-2339f358d943aecb3be36c80a333571e-7e1562304f0e91e1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "015ddd7f115e568eccc710390b8f6b2d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "578",
+        "Content-Length": "579",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:23:45 GMT",
-        "ETag": "\u002220036dc9-0000-0700-0000-6413dd3f0000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:19:45 GMT",
+        "ETag": "\u0022ee004910-0000-0700-0000-641422a00000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "cd4aae61048dfe39e2c5102e62a3d589",
-        "x-ms-correlation-request-id": "1bff5ca7-84d6-48d3-9fc8-e3b328197a80",
-        "x-ms-ratelimit-remaining-subscription-reads": "14906",
-        "x-ms-request-id": "32ed77cf-9a76-436b-929e-c9610d7e0a3a",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032345Z:1bff5ca7-84d6-48d3-9fc8-e3b328197a80",
-        "X-MSEdge-Ref": "Ref A: 675481CE461C4777B8C30587067B1A0A Ref B: STBEDGE0212 Ref C: 2023-03-17T03:23:45Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "status": "Accepted",
-        "startTime": "2023-03-17T03:23:43.6828895Z"
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-02bb0b9d7eec244ca8f14f0b31b4b795-6d060a744048ca4a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "bb6b3729aebf93e5402e352f1a525bfa",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "578",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:23:46 GMT",
-        "ETag": "\u002220036dc9-0000-0700-0000-6413dd3f0000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "bb6b3729aebf93e5402e352f1a525bfa",
-        "x-ms-correlation-request-id": "00d885f8-1e7c-4764-9419-e33c40710ef2",
-        "x-ms-ratelimit-remaining-subscription-reads": "14905",
-        "x-ms-request-id": "21ffd23c-d524-433f-97f1-6f5e77cfc942",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032346Z:00d885f8-1e7c-4764-9419-e33c40710ef2",
-        "X-MSEdge-Ref": "Ref A: 6D368B1187A846EA80CEC2B099D36B75 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:23:46Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "status": "Accepted",
-        "startTime": "2023-03-17T03:23:43.6828895Z"
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-02bb0b9d7eec244ca8f14f0b31b4b795-06d0594bc58a9b44-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "3913625445f1ee7c42c75548d07a045c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "578",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:23:47 GMT",
-        "ETag": "\u002220036dc9-0000-0700-0000-6413dd3f0000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "3913625445f1ee7c42c75548d07a045c",
-        "x-ms-correlation-request-id": "2ef77e6d-56ba-47a2-9c75-13773075137a",
-        "x-ms-ratelimit-remaining-subscription-reads": "14904",
-        "x-ms-request-id": "37615dd8-a43a-4fd5-8683-7a4ebfb20077",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032347Z:2ef77e6d-56ba-47a2-9c75-13773075137a",
-        "X-MSEdge-Ref": "Ref A: B4C7E12B0F9B4C21A116E6B88A34A440 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:23:47Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "status": "Accepted",
-        "startTime": "2023-03-17T03:23:43.6828895Z"
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-02bb0b9d7eec244ca8f14f0b31b4b795-61d321c4cd49e147-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "1cb923b1cba0b291c8b78d5ecf09e38f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "578",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:23:49 GMT",
-        "ETag": "\u002220036dc9-0000-0700-0000-6413dd3f0000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "1cb923b1cba0b291c8b78d5ecf09e38f",
-        "x-ms-correlation-request-id": "b5cfd213-cb78-460b-aa8e-fbb20fd1f896",
-        "x-ms-ratelimit-remaining-subscription-reads": "14903",
-        "x-ms-request-id": "63681a6f-29c3-4e6d-a331-6b1e84400c71",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032349Z:b5cfd213-cb78-460b-aa8e-fbb20fd1f896",
-        "X-MSEdge-Ref": "Ref A: C53C7B5025C94D03B1E819375D299F0E Ref B: STBEDGE0212 Ref C: 2023-03-17T03:23:49Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "status": "Accepted",
-        "startTime": "2023-03-17T03:23:43.6828895Z"
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-02bb0b9d7eec244ca8f14f0b31b4b795-f243efb145a8254a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "ffd916699c8fe497ba7c79f8589dc2c5",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "578",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:23:53 GMT",
-        "ETag": "\u002220036dc9-0000-0700-0000-6413dd3f0000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "ffd916699c8fe497ba7c79f8589dc2c5",
-        "x-ms-correlation-request-id": "1c2b5fb4-c9ac-4e71-946e-498287e49bf3",
-        "x-ms-ratelimit-remaining-subscription-reads": "14902",
-        "x-ms-request-id": "8225906b-4904-4ddb-a233-a4883fa561a4",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032354Z:1c2b5fb4-c9ac-4e71-946e-498287e49bf3",
-        "X-MSEdge-Ref": "Ref A: 7C8C7AE56A634CE48C1817DA2248ACE8 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:23:53Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "status": "Accepted",
-        "startTime": "2023-03-17T03:23:43.6828895Z"
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-02bb0b9d7eec244ca8f14f0b31b4b795-9f09ac97c47dcc4d-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "f77ed9293f988859d061703ab71e1f38",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "578",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:01 GMT",
-        "ETag": "\u002220036dc9-0000-0700-0000-6413dd3f0000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "f77ed9293f988859d061703ab71e1f38",
-        "x-ms-correlation-request-id": "8f8337c6-22b1-41f9-b78a-411028184eb5",
-        "x-ms-ratelimit-remaining-subscription-reads": "14901",
-        "x-ms-request-id": "d1c5ea6b-60d9-40b1-b946-8c9a89cf628e",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032402Z:8f8337c6-22b1-41f9-b78a-411028184eb5",
-        "X-MSEdge-Ref": "Ref A: B622612714BA4045B07F159EE4FA7F29 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:02Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "status": "Accepted",
-        "startTime": "2023-03-17T03:23:43.6828895Z"
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-02bb0b9d7eec244ca8f14f0b31b4b795-303888e1231dbc43-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "b9dec6e404a014cc8bd561245299592b",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "578",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:17 GMT",
-        "ETag": "\u002220036dc9-0000-0700-0000-6413dd3f0000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "b9dec6e404a014cc8bd561245299592b",
-        "x-ms-correlation-request-id": "d118be2c-cbbc-479f-9d21-9059960bc755",
-        "x-ms-ratelimit-remaining-subscription-reads": "14900",
-        "x-ms-request-id": "c6665195-ac19-4c1b-b383-19455211d86c",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032418Z:d118be2c-cbbc-479f-9d21-9059960bc755",
-        "X-MSEdge-Ref": "Ref A: FA130F2A258C4FC3BE5D859667D9A2E7 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:18Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "status": "Accepted",
-        "startTime": "2023-03-17T03:23:43.6828895Z"
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-02bb0b9d7eec244ca8f14f0b31b4b795-7961d3f37ce3fb40-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "f634c7f4ec8b2af7bd512f2e2b5d2c9c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "597",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:50 GMT",
-        "ETag": "\u00222003c9d3-0000-0700-0000-6413dd820000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "f634c7f4ec8b2af7bd512f2e2b5d2c9c",
-        "x-ms-correlation-request-id": "f6998df6-1556-4552-9df9-3014611a3280",
+        "x-ms-client-request-id": "015ddd7f115e568eccc710390b8f6b2d",
+        "x-ms-correlation-request-id": "d3912cc7-8f41-4539-9322-6b915cb13ff2",
         "x-ms-ratelimit-remaining-subscription-reads": "14899",
-        "x-ms-request-id": "2852cb5b-b964-40ef-9088-08565570038a",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032450Z:f6998df6-1556-4552-9df9-3014611a3280",
-        "X-MSEdge-Ref": "Ref A: 9E6E18BE43634FB38551F44325400E45 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:50Z"
+        "x-ms-request-id": "57eb83ba-c8aa-431c-823d-705726eae5cd",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T081946Z:d3912cc7-8f41-4539-9322-6b915cb13ff2",
+        "X-MSEdge-Ref": "Ref A: 3C016CA8C33047879E338BFF1502E040 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:19:46Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "3066a359-46ed-4a9e-a037-620e16fc98c6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "status": "Accepted",
+        "startTime": "2023-03-17T08:19:44.5337177Z"
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2339f358d943aecb3be36c80a333571e-c4c08143ac67a5ea-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b67077e7e9f134344d89a828243d1cbf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "579",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:19:46 GMT",
+        "ETag": "\u0022ee004910-0000-0700-0000-641422a00000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b67077e7e9f134344d89a828243d1cbf",
+        "x-ms-correlation-request-id": "68a006b2-4e1f-4b0c-974f-9b608da7f20c",
+        "x-ms-ratelimit-remaining-subscription-reads": "14883",
+        "x-ms-request-id": "9dd8adaf-5c4b-40cd-a401-3124f7ad11e0",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T081947Z:68a006b2-4e1f-4b0c-974f-9b608da7f20c",
+        "X-MSEdge-Ref": "Ref A: 506A99770ADA407A84E6369E3A6421F0 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:19:47Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "status": "Accepted",
+        "startTime": "2023-03-17T08:19:44.5337177Z"
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2339f358d943aecb3be36c80a333571e-48802e2ddb868c0b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4f23d1735dcd12ea88ff2ae3c6bc35ae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "579",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:19:47 GMT",
+        "ETag": "\u0022ee004910-0000-0700-0000-641422a00000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4f23d1735dcd12ea88ff2ae3c6bc35ae",
+        "x-ms-correlation-request-id": "7fbe8dd3-fbf0-4448-83e6-01441ab4fb20",
+        "x-ms-ratelimit-remaining-subscription-reads": "14882",
+        "x-ms-request-id": "2e7f1d02-6a17-4ab3-87b7-c9e31bb8aff7",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T081948Z:7fbe8dd3-fbf0-4448-83e6-01441ab4fb20",
+        "X-MSEdge-Ref": "Ref A: AE98EA6A07254726BA4A4EC768A8AA45 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:19:48Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "status": "Accepted",
+        "startTime": "2023-03-17T08:19:44.5337177Z"
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2339f358d943aecb3be36c80a333571e-1c58b093d5027feb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bd6aaffd72d6950aa928b3d56865328e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "579",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:19:50 GMT",
+        "ETag": "\u0022ee004910-0000-0700-0000-641422a00000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bd6aaffd72d6950aa928b3d56865328e",
+        "x-ms-correlation-request-id": "21c98a67-668a-44bc-b82c-412c1904194f",
+        "x-ms-ratelimit-remaining-subscription-reads": "14898",
+        "x-ms-request-id": "b2ae973e-107e-427a-b875-a58ece79bd71",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T081950Z:21c98a67-668a-44bc-b82c-412c1904194f",
+        "X-MSEdge-Ref": "Ref A: 9BA24852151F4F198F1899AEBC91269B Ref B: STBEDGE0514 Ref C: 2023-03-17T08:19:50Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "status": "Accepted",
+        "startTime": "2023-03-17T08:19:44.5337177Z"
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2339f358d943aecb3be36c80a333571e-87d22eafd4a9842c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3ac550aa1c6b895f8c5d2df2be506d90",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "579",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:19:54 GMT",
+        "ETag": "\u0022ee004910-0000-0700-0000-641422a00000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3ac550aa1c6b895f8c5d2df2be506d90",
+        "x-ms-correlation-request-id": "36a5ea67-3e97-4310-abb5-d51694c3856a",
+        "x-ms-ratelimit-remaining-subscription-reads": "14881",
+        "x-ms-request-id": "6f950686-9e2b-4580-bb8c-30d5a2b808f7",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T081954Z:36a5ea67-3e97-4310-abb5-d51694c3856a",
+        "X-MSEdge-Ref": "Ref A: B5AAF2F0B1654E4E9C7C14B4515BC828 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:19:54Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "status": "Accepted",
+        "startTime": "2023-03-17T08:19:44.5337177Z"
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2339f358d943aecb3be36c80a333571e-e404d341c6942c38-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "752afa535fd200e8c68da5a4a915aa22",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "579",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:20:02 GMT",
+        "ETag": "\u0022ee004910-0000-0700-0000-641422a00000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "752afa535fd200e8c68da5a4a915aa22",
+        "x-ms-correlation-request-id": "1eb44dfd-0796-49d5-9b14-ea7666c8170e",
+        "x-ms-ratelimit-remaining-subscription-reads": "14898",
+        "x-ms-request-id": "a7df809b-2300-424a-9c78-214851098756",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082003Z:1eb44dfd-0796-49d5-9b14-ea7666c8170e",
+        "X-MSEdge-Ref": "Ref A: 2CF1905BE9864F488621CFCB6F30E18F Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:02Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "status": "Accepted",
+        "startTime": "2023-03-17T08:19:44.5337177Z"
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2339f358d943aecb3be36c80a333571e-4d92e197b5786880-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "75399bcdfbf6e1424fe030794518d759",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "579",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:20:18 GMT",
+        "ETag": "\u0022ee004910-0000-0700-0000-641422a00000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "75399bcdfbf6e1424fe030794518d759",
+        "x-ms-correlation-request-id": "66afd738-17ca-4149-83af-7740174d83ef",
+        "x-ms-ratelimit-remaining-subscription-reads": "14897",
+        "x-ms-request-id": "c3da3ac4-e4fa-45f5-9dd4-315cce839e37",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082019Z:66afd738-17ca-4149-83af-7740174d83ef",
+        "X-MSEdge-Ref": "Ref A: 54FAE28E75854B08B9E4741D3ECA07E2 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:19Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "status": "Accepted",
+        "startTime": "2023-03-17T08:19:44.5337177Z"
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2339f358d943aecb3be36c80a333571e-df3f1dc6425a7af3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6d8122babc3b4bbc68c474dd76bae077",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "598",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:20:50 GMT",
+        "ETag": "\u0022ee00571a-0000-0700-0000-641422e20000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6d8122babc3b4bbc68c474dd76bae077",
+        "x-ms-correlation-request-id": "5304bd5e-a92f-43e2-a2d7-83a1a4b28e9c",
+        "x-ms-ratelimit-remaining-subscription-reads": "14880",
+        "x-ms-request-id": "4d1f7ea0-960e-4ab3-b140-b3a1132bec0e",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082051Z:5304bd5e-a92f-43e2-a2d7-83a1a4b28e9c",
+        "X-MSEdge-Ref": "Ref A: 734FB6FD440E477F877A7853DF5CCBFF Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:51Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "2e015e47-c6f5-42bd-8c94-dd45d81d4260*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
         "status": "Succeeded",
-        "startTime": "2023-03-17T03:23:43.6828895Z",
+        "startTime": "2023-03-17T08:19:44.5337177Z",
         "properties": null
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-02bb0b9d7eec244ca8f14f0b31b4b795-b214d22a670e214c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "9214405d08be25240c696bc3dd353637",
+        "traceparent": "00-2339f358d943aecb3be36c80a333571e-f0e9b8319f1fbb1a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "23250ab3f816589ab74826f22e6fbbad",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "623",
+        "Content-Length": "624",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:50 GMT",
-        "ETag": "\u0022f70080e5-0000-0700-0000-6413dd470000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:20:50 GMT",
+        "ETag": "\u0022fd00e5d0-0000-0700-0000-641422a70000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "9214405d08be25240c696bc3dd353637",
-        "x-ms-correlation-request-id": "a2f22d33-8a78-4008-a377-a6dc8f95dd71",
-        "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "14898",
-        "x-ms-request-id": "62bf396d-f524-4df6-a062-98eeb7c86e70",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032450Z:a2f22d33-8a78-4008-a377-a6dc8f95dd71",
-        "X-MSEdge-Ref": "Ref A: 4C0A63959A154EDD80D38B6EBEFF5A71 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:50Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "name": "email-service-1743",
-        "type": "microsoft.communication/emailservices",
-        "location": "global",
-        "tags": {},
-        "systemData": {
-          "createdBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
-          "createdByType": "Application",
-          "createdAt": "2023-03-17T03:23:43.2801304Z",
-          "lastModifiedBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-03-17T03:23:43.2801304Z"
-        },
-        "properties": {
-          "provisioningState": "Succeeded",
-          "dataLocation": "UnitedStates"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-854d5d860ede6b46a3485170ca1c211a-b14895d0f8aa674c-00",
-        "User-Agent": "azsdk-net-ResourceManager.Communication/1.1.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "f045450728e9f7adcfb4fc4fd59ee82e",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "623",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:50 GMT",
-        "ETag": "\u0022f70080e5-0000-0700-0000-6413dd470000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "f045450728e9f7adcfb4fc4fd59ee82e",
-        "x-ms-correlation-request-id": "569f7a17-b1fd-4329-a62b-7e4afc4dc47e",
-        "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "14897",
-        "x-ms-request-id": "28e13561-74af-43fb-a1af-7d40b3e5daee",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032450Z:569f7a17-b1fd-4329-a62b-7e4afc4dc47e",
-        "X-MSEdge-Ref": "Ref A: 6723A5A97C424E7F873312BE7F9B2549 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:50Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "name": "email-service-1743",
-        "type": "microsoft.communication/emailservices",
-        "location": "global",
-        "tags": {},
-        "systemData": {
-          "createdBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
-          "createdByType": "Application",
-          "createdAt": "2023-03-17T03:23:43.2801304Z",
-          "lastModifiedBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-03-17T03:23:43.2801304Z"
-        },
-        "properties": {
-          "provisioningState": "Succeeded",
-          "dataLocation": "UnitedStates"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-831db0d6a7510b4cba36973b0d6ca5a5-8a947e3e6de42746-00",
-        "User-Agent": "azsdk-net-ResourceManager.Communication/1.1.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "11c6c5a9c785ec6ca20fe92181344c88",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "635",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:50 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "11c6c5a9c785ec6ca20fe92181344c88",
-        "x-ms-correlation-request-id": "620d26ac-6648-4557-adc3-e37d5d6f604f",
+        "x-ms-client-request-id": "23250ab3f816589ab74826f22e6fbbad",
+        "x-ms-correlation-request-id": "9727ab84-e490-4e4c-a77c-b0a40b1bb2a3",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-reads": "14896",
-        "x-ms-request-id": "c84510c0-8f80-487b-be32-44a9d6c7a32f",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032451Z:620d26ac-6648-4557-adc3-e37d5d6f604f",
-        "X-MSEdge-Ref": "Ref A: 2B2084B2F0E6419A8EFAE814A77BA920 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:50Z"
+        "x-ms-request-id": "d829ec61-45ab-4136-bdd1-57a18a46010e",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082051Z:9727ab84-e490-4e4c-a77c-b0a40b1bb2a3",
+        "X-MSEdge-Ref": "Ref A: 083BFD553E21434590897AED42268971 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:51Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "name": "email-service-5442",
+        "type": "microsoft.communication/emailservices",
+        "location": "global",
+        "tags": {},
+        "systemData": {
+          "createdBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
+          "createdByType": "Application",
+          "createdAt": "2023-03-17T08:19:44.4282475Z",
+          "lastModifiedBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-17T08:19:44.4282475Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "dataLocation": "UnitedStates"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2b06af0d36a7a19f9257770607df1849-21932e54dad32683-00",
+        "User-Agent": "azsdk-net-ResourceManager.Communication/1.1.0-alpha.20230316.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "87ea4cb63c9410e7dfed0d3286646a94",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "624",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:20:50 GMT",
+        "ETag": "\u0022fd00e5d0-0000-0700-0000-641422a70000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "87ea4cb63c9410e7dfed0d3286646a94",
+        "x-ms-correlation-request-id": "3fca7ef4-d58a-4543-905b-e08bc71069df",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "14879",
+        "x-ms-request-id": "36007234-5ffb-45b7-a7f0-62a3e1839c55",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082051Z:3fca7ef4-d58a-4543-905b-e08bc71069df",
+        "X-MSEdge-Ref": "Ref A: 509F45E1B71F4CDB9AF0780C75FEE24D Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:51Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "name": "email-service-5442",
+        "type": "microsoft.communication/emailservices",
+        "location": "global",
+        "tags": {},
+        "systemData": {
+          "createdBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
+          "createdByType": "Application",
+          "createdAt": "2023-03-17T08:19:44.4282475Z",
+          "lastModifiedBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-17T08:19:44.4282475Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "dataLocation": "UnitedStates"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5bd04e89b4ee99bad397816fefcc17c5-6b92fd8cf100b7ab-00",
+        "User-Agent": "azsdk-net-ResourceManager.Communication/1.1.0-alpha.20230316.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3ac5b800b3f3c2428828b6f396c91df8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "636",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:20:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3ac5b800b3f3c2428828b6f396c91df8",
+        "x-ms-correlation-request-id": "4831713c-ebb4-4fd6-b231-81f5262e6805",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "14895",
+        "x-ms-request-id": "3a1468e5-6c66-421d-8c26-b7dac55bd99a",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082051Z:4831713c-ebb4-4fd6-b231-81f5262e6805",
+        "X-MSEdge-Ref": "Ref A: 3F6AE0D9C66348B58F16FE39068B47F4 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:51Z"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-            "name": "email-service-1743",
+            "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+            "name": "email-service-5442",
             "type": "microsoft.communication/emailservices",
             "location": "global",
             "tags": {},
             "systemData": {
               "createdBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
               "createdByType": "Application",
-              "createdAt": "2023-03-17T03:23:43.2801304Z",
+              "createdAt": "2023-03-17T08:19:44.4282475Z",
               "lastModifiedBy": "dd5e080b-9821-4976-9ab1-c95d8cc8eafa",
               "lastModifiedByType": "Application",
-              "lastModifiedAt": "2023-03-17T03:23:43.2801304Z"
+              "lastModifiedAt": "2023-03-17T08:19:44.4282475Z"
             },
             "properties": {
               "provisioningState": "Succeeded",
@@ -606,468 +606,466 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442?api-version=2023-03-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-ec7694575a49b949-00",
-        "User-Agent": "azsdk-net-ResourceManager.Communication/1.1.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "e627f71a3c1834b3931cc3090cd54f6e",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-21b2466a3d2d623f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Communication/1.1.0-alpha.20230316.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2a27c70958d076e323154429eb67d252",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+        "Azure-AsyncOperation": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "4",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:51 GMT",
-        "ETag": "\u0022f7008ee9-0000-0700-0000-6413dd830000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:20:51 GMT",
+        "ETag": "\u0022fd00b4d5-0000-0700-0000-641422e40000\u0022",
         "Expires": "-1",
-        "Location": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+        "Location": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "e627f71a3c1834b3931cc3090cd54f6e",
-        "x-ms-correlation-request-id": "04d2f30f-edc6-4589-a0e1-b24fcc9585ef",
+        "x-ms-client-request-id": "2a27c70958d076e323154429eb67d252",
+        "x-ms-correlation-request-id": "f7f5e463-a422-4507-ab05-c233aa3fedec",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14996",
-        "x-ms-request-id": "8b11a6e6-141f-442f-bc1b-2df9861425a6",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14992",
+        "x-ms-request-id": "1d0ddf42-ccc6-40fb-97b5-961a09524daf",
         "x-ms-resource-provider-hint": "noPolling",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032451Z:04d2f30f-edc6-4589-a0e1-b24fcc9585ef",
-        "X-MSEdge-Ref": "Ref A: CC6D311135CC437DA0265D5D89EA9FDA Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:51Z"
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082052Z:f7f5e463-a422-4507-ab05-c233aa3fedec",
+        "X-MSEdge-Ref": "Ref A: 2A0F9EE52A874E4DB075CF88C5BB09A0 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:51Z"
       },
       "ResponseBody": "null"
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-aeae0287117d8748-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "dd34736802766c1611927d680363dfcd",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-78cf330bcc464a73-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bf2814d0403da7c3d54f17de6f18d620",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "578",
+        "Content-Length": "579",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:51 GMT",
-        "ETag": "\u00222003fbd3-0000-0700-0000-6413dd830000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:20:51 GMT",
+        "ETag": "\u0022ee00a41a-0000-0700-0000-641422e40000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "dd34736802766c1611927d680363dfcd",
-        "x-ms-correlation-request-id": "c47eaa6b-c0d8-4694-b157-71fc5a8ee5f5",
-        "x-ms-ratelimit-remaining-subscription-reads": "14895",
-        "x-ms-request-id": "aaaa8083-1152-4960-8874-11b6241e6f93",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032451Z:c47eaa6b-c0d8-4694-b157-71fc5a8ee5f5",
-        "X-MSEdge-Ref": "Ref A: 6F3A0EEBF2AF4DABB4A5E2C12ACE0B1E Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:51Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "status": "Deleting",
-        "startTime": "2023-03-17T03:24:51.2791493Z"
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-9a99f948d708af48-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "44a07bc0341af61a45e70dbeeedaf507",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "578",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:52 GMT",
-        "ETag": "\u00222003fbd3-0000-0700-0000-6413dd830000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "44a07bc0341af61a45e70dbeeedaf507",
-        "x-ms-correlation-request-id": "361bb364-3483-4aa9-93d2-a59cfecb222a",
+        "x-ms-client-request-id": "bf2814d0403da7c3d54f17de6f18d620",
+        "x-ms-correlation-request-id": "1e10fb6a-e3dd-408f-80c6-1a015358dff7",
         "x-ms-ratelimit-remaining-subscription-reads": "14894",
-        "x-ms-request-id": "4a692baf-391c-46a7-9704-5a3473591a61",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032452Z:361bb364-3483-4aa9-93d2-a59cfecb222a",
-        "X-MSEdge-Ref": "Ref A: 642E60D9B1704568B5E1E2FB037F7470 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:52Z"
+        "x-ms-request-id": "16ff82b9-6d29-4566-b5a3-5e7450169ed1",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082052Z:1e10fb6a-e3dd-408f-80c6-1a015358dff7",
+        "X-MSEdge-Ref": "Ref A: C4F348C3287E4647BA40247AA09E6235 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:52Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
         "status": "Deleting",
-        "startTime": "2023-03-17T03:24:51.2791493Z"
+        "startTime": "2023-03-17T08:20:52.0992159Z"
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-46566dee8d56d54e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "98a128a671a07ef726ad06dba6493c75",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-8eafb12f8bd3c045-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "05156355a7d7884f0c2320a85a77ef2f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "578",
+        "Content-Length": "579",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:53 GMT",
-        "ETag": "\u00222003fbd3-0000-0700-0000-6413dd830000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:20:52 GMT",
+        "ETag": "\u0022ee00a41a-0000-0700-0000-641422e40000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "98a128a671a07ef726ad06dba6493c75",
-        "x-ms-correlation-request-id": "3790be71-c0e0-4403-9d62-55522e8c67a0",
+        "x-ms-client-request-id": "05156355a7d7884f0c2320a85a77ef2f",
+        "x-ms-correlation-request-id": "d4ebca96-cddf-4a69-a84e-a5d395fb2f15",
+        "x-ms-ratelimit-remaining-subscription-reads": "14878",
+        "x-ms-request-id": "30f7e829-75d5-439b-8504-d5949ca921cc",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082053Z:d4ebca96-cddf-4a69-a84e-a5d395fb2f15",
+        "X-MSEdge-Ref": "Ref A: D21EF50FEFC2454A8BD75E66FBEA58A6 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:53Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "status": "Deleting",
+        "startTime": "2023-03-17T08:20:52.0992159Z"
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-3ca0bfbe67c62b72-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d6582e9b133f9d15cd4ba05969db93f0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "579",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:20:54 GMT",
+        "ETag": "\u0022ee00a41a-0000-0700-0000-641422e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d6582e9b133f9d15cd4ba05969db93f0",
+        "x-ms-correlation-request-id": "031be30a-2e7a-4c74-9796-d30d97dd4362",
         "x-ms-ratelimit-remaining-subscription-reads": "14893",
-        "x-ms-request-id": "de1267ed-d00e-43dc-a3f5-ca758d6d83ec",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032454Z:3790be71-c0e0-4403-9d62-55522e8c67a0",
-        "X-MSEdge-Ref": "Ref A: 07BD6F87AEB54CF6A229BD3125B12472 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:53Z"
+        "x-ms-request-id": "c55fb027-6c00-4597-b93f-bd6ac28471d6",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082054Z:031be30a-2e7a-4c74-9796-d30d97dd4362",
+        "X-MSEdge-Ref": "Ref A: 65739E87B46C48E99BC8499BFDF41EE0 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:54Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
         "status": "Deleting",
-        "startTime": "2023-03-17T03:24:51.2791493Z"
+        "startTime": "2023-03-17T08:20:52.0992159Z"
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-1f0447ce1aa9174d-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "c3197f7931ea3481593e988ff5577d37",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-adab350d17cb61cd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2316dd5174de283ec5a0b2191f1b4c5d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "578",
+        "Content-Length": "579",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:54 GMT",
-        "ETag": "\u00222003fbd3-0000-0700-0000-6413dd830000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:20:55 GMT",
+        "ETag": "\u0022ee00a41a-0000-0700-0000-641422e40000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "c3197f7931ea3481593e988ff5577d37",
-        "x-ms-correlation-request-id": "e9a834f0-5214-40d6-84f5-fb79ff7e232f",
+        "x-ms-client-request-id": "2316dd5174de283ec5a0b2191f1b4c5d",
+        "x-ms-correlation-request-id": "6ec8816b-29fe-4696-84a2-9db61aafb3ee",
         "x-ms-ratelimit-remaining-subscription-reads": "14892",
-        "x-ms-request-id": "8ace4e6a-fbbc-48c4-aa1b-d512eb4e17b6",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032455Z:e9a834f0-5214-40d6-84f5-fb79ff7e232f",
-        "X-MSEdge-Ref": "Ref A: 5CCBD4879CBB4E5CA5386E19D896F767 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:55Z"
+        "x-ms-request-id": "6356c318-ef19-4f8e-9388-bbca45cd4aeb",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082056Z:6ec8816b-29fe-4696-84a2-9db61aafb3ee",
+        "X-MSEdge-Ref": "Ref A: E7AE23CD64BE4E55A250D46A709D9B6F Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:55Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
         "status": "Deleting",
-        "startTime": "2023-03-17T03:24:51.2791493Z"
+        "startTime": "2023-03-17T08:20:52.0992159Z"
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-1afb9b99c2418d46-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "dbc1769d47c24e2c84221d6c2d3e4ffb",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-f7f7f58ced51e007-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4042e76000c042e14d77378c07f51f31",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "578",
+        "Content-Length": "579",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:24:56 GMT",
-        "ETag": "\u00222003fbd3-0000-0700-0000-6413dd830000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:20:57 GMT",
+        "ETag": "\u0022ee00a41a-0000-0700-0000-641422e40000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "dbc1769d47c24e2c84221d6c2d3e4ffb",
-        "x-ms-correlation-request-id": "6338dc74-7646-4608-95b1-8b113c72ca5d",
+        "x-ms-client-request-id": "4042e76000c042e14d77378c07f51f31",
+        "x-ms-correlation-request-id": "47422fb0-205b-4245-8e5b-1b5a5d78fb39",
+        "x-ms-ratelimit-remaining-subscription-reads": "14877",
+        "x-ms-request-id": "4710b547-c11a-4546-8a13-4300673cacad",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082058Z:47422fb0-205b-4245-8e5b-1b5a5d78fb39",
+        "X-MSEdge-Ref": "Ref A: 902885A4DAE2425CB0AACC1A5B2D7AB8 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:20:58Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "status": "Deleting",
+        "startTime": "2023-03-17T08:20:52.0992159Z"
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-f098dd23c171d629-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7d572f8fcc612751f030119f60fb7eb2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "579",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:21:01 GMT",
+        "ETag": "\u0022ee00a41a-0000-0700-0000-641422e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7d572f8fcc612751f030119f60fb7eb2",
+        "x-ms-correlation-request-id": "4bb5ccb3-5361-4b7c-97a8-325cfbbdfdb7",
+        "x-ms-ratelimit-remaining-subscription-reads": "14876",
+        "x-ms-request-id": "9ca77d03-112f-40eb-9529-2b73b5a1fcd6",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082102Z:4bb5ccb3-5361-4b7c-97a8-325cfbbdfdb7",
+        "X-MSEdge-Ref": "Ref A: 4AD9D7A34A254E5F8AEA6858F5A758ED Ref B: STBEDGE0514 Ref C: 2023-03-17T08:21:02Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
+        "status": "Deleting",
+        "startTime": "2023-03-17T08:20:52.0992159Z"
+      }
+    },
+    {
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-1fa3ba15487eb3fd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "81f943fe52985130fbd3d5673db221d0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "579",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Mar 2023 08:21:09 GMT",
+        "ETag": "\u0022ee00a41a-0000-0700-0000-641422e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "81f943fe52985130fbd3d5673db221d0",
+        "x-ms-correlation-request-id": "0a896c96-ac77-4844-9119-d21a23910d0f",
         "x-ms-ratelimit-remaining-subscription-reads": "14891",
-        "x-ms-request-id": "9f2818dd-5f54-4efd-9a9c-1fc465efa11a",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032457Z:6338dc74-7646-4608-95b1-8b113c72ca5d",
-        "X-MSEdge-Ref": "Ref A: 062A13732DC74DE0BC7D9ACB6938B0DD Ref B: STBEDGE0212 Ref C: 2023-03-17T03:24:57Z"
+        "x-ms-request-id": "1f6c3ca2-0a46-430e-b5ef-7af46698305e",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082110Z:0a896c96-ac77-4844-9119-d21a23910d0f",
+        "X-MSEdge-Ref": "Ref A: 1F4992C0CC1D4C0B98D6A5DD645A5CEA Ref B: STBEDGE0514 Ref C: 2023-03-17T08:21:10Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
         "status": "Deleting",
-        "startTime": "2023-03-17T03:24:51.2791493Z"
+        "startTime": "2023-03-17T08:20:52.0992159Z"
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-b549318c65393546-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "6f4598ab32c1751ca66c3e62d96788cf",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-c7834652628dac53-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ef898180cec394fb961b508fee42e252",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "578",
+        "Content-Length": "579",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:25:01 GMT",
-        "ETag": "\u00222003fbd3-0000-0700-0000-6413dd830000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:21:25 GMT",
+        "ETag": "\u0022ee00a41a-0000-0700-0000-641422e40000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "6f4598ab32c1751ca66c3e62d96788cf",
-        "x-ms-correlation-request-id": "82424460-15a3-48e1-b82f-22c0721f65a3",
-        "x-ms-ratelimit-remaining-subscription-reads": "14747",
-        "x-ms-request-id": "20b647af-927b-4fea-8606-8fcdadaa7ab4",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032501Z:82424460-15a3-48e1-b82f-22c0721f65a3",
-        "X-MSEdge-Ref": "Ref A: DDA220C4F6494C8FABDA84D97013EFFB Ref B: STBEDGE0212 Ref C: 2023-03-17T03:25:01Z"
+        "x-ms-client-request-id": "ef898180cec394fb961b508fee42e252",
+        "x-ms-correlation-request-id": "515fdd6c-fc7b-4a33-8e9e-e061ccd9a336",
+        "x-ms-ratelimit-remaining-subscription-reads": "14875",
+        "x-ms-request-id": "63e4e921-e48f-490c-824d-a50f14302d81",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082126Z:515fdd6c-fc7b-4a33-8e9e-e061ccd9a336",
+        "X-MSEdge-Ref": "Ref A: 3AA077068CE74DC1A3F563CE58895347 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:21:26Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
         "status": "Deleting",
-        "startTime": "2023-03-17T03:24:51.2791493Z"
+        "startTime": "2023-03-17T08:20:52.0992159Z"
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-8cadb1c838a4c940-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "303ecf2f608731b252cb3ec81314071b",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-f2bf29b420259b07-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c48d84f99dfb3c98fe06818ef6e9ea3d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "578",
+        "Content-Length": "579",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:25:09 GMT",
-        "ETag": "\u00222003fbd3-0000-0700-0000-6413dd830000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:21:57 GMT",
+        "ETag": "\u0022ee00a41a-0000-0700-0000-641422e40000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "303ecf2f608731b252cb3ec81314071b",
-        "x-ms-correlation-request-id": "6690a050-e19b-4a60-8eb7-67074ac9e59c",
+        "x-ms-client-request-id": "c48d84f99dfb3c98fe06818ef6e9ea3d",
+        "x-ms-correlation-request-id": "25b2187c-8966-40cb-9f15-b9159609da40",
         "x-ms-ratelimit-remaining-subscription-reads": "14890",
-        "x-ms-request-id": "ac90b119-acee-4885-b079-00c3907507db",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032509Z:6690a050-e19b-4a60-8eb7-67074ac9e59c",
-        "X-MSEdge-Ref": "Ref A: 80E3D4D97F28407BB01B8484AC725582 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:25:09Z"
+        "x-ms-request-id": "4b454dfc-22f9-4d31-b1ab-8920fc5148ca",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082158Z:25b2187c-8966-40cb-9f15-b9159609da40",
+        "X-MSEdge-Ref": "Ref A: 1C0B429DE75D43EDA2CF77A7F80D85BD Ref B: STBEDGE0514 Ref C: 2023-03-17T08:21:58Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
         "status": "Deleting",
-        "startTime": "2023-03-17T03:24:51.2791493Z"
+        "startTime": "2023-03-17T08:20:52.0992159Z"
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-5d3ce4bbe3254f4c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "5ce49cef0e116b76594c345509ca741c",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-f40a9d3dbbb25f40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "df1e410e8e712fee4765eb7d02a162b9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "578",
+        "Content-Length": "579",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:25:25 GMT",
-        "ETag": "\u00222003fbd3-0000-0700-0000-6413dd830000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:22:30 GMT",
+        "ETag": "\u0022ee00a41a-0000-0700-0000-641422e40000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5ce49cef0e116b76594c345509ca741c",
-        "x-ms-correlation-request-id": "3eec78e2-f0a0-49d0-8412-3e3632031077",
+        "x-ms-client-request-id": "df1e410e8e712fee4765eb7d02a162b9",
+        "x-ms-correlation-request-id": "0f94f5b8-6cf2-4004-9875-180486c6a78b",
         "x-ms-ratelimit-remaining-subscription-reads": "14889",
-        "x-ms-request-id": "1308f312-c4f0-4390-8a0d-9fd7b286a748",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032526Z:3eec78e2-f0a0-49d0-8412-3e3632031077",
-        "X-MSEdge-Ref": "Ref A: F7B956FCC01F4ABEB2F66DBACE0FA394 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:25:25Z"
+        "x-ms-request-id": "a5df729e-e74b-4804-a828-ebc6a929a0df",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082230Z:0f94f5b8-6cf2-4004-9875-180486c6a78b",
+        "X-MSEdge-Ref": "Ref A: 2BB34F82476D43B7BD01DF8201935FA4 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:22:30Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
         "status": "Deleting",
-        "startTime": "2023-03-17T03:24:51.2791493Z"
+        "startTime": "2023-03-17T08:20:52.0992159Z"
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-f79ae33d74ac284d-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "5d3d4e991e004a73e5141cf6f3546192",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "578",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:25:57 GMT",
-        "ETag": "\u00222003fbd3-0000-0700-0000-6413dd830000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5d3d4e991e004a73e5141cf6f3546192",
-        "x-ms-correlation-request-id": "04eb5c37-8b3b-4b1b-9110-470e44b0e448",
-        "x-ms-ratelimit-remaining-subscription-reads": "14888",
-        "x-ms-request-id": "d9351d89-6b9b-40e8-993a-3b49e5e7a23f",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032558Z:04eb5c37-8b3b-4b1b-9110-470e44b0e448",
-        "X-MSEdge-Ref": "Ref A: 467EB421EE9C4A1AA00BA5B875A84743 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:25:58Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "status": "Deleting",
-        "startTime": "2023-03-17T03:24:51.2791493Z"
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Connection": "close",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-7b5913371828db4b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "3c7323652c8320bd59d3d73b2b5d2888",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Connection": "close",
-        "Content-Length": "578",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:26:29 GMT",
-        "ETag": "\u00222003fbd3-0000-0700-0000-6413dd830000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "3c7323652c8320bd59d3d73b2b5d2888",
-        "x-ms-correlation-request-id": "7249c632-7d2b-41a6-9ac7-ae7bccd44756",
-        "x-ms-ratelimit-remaining-subscription-reads": "14746",
-        "x-ms-request-id": "5b58c8f3-9e47-43a0-8366-f67b3dd8e0c3",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032630Z:7249c632-7d2b-41a6-9ac7-ae7bccd44756",
-        "X-MSEdge-Ref": "Ref A: 784C9D6766274707A3BF6C6D30C79D38 Ref B: STBEDGE0212 Ref C: 2023-03-17T03:26:30Z"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
-        "status": "Deleting",
-        "startTime": "2023-03-17T03:24:51.2791493Z"
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C?api-version=2023-03-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-c16ec305a621c44d969f0b68f376441b-fd1d31bd0e5eb04e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "c52e2156a9d7d11b299976fdf1807704",
+        "traceparent": "00-343d06cf42552f672b5d1dcb67a8299d-8f338548d253d467-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b86d83f15d24e3d4e84cf0bc4d6c9dac",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "597",
+        "Content-Length": "598",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Mar 2023 03:27:01 GMT",
-        "ETag": "\u0022200392e6-0000-0700-0000-6413de020000\u0022",
+        "Date": "Fri, 17 Mar 2023 08:23:02 GMT",
+        "ETag": "\u0022ee00452e-0000-0700-0000-641423630000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "c52e2156a9d7d11b299976fdf1807704",
-        "x-ms-correlation-request-id": "a28387dd-e335-4509-a106-83aebf559a73",
-        "x-ms-ratelimit-remaining-subscription-reads": "14852",
-        "x-ms-request-id": "90a4eb00-9cf8-4131-90a8-6fb1bfb81a45",
-        "x-ms-routing-request-id": "CENTRALUS:20230317T032702Z:a28387dd-e335-4509-a106-83aebf559a73",
-        "X-MSEdge-Ref": "Ref A: CE38A6F3F5AD4CE189C361D76774F51C Ref B: STBEDGE0107 Ref C: 2023-03-17T03:27:02Z"
+        "x-ms-client-request-id": "b86d83f15d24e3d4e84cf0bc4d6c9dac",
+        "x-ms-correlation-request-id": "c197acb3-76b9-47ef-b72d-2c6f295b9354",
+        "x-ms-ratelimit-remaining-subscription-reads": "14888",
+        "x-ms-request-id": "b38859d1-3930-4693-a2c1-fa75124fe266",
+        "x-ms-routing-request-id": "CENTRALUS:20230317T082303Z:c197acb3-76b9-47ef-b72d-2c6f295b9354",
+        "X-MSEdge-Ref": "Ref A: D8D30E07274940838D7C220AD9EA35D0 Ref B: STBEDGE0514 Ref C: 2023-03-17T08:23:03Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "name": "8b11a6e6-141f-442f-bc1b-2df9861425a6*6C0D2D4EB0405435267637CFD2B800BBFE9C6EDECA740E1C55FD718BDBB6926C",
-        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-278/providers/Microsoft.Communication/emailServices/email-service-1743",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "name": "1d0ddf42-ccc6-40fb-97b5-961a09524daf*6AE11A9EAEDAB59BF7B09390CBB40D348E35F076F02666F83F487EE350224A1E",
+        "resourceId": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-7488/providers/Microsoft.Communication/emailServices/email-service-5442",
         "status": "Succeeded",
-        "startTime": "2023-03-17T03:24:51.2791493Z",
+        "startTime": "2023-03-17T08:20:52.0992159Z",
         "properties": null
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.windows-ppe.net/",
-    "RandomSeed": "1128689756",
+    "RandomSeed": "288122318",
     "RESOURCE_MANAGER_URL": "https://api-dogfood.resources.windows-int.net/",
     "SUBSCRIPTION_ID": "ce1bff77-08c1-4199-b7a5-52194a42b6ce"
   }
