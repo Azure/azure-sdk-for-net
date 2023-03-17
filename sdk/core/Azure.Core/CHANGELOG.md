@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Set the Activity status to `Error` on failed activity source activities.
+
 ### Other Changes
 
 ## 1.30.0 (2023-03-09)
