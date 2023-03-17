@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Communication.Tests
             ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _emailServiceName = SessionRecording.GenerateAssetName("email-test");
-            _domainResourceName = Recording.GenerateAssetName("domain-") + ".com";
+            _domainResourceName = SessionRecording.GenerateAssetName("domain-") + ".com";
             _emailService = await CreateDefaultEmailServices(_emailServiceName, rg);
             _domainResource = await CreateDefaultDomain(_domainResourceName, _emailService);
             _location = ResourceLocation;

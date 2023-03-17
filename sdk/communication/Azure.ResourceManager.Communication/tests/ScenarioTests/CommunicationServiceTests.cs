@@ -137,12 +137,14 @@ namespace Azure.ResourceManager.Communication.Tests
             string secondaryConnectionString = keys.Value.SecondaryConnectionString;
             var parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Primary };
             var newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
-            Assert.AreEqual(primaryKey, newkeys.Value.PrimaryKey);
-            Assert.NotNull(primaryConnectionString, keys.Value.PrimaryConnectionString);
+            Assert.AreNotEqual(primaryKey, newkeys.Value.PrimaryKey);
+            Assert.AreNotEqual(primaryConnectionString, keys.Value.PrimaryConnectionString);
+            Assert.AreEqual(secondaryKey, newkeys.Value.SecondaryKey);
+            Assert.AreEqual(secondaryConnectionString, keys.Value.SecondaryConnectionString);
             parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Secondary };
             newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
-            Assert.NotNull(secondaryKey, keys.Value.SecondaryKey);
-            Assert.NotNull(secondaryConnectionString, keys.Value.SecondaryConnectionString);
+            Assert.AreNotEqual(secondaryKey, newkeys.Value.SecondaryKey);
+            Assert.AreNotEqual(secondaryConnectionString, newkeys.Value.SecondaryConnectionString);
         }
 
         [Test]
