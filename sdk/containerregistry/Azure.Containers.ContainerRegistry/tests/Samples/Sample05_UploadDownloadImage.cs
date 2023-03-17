@@ -20,16 +20,13 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #region Snippet:ContainerRegistry_Samples_CreateBlobClient
 
             // Get the service endpoint from the environment
-            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+            Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             string repository = "sample-oci-image";
             string tag = "demo";
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-            {
-                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-            });
+            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
 
             #endregion
 
@@ -73,16 +70,13 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             // Get the service endpoint from the environment
-            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+            Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             string repository = "sample-oci-image";
             string tag = "demo";
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-            {
-                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-            });
+            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential());
 
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
             Directory.CreateDirectory(path);
@@ -141,16 +135,13 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             // Get the service endpoint from the environment
-            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+            Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             string repository = "sample-oci-image";
             string tag = "demo";
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-            {
-                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-            });
+            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
 
             #region Snippet:ContainerRegistry_Samples_DeleteBlob
             DownloadManifestResult result = await client.DownloadManifestAsync(tag);
@@ -168,8 +159,6 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #endregion
         }
 
-        [Test]
-        [AsyncOnly]
         public async Task UploadDockerManifestAsync()
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
@@ -180,10 +169,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string repository = "library/hello-world";
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-            {
-                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-            });
+            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential());
 
 #region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
 
@@ -215,8 +201,10 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task DownloadCustomManifestAsync()
+        public async Task UploadDownloadDockerManifestAsync()
         {
+            await UploadDockerManifestAsync();
+
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             // Get the service endpoint from the environment
@@ -227,10 +215,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Directory.CreateDirectory(path);
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-            {
-                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-            });
+            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
 
 #region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
 

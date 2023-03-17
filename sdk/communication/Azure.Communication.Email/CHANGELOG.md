@@ -1,5 +1,20 @@
 # Release History
 
+## 1.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.4 (2023-03-15)
+
+### Bugs Fixed
+- Fixed a bug that caused some attachments to be corrupted.
+
 ## 1.0.0-beta.3 (2023-03-11)
 
 ### Other Changes

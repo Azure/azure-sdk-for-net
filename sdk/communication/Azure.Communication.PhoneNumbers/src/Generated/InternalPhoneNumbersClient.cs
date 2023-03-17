@@ -188,7 +188,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
-        /// <param name="assignmentType"> Filter by assignmentType, e.g. User, Application. </param>
+        /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
         /// <param name="locality"> The name of locality or town in which to search for the area code. This is required if the number type is Geographic. </param>
         /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>
@@ -208,7 +208,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree. </param>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
-        /// <param name="assignmentType"> Filter by assignmentType, e.g. User, Application. </param>
+        /// <param name="assignmentType"> Filter by assignmentType, e.g. Person, Application. </param>
         /// <param name="locality"> The name of locality or town in which to search for the area code. This is required if the number type is Geographic. </param>
         /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. &apos;en-US&apos;. </param>

@@ -256,14 +256,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             ExportResult result = ExportResult.Failure;
             int statusCode = 0;
-            byte[] content;
+            byte[]? content;
             int retryInterval;
 
             if (!httpMessage.HasResponse)
             {
                 // HttpRequestException
                 content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                if (content != null)
+                {
+                    result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                }
             }
             else
             {
@@ -287,8 +290,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         // Parse retry-after header
                         // Send Messages To Storage
                         content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
+                        if (content != null)
+                        {
+                            retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
+                            result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
+                        }
                         break;
                     case ResponseStatusCodes.Unauthorized:
                     case ResponseStatusCodes.Forbidden:
@@ -298,7 +304,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case ResponseStatusCodes.GatewayTimeout:
                         // Send Messages To Storage
                         content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                        if (content != null)
+                        {
+                            result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                        }
                         break;
                     default:
                         // Log Non-Retriable Status and don't retry or store;
