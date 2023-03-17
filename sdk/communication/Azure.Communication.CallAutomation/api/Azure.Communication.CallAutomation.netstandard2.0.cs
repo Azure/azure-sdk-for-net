@@ -13,17 +13,20 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.CallInvite ParticipantToAdd { get { throw null; } }
     }
-    public partial class AddParticipantResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
+    public partial class AddParticipantResult
     {
         internal AddParticipantResult() { }
         public string OperationContext { get { throw null; } }
         public Azure.Communication.CallAutomation.CallParticipant Participant { get { throw null; } }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AddParticipantsEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
+        public Azure.Communication.CallAutomation.AddParticipantsEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AddParticipantsEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AddParticipantsEventResult : Azure.Communication.CallAutomation.EventResultBase
+    public partial class AddParticipantsEventResult
     {
         internal AddParticipantsEventResult() { }
         public Azure.Communication.CallAutomation.AddParticipantFailed FailureEvent { get { throw null; } }
+        public bool IsSuccessEvent { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
         public Azure.Communication.CallAutomation.AddParticipantSucceeded SuccessEvent { get { throw null; } }
     }
     public partial class AddParticipantSucceeded : Azure.Communication.CallAutomation.CallAutomationEventBase
@@ -32,9 +35,10 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
         public static Azure.Communication.CallAutomation.AddParticipantSucceeded Deserialize(string content) { throw null; }
     }
-    public partial class AnswerCallEventResult : Azure.Communication.CallAutomation.EventResultBase
+    public partial class AnswerCallEventResult
     {
         internal AnswerCallEventResult() { }
+        public bool IsSuccessEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnected SuccessEvent { get { throw null; } }
     }
     public partial class AnswerCallOptions
@@ -45,12 +49,13 @@ namespace Azure.Communication.CallAutomation
         public string IncomingCallContext { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
     }
-    public partial class AnswerCallResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
+    public partial class AnswerCallResult
     {
         internal AnswerCallResult() { }
         public Azure.Communication.CallAutomation.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties { get { throw null; } }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AnswerCallEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
+        public Azure.Communication.CallAutomation.AnswerCallEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AnswerCallEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BlobStorage : Azure.Communication.CallAutomation.ExternalStorage
     {
@@ -76,7 +81,7 @@ namespace Azure.Communication.CallAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CreateCallResult>> CreateGroupCallAsync(Azure.Communication.CallAutomation.CreateGroupCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.CallAutomation.CallConnection GetCallConnection(string callConnectionId) { throw null; }
         public virtual Azure.Communication.CallAutomation.CallRecording GetCallRecording() { throw null; }
-        public virtual Azure.Communication.CallAutomation.EventProcessor GetEventProcessor() { throw null; }
+        public virtual Azure.Communication.CallAutomation.CallAutomationEventProcessor GetEventProcessor() { throw null; }
         public virtual Azure.Communication.CommunicationUserIdentifier GetSourceIdentity() { throw null; }
         public virtual Azure.Response RedirectCall(Azure.Communication.CallAutomation.RedirectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RedirectCall(string incomingCallContext, Azure.Communication.CallAutomation.CallInvite callInvite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -90,7 +95,6 @@ namespace Azure.Communication.CallAutomation
     public partial class CallAutomationClientOptions : Azure.Core.ClientOptions
     {
         public CallAutomationClientOptions(Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion version = Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion.V2023_01_15_Preview, Azure.Communication.CommunicationUserIdentifier source = null) { }
-        public Azure.Communication.CallAutomation.EventProcessorOptions EventProcessorOptions { get { throw null; } }
         public enum ServiceVersion
         {
             V2023_01_15_Preview = 1,
@@ -122,10 +126,17 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.CallAutomationEventBase[] ParseMany(Azure.Messaging.CloudEvent[] cloudEvents) { throw null; }
         public static Azure.Communication.CallAutomation.CallAutomationEventBase[] ParseMany(System.BinaryData json) { throw null; }
     }
-    public abstract partial class CallAutomationEventWithReasonCodeName : Azure.Communication.CallAutomation.CallAutomationEventBase
+    public partial class CallAutomationEventProcessor
     {
-        protected CallAutomationEventWithReasonCodeName() { }
-        public Azure.Communication.CallAutomation.ReasonCode ReasonCode { get { throw null; } }
+        internal CallAutomationEventProcessor() { }
+        public void AttachOngoingEventProcessor<TEvent>(string callConnectionId, System.Action<TEvent> eventProcessor) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { }
+        public void DetachOngoingEventProcessor<TEvent>(string callConnectionId) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { }
+        public void ProcessEvents(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallAutomationEventBase> events) { }
+        public void ProcessEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> events) { }
+        public Azure.Communication.CallAutomation.CallAutomationEventBase WaitForEventProcessor(System.Func<Azure.Communication.CallAutomation.CallAutomationEventBase, bool> predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CallAutomationEventBase> WaitForEventProcessorAsync(System.Func<Azure.Communication.CallAutomation.CallAutomationEventBase, bool> predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<TEvent> WaitForEventProcessorAsync<TEvent>(string connectionId = null, string operationContext = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { throw null; }
+        public TEvent WaitForEventProcessor<TEvent>(string connectionId = null, string operationContext = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { throw null; }
     }
     public static partial class CallAutomationModelFactory
     {
@@ -143,7 +154,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.CollectTonesResult CollectTonesResult(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.DtmfTone> tones = null) { throw null; }
         public static Azure.Communication.CallAutomation.CreateCallResult CreateCallResult(Azure.Communication.CallAutomation.CallConnection callConnection = null, Azure.Communication.CallAutomation.CallConnectionProperties callConnectionProperties = null) { throw null; }
         public static Azure.Communication.CallAutomation.MuteParticipantsResponse MuteParticipantsResponse(string operationContext = null) { throw null; }
-        public static Azure.Communication.CallAutomation.ParticipantsUpdated ParticipantsUpdated(string callConnectionId = null, string serverCallId = null, string correlationId = null, System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallParticipant> participants = null) { throw null; }
+        public static Azure.Communication.CallAutomation.ParticipantsUpdated ParticipantsUpdated(string callConnectionId = null, string serverCallId = null, string correlationId = null, System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallParticipant> participants = null, int sequenceNumber = 0) { throw null; }
         public static Azure.Communication.CallAutomation.PlayCanceled PlayCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.PlayCompleted PlayCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.PlayFailed PlayFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
@@ -370,16 +381,18 @@ namespace Azure.Communication.CallAutomation
         internal CallTransferFailed() { }
         public static Azure.Communication.CallAutomation.CallTransferFailed Deserialize(string content) { throw null; }
     }
-    public partial class CancelAllMediaOperationsEventResult : Azure.Communication.CallAutomation.EventResultBase
+    public partial class CancelAllMediaOperationsEventResult
     {
         internal CancelAllMediaOperationsEventResult() { }
+        public bool IsSuccessEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.PlayCanceled PlayCanceledSucessEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.RecognizeCanceled RecognizeCanceledSucessEvent { get { throw null; } }
     }
-    public partial class CancelAllMediaOperationsResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
+    public partial class CancelAllMediaOperationsResult
     {
         internal CancelAllMediaOperationsResult() { }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CancelAllMediaOperationsEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
+        public Azure.Communication.CallAutomation.CancelAllMediaOperationsEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CancelAllMediaOperationsEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ChoiceResult : Azure.Communication.CallAutomation.RecognizeResult
     {
@@ -391,6 +404,7 @@ namespace Azure.Communication.CallAutomation
     {
         internal CollectTonesResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.DtmfTone> Tones { get { throw null; } }
+        public string ConvertToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ContentTransferOptions : System.IEquatable<Azure.Communication.CallAutomation.ContentTransferOptions>
@@ -409,9 +423,10 @@ namespace Azure.Communication.CallAutomation
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Communication.CallAutomation.ContentTransferOptions left, Azure.Communication.CallAutomation.ContentTransferOptions right) { throw null; }
     }
-    public partial class CreateCallEventResult : Azure.Communication.CallAutomation.EventResultBase
+    public partial class CreateCallEventResult
     {
         internal CreateCallEventResult() { }
+        public bool IsSuccessEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnected SuccessEvent { get { throw null; } }
     }
     public partial class CreateCallOptions
@@ -423,12 +438,13 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
     }
-    public partial class CreateCallResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
+    public partial class CreateCallResult
     {
         internal CreateCallResult() { }
         public Azure.Communication.CallAutomation.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties { get { throw null; } }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CreateCallEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
+        public Azure.Communication.CallAutomation.CreateCallEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CreateCallEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CreateGroupCallOptions
     {
@@ -471,27 +487,8 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(Azure.Communication.CallAutomation.DtmfTone left, Azure.Communication.CallAutomation.DtmfTone right) { throw null; }
         public static implicit operator Azure.Communication.CallAutomation.DtmfTone (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.DtmfTone left, Azure.Communication.CallAutomation.DtmfTone right) { throw null; }
+        public char ToChar() { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class EventProcessor
-    {
-        internal EventProcessor() { }
-        public void AttachOngoingEventProcessor<TEvent>(string callConnectionId, System.Action<TEvent> eventProcessor) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { }
-        public void DetachOngoingEventProcessor<TEvent>(string callConnectionId) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { }
-        public void ProcessEvents(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallAutomationEventBase> events) { }
-        public void ProcessEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> events) { }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CallAutomationEventBase> WaitForSingleEvent(System.Func<Azure.Communication.CallAutomation.CallAutomationEventBase, bool> predicate, System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
-        public System.Threading.Tasks.Task<TEvent> WaitForSingleEvent<TEvent>(string connectionId = null, string operationContext = null, System.TimeSpan eventTimeout = default(System.TimeSpan)) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { throw null; }
-    }
-    public partial class EventProcessorOptions
-    {
-        public EventProcessorOptions() { }
-        public System.TimeSpan EventTimeout { get { throw null; } set { } }
-    }
-    public abstract partial class EventResultBase
-    {
-        protected EventResultBase() { }
-        public bool IsSuccessEvent { get { throw null; } }
     }
     public abstract partial class ExternalStorage
     {
@@ -648,6 +645,7 @@ namespace Azure.Communication.CallAutomation
     {
         internal ParticipantsUpdated() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.CallParticipant> Participants { get { throw null; } }
+        public int? SequenceNumber { get { throw null; } }
         public static Azure.Communication.CallAutomation.ParticipantsUpdated Deserialize(string content) { throw null; }
     }
     public partial class PlayCanceled : Azure.Communication.CallAutomation.CallAutomationEventBase
@@ -655,20 +653,23 @@ namespace Azure.Communication.CallAutomation
         internal PlayCanceled() { }
         public static Azure.Communication.CallAutomation.PlayCanceled Deserialize(string content) { throw null; }
     }
-    public partial class PlayCompleted : Azure.Communication.CallAutomation.CallAutomationEventWithReasonCodeName
+    public partial class PlayCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal PlayCompleted() { }
+        public Azure.Communication.CallAutomation.ReasonCode ReasonCode { get { throw null; } }
         public static Azure.Communication.CallAutomation.PlayCompleted Deserialize(string content) { throw null; }
     }
-    public partial class PlayEventResult : Azure.Communication.CallAutomation.EventResultBase
+    public partial class PlayEventResult
     {
         internal PlayEventResult() { }
         public Azure.Communication.CallAutomation.PlayFailed FailureEvent { get { throw null; } }
+        public bool IsSuccessEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.PlayCompleted SuccessEvent { get { throw null; } }
     }
-    public partial class PlayFailed : Azure.Communication.CallAutomation.CallAutomationEventWithReasonCodeName
+    public partial class PlayFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal PlayFailed() { }
+        public Azure.Communication.CallAutomation.ReasonCode ReasonCode { get { throw null; } }
         public static Azure.Communication.CallAutomation.PlayFailed Deserialize(string content) { throw null; }
     }
     public partial class PlayOptions
@@ -677,10 +678,11 @@ namespace Azure.Communication.CallAutomation
         public bool Loop { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
     }
-    public partial class PlayResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
+    public partial class PlayResult
     {
         internal PlayResult() { }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.PlayEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
+        public Azure.Communication.CallAutomation.PlayEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.PlayEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public abstract partial class PlaySource
     {
@@ -737,9 +739,10 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.RecognizeResult RecognizeResult { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeCompleted Deserialize(string content) { throw null; }
     }
-    public partial class RecognizeFailed : Azure.Communication.CallAutomation.CallAutomationEventWithReasonCodeName
+    public partial class RecognizeFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal RecognizeFailed() { }
+        public Azure.Communication.CallAutomation.ReasonCode ReasonCode { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeFailed Deserialize(string content) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -881,6 +884,12 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallRejectReason CallRejectReason { get { throw null; } set { } }
         public string IncomingCallContext { get { throw null; } }
     }
+    public partial class RemoveParticipantFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal RemoveParticipantFailed() { }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RemoveParticipantFailed Deserialize(string content) { throw null; }
+    }
     public partial class RemoveParticipantOptions
     {
         public RemoveParticipantOptions(Azure.Communication.CommunicationIdentifier participantToRemove) { }
@@ -892,16 +901,18 @@ namespace Azure.Communication.CallAutomation
         internal RemoveParticipantResult() { }
         public string OperationContext { get { throw null; } }
     }
+    public partial class RemoveParticipantSucceeded : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal RemoveParticipantSucceeded() { }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RemoveParticipantSucceeded Deserialize(string content) { throw null; }
+    }
     public partial class ResultInformation
     {
         internal ResultInformation() { }
         public int? Code { get { throw null; } }
         public string Message { get { throw null; } }
         public int? SubCode { get { throw null; } }
-    }
-    public abstract partial class ResultWithWaitForEventBase
-    {
-        protected ResultWithWaitForEventBase() { }
     }
     public partial class ServerCallLocator : Azure.Communication.CallAutomation.CallLocator
     {
@@ -915,16 +926,18 @@ namespace Azure.Communication.CallAutomation
         public SsmlSource(string ssmlText) { }
         public string SsmlText { get { throw null; } }
     }
-    public partial class StartRecognizingEventResult : Azure.Communication.CallAutomation.EventResultBase
+    public partial class StartRecognizingEventResult
     {
         internal StartRecognizingEventResult() { }
         public Azure.Communication.CallAutomation.RecognizeFailed FailureEvent { get { throw null; } }
+        public bool IsSuccessEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.RecognizeCompleted SuccessEvent { get { throw null; } }
     }
-    public partial class StartRecognizingResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
+    public partial class StartRecognizingResult
     {
         internal StartRecognizingResult() { }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.StartRecognizingEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
+        public Azure.Communication.CallAutomation.StartRecognizingEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.StartRecognizingEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StartRecordingOptions
     {
@@ -946,17 +959,19 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.GenderType? VoiceGender { get { throw null; } set { } }
         public string VoiceName { get { throw null; } set { } }
     }
-    public partial class TransferCallToParticipantEventResult : Azure.Communication.CallAutomation.EventResultBase
+    public partial class TransferCallToParticipantEventResult
     {
         internal TransferCallToParticipantEventResult() { }
         public Azure.Communication.CallAutomation.CallTransferFailed FailureEvent { get { throw null; } }
+        public bool IsSuccessEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.CallTransferAccepted SuccessEvent { get { throw null; } }
     }
-    public partial class TransferCallToParticipantResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
+    public partial class TransferCallToParticipantResult
     {
         internal TransferCallToParticipantResult() { }
         public string OperationContext { get { throw null; } }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.TransferCallToParticipantEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
+        public Azure.Communication.CallAutomation.TransferCallToParticipantEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.TransferCallToParticipantEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TransferToParticipantOptions
     {
