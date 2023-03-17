@@ -1,6 +1,6 @@
 # Release History
 
-## 7.13.0-beta.1 (Unreleased)
+## 7.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,32 @@
 
 ### Other Changes
 
+## 7.13.1 (2023-03-13)
+
+### Bugs Fixed
+
+- Fixed issue with Guid writing during message settlement that could result in an `ArgumentException` if the ArrayPool returned a buffer that is larger than the size of the Guid.
+
+## 7.13.0 (2023-03-08)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the messaging attribute specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml#L98).
+
+### Bugs Fixed
+
+- Fixed deserialization of the lock token to take into account endianness. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+### Other Changes
+
 - Some checks for cancellation that were occurring after a service operation had been completed have been removed.  Because the service operation was already complete, cancellation was not actually performed and the results of the operation should be returned.
+
+- Exceptions related to the cancellation token being signaled on a receive operation will now be logged as Verbose rather than Error.
 
 ## 7.12.0 (2023-01-12)
 
