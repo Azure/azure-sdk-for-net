@@ -825,7 +825,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                         return;
 
                     received += length;
-                    sha256.TransformBlock(buffer, offset, length, buffer, 0);
+                    sha256.TransformBlock(buffer, offset, length, buffer, offset);
 
                     if (received == contentLength)
                     {

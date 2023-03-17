@@ -32,9 +32,13 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         internal static string ComputeDigest(BinaryData data)
         {
+#if NET6_0_OR_GREATER
+     return FormatDigest(SHA256.HashData(data));
+#else
             using SHA256 sha256 = SHA256.Create();
             var hashValue = sha256.ComputeHash(data.ToArray());
             return FormatDigest(hashValue);
+#endif
         }
 
         internal static string FormatDigest(byte[] hash)
