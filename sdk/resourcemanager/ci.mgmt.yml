@@ -117,6 +117,7 @@ trigger:
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
     - sdk/orbital/Azure.ResourceManager.Orbital
+    - sdk/paloaltonetworks/Azure.ResourceManager.PaloAltoNetworks
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
@@ -283,6 +284,7 @@ pr:
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
     - sdk/orbital/Azure.ResourceManager.Orbital
+    - sdk/paloaltonetworks/Azure.ResourceManager.PaloAltoNetworks
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
