@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Communication.Tests
         private string _dataLocation;
 
         public CommunicationServiceTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
