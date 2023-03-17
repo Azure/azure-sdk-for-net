@@ -8,9 +8,9 @@
         "api-key": "***********",
         "Content-Length": "38",
         "Content-Type": "application/json",
-        "traceparent": "00-f29875f40580ae92a2acf4b80198cd19-487e8861f8508ab9-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "55035988a0cc80b5a0e17865cccbe571",
+        "traceparent": "00-9bb3b9f87a074a8e77dd5a3f1ed12659-ca9e0cc3ed2b4274-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "b9db3a47ef6ebf2026b80fca1322e330",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -19,16 +19,16 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "6e04e8e5-7adf-443c-b05a-33a569309595",
+        "apim-request-id": "47f2f8de-2d5e-4afa-a8b0-9945b11c1c20",
         "Content-Length": "89244",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 03:53:00 GMT",
-        "openai-processing-ms": "37.5738",
+        "Date": "Fri, 17 Mar 2023 16:26:26 GMT",
+        "openai-processing-ms": "212.3668",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "55035988a0cc80b5a0e17865cccbe571",
+        "x-ms-client-request-id": "b9db3a47ef6ebf2026b80fca1322e330",
         "x-ms-region": "East US",
-        "X-Request-ID": "6b039b50-a761-4c95-b9f1-ae5e384c931f"
+        "X-Request-ID": "4821d29c-c8ef-4653-8939-ee3c43946689"
       },
       "ResponseBody": {
         "object": "list",
@@ -4148,6 +4148,6 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1967861342"
+    "RandomSeed": "104430793"
   }
 }

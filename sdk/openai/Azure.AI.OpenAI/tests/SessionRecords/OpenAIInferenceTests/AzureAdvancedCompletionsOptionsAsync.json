@@ -8,9 +8,9 @@
         "api-key": "***********",
         "Content-Length": "135",
         "Content-Type": "application/json",
-        "traceparent": "00-855d1f3eef8a77ad3b2da62d857b5b90-2009cab96831a640-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "d9ee6dd0baa336da179bdcb1decc7489",
+        "traceparent": "00-12bc05d657632cdcb791ad17756d5cb7-404becb00bb52659-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "3f3ad05d21e5879850aa8a2483a4a9ff",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -26,30 +26,30 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "22aedaa7-70a9-436c-a918-39a81b43125f",
+        "apim-request-id": "3b3b7765-0478-4081-ba7b-440f63ab5d50",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "1445",
+        "Content-Length": "1407",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 03:50:31 GMT",
+        "Date": "Fri, 17 Mar 2023 16:26:53 GMT",
         "openai-model": "text-davinci-002",
-        "openai-processing-ms": "870.0749",
+        "openai-processing-ms": "474.0382",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "d9ee6dd0baa336da179bdcb1decc7489",
+        "x-ms-client-request-id": "3f3ad05d21e5879850aa8a2483a4a9ff",
         "x-ms-region": "East US",
-        "X-Request-ID": "03443fbb-59d2-4c7e-a20d-388a669a7a3d"
+        "X-Request-ID": "a0dc36e5-ba20-444f-b84e-2b462401a658"
       },
       "ResponseBody": {
-        "id": "cmpl-6uvOpg4UFWZ10hhWcff92shAZim8M",
+        "id": "cmpl-6v7CnKkLXbXJ7irOw15qblw2ie9re",
         "object": "text_completion",
-        "created": 1679025031,
+        "created": 1679070413,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "Are bananas especially radioactive?\n\nThere is no scientific evidence to suggest that bananas are especially radioactive.",
+            "text": "Are bananas especially radioactive?\n\nThere is no definitive answer to this question as the level of radioactivity",
             "index": 0,
-            "finish_reason": "stop",
+            "finish_reason": "length",
             "logprobs": {
               "tokens": [
                 "Are",
@@ -62,40 +62,40 @@
                 "There",
                 " is",
                 " no",
-                " scientific",
-                " evidence",
+                " definitive",
+                " answer",
                 " to",
-                " suggest",
-                " that",
-                " bananas",
-                " are",
-                " especially",
-                " radioactive",
-                ".",
-                "\u003C|endoftext|\u003E"
+                " this",
+                " question",
+                " as",
+                " the",
+                " level",
+                " of",
+                " radio",
+                "activity"
               ],
               "token_logprobs": [
                 0,
                 -14.245149,
-                -11.099685,
-                -6.3892307,
-                -0.06434352,
-                -0.0004186447,
-                -0.0000084157,
-                -0.78614634,
-                -0.00071307976,
-                -0.00068731094,
-                -0.52006805,
-                -0.0020825032,
-                -0.07519206,
-                -0.42742088,
-                -0.00234254,
-                -0.0002389362,
-                -0.012846767,
-                -0.7402037,
-                -0.00022457016,
-                -0.000039292627,
-                -1.1889347
+                -11.102116,
+                -6.3806796,
+                -0.06389929,
+                -0.00042544052,
+                -0.000008653179,
+                -0.7837118,
+                -0.0007148679,
+                -0.0006832541,
+                -2.075076,
+                -0.000016999666,
+                -0.0038069428,
+                -0.000023795494,
+                -0.0012576877,
+                -0.07873379,
+                -0.18209077,
+                -0.53919625,
+                -7.8540467e-7,
+                -0.019113151,
+                -1.8841804e-7
               ],
               "top_logprobs": [
                 null,
@@ -103,61 +103,61 @@
                   " you": -0.54792994
                 },
                 {
-                  " good": -1.269073
+                  " good": -1.2677795
                 },
                 {
-                  " good": -0.69604325
+                  " good": -0.69813603
                 },
                 {
-                  "?": -0.06434352
+                  "?": -0.06389929
                 },
                 {
-                  "\n": -0.0004186447
+                  "\n": -0.00042544052
                 },
                 {
-                  "\n": -0.0000084157
+                  "\n": -0.000008653179
                 },
                 {
-                  "There": -0.78614634
+                  "There": -0.7837118
                 },
                 {
-                  " is": -0.00071307976
+                  " is": -0.0007148679
                 },
                 {
-                  " no": -0.00068731094
+                  " no": -0.0006832541
                 },
                 {
-                  " scientific": -0.52006805
+                  " scientific": -0.5161227
                 },
                 {
-                  " evidence": -0.0020825032
+                  " answer": -0.000016999666
                 },
                 {
-                  " to": -0.07519206
+                  " to": -0.0038069428
                 },
                 {
-                  " suggest": -0.42742088
+                  " this": -0.000023795494
                 },
                 {
-                  " that": -0.00234254
+                  " question": -0.0012576877
                 },
                 {
-                  " bananas": -0.0002389362
+                  " as": -0.07873379
                 },
                 {
-                  " are": -0.012846767
+                  " the": -0.18209077
                 },
                 {
-                  " especially": -0.7402037
+                  " level": -0.53919625
                 },
                 {
-                  " radioactive": -0.00022457016
+                  " of": -7.8540467e-7
                 },
                 {
-                  ".": -0.000039292627
+                  " radio": -0.019113151
                 },
                 {
-                  " While": -0.8093742
+                  "activity": -1.8841804e-7
                 }
               ],
               "text_offset": [
@@ -173,23 +173,23 @@
                 45,
                 48,
                 59,
-                68,
-                71,
-                79,
-                84,
-                92,
+                66,
+                69,
+                74,
+                83,
+                86,
+                90,
                 96,
-                107,
-                119,
-                120
+                99,
+                105
               ]
             }
           }
         ],
         "usage": {
-          "completion_tokens": 40,
+          "completion_tokens": 41,
           "prompt_tokens": 5,
-          "total_tokens": 45
+          "total_tokens": 46
         }
       }
     }
@@ -199,7 +199,7 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1245125069",
+    "RandomSeed": "1159552267",
     "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

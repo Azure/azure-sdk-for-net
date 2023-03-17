@@ -100,6 +100,15 @@ namespace Azure.AI.OpenAI
                     }
                 }
 
+                // Non-Azure OpenAI doesn't always set the FinishReason on streaming choices when multiple prompts are
+                // provided.
+                lock (_streamingChoicesLock)
+                {
+                    foreach (StreamingChoice streamingChoice in _streamingChoices)
+                    {
+                        streamingChoice.StreamingDoneSignalReceived = true;
+                    }
+                }
                 _streamingTaskComplete = true;
                 _updateAvailableEvent.Set();
             });

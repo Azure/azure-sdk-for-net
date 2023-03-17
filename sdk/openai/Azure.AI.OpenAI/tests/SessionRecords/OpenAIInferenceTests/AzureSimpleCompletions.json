@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "44",
         "Content-Type": "application/json",
-        "traceparent": "00-e96b38891e58521da28b223d238ff889-6c7546a92ab688a3-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "018f2a94c02cbac5f9a1b98e68a0fdea",
+        "traceparent": "00-b62b903ea94533afdf95f13be21a6e7c-af7556afa9414ff6-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "b4c2146e8eb29ab57137be35764ad325",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,24 +22,24 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "4e9f15d5-da1f-4645-9a82-9dcf6e569e42",
+        "apim-request-id": "533d2461-2372-46f7-84a7-ade94b3e9cf9",
         "Cache-Control": "must-revalidate, no-cache",
         "Content-Length": "261",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 03:53:01 GMT",
+        "Date": "Fri, 17 Mar 2023 16:26:27 GMT",
         "openai-model": "text-davinci-002",
-        "openai-processing-ms": "287.0437",
+        "openai-processing-ms": "276.697",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "018f2a94c02cbac5f9a1b98e68a0fdea",
+        "x-ms-client-request-id": "b4c2146e8eb29ab57137be35764ad325",
         "x-ms-region": "East US",
-        "X-Request-ID": "e97c5ba6-61e5-4e30-9348-2590d1bde5c6"
+        "X-Request-ID": "41130661-7038-4eb3-973f-d64895f104b2"
       },
       "ResponseBody": {
-        "id": "cmpl-6uvRFIRJnsrZkMdWbMTdmo3AjR1cW",
+        "id": "cmpl-6v7CN63wgN1AFcWAT8iNPhKMknvcJ",
         "object": "text_completion",
-        "created": 1679025181,
+        "created": 1679070387,
         "model": "text-davinci-002",
         "choices": [
           {
@@ -62,6 +62,6 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1666786909"
+    "RandomSeed": "930894542"
   }
 }

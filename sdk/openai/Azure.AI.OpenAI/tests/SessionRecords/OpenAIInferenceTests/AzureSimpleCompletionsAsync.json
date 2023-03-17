@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "44",
         "Content-Type": "application/json",
-        "traceparent": "00-e9798485e77dcc1b188ce4ba90caedca-2b9d4982f6409a25-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "0ac565e3c4bc9318b6d760693f27f116",
+        "traceparent": "00-0d054e2503756c958092ebee83f8a7bf-5c9972376fbbdcbc-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "d337abb4ff48bd1d51dd1a5e217a7a5c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,37 +22,37 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "eaeb80d9-8f6e-44f9-81e2-210d734befc7",
+        "apim-request-id": "7cf36dc3-b9c0-4998-a616-58e6252e16d5",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "261",
+        "Content-Length": "321",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 03:51:07 GMT",
+        "Date": "Fri, 17 Mar 2023 16:27:16 GMT",
         "openai-model": "text-davinci-002",
-        "openai-processing-ms": "640.4222",
+        "openai-processing-ms": "300.5021",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "0ac565e3c4bc9318b6d760693f27f116",
+        "x-ms-client-request-id": "d337abb4ff48bd1d51dd1a5e217a7a5c",
         "x-ms-region": "East US",
-        "X-Request-ID": "d73a2591-a1bc-4e7a-8dc9-e40a21305e22"
+        "X-Request-ID": "16a3ddc1-a926-403f-8028-fa5b38efd311"
       },
       "ResponseBody": {
-        "id": "cmpl-6uvPPsvSD7jYYzwLZpZOcVbO83a3a",
+        "id": "cmpl-6v7D95ZiHcuew5V86yvqXsH8loYba",
         "object": "text_completion",
-        "created": 1679025067,
+        "created": 1679070435,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "\n",
+            "text": "\n\nI\u0027m here to learn about programming and web development!",
             "index": 0,
             "finish_reason": "stop",
             "logprobs": null
           }
         ],
         "usage": {
-          "completion_tokens": 1,
+          "completion_tokens": 13,
           "prompt_tokens": 3,
-          "total_tokens": 4
+          "total_tokens": 16
         }
       }
     }
@@ -62,6 +62,6 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1886959635"
+    "RandomSeed": "903646568"
   }
 }

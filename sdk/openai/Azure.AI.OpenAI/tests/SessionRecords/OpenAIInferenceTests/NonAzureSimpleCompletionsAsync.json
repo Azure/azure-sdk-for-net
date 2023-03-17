@@ -6,64 +6,58 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "88",
+        "Content-Length": "71",
         "Content-Type": "application/json",
-        "traceparent": "00-97473b8ec9a4a3c0fdc3f890e63f739a-dbf38860362c9e18-00",
+        "traceparent": "00-3b7e57ae1f1f5d82a35c55333e724434-10d81aca1a4e781a-00",
         "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "e696b38d732a152d0be84360656125ef",
+        "x-ms-client-request-id": "466d3c1087829ace107cbe567c107144",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "prompt": [
-          "Hello world",
-          "running over the same old ground"
+          "Hello world!"
         ],
-        "model": "text-davinci-003"
+        "max_tokens": 100,
+        "model": "text-davinci-002"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Cache-Control": "must-revalidate, no-cache",
         "Connection": "keep-alive",
-        "Content-Length": "472",
+        "Content-Length": "533",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 16:27:23 GMT",
-        "Openai-Model": "text-davinci-003",
+        "Date": "Fri, 17 Mar 2023 16:27:46 GMT",
+        "Openai-Model": "text-davinci-002",
         "Openai-Organization": "msft-finetuning-2",
-        "Openai-Processing-Ms": "639",
+        "Openai-Processing-Ms": "1500",
         "Openai-Version": "2020-10-01",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Ratelimit-Limit-Requests": "3000",
         "X-Ratelimit-Limit-Tokens": "250000",
-        "X-Ratelimit-Remaining-Requests": "5480",
-        "X-Ratelimit-Remaining-Tokens": "456844",
-        "X-Ratelimit-Reset-Requests": "109.62",
-        "X-Ratelimit-Reset-Tokens": "109.64",
-        "X-Request-ID": "8f24765ab48b00c4bc1a59194785f9c6"
+        "X-Ratelimit-Remaining-Requests": "8964",
+        "X-Ratelimit-Remaining-Tokens": "733088",
+        "X-Ratelimit-Reset-Requests": "179.28",
+        "X-Ratelimit-Reset-Tokens": "175.94",
+        "X-Request-ID": "6138c053b6a14e37376c7510f34bc5b5"
       },
       "ResponseBody": {
-        "id": "cmpl-6v7DGzumuskmRuzr5923NFQJN66bm",
+        "id": "cmpl-6v7Dcf47NgU1UrGp9zhPFIHIE29n4",
         "object": "text_completion",
-        "created": 1679070442,
-        "model": "text-davinci-003",
+        "created": 1679070464,
+        "model": "text-davinci-002",
         "choices": [
           {
-            "text": "\n\nHello friends! Thank you for taking a moment to look at my introduction",
+            "text": "\n\u002B//\n\u002B#include \u003Cbits/stdc\u002B\u002B.h\u003E\n\u002Busing namespace std;\n\u002B\n\u002Bint main()\n\u002B{\n\u002B      ios_base::sync_with_stdio(false);\n\u002B      cin.tie(NULL);\n\u002B      cout.tie(NULL);\n\u002B      // Solution starts from here\n\u002B      if(false)\n\u002B      {\n\u002B            cout\u003C\u003C\u0022false\u0022\u003C\u003Cendl;\n",
             "index": 0,
-            "logprobs": null,
-            "finish_reason": "length"
-          },
-          {
-            "text": "\n\nRunning over the same old ground is when a person does not take the",
-            "index": 1,
             "logprobs": null,
             "finish_reason": "length"
           }
         ],
         "usage": {
-          "prompt_tokens": 8,
-          "completion_tokens": 32,
-          "total_tokens": 40
+          "prompt_tokens": 3,
+          "completion_tokens": 100,
+          "total_tokens": 103
         }
       }
     }
@@ -72,6 +66,6 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1514867581"
+    "RandomSeed": "1641595204"
   }
 }

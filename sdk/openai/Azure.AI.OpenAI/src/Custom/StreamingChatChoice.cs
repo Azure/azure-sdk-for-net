@@ -37,6 +37,17 @@ namespace Azure.AI.OpenAI
 
         internal ChatMessage StreamingDeltaMessage { get; set; }
 
+        internal bool StreamingDoneSignalReceived
+        {
+            get => _streamingDoneSignalReceived;
+            set
+            {
+                _streamingDoneSignalReceived = value;
+                _updateAvailableEvent.Set();
+            }
+        }
+        private bool _streamingDoneSignalReceived;
+
         internal StreamingChatChoice(ChatChoice originalBaseChoice)
         {
             _baseChoices = new List<ChatChoice>() { originalBaseChoice };
@@ -73,10 +84,10 @@ namespace Azure.AI.OpenAI
                     {
                         ChatChoice mostRecentChoice = _baseChoices.Last();
                         string mostRecentFinishReason = mostRecentChoice.FinishReason;
-                        bool choiceIsComplete = !string.IsNullOrEmpty(mostRecentFinishReason);
+                        bool choiceIsComplete = !string.IsNullOrEmpty(mostRecentFinishReason) || StreamingDoneSignalReceived;
 
                         doneWaiting = choiceIsComplete || i < _baseChoices.Count;
-                        isFinalIndex = choiceIsComplete && i == _baseChoices.Count - 1;
+                        isFinalIndex = choiceIsComplete && i >= _baseChoices.Count - 1;
                     }
 
                     if (!doneWaiting)

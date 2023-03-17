@@ -1,0 +1,208 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.openai.com/v1/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "162",
+        "Content-Type": "application/json",
+        "traceparent": "00-56d21d6c3e12e95fdd2e432beb4c7dd4-c9159fd3bd23f392-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "98e3b9c0d6f4e44a09f666ad23e9990b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Are bananas especially radioactive?"
+        ],
+        "temperature": 0.75,
+        "user": "AzureSDKOpenAITests",
+        "logprobs": 1,
+        "echo": true,
+        "best_of": 3,
+        "model": "text-davinci-002"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Connection": "keep-alive",
+        "Content-Length": "1447",
+        "Content-Type": "application/json",
+        "Date": "Fri, 17 Mar 2023 16:27:19 GMT",
+        "Openai-Model": "text-davinci-002",
+        "Openai-Organization": "msft-finetuning-2",
+        "Openai-Processing-Ms": "726",
+        "Openai-Version": "2020-10-01",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Ratelimit-Limit-Requests": "3000",
+        "X-Ratelimit-Limit-Tokens": "250000",
+        "X-Ratelimit-Remaining-Requests": "7656",
+        "X-Ratelimit-Remaining-Tokens": "630163",
+        "X-Ratelimit-Reset-Requests": "153.12",
+        "X-Ratelimit-Reset-Tokens": "151.24",
+        "X-Request-ID": "4c767561d433cd032bbf688f1c13f560"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6v7DC1xJnqQaWaZiIkDJQo3FCgN8P",
+        "object": "text_completion",
+        "created": 1679070438,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "Are bananas especially radioactive?\n\nThere is no scientific evidence to support the claim that bananas are especially radioactive",
+            "index": 0,
+            "logprobs": {
+              "tokens": [
+                "Are",
+                " bananas",
+                " especially",
+                " radioactive",
+                "?",
+                "\n",
+                "\n",
+                "There",
+                " is",
+                " no",
+                " scientific",
+                " evidence",
+                " to",
+                " support",
+                " the",
+                " claim",
+                " that",
+                " bananas",
+                " are",
+                " especially",
+                " radioactive"
+              ],
+              "token_logprobs": [
+                null,
+                -14.245065,
+                -11.107244,
+                -6.3912973,
+                -0.06380749,
+                -0.00042043283,
+                -8.176345e-6,
+                -0.7838188,
+                -0.0007242328,
+                -0.0007041307,
+                -0.5175299,
+                -0.002123538,
+                -0.07420278,
+                -1.0572085,
+                -0.00008459475,
+                -0.014093876,
+                -3.170517e-6,
+                -0.00009592052,
+                -0.0017716006,
+                -0.33348888,
+                -0.00013133019
+              ],
+              "top_logprobs": [
+                null,
+                {
+                  " you": -0.54791063
+                },
+                {
+                  " good": -1.2702314
+                },
+                {
+                  " good": -0.69638973
+                },
+                {
+                  "?": -0.06380749
+                },
+                {
+                  "\n": -0.00042043283
+                },
+                {
+                  "\n": -8.176345e-6
+                },
+                {
+                  "There": -0.7838188
+                },
+                {
+                  " is": -0.0007242328
+                },
+                {
+                  " no": -0.0007041307
+                },
+                {
+                  " scientific": -0.5175299
+                },
+                {
+                  " evidence": -0.002123538
+                },
+                {
+                  " to": -0.07420278
+                },
+                {
+                  " suggest": -0.4281804
+                },
+                {
+                  " the": -0.00008459475
+                },
+                {
+                  " claim": -0.014093876
+                },
+                {
+                  " that": -3.170517e-6
+                },
+                {
+                  " bananas": -0.00009592052
+                },
+                {
+                  " are": -0.0017716006
+                },
+                {
+                  " especially": -0.33348888
+                },
+                {
+                  " radioactive": -0.00013133019
+                }
+              ],
+              "text_offset": [
+                0,
+                3,
+                11,
+                22,
+                34,
+                35,
+                36,
+                37,
+                42,
+                45,
+                48,
+                59,
+                68,
+                71,
+                79,
+                83,
+                89,
+                94,
+                102,
+                106,
+                117
+              ]
+            },
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 5,
+          "completion_tokens": 42,
+          "total_tokens": 47
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "1101863716"
+  }
+}

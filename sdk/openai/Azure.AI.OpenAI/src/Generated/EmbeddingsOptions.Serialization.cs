@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class EmbeddingsOptions : IUtf8JsonSerializable
+    public partial class EmbeddingsOptions
     {
     }
 }

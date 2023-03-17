@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "300",
         "Content-Type": "application/json",
-        "traceparent": "00-a98a29bc4c295fa929c643aa5bbf618a-695eea4180305fd0-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "c417cb1e5fc63210a452a1d690677c9f",
+        "traceparent": "00-d65daffed435d8adbeb4d3cdbce38d8d-1f212cf399cd5a63-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "e3751b9b5879df67e6797f171d6ac1b3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -40,34 +40,34 @@
         "Access-Control-Allow-Origin": "*",
         "Cache-Control": "must-revalidate, no-cache",
         "Connection": "keep-alive",
+        "Content-Length": "616",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 03:53:08 GMT",
+        "Date": "Fri, 17 Mar 2023 16:26:32 GMT",
         "Openai-Model": "gpt-3.5-turbo-0301",
         "Openai-Organization": "msft-finetuning-2",
-        "Openai-Processing-Ms": "2956",
+        "Openai-Processing-Ms": "2025",
         "Openai-Version": "2020-10-01",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Transfer-Encoding": "chunked",
         "X-Ratelimit-Limit-Requests": "3500",
         "X-Ratelimit-Remaining-Requests": "3499",
         "X-Ratelimit-Reset-Requests": "59.98",
-        "X-Request-ID": "61c0f9965a86d900eb6fb0ed9f38d9bd"
+        "X-Request-ID": "442d1336e4cb89206b4a426b6d321b89"
       },
       "ResponseBody": {
-        "id": "chatcmpl-6uvRJNAwAFbrNASQzaM2hLXK4MGxb",
+        "id": "chatcmpl-6v7CQhpuhLVXNNiHVXvxzCrcXzD55",
         "object": "chat.completion",
-        "created": 1679025185,
+        "created": 1679070390,
         "model": "gpt-3.5-turbo-0301",
         "usage": {
           "prompt_tokens": 51,
-          "completion_tokens": 117,
-          "total_tokens": 168
+          "completion_tokens": 69,
+          "total_tokens": 120
         },
         "choices": [
           {
             "message": {
               "role": "assistant",
-              "content": "The temperature you should bake pizza at depends on the type of pizza and crust you have. In general, traditional thin-crust pizza is typically baked at a high temperature of around 450 - 500\u00B0F (230 - 260\u00B0C), while thicker-crusted pizza may be baked at a lower temperature of 375 - 425\u00B0F (190 - 220\u00B0C).\n\nIt is important to follow the instructions on the pizza packaging or your pizza recipe for the specific temperature and baking time. That way, you can ensure that your pizza comes out perfectly cooked and with a crispy crust."
+              "content": "Typically, pizza is baked at a temperature of 450-500 degrees Fahrenheit (230-260 degrees Celsius) for 10-15 minutes, depending on the thickness of the crust and the toppings. It is best to consult the instructions on the pizza packaging or your favorite pizza recipe to get more specific guidance on baking temperature and time."
             },
             "finish_reason": "stop",
             "index": 0
@@ -80,6 +80,6 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "177152957"
+    "RandomSeed": "1069636817"
   }
 }

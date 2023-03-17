@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "88",
         "Content-Type": "application/json",
-        "traceparent": "00-67f40ed652603ec1b5ce67a440b34db5-7c6a6e899635cbf3-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "2dc49fe2cb68f748d9d7b4a035d4736c",
+        "traceparent": "00-360b96ce13053489f302fb8c05b1b77f-9810818b20c77ab0-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "8630928611d1b71ce2530cabf6cb1142",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -25,12 +25,12 @@
         "Access-Control-Allow-Origin": "*",
         "Cache-Control": "must-revalidate, no-cache",
         "Connection": "keep-alive",
-        "Content-Length": "407",
+        "Content-Length": "452",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 03:53:08 GMT",
+        "Date": "Fri, 17 Mar 2023 16:26:33 GMT",
         "Openai-Model": "text-davinci-003",
         "Openai-Organization": "msft-finetuning-2",
-        "Openai-Processing-Ms": "544",
+        "Openai-Processing-Ms": "478",
         "Openai-Version": "2020-10-01",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Ratelimit-Limit-Requests": "3000",
@@ -39,22 +39,22 @@
         "X-Ratelimit-Remaining-Tokens": "249968",
         "X-Ratelimit-Reset-Requests": "59.98",
         "X-Ratelimit-Reset-Tokens": "59.99",
-        "X-Request-ID": "58e8c5530bfdf6517ad130674f73828c"
+        "X-Request-ID": "02d17c40ca942f21b950c15dbed4b982"
       },
       "ResponseBody": {
-        "id": "cmpl-6uvRMigSjzbYjQfJ3PZsP1B8iao94",
+        "id": "cmpl-6v7CTCiboc19qsQT1zVJNwc6CMWGR",
         "object": "text_completion",
-        "created": 1679025188,
+        "created": 1679070393,
         "model": "text-davinci-003",
         "choices": [
           {
-            "text": "\n\nUpdated file",
+            "text": "\n\nHello world is a phrase that is used as a test for new systems",
             "index": 0,
             "logprobs": null,
-            "finish_reason": "stop"
+            "finish_reason": "length"
           },
           {
-            "text": "\n\nWhat is used to refer to rehashing a conversation or revisiting",
+            "text": "\n\nthe story had been told\na thousand times or more\nbut I",
             "index": 1,
             "logprobs": null,
             "finish_reason": "length"
@@ -62,8 +62,8 @@
         ],
         "usage": {
           "prompt_tokens": 8,
-          "completion_tokens": 20,
-          "total_tokens": 28
+          "completion_tokens": 32,
+          "total_tokens": 40
         }
       }
     }
@@ -72,6 +72,6 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "47577112"
+    "RandomSeed": "1190829692"
   }
 }

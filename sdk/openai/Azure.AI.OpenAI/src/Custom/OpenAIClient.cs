@@ -396,7 +396,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                HttpMessage message = CreateGetCompletionsRequest(deploymentOrModelName, streamingContent, context);
+                HttpMessage message = CreateGetChatCompletionsRequest(deploymentOrModelName, streamingContent, context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(new StreamingChatCompletions(baseResponse), baseResponse);

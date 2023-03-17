@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "300",
         "Content-Type": "application/json",
-        "traceparent": "00-2854977bd549f673018c32e390811ada-7356b21d4e953eb2-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "f43dc235635d1b0ff641eb5ffc2a9c15",
+        "traceparent": "00-583286c928c5430b4ad605edf2530eaa-7c6fb95387d8b6e1-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "7aaa02cb776911ca26a751feb6cd2054",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -40,34 +40,34 @@
         "Access-Control-Allow-Origin": "*",
         "Cache-Control": "must-revalidate, no-cache",
         "Connection": "keep-alive",
+        "Content-Length": "984",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 03:51:16 GMT",
+        "Date": "Fri, 17 Mar 2023 16:27:22 GMT",
         "Openai-Model": "gpt-3.5-turbo-0301",
         "Openai-Organization": "msft-finetuning-2",
-        "Openai-Processing-Ms": "3416",
+        "Openai-Processing-Ms": "3156",
         "Openai-Version": "2020-10-01",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Transfer-Encoding": "chunked",
         "X-Ratelimit-Limit-Requests": "3500",
-        "X-Ratelimit-Remaining-Requests": "3499",
-        "X-Ratelimit-Reset-Requests": "59.98",
-        "X-Request-ID": "a0868fcaf5658bd06fecbb57faef4737"
+        "X-Ratelimit-Remaining-Requests": "6328",
+        "X-Ratelimit-Reset-Requests": "108.48",
+        "X-Request-ID": "76138e987f213b87ab59e094d1dab769"
       },
       "ResponseBody": {
-        "id": "chatcmpl-6uvPVzAJfAsRcJHvLkL2MJhxtXws3",
+        "id": "chatcmpl-6v7DDZUjfOZTyj1RHn0CIf9pTLNZd",
         "object": "chat.completion",
-        "created": 1679025073,
+        "created": 1679070439,
         "model": "gpt-3.5-turbo-0301",
         "usage": {
           "prompt_tokens": 51,
-          "completion_tokens": 134,
-          "total_tokens": 185
+          "completion_tokens": 155,
+          "total_tokens": 206
         },
         "choices": [
           {
             "message": {
               "role": "assistant",
-              "content": "The temperature you should bake pizza at can vary depending on the type of pizza and the crust you are using. A general rule of thumb for most home ovens is to preheat your oven to 450\u00B0F (230\u00B0C) and bake your pizza for 12-15 minutes. However, if you are using a thin crust, you may need to lower the temperature and bake it for a shorter amount of time, while if you are using a thicker deep-dish crust, you may need to raise the temperature and bake it for a longer amount of time. It\u0027s always best to refer to the specific recipe or instructions provided with your pizza ingredients and crust."
+              "content": "It depends on the type of pizza you\u0027re making and the baking method you\u0027re using, but generally, pizzas are baked at high temperatures. \n\nFor a classic thin-crust pizza baked in a conventional oven, 425-450 degrees Fahrenheit (218-232 degrees Celsius) works well. For a thicker crust or deep-dish pizza, you may want to lower the temperature to 375-400 degrees Fahrenheit (190-204 degrees Celsius) and bake for longer. \n\nIf you\u0027re using a pizza stone or pizza steel, you can preheat it to an even higher temperature, such as 500-550 degrees Fahrenheit (260-288 degrees Celsius). \n\nFinally, always defer to the baking instructions that came with your pizza dough or kit for the best results."
             },
             "finish_reason": "stop",
             "index": 0
@@ -80,6 +80,6 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "2080344848"
+    "RandomSeed": "165005285"
   }
 }

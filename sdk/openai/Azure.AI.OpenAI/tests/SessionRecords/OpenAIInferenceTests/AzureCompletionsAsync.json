@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "61",
         "Content-Type": "application/json",
-        "traceparent": "00-0845714e531c230f9fdca1b31895e4b4-04d69830daf28317-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "d90c184236af5c5a533efa80e58817cc",
+        "traceparent": "00-78d07e543828d4a76c8749d684898310-04e37aad06cf8608-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "7612372e349896c5db4b81f23c0227d8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,34 +22,34 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "9381654f-e5c4-4560-9c2a-fd372e2ea5c6",
+        "apim-request-id": "447edca8-53c2-42ed-b9f1-7d7d84e6b463",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "457",
+        "Content-Length": "446",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 03:50:33 GMT",
+        "Date": "Fri, 17 Mar 2023 16:26:54 GMT",
         "openai-model": "text-davinci-002",
-        "openai-processing-ms": "1116.0586",
+        "openai-processing-ms": "517.8851",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "d90c184236af5c5a533efa80e58817cc",
+        "x-ms-client-request-id": "7612372e349896c5db4b81f23c0227d8",
         "x-ms-region": "East US",
-        "X-Request-ID": "f04e3b8d-fc32-4dde-90e9-423d9218cb00"
+        "X-Request-ID": "c79c51ef-a144-43da-980a-2b885781d453"
       },
       "ResponseBody": {
-        "id": "cmpl-6uvOqvgMn5fLj7FcKe4h7nOUAJrc8",
+        "id": "cmpl-6v7CoITLhtsVX46pG1Q5nCClMRGGV",
         "object": "text_completion",
-        "created": 1679025032,
+        "created": 1679070414,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": " Hello world\n\nHello world\n\nHello, world!\n\nGreetings",
+            "text": "!\u0022;\n//             while(true) {\n//                 const buffer =",
             "index": 0,
             "finish_reason": "length",
             "logprobs": null
           },
           {
-            "text": "! There\u0027s more excitement ahead than we\u0027ve found in this glum little world",
+            "text": "\u2019 and even \u2018digging his grave\u2019 in 2011. There",
             "index": 1,
             "finish_reason": "length",
             "logprobs": null
@@ -68,6 +68,6 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1217873748"
+    "RandomSeed": "1614828414"
   }
 }

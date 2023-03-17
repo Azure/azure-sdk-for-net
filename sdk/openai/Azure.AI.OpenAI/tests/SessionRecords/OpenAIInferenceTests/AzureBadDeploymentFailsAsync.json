@@ -8,9 +8,9 @@
         "api-key": "***********",
         "Content-Length": "26",
         "Content-Type": "application/json",
-        "traceparent": "00-580c076974c0e8cad2df73fd17c10a61-d203224458e82e3a-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230316.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "e261a030e66bd28a5dd93df86fa31312",
+        "traceparent": "00-545a6fc4ae32c81d4f8a6a4e3fad3bc1-1ec295dbe70c9a2a-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230317.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "7bc5df4c0d453dcfa2571e09342f818c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -20,11 +20,11 @@
       },
       "StatusCode": 404,
       "ResponseHeaders": {
-        "apim-request-id": "84ddd856-5bf0-455e-bc6a-b3e07b0291aa",
+        "apim-request-id": "ec20a1c4-0f3c-40c5-ae00-86c231cde7a3",
         "Content-Length": "198",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Mar 2023 03:50:31 GMT",
-        "OpenAI-Processing-Ms": "1.3116",
+        "Date": "Fri, 17 Mar 2023 16:26:53 GMT",
+        "OpenAI-Processing-Ms": "1.3583",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-ms-region": "East US"
@@ -41,6 +41,6 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "41611858"
+    "RandomSeed": "796287278"
   }
 }
