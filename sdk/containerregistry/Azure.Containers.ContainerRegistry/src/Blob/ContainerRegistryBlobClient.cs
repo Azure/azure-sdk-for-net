@@ -143,7 +143,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The result of the manifest upload.</returns>
         public virtual Response<UploadManifestResult> UploadManifest(OciImageManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
@@ -170,7 +170,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The result of the manifest upload.</returns>
         public virtual Response<UploadManifestResult> UploadManifest(BinaryData manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
@@ -186,7 +186,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The result of the manifest upload.</returns>
         internal virtual Response<UploadManifestResult> UploadManifest(Stream manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
@@ -213,7 +213,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The result of the manifest upload.</returns>
         public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(OciImageManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
@@ -240,7 +240,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The result of the manifest upload.</returns>
         public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(BinaryData manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
@@ -251,21 +251,21 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Uploads an artifact manifest.
         /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> containing the serialized manifest to upload.</param>
+        /// <param name="manifest">The <see cref="Stream"/> containing the serialized manifest to upload.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
-        internal virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(Stream stream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        /// <returns>The result of the manifest upload.</returns>
+        internal virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(Stream manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            Argument.AssertNotNull(manifest, nameof(manifest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
             scope.Start();
             try
             {
-                using MemoryStream manifestStream = await CopyStreamAsync(stream, true).ConfigureAwait(false);
+                using MemoryStream manifestStream = await CopyStreamAsync(manifest, true).ConfigureAwait(false);
                 return await UploadManifestInternalAsync(manifestStream, tag, mediaType, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -275,15 +275,15 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private async Task<Response<UploadManifestResult>> UploadManifestInternalAsync(MemoryStream stream, string tag, ManifestMediaType? mediaType, bool async, CancellationToken cancellationToken)
+        private async Task<Response<UploadManifestResult>> UploadManifestInternalAsync(MemoryStream manifest, string tag, ManifestMediaType? mediaType, bool async, CancellationToken cancellationToken)
         {
-            string contentDigest = BlobHelper.ComputeDigest(stream);
+            string contentDigest = BlobHelper.ComputeDigest(manifest);
             string tagOrDigest = tag ?? contentDigest;
             string contentType = mediaType.HasValue ? mediaType.ToString() : ManifestMediaType.OciImageManifest.ToString();
 
             ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = async ?
-                await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, contentType, cancellationToken).ConfigureAwait(false) :
-                _restClient.CreateManifest(_repositoryName, tagOrDigest, stream, contentType, cancellationToken);
+                await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifest, contentType, cancellationToken).ConfigureAwait(false) :
+                _restClient.CreateManifest(_repositoryName, tagOrDigest, manifest, contentType, cancellationToken);
 
             ValidateDigest(contentDigest, response.Headers.DockerContentDigest);
 
@@ -326,9 +326,9 @@ namespace Azure.Containers.ContainerRegistry
             return stream;
         }
 
-        private static OciImageManifest DeserializeManifest(Stream stream)
+        private static OciImageManifest DeserializeManifest(Stream manifest)
         {
-            using var document = JsonDocument.Parse(stream);
+            using var document = JsonDocument.Parse(manifest);
             return OciImageManifest.DeserializeOciImageManifest(document.RootElement);
         }
 
@@ -337,7 +337,7 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="content">The blob content.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
         public virtual Response<UploadBlobResult> UploadBlob(BinaryData content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -350,7 +350,7 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="content">The stream containing the blob data.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
         public virtual Response<UploadBlobResult> UploadBlob(Stream content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -383,7 +383,7 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="content">The blob content.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
         public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(BinaryData content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -396,7 +396,7 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="content">The stream containing the blob data.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
         public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -424,17 +424,17 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private async Task<ChunkedUploadResult> UploadInChunksInternalAsync(string location, Stream stream, int chunkSize, bool async = true, CancellationToken cancellationToken = default)
+        private async Task<ChunkedUploadResult> UploadInChunksInternalAsync(string location, Stream content, int chunkSize, bool async = true, CancellationToken cancellationToken = default)
         {
             ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = null;
 
             // If the stream is seekable and smaller than the max chunk size, upload in a single chunk.
-            if (TryGetLength(stream, out long length) && length < chunkSize)
+            if (TryGetLength(content, out long length) && length < chunkSize)
             {
                 // Create a copy so we don't dispose the caller's stream when sending.
                 using MemoryStream chunk = async ?
-                    await CopyStreamAsync(stream, true).ConfigureAwait(false) :
-                    CopyStreamAsync(stream, false).EnsureCompleted();
+                    await CopyStreamAsync(content, true).ConfigureAwait(false) :
+                    CopyStreamAsync(content, false).EnsureCompleted();
 
                 string digest = BlobHelper.ComputeDigest(chunk);
 
@@ -455,8 +455,8 @@ namespace Azure.Containers.ContainerRegistry
             {
                 // Read first chunk into buffer.
                 int bytesRead = async ?
-                    await stream.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
-                    stream.Read(buffer, 0, chunkSize);
+                    await content.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
+                    content.Read(buffer, 0, chunkSize);
 
                 while (bytesRead > 0)
                 {
@@ -478,8 +478,8 @@ namespace Azure.Containers.ContainerRegistry
 
                     // Read next chunk into buffer
                     bytesRead = async ?
-                        await stream.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
-                        stream.Read(buffer, 0, chunkSize);
+                        await content.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
+                        content.Read(buffer, 0, chunkSize);
                 }
 
                 // Complete hash computation.
@@ -761,7 +761,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="destination">Destination for the downloaded blob.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        /// <returns>The response corresponding to the final GET blob chunk request.</returns>
         public virtual Response DownloadBlobTo(string digest, Stream destination, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -878,7 +878,7 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="digest">The digest of the blob to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The response received from the delete operation.</returns>
         public virtual Response DeleteBlob(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -902,7 +902,7 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="digest">The digest of the blob to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The response received from the delete operation.</returns>
         public virtual async Task<Response> DeleteBlobAsync(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -926,7 +926,7 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="digest">The digest of the manifest to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The response received from the delete operation.</returns>
         public virtual Response DeleteManifest(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
@@ -949,7 +949,7 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="digest">The digest of the manifest to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <returns>The response received from the delete operation.</returns>
         public virtual async Task<Response> DeleteManifestAsync(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
