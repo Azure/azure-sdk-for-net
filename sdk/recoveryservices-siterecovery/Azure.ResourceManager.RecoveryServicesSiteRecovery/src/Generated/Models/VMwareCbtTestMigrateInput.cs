@@ -53,5 +53,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: VMwareCbtTestMigrateInput.vmNics
         /// </summary>
         public IList<VMwareCbtNicInput> VmNics { get; }
+        /// <summary>
+        /// A value indicating the inplace OS Upgrade version.
+        /// Serialized Name: VMwareCbtTestMigrateInput.osUpgradeVersion
+        /// </summary>
+        public string OSUpgradeVersion { get; set; }
     }
 }

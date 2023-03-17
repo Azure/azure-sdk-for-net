@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> The SearchServiceAdminKeyKind. </summary>
     public enum SearchServiceAdminKeyKind
     {
-        /// <summary> primary. </summary>
+        /// <summary> The primary API key for the search service. </summary>
         Primary,
-        /// <summary> secondary. </summary>
+        /// <summary> The secondary API key for the search service. </summary>
         Secondary
     }
 }

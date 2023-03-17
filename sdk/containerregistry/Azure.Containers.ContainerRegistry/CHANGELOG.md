@@ -1,5 +1,25 @@
 # Release History
 
+## 1.1.0-beta.9 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.8 (2023-03-13)
+
+### Features Added
+
+- Added `SizeInBytes` to `UploadBlobResult` to prevent the need to check stream length on a possibly non-seekable stream.
+
+### Breaking Changes
+
+- Renamed `OciBlobDescriptor` to `OciDescriptor`.
+
 ## 1.1.0-beta.7 (2023-03-07)
 
 ### Features Added

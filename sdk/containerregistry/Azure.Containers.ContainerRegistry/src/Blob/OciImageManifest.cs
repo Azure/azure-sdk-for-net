@@ -5,14 +5,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    [CodeGenModel("OCIManifest")]
+    [CodeGenModel("OciImageManifest")]
     public partial class OciImageManifest
     {
-        /// <summary> Initializes a new instance of OciImageManifest. </summary>
-        public OciImageManifest()
-        {
-            Layers = new ChangeTrackingList<OciBlobDescriptor>();
-            SchemaVersion = 2;
-        }
     }
 }

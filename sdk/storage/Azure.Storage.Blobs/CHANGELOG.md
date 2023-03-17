@@ -2,6 +2,7 @@
 
 ## 12.16.0-beta.1 (Unreleased)
 - Added support for service version 2022-11-02.
+- Fixed bug where GenerateSasUri did not honor TrimBlobNameSlashes when creating the SAS (#34591).
 
 ## 12.15.0 (2023-02-21)
 - Includes all features from 12.15.0-beta.1.

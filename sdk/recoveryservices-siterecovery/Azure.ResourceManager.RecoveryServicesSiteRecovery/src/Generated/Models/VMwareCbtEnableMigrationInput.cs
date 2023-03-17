@@ -152,6 +152,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         public string TargetProximityPlacementGroupId { get; set; }
         /// <summary>
+        /// The confidential VM key vault Id for ADE installation.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.confidentialVmKeyVaultId
+        /// </summary>
+        public ResourceIdentifier ConfidentialVmKeyVaultId { get; set; }
+        /// <summary>
+        /// The target VM security profile.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetVmSecurityProfile
+        /// </summary>
+        public VMwareCbtSecurityProfileProperties TargetVmSecurityProfile { get; set; }
+        /// <summary>
         /// The target boot diagnostics storage account ARM Id.
         /// Serialized Name: VMwareCbtEnableMigrationInput.targetBootDiagnosticsStorageAccountId
         /// </summary>

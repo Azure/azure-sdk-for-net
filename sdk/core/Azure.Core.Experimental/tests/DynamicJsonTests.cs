@@ -688,6 +688,28 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(null, dynamicJson.Foo);
         }
 
+        [Test]
+        public void CanGetPascalCaseNestedProperties()
+        {
+            string json = """
+                {
+                    "root" : {
+                        "child" : [
+                            {
+                                "item": {
+                                    "leaf" : true
+                                }
+                            }
+                        ]
+                    }
+                }
+                """;
+
+            dynamic dynamicJson = BinaryData.FromString(json).ToDynamic(DynamicJsonOptions.AzureDefault);
+            Assert.IsTrue(dynamicJson.root.child[0].item.leaf);
+            Assert.IsTrue(dynamicJson.Root.Child[0].Item.Leaf);
+        }
+
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {

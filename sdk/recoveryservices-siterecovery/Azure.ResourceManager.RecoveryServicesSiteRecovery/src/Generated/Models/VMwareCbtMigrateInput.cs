@@ -35,5 +35,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: VMwareCbtMigrateInput.performShutdown
         /// </summary>
         public string PerformShutdown { get; }
+        /// <summary>
+        /// A value indicating the inplace OS Upgrade version.
+        /// Serialized Name: VMwareCbtMigrateInput.osUpgradeVersion
+        /// </summary>
+        public string OSUpgradeVersion { get; set; }
     }
 }

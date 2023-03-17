@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetNicTags = new ChangeTrackingDictionary<string, string>();
             SeedDiskTags = new ChangeTrackingDictionary<string, string>();
             TargetDiskTags = new ChangeTrackingDictionary<string, string>();
+            SupportedOSVersions = new ChangeTrackingList<string>();
             InstanceType = "VMwareCbt";
         }
 
@@ -41,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="osType">
         /// The type of the OS on the VM.
         /// Serialized Name: VMwareCbtMigrationDetails.osType
+        /// </param>
+        /// <param name="osName">
+        /// The name of the OS on the VM.
+        /// Serialized Name: VMwareCbtMigrationDetails.osName
         /// </param>
         /// <param name="firmwareType">
         /// The firmware type.
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetProximityPlacementGroupId">
         /// The target proximity placement group Id.
         /// Serialized Name: VMwareCbtMigrationDetails.targetProximityPlacementGroupId
+        /// </param>
+        /// <param name="confidentialVmKeyVaultId">
+        /// The confidential VM key vault Id for ADE installation.
+        /// Serialized Name: VMwareCbtMigrationDetails.confidentialVmKeyVaultId
+        /// </param>
+        /// <param name="targetVmSecurityProfile">
+        /// The target VM security profile.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetVmSecurityProfile
         /// </param>
         /// <param name="targetBootDiagnosticsStorageAccountId">
         /// The target boot diagnostics storage account ARM Id.
@@ -186,10 +199,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The tags for the target disks.
         /// Serialized Name: VMwareCbtMigrationDetails.targetDiskTags
         /// </param>
-        internal VMwareCbtMigrationDetails(string instanceType, string vmwareMachineId, string osType, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string storageAccountId, string targetVmName, string targetVmSize, string targetLocation, string targetResourceGroupId, string targetAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, string targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks, string targetNetworkId, string testNetworkId, IReadOnlyList<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, string migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, string resyncRequired, ResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags) : base(instanceType)
+        /// <param name="supportedOSVersions">
+        /// List of supported inplace OS Upgrade versions.
+        /// Serialized Name: VMwareCbtMigrationDetails.supportedOSVersions
+        /// </param>
+        internal VMwareCbtMigrationDetails(string instanceType, string vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string storageAccountId, string targetVmName, string targetVmSize, string targetLocation, string targetResourceGroupId, string targetAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, string targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks, string targetNetworkId, string testNetworkId, IReadOnlyList<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, string migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, string resyncRequired, ResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IReadOnlyList<string> supportedOSVersions) : base(instanceType)
         {
             VMwareMachineId = vmwareMachineId;
             OSType = osType;
+            OSName = osName;
             FirmwareType = firmwareType;
             TargetGeneration = targetGeneration;
             LicenseType = licenseType;
@@ -204,6 +222,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetAvailabilitySetId = targetAvailabilitySetId;
             TargetAvailabilityZone = targetAvailabilityZone;
             TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
+            ConfidentialVmKeyVaultId = confidentialVmKeyVaultId;
+            TargetVmSecurityProfile = targetVmSecurityProfile;
             TargetBootDiagnosticsStorageAccountId = targetBootDiagnosticsStorageAccountId;
             TargetVmTags = targetVmTags;
             ProtectedDisks = protectedDisks;
@@ -226,6 +246,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PerformAutoResync = performAutoResync;
             SeedDiskTags = seedDiskTags;
             TargetDiskTags = targetDiskTags;
+            SupportedOSVersions = supportedOSVersions;
             InstanceType = instanceType ?? "VMwareCbt";
         }
 
@@ -239,6 +260,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: VMwareCbtMigrationDetails.osType
         /// </summary>
         public string OSType { get; }
+        /// <summary>
+        /// The name of the OS on the VM.
+        /// Serialized Name: VMwareCbtMigrationDetails.osName
+        /// </summary>
+        public string OSName { get; }
         /// <summary>
         /// The firmware type.
         /// Serialized Name: VMwareCbtMigrationDetails.firmwareType
@@ -309,6 +335,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: VMwareCbtMigrationDetails.targetProximityPlacementGroupId
         /// </summary>
         public string TargetProximityPlacementGroupId { get; }
+        /// <summary>
+        /// The confidential VM key vault Id for ADE installation.
+        /// Serialized Name: VMwareCbtMigrationDetails.confidentialVmKeyVaultId
+        /// </summary>
+        public ResourceIdentifier ConfidentialVmKeyVaultId { get; }
+        /// <summary>
+        /// The target VM security profile.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetVmSecurityProfile
+        /// </summary>
+        public VMwareCbtSecurityProfileProperties TargetVmSecurityProfile { get; }
         /// <summary>
         /// The target boot diagnostics storage account ARM Id.
         /// Serialized Name: VMwareCbtMigrationDetails.targetBootDiagnosticsStorageAccountId
@@ -419,5 +455,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: VMwareCbtMigrationDetails.targetDiskTags
         /// </summary>
         public IReadOnlyDictionary<string, string> TargetDiskTags { get; }
+        /// <summary>
+        /// List of supported inplace OS Upgrade versions.
+        /// Serialized Name: VMwareCbtMigrationDetails.supportedOSVersions
+        /// </summary>
+        public IReadOnlyList<string> SupportedOSVersions { get; }
     }
 }

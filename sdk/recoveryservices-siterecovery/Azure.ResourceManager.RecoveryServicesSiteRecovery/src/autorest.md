@@ -9,7 +9,7 @@ generate-model-factory: false
 csharp: true
 library-name: RecoveryServicesSiteRecovery
 namespace: Azure.ResourceManager.RecoveryServicesSiteRecovery
-require: https://github.com/Azure/azure-rest-api-specs/blob/d1eb4e42e24016044e150c0fb8f0dc6c1182b5f5/specification/recoveryservicessiterecovery/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/95fb710c0025b325306898a3210333eaaf5d5e62/specification/recoveryservicessiterecovery/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -60,6 +60,9 @@ rename-mapping:
   CreateProtectionContainerMappingInputProperties: ReplicationProtectionContainerMappingProperties
   ReplicationProviderSpecificContainerCreationInput: ReplicationProviderSpecificContainerCreationContent
   InMageRcmFailbackReplicationDetails.targetvCenterId: TargetVCenterId
+  SecurityType: VirtualMachineSecurityType
+  VMwareCbtEnableMigrationInput.confidentialVmKeyVaultId: -|arm-id
+  VMwareCbtMigrationDetails.confidentialVmKeyVaultId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'
