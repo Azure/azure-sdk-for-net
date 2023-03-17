@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.InteropServices.ComTypes;
+
 namespace Azure.Storage.DataMovement
 {
     internal class DataMovementConstants
@@ -69,35 +71,28 @@ namespace Azure.Storage.DataMovement
 
             internal const int LongSizeInBytes = 8; // 8 bytes
             internal const int VersionStrMaxSize = 2; // 2 chars
-            internal const int VersionMaxSizeInBytes = 4; //  4 bytes
             internal const int TransferIdStrMaxSize = 36; // 36 chars
-            internal const int TransferIdMaxSizeInBytes = 72; // 72 bytes
             internal const int PathStrMaxSize = 4096; // 8182 bytes
-            internal const int PathStrMaxSizeInBytes = PathStrMaxSize * 2; // 8182 bytes
             internal const int ExtraQueryMaxSize = 1000; // 1000 char
-            internal const int ExtraQueryMaxSizeInBytes = ExtraQueryMaxSize * 2; // 2000 bytes
             internal const int HeaderValueMaxSize = 1000; // 1000 char
-            internal const int HeaderValueMaxSizeInBytes = HeaderValueMaxSize * 2; // 2000 bytes
             internal const int OneByte = 1; // 1 byte (bool's are one byte)
             internal const int MetadataStrMaxSize = 4096; // 8182 bytes (can update to be larger if needed)
-            internal const int MetadataStrMaxSizeInBytes = MetadataStrMaxSize * 2; // 8182 bytes
             internal const int BlobTagsStrMaxSize = 4096; // 8182 bytes (can update to be larger if needed)
-            internal const int BlobTagsStrMaxSizeInBytes = BlobTagsStrMaxSize * 2; // 8182 bytes
 
             /// <summary>Index: 0</summary>
             internal const int VersionIndex = 0; // Index: 0
             /// <summary>Index: 4</summary>
-            internal const int StartTimeIndex = VersionIndex + VersionMaxSizeInBytes; // Index: 4
+            internal const int StartTimeIndex = VersionIndex + VersionStrMaxSize; // Index: 4
             /// <summary>Index: 12</summary>
             internal const int TransferIdIndex = StartTimeIndex + LongSizeInBytes; // Index: 12
             /// <summary>Index: 84</summary>
-            internal const int PartNumberIndex = TransferIdIndex + TransferIdMaxSizeInBytes; // Index: 84
+            internal const int PartNumberIndex = TransferIdIndex + TransferIdStrMaxSize; // Index: 84
             /// <summary>Index: 92</summary>
             internal const int SourcePathLengthIndex = PartNumberIndex + LongSizeInBytes; // Index: 92
             /// <summary>Index: 100</summary>
             internal const int SourcePathIndex = SourcePathLengthIndex + LongSizeInBytes; // Index: 100
             /// <summary>Index: 8282</summary>
-            internal const int SourceExtraQueryLengthIndex = SourcePathIndex + PathStrMaxSizeInBytes; // Index: 8282
+            internal const int SourceExtraQueryLengthIndex = SourcePathIndex + PathStrMaxSize; // Index: 8282
             /// <summary>Index: 8290</summary>
             internal const int SourceExtraQueryIndex = SourceExtraQueryLengthIndex + LongSizeInBytes; // Index: 8290
             /// <summary>Index: 10,290</summary>
@@ -105,11 +100,11 @@ namespace Azure.Storage.DataMovement
             /// <summary>Index: 10,298</summary>
             internal const int DestinationPathIndex = DestinationPathLengthIndex + LongSizeInBytes; // Index: 10,298
             /// <summary>Index: 18,480</summary>
-            internal const int DestinationExtraQueryLengthIndex = DestinationPathIndex + PathStrMaxSizeInBytes; // Index: 18,480
+            internal const int DestinationExtraQueryLengthIndex = DestinationPathIndex + PathStrMaxSize; // Index: 18,480
             /// <summary>Index: 18,488</summary>
             internal const int DestinationExtraQueryIndex = DestinationExtraQueryLengthIndex + LongSizeInBytes; // Index: 18,488
             /// <summary>Index: 20,488</summary>
-            internal const int IsFinalPartIndex = DestinationExtraQueryIndex + ExtraQueryMaxSizeInBytes; // Index: 20,488
+            internal const int IsFinalPartIndex = DestinationExtraQueryIndex + ExtraQueryMaxSize; // Index: 20,488
             /// <summary>Index: 20,489</summary>
             internal const int ForceWriteIndex = IsFinalPartIndex + OneByte; // Index: 20,489
             /// <summary>Index: 20,490</summary>
@@ -137,23 +132,23 @@ namespace Azure.Storage.DataMovement
             /// <summary>Index: 20,521</summary>
             internal const int DstBlobContentTypeIndex = DstBlobContentTypeLengthIndex + LongSizeInBytes; // Index: 20,521
             /// <summary>Index: 20,529</summary>
-            internal const int DstBlobContentEncodingLengthIndex = DstBlobContentTypeIndex + HeaderValueMaxSizeInBytes; // Index: 20,529
+            internal const int DstBlobContentEncodingLengthIndex = DstBlobContentTypeIndex + HeaderValueMaxSize; // Index: 20,529
             /// <summary>Index: 22,529</summary>
             internal const int DstBlobContentEncodingIndex = DstBlobContentEncodingLengthIndex + LongSizeInBytes; // Index: 22,529
             /// <summary>Index: 24,529</summary>
-            internal const int DstBlobContentLanguageLengthIndex = DstBlobContentEncodingIndex + HeaderValueMaxSizeInBytes; // Index: 24,529
+            internal const int DstBlobContentLanguageLengthIndex = DstBlobContentEncodingIndex + HeaderValueMaxSize; // Index: 24,529
             /// <summary>Index: 24,537</summary>
             internal const int DstBlobContentLanguageIndex = DstBlobContentLanguageLengthIndex + LongSizeInBytes; // Index: 24,537
             /// <summary>Index: 26,537</summary>
-            internal const int DstBlobContentDispositionLengthIndex = DstBlobContentLanguageIndex + HeaderValueMaxSizeInBytes; // Index: 26,537
+            internal const int DstBlobContentDispositionLengthIndex = DstBlobContentLanguageIndex + HeaderValueMaxSize; // Index: 26,537
             /// <summary>Index: 26,545</summary>
             internal const int DstBlobContentDispositionIndex = DstBlobContentDispositionLengthIndex + LongSizeInBytes; // Index: 26,545
             /// <summary>Index: 28,545</summary>
-            internal const int DstBlobCacheControlLengthIndex = DstBlobContentDispositionIndex + HeaderValueMaxSizeInBytes; // Index: 28,545
+            internal const int DstBlobCacheControlLengthIndex = DstBlobContentDispositionIndex + HeaderValueMaxSize; // Index: 28,545
             /// <summary>Index: 28,553</summary>
             internal const int DstBlobCacheControlIndex = DstBlobCacheControlLengthIndex + LongSizeInBytes; // Index: 28,553
             /// <summary>Index: 30,553</summary>
-            internal const int DstBlobBlockBlobTierIndex = DstBlobCacheControlIndex + HeaderValueMaxSizeInBytes; // Index: 30,553
+            internal const int DstBlobBlockBlobTierIndex = DstBlobCacheControlIndex + HeaderValueMaxSize; // Index: 30,553
             /// <summary>Index: 30,554</summary>
             internal const int DstBlobPageBlobTierIndex = DstBlobBlockBlobTierIndex + OneByte; // Index: 30,554
             /// <summary>Index: 30,554</summary>
@@ -163,25 +158,25 @@ namespace Azure.Storage.DataMovement
             /// <summary>Index: 30,556</summary>
             internal const int DstBlobMetadataIndex = DstBlobMetadataLengthIndex + LongSizeInBytes; // Index: 30,556
             /// <summary>Index: 38,738</summary>
-            internal const int DstBlobTagsLengthIndex = DstBlobMetadataIndex + MetadataStrMaxSizeInBytes; // Index: 38,738
+            internal const int DstBlobTagsLengthIndex = DstBlobMetadataIndex + MetadataStrMaxSize; // Index: 38,738
             /// <summary>Index: 38,746</summary>
             internal const int DstBlobTagsIndex = DstBlobTagsLengthIndex + LongSizeInBytes; // Index: 38,746
             /// <summary>Index: 46,928</summary>
-            internal const int DstBlobCpkInfoLengthIndex = DstBlobTagsIndex + BlobTagsStrMaxSizeInBytes; // Index: 38,746
+            internal const int DstBlobCpkInfoLengthIndex = DstBlobTagsIndex + BlobTagsStrMaxSize; // Index: 38,746
             /// <summary>Index: 46,936</summary>
             internal const int DstBlobCpkInfoIndex = DstBlobCpkInfoLengthIndex + LongSizeInBytes; // Index: 38,746
             /// <summary>Index: 46,928</summary>
-            internal const int DstBlobCpkScopeInfoLengthIndex = DstBlobTagsIndex + BlobTagsStrMaxSizeInBytes; // Index: 38,746
+            internal const int DstBlobCpkScopeInfoLengthIndex = DstBlobTagsIndex + BlobTagsStrMaxSize; // Index: 38,746
             /// <summary>Index: 46,936</summary>
             internal const int DstBlobCpkScopeInfoIndex = DstBlobCpkScopeInfoLengthIndex + LongSizeInBytes; // Index: 38,746
             /// <summary>Index: 48,945</summary>
-            internal const int DstBlobIsSourceEncrypted = DstBlobCpkInfoIndex + HeaderValueMaxSizeInBytes; // Index: 38,746
+            internal const int DstBlobIsSourceEncrypted = DstBlobCpkInfoIndex + HeaderValueMaxSize; // Index: 38,746
             /// <summary>Index: 48,946</summary>
             internal const int DstBlobCpkScopeLengthIndex = DstBlobIsSourceEncrypted + OneByte; // Index: 38,746
             /// <summary>Index: 48,954</summary>
             internal const int DstBlobCpkScopeIndex = DstBlobCpkScopeLengthIndex + LongSizeInBytes; // Index: 38,746
             /// <summary>Index: 50,954</summary>
-            internal const int DstBlobBlockSizeIndex = DstBlobCpkScopeIndex + HeaderValueMaxSizeInBytes; // Index: 38,746
+            internal const int DstBlobBlockSizeIndex = DstBlobCpkScopeIndex + HeaderValueMaxSize; // Index: 38,746
 
             // JobPartPlanDestinationLocal Indexes
             /// <summary>Index: 50,962</summary>
@@ -210,6 +205,10 @@ namespace Azure.Storage.DataMovement
             internal const int AtomicJobStatusIndex = RehydratePriorityTypeIndex + OneByte;
             /// <summary>Index: 50,974</summary>
             internal const int AtomicPartStatusIndex = AtomicJobStatusIndex + OneByte;
+            /// <summary>
+            /// Size of the JobPart Header
+            /// </summary>
+            internal const int JobPartHeaderSizeInBytes = AtomicPartStatusIndex + OneByte;
         }
     }
 }

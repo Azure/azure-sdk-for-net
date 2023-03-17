@@ -49,25 +49,31 @@ namespace Azure.Storage.DataMovement.Tests
         private const StorageTransferStatus _atomicJobStatus = StorageTransferStatus.Queued;
         private const StorageTransferStatus _atomicPartStatus = StorageTransferStatus.Queued;
 
+        private static IDictionary<string, string> StringToDictionary(string str, string elementName)
+        {
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+            string[] splitSemiColon = str.Split(';');
+            foreach (string value in splitSemiColon)
+            {
+                string[] splitEqual = value.Split('=');
+                if (splitEqual.Length != 2)
+                {
+                    throw Errors.InvalidStringToDictionary(elementName, str);
+                }
+                dictionary.Add(splitEqual[0], splitEqual[1]);
+            }
+            return dictionary;
+        }
+
         private static string DictionaryToString(IDictionary<string, string> dict)
         {
             string concatStr = "";
             foreach (KeyValuePair<string, string> kv in dict)
             {
-                concatStr = string.Join(" ", new string[] { concatStr, kv.Key, kv.Value });
+                // e.g. store like "header=value;"
+                concatStr = string.Concat(concatStr, $"{kv.Key}={kv.Value};");
             }
             return concatStr;
-        }
-
-        private static IDictionary<string, string> StringToDictionary(string str)
-        {
-            IDictionary<string, string> dictionary = new Dictionary<string,string>();
-            string[] splitSpace = str.Split(' ');
-            foreach (string value in splitSpace)
-            {
-                dictionary.Add(value, value);
-            }
-            return dictionary;
         }
 
         private JobPartPlanHeader CreateDefaultHeader(
@@ -271,13 +277,15 @@ namespace Azure.Storage.DataMovement.Tests
                 metadata: metadata,
                 blobTags: blobTags);
 
-            using (Stream stream = new NonSeekableMemoryStream())
+            using (Stream stream = new MemoryStream(DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
                 // Act
                 header.Serialize(stream);
 
                 // Assert
-                int versionSize = DataMovementConstants.PlanFile.VersionMaxSizeInBytes;
+                stream.Position = 0;
+
+                int versionSize = DataMovementConstants.PlanFile.VersionStrMaxSize;
                 byte[] versionBuffer = new byte[versionSize];
                 stream.ReadAsync(versionBuffer, 0, versionSize);
                 Assert.AreEqual(DataMovementConstants.PlanFile.SchemaVersion.ToByteArray(versionSize), versionBuffer);
@@ -287,7 +295,7 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(startTimeBuffer, 0, startTimeSize);
                 Assert.AreEqual(_startTime.Ticks.ToByteArray(startTimeSize), startTimeBuffer);
 
-                int transferIdSize = DataMovementConstants.PlanFile.TransferIdMaxSizeInBytes;
+                int transferIdSize = DataMovementConstants.PlanFile.TransferIdStrMaxSize;
                 byte[] transferIdBuffer = new byte[transferIdSize];
                 stream.ReadAsync(transferIdBuffer, 0, transferIdSize);
                 Assert.AreEqual(_transferId.ToByteArray(transferIdSize), transferIdBuffer);
@@ -302,7 +310,7 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(sourcePathLengthBuffer, 0, sourcePathLengthSize);
                 Assert.AreEqual(((long)_sourcePath.Length).ToByteArray(sourcePathLengthSize), sourcePathLengthBuffer);
 
-                int sourcePathSize = DataMovementConstants.PlanFile.PathStrMaxSizeInBytes;
+                int sourcePathSize = DataMovementConstants.PlanFile.PathStrMaxSize;
                 byte[] sourcePathBuffer = new byte[sourcePathSize];
                 stream.ReadAsync(sourcePathBuffer, 0, sourcePathSize);
                 Assert.AreEqual(_sourcePath.ToByteArray(sourcePathSize), sourcePathBuffer);
@@ -312,7 +320,7 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(sourceExtraQueryLengthBuffer, 0, sourceExtraQueryLengthSize);
                 Assert.AreEqual(((long)_sourceQuery.Length).ToByteArray(sourceExtraQueryLengthSize), sourceExtraQueryLengthBuffer);
 
-                int sourceExtraQuerySize = DataMovementConstants.PlanFile.ExtraQueryMaxSizeInBytes;
+                int sourceExtraQuerySize = DataMovementConstants.PlanFile.ExtraQueryMaxSize;
                 byte[] sourceExtraQueryBuffer = new byte[sourceExtraQuerySize];
                 stream.ReadAsync(sourceExtraQueryBuffer, 0, sourceExtraQuerySize);
                 Assert.AreEqual(_sourceQuery.ToByteArray(sourceExtraQuerySize), sourceExtraQueryBuffer);
@@ -322,7 +330,7 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(destinationPathLengthBuffer, 0, destinationPathLengthSize);
                 Assert.AreEqual(((long)_destinationPath.Length).ToByteArray(destinationPathLengthSize), destinationPathLengthBuffer);
 
-                int destinationPathSize = DataMovementConstants.PlanFile.PathStrMaxSizeInBytes;
+                int destinationPathSize = DataMovementConstants.PlanFile.PathStrMaxSize;
                 byte[] destinationPathBuffer = new byte[destinationPathSize];
                 stream.ReadAsync(destinationPathBuffer, 0, destinationPathSize);
                 Assert.AreEqual(_destinationPath.ToByteArray(destinationPathSize), destinationPathBuffer);
@@ -332,7 +340,7 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(destinationExtraQueryLengthBuffer, 0, destinationExtraQueryLengthSize);
                 Assert.AreEqual(((long)_destinationQuery.Length).ToByteArray(destinationExtraQueryLengthSize), destinationExtraQueryLengthBuffer);
 
-                int destinationExtraQuerySize = DataMovementConstants.PlanFile.ExtraQueryMaxSizeInBytes;
+                int destinationExtraQuerySize = DataMovementConstants.PlanFile.ExtraQueryMaxSize;
                 byte[] destinationExtraQueryBuffer = new byte[destinationExtraQuerySize];
                 stream.ReadAsync(destinationExtraQueryBuffer, 0, destinationExtraQuerySize);
                 Assert.AreEqual(_destinationQuery.ToByteArray(destinationExtraQuerySize), destinationExtraQueryBuffer);
@@ -342,6 +350,10 @@ namespace Azure.Storage.DataMovement.Tests
                 byte[] isFinalPartBuffer = new byte[oneByte];
                 stream.ReadAsync(isFinalPartBuffer, 0, oneByte);
                 Assert.AreEqual(0, isFinalPartBuffer[0]);
+
+                byte[] forceWriteBuffer = new byte[oneByte];
+                stream.ReadAsync(forceWriteBuffer, 0, forceWriteBuffer.Length);
+                Assert.AreEqual(0, forceWriteBuffer[0]);
 
                 byte[] forceIfReadOnlyBuffer = new byte[oneByte];
                 stream.ReadAsync(forceIfReadOnlyBuffer, 0, oneByte);
@@ -362,11 +374,11 @@ namespace Azure.Storage.DataMovement.Tests
 
                 byte[] fromToBuffer = new byte[oneByte];
                 stream.ReadAsync(fromToBuffer, 0, oneByte);
-                Assert.AreEqual(0, fromToBuffer[0]);
+                Assert.AreEqual((byte)_fromTo, fromToBuffer[0]);
 
-                byte[] folderPropertyOptionBuffer = new byte[oneByte];
-                stream.ReadAsync(folderPropertyOptionBuffer, 0, oneByte);
-                Assert.AreEqual(0, folderPropertyOptionBuffer[0]);
+                byte[] folderPropertyModeBuffer = new byte[oneByte];
+                stream.ReadAsync(folderPropertyModeBuffer, 0, oneByte);
+                Assert.AreEqual((byte)_folderPropertiesMode, folderPropertyModeBuffer[0]);
 
                 int numberChunksSize = DataMovementConstants.PlanFile.LongSizeInBytes;
                 byte[] numberChunksBuffer = new byte[numberChunksSize];
@@ -375,7 +387,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                 byte[] blobTypeBuffer = new byte[oneByte];
                 stream.ReadAsync(blobTypeBuffer, 0, oneByte);
-                Assert.AreEqual(0, blobTypeBuffer[0]);
+                Assert.AreEqual((byte)_blobType, blobTypeBuffer[0]);
 
                 byte[] noGuessMimeTypeBuffer = new byte[oneByte];
                 stream.ReadAsync(noGuessMimeTypeBuffer, 0, oneByte);
@@ -386,7 +398,7 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(contentTypeLengthBuffer, 0, contentTypeLengthSize);
                 Assert.AreEqual(((long)_contentType.Length).ToByteArray(contentTypeLengthSize), contentTypeLengthBuffer);
 
-                int contentTypeSize = DataMovementConstants.PlanFile.HeaderValueMaxSizeInBytes;
+                int contentTypeSize = DataMovementConstants.PlanFile.HeaderValueMaxSize;
                 byte[] contentTypeBuffer = new byte[contentTypeSize];
                 stream.ReadAsync(contentTypeBuffer, 0, contentTypeSize);
                 Assert.AreEqual(_contentType.ToByteArray(contentTypeSize), contentTypeBuffer);
@@ -396,7 +408,7 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(contentEncodingLengthBuffer, 0, contentEncodingLengthSize);
                 Assert.AreEqual(((long)_contentEncoding.Length).ToByteArray(contentEncodingLengthSize), contentEncodingLengthBuffer);
 
-                int contentEncodingSize = DataMovementConstants.PlanFile.HeaderValueMaxSizeInBytes;
+                int contentEncodingSize = DataMovementConstants.PlanFile.HeaderValueMaxSize;
                 byte[] contentEncodingBuffer = new byte[contentEncodingSize];
                 stream.ReadAsync(contentEncodingBuffer, 0, contentEncodingSize);
                 Assert.AreEqual(_contentEncoding.ToByteArray(contentEncodingSize), contentEncodingBuffer);
@@ -406,7 +418,7 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(contentLanguageLengthBuffer, 0, contentLanguageLengthSize);
                 Assert.AreEqual(((long)_contentLanguage.Length).ToByteArray(contentLanguageLengthSize), contentLanguageLengthBuffer);
 
-                int contentLanguageSize = DataMovementConstants.PlanFile.HeaderValueMaxSizeInBytes;
+                int contentLanguageSize = DataMovementConstants.PlanFile.HeaderValueMaxSize;
                 byte[] contentLanguageBuffer = new byte[contentLanguageSize];
                 stream.ReadAsync(contentLanguageBuffer, 0, contentLanguageSize);
                 Assert.AreEqual(_contentLanguage.ToByteArray(contentLanguageSize), contentLanguageBuffer);
@@ -416,7 +428,7 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(contentDispositionLengthBuffer, 0, contentDispositionLengthSize);
                 Assert.AreEqual(((long)_contentDisposition.Length).ToByteArray(contentDispositionLengthSize), contentDispositionLengthBuffer);
 
-                int contentDispositionSize = DataMovementConstants.PlanFile.HeaderValueMaxSizeInBytes;
+                int contentDispositionSize = DataMovementConstants.PlanFile.HeaderValueMaxSize;
                 byte[] contentDispositionBuffer = new byte[contentDispositionSize];
                 stream.ReadAsync(contentDispositionBuffer, 0, contentDispositionSize);
                 Assert.AreEqual(_contentDisposition.ToByteArray(contentDispositionSize), contentDispositionBuffer);
@@ -426,18 +438,18 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(cacheControlLengthBuffer, 0, cacheControlLengthSize);
                 Assert.AreEqual(((long)_cacheControl.Length).ToByteArray(cacheControlLengthSize), cacheControlLengthBuffer);
 
-                int cacheControlSize = DataMovementConstants.PlanFile.HeaderValueMaxSizeInBytes;
+                int cacheControlSize = DataMovementConstants.PlanFile.HeaderValueMaxSize;
                 byte[] cacheControlBuffer = new byte[cacheControlSize];
                 stream.ReadAsync(cacheControlBuffer, 0, cacheControlSize);
                 Assert.AreEqual(_cacheControl.ToByteArray(cacheControlSize), cacheControlBuffer);
 
                 byte[] blockBlobTierBuffer = new byte[oneByte];
                 stream.ReadAsync(blockBlobTierBuffer, 0, oneByte);
-                Assert.AreEqual(0, blockBlobTierBuffer[0]);
+                Assert.AreEqual((byte)_blockBlobTier, blockBlobTierBuffer[0]);
 
                 byte[] pageBlobTierBuffer = new byte[oneByte];
                 stream.ReadAsync(pageBlobTierBuffer, 0, oneByte);
-                Assert.AreEqual(0, pageBlobTierBuffer[0]);
+                Assert.AreEqual((byte)_pageBlobTier, pageBlobTierBuffer[0]);
 
                 byte[] putMd5Buffer = new byte[oneByte];
                 stream.ReadAsync(putMd5Buffer, 0, oneByte);
@@ -449,7 +461,7 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(metadataLengthBuffer, 0, metadataLengthSize);
                 Assert.AreEqual(((long)metadataStr.Length).ToByteArray(metadataLengthSize), metadataLengthBuffer);
 
-                int metadataSize = DataMovementConstants.PlanFile.HeaderValueMaxSizeInBytes;
+                int metadataSize = DataMovementConstants.PlanFile.MetadataStrMaxSize;
                 byte[] metadataBuffer = new byte[metadataSize];
                 stream.ReadAsync(metadataBuffer, 0, metadataSize);
                 Assert.AreEqual(metadataStr.ToByteArray(metadataSize), metadataBuffer);
@@ -460,7 +472,7 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(blobTagsLengthBuffer, 0, blobTagsLengthSize);
                 Assert.AreEqual(((long)blobTagsStr.Length).ToByteArray(blobTagsLengthSize), blobTagsLengthBuffer);
 
-                int blobTagsSize = DataMovementConstants.PlanFile.HeaderValueMaxSizeInBytes;
+                int blobTagsSize = DataMovementConstants.PlanFile.BlobTagsStrMaxSize;
                 byte[] blobTagsBuffer = new byte[blobTagsSize];
                 stream.ReadAsync(blobTagsBuffer, 0, blobTagsSize);
                 Assert.AreEqual(blobTagsStr.ToByteArray(blobTagsSize), blobTagsBuffer);
@@ -470,17 +482,21 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(cpkInfoLengthBuffer, 0, cpkInfoLengthSize);
                 Assert.AreEqual(((long)_cpkInfo.Length).ToByteArray(cpkInfoLengthSize), cpkInfoLengthBuffer);
 
-                int cpkInfoSize = DataMovementConstants.PlanFile.HeaderValueMaxSizeInBytes;
+                int cpkInfoSize = DataMovementConstants.PlanFile.HeaderValueMaxSize;
                 byte[] cpkInfoBuffer = new byte[cpkInfoSize];
                 stream.ReadAsync(cpkInfoBuffer, 0, cpkInfoSize);
                 Assert.AreEqual(_cpkInfo.ToByteArray(cpkInfoSize), cpkInfoBuffer);
+
+                byte[] isSourceEncryptedBuffer = new byte[oneByte];
+                stream.ReadAsync(isSourceEncryptedBuffer, 0, oneByte);
+                Assert.AreEqual(0, isSourceEncryptedBuffer[0]);
 
                 int cpkScopeInfoLengthSize = DataMovementConstants.PlanFile.LongSizeInBytes;
                 byte[] cpkScopeInfoLengthBuffer = new byte[cpkScopeInfoLengthSize];
                 stream.ReadAsync(cpkScopeInfoLengthBuffer, 0, cpkScopeInfoLengthSize);
                 Assert.AreEqual(((long)_cpkScopeInfo.Length).ToByteArray(cpkScopeInfoLengthSize), cpkScopeInfoLengthBuffer);
 
-                int cpkScopeInfoSize = DataMovementConstants.PlanFile.HeaderValueMaxSizeInBytes;
+                int cpkScopeInfoSize = DataMovementConstants.PlanFile.HeaderValueMaxSize;
                 byte[] cpkScopeInfoBuffer = new byte[cpkScopeInfoSize];
                 stream.ReadAsync(cpkScopeInfoBuffer, 0, cpkScopeInfoSize);
                 Assert.AreEqual(_cpkScopeInfo.ToByteArray(cpkScopeInfoSize), cpkScopeInfoBuffer);
@@ -510,33 +526,37 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(s2sGetPropertiesInBackendBuffer, 0, oneByte);
                 Assert.AreEqual(0, s2sGetPropertiesInBackendBuffer[0]);
 
-                byte[] s2sInvalidMetadataHandleOptionBuffer = new byte[oneByte];
-                stream.ReadAsync(s2sInvalidMetadataHandleOptionBuffer, 0, oneByte);
-                Assert.AreEqual(_s2sInvalidMetadataHandleOption, s2sInvalidMetadataHandleOptionBuffer[0]);
+                byte[] s2sSourceChangeValidationBuffer = new byte[oneByte];
+                stream.ReadAsync(s2sSourceChangeValidationBuffer, 0, oneByte);
+                Assert.AreEqual(0, s2sSourceChangeValidationBuffer[0]);
 
                 byte[] destLengthValidationBuffer = new byte[oneByte];
                 stream.ReadAsync(destLengthValidationBuffer, 0, oneByte);
                 Assert.AreEqual(0, destLengthValidationBuffer[0]);
 
+                byte[] s2sInvalidMetadataHandleOptionBuffer = new byte[oneByte];
+                stream.ReadAsync(s2sInvalidMetadataHandleOptionBuffer, 0, oneByte);
+                Assert.AreEqual(_s2sInvalidMetadataHandleOption, s2sInvalidMetadataHandleOptionBuffer[0]);
+
                 byte[] deleteSnapshotsOptionBuffer = new byte[oneByte];
                 stream.ReadAsync(deleteSnapshotsOptionBuffer, 0, oneByte);
-                Assert.AreEqual(_jobPartDeleteSnapshotsOption, deleteSnapshotsOptionBuffer[0]);
+                Assert.AreEqual((byte)_jobPartDeleteSnapshotsOption, deleteSnapshotsOptionBuffer[0]);
 
                 byte[] permanentDeleteOptionBuffer = new byte[oneByte];
                 stream.ReadAsync(permanentDeleteOptionBuffer, 0, oneByte);
-                Assert.AreEqual(_jobPartPermanentDeleteOption, permanentDeleteOptionBuffer[0]);
+                Assert.AreEqual((byte)_jobPartPermanentDeleteOption, permanentDeleteOptionBuffer[0]);
 
                 byte[] rehydratePriorityTypeBuffer = new byte[oneByte];
                 stream.ReadAsync(rehydratePriorityTypeBuffer, 0, oneByte);
-                Assert.AreEqual(_jobPartPlanRehydratePriorityType, rehydratePriorityTypeBuffer[0]);
+                Assert.AreEqual((byte)_jobPartPlanRehydratePriorityType, rehydratePriorityTypeBuffer[0]);
 
                 byte[] atomicJobStatusBuffer = new byte[oneByte];
                 stream.ReadAsync(atomicJobStatusBuffer, 0, oneByte);
-                Assert.AreEqual(_atomicJobStatus, atomicJobStatusBuffer[0]);
+                Assert.AreEqual((byte)_atomicJobStatus, atomicJobStatusBuffer[0]);
 
                 byte[] atomicPartStatusBuffer = new byte[oneByte];
                 stream.ReadAsync(atomicPartStatusBuffer, 0, oneByte);
-                Assert.AreEqual(_atomicPartStatus, atomicPartStatusBuffer[0]);
+                Assert.AreEqual((byte)_atomicPartStatus, atomicPartStatusBuffer[0]);
             }
         }
 
@@ -562,7 +582,7 @@ namespace Azure.Storage.DataMovement.Tests
                 metadata: metadata,
                 blobTags: blobTags);
 
-            using (Stream stream = new NonSeekableMemoryStream())
+            using (Stream stream = new MemoryStream(DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
                 header.Serialize(stream);
 

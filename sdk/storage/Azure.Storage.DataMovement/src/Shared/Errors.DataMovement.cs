@@ -96,5 +96,8 @@ namespace Azure.Storage
 
         public static ArgumentException InvalidPlanFileJson(string elementName, int expectedSize, int actualSize)
             => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected size: {expectedSize}\n Actual Size: {actualSize}");
+
+        public static ArgumentException InvalidStringToDictionary(string elementName, string value)
+            => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected format stored was invalid, \"{value}\"");
     }
 }

@@ -11,38 +11,6 @@ namespace Azure.Storage.DataMovement
 {
     internal static class DataMovementExtensions
     {
-        public static byte[] UriToByteArray(this StorageResource storageResource)
-        {
-            // Create Source Root
-            byte[] byteArray;
-            if (storageResource.CanProduceUri == ProduceUriType.ProducesUri)
-            {
-                Uri sourceUri = storageResource.Uri;
-                byteArray = string.Format(
-                    CultureInfo.InvariantCulture,
-                    "{0}{1}{2}",
-                    sourceUri.Authority,
-                    Uri.SchemeDelimiter,
-                    sourceUri.AbsolutePath).ToByteArray();
-            }
-            else
-            {
-                byteArray = storageResource.Path.ToByteArray();
-            }
-            return byteArray;
-        }
-
-        public static byte[] UriQueryToByteArray(this StorageResource storageResource)
-        {
-            // Create Source Root
-            if (storageResource.CanProduceUri == ProduceUriType.ProducesUri)
-            {
-                Uri sourceUri = storageResource.Uri;
-                return sourceUri.Query.ToByteArray();
-            }
-            return default;
-        }
-
         // string to byte array
         public static byte[] ToByteArray(this string query, int? bufferSize = default)
         {
@@ -65,15 +33,14 @@ namespace Azure.Storage.DataMovement
             return arr;
         }
 
-        public static string ByteArrayToString(this byte[] bytes)
+        public static string ByteArrayToString(this byte[] bytes, long length)
         {
-            return Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+            return Encoding.UTF8.GetString(bytes, 0, (int)length);
         }
 
         public static long ByteArrayToLong(this byte[] bytes)
         {
-            string longStr = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-            return Convert.ToInt64(longStr, CultureInfo.InvariantCulture);
+            return BitConverter.ToInt64(bytes, 0);
         }
 
         internal static StorageResourceProperties ToStorageResourceProperties(this FileInfo fileInfo)

@@ -20,8 +20,6 @@ namespace Azure.Storage.DataMovement
         // uint_8
         public byte MD5VerificationOption;
 
-        private JobPartPlanDestinationLocal() { }
-
         public JobPartPlanDestinationLocal(
             bool preserveLastModifiedTime,
             byte md5VerificationOption)

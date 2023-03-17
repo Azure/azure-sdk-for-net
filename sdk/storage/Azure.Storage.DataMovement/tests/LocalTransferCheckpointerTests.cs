@@ -108,7 +108,7 @@ namespace Azure.Storage.DataMovement.Tests
                 JobPartPlanFileName fileName = new JobPartPlanFileName(checkpointerPath, transferId, i);
 
                 JobPartPlanFile jobFile;
-                using (Stream stream = new MemoryStream())
+                using (Stream stream = new MemoryStream(DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
                 {
                     header.Serialize(stream);
                     jobFile = await JobPartPlanFile.CreateJobPartPlanFileAsync(

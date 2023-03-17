@@ -144,6 +144,43 @@ namespace Azure.Storage.DataMovement
             JobPartPlanBlockBlobTier blockBlobTier,
             JobPartPlanPageBlobTier pageBlobTier,
             bool putMd5,
+            string metadata,
+            string blobTags,
+            string cpkInfo,
+            bool isSourceEncrypted,
+            string cpkScopeInfo,
+            long blockSize)
+            : this(
+                blobType: blobType,
+                noGuessMimeType: noGuessMimeType,
+                contentType: contentType,
+                contentEncoding: contentEncoding,
+                contentLanguage: contentLanguage,
+                contentDisposition: contentDisposition,
+                cacheControl: cacheControl,
+                blockBlobTier: blockBlobTier,
+                pageBlobTier: pageBlobTier,
+                putMd5: putMd5,
+                metadata: StringToDictionary(metadata, nameof(metadata)),
+                blobTags: StringToDictionary(blobTags, nameof(blobTags)),
+                cpkInfo: cpkInfo,
+                isSourceEncrypted: isSourceEncrypted,
+                cpkScopeInfo: cpkScopeInfo,
+                blockSize: blockSize)
+        {
+        }
+
+        public JobPartPlanDestinationBlob(
+            JobPlanBlobType blobType,
+            bool noGuessMimeType,
+            string contentType,
+            string contentEncoding,
+            string contentLanguage,
+            string contentDisposition,
+            string cacheControl,
+            JobPartPlanBlockBlobTier blockBlobTier,
+            JobPartPlanPageBlobTier pageBlobTier,
+            bool putMd5,
             IDictionary<string,string> metadata,
             IDictionary<string, string> blobTags,
             string cpkInfo,
@@ -177,7 +214,7 @@ namespace Azure.Storage.DataMovement
                     expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: contentEncoding.Length);
             }
-            if (contentLanguage.Length < DataMovementConstants.PlanFile.HeaderValueMaxSize)
+            if (contentLanguage.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
             {
                 ContentLanguage = contentLanguage;
                 ContentLanguageLength = contentLanguage.Length;
@@ -226,7 +263,7 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidPlanFileJson(
                     elementName: nameof(Metadata),
-                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.MetadataStrMaxSize,
                     actualSize: metadataConvert.Length);
             }
             string blobTagsConvert = DictionaryToString(blobTags);
@@ -239,7 +276,7 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidPlanFileJson(
                     elementName: nameof(blobTags),
-                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.BlobTagsStrMaxSize,
                     actualSize: blobTagsConvert.Length);
             }
             if (cpkInfo.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
@@ -270,12 +307,32 @@ namespace Azure.Storage.DataMovement
             BlockSize = blockSize;
         }
 
+        private static IDictionary<string, string> StringToDictionary(string str, string elementName)
+        {
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+            string[] splitSemiColon = str.Split(';');
+            foreach (string value in splitSemiColon)
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    string[] splitEqual = value.Split('=');
+                    if (splitEqual.Length != 2)
+                    {
+                        throw Errors.InvalidStringToDictionary(elementName, str);
+                    }
+                    dictionary.Add(splitEqual[0], splitEqual[1]);
+                }
+            }
+            return dictionary;
+        }
+
         private static string DictionaryToString(IDictionary<string, string> dict)
         {
             string concatStr = "";
             foreach (KeyValuePair<string, string> kv in dict)
             {
-                concatStr = string.Join(" ", new string[] { concatStr, kv.Key, kv.Value });
+                // e.g. store like "header=value;"
+                concatStr = string.Concat(concatStr,$"{kv.Key}={kv.Value};");
             }
             return concatStr;
         }
