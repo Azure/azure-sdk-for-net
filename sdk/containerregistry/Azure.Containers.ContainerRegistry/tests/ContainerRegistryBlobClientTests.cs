@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -56,11 +57,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.That(async () => await client.DeleteManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
             Assert.That(async () => await client.DownloadBlobAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
             Assert.That(async () => await client.DownloadManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
-            Assert.That(async () => await client.UploadManifestAsync(manifest: null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
-            Assert.That(async () => await client.UploadManifestAsync(content: null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `content` is not null.");
-            Assert.That(async () => await client.UploadManifestAsync(stream: null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `stream` is not null.");
-            Assert.That(async () => await client.UploadBlobAsync(content: null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `content` is not null.");
-            Assert.That(async () => await client.UploadBlobAsync(stream: null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `stream` is not null.");
+            Assert.That(async () => await client.UploadManifestAsync(manifest: (OciImageManifest)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
+            Assert.That(async () => await client.UploadManifestAsync(manifest: (BinaryData)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
+            Assert.That(async () => await client.UploadBlobAsync(content: (BinaryData)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `content` is not null.");
+            Assert.That(async () => await client.UploadBlobAsync(content: (Stream)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `content` is not null.");
         }
 
         /// <summary>

@@ -6,7 +6,6 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -41,10 +40,10 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
-        /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="repository"/> is null. </exception>
-        public ContainerRegistryBlobClient(Uri endpoint, string repository) :
-            this(endpoint,  repository, new ContainerRegistryAnonymousAccessCredential(), new ContainerRegistryClientOptions())
+        /// <param name="repositoryName">The name of the repository that logically groups the artifact parts.</param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="repositoryName"/> is null. </exception>
+        public ContainerRegistryBlobClient(Uri endpoint, string repositoryName) :
+            this(endpoint, repositoryName, new ContainerRegistryAnonymousAccessCredential(), new ContainerRegistryClientOptions())
         {
         }
 
@@ -55,11 +54,11 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
-        /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
+        /// <param name="repositoryName">The name of the repository that logically groups the artifact parts.</param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="repository"/> is null. </exception>
-        public ContainerRegistryBlobClient(Uri endpoint, string repository, ContainerRegistryClientOptions options) :
-            this(endpoint, repository, new ContainerRegistryAnonymousAccessCredential(), options)
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="repositoryName"/> is null. </exception>
+        public ContainerRegistryBlobClient(Uri endpoint, string repositoryName, ContainerRegistryClientOptions options) :
+            this(endpoint, repositoryName, new ContainerRegistryAnonymousAccessCredential(), options)
         {
         }
 
@@ -70,9 +69,9 @@ namespace Azure.Containers.ContainerRegistry
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
-        /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/>, <paramref name="credential"/>, or <paramref name="repository"/> is null. </exception>
-        public ContainerRegistryBlobClient(Uri endpoint, string repository, TokenCredential credential) : this(endpoint, repository, credential, new ContainerRegistryClientOptions())
+        /// <param name="repositoryName">The name of the repository that logically groups the artifact parts.</param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/>, <paramref name="credential"/>, or <paramref name="repositoryName"/> is null. </exception>
+        public ContainerRegistryBlobClient(Uri endpoint, string repositoryName, TokenCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
         {
         }
 
@@ -83,27 +82,27 @@ namespace Azure.Containers.ContainerRegistry
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
-        /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
+        /// <param name="repositoryName">The name of the repository that logically groups the artifact parts.</param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/>, <paramref name="credential"/>, or <paramref name="repository"/> is null. </exception>
-        public ContainerRegistryBlobClient(Uri endpoint, string repository, TokenCredential credential, ContainerRegistryClientOptions options) : this(endpoint, credential, repository, null, options)
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/>, <paramref name="credential"/>, or <paramref name="repositoryName"/> is null. </exception>
+        public ContainerRegistryBlobClient(Uri endpoint, string repositoryName, TokenCredential credential, ContainerRegistryClientOptions options) : this(endpoint, credential, repositoryName, null, options)
         {
         }
 
         internal ContainerRegistryBlobClient(
             Uri endpoint,
             TokenCredential credential,
-            string repository,
+            string repositoryName,
             IContainerRegistryAuthenticationClient authenticationClient,
             ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(repository, nameof(repository));
+            Argument.AssertNotNull(repositoryName, nameof(repositoryName));
 
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
-            _repositoryName = repository;
+            _repositoryName = repositoryName;
             _maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
             _clientDiagnostics = new ClientDiagnostics(options);
 
@@ -166,37 +165,37 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Uploads an artifact manifest.
         /// </summary>
-        /// <param name="content">The <see cref="BinaryData"/> containing the serialized manifest to upload.</param>
+        /// <param name="manifest">The <see cref="BinaryData"/> containing the serialized manifest to upload.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<UploadManifestResult> UploadManifest(BinaryData content, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        public virtual Response<UploadManifestResult> UploadManifest(BinaryData manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(manifest, nameof(manifest));
 
-            return UploadManifest(content.ToStream(), tag, mediaType, cancellationToken);
+            return UploadManifest(manifest.ToStream(), tag, mediaType, cancellationToken);
         }
 
         /// <summary>
         /// Uploads an artifact manifest.
         /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> containing the serialized manifest to upload.</param>
+        /// <param name="manifest">The <see cref="Stream"/> containing the serialized manifest to upload.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<UploadManifestResult> UploadManifest(Stream stream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        internal virtual Response<UploadManifestResult> UploadManifest(Stream manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            Argument.AssertNotNull(manifest, nameof(manifest));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
             scope.Start();
             try
             {
-                using MemoryStream manifestStream = CopyStreamAsync(stream, false).EnsureCompleted();
+                using MemoryStream manifestStream = CopyStreamAsync(manifest, false).EnsureCompleted();
                 return UploadManifestInternalAsync(manifestStream, tag, mediaType, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
@@ -236,17 +235,17 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Uploads an artifact manifest.
         /// </summary>
-        /// <param name="content">The <see cref="BinaryData"/> containing the serialized manifest to upload.</param>
+        /// <param name="manifest">The <see cref="BinaryData"/> containing the serialized manifest to upload.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(BinaryData content, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(BinaryData manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(manifest, nameof(manifest));
 
-            return await UploadManifestAsync(content.ToStream(), tag, mediaType, cancellationToken).ConfigureAwait(false);
+            return await UploadManifestAsync(manifest.ToStream(), tag, mediaType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -258,7 +257,7 @@ namespace Azure.Containers.ContainerRegistry
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(Stream stream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(Stream stream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
@@ -349,12 +348,12 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Upload a container registry blob.
         /// </summary>
-        /// <param name="stream">The stream containing the blob data.</param>
+        /// <param name="content">The stream containing the blob data.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<UploadBlobResult> UploadBlob(Stream stream, CancellationToken cancellationToken = default)
+        public virtual Response<UploadBlobResult> UploadBlob(Stream content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
             scope.Start();
@@ -363,7 +362,7 @@ namespace Azure.Containers.ContainerRegistry
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     _blobRestClient.StartUpload(_repositoryName, cancellationToken);
 
-                var result = UploadInChunksInternalAsync(startUploadResult.Headers.Location, stream, _maxChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+                var result = UploadInChunksInternalAsync(startUploadResult.Headers.Location, content, _maxChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     _blobRestClient.CompleteUpload(result.Digest, result.Location, null, cancellationToken);
@@ -395,12 +394,12 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Upload a container registry blob.
         /// </summary>
-        /// <param name="stream">The stream containing the blob data.</param>
+        /// <param name="content">The stream containing the blob data.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream stream, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
             scope.Start();
@@ -409,7 +408,7 @@ namespace Azure.Containers.ContainerRegistry
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
-                var result = await UploadInChunksInternalAsync(startUploadResult.Headers.Location, stream, _maxChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var result = await UploadInChunksInternalAsync(startUploadResult.Headers.Location, content, _maxChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     await _blobRestClient.CompleteUploadAsync(result.Digest, result.Location, null, cancellationToken).ConfigureAwait(false);
