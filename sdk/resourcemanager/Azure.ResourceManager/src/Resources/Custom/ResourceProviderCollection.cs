@@ -44,15 +44,12 @@ namespace Azure.ResourceManager.Resources
             Dictionary<string, string> resourceVersions;
             if (!Client.ResourceApiVersionCache.TryGetValue(resourceType.Namespace, out resourceVersions))
             {
-                resourceVersions = LoadResourceVersionsFromApi(resourceType.Namespace, cancellationToken);
+                resourceVersions = LoadResourceVersionsFromApiWithOverride(resourceType.Namespace, cancellationToken);
                 Client.ResourceApiVersionCache.TryAdd(resourceType.Namespace, resourceVersions);
             }
             if (!resourceVersions.TryGetValue(resourceType.Type, out version))
             {
-                if (!Client.ApiVersionOverrides.TryGetValue(resourceType, out version))
-                {
-                    throw new InvalidOperationException($"Invalid resource type {resourceType}");
-                }
+                throw new InvalidOperationException($"Invalid resource type {resourceType}");
             }
             return version;
         }
@@ -64,29 +61,42 @@ namespace Azure.ResourceManager.Resources
             Dictionary<string, string> resourceVersions;
             if (!Client.ResourceApiVersionCache.TryGetValue(resourceType.Namespace, out resourceVersions))
             {
-                resourceVersions = await LoadResourceVersionsFromApiAsync(resourceType.Namespace, cancellationToken).ConfigureAwait(false);
+                resourceVersions = await LoadResourceVersionsFromApiWithOverrideAsync(resourceType.Namespace, cancellationToken).ConfigureAwait(false);
                 Client.ResourceApiVersionCache.TryAdd(resourceType.Namespace, resourceVersions);
             }
             if (!resourceVersions.TryGetValue(resourceType.Type, out version))
             {
-                if (!Client.ApiVersionOverrides.TryGetValue(resourceType, out version))
-                {
-                    throw new InvalidOperationException($"Invalid resource type {resourceType}");
-                }
+                throw new InvalidOperationException($"Invalid resource type {resourceType}");
             }
             return version;
         }
 
-        private Dictionary<string, string> LoadResourceVersionsFromApi(string resourceNamespace, CancellationToken cancellationToken = default)
+        private Dictionary<string, string> LoadResourceVersionsFromApiWithOverride(string resourceNamespace, CancellationToken cancellationToken = default)
         {
             ResourceProviderResource results = Get(resourceNamespace, cancellationToken: cancellationToken);
-            return GetVersionsFromResult(results);
+            var resourceVersions = GetVersionsFromResult(results);
+            foreach (var keyValuePair in Client.ApiVersionOverrides)
+            {
+                if (string.Equals(keyValuePair.Key.Namespace, resourceNamespace, StringComparison.OrdinalIgnoreCase))
+                {
+                    resourceVersions[keyValuePair.Key.Type] = keyValuePair.Value;
+                }
+            }
+            return resourceVersions;
         }
 
-        private async Task<Dictionary<string, string>> LoadResourceVersionsFromApiAsync(string resourceNamespace, CancellationToken cancellationToken = default)
+        private async Task<Dictionary<string, string>> LoadResourceVersionsFromApiWithOverrideAsync(string resourceNamespace, CancellationToken cancellationToken = default)
         {
             ResourceProviderResource results = await GetAsync(resourceNamespace, cancellationToken: cancellationToken).ConfigureAwait(false);
-            return GetVersionsFromResult(results);
+            var resourceVersions = GetVersionsFromResult(results);
+            foreach (var keyValuePair in Client.ApiVersionOverrides)
+            {
+                if (string.Equals(keyValuePair.Key.Namespace, resourceNamespace, StringComparison.OrdinalIgnoreCase))
+                {
+                    resourceVersions[keyValuePair.Key.Type] = keyValuePair.Value;
+                }
+            }
+            return resourceVersions;
         }
 
         private static Dictionary<string, string> GetVersionsFromResult(ResourceProviderResource results)
