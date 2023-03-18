@@ -104,10 +104,10 @@ namespace Azure.AI.OpenAI.Tests
                     "This is a test",
                 },
                 MaxTokens = 1024,
-                SnippetCount = 3,
-                LogProbability = 1,
+                ChoicesPerPrompt = 3,
+                LogProbabilityCount = 1,
             };
-            int expectedChoiceCount = (requestOptions.SnippetCount ?? 1) * requestOptions.Prompts.Count;
+            int expectedChoiceCount = (requestOptions.ChoicesPerPrompt ?? 1) * requestOptions.Prompts.Count;
             Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response.GetRawResponse(), Is.Not.Null.Or.Empty);
             Assert.That(response.Value, Is.Not.Null);
@@ -228,7 +228,7 @@ namespace Azure.AI.OpenAI.Tests
                 Temperature = 0.75f,
                 User = "AzureSDKOpenAITests",
                 Echo = true,
-                LogProbability = 1,
+                LogProbabilityCount = 1,
             };
             Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
@@ -301,7 +301,7 @@ namespace Azure.AI.OpenAI.Tests
                     "What are some disturbing facts about papayas?"
                 },
                 MaxTokens = 512,
-                LogProbability = 1,
+                LogProbabilityCount = 1,
             };
 
             Response<StreamingCompletions> response = await client.GetCompletionsStreamingAsync(requestOptions);

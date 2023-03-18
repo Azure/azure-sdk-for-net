@@ -39,7 +39,10 @@ Once you have the value of the endpoint string and subscription key, you can cre
 // Replace with your Azure OpenAI key
 string key = "YOUR_AZURE_OPENAI_KEY";
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myModelDeploymentId", new AzureKeyCredential(key));
+var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key), new OpenAIClientOptions()
+{
+    DefaultDeploymentOrModelName = "myModelDeploymentId",
+});
 ```
 
 #### Create OpenAIClient with Azure Active Directory Credential
@@ -53,7 +56,10 @@ dotnet add package Azure.Identity
 
 ```C# Snippet:CreateOpenAIClientTokenCredential
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
+var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), new OpenAIClientOptions()
+{
+    DefaultDeploymentOrModelName = "myDeploymentId",
+});
 ```
 
 ## Key concepts
@@ -102,7 +108,10 @@ The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredentia
 
 ```C# Snippet:GenerateChatbotResponse
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
+var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), new OpenAIClientOptions()
+{
+    DefaultDeploymentOrModelName = "myDeploymentId",
+});
 
 string prompt = "What is Azure OpenAI?";
 Console.Write($"Input: {prompt}");
@@ -120,7 +129,10 @@ The `GenerateMultipleChatbotResponsesWithSubscriptionKey` method gives an exampl
 // Replace with your Azure OpenAI key
 string key = "YOUR_AZURE_OPENAI_KEY";
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myModelDeploymentId", new AzureKeyCredential(key));
+var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key), new OpenAIClientOptions()
+{
+    DefaultDeploymentOrModelName = "myModelDeploymentId",
+});
 
 List<string> examplePrompts = new(){
     "How are you today?",
@@ -134,7 +146,7 @@ foreach (string prompt in examplePrompts)
 {
     Console.Write($"Input: {prompt}");
     CompletionsOptions completionsOptions = new CompletionsOptions();
-    completionsOptions.Prompt.Add(prompt);
+    completionsOptions.Prompts.Add(prompt);
 
     Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
     string completion = completionsResponse.Value.Choices[0].Text;
@@ -148,7 +160,10 @@ The `SummarizeText` method generates a summarization of the given input prompt.
 
 ```C# Snippet:SummarizeText
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
+var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), new OpenAIClientOptions()
+{
+    DefaultDeploymentOrModelName = "myDeploymentId"
+});
 
 string textToSummarize = @"
     Two independent experiments reported their results this morning at CERN, Europe's high-energy physics laboratory near Geneva in Switzerland. Both show convincing evidence of a new boson particle weighing around 125 gigaelectronvolts, which so far fits predictions of the Higgs previously made by theoretical physicists.
@@ -169,12 +184,46 @@ string summarizationPrompt = @$"
 
 Console.Write($"Input: {summarizationPrompt}");
 CompletionsOptions completionsOptions = new CompletionsOptions();
-completionsOptions.Prompt.Add(summarizationPrompt);
+completionsOptions.Prompts.Add(summarizationPrompt);
 
 Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
 string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Summarization: {completion}");
 ```
+
+### Stream Chat Messages with non-Azure OpenAI
+
+```C# Snippet:StreamChatMessages
+string nonAzureOpenAIApiKey = "your-api-key-from-platform.openai.com";
+var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions()
+{
+    DefaultDeploymentOrModelName = "gpt-3.5-turbo",
+});
+
+var chatCompletionsOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatMessage(ChatRole.System, "You are a helpful assistant. You will talk like a pirate."),
+        new ChatMessage(ChatRole.User, "Can you help me?"),
+        new ChatMessage(ChatRole.Assistant, "Arrrr! Of course, me hearty! What can I do for ye?"),
+        new ChatMessage(ChatRole.User, "What's the best way to train a parrot?"),
+    }
+};
+
+Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(chatCompletionsOptions);
+using StreamingChatCompletions streamingChatCompletions = response.Value;
+
+await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
+{
+    await foreach (ChatMessage message in choice.GetMessageStreaming())
+    {
+        Console.Write(message.Content);
+    }
+    Console.WriteLine();
+}
+```
+
 ## Troubleshooting
 
 When you interact with Azure OpenAI using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][openai_rest] requests.

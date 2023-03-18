@@ -18,15 +18,15 @@ namespace Azure.AI.OpenAI
     public partial class ChatCompletionsOptions
     {
         public ChatCompletionsOptions() { }
+        public int? ChoicesPerPrompt { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<int, int> LogitBias { get { throw null; } }
         public int? MaxTokens { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessage> Messages { get { throw null; } }
         public float? NucleusSamplingFactor { get { throw null; } set { } }
         public float? PresencePenalty { get { throw null; } set { } }
-        public int? SnippetCount { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Stop { get { throw null; } }
+        public System.Collections.Generic.IList<string> StopSequences { get { throw null; } }
         public float? Temperature { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<int, int> TokenSelectionBiases { get { throw null; } }
         public string User { get { throw null; } set { } }
     }
     public partial class ChatMessage
@@ -83,18 +83,18 @@ namespace Azure.AI.OpenAI
     public partial class CompletionsOptions
     {
         public CompletionsOptions() { }
+        public int? ChoicesPerPrompt { get { throw null; } set { } }
         public bool? Echo { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
         public int? GenerationSampleCount { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<int, int> LogitBias { get { throw null; } }
-        public int? LogProbability { get { throw null; } set { } }
+        public int? LogProbabilityCount { get { throw null; } set { } }
         public int? MaxTokens { get { throw null; } set { } }
         public float? NucleusSamplingFactor { get { throw null; } set { } }
         public float? PresencePenalty { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Prompts { get { throw null; } }
-        public int? SnippetCount { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> StopSequences { get { throw null; } }
         public float? Temperature { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<int, int> TokenSelectionBiases { get { throw null; } }
         public string User { get { throw null; } set { } }
     }
     public partial class CompletionsUsage
