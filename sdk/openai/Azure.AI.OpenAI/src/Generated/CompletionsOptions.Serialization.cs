@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class CompletionsOptions
+    public partial class CompletionsOptions : IUtf8JsonSerializable
     {
     }
 }
