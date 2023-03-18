@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,41 +17,28 @@ namespace Azure.Communication.Email
     /// be an object which contains the OperationId = <see cref="EmailSendResult.Id"/>, operation status
     /// = <see cref="EmailSendResult.Status"/> and error if any for terminal failed status.
     /// </summary>
-    public class EmailSendOperation : Operation<EmailSendResult>
+    public class EmailSendOperation : Operation<EmailSendResult>, IOperation<EmailSendResult>
     {
+        private readonly TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(5);
+
+        private readonly OperationInternal<EmailSendResult> _operationInternal;
+
         /// <summary>
         /// The client used to check for completion.
         /// </summary>
         private readonly EmailClient _client;
 
         /// <summary>
-        /// The CancellationToken to use for all status checking.
-        /// </summary>
-        private readonly CancellationToken _cancellationToken;
-
-        /// <summary>
-        /// Whether the operation has completed.
-        /// </summary>
-        private bool _hasCompleted;
-
-        /// <summary>
-        /// Gets the status of the email send operation.
-        /// </summary>
-        private EmailSendResult _value;
-
-        private Response _rawResponse;
-
-        /// <summary>
         /// Gets a value indicating whether the operation has completed.
         /// </summary>
-        public override bool HasCompleted => _hasCompleted;
+        public override bool HasCompleted => _operationInternal.HasCompleted;
 
         /// <summary>
         /// Gets a value indicating whether the operation completed and
         /// successfully produced a value.  The <see cref="Operation{EmailSendResult}.Value"/>
         /// property is the status of the email send operation.
         /// </summary>
-        public override bool HasValue => (_value != null);
+        public override bool HasValue => _operationInternal.HasValue;
 
         /// <inheritdoc />
         public override string Id { get; }
@@ -57,18 +46,52 @@ namespace Azure.Communication.Email
         /// <summary>
         /// Gets the status of the email send operation.
         /// </summary>
-        public override EmailSendResult Value => OperationHelpers.GetValue(ref _value);
+        public override EmailSendResult Value => _operationInternal.Value;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _rawResponse;
+        public override Response GetRawResponse() => _operationInternal.RawResponse;
 
         /// <inheritdoc />
-        public override ValueTask<Response<EmailSendResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionAsync(cancellationToken);
+        public override async ValueTask<Response<EmailSendResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+            await _operationInternal.WaitForCompletionAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="suggestedPollingInterval">
+        /// The interval between status requests to the server.
+        /// The interval can change based on information returned from the server.
+        /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+        /// In that case, it uses the larger of the values between this value and the one returned from the server.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+        /// </remarks>
+        public override async ValueTask<Response<EmailSendResult>> WaitForCompletionAsync(TimeSpan suggestedPollingInterval, CancellationToken cancellationToken) =>
+            await _operationInternal.WaitForCompletionAsync(suggestedPollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
-        public override ValueTask<Response<EmailSendResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override Response<EmailSendResult> WaitForCompletion(CancellationToken cancellationToken = default) =>
+            _operationInternal.WaitForCompletion(DefaultPollingInterval, cancellationToken);
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="suggestedPollingInterval">
+        /// The interval between status requests to the server.
+        /// The interval can change based on information returned from the server.
+        /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+        /// In that case, it uses the larger of the values between this value and the one returned from the server.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatus till HasCompleted is true, then return the final result of the operation.
+        /// </remarks>
+        public override Response<EmailSendResult> WaitForCompletion(TimeSpan suggestedPollingInterval, CancellationToken cancellationToken) =>
+            _operationInternal.WaitForCompletion(suggestedPollingInterval, cancellationToken);
 
         /// <summary>
         /// Initializes a new <see cref="EmailSendOperation"/> instance for
@@ -86,7 +109,7 @@ namespace Azure.Communication.Email
         /// </param>
         /// <param name="id">The ID of this operation.</param>
         public EmailSendOperation(string id, EmailClient client) :
-            this(client, id, null, CancellationToken.None)
+            this(client, id, null)
         {
         }
 
@@ -101,46 +124,33 @@ namespace Azure.Communication.Email
         /// Either the response from initiating the operation or getting the
         /// status if we're creating an operation from an existing ID.
         /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
         internal EmailSendOperation(
             EmailClient client,
             string copyId,
-            Response initialResponse,
-            CancellationToken cancellationToken)
+            Response initialResponse)
         {
             Id = copyId;
-            _value = null;
-            _rawResponse = initialResponse;
             _client = client;
-            _cancellationToken = cancellationToken;
+            _operationInternal = new OperationInternal<EmailSendResult>(_client._clientDiagnostics, this, initialResponse);
         }
 
         /// <summary>
         /// Check for the latest status of the email send operation.
         /// </summary>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>The <see cref="Response"/> with the status update.</returns>
-        public override Response UpdateStatus(
-            CancellationToken cancellationToken = default) =>
-            UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The HTTP response received from the server.</returns>
+        /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
+            _operationInternal.UpdateStatus(cancellationToken);
 
         /// <summary>
         /// Check for the latest status of the email send operation.
         /// </summary>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>The <see cref="Response"/> with the status update.</returns>
-        public override async ValueTask<Response> UpdateStatusAsync(
-            CancellationToken cancellationToken = default) =>
-            await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The HTTP response received from the server.</returns>
+        /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
+            await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Check for the latest status of the email send operation.
@@ -151,52 +161,42 @@ namespace Azure.Communication.Email
         /// </param>
         /// <param name="async" />
         /// <returns>The <see cref="Response"/> with the status update.</returns>
-        private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        async ValueTask<OperationState<EmailSendResult>> IOperation<EmailSendResult>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            // Short-circuit when already completed (which improves mocking
-            // scenarios that won't have a client).
-            if (HasCompleted)
-            {
-                return GetRawResponse();
-            }
-
-            // Use our original CancellationToken if the user didn't provide one
-            if (cancellationToken == default)
-            {
-                cancellationToken = _cancellationToken;
-            }
-
             // Get the latest status
             Response<EmailSendResult> update = async
                 ? await _client.GetSendResultAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false)
                 : _client.GetSendResult(Id, cancellationToken: cancellationToken);
 
-            // Check if the operation is no longer running
-            if (update.Value.Status != EmailSendStatus.NotStarted &&
-                update.Value.Status != EmailSendStatus.Running)
-            {
-                _hasCompleted = true;
-            }
-
-            // Check if the operation succeeded
-            if (Id == update.Value.Id &&
-                update.Value.Status == EmailSendStatus.Succeeded)
-            {
-                _value = update.Value;
-            }
-            // Check if the operation aborted or failed
-            if (Id == update.Value.Id &&
-                (update.Value.Status == EmailSendStatus.Failed ||
-                update.Value.Status == EmailSendStatus.Canceled))
-            {
-                _value = default;
-            }
-
             // Save this update as the latest raw response indicating the state
             // of the copy operation
-            Response response = update.GetRawResponse();
-            _rawResponse = response;
-            return response;
+            Response rawResponse = update.GetRawResponse();
+
+            if (update.Value.Status == EmailSendStatus.Succeeded)
+            {
+                return OperationState<EmailSendResult>.Success(rawResponse, update.Value);
+            }
+            else if (update.Value.Status == EmailSendStatus.Failed || update.Value.Status == EmailSendStatus.Canceled)
+            {
+                RequestFailedException requestFailedException = _client._clientDiagnostics.CreateRequestFailedException(rawResponse);
+                return OperationState<EmailSendResult>.Failure(rawResponse, requestFailedException);
+            }
+
+            return OperationState<EmailSendResult>.Pending(rawResponse);
+        }
+
+        private static IDictionary<string, string> CreateAdditionalInformation(ErrorDetail error)
+        {
+            if (string.IsNullOrEmpty(error.ToString()))
+                return null;
+
+            var additionalInformationToReturn = new Dictionary<string, string>();
+            foreach (var additionalInfo in error.AdditionalInfo)
+            {
+                additionalInformationToReturn.Add(additionalInfo.Type, additionalInfo.Info.ToString());
+            }
+
+            return additionalInformationToReturn;
         }
     }
 }

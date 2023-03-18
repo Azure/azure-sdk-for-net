@@ -18,9 +18,9 @@ namespace Azure.Communication.Email
     /// <summary> The Email service client. </summary>
     public partial class EmailClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
+        internal readonly ClientDiagnostics _clientDiagnostics;
 
-        private readonly EmailRestClient _restClient;
+        internal readonly EmailRestClient _restClient;
 
         /// <summary> Initializes a new instance of EmailClient for mocking. </summary>
         protected EmailClient()
@@ -292,7 +292,7 @@ namespace Azure.Communication.Email
             using JsonDocument document = await JsonDocument.ParseAsync(rawResponse.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var emailSendResult = EmailSendResult.DeserializeEmailSendResult(document.RootElement);
 
-            var operation = new EmailSendOperation(this, emailSendResult.Id, originalResponse.GetRawResponse(), cancellationToken);
+            var operation = new EmailSendOperation(this, emailSendResult.Id, originalResponse.GetRawResponse());
             if (wait == WaitUntil.Completed)
             {
                 await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -315,7 +315,7 @@ namespace Azure.Communication.Email
             using JsonDocument document = JsonDocument.Parse(rawResponse.ContentStream, default);
             var emailSendResult = EmailSendResult.DeserializeEmailSendResult(document.RootElement);
 
-            var operation = new EmailSendOperation(this, emailSendResult.Id, originalResponse.GetRawResponse(), cancellationToken);
+            var operation = new EmailSendOperation(this, emailSendResult.Id, originalResponse.GetRawResponse());
             if (wait == WaitUntil.Completed)
             {
                 operation.WaitForCompletion(cancellationToken);
