@@ -397,7 +397,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             selectionMarks ??= new List<DocumentSelectionMark>();
             lines ??= new List<DocumentLine>();
 
-            return new DocumentPage(pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList());
+            var annotations = new List<DocumentAnnotation>();
+            var barcodes = new List<DocumentBarcode>();
+            var formulas = new List<DocumentFormula>();
+            var images = new List<DocumentImage>();
+
+            return new DocumentPage(kind: default, pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList(), annotations, barcodes, formulas, images);
         }
 
         /// <summary> Initializes a new instance of DocumentParagraph. </summary>

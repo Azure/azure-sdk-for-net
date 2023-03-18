@@ -406,7 +406,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 try
                 {
                     Response<GetDocumentModelsResponse> response = ServiceClient.DocumentModelsListModels(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink.AbsoluteUri, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -423,7 +423,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 try
                 {
                     Response<GetDocumentModelsResponse> response = ServiceClient.DocumentModelsListModelsNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink.AbsoluteUri, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -450,7 +450,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 try
                 {
                     Response<GetDocumentModelsResponse> response = await ServiceClient.DocumentModelsListModelsAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink.AbsoluteUri, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -467,7 +467,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 try
                 {
                     Response<GetDocumentModelsResponse> response = await ServiceClient.DocumentModelsListModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink.AbsoluteUri, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -596,7 +596,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 try
                 {
                     var response = ServiceClient.MiscellaneousListOperations(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink.AbsoluteUri, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -613,7 +613,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 try
                 {
                     var response = ServiceClient.MiscellaneousListOperationsNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink.AbsoluteUri, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -640,7 +640,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 try
                 {
                     var response = await ServiceClient.MiscellaneousListOperationsAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink.AbsoluteUri, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -657,7 +657,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 try
                 {
                     var response = await ServiceClient.MiscellaneousListOperationsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink.AbsoluteUri, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

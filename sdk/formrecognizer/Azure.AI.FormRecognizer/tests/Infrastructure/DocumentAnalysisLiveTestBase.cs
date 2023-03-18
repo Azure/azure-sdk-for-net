@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
@@ -46,6 +47,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <returns>The instrumented <see cref="DocumentAnalysisClient" />.</returns>
         protected DocumentAnalysisClient CreateDocumentAnalysisClient(out DocumentAnalysisClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {
+            if (useTokenCredential)
+            {
+                Assert.Ignore();
+            }
+
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new DocumentAnalysisClientOptions(_serviceVersion));
 
@@ -81,6 +87,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <returns>The instrumented <see cref="DocumentModelAdministrationClient" />.</returns>
         protected DocumentModelAdministrationClient CreateDocumentModelAdministrationClient(out DocumentModelAdministrationClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {
+            if (useTokenCredential)
+            {
+                Assert.Ignore();
+            }
+
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new DocumentAnalysisClientOptions(_serviceVersion));
 

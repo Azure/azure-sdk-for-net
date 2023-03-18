@@ -1,202 +1,122 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2023-02-28-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "213510",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8cc93ea6c1d44ab4b99c5498d10d34ab-372112973ca84f70-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "cbe5430815e8ea8d3b6424daa3c35b79",
+        "traceparent": "00-cec962545297fb994bd620c8682825e1-633f78a313058a35-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "558cb12e8ec8cac2b767b533d9f37e7d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "43a9ecbe-9e1e-4b3c-a771-71a05102c0ec",
+        "apim-request-id": "5a88c5b7-6080-4cdd-a376-be31d979c25c",
         "Content-Length": "0",
-        "Date": "Tue, 16 Aug 2022 05:46:55 GMT",
-        "Operation-Location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/43a9ecbe-9e1e-4b3c-a771-71a05102c0ec?api-version=2022-08-31",
+        "Date": "Tue, 07 Mar 2023 01:02:29 GMT",
+        "Operation-Location": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/5a88c5b7-6080-4cdd-a376-be31d979c25c?api-version=2023-02-28-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "116"
+        "x-envoy-upstream-service-time": "99",
+        "x-ms-region": "West Europe"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/43a9ecbe-9e1e-4b3c-a771-71a05102c0ec?api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/5a88c5b7-6080-4cdd-a376-be31d979c25c?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8cc93ea6c1d44ab4b99c5498d10d34ab-254d8dbce282eb16-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "3d430575030da3f935bda8d0a02f81b7",
+        "traceparent": "00-cec962545297fb994bd620c8682825e1-3a804b6bd2b052da-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fadb711bdede377421c1a7cd8baff938",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "dc34aeeb-e168-4490-b247-d9c1577d8b57",
+        "apim-request-id": "27a62ce1-345e-40f0-a5be-91487984de96",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:46:55 GMT",
+        "Date": "Tue, 07 Mar 2023 01:02:30 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "132"
+        "x-envoy-upstream-service-time": "19",
+        "x-ms-region": "West Europe"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-08-16T05:46:56Z",
-        "lastUpdatedDateTime": "2022-08-16T05:46:56Z"
+        "createdDateTime": "2023-03-07T01:02:30Z",
+        "lastUpdatedDateTime": "2023-03-07T01:02:30Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/43a9ecbe-9e1e-4b3c-a771-71a05102c0ec?api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/5a88c5b7-6080-4cdd-a376-be31d979c25c?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8cc93ea6c1d44ab4b99c5498d10d34ab-7981bc09fac0cadc-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "ac872ecf4682cb3ace2c818f0405e8cc",
+        "traceparent": "00-cec962545297fb994bd620c8682825e1-85e614bafc8992ab-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "567ce4bb67053477109818becd7e1949",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1a85e882-8172-4b2b-9fca-b1c572aebb1b",
+        "apim-request-id": "f3d6d921-b9fc-4ece-9d94-f6b2ec2d7037",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:46:56 GMT",
+        "Date": "Tue, 07 Mar 2023 01:02:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "25"
+        "x-envoy-upstream-service-time": "24",
+        "x-ms-region": "West Europe"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-08-16T05:46:56Z",
-        "lastUpdatedDateTime": "2022-08-16T05:46:56Z"
+        "createdDateTime": "2023-03-07T01:02:30Z",
+        "lastUpdatedDateTime": "2023-03-07T01:02:30Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/43a9ecbe-9e1e-4b3c-a771-71a05102c0ec?api-version=2022-08-31",
+      "RequestUri": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/5a88c5b7-6080-4cdd-a376-be31d979c25c?api-version=2023-02-28-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8cc93ea6c1d44ab4b99c5498d10d34ab-b3bc5029d84e905a-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "943da12b643f05754a42952b6cbd490b",
+        "traceparent": "00-cec962545297fb994bd620c8682825e1-d4e30e7d68df070b-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.1.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c999283c82a04f903c543307e6f53f07",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c743e0a5-5506-4e45-8f36-66727a59af05",
-        "Content-Length": "106",
+        "apim-request-id": "260e449a-1232-4964-80af-13de9f8fe0ec",
+        "Content-Length": "54967",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:46:58 GMT",
+        "Date": "Tue, 07 Mar 2023 01:02:33 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2022-08-16T05:46:56Z",
-        "lastUpdatedDateTime": "2022-08-16T05:46:56Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/43a9ecbe-9e1e-4b3c-a771-71a05102c0ec?api-version=2022-08-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8cc93ea6c1d44ab4b99c5498d10d34ab-9bc1de8e25ce4dbc-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "740b6ce3ae3b2ff6cb786fe181699e30",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "6d33acb4-2fa1-4781-914a-65ca09d51b8b",
-        "Content-Length": "106",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:46:59 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2022-08-16T05:46:56Z",
-        "lastUpdatedDateTime": "2022-08-16T05:46:56Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/43a9ecbe-9e1e-4b3c-a771-71a05102c0ec?api-version=2022-08-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8cc93ea6c1d44ab4b99c5498d10d34ab-3a58da1be98bde94-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "ffa4dcd4ecf16a78b8826240b00f5e11",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "847e9cd8-7771-4afc-8ec8-9a919625c2a9",
-        "Content-Length": "106",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:47:00 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "28"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2022-08-16T05:46:56Z",
-        "lastUpdatedDateTime": "2022-08-16T05:47:00Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/43a9ecbe-9e1e-4b3c-a771-71a05102c0ec?api-version=2022-08-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8cc93ea6c1d44ab4b99c5498d10d34ab-ddb448e9f1003802-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "98ab76e273f97d90aa0ec9c7f59483e0",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "b504b132-3ca5-487f-88ce-88c9a444d3e8",
-        "Content-Length": "64497",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Aug 2022 05:47:01 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "65"
+        "x-envoy-upstream-service-time": "78",
+        "x-ms-region": "West Europe"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2022-08-16T05:46:56Z",
-        "lastUpdatedDateTime": "2022-08-16T05:47:01Z",
+        "createdDateTime": "2023-03-07T01:02:30Z",
+        "lastUpdatedDateTime": "2023-03-07T01:02:32Z",
         "analyzeResult": {
-          "apiVersion": "2022-08-31",
+          "apiVersion": "2023-02-28-preview",
           "modelId": "prebuilt-invoice",
           "stringIndexType": "utf16CodeUnit",
-          "content": "CONTOSO LTD.\nContoso Headquarters 123 456th St New York, NY, 10001\nINVOICE\nINVOICE: INV-100 INVOICE DATE: 11/15/2019 DUE DATE: 12/15/2019 CUSTOMER NAME: MICROSOFT CORPORATION SERVICE PERIOD: 10/14/2019 - 11/14/2019 CUSTOMER ID: CID-12345\nMicrosoft Corp 123 Other St, Redmond WA, 98052\nBILL TO:\nMicrosoft Finance\n123 Bill St,\nRedmond WA, 98052\nSHIP TO:\nMicrosoft Delivery\n123 Ship St,\nRedmond WA, 98052\nSERVICE ADDRESS:\nMicrosoft Services\n123 Service St,\nRedmond WA, 98052\nSALESPERSON\nP.O. NUMBER\nREQUISITIONER\nSHIPPED VIA\nF.O.B. POINT\nTERMS\nPO-3333\nDATE\nITEM CODE\nDESCRIPTION\nQTY\nUM\nPRICE\nTAX\nAMOUNT\n3/4/2021\nA123\nConsulting Services\n2\nhours\n$30.00\n10%\n$60.00\n3/5/2021\nB456\nDocument Fee\n3\n$10.00\n5%\n$30.00\n3/6/2021\nC789\nPrinting Fee\n10\npages\n$1.00\n20%\n$10.00\nSUBTOTAL\n$100.00\nSALES TAX\n$10.00\nTOTAL\n$110.00\nPREVIOUS UNPAID BALANCE\n$500.00\nTHANK YOU FOR YOUR BUSINESS!\nREMIT TO:\nContoso Billing\n123 Remit St\nNew York, NY, 10001\nAMOUNT DUE\n$610.00",
+          "content": "CONTOSO LTD.\nINVOICE\nContoso Headquarters\nINVOICE: INV-100\n123 456th St\nINVOICE DATE: 11/15/2019\nNew York, NY, 10001\nDUE DATE: 12/15/2019\nCUSTOMER NAME: MICROSOFT CORPORATION\nSERVICE PERIOD: 10/14/2019 - 11/14/2019\nCUSTOMER ID: CID-12345\nMicrosoft Corp\n123 Other St,\nRedmond WA, 98052\nBILL TO:\nSHIP TO:\nSERVICE ADDRESS:\nMicrosoft Finance\nMicrosoft Delivery\nMicrosoft Services\n123 Bill St,\n123 Ship St,\n123 Service St,\nRedmond WA, 98052\nRedmond WA, 98052\nRedmond WA, 98052\nSALESPERSON\nP.O. NUMBER\nREQUISITIONER\nSHIPPED VIA\nF.O.B. POINT\nTERMS\nPO-3333\nDATE\nITEM CODE\nDESCRIPTION\nQTY\nUM\nPRICE\nTAX\nAMOUNT\n3/4/2021\nA123\nConsulting Services\n2\nhours\n$30.00\n10%\n$60.00\n3/5/2021\nB456\nDocument Fee\n3\n$10.00\n5%\n$30.00\n3/6/2021\nC789\nPrinting Fee\n10\npages\n$1.00\n20%\n$10.00\nSUBTOTAL\n$100.00\nSALES TAX\n$10.00\nTOTAL\n$110.00\nPREVIOUS UNPAID BALANCE\n$500.00\nAMOUNT DUE\n$610.00\nTHANK YOU FOR YOUR BUSINESS!\nREMIT TO:\nContoso Billing\n123 Remit St\nNew York, NY, 10001",
           "pages": [
             {
               "pageNumber": 1,
@@ -242,6 +162,24 @@
                   }
                 },
                 {
+                  "content": "INVOICE",
+                  "polygon": [
+                    1409,
+                    115,
+                    1595,
+                    112,
+                    1596,
+                    157,
+                    1410,
+                    158
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 13,
+                    "length": 7
+                  }
+                },
+                {
                   "content": "Contoso",
                   "polygon": [
                     114,
@@ -255,7 +193,7 @@
                   ],
                   "confidence": 0.995,
                   "span": {
-                    "offset": 13,
+                    "offset": 21,
                     "length": 7
                   }
                 },
@@ -273,152 +211,8 @@
                   ],
                   "confidence": 0.993,
                   "span": {
-                    "offset": 21,
+                    "offset": 29,
                     "length": 12
-                  }
-                },
-                {
-                  "content": "123",
-                  "polygon": [
-                    116,
-                    321,
-                    163,
-                    320,
-                    163,
-                    353,
-                    116,
-                    353
-                  ],
-                  "confidence": 0.973,
-                  "span": {
-                    "offset": 34,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "456th",
-                  "polygon": [
-                    170,
-                    320,
-                    239,
-                    319,
-                    239,
-                    353,
-                    170,
-                    353
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 38,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "St",
-                  "polygon": [
-                    246,
-                    319,
-                    279,
-                    319,
-                    279,
-                    352,
-                    246,
-                    353
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 44,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "New",
-                  "polygon": [
-                    113,
-                    363,
-                    168,
-                    363,
-                    167,
-                    396,
-                    112,
-                    397
-                  ],
-                  "confidence": 0.992,
-                  "span": {
-                    "offset": 47,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "York,",
-                  "polygon": [
-                    181,
-                    363,
-                    250,
-                    363,
-                    250,
-                    395,
-                    181,
-                    396
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 51,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "NY,",
-                  "polygon": [
-                    256,
-                    363,
-                    306,
-                    363,
-                    305,
-                    395,
-                    256,
-                    395
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 57,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "10001",
-                  "polygon": [
-                    312,
-                    363,
-                    399,
-                    362,
-                    398,
-                    396,
-                    312,
-                    395
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 61,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "INVOICE",
-                  "polygon": [
-                    1409,
-                    115,
-                    1595,
-                    112,
-                    1596,
-                    157,
-                    1410,
-                    158
-                  ],
-                  "confidence": 0.995,
-                  "span": {
-                    "offset": 67,
-                    "length": 7
                   }
                 },
                 {
@@ -435,7 +229,7 @@
                   ],
                   "confidence": 0.994,
                   "span": {
-                    "offset": 75,
+                    "offset": 42,
                     "length": 8
                   }
                 },
@@ -453,8 +247,62 @@
                   ],
                   "confidence": 0.995,
                   "span": {
-                    "offset": 84,
+                    "offset": 51,
                     "length": 7
+                  }
+                },
+                {
+                  "content": "123",
+                  "polygon": [
+                    116,
+                    321,
+                    163,
+                    320,
+                    163,
+                    353,
+                    116,
+                    353
+                  ],
+                  "confidence": 0.973,
+                  "span": {
+                    "offset": 59,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "456th",
+                  "polygon": [
+                    170,
+                    320,
+                    239,
+                    319,
+                    239,
+                    353,
+                    170,
+                    353
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 63,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "St",
+                  "polygon": [
+                    246,
+                    319,
+                    279,
+                    319,
+                    279,
+                    352,
+                    246,
+                    353
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 69,
+                    "length": 2
                   }
                 },
                 {
@@ -471,7 +319,7 @@
                   ],
                   "confidence": 0.995,
                   "span": {
-                    "offset": 92,
+                    "offset": 72,
                     "length": 7
                   }
                 },
@@ -489,7 +337,7 @@
                   ],
                   "confidence": 0.997,
                   "span": {
-                    "offset": 100,
+                    "offset": 80,
                     "length": 5
                   }
                 },
@@ -507,8 +355,80 @@
                   ],
                   "confidence": 0.992,
                   "span": {
-                    "offset": 106,
+                    "offset": 86,
                     "length": 10
+                  }
+                },
+                {
+                  "content": "New",
+                  "polygon": [
+                    113,
+                    363,
+                    168,
+                    363,
+                    167,
+                    396,
+                    112,
+                    397
+                  ],
+                  "confidence": 0.992,
+                  "span": {
+                    "offset": 97,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "York,",
+                  "polygon": [
+                    181,
+                    363,
+                    250,
+                    363,
+                    250,
+                    395,
+                    181,
+                    396
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 101,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "NY,",
+                  "polygon": [
+                    256,
+                    363,
+                    306,
+                    363,
+                    305,
+                    395,
+                    256,
+                    395
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 107,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "10001",
+                  "polygon": [
+                    312,
+                    363,
+                    399,
+                    362,
+                    398,
+                    396,
+                    312,
+                    395
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 111,
+                    "length": 5
                   }
                 },
                 {
@@ -962,150 +882,6 @@
                   }
                 },
                 {
-                  "content": "Microsoft",
-                  "polygon": [
-                    113,
-                    751,
-                    247,
-                    752,
-                    246,
-                    780,
-                    113,
-                    781
-                  ],
-                  "confidence": 0.994,
-                  "span": {
-                    "offset": 294,
-                    "length": 9
-                  }
-                },
-                {
-                  "content": "Finance",
-                  "polygon": [
-                    253,
-                    752,
-                    359,
-                    751,
-                    358,
-                    782,
-                    252,
-                    780
-                  ],
-                  "confidence": 0.996,
-                  "span": {
-                    "offset": 304,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "123",
-                  "polygon": [
-                    117,
-                    790,
-                    163,
-                    790,
-                    163,
-                    823,
-                    117,
-                    822
-                  ],
-                  "confidence": 0.998,
-                  "span": {
-                    "offset": 312,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "Bill",
-                  "polygon": [
-                    169,
-                    790,
-                    211,
-                    790,
-                    212,
-                    822,
-                    170,
-                    823
-                  ],
-                  "confidence": 0.989,
-                  "span": {
-                    "offset": 316,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "St,",
-                  "polygon": [
-                    218,
-                    790,
-                    258,
-                    789,
-                    259,
-                    821,
-                    218,
-                    822
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 321,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "Redmond",
-                  "polygon": [
-                    115,
-                    831,
-                    243,
-                    832,
-                    243,
-                    862,
-                    115,
-                    863
-                  ],
-                  "confidence": 0.993,
-                  "span": {
-                    "offset": 325,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "WA,",
-                  "polygon": [
-                    250,
-                    832,
-                    308,
-                    832,
-                    308,
-                    862,
-                    250,
-                    862
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 333,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "98052",
-                  "polygon": [
-                    314,
-                    832,
-                    401,
-                    831,
-                    401,
-                    863,
-                    314,
-                    862
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 337,
-                    "length": 5
-                  }
-                },
-                {
                   "content": "SHIP",
                   "polygon": [
                     664,
@@ -1119,7 +895,7 @@
                   ],
                   "confidence": 0.989,
                   "span": {
-                    "offset": 343,
+                    "offset": 294,
                     "length": 4
                   }
                 },
@@ -1137,152 +913,8 @@
                   ],
                   "confidence": 0.998,
                   "span": {
-                    "offset": 348,
+                    "offset": 299,
                     "length": 3
-                  }
-                },
-                {
-                  "content": "Microsoft",
-                  "polygon": [
-                    664,
-                    751,
-                    795,
-                    752,
-                    795,
-                    782,
-                    665,
-                    781
-                  ],
-                  "confidence": 0.993,
-                  "span": {
-                    "offset": 352,
-                    "length": 9
-                  }
-                },
-                {
-                  "content": "Delivery",
-                  "polygon": [
-                    801,
-                    752,
-                    916,
-                    752,
-                    915,
-                    784,
-                    801,
-                    782
-                  ],
-                  "confidence": 0.996,
-                  "span": {
-                    "offset": 362,
-                    "length": 8
-                  }
-                },
-                {
-                  "content": "123",
-                  "polygon": [
-                    666,
-                    789,
-                    711,
-                    790,
-                    711,
-                    823,
-                    666,
-                    823
-                  ],
-                  "confidence": 0.998,
-                  "span": {
-                    "offset": 371,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "Ship",
-                  "polygon": [
-                    717,
-                    790,
-                    779,
-                    792,
-                    779,
-                    824,
-                    717,
-                    823
-                  ],
-                  "confidence": 0.995,
-                  "span": {
-                    "offset": 375,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "St,",
-                  "polygon": [
-                    786,
-                    792,
-                    823,
-                    793,
-                    823,
-                    824,
-                    786,
-                    824
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 380,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "Redmond",
-                  "polygon": [
-                    665,
-                    831,
-                    793,
-                    832,
-                    793,
-                    862,
-                    665,
-                    863
-                  ],
-                  "confidence": 0.996,
-                  "span": {
-                    "offset": 384,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "WA,",
-                  "polygon": [
-                    800,
-                    832,
-                    860,
-                    832,
-                    860,
-                    862,
-                    800,
-                    862
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 392,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "98052",
-                  "polygon": [
-                    866,
-                    832,
-                    951,
-                    831,
-                    951,
-                    862,
-                    865,
-                    862
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 396,
-                    "length": 5
                   }
                 },
                 {
@@ -1299,7 +931,7 @@
                   ],
                   "confidence": 0.993,
                   "span": {
-                    "offset": 402,
+                    "offset": 303,
                     "length": 7
                   }
                 },
@@ -1317,7 +949,79 @@
                   ],
                   "confidence": 0.994,
                   "span": {
-                    "offset": 410,
+                    "offset": 311,
+                    "length": 8
+                  }
+                },
+                {
+                  "content": "Microsoft",
+                  "polygon": [
+                    113,
+                    751,
+                    247,
+                    752,
+                    246,
+                    780,
+                    113,
+                    781
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 320,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "Finance",
+                  "polygon": [
+                    253,
+                    752,
+                    359,
+                    751,
+                    358,
+                    782,
+                    252,
+                    780
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 330,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "Microsoft",
+                  "polygon": [
+                    664,
+                    751,
+                    795,
+                    752,
+                    795,
+                    782,
+                    665,
+                    781
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 338,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "Delivery",
+                  "polygon": [
+                    801,
+                    752,
+                    916,
+                    752,
+                    915,
+                    784,
+                    801,
+                    782
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 348,
                     "length": 8
                   }
                 },
@@ -1335,7 +1039,7 @@
                   ],
                   "confidence": 0.993,
                   "span": {
-                    "offset": 419,
+                    "offset": 357,
                     "length": 9
                   }
                 },
@@ -1353,8 +1057,116 @@
                   ],
                   "confidence": 0.996,
                   "span": {
-                    "offset": 429,
+                    "offset": 367,
                     "length": 8
+                  }
+                },
+                {
+                  "content": "123",
+                  "polygon": [
+                    117,
+                    790,
+                    163,
+                    790,
+                    163,
+                    823,
+                    117,
+                    822
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 376,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "Bill",
+                  "polygon": [
+                    169,
+                    790,
+                    211,
+                    790,
+                    212,
+                    822,
+                    170,
+                    823
+                  ],
+                  "confidence": 0.989,
+                  "span": {
+                    "offset": 380,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "St,",
+                  "polygon": [
+                    218,
+                    790,
+                    258,
+                    789,
+                    259,
+                    821,
+                    218,
+                    822
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 385,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "123",
+                  "polygon": [
+                    666,
+                    789,
+                    711,
+                    790,
+                    711,
+                    823,
+                    666,
+                    823
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 389,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "Ship",
+                  "polygon": [
+                    717,
+                    790,
+                    779,
+                    792,
+                    779,
+                    824,
+                    717,
+                    823
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 393,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "St,",
+                  "polygon": [
+                    786,
+                    792,
+                    823,
+                    793,
+                    823,
+                    824,
+                    786,
+                    824
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 398,
+                    "length": 3
                   }
                 },
                 {
@@ -1371,7 +1183,7 @@
                   ],
                   "confidence": 0.998,
                   "span": {
-                    "offset": 438,
+                    "offset": 402,
                     "length": 3
                   }
                 },
@@ -1389,7 +1201,7 @@
                   ],
                   "confidence": 0.997,
                   "span": {
-                    "offset": 442,
+                    "offset": 406,
                     "length": 7
                   }
                 },
@@ -1407,8 +1219,116 @@
                   ],
                   "confidence": 0.997,
                   "span": {
-                    "offset": 450,
+                    "offset": 414,
                     "length": 3
+                  }
+                },
+                {
+                  "content": "Redmond",
+                  "polygon": [
+                    115,
+                    831,
+                    243,
+                    832,
+                    243,
+                    862,
+                    115,
+                    863
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 418,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "WA,",
+                  "polygon": [
+                    250,
+                    832,
+                    308,
+                    832,
+                    308,
+                    862,
+                    250,
+                    862
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 426,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "98052",
+                  "polygon": [
+                    314,
+                    832,
+                    401,
+                    831,
+                    401,
+                    863,
+                    314,
+                    862
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 430,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "Redmond",
+                  "polygon": [
+                    665,
+                    831,
+                    793,
+                    832,
+                    793,
+                    862,
+                    665,
+                    863
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 436,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "WA,",
+                  "polygon": [
+                    800,
+                    832,
+                    860,
+                    832,
+                    860,
+                    862,
+                    800,
+                    862
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 444,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "98052",
+                  "polygon": [
+                    866,
+                    832,
+                    951,
+                    831,
+                    951,
+                    862,
+                    865,
+                    862
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 448,
+                    "length": 5
                   }
                 },
                 {
@@ -2474,294 +2394,6 @@
                   }
                 },
                 {
-                  "content": "THANK",
-                  "polygon": [
-                    623,
-                    1702,
-                    715,
-                    1702,
-                    714,
-                    1734,
-                    622,
-                    1733
-                  ],
-                  "confidence": 0.993,
-                  "span": {
-                    "offset": 839,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "YOU",
-                  "polygon": [
-                    721,
-                    1702,
-                    777,
-                    1702,
-                    777,
-                    1735,
-                    721,
-                    1734
-                  ],
-                  "confidence": 0.99,
-                  "span": {
-                    "offset": 845,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "FOR",
-                  "polygon": [
-                    786,
-                    1702,
-                    842,
-                    1702,
-                    842,
-                    1735,
-                    786,
-                    1735
-                  ],
-                  "confidence": 0.998,
-                  "span": {
-                    "offset": 849,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "YOUR",
-                  "polygon": [
-                    849,
-                    1702,
-                    924,
-                    1703,
-                    923,
-                    1735,
-                    848,
-                    1735
-                  ],
-                  "confidence": 0.988,
-                  "span": {
-                    "offset": 853,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "BUSINESS!",
-                  "polygon": [
-                    930,
-                    1703,
-                    1075,
-                    1703,
-                    1075,
-                    1734,
-                    930,
-                    1735
-                  ],
-                  "confidence": 0.995,
-                  "span": {
-                    "offset": 858,
-                    "length": 9
-                  }
-                },
-                {
-                  "content": "REMIT",
-                  "polygon": [
-                    113,
-                    1828,
-                    200,
-                    1828,
-                    200,
-                    1855,
-                    114,
-                    1856
-                  ],
-                  "confidence": 0.994,
-                  "span": {
-                    "offset": 868,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "TO:",
-                  "polygon": [
-                    206,
-                    1828,
-                    253,
-                    1829,
-                    252,
-                    1856,
-                    206,
-                    1855
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 874,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "Contoso",
-                  "polygon": [
-                    113,
-                    1869,
-                    224,
-                    1870,
-                    225,
-                    1904,
-                    115,
-                    1900
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 878,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "Billing",
-                  "polygon": [
-                    231,
-                    1870,
-                    317,
-                    1870,
-                    317,
-                    1903,
-                    231,
-                    1904
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 886,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "123",
-                  "polygon": [
-                    115,
-                    1910,
-                    161,
-                    1910,
-                    162,
-                    1940,
-                    115,
-                    1941
-                  ],
-                  "confidence": 0.998,
-                  "span": {
-                    "offset": 894,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "Remit",
-                  "polygon": [
-                    169,
-                    1910,
-                    250,
-                    1912,
-                    250,
-                    1939,
-                    169,
-                    1940
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 898,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "St",
-                  "polygon": [
-                    256,
-                    1912,
-                    290,
-                    1912,
-                    290,
-                    1939,
-                    256,
-                    1939
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 904,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "New",
-                  "polygon": [
-                    114,
-                    1951,
-                    168,
-                    1952,
-                    167,
-                    1984,
-                    113,
-                    1984
-                  ],
-                  "confidence": 0.994,
-                  "span": {
-                    "offset": 907,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "York,",
-                  "polygon": [
-                    181,
-                    1952,
-                    251,
-                    1952,
-                    251,
-                    1983,
-                    181,
-                    1983
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 911,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "NY,",
-                  "polygon": [
-                    257,
-                    1952,
-                    306,
-                    1951,
-                    306,
-                    1983,
-                    257,
-                    1983
-                  ],
-                  "confidence": 0.998,
-                  "span": {
-                    "offset": 917,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "10001",
-                  "polygon": [
-                    312,
-                    1951,
-                    399,
-                    1949,
-                    399,
-                    1983,
-                    312,
-                    1983
-                  ],
-                  "confidence": 0.997,
-                  "span": {
-                    "offset": 921,
-                    "length": 5
-                  }
-                },
-                {
                   "content": "AMOUNT",
                   "polygon": [
                     1149,
@@ -2775,7 +2407,7 @@
                   ],
                   "confidence": 0.994,
                   "span": {
-                    "offset": 927,
+                    "offset": 839,
                     "length": 6
                   }
                 },
@@ -2793,7 +2425,7 @@
                   ],
                   "confidence": 0.998,
                   "span": {
-                    "offset": 934,
+                    "offset": 846,
                     "length": 3
                   }
                 },
@@ -2811,8 +2443,296 @@
                   ],
                   "confidence": 0.991,
                   "span": {
-                    "offset": 938,
+                    "offset": 850,
                     "length": 7
+                  }
+                },
+                {
+                  "content": "THANK",
+                  "polygon": [
+                    623,
+                    1702,
+                    715,
+                    1702,
+                    714,
+                    1734,
+                    622,
+                    1733
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 858,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "YOU",
+                  "polygon": [
+                    721,
+                    1702,
+                    777,
+                    1702,
+                    777,
+                    1735,
+                    721,
+                    1734
+                  ],
+                  "confidence": 0.99,
+                  "span": {
+                    "offset": 864,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "FOR",
+                  "polygon": [
+                    786,
+                    1702,
+                    842,
+                    1702,
+                    842,
+                    1735,
+                    786,
+                    1735
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 868,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "YOUR",
+                  "polygon": [
+                    849,
+                    1702,
+                    924,
+                    1703,
+                    923,
+                    1735,
+                    848,
+                    1735
+                  ],
+                  "confidence": 0.988,
+                  "span": {
+                    "offset": 872,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "BUSINESS!",
+                  "polygon": [
+                    930,
+                    1703,
+                    1075,
+                    1703,
+                    1075,
+                    1734,
+                    930,
+                    1735
+                  ],
+                  "confidence": 0.995,
+                  "span": {
+                    "offset": 877,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "REMIT",
+                  "polygon": [
+                    113,
+                    1828,
+                    200,
+                    1828,
+                    200,
+                    1855,
+                    114,
+                    1856
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 887,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "TO:",
+                  "polygon": [
+                    206,
+                    1828,
+                    253,
+                    1829,
+                    252,
+                    1856,
+                    206,
+                    1855
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 893,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "Contoso",
+                  "polygon": [
+                    113,
+                    1869,
+                    224,
+                    1870,
+                    225,
+                    1904,
+                    115,
+                    1900
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 897,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "Billing",
+                  "polygon": [
+                    231,
+                    1870,
+                    317,
+                    1870,
+                    317,
+                    1903,
+                    231,
+                    1904
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 905,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "123",
+                  "polygon": [
+                    115,
+                    1910,
+                    161,
+                    1910,
+                    162,
+                    1940,
+                    115,
+                    1941
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 913,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "Remit",
+                  "polygon": [
+                    169,
+                    1910,
+                    250,
+                    1912,
+                    250,
+                    1939,
+                    169,
+                    1940
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 917,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "St",
+                  "polygon": [
+                    256,
+                    1912,
+                    290,
+                    1912,
+                    290,
+                    1939,
+                    256,
+                    1939
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 923,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "New",
+                  "polygon": [
+                    114,
+                    1951,
+                    168,
+                    1952,
+                    167,
+                    1984,
+                    113,
+                    1984
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 926,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "York,",
+                  "polygon": [
+                    181,
+                    1952,
+                    251,
+                    1952,
+                    251,
+                    1983,
+                    181,
+                    1983
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 930,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "NY,",
+                  "polygon": [
+                    257,
+                    1952,
+                    306,
+                    1951,
+                    306,
+                    1983,
+                    257,
+                    1983
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 936,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "10001",
+                  "polygon": [
+                    312,
+                    1951,
+                    399,
+                    1949,
+                    399,
+                    1983,
+                    312,
+                    1983
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 940,
+                    "length": 5
                   }
                 }
               ],
@@ -2837,63 +2757,6 @@
                   ]
                 },
                 {
-                  "content": "Contoso Headquarters",
-                  "polygon": [
-                    114,
-                    280,
-                    423,
-                    282,
-                    423,
-                    314,
-                    114,
-                    313
-                  ],
-                  "spans": [
-                    {
-                      "offset": 13,
-                      "length": 20
-                    }
-                  ]
-                },
-                {
-                  "content": "123 456th St",
-                  "polygon": [
-                    116,
-                    320,
-                    279,
-                    319,
-                    280,
-                    351,
-                    116,
-                    353
-                  ],
-                  "spans": [
-                    {
-                      "offset": 34,
-                      "length": 12
-                    }
-                  ]
-                },
-                {
-                  "content": "New York, NY, 10001",
-                  "polygon": [
-                    112,
-                    362,
-                    399,
-                    362,
-                    399,
-                    395,
-                    112,
-                    396
-                  ],
-                  "spans": [
-                    {
-                      "offset": 47,
-                      "length": 19
-                    }
-                  ]
-                },
-                {
                   "content": "INVOICE",
                   "polygon": [
                     1409,
@@ -2907,8 +2770,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 67,
+                      "offset": 13,
                       "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "Contoso Headquarters",
+                  "polygon": [
+                    114,
+                    280,
+                    423,
+                    282,
+                    423,
+                    314,
+                    114,
+                    313
+                  ],
+                  "spans": [
+                    {
+                      "offset": 21,
+                      "length": 20
                     }
                   ]
                 },
@@ -2926,8 +2808,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 75,
+                      "offset": 42,
                       "length": 16
+                    }
+                  ]
+                },
+                {
+                  "content": "123 456th St",
+                  "polygon": [
+                    116,
+                    320,
+                    279,
+                    319,
+                    280,
+                    351,
+                    116,
+                    353
+                  ],
+                  "spans": [
+                    {
+                      "offset": 59,
+                      "length": 12
                     }
                   ]
                 },
@@ -2945,8 +2846,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 92,
+                      "offset": 72,
                       "length": 24
+                    }
+                  ]
+                },
+                {
+                  "content": "New York, NY, 10001",
+                  "polygon": [
+                    112,
+                    362,
+                    399,
+                    362,
+                    399,
+                    395,
+                    112,
+                    396
+                  ],
+                  "spans": [
+                    {
+                      "offset": 97,
+                      "length": 19
                     }
                   ]
                 },
@@ -3103,63 +3023,6 @@
                   ]
                 },
                 {
-                  "content": "Microsoft Finance",
-                  "polygon": [
-                    113,
-                    750,
-                    361,
-                    751,
-                    361,
-                    781,
-                    113,
-                    780
-                  ],
-                  "spans": [
-                    {
-                      "offset": 294,
-                      "length": 17
-                    }
-                  ]
-                },
-                {
-                  "content": "123 Bill St,",
-                  "polygon": [
-                    116,
-                    789,
-                    258,
-                    789,
-                    258,
-                    821,
-                    116,
-                    822
-                  ],
-                  "spans": [
-                    {
-                      "offset": 312,
-                      "length": 12
-                    }
-                  ]
-                },
-                {
-                  "content": "Redmond WA, 98052",
-                  "polygon": [
-                    114,
-                    831,
-                    405,
-                    831,
-                    405,
-                    862,
-                    114,
-                    862
-                  ],
-                  "spans": [
-                    {
-                      "offset": 325,
-                      "length": 17
-                    }
-                  ]
-                },
-                {
                   "content": "SHIP TO:",
                   "polygon": [
                     663,
@@ -3173,65 +3036,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 343,
+                      "offset": 294,
                       "length": 8
-                    }
-                  ]
-                },
-                {
-                  "content": "Microsoft Delivery",
-                  "polygon": [
-                    664,
-                    751,
-                    918,
-                    752,
-                    917,
-                    783,
-                    664,
-                    781
-                  ],
-                  "spans": [
-                    {
-                      "offset": 352,
-                      "length": 18
-                    }
-                  ]
-                },
-                {
-                  "content": "123 Ship St,",
-                  "polygon": [
-                    664,
-                    789,
-                    823,
-                    791,
-                    822,
-                    824,
-                    663,
-                    822
-                  ],
-                  "spans": [
-                    {
-                      "offset": 371,
-                      "length": 12
-                    }
-                  ]
-                },
-                {
-                  "content": "Redmond WA, 98052",
-                  "polygon": [
-                    664,
-                    831,
-                    954,
-                    831,
-                    954,
-                    862,
-                    664,
-                    862
-                  ],
-                  "spans": [
-                    {
-                      "offset": 384,
-                      "length": 17
                     }
                   ]
                 },
@@ -3249,8 +3055,46 @@
                   ],
                   "spans": [
                     {
-                      "offset": 402,
+                      "offset": 303,
                       "length": 16
+                    }
+                  ]
+                },
+                {
+                  "content": "Microsoft Finance",
+                  "polygon": [
+                    113,
+                    750,
+                    361,
+                    751,
+                    361,
+                    781,
+                    113,
+                    780
+                  ],
+                  "spans": [
+                    {
+                      "offset": 320,
+                      "length": 17
+                    }
+                  ]
+                },
+                {
+                  "content": "Microsoft Delivery",
+                  "polygon": [
+                    664,
+                    751,
+                    918,
+                    752,
+                    917,
+                    783,
+                    664,
+                    781
+                  ],
+                  "spans": [
+                    {
+                      "offset": 338,
+                      "length": 18
                     }
                   ]
                 },
@@ -3268,8 +3112,46 @@
                   ],
                   "spans": [
                     {
-                      "offset": 419,
+                      "offset": 357,
                       "length": 18
+                    }
+                  ]
+                },
+                {
+                  "content": "123 Bill St,",
+                  "polygon": [
+                    116,
+                    789,
+                    258,
+                    789,
+                    258,
+                    821,
+                    116,
+                    822
+                  ],
+                  "spans": [
+                    {
+                      "offset": 376,
+                      "length": 12
+                    }
+                  ]
+                },
+                {
+                  "content": "123 Ship St,",
+                  "polygon": [
+                    664,
+                    789,
+                    823,
+                    791,
+                    822,
+                    824,
+                    663,
+                    822
+                  ],
+                  "spans": [
+                    {
+                      "offset": 389,
+                      "length": 12
                     }
                   ]
                 },
@@ -3287,8 +3169,46 @@
                   ],
                   "spans": [
                     {
-                      "offset": 438,
+                      "offset": 402,
                       "length": 15
+                    }
+                  ]
+                },
+                {
+                  "content": "Redmond WA, 98052",
+                  "polygon": [
+                    114,
+                    831,
+                    405,
+                    831,
+                    405,
+                    862,
+                    114,
+                    862
+                  ],
+                  "spans": [
+                    {
+                      "offset": 418,
+                      "length": 17
+                    }
+                  ]
+                },
+                {
+                  "content": "Redmond WA, 98052",
+                  "polygon": [
+                    664,
+                    831,
+                    954,
+                    831,
+                    954,
+                    862,
+                    664,
+                    862
+                  ],
+                  "spans": [
+                    {
+                      "offset": 436,
+                      "length": 17
                     }
                   ]
                 },
@@ -4186,101 +4106,6 @@
                   ]
                 },
                 {
-                  "content": "THANK YOU FOR YOUR BUSINESS!",
-                  "polygon": [
-                    621,
-                    1702,
-                    1076,
-                    1703,
-                    1076,
-                    1734,
-                    620,
-                    1733
-                  ],
-                  "spans": [
-                    {
-                      "offset": 839,
-                      "length": 28
-                    }
-                  ]
-                },
-                {
-                  "content": "REMIT TO:",
-                  "polygon": [
-                    112,
-                    1827,
-                    253,
-                    1828,
-                    253,
-                    1856,
-                    112,
-                    1855
-                  ],
-                  "spans": [
-                    {
-                      "offset": 868,
-                      "length": 9
-                    }
-                  ]
-                },
-                {
-                  "content": "Contoso Billing",
-                  "polygon": [
-                    113,
-                    1868,
-                    322,
-                    1869,
-                    321,
-                    1904,
-                    113,
-                    1902
-                  ],
-                  "spans": [
-                    {
-                      "offset": 878,
-                      "length": 15
-                    }
-                  ]
-                },
-                {
-                  "content": "123 Remit St",
-                  "polygon": [
-                    114,
-                    1910,
-                    290,
-                    1910,
-                    290,
-                    1940,
-                    114,
-                    1940
-                  ],
-                  "spans": [
-                    {
-                      "offset": 894,
-                      "length": 12
-                    }
-                  ]
-                },
-                {
-                  "content": "New York, NY, 10001",
-                  "polygon": [
-                    113,
-                    1950,
-                    400,
-                    1948,
-                    400,
-                    1982,
-                    113,
-                    1984
-                  ],
-                  "spans": [
-                    {
-                      "offset": 907,
-                      "length": 19
-                    }
-                  ]
-                },
-                {
                   "content": "AMOUNT DUE",
                   "polygon": [
                     1148,
@@ -4294,7 +4119,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 927,
+                      "offset": 839,
                       "length": 10
                     }
                   ]
@@ -4313,8 +4138,103 @@
                   ],
                   "spans": [
                     {
-                      "offset": 938,
+                      "offset": 850,
                       "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "THANK YOU FOR YOUR BUSINESS!",
+                  "polygon": [
+                    621,
+                    1702,
+                    1076,
+                    1703,
+                    1076,
+                    1734,
+                    620,
+                    1733
+                  ],
+                  "spans": [
+                    {
+                      "offset": 858,
+                      "length": 28
+                    }
+                  ]
+                },
+                {
+                  "content": "REMIT TO:",
+                  "polygon": [
+                    112,
+                    1827,
+                    253,
+                    1828,
+                    253,
+                    1856,
+                    112,
+                    1855
+                  ],
+                  "spans": [
+                    {
+                      "offset": 887,
+                      "length": 9
+                    }
+                  ]
+                },
+                {
+                  "content": "Contoso Billing",
+                  "polygon": [
+                    113,
+                    1868,
+                    322,
+                    1869,
+                    321,
+                    1904,
+                    113,
+                    1902
+                  ],
+                  "spans": [
+                    {
+                      "offset": 897,
+                      "length": 15
+                    }
+                  ]
+                },
+                {
+                  "content": "123 Remit St",
+                  "polygon": [
+                    114,
+                    1910,
+                    290,
+                    1910,
+                    290,
+                    1940,
+                    114,
+                    1940
+                  ],
+                  "spans": [
+                    {
+                      "offset": 913,
+                      "length": 12
+                    }
+                  ]
+                },
+                {
+                  "content": "New York, NY, 10001",
+                  "polygon": [
+                    113,
+                    1950,
+                    400,
+                    1948,
+                    400,
+                    1982,
+                    113,
+                    1984
+                  ],
+                  "spans": [
+                    {
+                      "offset": 926,
+                      "length": 19
                     }
                   ]
                 }
@@ -5512,1689 +5432,6 @@
               ]
             }
           ],
-          "paragraphs": [
-            {
-              "spans": [
-                {
-                  "offset": 0,
-                  "length": 12
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    113,
-                    131,
-                    467,
-                    130,
-                    467,
-                    178,
-                    113,
-                    179
-                  ]
-                }
-              ],
-              "content": "CONTOSO LTD."
-            },
-            {
-              "spans": [
-                {
-                  "offset": 13,
-                  "length": 53
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    113,
-                    280,
-                    423,
-                    282,
-                    422,
-                    398,
-                    112,
-                    396
-                  ]
-                }
-              ],
-              "content": "Contoso Headquarters 123 456th St New York, NY, 10001"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 67,
-                  "length": 7
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1409,
-                    113,
-                    1600,
-                    112,
-                    1600,
-                    156,
-                    1409,
-                    157
-                  ]
-                }
-              ],
-              "role": "title",
-              "content": "INVOICE"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 75,
-                  "length": 162
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    985,
-                    276,
-                    1602,
-                    276,
-                    1602,
-                    513,
-                    985,
-                    513
-                  ]
-                }
-              ],
-              "content": "INVOICE: INV-100 INVOICE DATE: 11/15/2019 DUE DATE: 12/15/2019 CUSTOMER NAME: MICROSOFT CORPORATION SERVICE PERIOD: 10/14/2019 - 11/14/2019 CUSTOMER ID: CID-12345"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 238,
-                  "length": 46
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    113,
-                    525,
-                    403,
-                    525,
-                    403,
-                    638,
-                    113,
-                    638
-                  ]
-                }
-              ],
-              "content": "Microsoft Corp 123 Other St, Redmond WA, 98052"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 285,
-                  "length": 8
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    113,
-                    705,
-                    224,
-                    705,
-                    225,
-                    738,
-                    113,
-                    738
-                  ]
-                }
-              ],
-              "content": "BILL TO:"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 294,
-                  "length": 17
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    113,
-                    750,
-                    361,
-                    751,
-                    361,
-                    781,
-                    113,
-                    780
-                  ]
-                }
-              ],
-              "content": "Microsoft Finance"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 312,
-                  "length": 12
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    116,
-                    789,
-                    258,
-                    789,
-                    258,
-                    821,
-                    116,
-                    822
-                  ]
-                }
-              ],
-              "content": "123 Bill St,"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 325,
-                  "length": 17
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    114,
-                    831,
-                    405,
-                    831,
-                    405,
-                    862,
-                    114,
-                    862
-                  ]
-                }
-              ],
-              "content": "Redmond WA, 98052"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 343,
-                  "length": 8
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    663,
-                    708,
-                    780,
-                    708,
-                    780,
-                    736,
-                    663,
-                    735
-                  ]
-                }
-              ],
-              "content": "SHIP TO:"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 352,
-                  "length": 18
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    664,
-                    751,
-                    918,
-                    752,
-                    917,
-                    783,
-                    664,
-                    781
-                  ]
-                }
-              ],
-              "content": "Microsoft Delivery"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 371,
-                  "length": 12
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    664,
-                    789,
-                    823,
-                    791,
-                    822,
-                    824,
-                    663,
-                    822
-                  ]
-                }
-              ],
-              "content": "123 Ship St,"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 384,
-                  "length": 17
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    664,
-                    831,
-                    954,
-                    831,
-                    954,
-                    862,
-                    664,
-                    862
-                  ]
-                }
-              ],
-              "content": "Redmond WA, 98052"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 402,
-                  "length": 16
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1238,
-                    705,
-                    1487,
-                    706,
-                    1487,
-                    736,
-                    1238,
-                    735
-                  ]
-                }
-              ],
-              "content": "SERVICE ADDRESS:"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 419,
-                  "length": 18
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1238,
-                    751,
-                    1490,
-                    751,
-                    1490,
-                    780,
-                    1238,
-                    780
-                  ]
-                }
-              ],
-              "content": "Microsoft Services"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 438,
-                  "length": 15
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1241,
-                    790,
-                    1437,
-                    791,
-                    1437,
-                    821,
-                    1241,
-                    820
-                  ]
-                }
-              ],
-              "content": "123 Service St,"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 454,
-                  "length": 17
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1240,
-                    831,
-                    1530,
-                    831,
-                    1530,
-                    861,
-                    1240,
-                    861
-                  ]
-                }
-              ],
-              "content": "Redmond WA, 98052"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 472,
-                  "length": 11
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    99,
-                    912,
-                    362,
-                    911,
-                    362,
-                    966,
-                    99,
-                    966
-                  ]
-                }
-              ],
-              "content": "SALESPERSON"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 484,
-                  "length": 11
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    362,
-                    911,
-                    663,
-                    911,
-                    663,
-                    966,
-                    362,
-                    966
-                  ]
-                }
-              ],
-              "content": "P.O. NUMBER"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 496,
-                  "length": 13
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    663,
-                    911,
-                    937,
-                    911,
-                    937,
-                    966,
-                    663,
-                    966
-                  ]
-                }
-              ],
-              "content": "REQUISITIONER"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 510,
-                  "length": 11
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    937,
-                    911,
-                    1148,
-                    911,
-                    1148,
-                    966,
-                    937,
-                    966
-                  ]
-                }
-              ],
-              "content": "SHIPPED VIA"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 522,
-                  "length": 12
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1148,
-                    911,
-                    1362,
-                    911,
-                    1362,
-                    966,
-                    1148,
-                    966
-                  ]
-                }
-              ],
-              "content": "F.O.B. POINT"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 535,
-                  "length": 5
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1362,
-                    911,
-                    1597,
-                    911,
-                    1598,
-                    966,
-                    1362,
-                    966
-                  ]
-                }
-              ],
-              "content": "TERMS"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 541,
-                  "length": 7
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    362,
-                    966,
-                    663,
-                    966,
-                    663,
-                    1021,
-                    362,
-                    1021
-                  ]
-                }
-              ],
-              "content": "PO-3333"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 549,
-                  "length": 4
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    100,
-                    1064,
-                    261,
-                    1064,
-                    261,
-                    1121,
-                    100,
-                    1121
-                  ]
-                }
-              ],
-              "content": "DATE"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 554,
-                  "length": 9
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    261,
-                    1064,
-                    449,
-                    1064,
-                    449,
-                    1121,
-                    261,
-                    1121
-                  ]
-                }
-              ],
-              "content": "ITEM CODE"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 564,
-                  "length": 11
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    449,
-                    1064,
-                    862,
-                    1064,
-                    862,
-                    1121,
-                    449,
-                    1121
-                  ]
-                }
-              ],
-              "content": "DESCRIPTION"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 576,
-                  "length": 3
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    862,
-                    1064,
-                    949,
-                    1064,
-                    949,
-                    1121,
-                    862,
-                    1121
-                  ]
-                }
-              ],
-              "content": "QTY"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 580,
-                  "length": 2
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    949,
-                    1064,
-                    1113,
-                    1064,
-                    1111,
-                    1121,
-                    949,
-                    1121
-                  ]
-                }
-              ],
-              "content": "UM"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 583,
-                  "length": 5
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1113,
-                    1064,
-                    1300,
-                    1064,
-                    1300,
-                    1121,
-                    1111,
-                    1121
-                  ]
-                }
-              ],
-              "content": "PRICE"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 589,
-                  "length": 3
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1300,
-                    1064,
-                    1437,
-                    1064,
-                    1437,
-                    1121,
-                    1300,
-                    1121
-                  ]
-                }
-              ],
-              "content": "TAX"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 593,
-                  "length": 6
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1437,
-                    1064,
-                    1597,
-                    1064,
-                    1599,
-                    1121,
-                    1437,
-                    1121
-                  ]
-                }
-              ],
-              "content": "AMOUNT"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 600,
-                  "length": 8
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    100,
-                    1121,
-                    261,
-                    1121,
-                    261,
-                    1181,
-                    100,
-                    1181
-                  ]
-                }
-              ],
-              "content": "3/4/2021"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 609,
-                  "length": 4
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    261,
-                    1121,
-                    449,
-                    1121,
-                    449,
-                    1181,
-                    261,
-                    1181
-                  ]
-                }
-              ],
-              "content": "A123"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 614,
-                  "length": 19
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    449,
-                    1121,
-                    862,
-                    1121,
-                    862,
-                    1181,
-                    449,
-                    1181
-                  ]
-                }
-              ],
-              "content": "Consulting Services"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 634,
-                  "length": 1
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    862,
-                    1121,
-                    949,
-                    1121,
-                    949,
-                    1181,
-                    862,
-                    1181
-                  ]
-                }
-              ],
-              "content": "2"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 636,
-                  "length": 5
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    949,
-                    1121,
-                    1111,
-                    1121,
-                    1111,
-                    1179,
-                    949,
-                    1181
-                  ]
-                }
-              ],
-              "content": "hours"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 642,
-                  "length": 6
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1111,
-                    1121,
-                    1300,
-                    1121,
-                    1300,
-                    1179,
-                    1111,
-                    1179
-                  ]
-                }
-              ],
-              "content": "$30.00"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 649,
-                  "length": 3
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1300,
-                    1121,
-                    1437,
-                    1121,
-                    1437,
-                    1179,
-                    1300,
-                    1179
-                  ]
-                }
-              ],
-              "content": "10%"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 653,
-                  "length": 6
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1437,
-                    1121,
-                    1599,
-                    1121,
-                    1599,
-                    1179,
-                    1437,
-                    1179
-                  ]
-                }
-              ],
-              "content": "$60.00"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 660,
-                  "length": 8
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    100,
-                    1181,
-                    261,
-                    1181,
-                    261,
-                    1239,
-                    100,
-                    1240
-                  ]
-                }
-              ],
-              "content": "3/5/2021"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 669,
-                  "length": 4
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    261,
-                    1181,
-                    449,
-                    1181,
-                    449,
-                    1239,
-                    261,
-                    1239
-                  ]
-                }
-              ],
-              "content": "B456"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 674,
-                  "length": 12
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    449,
-                    1181,
-                    862,
-                    1181,
-                    862,
-                    1239,
-                    449,
-                    1239
-                  ]
-                }
-              ],
-              "content": "Document Fee"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 687,
-                  "length": 1
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    862,
-                    1181,
-                    949,
-                    1181,
-                    949,
-                    1239,
-                    862,
-                    1239
-                  ]
-                }
-              ],
-              "content": "3"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 689,
-                  "length": 6
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1111,
-                    1179,
-                    1300,
-                    1179,
-                    1300,
-                    1239,
-                    1111,
-                    1239
-                  ]
-                }
-              ],
-              "content": "$10.00"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 696,
-                  "length": 2
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1300,
-                    1179,
-                    1437,
-                    1179,
-                    1437,
-                    1239,
-                    1300,
-                    1239
-                  ]
-                }
-              ],
-              "content": "5%"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 699,
-                  "length": 6
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1437,
-                    1179,
-                    1599,
-                    1179,
-                    1599,
-                    1239,
-                    1437,
-                    1239
-                  ]
-                }
-              ],
-              "content": "$30.00"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 706,
-                  "length": 8
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    100,
-                    1240,
-                    261,
-                    1239,
-                    261,
-                    1300,
-                    100,
-                    1300
-                  ]
-                }
-              ],
-              "content": "3/6/2021"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 715,
-                  "length": 4
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    261,
-                    1239,
-                    449,
-                    1239,
-                    449,
-                    1300,
-                    261,
-                    1300
-                  ]
-                }
-              ],
-              "content": "C789"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 720,
-                  "length": 12
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    449,
-                    1239,
-                    862,
-                    1239,
-                    862,
-                    1300,
-                    449,
-                    1300
-                  ]
-                }
-              ],
-              "content": "Printing Fee"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 733,
-                  "length": 2
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    862,
-                    1239,
-                    949,
-                    1239,
-                    949,
-                    1300,
-                    862,
-                    1300
-                  ]
-                }
-              ],
-              "content": "10"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 736,
-                  "length": 5
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    949,
-                    1239,
-                    1111,
-                    1239,
-                    1111,
-                    1300,
-                    949,
-                    1300
-                  ]
-                }
-              ],
-              "content": "pages"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 742,
-                  "length": 5
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1111,
-                    1239,
-                    1300,
-                    1239,
-                    1300,
-                    1300,
-                    1111,
-                    1300
-                  ]
-                }
-              ],
-              "content": "$1.00"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 748,
-                  "length": 3
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1300,
-                    1239,
-                    1437,
-                    1239,
-                    1437,
-                    1300,
-                    1300,
-                    1300
-                  ]
-                }
-              ],
-              "content": "20%"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 752,
-                  "length": 6
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1437,
-                    1239,
-                    1599,
-                    1239,
-                    1599,
-                    1300,
-                    1437,
-                    1300
-                  ]
-                }
-              ],
-              "content": "$10.00"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 759,
-                  "length": 8
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1202,
-                    1378,
-                    1347,
-                    1378,
-                    1347,
-                    1407,
-                    1202,
-                    1407
-                  ]
-                }
-              ],
-              "content": "SUBTOTAL"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 768,
-                  "length": 7
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1471,
-                    1372,
-                    1586,
-                    1369,
-                    1587,
-                    1402,
-                    1471,
-                    1405
-                  ]
-                }
-              ],
-              "content": "$100.00"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 776,
-                  "length": 9
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1204,
-                    1435,
-                    1348,
-                    1435,
-                    1348,
-                    1468,
-                    1204,
-                    1468
-                  ]
-                }
-              ],
-              "content": "SALES TAX"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 786,
-                  "length": 6
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1489,
-                    1432,
-                    1587,
-                    1428,
-                    1588,
-                    1461,
-                    1489,
-                    1464
-                  ]
-                }
-              ],
-              "content": "$10.00"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 793,
-                  "length": 5
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1257,
-                    1498,
-                    1348,
-                    1499,
-                    1348,
-                    1525,
-                    1257,
-                    1524
-                  ]
-                }
-              ],
-              "content": "TOTAL"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 799,
-                  "length": 7
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1472,
-                    1491,
-                    1586,
-                    1491,
-                    1586,
-                    1522,
-                    1472,
-                    1523
-                  ]
-                }
-              ],
-              "content": "$110.00"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 807,
-                  "length": 23
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    956,
-                    1555,
-                    1346,
-                    1555,
-                    1347,
-                    1585,
-                    956,
-                    1586
-                  ]
-                }
-              ],
-              "content": "PREVIOUS UNPAID BALANCE"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 831,
-                  "length": 7
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1470,
-                    1549,
-                    1585,
-                    1547,
-                    1586,
-                    1582,
-                    1470,
-                    1583
-                  ]
-                }
-              ],
-              "content": "$500.00"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 839,
-                  "length": 28
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    620,
-                    1702,
-                    1076,
-                    1703,
-                    1076,
-                    1734,
-                    620,
-                    1733
-                  ]
-                }
-              ],
-              "content": "THANK YOU FOR YOUR BUSINESS!"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 868,
-                  "length": 9
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    112,
-                    1827,
-                    253,
-                    1828,
-                    253,
-                    1856,
-                    112,
-                    1855
-                  ]
-                }
-              ],
-              "content": "REMIT TO:"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 878,
-                  "length": 15
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    113,
-                    1868,
-                    322,
-                    1869,
-                    321,
-                    1904,
-                    113,
-                    1902
-                  ]
-                }
-              ],
-              "content": "Contoso Billing"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 894,
-                  "length": 12
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    114,
-                    1910,
-                    290,
-                    1910,
-                    290,
-                    1940,
-                    114,
-                    1940
-                  ]
-                }
-              ],
-              "content": "123 Remit St"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 907,
-                  "length": 19
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    113,
-                    1950,
-                    400,
-                    1948,
-                    400,
-                    1982,
-                    113,
-                    1984
-                  ]
-                }
-              ],
-              "content": "New York, NY, 10001"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 927,
-                  "length": 10
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1148,
-                    1616,
-                    1345,
-                    1616,
-                    1345,
-                    1645,
-                    1148,
-                    1645
-                  ]
-                }
-              ],
-              "content": "AMOUNT DUE"
-            },
-            {
-              "spans": [
-                {
-                  "offset": 938,
-                  "length": 7
-                }
-              ],
-              "boundingRegions": [
-                {
-                  "pageNumber": 1,
-                  "polygon": [
-                    1472,
-                    1609,
-                    1586,
-                    1608,
-                    1587,
-                    1642,
-                    1472,
-                    1643
-                  ]
-                }
-              ],
-              "content": "$610.00"
-            }
-          ],
           "keyValuePairs": [
             {
               "key": {
@@ -7216,7 +5453,7 @@
                 ],
                 "spans": [
                   {
-                    "offset": 75,
+                    "offset": 42,
                     "length": 8
                   }
                 ]
@@ -7240,12 +5477,13 @@
                 ],
                 "spans": [
                   {
-                    "offset": 84,
+                    "offset": 51,
                     "length": 7
                   }
                 ]
               },
-              "confidence": 0.924
+              "confidence": 0.924,
+              "commonName": "InvoiceNumber"
             },
             {
               "key": {
@@ -7267,7 +5505,7 @@
                 ],
                 "spans": [
                   {
-                    "offset": 92,
+                    "offset": 72,
                     "length": 13
                   }
                 ]
@@ -7291,12 +5529,13 @@
                 ],
                 "spans": [
                   {
-                    "offset": 106,
+                    "offset": 86,
                     "length": 10
                   }
                 ]
               },
-              "confidence": 0.908
+              "confidence": 0.908,
+              "commonName": "InvoiceDate"
             },
             {
               "key": {
@@ -7347,7 +5586,8 @@
                   }
                 ]
               },
-              "confidence": 0.908
+              "confidence": 0.908,
+              "commonName": "DueDate"
             },
             {
               "key": {
@@ -7398,7 +5638,8 @@
                   }
                 ]
               },
-              "confidence": 0.89
+              "confidence": 0.89,
+              "commonName": "CustomerName"
             },
             {
               "key": {
@@ -7449,7 +5690,8 @@
                   }
                 ]
               },
-              "confidence": 0.879
+              "confidence": 0.879,
+              "commonName": "ServicePeriod"
             },
             {
               "key": {
@@ -7500,7 +5742,8 @@
                   }
                 ]
               },
-              "confidence": 0.908
+              "confidence": 0.908,
+              "commonName": "CustomerNumber"
             },
             {
               "key": {
@@ -7546,12 +5789,21 @@
                 ],
                 "spans": [
                   {
-                    "offset": 294,
-                    "length": 48
+                    "offset": 320,
+                    "length": 17
+                  },
+                  {
+                    "offset": 376,
+                    "length": 12
+                  },
+                  {
+                    "offset": 418,
+                    "length": 17
                   }
                 ]
               },
-              "confidence": 0.832
+              "confidence": 0.832,
+              "commonName": "BillingAddress"
             },
             {
               "key": {
@@ -7573,7 +5825,7 @@
                 ],
                 "spans": [
                   {
-                    "offset": 343,
+                    "offset": 294,
                     "length": 8
                   }
                 ]
@@ -7597,12 +5849,21 @@
                 ],
                 "spans": [
                   {
-                    "offset": 352,
-                    "length": 49
+                    "offset": 338,
+                    "length": 18
+                  },
+                  {
+                    "offset": 389,
+                    "length": 12
+                  },
+                  {
+                    "offset": 436,
+                    "length": 17
                   }
                 ]
               },
-              "confidence": 0.832
+              "confidence": 0.832,
+              "commonName": "ShippingAddress"
             },
             {
               "key": {
@@ -7624,7 +5885,7 @@
                 ],
                 "spans": [
                   {
-                    "offset": 402,
+                    "offset": 303,
                     "length": 16
                   }
                 ]
@@ -7648,12 +5909,21 @@
                 ],
                 "spans": [
                   {
-                    "offset": 419,
-                    "length": 52
+                    "offset": 357,
+                    "length": 18
+                  },
+                  {
+                    "offset": 402,
+                    "length": 15
+                  },
+                  {
+                    "offset": 454,
+                    "length": 17
                   }
                 ]
               },
-              "confidence": 0.832
+              "confidence": 0.832,
+              "commonName": "ServiceLocation"
             },
             {
               "key": {
@@ -7704,7 +5974,8 @@
                   }
                 ]
               },
-              "confidence": 0.907
+              "confidence": 0.907,
+              "commonName": "PurchaseOrderNumber"
             },
             {
               "key": {
@@ -7755,7 +6026,8 @@
                   }
                 ]
               },
-              "confidence": 0.924
+              "confidence": 0.924,
+              "commonName": "SubTotal"
             },
             {
               "key": {
@@ -7806,7 +6078,8 @@
                   }
                 ]
               },
-              "confidence": 0.908
+              "confidence": 0.908,
+              "commonName": "SalesTax"
             },
             {
               "key": {
@@ -7857,7 +6130,8 @@
                   }
                 ]
               },
-              "confidence": 0.924
+              "confidence": 0.924,
+              "commonName": "InvoiceTotal"
             },
             {
               "key": {
@@ -7908,7 +6182,8 @@
                   }
                 ]
               },
-              "confidence": 0.889
+              "confidence": 0.889,
+              "commonName": "PreviousBalance"
             },
             {
               "key": {
@@ -7930,7 +6205,7 @@
                 ],
                 "spans": [
                   {
-                    "offset": 927,
+                    "offset": 839,
                     "length": 10
                   }
                 ]
@@ -7954,12 +6229,13 @@
                 ],
                 "spans": [
                   {
-                    "offset": 938,
+                    "offset": 850,
                     "length": 7
                   }
                 ]
               },
-              "confidence": 0.908
+              "confidence": 0.908,
+              "commonName": "AmountDue"
             },
             {
               "key": {
@@ -7981,7 +6257,7 @@
                 ],
                 "spans": [
                   {
-                    "offset": 868,
+                    "offset": 887,
                     "length": 9
                   }
                 ]
@@ -8005,7 +6281,7 @@
                 ],
                 "spans": [
                   {
-                    "offset": 878,
+                    "offset": 897,
                     "length": 48
                   }
                 ]
@@ -8048,7 +6324,8 @@
                   "type": "currency",
                   "valueCurrency": {
                     "currencySymbol": "$",
-                    "amount": 610.0
+                    "amount": 610.0,
+                    "currencyCode": "USD"
                   },
                   "content": "$610.00",
                   "boundingRegions": [
@@ -8066,10 +6343,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.968,
+                  "confidence": 0.967,
                   "spans": [
                     {
-                      "offset": 938,
+                      "offset": 850,
                       "length": 7
                     }
                   ]
@@ -8092,11 +6369,15 @@
                       ]
                     }
                   ],
-                  "confidence": 0.906,
+                  "confidence": 0.892,
                   "spans": [
                     {
-                      "offset": 312,
-                      "length": 30
+                      "offset": 376,
+                      "length": 12
+                    },
+                    {
+                      "offset": 418,
+                      "length": 17
                     }
                   ],
                   "valueAddress": {
@@ -8127,17 +6408,17 @@
                       ]
                     }
                   ],
-                  "confidence": 0.926,
+                  "confidence": 0.933,
                   "spans": [
                     {
-                      "offset": 294,
+                      "offset": 320,
                       "length": 17
                     }
                   ]
                 },
                 "CustomerAddress": {
                   "type": "address",
-                  "content": "123 Other St, Redmond WA, 98052",
+                  "content": "123 Other St,\nRedmond WA, 98052",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
@@ -8153,7 +6434,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.906,
+                  "confidence": 0.893,
                   "spans": [
                     {
                       "offset": 253,
@@ -8188,7 +6469,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.926,
+                  "confidence": 0.932,
                   "spans": [
                     {
                       "offset": 238,
@@ -8242,7 +6523,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.907,
+                  "confidence": 0.829,
                   "spans": [
                     {
                       "offset": 153,
@@ -8269,7 +6550,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.962,
+                  "confidence": 0.968,
                   "spans": [
                     {
                       "offset": 127,
@@ -8296,10 +6577,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.968,
+                  "confidence": 0.97,
                   "spans": [
                     {
-                      "offset": 106,
+                      "offset": 86,
                       "length": 10
                     }
                   ]
@@ -8323,10 +6604,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.968,
+                  "confidence": 0.97,
                   "spans": [
                     {
-                      "offset": 84,
+                      "offset": 51,
                       "length": 7
                     }
                   ]
@@ -8335,7 +6616,8 @@
                   "type": "currency",
                   "valueCurrency": {
                     "currencySymbol": "$",
-                    "amount": 110.0
+                    "amount": 110.0,
+                    "currencyCode": "USD"
                   },
                   "content": "$110.00",
                   "boundingRegions": [
@@ -8353,7 +6635,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.958,
+                  "confidence": 0.967,
                   "spans": [
                     {
                       "offset": 799,
@@ -8371,7 +6653,8 @@
                           "type": "currency",
                           "valueCurrency": {
                             "currencySymbol": "$",
-                            "amount": 60.0
+                            "amount": 60.0,
+                            "currencyCode": "USD"
                           },
                           "content": "$60.00",
                           "boundingRegions": [
@@ -8389,7 +6672,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.972,
+                          "confidence": 0.899,
                           "spans": [
                             {
                               "offset": 653,
@@ -8416,7 +6699,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.972,
+                          "confidence": 0.9,
                           "spans": [
                             {
                               "offset": 600,
@@ -8443,7 +6726,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.955,
+                          "confidence": 0.898,
                           "spans": [
                             {
                               "offset": 614,
@@ -8470,7 +6753,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.897,
                           "spans": [
                             {
                               "offset": 609,
@@ -8497,7 +6780,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.899,
                           "spans": [
                             {
                               "offset": 634,
@@ -8505,9 +6788,9 @@
                             }
                           ]
                         },
-                        "Tax": {
-                          "type": "currency",
-                          "valueCurrency": {},
+                        "TaxRate": {
+                          "type": "string",
+                          "valueString": "10%",
                           "content": "10%",
                           "boundingRegions": [
                             {
@@ -8524,7 +6807,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.896,
                           "spans": [
                             {
                               "offset": 649,
@@ -8551,7 +6834,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.97,
+                          "confidence": 0.899,
                           "spans": [
                             {
                               "offset": 636,
@@ -8563,7 +6846,8 @@
                           "type": "currency",
                           "valueCurrency": {
                             "currencySymbol": "$",
-                            "amount": 30.0
+                            "amount": 30.0,
+                            "currencyCode": "USD"
                           },
                           "content": "$30.00",
                           "boundingRegions": [
@@ -8581,7 +6865,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.898,
                           "spans": [
                             {
                               "offset": 642,
@@ -8606,7 +6890,7 @@
                           ]
                         }
                       ],
-                      "confidence": 0.97,
+                      "confidence": 0.909,
                       "spans": [
                         {
                           "offset": 600,
@@ -8621,7 +6905,8 @@
                           "type": "currency",
                           "valueCurrency": {
                             "currencySymbol": "$",
-                            "amount": 30.0
+                            "amount": 30.0,
+                            "currencyCode": "USD"
                           },
                           "content": "$30.00",
                           "boundingRegions": [
@@ -8639,7 +6924,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.972,
+                          "confidence": 0.899,
                           "spans": [
                             {
                               "offset": 699,
@@ -8666,7 +6951,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.899,
                           "spans": [
                             {
                               "offset": 660,
@@ -8693,7 +6978,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.955,
+                          "confidence": 0.898,
                           "spans": [
                             {
                               "offset": 674,
@@ -8720,7 +7005,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.897,
                           "spans": [
                             {
                               "offset": 669,
@@ -8747,7 +7032,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.899,
                           "spans": [
                             {
                               "offset": 687,
@@ -8755,9 +7040,9 @@
                             }
                           ]
                         },
-                        "Tax": {
-                          "type": "currency",
-                          "valueCurrency": {},
+                        "TaxRate": {
+                          "type": "string",
+                          "valueString": "5%",
                           "content": "5%",
                           "boundingRegions": [
                             {
@@ -8774,7 +7059,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.97,
+                          "confidence": 0.895,
                           "spans": [
                             {
                               "offset": 696,
@@ -8786,7 +7071,8 @@
                           "type": "currency",
                           "valueCurrency": {
                             "currencySymbol": "$",
-                            "amount": 10.0
+                            "amount": 10.0,
+                            "currencyCode": "USD"
                           },
                           "content": "$10.00",
                           "boundingRegions": [
@@ -8804,7 +7090,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.898,
                           "spans": [
                             {
                               "offset": 689,
@@ -8829,7 +7115,7 @@
                           ]
                         }
                       ],
-                      "confidence": 0.97,
+                      "confidence": 0.909,
                       "spans": [
                         {
                           "offset": 660,
@@ -8844,7 +7130,8 @@
                           "type": "currency",
                           "valueCurrency": {
                             "currencySymbol": "$",
-                            "amount": 10.0
+                            "amount": 10.0,
+                            "currencyCode": "USD"
                           },
                           "content": "$10.00",
                           "boundingRegions": [
@@ -8862,7 +7149,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.972,
+                          "confidence": 0.899,
                           "spans": [
                             {
                               "offset": 752,
@@ -8889,7 +7176,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.899,
                           "spans": [
                             {
                               "offset": 706,
@@ -8916,7 +7203,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.956,
+                          "confidence": 0.899,
                           "spans": [
                             {
                               "offset": 720,
@@ -8943,7 +7230,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.897,
                           "spans": [
                             {
                               "offset": 715,
@@ -8970,7 +7257,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.899,
                           "spans": [
                             {
                               "offset": 733,
@@ -8978,9 +7265,9 @@
                             }
                           ]
                         },
-                        "Tax": {
-                          "type": "currency",
-                          "valueCurrency": {},
+                        "TaxRate": {
+                          "type": "string",
+                          "valueString": "20%",
                           "content": "20%",
                           "boundingRegions": [
                             {
@@ -8997,7 +7284,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.897,
                           "spans": [
                             {
                               "offset": 748,
@@ -9024,7 +7311,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.97,
+                          "confidence": 0.898,
                           "spans": [
                             {
                               "offset": 736,
@@ -9036,7 +7323,8 @@
                           "type": "currency",
                           "valueCurrency": {
                             "currencySymbol": "$",
-                            "amount": 1.0
+                            "amount": 1.0,
+                            "currencyCode": "USD"
                           },
                           "content": "$1.00",
                           "boundingRegions": [
@@ -9054,7 +7342,7 @@
                               ]
                             }
                           ],
-                          "confidence": 0.971,
+                          "confidence": 0.898,
                           "spans": [
                             {
                               "offset": 742,
@@ -9079,7 +7367,7 @@
                           ]
                         }
                       ],
-                      "confidence": 0.97,
+                      "confidence": 0.908,
                       "spans": [
                         {
                           "offset": 706,
@@ -9093,7 +7381,8 @@
                   "type": "currency",
                   "valueCurrency": {
                     "currencySymbol": "$",
-                    "amount": 500.0
+                    "amount": 500.0,
+                    "currencyCode": "USD"
                   },
                   "content": "$500.00",
                   "boundingRegions": [
@@ -9111,7 +7400,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.958,
+                  "confidence": 0.944,
                   "spans": [
                     {
                       "offset": 831,
@@ -9138,7 +7427,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.962,
+                  "confidence": 0.955,
                   "spans": [
                     {
                       "offset": 541,
@@ -9164,10 +7453,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.906,
+                  "confidence": 0.889,
                   "spans": [
                     {
-                      "offset": 894,
+                      "offset": 913,
                       "length": 32
                     }
                   ],
@@ -9199,10 +7488,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.926,
+                  "confidence": 0.933,
                   "spans": [
                     {
-                      "offset": 878,
+                      "offset": 897,
                       "length": 15
                     }
                   ]
@@ -9225,11 +7514,15 @@
                       ]
                     }
                   ],
-                  "confidence": 0.906,
+                  "confidence": 0.887,
                   "spans": [
                     {
-                      "offset": 438,
-                      "length": 33
+                      "offset": 402,
+                      "length": 15
+                    },
+                    {
+                      "offset": 454,
+                      "length": 17
                     }
                   ],
                   "valueAddress": {
@@ -9260,10 +7553,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.925,
+                  "confidence": 0.914,
                   "spans": [
                     {
-                      "offset": 419,
+                      "offset": 357,
                       "length": 18
                     }
                   ]
@@ -9287,7 +7580,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.968,
+                  "confidence": 0.957,
                   "spans": [
                     {
                       "offset": 204,
@@ -9314,7 +7607,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.968,
+                  "confidence": 0.957,
                   "spans": [
                     {
                       "offset": 191,
@@ -9340,11 +7633,15 @@
                       ]
                     }
                   ],
-                  "confidence": 0.906,
+                  "confidence": 0.89,
                   "spans": [
                     {
-                      "offset": 371,
-                      "length": 30
+                      "offset": 389,
+                      "length": 12
+                    },
+                    {
+                      "offset": 436,
+                      "length": 17
                     }
                   ],
                   "valueAddress": {
@@ -9375,10 +7672,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.925,
+                  "confidence": 0.932,
                   "spans": [
                     {
-                      "offset": 352,
+                      "offset": 338,
                       "length": 18
                     }
                   ]
@@ -9387,7 +7684,8 @@
                   "type": "currency",
                   "valueCurrency": {
                     "currencySymbol": "$",
-                    "amount": 100.0
+                    "amount": 100.0,
+                    "currencyCode": "USD"
                   },
                   "content": "$100.00",
                   "boundingRegions": [
@@ -9405,7 +7703,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.968,
+                  "confidence": 0.97,
                   "spans": [
                     {
                       "offset": 768,
@@ -9417,7 +7715,8 @@
                   "type": "currency",
                   "valueCurrency": {
                     "currencySymbol": "$",
-                    "amount": 10.0
+                    "amount": 10.0,
+                    "currencyCode": "USD"
                   },
                   "content": "$10.00",
                   "boundingRegions": [
@@ -9435,7 +7734,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.962,
+                  "confidence": 0.967,
                   "spans": [
                     {
                       "offset": 786,
@@ -9445,7 +7744,7 @@
                 },
                 "VendorAddress": {
                   "type": "address",
-                  "content": "123 456th St New York, NY, 10001",
+                  "content": "123 456th St\nNew York, NY, 10001",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
@@ -9461,11 +7760,15 @@
                       ]
                     }
                   ],
-                  "confidence": 0.904,
+                  "confidence": 0.889,
                   "spans": [
                     {
-                      "offset": 34,
-                      "length": 32
+                      "offset": 59,
+                      "length": 12
+                    },
+                    {
+                      "offset": 97,
+                      "length": 19
                     }
                   ],
                   "valueAddress": {
@@ -9496,10 +7799,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.926,
+                  "confidence": 0.933,
                   "spans": [
                     {
-                      "offset": 13,
+                      "offset": 21,
                       "length": 20
                     }
                   ]
@@ -9523,7 +7826,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.925,
+                  "confidence": 0.932,
                   "spans": [
                     {
                       "offset": 0,
@@ -9547,7 +7850,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
-    "RandomSeed": "2005287171"
+    "FORM_RECOGNIZER_ENDPOINT": "https://jrathor-fr-weu1.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "1290794672"
   }
 }

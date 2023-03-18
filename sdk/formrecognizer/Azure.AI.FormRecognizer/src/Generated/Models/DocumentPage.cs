@@ -35,39 +35,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Formulas = new ChangeTrackingList<DocumentFormula>();
             Images = new ChangeTrackingList<DocumentImage>();
         }
-
-        /// <summary> Initializes a new instance of DocumentPage. </summary>
-        /// <param name="kind"> Kind of document page. </param>
-        /// <param name="pageNumber"> 1-based page number in the input document. </param>
-        /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
-        /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
-        /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
-        /// <param name="unitPrivate"> The unit used by the width, height, and polygon properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </param>
-        /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
-        /// <param name="words"> Extracted words from the page. </param>
-        /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
-        /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
-        /// <param name="annotations"> Extracted annotations from the page. </param>
-        /// <param name="barcodes"> Extracted barcodes from the page. </param>
-        /// <param name="formulas"> Extracted formulas from the page. </param>
-        /// <param name="images"> Extracted images from the page. </param>
-        internal DocumentPage(DocumentPageKind kind, int pageNumber, float? angle, float? width, float? height, V3LengthUnit? unitPrivate, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines, IReadOnlyList<DocumentAnnotation> annotations, IReadOnlyList<DocumentBarcode> barcodes, IReadOnlyList<DocumentFormula> formulas, IReadOnlyList<DocumentImage> images)
-        {
-            Kind = kind;
-            PageNumber = pageNumber;
-            Angle = angle;
-            Width = width;
-            Height = height;
-            UnitPrivate = unitPrivate;
-            Spans = spans;
-            Words = words;
-            SelectionMarks = selectionMarks;
-            Lines = lines;
-            Annotations = annotations;
-            Barcodes = barcodes;
-            Formulas = formulas;
-            Images = images;
-        }
         /// <summary> 1-based page number in the input document. </summary>
         public int PageNumber { get; }
         /// <summary> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </summary>

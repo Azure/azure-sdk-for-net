@@ -107,7 +107,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
         internal ComposeDocumentModelOperation(
-            Uri location,
+            string location,
             Response postResponse,
             DocumentAnalysisRestClient allOperations,
             ClientDiagnostics diagnostics)
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             _diagnostics = diagnostics;
             _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
 
-            Id = location.AbsoluteUri.Split('/').Last().Split('?').FirstOrDefault();
+            Id = location.Split('/').Last().Split('?').FirstOrDefault();
         }
 
         /// <summary>

@@ -10,6 +10,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentPage
     {
         /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <param name="kind"> Kind of document page. </param>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
@@ -19,8 +20,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="words"> Extracted words from the page. </param>
         /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
-        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, V3LengthUnit? unitPrivate, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines)
+        /// <param name="annotations"> Extracted annotations from the page. </param>
+        /// <param name="barcodes"> Extracted barcodes from the page. </param>
+        /// <param name="formulas"> Extracted formulas from the page. </param>
+        /// <param name="images"> Extracted images from the page. </param>
+        internal DocumentPage(DocumentPageKind kind, int pageNumber, float? angle, float? width, float? height, V3LengthUnit? unitPrivate, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines, IReadOnlyList<DocumentAnnotation> annotations, IReadOnlyList<DocumentBarcode> barcodes, IReadOnlyList<DocumentFormula> formulas, IReadOnlyList<DocumentImage> images)
         {
+            Kind = kind;
             PageNumber = pageNumber;
             Angle = angle;
             Width = width;
@@ -30,6 +36,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Words = words;
             SelectionMarks = selectionMarks;
             Lines = lines;
+            Annotations = annotations;
+            Barcodes = barcodes;
+            Formulas = formulas;
+            Images = images;
 
             foreach (DocumentLine line in Lines)
             {
@@ -40,8 +50,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of DocumentPage. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, DocumentPageLengthUnit? unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines)
+        internal DocumentPage(DocumentPageKind kind, int pageNumber, float? angle, float? width, float? height, DocumentPageLengthUnit? unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines, IReadOnlyList<DocumentAnnotation> annotations, IReadOnlyList<DocumentBarcode> barcodes, IReadOnlyList<DocumentFormula> formulas, IReadOnlyList<DocumentImage> images)
         {
+            Kind = kind;
             PageNumber = pageNumber;
             Angle = angle;
             Width = width;
@@ -51,6 +62,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Words = words;
             SelectionMarks = selectionMarks;
             Lines = lines;
+            Annotations = annotations;
+            Barcodes = barcodes;
+            Formulas = formulas;
+            Images = images;
 
             foreach (DocumentLine line in Lines)
             {

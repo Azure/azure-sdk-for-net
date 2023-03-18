@@ -104,7 +104,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="postResponse">Response from the POSt request that initiated the operation.</param>
-        internal AnalyzeDocumentOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, Uri operationLocation, Response postResponse)
+        internal AnalyzeDocumentOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             // TODO: Add validation here (should we store _resuldId and _modelId as GUIDs?)
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
 
-            string[] substrs = operationLocation.AbsoluteUri.Split('/', '?');
+            string[] substrs = operationLocation.Split('/', '?');
 
             _resultId = substrs[substrs.Length - 2];
             _modelId = substrs[substrs.Length - 4];

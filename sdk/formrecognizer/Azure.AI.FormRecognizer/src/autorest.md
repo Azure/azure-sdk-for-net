@@ -156,13 +156,13 @@ directive:
 # Service V3 swagger
 ``` yaml
 input-file:
-  -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
+  -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
 ```
 
 ## Move generated models to the DocumentAnalysis namespace
 ``` yaml
 directive:
-  from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
+  from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
   where: $.definitions.*
   transform: >
     $["x-namespace"] = "Azure.AI.FormRecognizer.DocumentAnalysis"
@@ -171,7 +171,7 @@ directive:
 ## Rename operationIds
 ``` yaml
 directive:
-- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
+- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
   where: $.paths.*
   transform: >
     const prefix = "DocumentAnalysis_";
@@ -185,7 +185,7 @@ directive:
 ## Rename duplicated types
 ``` yaml
 directive:
-  from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
+  from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
   where: $.definitions.ModelInfo
   transform: >
     $["x-ms-client-name"] = "DocumentModel"
@@ -193,7 +193,7 @@ directive:
 
 ``` yaml
 directive:
-  from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
+  from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
   where: $.definitions.ErrorResponse
   transform: >
     $["x-ms-client-name"] = "DocumentErrorResponse"
@@ -201,7 +201,7 @@ directive:
 
 ``` yaml
 directive:
-- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
+- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
   where: $.definitions.OperationStatus
   transform: >
     $["x-ms-enum"].name = "DocumentOperationStatus";
@@ -211,7 +211,7 @@ directive:
 
 ``` yaml
 directive:
-- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
+- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
   where: $.definitions.DocumentPage.properties.unit
   transform: >
     $["x-ms-enum"].name = "V3LengthUnit";
@@ -219,7 +219,7 @@ directive:
 
 ``` yaml
 directive:
-- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
+- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
   where: $.definitions.DocumentSelectionMarkState
   transform: >
     $["x-ms-enum"].name = "V3SelectionMarkState";
@@ -228,7 +228,7 @@ directive:
 ## Move enums to the DocumentAnalysis namespace
 ``` yaml
 directive:
-- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
+- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
   where: $.definitions..properties.*
   transform: >
     if ($.enum) {
@@ -239,7 +239,7 @@ directive:
 ## Rename QueryStringIndexType
 ``` yaml
 directive:
-- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
+- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
   where: $.parameters.QueryStringIndexType
   transform: >
     $["x-namespace"] = "Azure.AI.FormRecognizer.DocumentAnalysis"
@@ -247,25 +247,28 @@ directive:
 
 ``` yaml
 directive:
-- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
+- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
   where: $.definitions.AnalyzeDocumentRequest.properties.urlSource
   transform: >
     $["x-ms-client-name"] = "uriSource";
 ```
 
 ## Remove uuid format restrictions
+Setting these input IDs' formats to `uuid` moves the format validation to the client side, chaging the type of the Exception thrown in case of error (breaking change).
 ``` yaml
 directive:
-- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
-  where: $.parameters.PathOperationId
+- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
+  where: $.parameters
   transform: >
-    $["format"] = undefined;
+    $.PathOperationId.format = undefined;
+    $.PathResultId.format = undefined;
 ```
 
-``` yaml
+Setting the Operation-Location format to `uuid` produces code that fails during runtime. The extracted header (a string) cannot be converted to `Uri` directly.
+```yaml
 directive:
-- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXABAF2FF7EFLFQ7MPUY76NDVA
-  where: $.parameters.PathResultId
+- from: https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/6e47de70bfbfa1124728808335571898c123d3fe/specification/cognitiveservices/data-plane/FormRecognizer/preview/2023-02-28-preview/FormRecognizer.json?token=GHSAT0AAAAAAB5R7LXBO4TEYHCSVVFEHA5YZAHJZSA
+  where: $.paths..Operation-Location
   transform: >
-    $["format"] = undefined;
+    $.format = undefined;
 ```

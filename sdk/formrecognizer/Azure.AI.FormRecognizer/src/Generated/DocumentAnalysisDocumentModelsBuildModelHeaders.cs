@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure;
 using Azure.Core;
 
@@ -19,6 +18,6 @@ namespace Azure.AI.FormRecognizer
             _response = response;
         }
         /// <summary> Operation result URL. </summary>
-        public Uri OperationLocation => _response.Headers.TryGetValue("Operation-Location", out Uri value) ? value : null;
+        public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
     }
 }

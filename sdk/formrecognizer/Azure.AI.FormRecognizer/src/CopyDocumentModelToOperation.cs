@@ -94,13 +94,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="postResponse">Response from the POSt request that initiated the operation.</param>
-        internal CopyDocumentModelToOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, Uri operationLocation, Response postResponse)
+        internal CopyDocumentModelToOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
             _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
 
-            Id = operationLocation.AbsoluteUri.Split('/').Last().Split('?').FirstOrDefault();
+            Id = operationLocation.Split('/').Last().Split('?').FirstOrDefault();
         }
 
         /// <summary>
