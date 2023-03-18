@@ -58,5 +58,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
             return builder.ToString();
         }
+
+        internal static void ValidateDigest(string clientDigest, string serverDigest, string message = default)
+        {
+            message ??= "The server-computed digest does not match the client-computed digest.";
+
+            if (!clientDigest.Equals(serverDigest, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new RequestFailedException(200, message);
+            }
+        }
     }
 }

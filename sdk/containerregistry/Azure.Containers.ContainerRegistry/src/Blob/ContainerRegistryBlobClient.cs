@@ -285,7 +285,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, contentType, cancellationToken).ConfigureAwait(false) :
                 _restClient.CreateManifest(_repositoryName, tagOrDigest, stream, contentType, cancellationToken);
 
-            ValidateDigest(contentDigest, response.Headers.DockerContentDigest);
+            BlobHelper.ValidateDigest(contentDigest, response.Headers.DockerContentDigest);
 
             return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
         }
@@ -367,7 +367,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     _blobRestClient.CompleteUpload(result.Digest, result.Location, null, cancellationToken);
 
-                ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
+                BlobHelper.ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
                 return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
             }
@@ -413,7 +413,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     await _blobRestClient.CompleteUploadAsync(result.Digest, result.Location, null, cancellationToken).ConfigureAwait(false);
 
-                ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
+                BlobHelper.ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
                 return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
             }
@@ -574,11 +574,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (ReferenceIsDigest(tagOrDigest))
                 {
-                    ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
+                    BlobHelper.ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
                 }
                 else
                 {
-                    ValidateDigest(contentDigest, digest);
+                    BlobHelper.ValidateDigest(contentDigest, digest);
                 }
 
                 return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
@@ -632,11 +632,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (ReferenceIsDigest(tagOrDigest))
                 {
-                    ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
+                    BlobHelper.ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
                 }
                 else
                 {
-                    ValidateDigest(contentDigest, digest);
+                    BlobHelper.ValidateDigest(contentDigest, digest);
                 }
 
                 return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
@@ -673,16 +673,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         private static bool ReferenceIsDigest(string reference)
         {
             return reference.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase);
-        }
-
-        private static void ValidateDigest(string clientDigest, string serverDigest, string message = default)
-        {
-            message ??= "The server-computed digest does not match the client-computed digest.";
-
-            if (!clientDigest.Equals(serverDigest, StringComparison.OrdinalIgnoreCase))
-            {
-                throw new RequestFailedException(200, message);
-            }
         }
 
         /// <summary>
@@ -750,7 +740,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 BinaryData.FromStream(blobResult.Value);
 
             string contentDigest = BlobHelper.ComputeDigest(data);
-            ValidateDigest(contentDigest, digest);
+            BlobHelper.ValidateDigest(contentDigest, digest);
 
             return Response.FromValue(new DownloadBlobResult(digest, data), blobResult.GetRawResponse());
         }
@@ -805,37 +795,17 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
                 _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
 
-            SHA256 sha256 = SHA256.Create();
-            int contentLength = (int)blobResult.Headers.ContentLength.Value;
-            int received = 0;
-            bool validated = false;
-
             // Wrap the response Content in a RetriableStream so we
             // can return it before it's finished downloading, but still
             // allow retrying if it fails.
-            Stream stream = RetriableStream.Create(
+            Stream retriableStream = RetriableStream.Create(
                 blobResult.Value,
                 offset => _blobRestClient.GetChunk(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).Value,
                 async offset => await _blobRestClient.GetChunkAsync(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).ConfigureAwait(false),
                 _pipeline.ResponseClassifier,
-                _maxRetries,
-                (buffer, offset, length) =>
-                {
-                    if (validated)
-                        return;
+                _maxRetries);
 
-                    received += length;
-                    sha256.TransformBlock(buffer, offset, length, buffer, offset);
-
-                    if (received == contentLength)
-                    {
-                        sha256.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
-                        string computedDigest = BlobHelper.FormatDigest(sha256.Hash);
-                        ValidateDigest(computedDigest, digest);
-                        validated = true;
-                    }
-                },
-                sha256.Dispose);
+            ValidatingStream stream = new(retriableStream, (int)blobResult.Headers.ContentLength.Value, digest);
 
             return Response.FromValue(new DownloadBlobStreamingResult(digest, stream), blobResult.GetRawResponse());
         }
@@ -1039,7 +1009,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
                 string computedDigest = BlobHelper.FormatDigest(sha256.Hash);
-                ValidateDigest(computedDigest, digest);
+                BlobHelper.ValidateDigest(computedDigest, digest);
 
                 if (async)
                 {
