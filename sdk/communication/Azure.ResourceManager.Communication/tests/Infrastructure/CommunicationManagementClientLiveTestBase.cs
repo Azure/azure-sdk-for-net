@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Communication.Models;
@@ -46,7 +47,8 @@ namespace Azure.ResourceManager.Communication.Tests
             {
                 DataLocation = ResourceDataLocation,
             };
-            var communicationServiceLro = await _resourceGroup.GetCommunicationServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
+            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
+            var communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
             return communicationServiceLro.Value;
         }
 
@@ -56,7 +58,8 @@ namespace Azure.ResourceManager.Communication.Tests
             {
                 DataLocation = ResourceDataLocation,
             };
-            var emailServiceLro = await _resourceGroup.GetEmailServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, emailServiceName, data);
+            var collection = _resourceGroup.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
+            var emailServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, emailServiceName, data);
             return emailServiceLro.Value;
         }
 

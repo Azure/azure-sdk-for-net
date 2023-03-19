@@ -9,7 +9,10 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter.Models
 {
     [CodeGenModel("ClassificationPolicy")]
-    [CodeGenSuppress("ClassificationPolicy")]
+    [
+#pragma warning disable CA1825 // Avoid zero-length array allocations
+        CodeGenSuppress("ClassificationPolicy")]
+#pragma warning restore CA1825 // Avoid zero-length array allocations
     public partial class ClassificationPolicy
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>

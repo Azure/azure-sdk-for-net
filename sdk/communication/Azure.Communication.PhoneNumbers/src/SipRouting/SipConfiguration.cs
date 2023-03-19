@@ -9,7 +9,9 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
+#pragma warning disable CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("SipConfiguration")]
+#pragma warning restore CA1825 // Avoid zero-length array allocations
     internal partial class SipConfiguration
     {
         /// <summary>

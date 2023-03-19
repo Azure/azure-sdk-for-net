@@ -10,7 +10,9 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("ReclassifyExceptionAction")]
+#pragma warning disable CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("ReclassifyExceptionAction")]
+#pragma warning restore CA1825 // Avoid zero-length array allocations
     public partial class ReclassifyExceptionAction
     {
         [CodeGenMember("LabelsToUpsert")]

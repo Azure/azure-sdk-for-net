@@ -9,6 +9,8 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Communication;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Tests
@@ -46,7 +48,9 @@ namespace Azure.ResourceManager.Communication.Tests
         [TearDown]
         public async Task TearDown()
         {
-            await foreach (var communicationService in _resourceGroup.GetCommunicationServiceResources())
+            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
+
+            await foreach (var communicationService in collection)
             {
                 await communicationService.DeleteAsync(WaitUntil.Completed);
             }
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             SetTagResourceUsage(ArmClient, useTagResource);
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources();
+            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             await communication.AddTagAsync("testkey", "testvalue");
             communication = await collection.GetAsync(communicationServiceName);
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             SetTagResourceUsage(ArmClient, useTagResource);
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources();
+            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             await communication.AddTagAsync("testkey", "testvalue");
             communication = await collection.GetAsync(communicationServiceName);
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             SetTagResourceUsage(ArmClient, useTagResource);
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources();
+            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             await communication.AddTagAsync("testkey", "testvalue");
             communication = await collection.GetAsync(communicationServiceName);
@@ -115,7 +119,6 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task GetKeys()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources();
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             var keys = await communication.GetKeysAsync();
             Assert.NotNull(keys.Value.PrimaryKey);
@@ -128,7 +131,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task RegenerateKey()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources();
+            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             var keys = await communication.GetKeysAsync();
             string primaryKey = keys.Value.PrimaryKey;
@@ -136,11 +139,11 @@ namespace Azure.ResourceManager.Communication.Tests
             string primaryConnectionString = keys.Value.PrimaryConnectionString;
             string secondaryConnectionString = keys.Value.SecondaryConnectionString;
             var parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Primary };
-            var newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
+            var newkeys = await communication.RegenerateKeyAsync(parameter);
             Assert.AreNotEqual(primaryKey, newkeys.Value.PrimaryKey);
             Assert.AreNotEqual(primaryConnectionString, newkeys.Value.PrimaryConnectionString);
             parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Secondary };
-            newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
+            newkeys = await communication.RegenerateKeyAsync(parameter);
             Assert.AreNotEqual(secondaryKey, newkeys.Value.SecondaryKey);
             Assert.AreNotEqual(secondaryConnectionString, newkeys.Value.SecondaryConnectionString);
         }
@@ -149,7 +152,6 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task LinkNotificationHub()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources();
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             // Need to create a NotificationHub first
             var parameter = new LinkNotificationHubContent(new ResourceIdentifier(((CommunicationManagementTestEnvironment)TestEnvironment).NotificationHubsResourceId),
@@ -162,7 +164,8 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task Exists()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources();
+
+            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             bool exists = await collection.ExistsAsync(communicationServiceName);
             Assert.IsTrue(exists);
@@ -188,7 +191,7 @@ namespace Azure.ResourceManager.Communication.Tests
             {
                 Tags = { { "newtag", "newvalue" } }
             };
-            var communication2 = (await communication1.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            var communication2 = (await communication1.UpdateAsync(patch)).Value;
             Assert.IsNotNull(communication2);
             Assert.AreEqual("newtag", communication2.Data.Tags.FirstOrDefault().Key);
             Assert.AreEqual(communication1.Data.Name, communication2.Data.Name);
@@ -198,7 +201,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task Delete()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources();
+            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             var communicationService = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             await communicationService.DeleteAsync(WaitUntil.Completed);
             bool exists = await collection.ExistsAsync(communicationServiceName);
@@ -209,7 +212,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task Get()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources();
+            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             var communicationService = await collection.GetAsync(communicationServiceName);
             Assert.IsNotNull(communicationService);
@@ -223,7 +226,8 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
             await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
-            var list = await _resourceGroup.GetCommunicationServiceResources().GetAllAsync().ToEnumerableAsync();
+            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(communicationServiceName, list.FirstOrDefault().Data.Name);
             Assert.AreEqual(_location.ToString(), list.FirstOrDefault().Data.Location.ToString());

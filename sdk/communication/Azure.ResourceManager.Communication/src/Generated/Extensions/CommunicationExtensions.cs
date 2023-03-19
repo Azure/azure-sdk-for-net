@@ -19,37 +19,145 @@ namespace Azure.ResourceManager.Communication
     /// <summary> A class to add extension methods to Azure.ResourceManager.Communication. </summary>
     public static partial class CommunicationExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroup)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resourceGroup.GetCachedClient((client) =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroup.Id);
             }
             );
         }
 
+        /// <summary> Gets a collection of CommunicationServiceResources in the TenantResource. </summary>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
+        public static CommunicationServiceResourceCollection GetCommunicationServiceResources(this ResourceGroupResource resourceGroup, Guid subscriptionId, string resourceGroupName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetExtensionClient(resourceGroup).GetCommunicationServiceResources();
+        }
+
         /// <summary>
-        /// Checks that the CommunicationService name is valid and is not already in use.
+        /// Get the CommunicationService and its properties.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CommunicationServices_CheckNameAvailability</description>
+        /// <description>CommunicationServices_Get</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Parameters supplied to the operation. </param>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CommunicationNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<CommunicationServiceResource>> GetCommunicationServiceResourceAsync(this ResourceGroupResource resourceGroup, Guid subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            return await resourceGroup.GetCommunicationServiceResourceAsync(subscriptionId, resourceGroup.Id.Name, communicationServiceName, cancellationToken).ConfigureAwait(false);
+        }
 
-            return await GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        /// <summary>
+        /// Get the CommunicationService and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<CommunicationServiceResource> GetCommunicationServiceResource(this ResourceGroupResource resourceGroup, Guid subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetCommunicationServiceResource(subscriptionId, resourceGroup.Id.Name, communicationServiceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EmailServiceResources in the TenantResource. </summary>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An object representing collection of EmailServiceResources and their operations over a EmailServiceResource. </returns>
+        public static EmailServiceResourceCollection GetEmailServiceResources(this ResourceGroupResource resourceGroup, Guid subscriptionId, string resourceGroupName)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetExtensionClient(resourceGroup).GetEmailServiceResources();
+        }
+
+        /// <summary>
+        /// Get the EmailService and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<EmailServiceResource>> GetEmailServiceResourceAsync(this ResourceGroupResource resourceGroup, Guid subscriptionId, string resourceGroupName, string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetEmailServiceResources(subscriptionId, resourceGroupName).GetAsync(emailServiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the EmailService and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<EmailServiceResource> GetEmailServiceResource(this ResourceGroupResource resourceGroup, Guid subscriptionId, string resourceGroupName, string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetEmailServiceResources(subscriptionId, resourceGroupName).Get(emailServiceName, cancellationToken);
         }
 
         /// <summary>
@@ -65,15 +173,39 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CommunicationNameAvailabilityResult> CheckCommunicationNameAvailability(this SubscriptionResource subscriptionResource, CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CommunicationNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(this ResourceGroupResource resourceGroup, CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailability(content, cancellationToken);
+            return await resourceGroup.CheckCommunicationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks that the CommunicationService name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CommunicationNameAvailabilityResult> CheckCommunicationNameAvailability(this ResourceGroupResource resourceGroup, CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return resourceGroup.CheckCommunicationNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -89,12 +221,12 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CommunicationServiceResource> GetCommunicationServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CommunicationServiceResource> GetCommunicationServiceResourcesAsync(this ResourceGroupResource resourceGroup, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCommunicationServiceResourcesAsync(cancellationToken);
+            return resourceGroup.GetCommunicationServiceResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -110,12 +242,12 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CommunicationServiceResource> GetCommunicationServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<CommunicationServiceResource> GetCommunicationServiceResources(this ResourceGroupResource resourceGroup, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCommunicationServiceResources(cancellationToken);
+            return resourceGroup.GetCommunicationServiceResources(cancellationToken);
         }
 
         /// <summary>
@@ -131,12 +263,12 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EmailServiceResource> GetEmailServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EmailServiceResource> GetEmailServiceResourcesAsync(this ResourceGroupResource resourceGroup, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetEmailServiceResourcesAsync(cancellationToken);
+            return resourceGroup.GetEmailServiceResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -152,12 +284,12 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EmailServiceResource> GetEmailServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<EmailServiceResource> GetEmailServiceResources(this ResourceGroupResource resourceGroup, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetEmailServiceResources(cancellationToken);
+            return resourceGroup.GetEmailServiceResources(cancellationToken);
         }
 
         /// <summary>
@@ -173,12 +305,12 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(this ResourceGroupResource resourceGroup, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVerifiedExchangeOnlineDomainsEmailServicesAsync(cancellationToken);
+            return resourceGroup.GetVerifiedExchangeOnlineDomainsEmailServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -194,133 +326,12 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(this ResourceGroupResource resourceGroup, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVerifiedExchangeOnlineDomainsEmailServices(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
-
-        /// <summary> Gets a collection of CommunicationServiceResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
-        public static CommunicationServiceResourceCollection GetCommunicationServiceResources(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetCommunicationServiceResources();
-        }
-
-        /// <summary>
-        /// Get the CommunicationService and its properties.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunicationServices_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<CommunicationServiceResource>> GetCommunicationServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetCommunicationServiceResources().GetAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the CommunicationService and its properties.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunicationServices_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<CommunicationServiceResource> GetCommunicationServiceResource(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetCommunicationServiceResources().Get(communicationServiceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EmailServiceResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of EmailServiceResources and their operations over a EmailServiceResource. </returns>
-        public static EmailServiceResourceCollection GetEmailServiceResources(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetEmailServiceResources();
-        }
-
-        /// <summary>
-        /// Get the EmailService and its properties.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EmailServices_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<EmailServiceResource>> GetEmailServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string emailServiceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetEmailServiceResources().GetAsync(emailServiceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the EmailService and its properties.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EmailServices_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<EmailServiceResource> GetEmailServiceResource(this ResourceGroupResource resourceGroupResource, string emailServiceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetEmailServiceResources().Get(emailServiceName, cancellationToken);
+            return resourceGroup.GetVerifiedExchangeOnlineDomainsEmailServices(cancellationToken);
         }
 
         #region CommunicationServiceResource

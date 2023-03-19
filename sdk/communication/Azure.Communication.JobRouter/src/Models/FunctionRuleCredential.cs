@@ -7,7 +7,9 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("FunctionRuleCredential")]
+#pragma warning disable CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("FunctionRuleCredential")]
+#pragma warning restore CA1825 // Avoid zero-length array allocations
     public partial class FunctionRuleCredential
     {
         /// <summary> Initializes a new instance of AzureFunctionRuleCredential. </summary>
