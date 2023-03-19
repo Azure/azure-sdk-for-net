@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    /// <summary> Provisioning state of the resource. </summary>
+    /// <summary> Provisioning state of the resource. Unknown is the default state for Communication Services. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
         private readonly string _value;

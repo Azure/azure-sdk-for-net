@@ -7,7 +7,9 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("FunctionRule")]
+#pragma warning disable CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("FunctionRule")]
+#pragma warning restore CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("FunctionRule", typeof(string))]
     public partial class FunctionRule : RouterRule
     {

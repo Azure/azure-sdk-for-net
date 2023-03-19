@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             ArmClient = GetArmClient();
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
-            _emailService = await _resourceGroup.GetEmailServiceResourceAsync(_emailServiceName);
+            _emailService = _resourceGroup.GetEmailServiceResource(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName, _emailServiceName);
         }
 
         [TearDown]

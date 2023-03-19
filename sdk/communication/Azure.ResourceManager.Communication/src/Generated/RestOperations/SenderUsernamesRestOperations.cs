@@ -6,13 +6,9 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -41,7 +37,7 @@ namespace Azure.ResourceManager.Communication
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListByDomainsRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
+        internal HttpMessage CreateListByDomainsRequest(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,16 +61,15 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> List all valid sender usernames for a domains resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.SenderUsernameResourceCollection>> ListByDomainsAsync(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<Models.SenderUsernameResourceCollection>> ListByDomainsAsync(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -96,16 +91,15 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> List all valid sender usernames for a domains resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.SenderUsernameResourceCollection> ListByDomains(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<Models.SenderUsernameResourceCollection> ListByDomains(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -126,7 +120,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,17 +145,16 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Get a valid sender username for a domains resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="senderUsername"> The valid sender Username. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SenderUsernameResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SenderUsernameResourceData>> GetAsync(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -186,17 +179,16 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Get a valid sender username for a domains resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="senderUsername"> The valid sender Username. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SenderUsernameResourceData> Get(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SenderUsernameResourceData> Get(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -220,7 +212,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, SenderUsernameResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, SenderUsernameResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -249,18 +241,17 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Add a new SenderUsername resource under the parent Domains resource or update an existing SenderUsername resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="senderUsername"> The valid sender Username. </param>
         /// <param name="data"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/>, <paramref name="senderUsername"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SenderUsernameResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, SenderUsernameResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/>, <paramref name="senderUsername"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SenderUsernameResourceData>> CreateOrUpdateAsync(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, SenderUsernameResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -272,6 +263,7 @@ namespace Azure.ResourceManager.Communication
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         SenderUsernameResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -284,18 +276,17 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Add a new SenderUsername resource under the parent Domains resource or update an existing SenderUsername resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="senderUsername"> The valid sender Username. </param>
         /// <param name="data"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/>, <paramref name="senderUsername"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SenderUsernameResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, SenderUsernameResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/>, <paramref name="senderUsername"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SenderUsernameResourceData> CreateOrUpdate(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, SenderUsernameResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -319,7 +310,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -344,74 +335,62 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Operation to delete a SenderUsernames resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="senderUsername"> The valid sender Username. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
 
-            if (senderUsername != "donotreply")
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, emailServiceName, domainName, senderUsername);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
             {
-                using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, emailServiceName, domainName, senderUsername);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw new RequestFailedException(message.Response);
-                }
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
             }
-
-            return new MockResponse();
         }
 
         /// <summary> Operation to delete a SenderUsernames resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="senderUsername"> The valid sender Username. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
 
-            if (senderUsername != "donotreply")
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, emailServiceName, domainName, senderUsername);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
             {
-                using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, emailServiceName, domainName, senderUsername);
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw new RequestFailedException(message.Response);
-                }
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
             }
-
-            return new MockResponse();
         }
 
-        internal HttpMessage CreateListByDomainsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
+        internal HttpMessage CreateListByDomainsNextPageRequest(string nextLink, Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -427,17 +406,16 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> List all valid sender usernames for a domains resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.SenderUsernameResourceCollection>> ListByDomainsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<Models.SenderUsernameResourceCollection>> ListByDomainsNextPageAsync(string nextLink, Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -460,17 +438,16 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> List all valid sender usernames for a domains resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="domainName"> The name of the Domains resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.SenderUsernameResourceCollection> ListByDomainsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<Models.SenderUsernameResourceCollection> ListByDomainsNextPage(string nextLink, Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -489,40 +466,6 @@ namespace Azure.ResourceManager.Communication
                 default:
                     throw new RequestFailedException(message.Response);
             }
-        }
-    }
-
-    internal class MockResponse : Response
-    {
-        public override int Status => 204;
-
-        public override string ReasonPhrase => "NoContent";
-
-        public override Stream ContentStream { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override string ClientRequestId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public override void Dispose()
-        {
-        }
-
-        protected override bool ContainsHeader(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override IEnumerable<HttpHeader> EnumerateHeaders()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool TryGetHeader(string name, out string value)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
-        {
-            throw new NotImplementedException();
         }
     }
 }

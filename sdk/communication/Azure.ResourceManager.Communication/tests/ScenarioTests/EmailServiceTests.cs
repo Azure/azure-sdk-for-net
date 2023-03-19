@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,7 +50,8 @@ namespace Azure.ResourceManager.Communication.Tests
         [TearDown]
         public async Task TearDown()
         {
-            var list = await _resourceGroup.GetEmailServiceResources().GetAllAsync().ToEnumerableAsync();
+            var collection = _resourceGroup.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
             foreach (var emailService in list)
             {
                 await emailService.DeleteAsync(WaitUntil.Completed);
@@ -63,7 +65,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             SetTagResourceUsage(ArmClient, useTagResource);
             string emailServiceName = Recording.GenerateAssetName("email-service-");
-            var collection = _resourceGroup.GetEmailServiceResources();
+            var collection = _resourceGroup.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             var email = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             await email.AddTagAsync("testkey", "testvalue");
             email = await collection.GetAsync(emailServiceName);
@@ -79,7 +81,8 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             SetTagResourceUsage(ArmClient, useTagResource);
             string emailServiceName = Recording.GenerateAssetName("email-service-");
-            var collection = _resourceGroup.GetEmailServiceResources();
+            var resourceClient = new TenantResourceExtensionClient(ArmClient, _resourceGroup.Id);
+            var collection = resourceClient.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.Name);
             var email = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             await email.AddTagAsync("testkey", "testvalue");
             email = await collection.GetAsync(emailServiceName);
@@ -99,7 +102,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             SetTagResourceUsage(ArmClient, useTagResource);
             string emailServiceName = Recording.GenerateAssetName("email-service-");
-            var collection = _resourceGroup.GetEmailServiceResources();
+            var collection = _resourceGroup.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             var email = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             await email.AddTagAsync("testkey", "testvalue");
             email = await collection.GetAsync(emailServiceName);
@@ -119,7 +122,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task Exists()
         {
             string emailServiceName = Recording.GenerateAssetName("email-service-");
-            var collection = _resourceGroup.GetEmailServiceResources();
+            var collection = _resourceGroup.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             bool exists = await collection.ExistsAsync(emailServiceName);
             Assert.IsTrue(exists);
@@ -151,7 +154,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task Delete()
         {
             string emailServiceName = Recording.GenerateAssetName("email-service-");
-            var collection = _resourceGroup.GetEmailServiceResources();
+            var collection = _resourceGroup.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             var emailService = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             await emailService.DeleteAsync(WaitUntil.Completed);
             bool exists = await collection.ExistsAsync(emailServiceName);
@@ -162,7 +165,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task Get()
         {
             string emailServiceName = Recording.GenerateAssetName("email-service-");
-            var collection = _resourceGroup.GetEmailServiceResources();
+            var collection = _resourceGroup.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
             await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             var emailService = await collection.GetAsync(emailServiceName);
             Assert.IsNotNull(emailService);
@@ -176,7 +179,8 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             string emailServiceName = Recording.GenerateAssetName("email-service-");
             await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
-            var list = await _resourceGroup.GetEmailServiceResources().GetAllAsync().ToEnumerableAsync();
+            var collection = _resourceGroup.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(emailServiceName, list.FirstOrDefault().Data.Name);
             Assert.AreEqual(_location.ToString(), list.FirstOrDefault().Data.Location.ToString());

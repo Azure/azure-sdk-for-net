@@ -9,7 +9,9 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter.Models
 {
     [CodeGenModel("ExceptionPolicy")]
+#pragma warning disable CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("ExceptionPolicy")]
+#pragma warning restore CA1825 // Avoid zero-length array allocations
     public partial class ExceptionPolicy
     {
         /// <summary> Initializes a new instance of ExceptionPolicy. </summary>

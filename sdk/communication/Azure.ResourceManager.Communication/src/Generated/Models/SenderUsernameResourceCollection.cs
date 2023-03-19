@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> Initializes a new instance of SenderUsernameResourceCollection. </summary>
         /// <param name="value"> List of SenderUsernames. </param>
-        /// <param name="nextLink">
-        /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
-        /// </param>
+        /// <param name="nextLink"> The URL the client should use to fetch the next page (per server side paging). </param>
         internal SenderUsernameResourceCollection(IReadOnlyList<SenderUsernameResourceData> value, string nextLink)
         {
             Value = value;
@@ -34,10 +31,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> List of SenderUsernames. </summary>
         public IReadOnlyList<SenderUsernameResourceData> Value { get; }
-        /// <summary>
-        /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
-        /// </summary>
+        /// <summary> The URL the client should use to fetch the next page (per server side paging). </summary>
         public string NextLink { get; }
     }
 }

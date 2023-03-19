@@ -16,13 +16,14 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
 {
     public class Sample1_ManagingCommunicationService
     {
+        private ArmClient armClient;
         private ResourceGroupResource resourceGroup;
 
         [SetUp]
         protected async Task initialize()
         {
             #region Snippet:Readme_DefaultSubscription
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+            armClient = new ArmClient(new DefaultAzureCredential());
             SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
@@ -43,7 +44,9 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task CreateCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
-            CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
+
+            var resourceClient = new TenantResourceExtensionClient(armClient, resourceGroup.Id);
+            CommunicationServiceResourceCollection collection = resourceClient.GetCommunicationServiceResources(Guid.Parse(resourceGroup.Id.SubscriptionId), resourceGroup.Id.Name);
             string communicationServiceName = "myCommunicationService";
             CommunicationServiceResourceData data = new CommunicationServiceResourceData("global")
             {
@@ -59,8 +62,8 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task ListCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_ListAllCommunicationService
-            CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
-
+            var resourceClient = new TenantResourceExtensionClient(armClient, resourceGroup.Id);
+            var collection = resourceClient.GetCommunicationServiceResources(Guid.Parse(resourceGroup.Id.SubscriptionId), resourceGroup.Id.Name);
             AsyncPageable<CommunicationServiceResource> list = collection.GetAllAsync();
             await foreach (CommunicationServiceResource communicationService  in list)
             {
@@ -74,7 +77,8 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task DeleteCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
-            CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
+            var resourceClient = new TenantResourceExtensionClient(armClient, resourceGroup.Id);
+            var collection = resourceClient.GetCommunicationServiceResources(Guid.Parse(resourceGroup.Id.SubscriptionId), resourceGroup.Id.Name);
 
             CommunicationServiceResource communicationService = await collection.GetAsync("myCommunicationService");
             await communicationService.DeleteAsync(WaitUntil.Completed);

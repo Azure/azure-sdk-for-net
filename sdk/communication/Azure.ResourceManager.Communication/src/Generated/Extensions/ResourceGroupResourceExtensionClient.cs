@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 
@@ -35,14 +36,14 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
         public virtual CommunicationServiceResourceCollection GetCommunicationServiceResources()
         {
-            return GetCachedClient(Client => new CommunicationServiceResourceCollection(Client, Id));
+            return GetCachedClient(Client => new CommunicationServiceResourceCollection(Client, Id, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName));
         }
 
         /// <summary> Gets a collection of EmailServiceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of EmailServiceResources and their operations over a EmailServiceResource. </returns>
         public virtual EmailServiceResourceCollection GetEmailServiceResources()
         {
-            return GetCachedClient(Client => new EmailServiceResourceCollection(Client, Id));
+            return GetCachedClient(Client => new EmailServiceResourceCollection(Client, Id, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName));
         }
     }
 }
