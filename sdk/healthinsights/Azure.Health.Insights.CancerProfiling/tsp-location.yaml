@@ -2,5 +2,5 @@ directory: specification/cognitiveservices/HealthInsights/healthinsights.oncophe
 additionalDirectories:
   - specification/cognitiveservices/HealthInsights/healthinsights.openapi/
   - specification/cognitiveservices/HealthInsights/healthinsights.common/
-commit: 425b28b4e69ab9a87479db5eb4410c0865f791c0
+commit: 257253bba159129afb9c82387bcc3ae0805e19e6
 repo: asaflevi-ms/azure-rest-api-specs
