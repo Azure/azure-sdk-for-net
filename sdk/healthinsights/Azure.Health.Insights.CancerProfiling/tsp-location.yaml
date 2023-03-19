@@ -3,5 +3,5 @@ additionalDirectories:
   - specification/cognitiveservices/HealthInsights/healthinsights.openapi/
   - specification/cognitiveservices/HealthInsights/healthinsights.common/
   - specification/cognitiveservices/HealthInsights/healthinsights.trialmatcher/
-commit: 13cd3e3933da5bdc63a4e745a044c5135a3280b0
+commit: 1e06017929fcc6a8be72c489a2bc50510dfb3633
 repo: asaflevi-ms/azure-rest-api-specs
