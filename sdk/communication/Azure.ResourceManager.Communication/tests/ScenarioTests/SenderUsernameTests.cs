@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Communication.Tests
         private string _dataLocation;
 
         public SenderUsernameTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 

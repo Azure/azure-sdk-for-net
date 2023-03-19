@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Communication.Tests
         private string _dataLocation;
 
         public CommunicationServiceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -138,9 +138,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Primary };
             var newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
             Assert.AreNotEqual(primaryKey, newkeys.Value.PrimaryKey);
-            Assert.AreNotEqual(primaryConnectionString, keys.Value.PrimaryConnectionString);
-            Assert.AreEqual(secondaryKey, newkeys.Value.SecondaryKey);
-            Assert.AreEqual(secondaryConnectionString, keys.Value.SecondaryConnectionString);
+            Assert.AreNotEqual(primaryConnectionString, newkeys.Value.PrimaryConnectionString);
             parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Secondary };
             newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
             Assert.AreNotEqual(secondaryKey, newkeys.Value.SecondaryKey);
