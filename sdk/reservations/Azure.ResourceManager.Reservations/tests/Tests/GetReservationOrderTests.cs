@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetSingleReservationOrder()
         {
-            var response = await Collection.GetAsync(Guid.Parse("838f3bcf-5af0-4606-ae23-cdea328acd51"));
+            var response = await Collection.GetAsync(Guid.Parse("8d233700-d9f3-4021-aba1-f9350f3ac0dc"));
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.Data);
-            Assert.AreEqual("/providers/microsoft.capacity/reservationOrders/838f3bcf-5af0-4606-ae23-cdea328acd51", response.Value.Data.Id.ToString());
-            Assert.AreEqual("Microsoft.Capacity/reservationOrders", response.Value.Data.ResourceType.ToString());
-            Assert.AreEqual("838f3bcf-5af0-4606-ae23-cdea328acd51", response.Value.Data.Name);
-            Assert.AreEqual(4, response.Value.Data.Version);
-            Assert.AreEqual("testVM", response.Value.Data.DisplayName);
+            Assert.AreEqual("/providers/microsoft.capacity/reservationOrders/8d233700-d9f3-4021-aba1-f9350f3ac0dc", response.Value.Data.Id.ToString());
+            Assert.AreEqual("microsoft.capacity/reservationOrders", response.Value.Data.ResourceType.ToString());
+            Assert.AreEqual("8d233700-d9f3-4021-aba1-f9350f3ac0dc", response.Value.Data.Name);
+            Assert.AreEqual(21, response.Value.Data.Version);
+            Assert.AreEqual("testingCreateTipVM", response.Value.Data.DisplayName);
             Assert.AreEqual(ReservationTerm.P1Y, response.Value.Data.Term);
-            Assert.AreEqual(ReservationProvisioningState.Failed, response.Value.Data.ProvisioningState);
+            Assert.AreEqual(ReservationProvisioningState.Cancelled, response.Value.Data.ProvisioningState);
             Assert.IsNotNull(response.Value.Data.Reservations);
             Assert.AreEqual(1, response.Value.Data.Reservations.Count);
-            Assert.AreEqual("/providers/microsoft.capacity/reservationOrders/838f3bcf-5af0-4606-ae23-cdea328acd51/reservations/2b3dce9f-0539-418f-9b30-594f0c089698", response.Value.Data.Reservations[0].Id.ToString());
-            Assert.AreEqual(1, response.Value.Data.OriginalQuantity);
+            Assert.AreEqual("/providers/Microsoft.Capacity/reservationOrders/8d233700-d9f3-4021-aba1-f9350f3ac0dc/reservations/ec1a9023-ec6b-44a7-8a49-1402bc2d766b", response.Value.Data.Reservations[0].Id.ToString());
+            Assert.AreEqual(3, response.Value.Data.OriginalQuantity);
             Assert.AreEqual(ReservationBillingPlan.Monthly, response.Value.Data.BillingPlan);
         }
 
@@ -65,18 +65,18 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);
             Assert.IsNotNull(result[0].Data);
-            Assert.AreEqual("/providers/microsoft.capacity/reservationOrders/c848cae0-7ade-43c8-a42c-52cc53413a72", result[0].Data.Id.ToString());
-            Assert.AreEqual("Microsoft.Capacity/reservationOrders", result[0].Data.ResourceType.ToString());
-            Assert.AreEqual("c848cae0-7ade-43c8-a42c-52cc53413a72", result[0].Data.Name);
-            Assert.AreEqual(9, result[0].Data.Version);
+            Assert.AreEqual("/providers/microsoft.capacity/reservationOrders/5e500b18-4fb6-4a63-b6d8-8469a09c5e60", result[0].Data.Id.ToString());
+            Assert.AreEqual("microsoft.capacity/reservationOrders", result[0].Data.ResourceType.ToString());
+            Assert.AreEqual("5e500b18-4fb6-4a63-b6d8-8469a09c5e60", result[0].Data.Name);
+            Assert.AreEqual(21, result[0].Data.Version);
             Assert.AreEqual("testVM", result[0].Data.DisplayName);
             Assert.AreEqual(ReservationTerm.P1Y, result[0].Data.Term);
-            Assert.AreEqual(ReservationProvisioningState.Succeeded, result[0].Data.ProvisioningState);
+            Assert.AreEqual(ReservationProvisioningState.Cancelled, result[0].Data.ProvisioningState);
             Assert.IsNotNull(result[0].Data.Reservations);
             Assert.AreEqual(1, result[0].Data.Reservations.Count);
-            Assert.AreEqual("/providers/microsoft.capacity/reservationOrders/c848cae0-7ade-43c8-a42c-52cc53413a72/reservations/34a9427a-0966-4186-86dd-bbcf720913c0", result[0].Data.Reservations[0].Id.ToString());
-            Assert.AreEqual(1, result[0].Data.OriginalQuantity);
-            Assert.AreEqual(ReservationBillingPlan.Upfront, result[0].Data.BillingPlan);
+            Assert.AreEqual("/providers/Microsoft.Capacity/reservationOrders/5e500b18-4fb6-4a63-b6d8-8469a09c5e60/reservations/48f6eeec-cf66-4a23-a4be-81d4d7000beb", result[0].Data.Reservations[0].Id.ToString());
+            Assert.AreEqual(3, result[0].Data.OriginalQuantity);
+            Assert.AreEqual(ReservationBillingPlan.Monthly, result[0].Data.BillingPlan);
         }
     }
 }
