@@ -143,17 +143,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static void HandleFailures(HttpMessage httpMessage, PersistentBlob blob, PersistentBlobProvider blobProvider)
         {
-            int retryInterval;
             int statusCode = 0;
             bool shouldRetry = true;
 
-            if (!httpMessage.HasResponse)
-            {
-                // HttpRequestException
-                // Extend lease time so that it is not picked again for retry.
-                blob.TryLease(HttpPipelineHelper.MinimumRetryInterval);
-            }
-            else
+            if (httpMessage.HasResponse)
             {
                 statusCode = httpMessage.Response.Status;
                 switch (statusCode)
@@ -162,35 +155,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         // Parse retry-after header
                         // Send Failed Messages To Storage
                         // Delete existing file
-                        TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
-                        var content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
+                        TrackResponse trackResponse = GetTrackResponse(httpMessage);
+                        var content = GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
                         if (content != null)
                         {
-                            retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                             blob.TryDelete();
-                            blobProvider?.SaveTelemetry(content, retryInterval);
+                            blobProvider?.SaveTelemetry(content);
                         }
                         break;
                     case ResponseStatusCodes.RequestTimeout:
                     case ResponseStatusCodes.ResponseCodeTooManyRequests:
                     case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
-                        // Extend lease time using retry interval period
-                        // so that it is not picked up again before that.
-                        retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        blob.TryLease(retryInterval);
-                        break;
                     case ResponseStatusCodes.Unauthorized:
                     case ResponseStatusCodes.Forbidden:
                     case ResponseStatusCodes.InternalServerError:
                     case ResponseStatusCodes.BadGateway:
                     case ResponseStatusCodes.ServiceUnavailable:
                     case ResponseStatusCodes.GatewayTimeout:
-                        // Extend lease time so that it is not picked up again
-                        blob.TryLease(HttpPipelineHelper.MinimumRetryInterval);
                         break;
                     default:
-                        // Log Non-Retriable Status and don't retry or store;
-                        // File will be cleared by maintenance job
                         shouldRetry = false;
                         break;
                 }
