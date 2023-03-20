@@ -114,25 +114,48 @@ namespace Azure.Data.AppConfiguration.Samples
         }
 
         [Test]
-        public void ThrowNotFoundError()
+        public void ThrowNotFoundErrorSync()
         {
+            #region Snippet:ThrowNotFoundErrorSync
 #if !SNIPPET
             var connectionString = TestEnvironment.ConnectionString;
 #endif
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#endif
+            var client = new ConfigurationClient(connectionString);
+            try
+            {
+                ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+                Console.WriteLine("Key wasn't found.");
+            }
+            #endregion Snippet:ThrowNotFoundErrorSync
+        }
+
+        [Test]
+        public async Task ThrowNotFoundErrorAsync()
+        {
+            #region Snippet:ThrowNotFoundErrorAsync
+#if !SNIPPET
+            var connectionString = TestEnvironment.ConnectionString;
+#endif
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#endif
+            var client = new ConfigurationClient(connectionString);
 
             try
             {
-                #region Snippet:ThrowNotFoundError
-#if SNIPPET
-                string connectionString = "<connection_string>";
-#endif
-                var client = new ConfigurationClient(connectionString);
-                ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
-                #endregion Snippet:ThrowNotFoundError
+                ConfigurationSetting setting = await client.GetConfigurationSettingAsync("nonexistent_key");
             }
-            catch (RequestFailedException)
+            catch (RequestFailedException ex) when (ex.Status == 404)
             {
+                Console.WriteLine("Key wasn't found.");
             }
+            #endregion Snippet:ThrowNotFoundErrorAsync
         }
 
         [OneTimeTearDown]
