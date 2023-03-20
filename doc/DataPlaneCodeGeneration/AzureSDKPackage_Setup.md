@@ -37,7 +37,7 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-TypeSpecDataPlaneGene
 
 - `-sdkFolder` take the address of the sdk folder in azure-sdk-for-net repo. e.g. /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector. [Required]
 - `-typespecSpecDirectory` takes the relative path of the typespec project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector [Required]
-- `-additionalSubDirectories` takes the relative paths of the additional directories needed by the cadl project, such as share library folder, separated by semicolon if there is more than one folder. [Optional]
+- `-additionalSubDirectories` takes the relative paths of the additional directories needed by the typespec project, such as share library folder, separated by semicolon if there is more than one folder. [Optional]
 - `-commit` takes the git commit hash  (e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90) [Required]
 - `-repo` takes the `<owner>/<repo>` of the REST API specification repository. (e.g. Azure/azure-rest-api-specs), [Optional], default is `Azure/azure-rest-api-specs`
 
