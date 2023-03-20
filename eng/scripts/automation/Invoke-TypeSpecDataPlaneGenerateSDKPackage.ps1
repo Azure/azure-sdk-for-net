@@ -6,8 +6,8 @@ script for creating a getting started project in a branch of `azure-sdk-for-net`
 .PARAMETER sdkFolder
 The address of the sdk folder in azure-sdk-for-net repo. e.g. /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector
 
-.PARAMETER cadlSpecDirectory
-The relative path of the cadl project folder in spec repo. e.g. `specification/cognitiveservices/AnomalyDetector`
+.PARAMETER typespecSpecDirectory
+The relative path of the typespec project folder in spec repo. e.g. `specification/cognitiveservices/AnomalyDetector`
 
  .PARAMETER repo
 The `<owner>/<repo>` of the spec repo. e.g. `Azure/azure-rest-api-specs`
@@ -16,7 +16,7 @@ The `<owner>/<repo>` of the spec repo. e.g. `Azure/azure-rest-api-specs`
 The commit of the github hash, e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90
 
 .PARAMETER additionalSubDirectories
-The relative paths of the additional directories needed by the cadl project, such as share library folder, separated by semicolon if there is more than one folder.
+The relative paths of the additional directories needed by the typespec project, such as share library folder, separated by semicolon if there is more than one folder.
 
 .EXAMPLE
 Run script with default parameters.
@@ -28,11 +28,6 @@ e.g.
 Use git url
 
 Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -sdkFolder /home/azure-sdk-for-net/Azure.AI.AnomalyDetector -sdkFolder /home/azure-sdk-for-net/Azure.AI.AnomalyDetector -typespecSpecDirectory specification/cognitiveservices/AnomalyDetector -commit ac8e06a2ed0fc1c54663c98f12c8a073f8026b90 -repo Azure/azure-rest-api-specs
-
-or
-Use local Cadl project
-
-Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace Azure.AI.AnomalyDetector -sdkPath /home/azure-sdk-for-net -cadlRelativeFolder specification/cognitiveservices/AnomalyDetector -specRoot /home/azure-rest-api-specs
 
 #>
 param (
@@ -50,7 +45,7 @@ Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -sdkFolder <sdk-folder-path> -typ
 Options:
 -sdkFolder [Required] take the address of the sdk folder in azure-sdk-for-net repo. e.g. /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector
 -typespecSpecDirectory [Required] takes the relative path of the typespec project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector
--additionalSubDirectories [Optional] takes the relative paths of the additional directories needed by the cadl project
+-additionalSubDirectories [Optional] takes the relative paths of the additional directories needed by the typespec project
 -commit takes the git commit hash  (e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90)
 -repo [Optional] takes the `<owner>/<repo>` of the REST API specification repository. (e.g. Azure/azure-rest-api-specs). The default is Azure/azure-rest-api-specs
 "
@@ -63,8 +58,8 @@ if (!$sdkFolder -or !$typespecSpecDirectory) {
   Throw "One of required parameters (sdkFolder, typespecSpecDirectory) is missing. Please use -help to see the usage."
 }
 
-if ((!$commit) -And !$specRoot) {
-  Throw "The cadl project path is not provided. You need to provide either (-commit, -repo) pair to refer to URL path or -specRoot to refer to local file system path."
+if (!$commit) {
+  Throw "The typespec project path is not provided. You need to provide (-commit, -repo) pair to refer to URL path."
 }
 . (Join-Path $PSScriptRoot GenerateAndBuildLib.ps1)
 

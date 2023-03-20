@@ -476,7 +476,6 @@ function New-TypeSpecPackageFolder() {
         $fileContent = Get-Content -Path $projFile
         $fileContent = $fileContent -replace '<Version>[^<]+</Version>', '<Version>1.0.0-beta.1</Version>'
         $fileContent | Out-File $projFile
-        # (Get-Content $projFile) -replace "<Version>*.*.*-*.*</Version>", "<Version>1.0.0-beta.1</Version>" | -replace "<AutoRestInput>*</AutoRestInput>", "<AutoRestInput>$cadlInput</AutoRestInput>" |Set-Content $projFile
         Pop-Location
         # dotnet sln
         Push-Location $projectFolder
