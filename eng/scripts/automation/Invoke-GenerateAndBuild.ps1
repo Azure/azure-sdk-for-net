@@ -97,11 +97,11 @@ if ($relatedCadlProjectFolder) {
     $relatedCadlProjectFolder = "specification/$relatedCadlProjectFolder"
     $specRoot = Split-Path $specRoot
   }
-  New-CADLPackageFolder `
+  New-TypeSpecPackageFolder `
       -service $service `
       -namespace $namespace `
       -sdkPath $sdkPath `
-      -relatedCadlProjectFolder $relatedCadlProjectFolder `
+      -relatedTypeSpecProjectFolder $relatedCadlProjectFolder `
       -specRoot $specRoot `
       -outputJsonFile $newpackageoutput
   $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json

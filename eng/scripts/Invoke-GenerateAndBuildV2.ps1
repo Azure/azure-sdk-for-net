@@ -133,11 +133,11 @@ if ($relatedCadlProjectFolder) {
             throw "Not provide service name or namespace."
         }
         $projectFolder = (Join-Path $sdkPath "sdk" $service $namespace)
-        New-CADLPackageFolder `
+        New-TypeSpecPackageFolder `
             -service $service `
             -namespace $namespace `
             -sdkPath $sdkPath `
-            -relatedCadlProjectFolder $cadlRelativeFolder `
+            -relatedTypeSpecProjectFolder $cadlRelativeFolder `
             -specRoot $swaggerDir `
             -outputJsonFile $newpackageoutput
         $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json

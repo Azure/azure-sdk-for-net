@@ -1,6 +1,6 @@
 #Requires -Version 7.0
 $CI_YAML_FILE = "ci.yml"
-$CADL_LOCATION_FILE = "cadl-location.yaml"
+$TSP_LOCATION_FILE = "tsp-location.yaml"
 
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 
@@ -360,9 +360,9 @@ function New-MgmtPackageFolder() {
     return $projectFolder
 }
 
-function CreateOrUpdateCadlConfigFile() {
+function CreateOrUpdateTypeSpecConfigFile() {
     param (
-        [string]$cadlConfigurationFile,
+        [string]$typespecConfigurationFile,
         [string]$directory,
         [string]$commit = "",
         [string]$repo = "",
@@ -370,12 +370,12 @@ function CreateOrUpdateCadlConfigFile() {
         [string]$additionalSubDirectories="" #additional directories needed, separated by semicolon if more than one
         
     )
-    if (!(Test-Path -Path $cadlConfigurationFile)) {
-        New-Item -Path $cadlConfigurationFile
+    if (!(Test-Path -Path $typespecConfigurationFile)) {
+        New-Item -Path $typespecConfigurationFile
     }
 
     Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
-    $configuration = Get-Content -Path $cadlConfigurationFile -Raw | ConvertFrom-Yaml
+    $configuration = Get-Content -Path $typespecConfigurationFile -Raw | ConvertFrom-Yaml
     if ( !$configuration) {
         $configuration = @{}
     }
@@ -404,15 +404,15 @@ function CreateOrUpdateCadlConfigFile() {
         $configuration.Remove("additionalDirectories")
     }
 
-    $configuration |ConvertTo-Yaml | Out-File $cadlConfigurationFile
+    $configuration |ConvertTo-Yaml | Out-File $typespecConfigurationFile
 }
 
-function New-CADLPackageFolder() {
+function New-TypeSpecPackageFolder() {
     param(
         [string]$service,
         [string]$namespace,
         [string]$sdkPath = "",
-        [string]$relatedCadlProjectFolder,
+        [string]$relatedTypeSpecProjectFolder,
         [string]$commit = "",
         [string]$repo = "",
         [string]$specRoot = "",
@@ -434,9 +434,9 @@ function New-CADLPackageFolder() {
             Remove-Item -Path $projectFolder/src/autorest.md
         }
         
-        CreateOrUpdateCadlConfigFile `
-            -cadlConfigurationFile $projectFolder/$CADL_LOCATION_FILE `
-            -directory $relatedCadlProjectFolder `
+        CreateOrUpdateTypeSpecConfigFile `
+            -typespecConfigurationFile $projectFolder/$TSP_LOCATION_FILE `
+            -directory $relatedTypeSpecProjectFolder `
             -commit $commit `
             -repo $repo `
             -specRoot $specRoot `
@@ -484,9 +484,9 @@ function New-CADLPackageFolder() {
             Remove-Item -Path $projectFolder/src/autorest.md
         }
 
-        CreateOrUpdateCadlConfigFile `
-            -cadlConfigurationFile $projectFolder/$CADL_LOCATION_FILE `
-            -directory $relatedCadlProjectFolder `
+        CreateOrUpdateTypeSpecConfigFile `
+            -typespecConfigurationFile $projectFolder/$TSP_LOCATION_FILE `
+            -directory $relatedTypeSpecProjectFolder `
             -commit $commit `
             -repo $repo `
             -specRoot $specRoot `

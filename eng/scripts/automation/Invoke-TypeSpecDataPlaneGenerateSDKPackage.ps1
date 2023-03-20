@@ -21,23 +21,23 @@ The relative paths of the additional directories needed by the cadl project, suc
 .EXAMPLE
 Run script with default parameters.
 
-Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -sdkFolder <sdk-folder-path> -cadlSpecDirectory <relativeCadlProjectFolderPath> [-commit <commitId>] [-repo <specRepo>] [-specRoot <specRepoRootPath>] [-additionalSubDirectories <relativeFolders>]
+Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -sdkFolder <sdk-folder-path> -typespecSpecDirectory <relativeTypeSpecProjectFolderPath> [-commit <commitId>] [-repo <specRepo>] [-specRoot <specRepoRootPath>] [-additionalSubDirectories <relativeFolders>]
 
 e.g.
 
 Use git url
 
-Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -sdkFolder /home/azure-sdk-for-net/Azure.AI.AnomalyDetector -sdkFolder /home/azure-sdk-for-net/Azure.AI.AnomalyDetector -cadlSpecDirectory specification/cognitiveservices/AnomalyDetector -commit ac8e06a2ed0fc1c54663c98f12c8a073f8026b90 -repo Azure/azure-rest-api-specs
+Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -sdkFolder /home/azure-sdk-for-net/Azure.AI.AnomalyDetector -sdkFolder /home/azure-sdk-for-net/Azure.AI.AnomalyDetector -typespecSpecDirectory specification/cognitiveservices/AnomalyDetector -commit ac8e06a2ed0fc1c54663c98f12c8a073f8026b90 -repo Azure/azure-rest-api-specs
 
 or
 Use local Cadl project
 
-Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace Azure.AI.AnomalyDetector -sdkPath /home/azure-sdk-for-net -cadlRelativeFolder specification/cognitiveservices/AnomalyDetector -specRoot /home/azure-rest-api-specs
+Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace Azure.AI.AnomalyDetector -sdkPath /home/azure-sdk-for-net -cadlRelativeFolder specification/cognitiveservices/AnomalyDetector -specRoot /home/azure-rest-api-specs
 
 #>
 param (
   [string]$sdkFolder,
-  [string]$cadlSpecDirectory,
+  [string]$typespecSpecDirectory,
   [string]$repo = "Azure/azure-rest-api-specs",
   [string]$commit = "",
   [string]$additionalSubDirectories="", #additional directories needed, separated by semicolon if more than one
@@ -45,11 +45,11 @@ param (
 )
 if ($help) {
   Write-Host("Usage:
-Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -sdkFolder <sdk-folder-path> -cadlSpecDirectory <relativeCadlProjectFolderPath> [-commit <commitId>] [-repo <specRepo>] [-specRoot <specRepoRootPath>] [-additionalSubDirectories <relativeFolders>]
+Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -sdkFolder <sdk-folder-path> -typespecSpecDirectory <relativeTypeSpecProjectFolderPath> [-commit <commitId>] [-repo <specRepo>] [-specRoot <specRepoRootPath>] [-additionalSubDirectories <relativeFolders>]
 
 Options:
 -sdkFolder [Required] take the address of the sdk folder in azure-sdk-for-net repo. e.g. /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector
--cadlSpecDirectory [Required] takes the relative path of the cadl project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector
+-typespecSpecDirectory [Required] takes the relative path of the typespec project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector
 -additionalSubDirectories [Optional] takes the relative paths of the additional directories needed by the cadl project
 -commit takes the git commit hash  (e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90)
 -repo [Optional] takes the `<owner>/<repo>` of the REST API specification repository. (e.g. Azure/azure-rest-api-specs). The default is Azure/azure-rest-api-specs
@@ -59,8 +59,8 @@ Options:
 }
 
 # validate input parameter
-if (!$sdkFolder -or !$cadlSpecDirectory) {
-  Throw "One of required parameters (sdkFolder, cadlSpecDirectory) is missing. Please use -help to see the usage."
+if (!$sdkFolder -or !$typespecSpecDirectory) {
+  Throw "One of required parameters (sdkFolder, typespecSpecDirectory) is missing. Please use -help to see the usage."
 }
 
 if ((!$commit) -And !$specRoot) {
@@ -78,11 +78,11 @@ if ( $sdkFolder -match "(?<sdkPath>.*)/sdk/(?<serviceDirectory>.*)/(?<namespace>
   $service = $matches["serviceDirectory"]
   $namespace = $matches["namespace"]
 }
-New-CADLPackageFolder `
+New-TypeSpecPackageFolder `
   -service $service `
   -namespace $namespace `
   -sdkPath $sdkPath `
-  -relatedCadlProjectFolder $cadlSpecDirectory `
+  -relatedTypeSpecProjectFolder $typespecSpecDirectory `
   -commit $commit `
   -repo $repo `
   -additionalSubDirectories $additionalSubDirectories `

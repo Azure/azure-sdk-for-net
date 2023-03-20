@@ -12,7 +12,7 @@
 
 ## Setup Typespec project
 
-Make sure you have typespec project in [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) repo or you can follow [Typespec Getting Start](https://github.com/microsoft/typespec/#using-node--npm) to initialize your typespec project, and refer to [Typespec Structure Guidelines](https://github.com/Azure/azure-rest-api-specs/blob/main/documentation/cadl-structure-guidelines.md) to configure your typespec project.
+Make sure you have typespec project in [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) repo or you can follow [Typespec Getting Started](https://github.com/microsoft/typespec/#using-node--npm) to initialize your typespec project, and refer to [Typespec Structure Guidelines](https://github.com/Azure/azure-rest-api-specs/blob/main/documentation/cadl-structure-guidelines.md) to configure your typespec project.
 
 ## Setup SDK Project Folder
 
