@@ -230,6 +230,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 Throws.InvalidOperationException);
         }
 
+        [Test]
+        public void SetMinBatchLargerThanMax_ThrowsInvalidOperationException()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                b =>
+                {
+                    b.AddEventHubs();
+                },
+                new Dictionary<string, string>
+                {
+                    { $"{extensionPath}:MaxEventBatchSize", "100" },
+                    { $"{extensionPath}:MinEventBatchSize", "170" },
+                }),
+                Throws.InvalidOperationException);
+        }
+
         private EventHubOptions CreateOptionsFromConfig()
         {
             string extensionPath = "AzureWebJobs:Extensions:EventHubs";
