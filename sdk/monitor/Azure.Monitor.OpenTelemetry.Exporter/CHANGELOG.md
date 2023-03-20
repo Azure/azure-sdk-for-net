@@ -6,6 +6,10 @@
 
 ### Breaking Changes
 
+- Removed `TokenCredential` from the extension methods `AddAzureMonitorTraceExporter()`, `AddAzureMonitorLogExporter()`, and `AddAzureMonitorMetricExporter()`.
+  This is instead available on `AzureMonitorExporterOptions`.
+  ([]())
+
 ### Bugs Fixed
 
 - Fixed an issue of when using ILogger to log an Exception a custom message would override the exception message.

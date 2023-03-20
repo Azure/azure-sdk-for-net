@@ -22,7 +22,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
         {
             this.meterProvider = Sdk.CreateMeterProviderBuilder()
                                 .AddMeter(meterName)
-                                .AddAzureMonitorMetricExporter(o => o.ConnectionString = connectionString, credential)
+                                .AddAzureMonitorMetricExporter(o =>
+                                {
+                                    o.ConnectionString = connectionString;
+                                    o.Credential = credential;
+                                })
                                 .Build();
         }
 

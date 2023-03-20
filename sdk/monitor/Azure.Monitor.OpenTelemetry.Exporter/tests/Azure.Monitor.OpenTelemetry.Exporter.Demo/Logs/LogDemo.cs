@@ -17,7 +17,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Logs
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.AddAzureMonitorLogExporter(o => o.ConnectionString = connectionString, credential);
+                    options.AddAzureMonitorLogExporter(o =>
+                    {
+                        o.ConnectionString = connectionString;
+                        o.Credential = credential;
+                    });
                 });
             });
         }

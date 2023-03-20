@@ -36,7 +36,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                             .AddProcessor(new ActivityFilteringProcessor())
                             .AddProcessor(new ActivityEnrichingProcessor())
                             .SetSampler(new ApplicationInsightsSampler(1.0F))
-                            .AddAzureMonitorTraceExporter(o => o.ConnectionString = connectionString, credential)
+                            .AddAzureMonitorTraceExporter(o =>
+                            {
+                                o.ConnectionString = connectionString;
+                                o.Credential = credential;
+                            })
                             .Build();
         }
 

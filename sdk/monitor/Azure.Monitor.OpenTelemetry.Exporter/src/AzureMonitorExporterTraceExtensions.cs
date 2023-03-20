@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -22,13 +21,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         /// <param name="builder"><see cref="TracerProviderBuilder"/> builder to use.</param>
         /// <param name="configure">Callback action for configuring <see cref="AzureMonitorExporterOptions"/>.</param>
-        /// <param name="credential"><see cref="TokenCredential" /></param>
         /// <param name="name">Name which is used when retrieving options.</param>
         /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
         public static TracerProviderBuilder AddAzureMonitorTraceExporter(
             this TracerProviderBuilder builder,
             Action<AzureMonitorExporterOptions>? configure = null,
-            TokenCredential? credential = null,
             string? name = null)
         {
             if (builder == null)
@@ -62,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 return new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
                     new StandardMetricsExtractionProcessor(),
-                    new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, exporterOptions.Credential?? credential))
+                    new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
                 });
             });
         }
