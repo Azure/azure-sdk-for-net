@@ -21,24 +21,6 @@ namespace Azure.ResourceManager.NetApp
         private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
         private VaultsRestOperations VaultsRestClient => _vaultsRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetAppAccountResource.ResourceType));
 
-        //        //
-        //        /// <summary> Initializes a new instance of the <see cref="NetAppAccountResource"/> class. </summary>
-        //        /// <param name="client"> The client parameters to use in these operations. </param>
-        //        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        //        internal NetAppAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
-        //        {
-        //            _netAppAccountAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-        //            TryGetApiVersion(ResourceType, out string netAppAccountAccountsApiVersion);
-        //            _netAppAccountAccountsRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountAccountsApiVersion);
-        //            _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        //            _vaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        //            _netAppVolumeGroupVolumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppVolumeGroupResource.ResourceType.Namespace, Diagnostics);
-        //            TryGetApiVersion(NetAppVolumeGroupResource.ResourceType, out string netAppVolumeGroupVolumeGroupsApiVersion);
-        //            _netAppVolumeGroupVolumeGroupsRestClient = new VolumeGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeGroupVolumeGroupsApiVersion);
-        //#if DEBUG
-        //            ValidateResourceId(Id);
-        //#endif
-        //        }
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
