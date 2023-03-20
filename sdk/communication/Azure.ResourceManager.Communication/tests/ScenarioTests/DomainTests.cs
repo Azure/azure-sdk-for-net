@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             ArmClient = GetArmClient();
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
-            _emailService = _resourceGroup.GetEmailServiceResource(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName, _emailServiceName);
+            _emailService = await _resourceGroup.GetEmailServiceResourceAsync(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName, _emailServiceName);
         }
 
         [TearDown]
         public async Task TearDown()
         {
-            await foreach (var domain in _emailService.GetCommunicationDomainResources().GetAllAsync())
+            await foreach (var domain in _emailService?.GetCommunicationDomainResources())
             {
                 await domain.DeleteAsync(WaitUntil.Completed);
             }

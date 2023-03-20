@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            return GetExtensionClient(resourceGroup).GetCommunicationServiceResources();
+            return resourceGroup.GetCommunicationServiceResources(subscriptionId, resourceGroupName);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Communication
         [ForwardsClientCalls]
         public static async Task<Response<CommunicationServiceResource>> GetCommunicationServiceResourceAsync(this ResourceGroupResource resourceGroup, Guid subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetCommunicationServiceResourceAsync(subscriptionId, resourceGroup.Id.Name, communicationServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroup).GetCommunicationServiceResources().GetAsync(communicationServiceName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Communication
         [ForwardsClientCalls]
         public static Response<CommunicationServiceResource> GetCommunicationServiceResource(this ResourceGroupResource resourceGroup, Guid subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetCommunicationServiceResource(subscriptionId, resourceGroup.Id.Name, communicationServiceName, cancellationToken);
+            return GetExtensionClient(resourceGroup).GetCommunicationServiceResources().Get(communicationServiceName);
         }
 
         /// <summary> Gets a collection of EmailServiceResources in the TenantResource. </summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Communication
         [ForwardsClientCalls]
         public static async Task<Response<EmailServiceResource>> GetEmailServiceResourceAsync(this ResourceGroupResource resourceGroup, Guid subscriptionId, string resourceGroupName, string emailServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetEmailServiceResources(subscriptionId, resourceGroupName).GetAsync(emailServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroup).GetEmailServiceResources().GetAsync(emailServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Communication
         [ForwardsClientCalls]
         public static Response<EmailServiceResource> GetEmailServiceResource(this ResourceGroupResource resourceGroup, Guid subscriptionId, string resourceGroupName, string emailServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetEmailServiceResources(subscriptionId, resourceGroupName).Get(emailServiceName, cancellationToken);
+            return GetExtensionClient(resourceGroup).GetEmailServiceResources().Get(emailServiceName, cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return resourceGroup.CheckCommunicationNameAvailability(content, cancellationToken);
+            return CheckCommunicationNameAvailability(resourceGroup, content, cancellationToken);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CommunicationServiceResource> GetCommunicationServiceResourcesAsync(this ResourceGroupResource resourceGroup, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetCommunicationServiceResourcesAsync(cancellationToken);
+            return GetExtensionClient(resourceGroup).GetCommunicationServiceResources().GetAllAsync();
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CommunicationServiceResource> GetCommunicationServiceResources(this ResourceGroupResource resourceGroup, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetCommunicationServiceResources(cancellationToken);
+            return GetExtensionClient(resourceGroup).GetCommunicationServiceResources().GetAll();
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EmailServiceResource> GetEmailServiceResourcesAsync(this ResourceGroupResource resourceGroup, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetEmailServiceResourcesAsync(cancellationToken);
+            return GetExtensionClient(resourceGroup).GetEmailServiceResources().GetAllAsync();
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EmailServiceResource> GetEmailServiceResources(this ResourceGroupResource resourceGroup, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetEmailServiceResources(cancellationToken);
+            return GetExtensionClient(resourceGroup).GetEmailServiceResources().GetAll();
         }
 
         /// <summary>

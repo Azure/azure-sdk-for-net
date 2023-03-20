@@ -81,8 +81,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             SetTagResourceUsage(ArmClient, useTagResource);
             string emailServiceName = Recording.GenerateAssetName("email-service-");
-            var resourceClient = new TenantResourceExtensionClient(ArmClient, _resourceGroup.Id);
-            var collection = resourceClient.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.Name);
+            var collection = _resourceGroup.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.Name);
             var email = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             await email.AddTagAsync("testkey", "testvalue");
             email = await collection.GetAsync(emailServiceName);
