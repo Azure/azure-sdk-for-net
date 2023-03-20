@@ -15,7 +15,7 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 All app configuration service operations will throw a [RequestFailedException](https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet) on failure.
 
-When you interact with the library, errors returned by the service correspond to the same HTTP status codes returned for [REST API](https://learn.microsoft.com/en-us/azure/azure-app-configuration/rest-api/) requests. 
+When you interact with the library, errors returned by the service correspond to the same HTTP status codes returned for [REST API](https://learn.microsoft.com/azure/azure-app-configuration/rest-api/) requests. 
 
 For example, if you try to retrieve a Configuration Setting that doesn't exist in your Configuration Store, a `404` error is returned, indicating `Not Found`.
 
