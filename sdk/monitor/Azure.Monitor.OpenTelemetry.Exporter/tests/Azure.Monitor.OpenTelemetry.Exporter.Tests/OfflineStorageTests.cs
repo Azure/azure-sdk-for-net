@@ -169,6 +169,43 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Empty(transmitter._fileBlobProvider.GetBlobs());
         }
 
+        // TODO: Remove TransmitFromStorage() test after moving to new implementation
+        [Fact]
+        public void TransmitFromStorage_New()
+        {
+            using var activity = CreateActivity("TestActivity");
+            var telemetryItem = CreateTelemetryItem(activity);
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            telemetryItems.Add(telemetryItem);
+
+            //Even though we are using different transmitter instances
+            // we need to use the same instance of fileProvider for this test.
+            var mockFileProvider = new MockFileProvider();
+            // Transmit
+            var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
+            var transmitter1 = GetTransmitter(mockResponse);
+            transmitter1._fileBlobProvider = mockFileProvider;
+            transmitter1.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+
+            //Assert
+            Assert.Single(transmitter1._fileBlobProvider.GetBlobs());
+
+            // reset server logic to return 200
+            mockResponse = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
+            var transmitter2 = GetTransmitter(mockResponse);
+            transmitter2._fileBlobProvider = mockFileProvider;
+
+            var transmitFromStorageHandler = new TransmitFromStorageHandler(transmitter2._applicationInsightsRestClient, transmitter2._fileBlobProvider);
+            transmitFromStorageHandler.TransmitFromStorage(null, null);
+
+            // Assert
+            // Blob will be deleted on successful transmission
+            Assert.Empty(transmitter2._fileBlobProvider.GetBlobs());
+
+            transmitter1.Dispose();
+            transmitter2.Dispose();
+        }
+
         private static AzureMonitorTransmitter GetTransmitter(MockResponse mockResponse)
         {
             MockTransport mockTransport = new MockTransport(mockResponse);
