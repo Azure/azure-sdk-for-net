@@ -11,7 +11,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     [JsonConverter(typeof(OciImageManifestConverter))]
     public partial class OciImageManifest : IUtf8JsonSerializable
@@ -19,10 +19,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Config))
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Config);
+                writer.WriteObjectValue(Configuration);
             }
             if (Optional.IsCollectionDefined(Layers))
             {
