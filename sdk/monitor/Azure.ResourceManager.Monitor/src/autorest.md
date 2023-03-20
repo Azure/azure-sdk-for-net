@@ -9,7 +9,7 @@ generate-model-factory: false
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
 require: https://github.com/Azure/azure-rest-api-specs/blob/fce14bf881523f16b14d8ecf325e004465cdcf56/specification/monitor/resource-manager/readme.md
-tag: package-track2-stable #package-preview-2023-04
+tag: package-track2-stable
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
