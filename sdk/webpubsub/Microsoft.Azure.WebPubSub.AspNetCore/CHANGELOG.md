@@ -10,6 +10,10 @@
 
 - Rename `ServiceEndpoint` to `WebPubSubServiceEndpoint`.
 
+### Bugs Fixed
+
+- Fix `Headers` field in `ConnectEventRequest` that was missed.
+
 ## 1.0.0-beta.4 (2022-11-11)
 
 ### Features Added
