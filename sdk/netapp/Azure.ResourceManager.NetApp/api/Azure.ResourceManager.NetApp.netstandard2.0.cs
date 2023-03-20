@@ -1203,13 +1203,13 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppVolumeAuthorizeReplicationContent() { }
         public Azure.Core.ResourceIdentifier RemoteVolumeResourceId { get { throw null; } set { } }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NetAppVolumeBackupConfiguration
     {
         public NetAppVolumeBackupConfiguration() { }
         public Azure.Core.ResourceIdentifier BackupPolicyId { get { throw null; } set { } }
         public bool? IsBackupEnabled { get { throw null; } set { } }
         public bool? IsPolicyEnforced { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier VaultId { get { throw null; } set { } }
     }
     public partial class NetAppVolumeBackupDetail
@@ -1250,7 +1250,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppVolumeBreakReplicationContent() { }
         public bool? ForceBreakReplication { get { throw null; } set { } }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NetAppVolumeDataProtection
     {
         public NetAppVolumeDataProtection() { }

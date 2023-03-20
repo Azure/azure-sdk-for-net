@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             CapacityPoolResource remoteCapacityPool = (await remoteCapacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, remoteCapactiyPoolData)).Value;
             //Create the remote volume with dataProtection
             NetAppReplicationObject replication = new(null, NetAppEndpointType.Destination, NetAppReplicationSchedule.TenMinutely, volumeResource1.Id, RemoteLocation);
-            NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection(null, replication: replication, null);
+            NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection() { Replication = replication };
             NetAppVolumeCollection remoteVolumeCollection = remoteCapacityPool.GetNetAppVolumes();
             NetAppVolumeResource remoteVolume = await CreateVolume(RemoteLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeCollection: remoteVolumeCollection, dataProtection: dataProtectionProperties);
             if (Mode != RecordedTestMode.Playback)
