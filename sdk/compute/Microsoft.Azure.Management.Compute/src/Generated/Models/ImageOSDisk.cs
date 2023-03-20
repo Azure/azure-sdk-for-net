@@ -31,8 +31,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="osType">This property allows you to specify the type
         /// of the OS that is included in the disk if creating a VM from a
-        /// custom image. &lt;br&gt;&lt;br&gt; Possible values are:
-        /// &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**.
+        /// custom image. Possible values are: **Windows,** **Linux.**.
         /// Possible values include: 'Windows', 'Linux'</param>
         /// <param name="osState">The OS State. For managed images, use
         /// Generalized. Possible values include: 'Generalized',
@@ -40,16 +39,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="snapshot">The snapshot.</param>
         /// <param name="managedDisk">The managedDisk.</param>
         /// <param name="blobUri">The Virtual Hard Disk.</param>
-        /// <param name="caching">Specifies the caching requirements.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
-        /// **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt;
-        /// **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
-        /// 'None', 'ReadOnly', 'ReadWrite'</param>
+        /// <param name="caching">Specifies the caching requirements. Possible
+        /// values are: **None,** **ReadOnly,** **ReadWrite.** The default
+        /// values are: **None for Standard storage. ReadOnly for Premium
+        /// storage.**. Possible values include: 'None', 'ReadOnly',
+        /// 'ReadWrite'</param>
         /// <param name="diskSizeGB">Specifies the size of empty data disks in
         /// gigabytes. This element can be used to overwrite the name of the
-        /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value
-        /// cannot be larger than 1023 GB</param>
+        /// disk in a virtual machine image. This value cannot be larger than
+        /// 1023 GB.</param>
         /// <param name="storageAccountType">Specifies the storage account type
         /// for the managed disk. NOTE: UltraSSD_LRS can only be used with data
         /// disks, it cannot be used with OS Disk. Possible values include:
@@ -73,9 +71,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets this property allows you to specify the type of the OS
         /// that is included in the disk if creating a VM from a custom image.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Windows**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Linux**. Possible values
+        /// Possible values are: **Windows,** **Linux.**. Possible values
         /// include: 'Windows', 'Linux'
         /// </summary>
         [JsonProperty(PropertyName = "osType")]

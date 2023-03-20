@@ -32,19 +32,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the WindowsConfiguration class.
         /// </summary>
         /// <param name="provisionVMAgent">Indicates whether virtual machine
-        /// agent should be provisioned on the virtual machine.
-        /// &lt;br&gt;&lt;br&gt; When this property is not specified in the
-        /// request body, default behavior is to set it to true.  This will
-        /// ensure that VM Agent is installed on the VM so that extensions can
-        /// be added to the VM later.</param>
+        /// agent should be provisioned on the virtual machine. When this
+        /// property is not specified in the request body, it is set to true by
+        /// default. This will ensure that VM Agent is installed on the VM so
+        /// that extensions can be added to the VM later.</param>
         /// <param name="enableAutomaticUpdates">Indicates whether Automatic
         /// Updates is enabled for the Windows virtual machine. Default value
-        /// is true. &lt;br&gt;&lt;br&gt; For virtual machine scale sets, this
-        /// property can be updated and updates will take effect on OS
-        /// reprovisioning.</param>
+        /// is true. For virtual machine scale sets, this property can be
+        /// updated and updates will take effect on OS reprovisioning.</param>
         /// <param name="timeZone">Specifies the time zone of the virtual
-        /// machine. e.g. "Pacific Standard Time". &lt;br&gt;&lt;br&gt;
-        /// Possible values can be
+        /// machine. e.g. "Pacific Standard Time". Possible values can be
         /// [TimeZoneInfo.Id](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id)
         /// value from time zones returned by
         /// [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.getsystemtimezones).</param>
@@ -77,29 +74,26 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets indicates whether virtual machine agent should be
-        /// provisioned on the virtual machine.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; When this property is not
-        /// specified in the request body, default behavior is to set it to
-        /// true.  This will ensure that VM Agent is installed on the VM so
-        /// that extensions can be added to the VM later.
+        /// provisioned on the virtual machine. When this property is not
+        /// specified in the request body, it is set to true by default. This
+        /// will ensure that VM Agent is installed on the VM so that extensions
+        /// can be added to the VM later.
         /// </summary>
         [JsonProperty(PropertyName = "provisionVMAgent")]
         public bool? ProvisionVMAgent { get; set; }
 
         /// <summary>
         /// Gets or sets indicates whether Automatic Updates is enabled for the
-        /// Windows virtual machine. Default value is true.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For virtual machine scale
-        /// sets, this property can be updated and updates will take effect on
-        /// OS reprovisioning.
+        /// Windows virtual machine. Default value is true. For virtual machine
+        /// scale sets, this property can be updated and updates will take
+        /// effect on OS reprovisioning.
         /// </summary>
         [JsonProperty(PropertyName = "enableAutomaticUpdates")]
         public bool? EnableAutomaticUpdates { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the time zone of the virtual machine. e.g.
-        /// "Pacific Standard Time". &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-        /// Possible values can be
+        /// "Pacific Standard Time". Possible values can be
         /// [TimeZoneInfo.Id](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id)
         /// value from time zones returned by
         /// [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.getsystemtimezones).

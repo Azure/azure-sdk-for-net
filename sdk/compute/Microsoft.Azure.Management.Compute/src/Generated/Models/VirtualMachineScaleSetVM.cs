@@ -64,20 +64,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="networkProfileConfiguration">Specifies the network
         /// profile configuration of the virtual machine.</param>
         /// <param name="diagnosticsProfile">Specifies the boot diagnostic
-        /// settings state. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2015-06-15.</param>
+        /// settings state. Minimum api-version: 2015-06-15.</param>
         /// <param name="availabilitySet">Specifies information about the
         /// availability set that the virtual machine should be assigned to.
         /// Virtual machines specified in the same availability set are
         /// allocated to different nodes to maximize availability. For more
         /// information about availability sets, see [Availability sets
         /// overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview).
-        /// &lt;br&gt;&lt;br&gt; For more information on Azure planned
-        /// maintenance, see [Maintenance and updates for Virtual Machines in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates)
-        /// &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to
-        /// availability set at creation time. An existing VM cannot be added
-        /// to an availability set.</param>
+        /// For more information on Azure planned maintenance, see [Maintenance
+        /// and updates for Virtual Machines in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates).
+        /// Currently, a VM can only be added to availability set at creation
+        /// time. An existing VM cannot be added to an availability
+        /// set.</param>
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         /// <param name="licenseType">Specifies that the image or disk that is
@@ -230,9 +229,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public VirtualMachineScaleSetVMNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the boot diagnostic settings state.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2015-06-15.
+        /// Gets or sets specifies the boot diagnostic settings state. Minimum
+        /// api-version: 2015-06-15.
         /// </summary>
         [JsonProperty(PropertyName = "properties.diagnosticsProfile")]
         public DiagnosticsProfile DiagnosticsProfile { get; set; }
@@ -244,13 +242,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// nodes to maximize availability. For more information about
         /// availability sets, see [Availability sets
         /// overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview).
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more information on Azure
-        /// planned maintenance, see [Maintenance and updates for Virtual
-        /// Machines in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Currently, a VM can only be
-        /// added to availability set at creation time. An existing VM cannot
-        /// be added to an availability set.
+        /// For more information on Azure planned maintenance, see [Maintenance
+        /// and updates for Virtual Machines in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates).
+        /// Currently, a VM can only be added to availability set at creation
+        /// time. An existing VM cannot be added to an availability set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySet")]
         public SubResource AvailabilitySet { get; set; }

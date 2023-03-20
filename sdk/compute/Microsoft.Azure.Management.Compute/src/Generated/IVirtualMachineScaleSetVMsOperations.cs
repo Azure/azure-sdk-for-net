@@ -388,9 +388,9 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='sasUriExpirationTimeInMinutes'>
         /// Expiration duration in minutes for the SAS URIs with a value
-        /// between 1 to 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not
-        /// specified, SAS URIs will be generated with a default expiration
-        /// duration of 120 minutes.
+        /// between 1 to 1440 minutes. **Note:** If not specified, SAS URIs
+        /// will be generated with a default expiration duration of 120
+        /// minutes.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

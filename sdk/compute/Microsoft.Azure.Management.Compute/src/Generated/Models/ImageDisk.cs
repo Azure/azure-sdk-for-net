@@ -32,16 +32,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="snapshot">The snapshot.</param>
         /// <param name="managedDisk">The managedDisk.</param>
         /// <param name="blobUri">The Virtual Hard Disk.</param>
-        /// <param name="caching">Specifies the caching requirements.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
-        /// **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt;
-        /// **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
-        /// 'None', 'ReadOnly', 'ReadWrite'</param>
+        /// <param name="caching">Specifies the caching requirements. Possible
+        /// values are: **None,** **ReadOnly,** **ReadWrite.** The default
+        /// values are: **None for Standard storage. ReadOnly for Premium
+        /// storage.**. Possible values include: 'None', 'ReadOnly',
+        /// 'ReadWrite'</param>
         /// <param name="diskSizeGB">Specifies the size of empty data disks in
         /// gigabytes. This element can be used to overwrite the name of the
-        /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value
-        /// cannot be larger than 1023 GB</param>
+        /// disk in a virtual machine image. This value cannot be larger than
+        /// 1023 GB.</param>
         /// <param name="storageAccountType">Specifies the storage account type
         /// for the managed disk. NOTE: UltraSSD_LRS can only be used with data
         /// disks, it cannot be used with OS Disk. Possible values include:
@@ -85,14 +84,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string BlobUri { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the caching requirements.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **None**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadOnly**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadWrite**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
-        /// 'None', 'ReadOnly', 'ReadWrite'
+        /// Gets or sets specifies the caching requirements. Possible values
+        /// are: **None,** **ReadOnly,** **ReadWrite.** The default values are:
+        /// **None for Standard storage. ReadOnly for Premium storage.**.
+        /// Possible values include: 'None', 'ReadOnly', 'ReadWrite'
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
@@ -100,8 +95,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the size of empty data disks in gigabytes.
         /// This element can be used to overwrite the name of the disk in a
-        /// virtual machine image. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This
-        /// value cannot be larger than 1023 GB
+        /// virtual machine image. This value cannot be larger than 1023 GB.
         /// </summary>
         [JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }

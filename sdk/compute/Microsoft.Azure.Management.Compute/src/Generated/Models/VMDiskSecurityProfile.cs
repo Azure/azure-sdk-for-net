@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the security profile settings for the managed disk.
-    /// &lt;br&gt;&lt;br&gt; NOTE: It can only be set for Confidential VMs
+    /// Specifies the security profile settings for the managed disk. **Note:**
+    /// It can only be set for Confidential VMs.
     /// </summary>
     public partial class VMDiskSecurityProfile
     {
@@ -31,12 +31,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VMDiskSecurityProfile class.
         /// </summary>
         /// <param name="securityEncryptionType">Specifies the EncryptionType
-        /// of the managed disk. &lt;br&gt; It is set to DiskWithVMGuestState
-        /// for encryption of the managed disk along with VMGuestState blob,
-        /// and VMGuestStateOnly for encryption of just the VMGuestState blob.
-        /// &lt;br&gt;&lt;br&gt; NOTE: It can be set for only Confidential VMs.
-        /// Possible values include: 'VMGuestStateOnly',
-        /// 'DiskWithVMGuestState'</param>
+        /// of the managed disk. It is set to DiskWithVMGuestState for
+        /// encryption of the managed disk along with VMGuestState blob, and
+        /// VMGuestStateOnly for encryption of just the VMGuestState blob.
+        /// **Note:** It can be set for only Confidential VMs. Possible values
+        /// include: 'VMGuestStateOnly', 'DiskWithVMGuestState'</param>
         /// <param name="diskEncryptionSet">Specifies the customer managed disk
         /// encryption set resource id for the managed disk that is used for
         /// Customer Managed Key encrypted ConfidentialVM OS Disk and VMGuest
@@ -54,11 +53,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the EncryptionType of the managed disk.
-        /// &amp;lt;br&amp;gt; It is set to DiskWithVMGuestState for encryption
-        /// of the managed disk along with VMGuestState blob, and
-        /// VMGuestStateOnly for encryption of just the VMGuestState blob.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; NOTE: It can be set for only
+        /// Gets or sets specifies the EncryptionType of the managed disk. It
+        /// is set to DiskWithVMGuestState for encryption of the managed disk
+        /// along with VMGuestState blob, and VMGuestStateOnly for encryption
+        /// of just the VMGuestState blob. **Note:** It can be set for only
         /// Confidential VMs. Possible values include: 'VMGuestStateOnly',
         /// 'DiskWithVMGuestState'
         /// </summary>

@@ -16,11 +16,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// Specifies the target splits for Spot and Regular priority VMs within a
-    /// scale set with flexible orchestration mode. &lt;br&gt;&lt;br&gt;With
-    /// this property the customer is able to specify the base number of
-    /// regular priority VMs created as the VMSS flex instance scales out and
-    /// the split between Spot and Regular priority VMs after this base target
-    /// has been reached.
+    /// scale set with flexible orchestration mode. With this property the
+    /// customer is able to specify the base number of regular priority VMs
+    /// created as the VMSS flex instance scales out and the split between Spot
+    /// and Regular priority VMs after this base target has been reached.
     /// </summary>
     public partial class PriorityMixPolicy
     {

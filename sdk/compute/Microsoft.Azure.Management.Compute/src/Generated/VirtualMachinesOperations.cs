@@ -798,11 +798,10 @@ namespace Microsoft.Azure.Management.Compute
 
         /// <summary>
         /// Sets the OS state of the virtual machine to generalized. It is recommended
-        /// to sysprep the virtual machine before performing this operation.
-        /// &lt;br&gt;For Windows, please refer to [Create a managed image of a
-        /// generalized VM in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
-        /// Linux, please refer to [How to create an image of a virtual machine or
+        /// to sysprep the virtual machine before performing this operation. For
+        /// Windows, please refer to [Create a managed image of a generalized VM in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).
+        /// For Linux, please refer to [How to create an image of a virtual machine or
         /// VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image).
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1723,8 +1722,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='sasUriExpirationTimeInMinutes'>
         /// Expiration duration in minutes for the SAS URIs with a value between 1 to
-        /// 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not specified, SAS URIs will be
-        /// generated with a default expiration duration of 120 minutes.
+        /// 1440 minutes. **Note:** If not specified, SAS URIs will be generated with a
+        /// default expiration duration of 120 minutes.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

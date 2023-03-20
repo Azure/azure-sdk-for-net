@@ -19,10 +19,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// Specifies information about the dedicated host group that the dedicated
-    /// hosts should be assigned to. &lt;br&gt;&lt;br&gt; Currently, a
-    /// dedicated host can only be added to a dedicated host group at creation
-    /// time. An existing dedicated host cannot be added to another dedicated
-    /// host group.
+    /// hosts should be assigned to. Currently, a dedicated host can only be
+    /// added to a dedicated host group at creation time. An existing dedicated
+    /// host cannot be added to another dedicated host group.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class DedicatedHostGroup : Resource
@@ -55,11 +54,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// on the dedicated host group. Automatic placement means resources
         /// are allocated on dedicated hosts, that are chosen by Azure, under
         /// the dedicated host group. The value is defaulted to 'false' when
-        /// not provided. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2020-06-01.</param>
+        /// not provided. Minimum api-version: 2020-06-01.</param>
         /// <param name="additionalCapabilities">Enables or disables a
-        /// capability on the dedicated host group.&lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2022-03-01.</param>
+        /// capability on the dedicated host group. Minimum api-version:
+        /// 2022-03-01.</param>
         /// <param name="zones">Availability Zone to use for this host group.
         /// Only single zone is supported. The zone can be assigned only during
         /// creation. If not provided, the group supports all zones in the
@@ -108,17 +106,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// scale sets can be placed automatically on the dedicated host group.
         /// Automatic placement means resources are allocated on dedicated
         /// hosts, that are chosen by Azure, under the dedicated host group.
-        /// The value is defaulted to 'false' when not provided.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2020-06-01.
+        /// The value is defaulted to 'false' when not provided. Minimum
+        /// api-version: 2020-06-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportAutomaticPlacement")]
         public bool? SupportAutomaticPlacement { get; set; }
 
         /// <summary>
         /// Gets or sets enables or disables a capability on the dedicated host
-        /// group.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2022-03-01.
+        /// group. Minimum api-version: 2022-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.additionalCapabilities")]
         public DedicatedHostGroupPropertiesAdditionalCapabilities AdditionalCapabilities { get; set; }

@@ -19,10 +19,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// Specifies information about the capacity reservation group that the
-    /// capacity reservations should be assigned to. &lt;br&gt;&lt;br&gt;
-    /// Currently, a capacity reservation can only be added to a capacity
-    /// reservation group at creation time. An existing capacity reservation
-    /// cannot be added or moved to another capacity reservation group.
+    /// capacity reservations should be assigned to. Currently, a capacity
+    /// reservation can only be added to a capacity reservation group at
+    /// creation time. An existing capacity reservation cannot be added or
+    /// moved to another capacity reservation group.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class CapacityReservationGroup : Resource
