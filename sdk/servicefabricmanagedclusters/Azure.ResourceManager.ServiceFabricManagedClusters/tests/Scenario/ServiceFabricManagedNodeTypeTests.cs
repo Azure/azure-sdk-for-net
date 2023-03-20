@@ -28,28 +28,52 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
         }
 
         [RecordedTest]
-        public async Task Create()
+        public async Task CreateOrUpdateDelete()
         {
-            string nodeTypeName = Recording.GenerateAssetName("node");
+            // CreateOrUpdate
+            string primaryNodeTypeName = Recording.GenerateAssetName("node");
+            string secondaryNodeTypeName = Recording.GenerateAssetName("node");
+            var primaryNodeType = await CreateServiceFabricManagedNodeType(primaryNodeTypeName, true);
+            var secondaryNodeType = await CreateServiceFabricManagedNodeType(secondaryNodeTypeName, false);
+            ValidatePurviewAccount(primaryNodeType.Data, primaryNodeTypeName);
+            ValidatePurviewAccount(secondaryNodeType.Data, secondaryNodeTypeName);
 
-            var list = await _nodeTypeCollection.GetAllAsync().ToEnumerableAsync();
+            // Delete
+            await secondaryNodeType.DeleteAsync(WaitUntil.Completed);
+            var flag = await _nodeTypeCollection.ExistsAsync(secondaryNodeTypeName);
+            Assert.IsFalse(flag);
         }
 
-        private async Task<ServiceFabricManagedNodeTypeResource> CreateServiceFabricManagedNodeType(string nodeTypeName)
+        [RecordedTest]
+        public async Task ExistGetGetAll()
+        {
+            string nodeTypeName = Recording.GenerateAssetName("node");
+            var nodeType = await CreateServiceFabricManagedNodeType(nodeTypeName, true);
+
+            // Exist
+            var flag = await _nodeTypeCollection.ExistsAsync(nodeTypeName);
+            Assert.IsTrue(flag);
+
+            // Get
+            var getNodeType = await _nodeTypeCollection.GetAsync(nodeTypeName);
+            ValidatePurviewAccount(getNodeType.Value.Data, nodeTypeName);
+
+            // GetAll
+            var list = await _nodeTypeCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            ValidatePurviewAccount(list.FirstOrDefault().Data, nodeTypeName);
+        }
+
+        private async Task<ServiceFabricManagedNodeTypeResource> CreateServiceFabricManagedNodeType(string nodeTypeName, bool isPrimaryNode)
         {
             var data = new ServiceFabricManagedNodeTypeData()
             {
-                Sku = new NodeTypeSku(6)
-                {
-                    Name = "Standard_P0",
-                    Tier = "Standard"
-                },
                 ApplicationPorts = new EndpointRangeDescription(20000, 30000),
                 DataDiskLetter = "S",
                 DataDiskSizeInGB = 256,
                 DataDiskType = ServiceFabricManagedDataDiskType.StandardSsdLrs,
                 EphemeralPorts = new EndpointRangeDescription(49152, 65534),
-                IsPrimary = true,
+                IsPrimary = isPrimaryNode,
                 VmImageOffer = "WindowsServer",
                 VmImagePublisher = "MicrosoftWindowsServer",
                 VmImageSku = "2019-Datacenter",
@@ -59,6 +83,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
             };
             var noteTypeLro = await _nodeTypeCollection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, data);
             return noteTypeLro.Value;
+        }
+
+        private void ValidatePurviewAccount(ServiceFabricManagedNodeTypeData nodeType, string nodeTypeName)
+        {
+            Assert.IsNotNull(nodeType);
         }
     }
 }

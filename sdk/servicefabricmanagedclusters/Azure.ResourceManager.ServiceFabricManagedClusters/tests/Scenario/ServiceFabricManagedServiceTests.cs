@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
         private const string _clusterNamePrefix = "sfmctest";
         private ResourceGroupResource _resourceGroup;
         private ServiceFabricManagedClusterCollection _clusterCollection;
-        public ServiceFabricManagedServiceTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ServiceFabricManagedServiceTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -28,25 +28,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
             _resourceGroup = await CreateResourceGroup();
             _clusterCollection = _resourceGroup.GetServiceFabricManagedClusters();
         }
-
-        //[RecordedTest]
-        //public async Task Update()
-        //{
-        //    // CreateOrUpdate
-        //    string clusterName = Recording.GenerateAssetName(_clusterNamePrefix);
-        //    var cluster = await CreateServiceFabricManagedCluster(_resourceGroup, clusterName);
-        //    ValidatePurviewAccount(cluster.Data, clusterName);
-
-        //    var patch = new ServiceFabricManagedClusterPatch()
-        //    {
-        //        Tags =
-        //        {
-        //            new KeyValuePair<string, string>("key1","value1"),
-        //            new KeyValuePair<string, string>("key2","value2"),
-        //        }
-        //    };
-        //    var response = await cluster.UpdateAsync(patch);
-        //}
 
         [RecordedTest]
         public async Task CreateOrUpdateExistGetGetAllDelete()

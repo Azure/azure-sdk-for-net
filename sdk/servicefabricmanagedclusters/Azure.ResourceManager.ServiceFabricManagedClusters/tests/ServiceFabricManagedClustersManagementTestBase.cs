@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             string dnsName = Recording.GenerateAssetName("sfmcnetsdk");
             var data = new ServiceFabricManagedClusterData(DefaultLocation)
             {
-                Sku = new ServiceFabricManagedClustersSku("Basic"),
+                Sku = new ServiceFabricManagedClustersSku("Standard"),
                 DnsName = dnsName,
                 ClientConnectionPort = 19000,
                 HttpGatewayConnectionPort = 19080,
