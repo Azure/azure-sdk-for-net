@@ -2,14 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using Azure.Messaging.EventHubs;
-using Microsoft.Azure.WebJobs.EventHubs.Processor;
-using Azure.Core;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
@@ -17,7 +11,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
     {
         private int _maxBatchSize;
         private int _minBatchSize;
-        private readonly object _cachedEventsLock = new object();
 
         // This is internal for mocking purposes only.
         internal Queue<EventData> CachedEvents { get; set; }
@@ -26,10 +19,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         {
             get
             {
-                lock (_cachedEventsLock)
-                {
-                    return CachedEvents.Count > 0;
-                }
+                return CachedEvents.Count > 0;
             }
         }
 
@@ -48,28 +38,25 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         public EventData[] GetBatchofEventsWithCached(EventData[] events = null, bool allowPartialBatch= false)
         {
             EventData[] eventsToReturn;
-            lock (_cachedEventsLock)
+            var totalEvents = CachedEvents.Count + events.Length;
+
+            foreach (var eventData in events)
             {
-                var totalEvents = CachedEvents.Count + events.Length;
+                CachedEvents.Enqueue(eventData);
+            }
 
-                foreach (var eventData in events)
+            if (totalEvents < _minBatchSize && !allowPartialBatch)
+            {
+                eventsToReturn = Array.Empty<EventData>();
+            }
+            else
+            {
+                var sizeOfBatch = totalEvents > _maxBatchSize ? _maxBatchSize : totalEvents;
+                eventsToReturn = new EventData[sizeOfBatch];
+                for (int i = 0; i < sizeOfBatch; i++)
                 {
-                    CachedEvents.Enqueue(eventData);
-                }
-
-                if (totalEvents < _minBatchSize && !timerTrigger)
-                {
-                    eventsToReturn = Array.Empty<EventData>();
-                }
-                else
-                {
-                    var sizeOfBatch = totalEvents > _maxBatchSize ? _maxBatchSize : totalEvents;
-                    eventsToReturn = new EventData[sizeOfBatch];
-                    for (int i = 0; i < sizeOfBatch; i++)
-                    {
-                        var nextEvent = CachedEvents.Dequeue();
-                        eventsToReturn[i] = nextEvent;
-                    }
+                    var nextEvent = CachedEvents.Dequeue();
+                    eventsToReturn[i] = nextEvent;
                 }
             }
             return eventsToReturn;

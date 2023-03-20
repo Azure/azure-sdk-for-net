@@ -37,6 +37,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 			private ValueStopwatch _currentCycle;
 			private EventProcessorHostPartition _mostRecentPartitionContext;
 			private CancellationTokenSource _cachedEventsBackgroundTaskCts;
+			private SemaphoreSlim _cachedEventsGuard;
 
 			internal PartitionProcessorEventsManager CachedEventsManager { get; }
 
@@ -49,15 +50,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 				_minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default
 				CachedEventsManager = new PartitionProcessorEventsManager(maxBatchSize: options.MaxEventBatchSize, minBatchSize: options.MinEventBatchSize);
 				_maxWaitTime = options.MaxWaitTime;
-			}
+				_cachedEventsGuard = new SemaphoreSlim(1, 1);
+            }
 
 			public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
 			{
-				// signal cancellation for any in progress executions
+				// signal cancellation for any in progress executions and clear the cached events
 				_cts.Cancel();
-				CachedEventsManager.PartitionClosing();
+				CachedEventsManager.ClearEventCache();
 
-				_logger.LogDebug(GetOperationDetails(context, $"CloseAsync, {reason.ToString()}"));
+				_logger.LogDebug(GetOperationDetails(context, $"CloseAsync, {reason}"));
 				return Task.CompletedTask;
 			}
 
@@ -104,8 +106,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 						}
 
 						EventHubTriggerInput eventHubTriggerInput = triggerInput.GetSingleEventTriggerInput(i);
-						TriggeredFunctionData input = new TriggeredFunctionData
-						{
+						TriggeredFunctionData input = new()
+                        {
 							TriggerValue = eventHubTriggerInput,
 							TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
 						};
@@ -120,28 +122,31 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
 					if (_minimumBatchesEnabled)
 					{
-						var triggerEvents = CachedEventsManager.GetBatchofEventsWithCached(events, false);
-
-						if (triggerEvents.Length > 0)
+						try
 						{
-							UpdateCheckpointContext(triggerEvents, context);
-							await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
-							eventToCheckpoint = triggerEvents.Last();
-
-							if (_cachedEventsBackgroundTaskCts != null)
+                            if (!_cachedEventsGuard.Wait(0, linkedCts.Token))
                             {
-                                // If there is a background timer task, cancel it and dispose of the cancellation token.
-                                _cachedEventsBackgroundTaskCts.Cancel();
-                                _cachedEventsBackgroundTaskCts.Dispose();
-                                _cachedEventsBackgroundTaskCts = null;
+                                await _cachedEventsGuard.WaitAsync(linkedCts.Token).ConfigureAwait(false);
+                            }
+                            var triggerEvents = CachedEventsManager.GetBatchofEventsWithCached(events, false);
+
+                            if (triggerEvents.Length > 0)
+                            {
+                                UpdateCheckpointContext(triggerEvents, context);
+                                await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
+                                eventToCheckpoint = triggerEvents.Last();
+                            }
+
+                            if (_cachedEventsBackgroundTaskCts == null && CachedEventsManager.HasCachedEvents)
+                            {
+                                // If there are events waiting to be processed, and no background task running, start a monitoring cycle
+                                _cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
+                                _cachedEventsBackgroundTask = MonitorCachedEvents(_cachedEventsBackgroundTaskCts.Token);
                             }
                         }
-
-						if (_cachedEventsBackgroundTaskCts == null && CachedEventsManager.HasCachedEvents)
+                        finally
 						{
-							// If there are events waiting to be processed, and no background task running, start a monitoring cycle
-							_cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
-                            _cachedEventsBackgroundTask = MonitorCachedEvents(_cachedEventsBackgroundTaskCts.Token);
+							_cachedEventsGuard.Release();
 						}
 					}
 					else
@@ -200,19 +205,25 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 				{
 					_currentCycle = ValueStopwatch.StartNew();
 
-					while (_currentCycle.GetElapsedTime() < _maxWaitTime)
+					while (_currentCycle.GetElapsedTime() < _maxWaitTime && !cancellationToken.IsCancellationRequested)
 					{
 						var remainingTime = RemainingTime(_currentCycle.GetElapsedTime());
 						await Task.Delay(remainingTime, cancellationToken).ConfigureAwait(false);
 					}
 
-					var triggerEvents = CachedEventsManager.GetBatchofEventsWithCached(timerTrigger: true);
+                    if (!_cachedEventsGuard.Wait(0, cancellationToken))
+                    {
+                        await _cachedEventsGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    }
+
+                    var triggerEvents = CachedEventsManager.GetBatchofEventsWithCached(allowPartialBatch: true);
 
 					if (triggerEvents.Length > 0)
 					{
 						await TriggerExecute(triggerEvents, _mostRecentPartitionContext, cancellationToken).ConfigureAwait(false);
 						await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
 					}
+					_cachedEventsGuard.Release();
 				}
 				catch (TaskCanceledException)
 				{
@@ -279,6 +290,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 						_cts.Dispose();
 						CachedEventsManager.Dispose();
 						_cachedEventsBackgroundTaskCts.Dispose();
+						_cachedEventsGuard.Dispose();
 					}
 
 					_disposed = true;
