@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 			{
 				using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken);
 				_mostRecentPartitionContext = context;
-				var events = messages?.ToArray() ?? Array.Empty<EventData>();
+				var events = messages.ToArray();
 				EventData eventToCheckpoint = null;
 
 				int eventCount = events.Length;
@@ -129,29 +129,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 							eventToCheckpoint = triggerEvents.Last();
 
 							if (_cachedEventsBackgroundTaskCts != null)
-							{
+                            {
                                 // If there is a background timer task, cancel it and dispose of the cancellation token.
                                 _cachedEventsBackgroundTaskCts.Cancel();
                                 _cachedEventsBackgroundTaskCts.Dispose();
-										 = null;
-							}
+                                _cachedEventsBackgroundTaskCts = null;
+                            }
+                        }
 
-							if (CachedEventsManager.HasCachedEvents)
-							{
-								// If there are events waiting to be processed, create a new linked cancellation token and start or restart the
-								// timer on the newest stored events.
-								_cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
-                                _cachedEventsBackgroundTask = MonitorCachedEvents(_cachedEventsBackgroundTaskCts.Token);
-							}
-						}
-						else
+						if (_cachedEventsBackgroundTaskCts == null && CachedEventsManager.HasCachedEvents)
 						{
-							if (_cachedEventsBackgroundTask == null && CachedEventsManager.HasCachedEvents)
-							{
-								// If we don't have enough events and the timer hasn't been started yet, start it.
-								_cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
-                                _cachedEventsBackgroundTask = MonitorCachedEvents(_cachedEventsBackgroundTaskCts.Token);
-							}
+							// If there are events waiting to be processed, and no background task running, start a monitoring cycle
+							_cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
+                            _cachedEventsBackgroundTask = MonitorCachedEvents(_cachedEventsBackgroundTaskCts.Token);
 						}
 					}
 					else
