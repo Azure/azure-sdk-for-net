@@ -18,7 +18,7 @@ We will generate SDK under the SDK project folder of `azure-sdk-for-net`.
 
 You can update `typespec-location.yaml` under sdk project folder to set the typespec project.
 
-You can refer to the [typespec-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Cadl-Project-Scripts.md#cadl-locationyaml) which describes the supported properties in the file.
+You can refer to the [typespec-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Typespec-Project-Scripts.md#cadl-locationyaml) which describes the supported properties in the file.
 
 ### Generate Code
 
