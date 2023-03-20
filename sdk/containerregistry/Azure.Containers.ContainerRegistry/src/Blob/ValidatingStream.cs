@@ -18,10 +18,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         private int _received;
         private bool _validated;
+        private bool _disposed;
 
         public ValidatingStream(Stream stream, int contentLength, string digest)
         {
-            _stream = stream;
+            _stream = stream ?? throw new InvalidOperationException("The response content stream does not have any data.");
             _sha256 = SHA256.Create();
             _contentLength = contentLength;
             _digest = digest;
@@ -83,9 +84,20 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         protected override void Dispose(bool disposing)
         {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _sha256?.Dispose();
+                    _stream?.Dispose();
+                }
+
+                _sha256 = null;
+                _stream = null;
+                _disposed = true;
+            }
+
             base.Dispose(disposing);
-            _sha256?.Dispose();
-            _stream?.Dispose();
         }
     }
 }
