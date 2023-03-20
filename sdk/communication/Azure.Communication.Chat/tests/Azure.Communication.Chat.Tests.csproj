@@ -17,7 +17,6 @@
     <None Include="..\tests.yml" Link="\tests.yml" />
   </ItemGroup>
 
-  <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="..\..\Shared\tests\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
