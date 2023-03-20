@@ -11,8 +11,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     internal class ValidatingStream : Stream
     {
-        private readonly Stream _stream;
-        private readonly SHA256 _sha256;
+        private Stream _stream;
+        private SHA256 _sha256;
         private readonly int _contentLength;
         private readonly string _digest;
 
@@ -94,6 +94,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 _sha256 = null;
                 _stream = null;
+
                 _disposed = true;
             }
 
