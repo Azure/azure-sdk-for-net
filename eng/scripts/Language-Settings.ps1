@@ -550,3 +550,15 @@ function Get-dotnet-EmitterName() {
 function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
   return "--option @azure-tools/typespec-csharp.emitter-output-dir=$projectDirectory/src"
 }
+
+function Get-dotnet-LatestTag([string]$projectDirectory) {
+  $projFile = Get-ChildItem (Join-Path $projectDirectory "src") -Name "*.csproj"
+  $xml = [Xml](Get-Content (Join-Path $projectDirectory "src" $projFile))
+  $version = $xml.Project.PropertyGroup.ApiCompatVersion
+  $name = Split-Path $projectDirectory -Leaf
+  if ($version) {
+    return $name, $version -Join "_"
+  }
+
+  return ""
+}
