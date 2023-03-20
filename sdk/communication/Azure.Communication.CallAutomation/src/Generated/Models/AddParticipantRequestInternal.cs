@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
         /// <summary>
         /// (Optional) The display name of the source that is associated with this invite operation when
-        /// adding a PSTN participant or teams user. Note: Will not update the display name in the roster.
+        /// adding a PSTN participant or teams user.  Note: Will not update the display name in the roster.
         /// </summary>
         public string SourceDisplayName { get; set; }
         /// <summary> The participant to invite. </summary>
