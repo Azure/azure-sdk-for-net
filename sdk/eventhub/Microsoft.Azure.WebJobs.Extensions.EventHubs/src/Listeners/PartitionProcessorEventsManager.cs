@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             CachedEvents.Clear();
         }
 
-        public EventData[] GetBatchofEventsWithCached(EventData[] events = null, bool timerTrigger = false)
+        public EventData[] GetBatchofEventsWithCached(EventData[] events = null, bool allowPartialBatch= false)
         {
             EventData[] eventsToReturn;
             lock (_cachedEventsLock)
