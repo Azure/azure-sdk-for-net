@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2023-03-12)
+## 1.0.0 (2023-03-22)
 
 ### Features Added
 
@@ -8,7 +8,6 @@
 
 ### Breaking Changes
 
-- Upgrade framework to .NET 6.0 LTS version.
 - Rename `ServiceEndpoint` to `WebPubSubServiceEndpoint`.
 
 ## 1.0.0-beta.4 (2022-11-11)
