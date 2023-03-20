@@ -40,6 +40,7 @@ jobs:
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash
+        working-directory: .github/workflows
       # End-Install
 
       # Testing checkout of sources from the Azure/azure-sdk-tools repository
