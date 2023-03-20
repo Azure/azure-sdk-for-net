@@ -1,15 +1,29 @@
 # Azure OpenAI client library for .NET
 
-Azure OpenAI is a managed service that allows developers to deploy, tune, and generate content from OpenAI models on Azure resouces.
+The Azure OpenAI client library for .NET is an adaptation of OpenAI's REST APIs that provides an idiomatic interface
+and rich integration with the rest of the Azure SDK ecosystem. It can connect to Azure OpenAI resources *or* to the
+non-Azure OpenAI inference endpoint, making it a great choice for even non-Azure OpenAI development.
 
 Use the client library for Azure OpenAI to:
 
 * [Create a completion for text][msdocs_openai_completion]
 * [Create a text embedding for comparisons][msdocs_openai_embedding]
 
+Azure OpenAI is a managed service that allows developers to deploy, tune, and generate content from OpenAI models on Azure resources.
+
   [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.OpenAI) | [API reference documentation](https://learn.microsoft.com/azure/cognitive-services/openai/reference) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/openai/) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/tests/Samples)
 
 ## Getting started
+
+### Prerequisites
+
+If you'd like to use an Azure OpenAI resource, you must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/)
+and [Azure OpenAI access](https://learn.microsoft.com/azure/cognitive-services/openai/overview#how-do-i-get-access-to-azure-openai).
+This will allow you to create an Azure OpenAI resource and get both a connection URL as well as API keys. For more
+information, see [Quickstart: Get started generating text using Azure OpenAI Service](https://learn.microsoft.com/azure/cognitive-services/openai/quickstart).
+
+If you'd like to use the Azure OpenAI .NET client library to connect to non-Azure OpenAI, you'll need an API key
+from a developer account at https://platform.openai.com/.
 
 ### Install the package
 
@@ -19,33 +33,23 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 dotnet add package Azure.AI.OpenAI --prerelease
 ```
 
-### Prerequisites
-
-You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [OpenAI access](https://learn.microsoft.com/azure/cognitive-services/openai/overview#how-do-i-get-access-to-azure-openai).
-
 ### Authenticate the client
 
-In order to interact with the Azure OpenAI service, you'll need to create an instance of the [OpenAIClient][openai_client_class] class. To make this possible, you'll need the endpoint URI for your Azure OpenAI resource and an API key to access that resource.
+In order to interact with Azure OpenAI or OpenAI, you'll need to create an instance of the [OpenAIClient][openai_client_class]
+class. To configure a client for use with Azure OpenAI, provide a valid endpoint URI to an Azure OpenAI resource
+along with a corresponding key credential, token credential, or Azure identity credential that's authorized to use the
+Azure OpenAI resource. To instead configure the client to connect to OpenAI's service, provide an API key from OpenAI's
+developer portal.
 
-#### Get credentials
-
-You can obtain the endpoint string and subscription key from the Azure OpenAI Portal.
-
-#### Create OpenAIClient
-
-Once you have the value of the endpoint string and subscription key, you can create the OpenAIClient:
-
-```C# Snippet:CreateOpenAIClient
-// Replace with your Azure OpenAI key
-string key = "YOUR_AZURE_OPENAI_KEY";
-string endpoint = "https://myaccount.openai.azure.com/";
-var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key), new OpenAIClientOptions()
-{
-    DefaultDeploymentOrModelName = "myModelDeploymentId",
-});
+```C# Snippet:MakeClientWithAzureOrNonAzureOpenAI
+OpenAIClient client = useAzureOpenAI
+    ? new OpenAIClient(
+        new Uri("https://your-azure-openai-resource.com/"),
+        new AzureKeyCredential("your-azure-openai-resource-api-key"))
+    : new OpenAIClient("your-api-key-from-platform.openai.com");
 ```
 
-#### Create OpenAIClient with Azure Active Directory Credential
+#### Create OpenAIClient with an Azure Active Directory Credential
 
 Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below,
 or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
@@ -66,21 +70,21 @@ var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), n
 
 The main concept to understand is [Completions][azure_openai_completions_docs]. Briefly explained, completions provides its functionality in the form of a text prompt, which by using a specific [model](https://learn.microsoft.com/azure/cognitive-services/openai/concepts/models), will then attempt to match the context and patterns, providing an output text. The following code snippet provides a rough overview (more details can be found in the `GenerateChatbotResponsesWithToken` sample code):
 
-```C#
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+```C# Snippet:UseAzureOrNonAzureOpenAI
+OpenAIClient client = useAzureOpenAI
+    ? new OpenAIClient(
+        new Uri("https://your-azure-openai-resource.com/"),
+        new AzureKeyCredential("your-azure-openai-resource-api-key"))
+    : new OpenAIClient("your-api-key-from-platform.openai.com");
 
-CompletionsOptions completionsOptions = new CompletionsOptions()
+Response<Completions> response = await client.GetCompletionsAsync(
+    "text-davinci-003", // assumes a matching model deployment or model name
+    "Hello, world!");
+
+foreach (Choice choice in response.Value.Choices)
 {
-    Prompt =
-    {
-        "What is Azure OpenAI?",
-    }
-};
-completionsOptions.Prompt.Add(prompt);
-
-Response<Completions> completionsResponse = client.GetCompletions("myModelDeployment", completionsOptions);
-string completion = completionsResponse.Value.Choices[0].Text;
-Console.WriteLine($"Chatbot: {completion}");
+    Console.WriteLine(choice.Text);
+}
 ```
 
 ### Thread safety
@@ -199,7 +203,7 @@ var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions()
 {
     DefaultDeploymentOrModelName = "gpt-3.5-turbo",
 });
-
+new OpenAIClient("foo");
 var chatCompletionsOptions = new ChatCompletionsOptions()
 {
     Messages =

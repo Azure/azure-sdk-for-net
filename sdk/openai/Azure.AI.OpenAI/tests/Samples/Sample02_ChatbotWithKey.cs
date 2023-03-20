@@ -14,7 +14,6 @@ namespace Azure.AI.OpenAI.Tests.Samples
         public void GetMultipleResponsesWithSubscriptionKey()
         {
             #region Snippet:GenerateMultipleChatbotResponsesWithSubscriptionKey
-            #region Snippet:CreateOpenAIClient
             // Replace with your Azure OpenAI key
             string key = "YOUR_AZURE_OPENAI_KEY";
             string endpoint = "https://myaccount.openai.azure.com/";
@@ -22,7 +21,6 @@ namespace Azure.AI.OpenAI.Tests.Samples
             {
                 DefaultDeploymentOrModelName = "myModelDeploymentId",
             });
-            #endregion
 
             List<string> examplePrompts = new(){
                 "How are you today?",
