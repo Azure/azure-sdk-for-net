@@ -6,7 +6,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary>
     /// Options to pass to the DownloadBlobTo method.
     /// </summary>
-    public class DownloadBlobToOptions
+    internal class DownloadBlobToOptions
     {
         private readonly int _maxChunkSize;
 

@@ -833,7 +833,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="options">Options to configure the operation behavior.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
-        public virtual Response DownloadBlobTo(string digest, string path, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        internal virtual Response DownloadBlobTo(string digest, string path, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(path, nameof(path));
@@ -866,7 +866,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="options">Options to configure the operation behavior.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
-        public virtual Response DownloadBlobTo(string digest, Stream destination, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        internal virtual Response DownloadBlobTo(string digest, Stream destination, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(destination, nameof(destination));
@@ -910,7 +910,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="options">Options to configure the operation behavior.</param>
         /// <param name="cancellationToken"> The cancellation token to use.</param>
         /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
-        public virtual async Task<Response> DownloadBlobToAsync(string digest, string path, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DownloadBlobToAsync(string digest, string path, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(path, nameof(path));
