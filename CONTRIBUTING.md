@@ -74,22 +74,6 @@ Now you can use the same command on non-windows as above for e.g. on Ubuntu you 
 - `dotnet msbuild eng\mgmt.proj /t:CreateNugetPackage /p:scope=Compute`
 - `dotnet msbuild build.proj /t:Util /p:UtilityName=InstallPsModules`
 
-### Code Coverage
-
-If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
-
-```dotnetcli
-dotnet tool restore
-dotnet test /p:CollectCoverage=true
-```
-
-On developers' machines, you can open `index.html` from within the `TestResults` directory in each of your test projects.
-Coverage reports can also be found in Azure Pipelines on the "Code Coverage" tab after a pull request validation build completes.
-All covered projects should have 70% or better test coverage.
-
-By default, all _Azure.*_ libraries are covered, and any project that sets the `IsClientLibrary=true` MSBuild property.
-To exclude a project, set `ExcludeFromCodeCoverage=true` in the project's MSBuild properties before other targets are imported.
-
 ### Update build tools
 
 Build tools are now downloaded as part of a nuget package under `root\restoredPackages\microsoft.internal.netsdkbuild.mgmt.tools`
@@ -177,6 +161,22 @@ information or instructions.
 
 ### Testing Against Latest Versions of Client Libraries
 In some cases, you might want to test against the latest versions of the client libraries. i.e. version not yet published to nuget. For this scenario you should make use of the `UseProjectReferenceToAzureClients` property which when set to `true` will switch all package references for client libraries present in the build to project references. This result in testing against the current version of the libraries in the repo. e.g. `dotnet test eng\service.proj /p:ServiceDirectory=eventhub --filter TestCategory!=Live /p:UseProjectReferenceToAzureClients=true`
+
+### Code Coverage
+
+If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
+
+```dotnetcli
+dotnet tool restore
+dotnet test /p:CollectCoverage=true
+```
+
+On developers' machines, you can open `index.html` from within the `TestResults` directory in each of your test projects.
+Coverage reports can also be found in Azure Pipelines on the "Code Coverage" tab after a pull request validation build completes.
+All covered projects should have 70% or better test coverage.
+
+By default, all _Azure.*_ libraries are covered, and any project that sets the `IsClientLibrary=true` MSBuild property.
+To exclude a project, set `ExcludeFromCodeCoverage=true` in the project's MSBuild properties before other targets are imported.
 
 ## Public API additions
 

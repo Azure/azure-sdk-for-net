@@ -10,7 +10,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
     public class TestData
     {
-        private readonly string Domain;
         public readonly List<string> Fqdns;
         public readonly int[] TrunkPorts = { 1122, 1123 };
 
@@ -21,17 +20,17 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         public readonly SipTrunkRoute RuleNavigateToAllTrunks;
         public readonly SipTrunkRoute RuleNavigateToNewTrunk;
         public readonly SipTrunkRoute RuleWithoutTrunks;
+        public readonly SipTrunkRoute RuleWithoutTrunks2;
 
-        public TestData(Guid random)
+        public TestData(string domain, string randomGuid)
         {
-            Domain = random.ToString();
-            Fqdns = new List<string>() { "sbs1." + Domain + ".com", "sbs2." + Domain + ".com" };
+            Fqdns = new List<string>() { "sbs1-" + randomGuid + "." + domain, "sbs2-" + randomGuid + "." + domain };
             TrunkList = new List<SipTrunk>
             {
                 new SipTrunk(Fqdns[0], TrunkPorts[0]),
                 new SipTrunk(Fqdns[1], TrunkPorts[1])
             };
-            NewTrunk = new SipTrunk("newsbs." + Domain + ".com", 3333);
+            NewTrunk = new SipTrunk("newsbs-" + randomGuid + "." + domain, 3333);
 
             RuleNavigateToTrunk1 = new SipTrunkRoute(
                 name: "First rule",
@@ -53,6 +52,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
                 description: "Handle all numbers'",
                 numberPattern: @"\+[1-9][0-9]{3,23}",
                 trunks: new List<string> ());
+            RuleWithoutTrunks2 = new SipTrunkRoute(
+                name: "Rule without trunks 2",
+                description: "Handle all numbers'",
+                numberPattern: @"\+[1-9][0-9]{3,23}",
+                trunks: new List<string>());
         }
     }
 }

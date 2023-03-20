@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         public BlobNfsTarget() { }
         public Azure.Core.ResourceIdentifier Target { get { throw null; } set { } }
         public string UsageModel { get { throw null; } set { } }
-        public int? VerificationTimer { get { throw null; } set { } }
-        public int? WriteBackTimer { get { throw null; } set { } }
+        public int? VerificationDelayInSeconds { get { throw null; } set { } }
+        public int? WriteBackDelayInSeconds { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DomainJoinedType : System.IEquatable<Azure.ResourceManager.StorageCache.Models.DomainJoinedType>

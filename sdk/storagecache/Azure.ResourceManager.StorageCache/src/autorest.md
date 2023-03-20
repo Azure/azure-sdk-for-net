@@ -68,6 +68,8 @@ rename-mapping:
   UsernameDownloadedType: StorageCacheUsernameDownloadedType
   Nfs3Target.verificationTimer: VerificationDelayInSeconds
   Nfs3Target.writeBackTimer: WriteBackDelayInSeconds
+  BlobNfsTarget.verificationTimer: VerificationDelayInSeconds
+  BlobNfsTarget.writeBackTimer: WriteBackDelayInSeconds  
 
 format-by-name-rules:
   'tenantId': 'uuid'

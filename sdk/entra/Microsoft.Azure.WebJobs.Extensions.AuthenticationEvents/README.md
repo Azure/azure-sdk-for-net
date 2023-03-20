@@ -212,19 +212,15 @@ To Test Token Augmentation, please do the following.
         "@odata.type": "microsoft.graph.onTokenIssuanceStartResponseData",
         "actions": [
             {
-                "@odata.type": "ProvideClaimsForToken",
-                "claims": [
-                    {
-                        "DateOfBirth": "01/01/2000"
-                    },
-                    {
-                        "CustomRoles": [
+                "@odata.type": "microsoft.graph.provideClaimsForToken",
+                "claims": {
+                    "DateOfBirth": "01/01/2000",
+                    "CustomRoles": [
                             "Writer",
                             "Editor"
                         ]
                     }
-                ]
-            }
+             }
         ]
     }
 }

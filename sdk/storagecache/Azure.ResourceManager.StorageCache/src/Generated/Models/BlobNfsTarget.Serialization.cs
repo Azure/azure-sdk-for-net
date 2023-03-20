@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("usageModel"u8);
                 writer.WriteStringValue(UsageModel);
             }
-            if (Optional.IsDefined(VerificationTimer))
+            if (Optional.IsDefined(VerificationDelayInSeconds))
             {
                 writer.WritePropertyName("verificationTimer"u8);
-                writer.WriteNumberValue(VerificationTimer.Value);
+                writer.WriteNumberValue(VerificationDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(WriteBackTimer))
+            if (Optional.IsDefined(WriteBackDelayInSeconds))
             {
                 writer.WritePropertyName("writeBackTimer"u8);
-                writer.WriteNumberValue(WriteBackTimer.Value);
+                writer.WriteNumberValue(WriteBackDelayInSeconds.Value);
             }
             writer.WriteEndObject();
         }
