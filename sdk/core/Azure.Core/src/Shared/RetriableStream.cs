@@ -36,23 +36,11 @@ namespace Azure.Core.Pipeline
         public static Stream Create(
             Stream initialResponse,
             Func<long, Stream> streamFactory,
-            Func<long, ValueTask<Stream>> asyncStreamFactory,
+            Func<long, ValueTask<Stream>> asyncResponseFactory,
             ResponseClassifier responseClassifier,
             int maxRetries)
         {
-            return new RetriableStreamImpl(initialResponse, streamFactory, asyncStreamFactory, responseClassifier, maxRetries);
-        }
-
-        public static Stream Create(
-            Stream initialResponse,
-            Func<long, Stream> streamFactory,
-            Func<long, ValueTask<Stream>> asyncStreamFactory,
-            ResponseClassifier responseClassifier,
-            int maxRetries,
-            Action<byte[], int, int> onRead,
-            Action onDispose = default)
-        {
-            return new RetriableStreamImpl(initialResponse, streamFactory, asyncStreamFactory, responseClassifier, maxRetries, onRead, onDispose);
+            return new RetriableStreamImpl(initialResponse, streamFactory, asyncResponseFactory, responseClassifier, maxRetries);
         }
 
         private class RetriableStreamImpl : Stream
@@ -62,10 +50,6 @@ namespace Azure.Core.Pipeline
             private readonly Func<long, Stream> _streamFactory;
 
             private readonly Func<long, ValueTask<Stream>> _asyncStreamFactory;
-
-            private readonly Action<byte[], int, int> _onRead;
-
-            private readonly Action _onDispose;
 
             private readonly int _maxRetries;
 
@@ -79,13 +63,7 @@ namespace Azure.Core.Pipeline
 
             private List<Exception> _exceptions;
 
-            public RetriableStreamImpl(Stream initialStream,
-                Func<long, Stream> streamFactory,
-                Func<long, ValueTask<Stream>> asyncStreamFactory,
-                ResponseClassifier responseClassifier,
-                int maxRetries,
-                Action<byte[], int, int> onRead = default,
-                Action onDispose = default)
+            public RetriableStreamImpl(Stream initialStream, Func<long, Stream> streamFactory, Func<long, ValueTask<Stream>> asyncStreamFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
                 if (initialStream.CanSeek)
                 {
@@ -104,8 +82,6 @@ namespace Azure.Core.Pipeline
                 _responseClassifier = responseClassifier;
                 _asyncStreamFactory = asyncStreamFactory;
                 _maxRetries = maxRetries;
-                _onRead = onRead;
-                _onDispose = onDispose;
             }
 
             public override long Seek(long offset, SeekOrigin origin)
@@ -119,10 +95,7 @@ namespace Azure.Core.Pipeline
                 {
                     try
                     {
-                        int result = await _currentStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
-
-                        _onRead?.Invoke(buffer, offset, result);
-
+                        var result = await _currentStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
                         _position += result;
                         return result;
                     }
@@ -175,10 +148,7 @@ namespace Azure.Core.Pipeline
                 {
                     try
                     {
-                        int result = _currentStream.Read(buffer, offset, count);
-
-                        _onRead?.Invoke(buffer, offset, result);
-
+                        var result = _currentStream.Read(buffer, offset, count);
                         _position += result;
                         return result;
                     }
@@ -228,7 +198,6 @@ namespace Azure.Core.Pipeline
 
             protected override void Dispose(bool disposing)
             {
-                _onDispose?.Invoke();
                 base.Dispose(disposing);
                 _currentStream?.Dispose();
             }

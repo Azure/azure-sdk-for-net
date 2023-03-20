@@ -32,9 +32,13 @@ namespace Azure.Containers.ContainerRegistry
 
         internal static string ComputeDigest(BinaryData data)
         {
+#if NET6_0_OR_GREATER
+     return FormatDigest(SHA256.HashData(data));
+#else
             using SHA256 sha256 = SHA256.Create();
             var hashValue = sha256.ComputeHash(data.ToArray());
             return FormatDigest(hashValue);
+#endif
         }
 
         internal static string FormatDigest(byte[] hash)
@@ -53,6 +57,16 @@ namespace Azure.Containers.ContainerRegistry
 #pragma warning restore CA1305 // Specify IFormatProvider
             }
             return builder.ToString();
+        }
+
+        internal static void ValidateDigest(string clientDigest, string serverDigest, string message = default)
+        {
+            message ??= "The server-computed digest does not match the client-computed digest.";
+
+            if (!clientDigest.Equals(serverDigest, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new RequestFailedException(200, message);
+            }
         }
     }
 }

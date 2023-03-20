@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests
