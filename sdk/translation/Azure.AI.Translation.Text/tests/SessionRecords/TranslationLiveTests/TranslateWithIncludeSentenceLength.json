@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-2539c09b3e549e58230598bc75127b95-2358d02bdcf0b9d1-00",
-        "User-Agent": "azsdk-net-AI.TextTranslator/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.19042)",
-        "x-ms-client-request-id": "5c35f637d56bb968d0170b1d644d24f5",
+        "traceparent": "00-003ea207f0d3284a90a8f36473733d8b-b832bc2e17de384e-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
+        "x-ms-client-request-id": "f05addc1420f69534274db413e93efa6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022La r\\u00E9ponse se trouve dans la traduction automatique. La meilleure technologie de traduction automatique ne peut pas toujours fournir des traductions adapt\\u00E9es \\u00E0 un site ou des utilisateurs comme un \\u00EAtre humain. Il suffit de copier et coller un extrait de code n\\u0027importe o\\u00F9.\u0022}]",
@@ -23,18 +23,18 @@
         ],
         "Content-Length": "432",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 10 Mar 2023 00:13:53 GMT",
+        "Date": "Mon, 20 Mar 2023 19:53:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "272",
         "X-MT-System": "Microsoft",
-        "X-RequestId": "TRAN.MW1P.99BE.0310T0013.5244FFD"
+        "X-RequestId": "TRAN.MW1P.99BD.0320T1953.4983764"
       },
       "ResponseBody": "[{\u0022detectedLanguage\u0022:{\u0022language\u0022:\u0022fr\u0022,\u0022score\u0022:1.0},\u0022translations\u0022:[{\u0022text\u0022:\u0022La r\u00E9ponse se trouve dans la traduction automatique. La meilleure technologie de traduction automatique ne peut pas toujours fournir des traductions adapt\u00E9es \u00E0 un site ou des utilisateurs comme un \u00EAtre humain. Il suffit de copier et coller un extrait de code n\u0027importe o\u00F9.\u0022,\u0022to\u0022:\u0022fr\u0022,\u0022sentLen\u0022:{\u0022srcSentLen\u0022:[53,157,62],\u0022transSentLen\u0022:[53,157,62]}}]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "1279568639",
+    "RandomSeed": "1592142464",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"

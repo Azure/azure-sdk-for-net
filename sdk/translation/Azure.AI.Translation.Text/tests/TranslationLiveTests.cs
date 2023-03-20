@@ -251,7 +251,16 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateWithToken()
         {
-            string accessToken = await GetAzureAuthorizationTokenAsync();
+            string accessToken;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                accessToken = string.Empty;
+            }
+            else
+            {
+                accessToken = await GetAzureAuthorizationTokenAsync();
+            }
+
             TokenCredential token = new StaticAccessTokenCredential(new AccessToken(accessToken, DateTimeOffset.Now.AddDays(1)));
 
             TextTranslationClient client = GetClient(token: token);

@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-77a75de5c98cae5bdca99726ae354fec-cb755649c3f37bdb-00",
-        "User-Agent": "azsdk-net-AI.TextTranslator/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.19042)",
-        "x-ms-client-request-id": "0fc67e2f50be08750825c124c3b2249e",
+        "traceparent": "00-f73921aa36c7be49bd5c3927f2053df7-64167b3b95e6f04b-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
+        "x-ms-client-request-id": "5f79562492add2e19ba146dbfb40440c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022gujarat\u0022},{\u0022Text\u0022:\u0022hadman\u0022},{\u0022Text\u0022:\u0022hukkabar\u0022}]",
@@ -23,17 +23,17 @@
         ],
         "Content-Length": "148",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 10 Mar 2023 00:13:55 GMT",
+        "Date": "Mon, 20 Mar 2023 19:53:33 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "21",
-        "X-RequestId": "TLIT.MW1P.99BE.0310T0013.524523A"
+        "X-RequestId": "TLIT.MW1P.99BD.0320T1953.49838F7"
       },
       "ResponseBody": "[{\u0022text\u0022:\u0022\u0A97\u0AC1\u0A9C\u0AB0\u0ABE\u0AA4\u0022,\u0022script\u0022:\u0022gujr\u0022},{\u0022text\u0022:\u0022\u0AB9\u0AC7\u0AA1\u0AAE\u0AC7\u0AA8\u0022,\u0022script\u0022:\u0022gujr\u0022},{\u0022text\u0022:\u0022\u0AB9\u0AC1\u0A95\u0ACD\u0A95\u0ABE\u0AAC\u0ABE\u0AB0\u0022,\u0022script\u0022:\u0022gujr\u0022}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "545313952",
+    "RandomSeed": "1772491398",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"
