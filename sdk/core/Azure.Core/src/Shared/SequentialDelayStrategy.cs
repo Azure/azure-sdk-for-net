@@ -16,9 +16,7 @@ namespace Azure.Core
     /// <remarks>Polling interval always follows the given sequence.</remarks>
     internal class SequentialDelayStrategy : DelayStrategy
     {
-        private readonly IEnumerable<TimeSpan>? _sequence;
-
-        private static readonly TimeSpan[] s_defaultPollingSequence = new TimeSpan[]
+        private static readonly TimeSpan[] s_pollingSequence = new TimeSpan[]
         {
             TimeSpan.FromSeconds(1),
             TimeSpan.FromSeconds(1),
@@ -29,25 +27,15 @@ namespace Azure.Core
             TimeSpan.FromSeconds(16),
             TimeSpan.FromSeconds(32)
         };
-        private static readonly TimeSpan _maxDelay = s_defaultPollingSequence[s_defaultPollingSequence.Length - 1];
+        private static readonly TimeSpan _maxDelay = s_pollingSequence[s_pollingSequence.Length - 1];
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="sequence"></param>
-        /// <param name="minJitterFactor"></param>
-        /// <param name="maxJitterFactor"></param>
-        public SequentialDelayStrategy(
-            IEnumerable<TimeSpan>? sequence,
-            double minJitterFactor,
-            double maxJitterFactor) : base(_maxDelay, minJitterFactor, maxJitterFactor)
+        public SequentialDelayStrategy() : base(_maxDelay, 1.0, 1.0)
         {
-            _sequence = sequence ?? s_defaultPollingSequence;
         }
 
         protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber)
         {
-            return retryNumber >= s_defaultPollingSequence.Length ? _maxDelay : s_defaultPollingSequence[retryNumber];
+            return retryNumber >= s_pollingSequence.Length ? _maxDelay : s_pollingSequence[retryNumber];
         }
     }
 }

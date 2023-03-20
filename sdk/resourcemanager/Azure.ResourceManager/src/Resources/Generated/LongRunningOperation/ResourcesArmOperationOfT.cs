@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
         internal ResourcesArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ResourcesArmOperation", strategy: DelayStrategy.CreateSequentialDelayStrategy());
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ResourcesArmOperation", strategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

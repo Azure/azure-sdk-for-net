@@ -13,6 +13,6 @@ namespace Azure.Core
     /// </summary>
     internal class ZeroPollingStrategy : DelayStrategy
     {
-        public override TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint) => TimeSpan.Zero;
+        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) => TimeSpan.Zero;
     }
 }

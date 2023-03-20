@@ -19,7 +19,7 @@ namespace Azure.Core
 
         public OperationPoller(DelayStrategy? strategy = null)
         {
-            _delayStrategy = strategy ?? DelayStrategy.CreateSequentialDelayStrategy();
+            _delayStrategy = strategy ?? new SequentialDelayStrategy();
         }
 
         public ValueTask<Response> WaitForCompletionResponseAsync(Operation operation, TimeSpan? delayHint, CancellationToken cancellationToken)
@@ -60,7 +60,7 @@ namespace Azure.Core
 
         private async ValueTask<Response> WaitForCompletionAsync(bool async, Operation operation, TimeSpan? delayHint, CancellationToken cancellationToken)
         {
-            int attempt = 0;
+            int retryNumber = 0;
             while (true)
             {
                 Response response = async ? await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : operation.UpdateStatus(cancellationToken);
@@ -69,7 +69,9 @@ namespace Azure.Core
                     return operation.GetRawResponse();
                 }
 
-                await Delay(async, _delayStrategy.GetNextDelay(response, ++attempt, response.Headers.RetryAfter, delayHint), cancellationToken).ConfigureAwait(false);
+                var strategy = delayHint.HasValue ? DelayStrategy.CreateFixedDelayStrategy(delayHint.Value) : _delayStrategy;
+
+                await Delay(async, strategy.GetNextDelay(response, ++retryNumber, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -84,13 +86,9 @@ namespace Azure.Core
                     return operation.RawResponse;
                 }
 
-                retryNumber++;
-                var defaultDelay = _delayStrategy.GetNextDelay(response, retryNumber, null, null);
+                var strategy = delayHint.HasValue ? DelayStrategy.CreateFixedDelayStrategy(delayHint.Value) : _delayStrategy;
 
-                delayHint ??= TimeSpan.Zero;
-                delayHint = defaultDelay > delayHint ? defaultDelay : delayHint;
-
-                await Delay(async, _delayStrategy.GetNextDelay(response, retryNumber, response.Headers.RetryAfter, delayHint), cancellationToken).ConfigureAwait(false);
+                await Delay(async, strategy.GetNextDelay(response, ++retryNumber, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
             }
         }
 

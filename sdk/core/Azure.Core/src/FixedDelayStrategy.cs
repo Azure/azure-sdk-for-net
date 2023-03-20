@@ -16,12 +16,8 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <param name="delay"></param>
-        /// <param name="minJitterFactor"></param>
-        /// <param name="maxJitterFactor"></param>
         public FixedDelayStrategy(
-            TimeSpan delay,
-            double minJitterFactor,
-            double maxJitterFactor) : base(TimeSpan.FromMilliseconds(delay.TotalMilliseconds * maxJitterFactor), minJitterFactor, maxJitterFactor)
+            TimeSpan delay) : base(TimeSpan.FromMilliseconds(delay.TotalMilliseconds * 1.2), 0.8, 1.2)
         {
             _delay = delay;
         }

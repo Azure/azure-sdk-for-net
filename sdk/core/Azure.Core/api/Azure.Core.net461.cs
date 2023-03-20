@@ -403,10 +403,9 @@ namespace Azure.Core
     public abstract partial class DelayStrategy
     {
         protected DelayStrategy(System.TimeSpan? maxDelay = default(System.TimeSpan?), double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { }
-        public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?), double factor = 2, double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { throw null; }
-        public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?), double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { throw null; }
-        public static Azure.Core.DelayStrategy CreateSequentialDelayStrategy(System.Collections.Generic.IEnumerable<System.TimeSpan>? sequence = null, double minJitterFactor = 0.8, double maxJitterFactor = 1.2) { throw null; }
-        public virtual System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint, System.TimeSpan? clientDelayHint) { throw null; }
+        public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
+        public virtual System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint) { throw null; }
         protected abstract System.TimeSpan GetNextDelayCore(Azure.Response? response, int retryNumber);
         protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
     }
@@ -1039,6 +1038,8 @@ namespace Azure.Core.Pipeline
     public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         public RetryPolicy(int? maxRetries = default(int?), Azure.Core.DelayStrategy? delayStrategy = null) { }
+        protected virtual System.TimeSpan GetNextDelay(Azure.Core.HttpMessage message, Azure.Core.DelayStrategy strategy) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayAsync(Azure.Core.HttpMessage message, Azure.Core.DelayStrategy strategy) { throw null; }
         protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
         protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
         protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
