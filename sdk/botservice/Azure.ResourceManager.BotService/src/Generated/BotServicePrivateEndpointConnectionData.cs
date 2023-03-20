@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.BotService.Models;
 using Azure.ResourceManager.Models;
@@ -12,12 +13,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    /// <summary> A class representing the BotServicePrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the BotServicePrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class BotServicePrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionData. </summary>
         public BotServicePrivateEndpointConnectionData()
         {
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionData. </summary>
@@ -28,11 +33,13 @@ namespace Azure.ResourceManager.BotService
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal BotServicePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, BotServicePrivateLinkServiceConnectionState connectionState, BotServicePrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="groupIds"> Group ids. </param>
+        internal BotServicePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, BotServicePrivateLinkServiceConnectionState connectionState, BotServicePrivateEndpointConnectionProvisioningState? provisioningState, IList<string> groupIds) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
+            GroupIds = groupIds;
         }
 
         /// <summary> The resource of private end point. </summary>
@@ -47,5 +54,7 @@ namespace Azure.ResourceManager.BotService
         public BotServicePrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public BotServicePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        /// <summary> Group ids. </summary>
+        public IList<string> GroupIds { get; }
     }
 }

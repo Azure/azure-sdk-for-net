@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Microsoft Teams channel definition. </summary>
-    public partial class MsTeamsChannel : Channel
+    public partial class MsTeamsChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of MsTeamsChannel. </summary>
         public MsTeamsChannel()

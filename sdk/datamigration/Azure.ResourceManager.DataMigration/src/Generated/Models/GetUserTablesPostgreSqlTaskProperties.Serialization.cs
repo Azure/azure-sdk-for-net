@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetUserTablesPostgreSqlTaskProperties DeserializeGetUserTablesPostgreSqlTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GetUserTablesPostgreSqlTaskInput> input = default;
             Optional<IReadOnlyList<GetUserTablesPostgreSqlTaskOutput>> output = default;
             TaskType taskType = default;

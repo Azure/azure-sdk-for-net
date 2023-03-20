@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TroubleshootingResult DeserializeTroubleshootingResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> code = default;

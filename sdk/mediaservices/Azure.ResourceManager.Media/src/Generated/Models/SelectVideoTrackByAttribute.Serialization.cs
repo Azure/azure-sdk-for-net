@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static SelectVideoTrackByAttribute DeserializeSelectVideoTrackByAttribute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TrackAttribute attribute = default;
             TrackAttributeFilter filter = default;
             Optional<string> filterValue = default;

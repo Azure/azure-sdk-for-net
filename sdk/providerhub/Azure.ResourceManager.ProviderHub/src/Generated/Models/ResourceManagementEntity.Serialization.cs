@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceManagementEntity DeserializeResourceManagementEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceId = default;
             Optional<string> homeTenantId = default;
             Optional<AzureLocation> location = default;

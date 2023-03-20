@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static UserDefinedResourcesProperties DeserializeUserDefinedResourcesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string query = default;
             IList<string> querySubscriptions = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.Communication.Rooms
     {
         internal static RoomModelInternal DeserializeRoomModelInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<DateTimeOffset> validFrom = default;

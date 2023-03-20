@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AssessmentOn))
+            if (Optional.IsDefined(AssessOn))
             {
                 writer.WritePropertyName("assessmentDate"u8);
-                writer.WriteStringValue(AssessmentOn.Value, "O");
+                writer.WriteStringValue(AssessOn.Value, "O");
             }
             if (Optional.IsDefined(Metadata))
             {
@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.PolicyInsights
 
         internal static PolicyAttestationData DeserializePolicyAttestationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

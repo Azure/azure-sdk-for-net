@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static PerformanceLevelCapability DeserializePerformanceLevelCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> value = default;
             Optional<PerformanceLevelUnit> unit = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ScriptStorageConfiguration DeserializeScriptStorageConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> storageAccountName = default;
             Optional<string> storageAccountKey = default;
             foreach (var property in element.EnumerateObject())

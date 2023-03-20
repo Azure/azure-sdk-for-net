@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static ReplicationJobSummary DeserializeReplicationJobSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> failedJobs = default;
             Optional<int> suspendedJobs = default;
             Optional<int> inProgressJobs = default;

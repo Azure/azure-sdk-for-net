@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static WebPubSubHubList DeserializeWebPubSubHubList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<WebPubSubHubData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

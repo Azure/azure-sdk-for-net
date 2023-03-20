@@ -12,7 +12,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppBackup data model. </summary>
+    /// <summary>
+    /// A class representing the NetAppBackup data model.
+    /// Backup of a Volume
+    /// </summary>
     public partial class NetAppBackupData : ResourceData
     {
         /// <summary> Initializes a new instance of NetAppBackupData. </summary>

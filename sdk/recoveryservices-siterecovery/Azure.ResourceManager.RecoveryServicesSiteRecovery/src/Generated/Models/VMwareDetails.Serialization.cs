@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareDetails DeserializeVMwareDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ProcessServer>> processServers = default;
             Optional<IReadOnlyList<MasterTargetServer>> masterTargetServers = default;
             Optional<IReadOnlyList<RunAsAccount>> runAsAccounts = default;

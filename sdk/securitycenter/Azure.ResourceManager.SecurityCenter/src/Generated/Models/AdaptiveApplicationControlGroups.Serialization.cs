@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AdaptiveApplicationControlGroups DeserializeAdaptiveApplicationControlGroups(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AdaptiveApplicationControlGroupData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

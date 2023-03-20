@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static SliceConfiguration DeserializeSliceConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WritableSubResource slice = default;
             WritableSubResource defaultDataNetwork = default;
             IList<DataNetworkConfiguration> dataNetworkConfigurations = default;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoClusterTrustedExternalTenant DeserializeKustoClusterTrustedExternalTenant(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {

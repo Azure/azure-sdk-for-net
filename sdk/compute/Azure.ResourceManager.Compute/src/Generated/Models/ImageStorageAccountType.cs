@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         private const string StandardLrsValue = "Standard_LRS";
         private const string StandardZrsValue = "Standard_ZRS";
         private const string PremiumLrsValue = "Premium_LRS";
+        private const string StandardSsdLrsValue = "StandardSSD_LRS";
 
         /// <summary> Standard_LRS. </summary>
         public static ImageStorageAccountType StandardLrs { get; } = new ImageStorageAccountType(StandardLrsValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Compute.Models
         public static ImageStorageAccountType StandardZrs { get; } = new ImageStorageAccountType(StandardZrsValue);
         /// <summary> Premium_LRS. </summary>
         public static ImageStorageAccountType PremiumLrs { get; } = new ImageStorageAccountType(PremiumLrsValue);
+        /// <summary> StandardSSD_LRS. </summary>
+        public static ImageStorageAccountType StandardSsdLrs { get; } = new ImageStorageAccountType(StandardSsdLrsValue);
         /// <summary> Determines if two <see cref="ImageStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(ImageStorageAccountType left, ImageStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageStorageAccountType"/> values are not the same. </summary>

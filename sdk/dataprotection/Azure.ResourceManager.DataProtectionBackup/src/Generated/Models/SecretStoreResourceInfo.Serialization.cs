@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static SecretStoreResourceInfo DeserializeSecretStoreResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             SecretStoreType secretStoreType = default;
             Optional<string> value = default;

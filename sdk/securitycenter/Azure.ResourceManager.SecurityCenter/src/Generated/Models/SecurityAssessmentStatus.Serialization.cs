@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAssessmentStatus DeserializeSecurityAssessmentStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SecurityAssessmentStatusCode code = default;
             Optional<string> cause = default;
             Optional<string> description = default;

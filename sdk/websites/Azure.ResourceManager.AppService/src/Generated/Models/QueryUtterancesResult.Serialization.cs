@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static QueryUtterancesResult DeserializeQueryUtterancesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SampleUtterance> sampleUtterance = default;
             Optional<float> score = default;
             foreach (var property in element.EnumerateObject())

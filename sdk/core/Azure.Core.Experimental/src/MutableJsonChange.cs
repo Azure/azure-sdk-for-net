@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text;
 using System.Text.Json;
 
 namespace Azure.Core.Json

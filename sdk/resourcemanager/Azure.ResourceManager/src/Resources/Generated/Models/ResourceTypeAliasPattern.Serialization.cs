@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ResourceTypeAliasPattern DeserializeResourceTypeAliasPattern(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> phrase = default;
             Optional<string> variable = default;
             Optional<ResourceTypeAliasPatternType> type = default;

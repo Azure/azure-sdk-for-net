@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static EncryptionSettingsElement DeserializeEncryptionSettingsElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KeyVaultAndSecretReference> diskEncryptionKey = default;
             Optional<KeyVaultAndKeyReference> keyEncryptionKey = default;
             foreach (var property in element.EnumerateObject())

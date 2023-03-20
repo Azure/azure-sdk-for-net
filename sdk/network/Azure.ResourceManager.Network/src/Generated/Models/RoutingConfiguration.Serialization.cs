@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static RoutingConfiguration DeserializeRoutingConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> associatedRouteTable = default;
             Optional<PropagatedRouteTable> propagatedRouteTables = default;
             Optional<VnetRoute> vnetRoutes = default;

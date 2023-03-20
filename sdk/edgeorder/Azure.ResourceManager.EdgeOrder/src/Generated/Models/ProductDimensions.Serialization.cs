@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductDimensions DeserializeProductDimensions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> length = default;
             Optional<double> height = default;
             Optional<double> width = default;

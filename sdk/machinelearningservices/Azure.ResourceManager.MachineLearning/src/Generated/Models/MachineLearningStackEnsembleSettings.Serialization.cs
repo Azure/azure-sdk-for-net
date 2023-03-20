@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningStackEnsembleSettings DeserializeMachineLearningStackEnsembleSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> stackMetaLearnerKWargs = default;
             Optional<double> stackMetaLearnerTrainPercentage = default;
             Optional<MachineLearningStackMetaLearnerType> stackMetaLearnerType = default;

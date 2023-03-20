@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static PublicIPAddressResourceSettings DeserializePublicIPAddressResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> domainNameLabel = default;
             Optional<string> fqdn = default;

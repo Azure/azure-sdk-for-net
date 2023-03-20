@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataStreamDeclaration DeserializeDataStreamDeclaration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DataColumnDefinition>> columns = default;
             foreach (var property in element.EnumerateObject())
             {

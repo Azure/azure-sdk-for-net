@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string jobName, CancellationToken cancellationToken = default)
+        public async Task<Response<BackupJobData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        JobResourceData value = default;
+                        BackupJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobResourceData.DeserializeJobResourceData(document.RootElement);
+                        value = BackupJobData.DeserializeBackupJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobResourceData)null, message.Response);
+                    return Response.FromValue((BackupJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobResourceData> Get(string subscriptionId, string resourceGroupName, string vaultName, string jobName, CancellationToken cancellationToken = default)
+        public Response<BackupJobData> Get(string subscriptionId, string resourceGroupName, string vaultName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        JobResourceData value = default;
+                        BackupJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobResourceData.DeserializeJobResourceData(document.RootElement);
+                        value = BackupJobData.DeserializeBackupJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobResourceData)null, message.Response);
+                    return Response.FromValue((BackupJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

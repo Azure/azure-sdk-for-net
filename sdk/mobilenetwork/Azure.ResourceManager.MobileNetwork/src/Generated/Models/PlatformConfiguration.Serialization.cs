@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PlatformConfiguration DeserializePlatformConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PlatformType type = default;
             Optional<WritableSubResource> azureStackEdgeDevice = default;
             Optional<IReadOnlyList<WritableSubResource>> azureStackEdgeDevices = default;

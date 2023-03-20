@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    /// <summary> A class representing the MySqlWaitStatistic data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlWaitStatistic data model.
+    /// Represents a Wait Statistic.
+    /// </summary>
     public partial class MySqlWaitStatisticData : ResourceData
     {
         /// <summary> Initializes a new instance of MySqlWaitStatisticData. </summary>

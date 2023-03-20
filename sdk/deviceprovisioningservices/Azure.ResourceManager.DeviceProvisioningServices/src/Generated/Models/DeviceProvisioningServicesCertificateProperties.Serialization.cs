@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static DeviceProvisioningServicesCertificateProperties DeserializeDeviceProvisioningServicesCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subject = default;
             Optional<DateTimeOffset> expiry = default;
             Optional<BinaryData> thumbprint = default;

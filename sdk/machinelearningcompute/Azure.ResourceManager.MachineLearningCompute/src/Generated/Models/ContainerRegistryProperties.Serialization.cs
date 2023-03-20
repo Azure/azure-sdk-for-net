@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static ContainerRegistryProperties DeserializeContainerRegistryProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {

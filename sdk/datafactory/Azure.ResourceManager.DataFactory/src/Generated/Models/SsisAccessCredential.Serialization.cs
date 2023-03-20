@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisAccessCredential DeserializeSsisAccessCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData domain = default;
             BinaryData userName = default;
             FactorySecretBaseDefinition password = default;

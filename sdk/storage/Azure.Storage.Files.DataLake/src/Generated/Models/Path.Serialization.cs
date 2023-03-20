@@ -15,6 +15,10 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal static Path DeserializePath(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<string> owner = default;
@@ -23,6 +27,7 @@ namespace Azure.Storage.Files.DataLake.Models
             Optional<string> encryptionScope = default;
             Optional<string> creationTime = default;
             Optional<string> expiryTime = default;
+            Optional<string> encryptionContext = default;
             Optional<string> contentLength = default;
             Optional<string> isDirectory = default;
             Optional<string> etag = default;
@@ -73,6 +78,11 @@ namespace Azure.Storage.Files.DataLake.Models
                     expiryTime = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("EncryptionContext"u8))
+                {
+                    encryptionContext = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("contentLength"u8))
                 {
                     contentLength = property.Value.GetString();
@@ -89,7 +99,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new Path(name.Value, Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, contentLength.Value, isDirectory.Value, etag.Value);
+            return new Path(name.Value, Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, encryptionContext.Value, contentLength.Value, isDirectory.Value, etag.Value);
         }
     }
 }

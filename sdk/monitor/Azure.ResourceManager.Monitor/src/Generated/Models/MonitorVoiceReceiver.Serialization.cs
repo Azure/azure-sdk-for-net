@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorVoiceReceiver DeserializeMonitorVoiceReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string countryCode = default;
             string phoneNumber = default;

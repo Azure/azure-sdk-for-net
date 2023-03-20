@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static NetworkProfile DeserializeNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<NetworkInterface>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {

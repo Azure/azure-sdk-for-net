@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the HubVirtualNetworkConnection data model. </summary>
+    /// <summary>
+    /// A class representing the HubVirtualNetworkConnection data model.
+    /// HubVirtualNetworkConnection Resource.
+    /// </summary>
     public partial class HubVirtualNetworkConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of HubVirtualNetworkConnectionData. </summary>

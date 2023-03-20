@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the OutboundFirewallRule data model. </summary>
+    /// <summary>
+    /// A class representing the OutboundFirewallRule data model.
+    /// An Azure SQL DB Server Outbound Firewall Rule.
+    /// </summary>
     public partial class OutboundFirewallRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of OutboundFirewallRuleData. </summary>

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the WorkloadNetworkSegment data model. </summary>
+    /// <summary>
+    /// A class representing the WorkloadNetworkSegment data model.
+    /// NSX Segment
+    /// </summary>
     public partial class WorkloadNetworkSegmentData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadNetworkSegmentData. </summary>

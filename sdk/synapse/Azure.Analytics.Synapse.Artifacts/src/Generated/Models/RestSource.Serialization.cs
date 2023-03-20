@@ -81,6 +81,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RestSource DeserializeRestSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> requestMethod = default;
             Optional<object> requestBody = default;
             Optional<object> additionalHeaders = default;

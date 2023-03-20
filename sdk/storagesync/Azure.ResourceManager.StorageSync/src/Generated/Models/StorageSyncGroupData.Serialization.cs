@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.StorageSync
 
         internal static StorageSyncGroupData DeserializeStorageSyncGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

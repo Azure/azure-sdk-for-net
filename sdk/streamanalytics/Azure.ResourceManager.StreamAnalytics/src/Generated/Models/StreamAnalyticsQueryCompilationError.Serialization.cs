@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamAnalyticsQueryCompilationError DeserializeStreamAnalyticsQueryCompilationError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<int> startLine = default;
             Optional<int> startColumn = default;

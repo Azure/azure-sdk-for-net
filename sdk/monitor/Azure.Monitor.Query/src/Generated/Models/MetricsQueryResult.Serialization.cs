@@ -16,6 +16,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricsQueryResult DeserializeMetricsQueryResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> cost = default;
             string timespan = default;
             Optional<TimeSpan> interval = default;

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static DeliveryWithResourceIdentity DeserializeDeliveryWithResourceIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventSubscriptionIdentity> identity = default;
             Optional<EventSubscriptionDestination> destination = default;
             foreach (var property in element.EnumerateObject())

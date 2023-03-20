@@ -146,6 +146,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerSchema DeserializeSwaggerSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> @ref = default;
             Optional<SwaggerSchemaType> type = default;
             Optional<string> title = default;

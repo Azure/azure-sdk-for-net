@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static HealthcareFhirResourceDeletedEventData DeserializeHealthcareFhirResourceDeletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareFhirResourceType> resourceType = default;
             Optional<string> resourceFhirAccount = default;
             Optional<string> resourceFhirId = default;

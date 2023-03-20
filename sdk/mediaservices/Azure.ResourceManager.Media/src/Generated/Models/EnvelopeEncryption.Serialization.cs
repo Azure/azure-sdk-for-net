@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static EnvelopeEncryption DeserializeEnvelopeEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaEnabledProtocols> enabledProtocols = default;
             Optional<IList<MediaTrackSelection>> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;

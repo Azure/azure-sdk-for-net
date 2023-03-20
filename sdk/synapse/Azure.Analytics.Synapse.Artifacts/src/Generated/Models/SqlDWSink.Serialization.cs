@@ -86,6 +86,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlDWSink DeserializeSqlDWSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> preCopyScript = default;
             Optional<object> allowPolyBase = default;
             Optional<PolybaseSettings> polyBaseSettings = default;

@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Reservations
     {
         internal static ReservationOrderData DeserializeReservationOrderData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> etag = default;
             ResourceIdentifier id = default;
             string name = default;

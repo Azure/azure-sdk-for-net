@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CommonEncryptionCenc DeserializeCommonEncryptionCenc(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaEnabledProtocols> enabledProtocols = default;
             Optional<IList<MediaTrackSelection>> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;

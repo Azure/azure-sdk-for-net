@@ -15,6 +15,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberOperation DeserializePhoneNumberOperation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PhoneNumberOperationType operationType = default;
             PhoneNumberOperationStatus status = default;
             Optional<string> resourceLocation = default;

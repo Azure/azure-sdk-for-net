@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Quota.Models
 
         internal static QuotaProperties DeserializeQuotaProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LimitJsonObject> limit = default;
             Optional<string> unit = default;
             Optional<ResourceName> name = default;

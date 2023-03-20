@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCacheUsage DeserializeStorageCacheUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> limit = default;
             Optional<string> unit = default;
             Optional<int> currentValue = default;

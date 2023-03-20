@@ -19,9 +19,19 @@ namespace Azure.Maps.Routing.Models
             writer.WriteStartArray();
             foreach (var item in Coordinates)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStartArray();
                 foreach (var item0 in item)
                 {
+                    if (item0 == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item1 in item0)
                     {

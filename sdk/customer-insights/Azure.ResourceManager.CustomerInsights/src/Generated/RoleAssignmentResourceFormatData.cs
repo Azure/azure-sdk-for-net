@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    /// <summary> A class representing the RoleAssignmentResourceFormat data model. </summary>
+    /// <summary>
+    /// A class representing the RoleAssignmentResourceFormat data model.
+    /// The Role Assignment resource format.
+    /// </summary>
     public partial class RoleAssignmentResourceFormatData : ResourceData
     {
         /// <summary> Initializes a new instance of RoleAssignmentResourceFormatData. </summary>

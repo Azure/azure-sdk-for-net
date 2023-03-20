@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.HybridCompute
 
         internal static HybridComputePrivateLinkResourceData DeserializeHybridComputePrivateLinkResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HybridComputePrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

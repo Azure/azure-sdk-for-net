@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountPoolStartTask DeserializeBatchAccountPoolStartTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> commandLine = default;
             Optional<IList<BatchResourceFile>> resourceFiles = default;
             Optional<IList<BatchEnvironmentSetting>> environmentSettings = default;

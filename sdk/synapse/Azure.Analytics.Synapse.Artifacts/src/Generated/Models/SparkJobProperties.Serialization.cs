@@ -96,6 +96,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SparkJobProperties DeserializeSparkJobProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             string file = default;
             Optional<string> className = default;

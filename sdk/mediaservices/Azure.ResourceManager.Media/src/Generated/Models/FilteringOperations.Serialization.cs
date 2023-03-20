@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static FilteringOperations DeserializeFilteringOperations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeinterlaceSettings> deinterlace = default;
             Optional<RotationSetting> rotation = default;
             Optional<RectangularWindow> crop = default;

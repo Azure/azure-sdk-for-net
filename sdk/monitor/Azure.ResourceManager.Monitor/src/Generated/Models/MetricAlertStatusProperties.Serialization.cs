@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static MetricAlertStatusProperties DeserializeMetricAlertStatusProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, string>> dimensions = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> timestamp = default;

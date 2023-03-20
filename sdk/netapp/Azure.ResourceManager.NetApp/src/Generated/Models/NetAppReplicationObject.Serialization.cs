@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppReplicationObject DeserializeNetAppReplicationObject(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> replicationId = default;
             Optional<NetAppEndpointType> endpointType = default;
             Optional<NetAppReplicationSchedule> replicationSchedule = default;

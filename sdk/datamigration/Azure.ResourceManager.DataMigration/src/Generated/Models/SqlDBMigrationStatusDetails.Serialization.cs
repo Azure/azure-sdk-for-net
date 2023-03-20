@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static SqlDBMigrationStatusDetails DeserializeSqlDBMigrationStatusDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> migrationState = default;
             Optional<IReadOnlyList<string>> sqlDataCopyErrors = default;
             Optional<IReadOnlyList<CopyProgressDetails>> listOfCopyProgressDetails = default;

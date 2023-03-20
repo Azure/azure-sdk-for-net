@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CommitmentPlanAccountAssociationListResult DeserializeCommitmentPlanAccountAssociationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<CommitmentPlanAccountAssociationData>> value = default;
             foreach (var property in element.EnumerateObject())

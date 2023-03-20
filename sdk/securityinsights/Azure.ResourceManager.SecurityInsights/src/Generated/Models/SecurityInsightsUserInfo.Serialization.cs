@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (ObjectId != null)
                 {
-                    writer.WritePropertyName("objectId");
+                    writer.WritePropertyName("objectId"u8);
                     writer.WriteStringValue(ObjectId.Value);
                 }
                 else
@@ -33,22 +33,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsUserInfo DeserializeSecurityInsightsUserInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> email = default;
             Optional<string> name = default;
             Optional<Guid?> objectId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectId"))
+                if (property.NameEquals("objectId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

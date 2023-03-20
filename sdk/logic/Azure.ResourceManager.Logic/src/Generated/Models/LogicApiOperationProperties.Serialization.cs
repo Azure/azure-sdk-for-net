@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiOperationProperties DeserializeLogicApiOperationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> summary = default;
             Optional<string> description = default;
             Optional<string> visibility = default;

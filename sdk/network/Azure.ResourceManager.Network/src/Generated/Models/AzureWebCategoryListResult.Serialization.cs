@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AzureWebCategoryListResult DeserializeAzureWebCategoryListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AzureWebCategoryData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

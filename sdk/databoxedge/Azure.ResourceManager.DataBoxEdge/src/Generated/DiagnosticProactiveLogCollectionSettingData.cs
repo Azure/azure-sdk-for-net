@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the DiagnosticProactiveLogCollectionSetting data model. </summary>
+    /// <summary>
+    /// A class representing the DiagnosticProactiveLogCollectionSetting data model.
+    /// The diagnostic proactive log collection settings of a device.
+    /// </summary>
     public partial class DiagnosticProactiveLogCollectionSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of DiagnosticProactiveLogCollectionSettingData. </summary>

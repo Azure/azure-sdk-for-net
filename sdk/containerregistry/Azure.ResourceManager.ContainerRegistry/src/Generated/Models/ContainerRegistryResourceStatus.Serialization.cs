@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryResourceStatus DeserializeContainerRegistryResourceStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayStatus = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> timestamp = default;

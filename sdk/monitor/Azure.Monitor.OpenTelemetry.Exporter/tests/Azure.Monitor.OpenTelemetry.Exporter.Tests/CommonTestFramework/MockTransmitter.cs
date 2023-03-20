@@ -39,5 +39,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         {
             throw new System.NotImplementedException();
         }
+
+        public void Dispose()
+        {
+        }
     }
 }

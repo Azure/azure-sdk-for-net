@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Line channel definition. </summary>
-    public partial class LineChannel : Channel
+    public partial class LineChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of LineChannel. </summary>
         public LineChannel()

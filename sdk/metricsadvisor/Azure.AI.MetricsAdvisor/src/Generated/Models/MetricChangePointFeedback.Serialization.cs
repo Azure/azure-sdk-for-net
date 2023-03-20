@@ -34,6 +34,10 @@ namespace Azure.AI.MetricsAdvisor
 
         internal static MetricChangePointFeedback DeserializeMetricChangePointFeedback(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             ChangePointFeedbackValue value = default;

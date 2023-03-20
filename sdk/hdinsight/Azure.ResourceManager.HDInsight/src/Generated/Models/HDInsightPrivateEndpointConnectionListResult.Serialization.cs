@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightPrivateEndpointConnectionListResult DeserializeHDInsightPrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HDInsightPrivateEndpointConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

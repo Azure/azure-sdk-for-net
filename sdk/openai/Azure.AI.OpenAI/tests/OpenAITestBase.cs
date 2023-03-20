@@ -19,13 +19,14 @@ namespace Azure.AI.OpenAI.Tests
         {
             public const string CompletionsDeploymentIdVariable = "OPENAI_DEPLOYMENT_ID";
             public const string EmbeddingsDeploymentIdVariable = "OPENAI_EMBEDDINGS_DEPLOYMENT_ID";
+            public const string OpenAIAuthTokenVariable = "OPENAI_AUTH_TOKEN";
             public const string EndpointVariable = "OPENAI_ENDPOINT";
             public const string ResourceGroupName = "openai-test-rg";
-            public const string CognitiveServicesAccountName = "openai-test-account";
+            public const string CognitiveServicesAccountName = "openai-sdk-test-automation-account";
             public const string CompletionsModelName = "text-davinci-002";
             public const string EmbeddingsModelName = "text-similarity-davinci-001";
             public const string SubDomainPrefix = "sdk";
-            public static AzureLocation Location = AzureLocation.EastUS;
+            public static AzureLocation Location = AzureLocation.WestEurope;
         }
 
         private static readonly object _deploymentIdLock = new object();
@@ -37,17 +38,27 @@ namespace Azure.AI.OpenAI.Tests
         private AzureKeyCredential _apiKey;
         private string _completionsDeploymentId;
         private string _embeddingsDeploymentId;
+        private string _openAIAuthToken;
 
         protected OpenAITestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             HeaderRegexSanitizers.Add(new Core.TestFramework.Models.HeaderRegexSanitizer("api-key", "***********"));
         }
 
-        protected OpenAIClient GetClient() => InstrumentClient(
-            new OpenAIClient(_endpoint, _apiKey, GetInstrumentedClientOptions()));
+        protected OpenAIClient GetCompletionsClient() => InstrumentClient(
+            new OpenAIClient(_endpoint, _completionsDeploymentId, _apiKey, GetInstrumentedClientOptions()));
 
-        protected OpenAIClient GetClientWithCredential() => InstrumentClient(
-            new OpenAIClient(_endpoint, TestEnvironment.Credential, GetInstrumentedClientOptions()));
+        protected OpenAIClient GetEmbeddingsClient() => InstrumentClient(
+            new OpenAIClient(_endpoint, _embeddingsDeploymentId, _apiKey, GetInstrumentedClientOptions()));
+
+        protected OpenAIClient GetBadDeploymentClient() => InstrumentClient(
+            new OpenAIClient(_endpoint, "BAD_DEPLOYMENT_ID", _apiKey, GetInstrumentedClientOptions()));
+
+        protected OpenAIClient GetCompletionsClientWithCredential() => InstrumentClient(
+            new OpenAIClient(_endpoint, _completionsDeploymentId, TestEnvironment.Credential, GetInstrumentedClientOptions()));
+
+        protected OpenAIClient GetPublicOpenAIClient() => InstrumentClient(
+            new OpenAIClient(_openAIAuthToken, InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01))) );
 
         [SetUp]
         public void CreateDeployment()
@@ -58,6 +69,7 @@ namespace Azure.AI.OpenAI.Tests
                 _endpoint = new Uri(Recording.GetVariable(Constants.EndpointVariable, null));
                 _completionsDeploymentId = Recording.GetVariable(Constants.CompletionsDeploymentIdVariable, null);
                 _embeddingsDeploymentId = Recording.GetVariable(Constants.EmbeddingsDeploymentIdVariable, null);
+                _openAIAuthToken = Recording.GetVariable(Constants.OpenAIAuthTokenVariable, null);
                 _apiKey = new AzureKeyCredential("unused placeholder value for recordings");
             }
             else if (_apiKey is not null)
@@ -110,7 +122,7 @@ namespace Azure.AI.OpenAI.Tests
                         CognitiveServicesAccountDeploymentResource embeddingsModelResource = GetEnsureDeployedModelResource(
                             openAIResource,
                             Constants.EmbeddingsModelName,
-                            CognitiveServicesAccountDeploymentScaleType.Manual);
+                            CognitiveServicesAccountDeploymentScaleType.Standard);
 
                         _endpoint = new Uri(openAIResource.Data.Properties.Endpoint);
                         _completionsDeploymentId = completionsModelResource.Id.Name;

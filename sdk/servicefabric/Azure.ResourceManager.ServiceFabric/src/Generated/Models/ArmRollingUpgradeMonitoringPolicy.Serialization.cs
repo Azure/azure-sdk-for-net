@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ArmRollingUpgradeMonitoringPolicy DeserializeArmRollingUpgradeMonitoringPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArmUpgradeFailureAction> failureAction = default;
             Optional<TimeSpan> healthCheckWaitDuration = default;
             Optional<TimeSpan> healthCheckStableDuration = default;

@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DynamicMetricCriteria DeserializeDynamicMetricCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DynamicThresholdOperator @operator = default;
             DynamicThresholdSensitivity alertSensitivity = default;
             DynamicThresholdFailingPeriods failingPeriods = default;

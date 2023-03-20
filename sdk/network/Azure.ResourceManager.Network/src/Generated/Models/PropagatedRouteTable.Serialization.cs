@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PropagatedRouteTable DeserializePropagatedRouteTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> labels = default;
             Optional<IList<WritableSubResource>> ids = default;
             foreach (var property in element.EnumerateObject())

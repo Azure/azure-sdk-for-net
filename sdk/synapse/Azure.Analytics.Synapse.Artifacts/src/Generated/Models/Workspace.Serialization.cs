@@ -116,6 +116,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static Workspace DeserializeWorkspace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             string location = default;
@@ -299,7 +303,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, property1.Value.GetObject());
+                                }
                             }
                             extraProperties = dictionary;
                             continue;

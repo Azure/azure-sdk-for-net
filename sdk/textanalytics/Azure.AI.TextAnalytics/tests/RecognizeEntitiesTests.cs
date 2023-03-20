@@ -302,9 +302,9 @@ namespace Azure.AI.TextAnalytics.Tests
                 // Ordinal, Speed, and NumericRange.
                 new TextDocumentInput("2", "This is the first aircraft of its kind. It can fly at over 1,300 mph and carry 65-80 passengers."),
                 // Area, Number, Currency, and DateTime.
-                new TextDocumentInput("3", "The apartment is 840 sqft. and it has 2 bedrooms. It costs 2,000 US dollars per month and will be available on 11/01/2022."),
+                new TextDocumentInput("3", "The apartment (840 sqft. with 2 bedrooms) costs 2,000 USD per month and will be available on 11/01/2022."),
                 // Volume, TemporalSpan (with Duration), and Temperature.
-                new TextDocumentInput("4", "Mix 1 cup of sugar. Bake for approximately 60 minutes in an oven preheated to 350 degrees F."),
+                new TextDocumentInput("4", "Mix 1 cup of sugar. Bake for 60 minutes in an oven preheated to 350 degrees F."),
                 // Information and TemporalSpan (with Begin and End).
                 new TextDocumentInput("5", "They retrieved 200 terabytes of data from 10/24/2022 to 10/28/2022."),
             }, options: options);
@@ -316,25 +316,24 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (CategorizedEntity entity in result1.Entities)
             {
                 Assert.IsNotNull(entity.Resolutions);
-
                 BaseResolution resolution = entity.Resolutions.FirstOrDefault();
 
-                if (resolution is AgeResolution age)
+                switch (resolution)
                 {
-                    Assert.AreEqual(5, age.Value);
-                    Assert.AreEqual(AgeUnit.Year, age.Unit);
-                }
+                    case AgeResolution age:
+                        Assert.AreEqual(5, age.Value);
+                        Assert.AreEqual(AgeUnit.Year, age.Unit);
+                        break;
 
-                if (resolution is LengthResolution length)
-                {
-                    Assert.AreEqual(14, length.Value);
-                    Assert.AreEqual(LengthUnit.Inch, length.Unit);
-                }
+                    case LengthResolution length:
+                        Assert.AreEqual(14, length.Value);
+                        Assert.AreEqual(LengthUnit.Inch, length.Unit);
+                        break;
 
-                if (resolution is WeightResolution weight)
-                {
-                    Assert.AreEqual(20, weight.Value);
-                    Assert.AreEqual(WeightUnit.Pound, weight.Unit);
+                    case WeightResolution weight:
+                        Assert.AreEqual(20, weight.Value);
+                        Assert.AreEqual(WeightUnit.Pound, weight.Unit);
+                        break;
                 }
             }
 
@@ -345,27 +344,26 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (CategorizedEntity entity in result2.Entities)
             {
                 Assert.IsNotNull(entity.Resolutions);
-
                 BaseResolution resolution = entity.Resolutions.FirstOrDefault();
 
-                if (resolution is OrdinalResolution ordinal)
+                switch (resolution)
                 {
-                    Assert.AreEqual("1", ordinal.Value);
-                    Assert.AreEqual(RelativeTo.Start, ordinal.RelativeTo);
-                    Assert.AreEqual("1", ordinal.Offset);
-                }
+                    case OrdinalResolution ordinal:
+                        Assert.AreEqual("1", ordinal.Value);
+                        Assert.AreEqual(RelativeTo.Start, ordinal.RelativeTo);
+                        Assert.AreEqual("1", ordinal.Offset);
+                        break;
 
-                if (resolution is SpeedResolution speed)
-                {
-                    Assert.AreEqual(1300, speed.Value);
-                    Assert.AreEqual(SpeedUnit.MilePerHour, speed.Unit);
-                }
+                    case SpeedResolution speed:
+                        Assert.AreEqual(1300, speed.Value);
+                        Assert.AreEqual(SpeedUnit.MilePerHour, speed.Unit);
+                        break;
 
-                if (resolution is NumericRangeResolution numericRange)
-                {
-                    Assert.AreEqual(65, numericRange.Minimum);
-                    Assert.AreEqual(80, numericRange.Maximum);
-                    Assert.AreEqual(RangeKind.Number, numericRange.RangeKind);
+                    case NumericRangeResolution numericRange:
+                        Assert.AreEqual(65, numericRange.Minimum);
+                        Assert.AreEqual(80, numericRange.Maximum);
+                        Assert.AreEqual(RangeKind.Number, numericRange.RangeKind);
+                        break;
                 }
             }
 
@@ -376,34 +374,32 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (CategorizedEntity entity in result3.Entities)
             {
                 Assert.IsNotNull(entity.Resolutions);
-
                 BaseResolution resolution = entity.Resolutions.FirstOrDefault();
 
-                if (resolution is AreaResolution area)
+                switch (resolution)
                 {
-                    Assert.AreEqual(840, area.Value);
-                    Assert.AreEqual(AreaUnit.SquareFoot, area.Unit);
-                }
+                    case AreaResolution area:
+                        Assert.AreEqual(840, area.Value);
+                        Assert.AreEqual(AreaUnit.SquareFoot, area.Unit);
+                        break;
 
-                if (resolution is NumberResolution number)
-                {
-                    Assert.AreEqual(2, number.Value);
-                    Assert.AreEqual(NumberKind.Integer, number.NumberKind);
-                }
+                    case NumberResolution number:
+                        Assert.AreEqual(2, number.Value);
+                        Assert.AreEqual(NumberKind.Integer, number.NumberKind);
+                        break;
 
-                if (resolution is CurrencyResolution currency)
-                {
-                    Assert.AreEqual(2000, currency.Value);
-                    Assert.AreEqual("USD", currency.Iso4217);
-                    Assert.AreEqual("United States dollar", currency.Unit);
-                }
+                    case CurrencyResolution currency:
+                        Assert.AreEqual(2000, currency.Value);
+                        Assert.AreEqual("USD", currency.Iso4217);
+                        Assert.AreEqual("United States dollar", currency.Unit);
+                        break;
 
-                if (resolution is DateTimeResolution dateTime)
-                {
-                    Assert.AreEqual("2022-11-01", dateTime.Value);
-                    Assert.AreEqual("2022-11-01", dateTime.Timex);
-                    Assert.AreEqual(DateTimeSubKind.Date, dateTime.DateTimeSubKind);
-                    Assert.IsNull(dateTime.Modifier);
+                    case DateTimeResolution dateTime:
+                        Assert.AreEqual("2022-11-01", dateTime.Value);
+                        Assert.AreEqual("2022-11-01", dateTime.Timex);
+                        Assert.AreEqual(DateTimeSubKind.Date, dateTime.DateTimeSubKind);
+                        Assert.IsNull(dateTime.Modifier);
+                        break;
                 }
             }
 
@@ -414,29 +410,28 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (CategorizedEntity entity in result4.Entities)
             {
                 Assert.IsNotNull(entity.Resolutions);
-
                 BaseResolution resolution = entity.Resolutions.FirstOrDefault();
 
-                if (resolution is VolumeResolution volume)
+                switch (resolution)
                 {
-                    Assert.AreEqual(1, volume.Value);
-                    Assert.AreEqual(VolumeUnit.Cup, volume.Unit);
-                }
+                    case VolumeResolution volume:
+                        Assert.AreEqual(1, volume.Value);
+                        Assert.AreEqual(VolumeUnit.Cup, volume.Unit);
+                        break;
 
-                if (resolution is TemporalSpanResolution temporalSpan)
-                {
-                    Assert.AreEqual("PT60M", temporalSpan.Duration);
-                    Assert.IsNull(temporalSpan.Begin);
-                    Assert.IsNull(temporalSpan.End);
-                    Assert.IsNull(temporalSpan.Modifier);
-                    // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/32650
-                    // Assert.AreEqual("PT60M", temporalSpan.Timex);
-                }
+                    case TemporalSpanResolution temporalSpan:
+                        Assert.AreEqual("PT60M", temporalSpan.Duration);
+                        Assert.IsNull(temporalSpan.Begin);
+                        Assert.IsNull(temporalSpan.End);
+                        Assert.IsNull(temporalSpan.Modifier);
+                        // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/32650
+                        // Assert.AreEqual("PT60M", temporalSpan.Timex);
+                        break;
 
-                if (resolution is TemperatureResolution temperature)
-                {
-                    Assert.AreEqual(350, temperature.Value);
-                    Assert.AreEqual(TemperatureUnit.Fahrenheit, temperature.Unit);
+                    case TemperatureResolution temperature:
+                        Assert.AreEqual(350, temperature.Value);
+                        Assert.AreEqual(TemperatureUnit.Fahrenheit, temperature.Unit);
+                        break;
                 }
             }
 
@@ -447,23 +442,23 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (CategorizedEntity entity in result5.Entities)
             {
                 Assert.IsNotNull(entity.Resolutions);
-
                 BaseResolution resolution = entity.Resolutions.FirstOrDefault();
 
-                if (resolution is InformationResolution information)
+                switch (resolution)
                 {
-                    Assert.AreEqual(200, information.Value);
-                    Assert.AreEqual(InformationUnit.Terabyte, information.Unit);
-                }
+                    case InformationResolution information:
+                        Assert.AreEqual(200, information.Value);
+                        Assert.AreEqual(InformationUnit.Terabyte, information.Unit);
+                        break;
 
-                if (resolution is TemporalSpanResolution temporalSpan)
-                {
-                    Assert.AreEqual("P4D", temporalSpan.Duration);
-                    Assert.AreEqual("2022-10-24", temporalSpan.Begin);
-                    Assert.AreEqual("2022-10-28", temporalSpan.End);
-                    Assert.IsNull(temporalSpan.Modifier);
-                    // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/32650
-                    // Assert.AreEqual("(2022-10-24,2022-10-28,P4D)", temporalSpan.Timex);
+                    case TemporalSpanResolution temporalSpan:
+                        Assert.AreEqual("P4D", temporalSpan.Duration);
+                        Assert.AreEqual("2022-10-24", temporalSpan.Begin);
+                        Assert.AreEqual("2022-10-28", temporalSpan.End);
+                        Assert.IsNull(temporalSpan.Modifier);
+                        // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/32650
+                        // Assert.AreEqual("(2022-10-24,2022-10-28,P4D)", temporalSpan.Timex);
+                        break;
                 }
             }
         }
@@ -475,16 +470,12 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             List<string> documents = s_batchConvenienceDocuments;
             Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
-            AnalyzeActionsOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
             TextAnalyticsActions actions = new()
             {
                 RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto", options);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
             await operation.WaitForCompletionAsync();
 
             // Take the first page.

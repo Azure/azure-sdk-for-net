@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         public static DataLakeAnalyticsCommitmentTierType ToDataLakeAnalyticsCommitmentTierType(this string value)
         {
-            if (string.Equals(value, "Consumption", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsCommitmentTierType.Consumption;
-            if (string.Equals(value, "Commitment_100AUHours", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsCommitmentTierType.Commitment100AUHours;
-            if (string.Equals(value, "Commitment_500AUHours", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsCommitmentTierType.Commitment500AUHours;
-            if (string.Equals(value, "Commitment_1000AUHours", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsCommitmentTierType.Commitment1000AUHours;
-            if (string.Equals(value, "Commitment_5000AUHours", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsCommitmentTierType.Commitment5000AUHours;
-            if (string.Equals(value, "Commitment_10000AUHours", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsCommitmentTierType.Commitment10000AUHours;
-            if (string.Equals(value, "Commitment_50000AUHours", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsCommitmentTierType.Commitment50000AUHours;
-            if (string.Equals(value, "Commitment_100000AUHours", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsCommitmentTierType.Commitment100000AUHours;
-            if (string.Equals(value, "Commitment_500000AUHours", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsCommitmentTierType.Commitment500000AUHours;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Consumption")) return DataLakeAnalyticsCommitmentTierType.Consumption;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_100AUHours")) return DataLakeAnalyticsCommitmentTierType.Commitment100AUHours;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_500AUHours")) return DataLakeAnalyticsCommitmentTierType.Commitment500AUHours;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_1000AUHours")) return DataLakeAnalyticsCommitmentTierType.Commitment1000AUHours;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_5000AUHours")) return DataLakeAnalyticsCommitmentTierType.Commitment5000AUHours;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_10000AUHours")) return DataLakeAnalyticsCommitmentTierType.Commitment10000AUHours;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_50000AUHours")) return DataLakeAnalyticsCommitmentTierType.Commitment50000AUHours;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_100000AUHours")) return DataLakeAnalyticsCommitmentTierType.Commitment100000AUHours;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_500000AUHours")) return DataLakeAnalyticsCommitmentTierType.Commitment500000AUHours;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeAnalyticsCommitmentTierType value.");
         }
     }

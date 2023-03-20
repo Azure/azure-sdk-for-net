@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeClusterGpuCapacity DeserializeEdgeClusterGpuCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> gpuType = default;
             Optional<int> gpuUsedUnitsCount = default;
             Optional<int> gpuFreeUnitsCount = default;

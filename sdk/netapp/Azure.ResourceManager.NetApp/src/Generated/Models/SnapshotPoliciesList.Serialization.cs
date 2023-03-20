@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static SnapshotPoliciesList DeserializeSnapshotPoliciesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SnapshotPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

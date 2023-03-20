@@ -25,6 +25,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static CompositionStreamState DeserializeCompositionStreamState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {

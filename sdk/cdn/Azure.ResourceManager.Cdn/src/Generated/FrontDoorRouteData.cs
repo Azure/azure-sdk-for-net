@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the FrontDoorRoute data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoorRoute data model.
+    /// Friendly Routes name mapping to the any Routes or secret related information.
+    /// </summary>
     public partial class FrontDoorRouteData : ResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorRouteData. </summary>

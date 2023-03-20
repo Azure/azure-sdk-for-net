@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementApprovalSettings DeserializeRoleManagementApprovalSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isApprovalRequired = default;
             Optional<bool> isApprovalRequiredForExtension = default;
             Optional<bool> isRequestorJustificationRequired = default;

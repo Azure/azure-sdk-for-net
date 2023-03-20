@@ -1,0 +1,207 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk2319.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "205",
+        "Content-Type": "application/json",
+        "traceparent": "00-a1b156c53942375a7e6ca2c89c533f21-f2dd0d2fedb0fe9f-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "9c8cdffc85cdab3aaeff62365af922e7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Are bananas especially radioactive?"
+        ],
+        "temperature": 0.75,
+        "user": "AzureSDKOpenAITests",
+        "logprobs": 1,
+        "model": "this is a bogus model parameter in the body",
+        "echo": true,
+        "cache_level": 0,
+        "best_of": 3
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "3c7deb47-327e-4bd5-a2cd-40838d4d230f",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "1377",
+        "Content-Type": "application/json",
+        "Date": "Fri, 17 Feb 2023 18:47:02 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "490.8198",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9c8cdffc85cdab3aaeff62365af922e7",
+        "x-ms-region": "West Europe",
+        "X-Request-ID": "ba38e129-f7a3-415f-93a7-4e611c777bbb"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6l034pQK0FEqezgaZixaqtb8orZBT",
+        "object": "text_completion",
+        "created": 1676659622,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "Are bananas especially radioactive?\n\nThere is no such thing as \u0022especially radioactive\u0022. Radiation is a natural",
+            "index": 0,
+            "logprobs": {
+              "tokens": [
+                "Are",
+                " bananas",
+                " especially",
+                " radioactive",
+                "?",
+                "\n",
+                "\n",
+                "There",
+                " is",
+                " no",
+                " such",
+                " thing",
+                " as",
+                " \u0022",
+                "especially",
+                " radioactive",
+                "\u0022.",
+                " Radiation",
+                " is",
+                " a",
+                " natural"
+              ],
+              "token_logprobs": [
+                null,
+                -14.24502,
+                -11.104932,
+                -6.384836,
+                -0.06387941,
+                -0.00042090964,
+                -8.176345e-6,
+                -0.787321,
+                -0.0007309132,
+                -0.0006904132,
+                -2.2257087,
+                -0.00009222505,
+                -9.130952e-6,
+                -0.44740167,
+                -0.50635767,
+                -0.011287279,
+                -3.8917499,
+                -2.5979974,
+                -0.0035933047,
+                -0.0226615,
+                -1.5627282
+              ],
+              "top_logprobs": [
+                null,
+                {
+                  " you": -0.5478203
+                },
+                {
+                  " good": -1.2670707
+                },
+                {
+                  " good": -0.6982347
+                },
+                {
+                  "?": -0.06387941
+                },
+                {
+                  "\n": -0.00042090964
+                },
+                {
+                  "\n": -8.176345e-6
+                },
+                {
+                  "There": -0.787321
+                },
+                {
+                  " is": -0.0007309132
+                },
+                {
+                  " no": -0.0006904132
+                },
+                {
+                  " scientific": -0.51836395
+                },
+                {
+                  " thing": -0.00009222505
+                },
+                {
+                  " as": -9.130952e-6
+                },
+                {
+                  " \u0022": -0.44740167
+                },
+                {
+                  "especially": -0.50635767
+                },
+                {
+                  " radioactive": -0.011287279
+                },
+                {
+                  ".\u0022": -0.047137808
+                },
+                {
+                  " All": -0.5922468
+                },
+                {
+                  " is": -0.0035933047
+                },
+                {
+                  " a": -0.0226615
+                },
+                {
+                  " naturally": -1.1357702
+                }
+              ],
+              "text_offset": [
+                0,
+                3,
+                11,
+                22,
+                34,
+                35,
+                36,
+                37,
+                42,
+                45,
+                48,
+                53,
+                59,
+                62,
+                64,
+                74,
+                86,
+                88,
+                98,
+                101,
+                103
+              ]
+            },
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 5,
+          "completion_tokens": 36,
+          "total_tokens": 41
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
+    "OPENAI_ENDPOINT": "https://sdk2319.openai.azure.com/",
+    "RandomSeed": "1186740502",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

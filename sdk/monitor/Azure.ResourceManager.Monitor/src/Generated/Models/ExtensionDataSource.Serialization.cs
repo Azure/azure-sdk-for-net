@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ExtensionDataSource DeserializeExtensionDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ExtensionDataSourceStream>> streams = default;
             string extensionName = default;
             Optional<BinaryData> extensionSettings = default;

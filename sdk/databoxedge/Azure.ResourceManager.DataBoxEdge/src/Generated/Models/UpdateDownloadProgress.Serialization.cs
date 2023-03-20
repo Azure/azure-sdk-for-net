@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static UpdateDownloadProgress DeserializeUpdateDownloadProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeDownloadPhase> downloadPhase = default;
             Optional<int> percentComplete = default;
             Optional<double> totalBytesToDownload = default;

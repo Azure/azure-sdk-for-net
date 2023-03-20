@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UriFileNameMatchCondition DeserializeUriFileNameMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             UriFileNameMatchConditionType typeName = default;
             UriFileNameOperator @operator = default;
             Optional<bool> negateCondition = default;

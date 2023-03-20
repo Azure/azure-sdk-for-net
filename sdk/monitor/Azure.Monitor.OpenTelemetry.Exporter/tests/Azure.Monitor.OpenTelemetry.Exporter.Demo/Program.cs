@@ -16,6 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
         public static void Main()
         {
             var credential = new DefaultAzureCredential();
+
             using var traceDemo = new TraceDemo(ConnectionString, credential);
             traceDemo.GenerateTraces();
 
@@ -25,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             using var logDemo = new LogDemo(ConnectionString, credential);
             logDemo.GenerateLogs();
 
-            Console.WriteLine("Press Enter key to exit.");
+            Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
         }
     }

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceConcurrencyControlOption DeserializeResourceConcurrencyControlOption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Policy> policy = default;
             foreach (var property in element.EnumerateObject())
             {
