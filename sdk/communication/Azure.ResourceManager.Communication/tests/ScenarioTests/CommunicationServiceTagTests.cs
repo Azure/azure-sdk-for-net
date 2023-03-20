@@ -6,11 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Communication;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Tests
@@ -18,9 +14,12 @@ namespace Azure.ResourceManager.Communication.Tests
     public class CommunicationServiceTagTests : CommunicationManagementClientLiveTestBase
     {
         private ResourceGroupResource _resourceGroup;
+        private TenantResource _tenantResource;
         private ResourceIdentifier _resourceGroupIdentifier;
         private string _location;
         private string _dataLocation;
+        private Guid _subscriptionId;
+        private string _resourceGroupName;
 
         public CommunicationServiceTagTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
@@ -29,12 +28,16 @@ namespace Azure.ResourceManager.Communication.Tests
 
         [OneTimeSetUp]
         public async Task OneTimeSetup()
-        {
+        {;
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName(ResourceGroupPrefix), new ResourceGroupData(new AzureLocation("westus")));
+
             ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _location = ResourceLocation;
             _dataLocation = ResourceDataLocation;
+
+            _subscriptionId = Guid.Parse(rg.Id.SubscriptionId);
+            _resourceGroupName = _resourceGroupIdentifier.ResourceGroupName;
             await StopSessionRecordingAsync();
         }
 
@@ -43,14 +46,13 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             ArmClient = GetArmClient();
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
+            _tenantResource = await ArmClient.GetTenants().GetAllAsync().FirstOrDefaultAsync(t=>t != null);
         }
 
         [TearDown]
         public async Task TearDown()
         {
-            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
-
-            await foreach (var communicationService in collection)
+            await foreach (var communicationService in _tenantResource.GetCommunicationServiceResources(_subscriptionId, _resourceGroupName))
             {
                 await communicationService.DeleteAsync(WaitUntil.Completed);
             }
@@ -63,8 +65,8 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             SetTagResourceUsage(ArmClient, useTagResource);
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
-            var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
+            var collection = _tenantResource.GetCommunicationServiceResources(_subscriptionId, _resourceGroupName);
+            var communication = await CreateDefaultCommunicationServices(_subscriptionId, _resourceGroupName, communicationServiceName, _tenantResource);
             await communication.AddTagAsync("testkey", "testvalue");
             communication = await collection.GetAsync(communicationServiceName);
             var tagValue = communication.Data.Tags.FirstOrDefault();
@@ -79,8 +81,8 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             SetTagResourceUsage(ArmClient, useTagResource);
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
-            var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
+            var collection = _tenantResource.GetCommunicationServiceResources(_subscriptionId, _resourceGroupName);
+            var communication = await CreateDefaultCommunicationServices(_subscriptionId, _resourceGroupName, communicationServiceName, _tenantResource);
             await communication.AddTagAsync("testkey", "testvalue");
             communication = await collection.GetAsync(communicationServiceName);
             var tagValue = communication.Data.Tags.FirstOrDefault();
@@ -99,8 +101,8 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             SetTagResourceUsage(ArmClient, useTagResource);
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
-            var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
+            var collection = _tenantResource.GetCommunicationServiceResources(_subscriptionId, _resourceGroupName);
+            var communication = await CreateDefaultCommunicationServices(_subscriptionId, _resourceGroupName, communicationServiceName, _tenantResource);
             await communication.AddTagAsync("testkey", "testvalue");
             communication = await collection.GetAsync(communicationServiceName);
             var tagValue = communication.Data.Tags.FirstOrDefault();
