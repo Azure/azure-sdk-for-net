@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Tests
             var subscription = await client.GetDefaultSubscriptionAsync();
             var version = await subscription.GetResourceProviders().GetApiVersionAsync(computeResourceType);
             Assert.AreEqual(expectedVersion, version);
-            Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
+            Assert.AreEqual(0, policy.GetCount("Microsoft.Compute"));
             Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
 
             policy = new ProviderCounterPolicy();
