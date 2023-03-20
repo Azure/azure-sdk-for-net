@@ -198,8 +198,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         public Nfs3Target() { }
         public string Target { get { throw null; } set { } }
         public string UsageModel { get { throw null; } set { } }
-        public int? VerificationTimer { get { throw null; } set { } }
-        public int? WriteBackTimer { get { throw null; } set { } }
+        public int? VerificationDelayInSeconds { get { throw null; } set { } }
+        public int? WriteBackDelayInSeconds { get { throw null; } set { } }
     }
     public partial class NfsAccessPolicy
     {

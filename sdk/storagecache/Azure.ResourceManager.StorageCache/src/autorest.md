@@ -66,6 +66,8 @@ rename-mapping:
   UsageModelsResult: StorageCacheUsageModelsResult
   UsernameSource: StorageCacheUsernameSourceType
   UsernameDownloadedType: StorageCacheUsernameDownloadedType
+  Nfs3Target.verificationTimer: VerificationDelayInSeconds
+  Nfs3Target.writeBackTimer: WriteBackDelayInSeconds
 
 format-by-name-rules:
   'tenantId': 'uuid'
