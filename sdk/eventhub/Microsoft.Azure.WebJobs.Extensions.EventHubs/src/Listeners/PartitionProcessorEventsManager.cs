@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             _minBatchSize = minBatchSize;
         }
 
-        public void PartitionClosing()
+        public void ClearEventCache()
         {
             CachedEvents.Clear();
         }
