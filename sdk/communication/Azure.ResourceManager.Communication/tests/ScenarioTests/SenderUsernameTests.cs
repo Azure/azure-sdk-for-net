@@ -49,9 +49,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             ArmClient = GetArmClient();
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
-
-            var resourceClient = new TenantResourceExtensionClient(ArmClient, _resourceGroup.Id);
-            var collection = resourceClient.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.Name);
+            var collection = _resourceGroup.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.Name);
             _emailService = await collection.GetAsync(_emailServiceName);
             _domainResource = await _emailService.GetCommunicationDomainResourceAsync(_domainResourceName);
         }
