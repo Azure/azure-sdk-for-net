@@ -147,7 +147,7 @@ namespace Azure.Storage.Tests
 
             // Read the data through the checksumming stream and get the checksum
             var destStream = new MemoryStream();
-            await stream.CopyToInternal(destStream, copyBuffer, IsAsync, cancellationToken: default);
+            await stream.CopyToInternalExactBufferSize(destStream, copyBuffer, IsAsync, cancellationToken: default);
             var streamChecksum = streamChecksumCalculator.GetCurrentHash();
 
             // Assert output data and checksum are expected
@@ -170,7 +170,7 @@ namespace Azure.Storage.Tests
             var stream = ChecksumCalculatingStream.GetWriteStream(destStream, streamChecksumCalculator.Append);
 
             // Write the data through the checksumming stream and get the checksum
-            await new MemoryStream(data).CopyToInternal(stream, copyBuffer, IsAsync, cancellationToken: default);
+            await new MemoryStream(data).CopyToInternalExactBufferSize(stream, copyBuffer, IsAsync, cancellationToken: default);
             var streamChecksum = streamChecksumCalculator.GetCurrentHash();
 
             // Assert output data and checksum are expected
@@ -269,7 +269,7 @@ namespace Azure.Storage.Tests
 
             // Read the data through the checksumming stream
             var destStream = new MemoryStream();
-            await stream.CopyToInternal(destStream, bufferSize: 1000, IsAsync, cancellationToken: default);
+            await stream.CopyToInternalExactBufferSize(destStream, bufferSize: 1000, IsAsync, cancellationToken: default);
 
             // Assert output data and checksum are expected
             CollectionAssert.AreEqual(data, destStream.ToArray());
@@ -278,7 +278,7 @@ namespace Azure.Storage.Tests
             // Rewind and reread the checksumming stream
             stream.Position = 0;
             destStream = new MemoryStream();
-            await stream.CopyToInternal(destStream, bufferSize: 900, IsAsync, cancellationToken: default);
+            await stream.CopyToInternalExactBufferSize(destStream, bufferSize: 900, IsAsync, cancellationToken: default);
 
             // Assert output data as expected and checksum unaltered
             CollectionAssert.AreEqual(data, destStream.ToArray());
@@ -330,12 +330,12 @@ namespace Azure.Storage.Tests
                 callbacks[1]);
 
             // Finish consuming stream
-            await stream.CopyToInternal(Stream.Null, 1000, IsAsync, cancellationToken: default);
+            await stream.CopyToInternalExactBufferSize(Stream.Null, 1000, IsAsync, cancellationToken: default);
 
             // Assert callback invocations and final checksum are as expected
-            // some targets don't strictly obey CopyTo bufferSize, so just check remaining KB of data made it
-            Assert.GreaterOrEqual(callbacks.Count, 3);
-            Assert.AreEqual(Constants.KB, callbacks.Skip(2).Sum(arr => arr.Length));
+            Assert.AreEqual(4, callbacks.Count);
+            Assert.AreEqual(1000, callbacks[2].Length);
+            Assert.AreEqual(24, callbacks[3].Length);
             CollectionAssert.AreEqual(dataChecksum, streamChecksumCalculator.GetCurrentHash());
         }
 
