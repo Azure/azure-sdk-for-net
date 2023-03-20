@@ -26,7 +26,6 @@ namespace Azure.AI.Translation.Text.Tests
         /// <summary>The name of the environment variable from which the Text Translator resource's API key will be extracted for the live tests.</summary>
         private const string RegionEnvironmentVariableName = "TEXT_TRANSLATION_REGION";
 
-        public string ApiKeyForTokenGeneration => GetVariable(ApiKeyEnvironmentVariableName);
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
         public string CustomEndpoint => GetRecordedVariable(CustomEndpointEnvironmentVariableName);

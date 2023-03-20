@@ -55,7 +55,7 @@ namespace Azure.AI.Translation.Text.Tests
 
             HttpClient httpClient = new HttpClient();
             UriBuilder requestUri = new UriBuilder(issueTokenURL);
-            requestUri.Query = $"Subscription-Key={TestEnvironment.ApiKeyForTokenGeneration}";
+            requestUri.Query = $"Subscription-Key={TestEnvironment.ApiKey}";
             var request = new HttpRequestMessage(HttpMethod.Post, requestUri.Uri);
             var response = await httpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
