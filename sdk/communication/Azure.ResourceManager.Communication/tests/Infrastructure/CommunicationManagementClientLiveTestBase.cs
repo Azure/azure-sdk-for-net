@@ -3,10 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.TestFramework;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Tests
@@ -41,25 +43,26 @@ namespace Azure.ResourceManager.Communication.Tests
             Init();
         }
 
-        internal async Task<CommunicationServiceResource> CreateDefaultCommunicationServices(string communicationServiceName, ResourceGroupResource _resourceGroup)
+        internal async Task<CommunicationServiceResource> CreateDefaultCommunicationServices(Guid subscriptionId, string resourceGroup, string communicationServiceName, TenantResource tenantResource)
         {
             CommunicationServiceResourceData data = new CommunicationServiceResourceData(ResourceLocation)
             {
                 DataLocation = ResourceDataLocation,
             };
-            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
-            var communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
+
+            await Task.Delay(1);
+            var communicationServiceLro = await tenantResource.GetCommunicationServiceResources(subscriptionId, resourceGroup).CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
             return communicationServiceLro.Value;
         }
 
-        internal async Task<EmailServiceResource> CreateDefaultEmailServices(string emailServiceName, ResourceGroupResource _resourceGroup)
+        internal async Task<EmailServiceResource> CreateDefaultEmailServices(Guid subscriptionId, string resourceGroup, string emailServiceName, TenantResource tenantResource)
         {
             EmailServiceResourceData data = new EmailServiceResourceData(ResourceLocation)
             {
                 DataLocation = ResourceDataLocation,
             };
-            var collection = _resourceGroup.GetEmailServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
-            var emailServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, emailServiceName, data);
+
+            var emailServiceLro = await tenantResource.GetEmailServiceResources(subscriptionId, resourceGroup).CreateOrUpdateAsync(WaitUntil.Completed, emailServiceName, data);
             return emailServiceLro.Value;
         }
 
@@ -69,6 +72,7 @@ namespace Azure.ResourceManager.Communication.Tests
             {
                 DomainManagement = DomainManagement.CustomerManaged
             };
+
             var domainLro = await emailService.GetCommunicationDomainResources().CreateOrUpdateAsync(WaitUntil.Completed, domainName, data);
             return domainLro.Value;
         }
