@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
             {
                 if (!Client.ResourceApiVersionCache.TryGetValue(resourceType.Namespace, out resourceVersions))
                 {
-                    resourceVersions = LoadResourceVersionsFromApiWithOverride(resourceType.Namespace, cancellationToken);
+                    resourceVersions = LoadResourceVersionsFromApi(resourceType.Namespace, cancellationToken);
                     Client.ResourceApiVersionCache.TryAdd(resourceType.Namespace, resourceVersions);
                 }
                 if (!resourceVersions.TryGetValue(resourceType.Type, out version))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources
             {
                 if (!Client.ResourceApiVersionCache.TryGetValue(resourceType.Namespace, out resourceVersions))
                 {
-                    resourceVersions = await LoadResourceVersionsFromApiWithOverrideAsync(resourceType.Namespace, cancellationToken).ConfigureAwait(false);
+                    resourceVersions = await LoadResourceVersionsFromApiAsync(resourceType.Namespace, cancellationToken).ConfigureAwait(false);
                     Client.ResourceApiVersionCache.TryAdd(resourceType.Namespace, resourceVersions);
                 }
                 if (!resourceVersions.TryGetValue(resourceType.Type, out version))
@@ -77,32 +77,16 @@ namespace Azure.ResourceManager.Resources
             return version;
         }
 
-        private Dictionary<string, string> LoadResourceVersionsFromApiWithOverride(string resourceNamespace, CancellationToken cancellationToken = default)
+        private Dictionary<string, string> LoadResourceVersionsFromApi(string resourceNamespace, CancellationToken cancellationToken = default)
         {
             ResourceProviderResource results = Get(resourceNamespace, cancellationToken: cancellationToken);
-            var resourceVersions = GetVersionsFromResult(results);
-            foreach (var keyValuePair in Client.ApiVersionOverrides)
-            {
-                if (string.Equals(keyValuePair.Key.Namespace, resourceNamespace, StringComparison.OrdinalIgnoreCase))
-                {
-                    resourceVersions[keyValuePair.Key.Type] = keyValuePair.Value;
-                }
-            }
-            return resourceVersions;
+            return GetVersionsFromResult(results);
         }
 
-        private async Task<Dictionary<string, string>> LoadResourceVersionsFromApiWithOverrideAsync(string resourceNamespace, CancellationToken cancellationToken = default)
+        private async Task<Dictionary<string, string>> LoadResourceVersionsFromApiAsync(string resourceNamespace, CancellationToken cancellationToken = default)
         {
             ResourceProviderResource results = await GetAsync(resourceNamespace, cancellationToken: cancellationToken).ConfigureAwait(false);
-            var resourceVersions = GetVersionsFromResult(results);
-            foreach (var keyValuePair in Client.ApiVersionOverrides)
-            {
-                if (string.Equals(keyValuePair.Key.Namespace, resourceNamespace, StringComparison.OrdinalIgnoreCase))
-                {
-                    resourceVersions[keyValuePair.Key.Type] = keyValuePair.Value;
-                }
-            }
-            return resourceVersions;
+            return GetVersionsFromResult(results);
         }
 
         private static Dictionary<string, string> GetVersionsFromResult(ResourceProviderResource results)
