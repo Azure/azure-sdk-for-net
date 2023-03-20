@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            return resourceGroup.GetCommunicationServiceResources(subscriptionId, resourceGroupName);
+            return GetExtensionClient(resourceGroup).GetCommunicationServiceResources();
         }
 
         /// <summary>
