@@ -581,6 +581,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        [Ignore(reason: "We don't currently support configurable chunk size on download.")]
         public async Task CanDownloadBlobToStreamInEqualSizeChunks()
         {
             // Arrange
@@ -613,6 +614,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        [Ignore(reason: "We don't currently support configurable chunk size on download.")]
         public async Task CanDownloadBlobToStreamInUnequalChunks()
         {
             // Arrange

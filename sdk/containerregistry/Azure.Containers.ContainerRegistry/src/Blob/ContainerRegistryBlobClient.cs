@@ -104,7 +104,6 @@ namespace Azure.Containers.ContainerRegistry
             _registryName = endpoint.Host.Split('.')[0];
             _repositoryName = repositoryName;
             _maxRetries = options.Retry.MaxRetries;
-            _maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
@@ -363,7 +362,7 @@ namespace Azure.Containers.ContainerRegistry
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     _blobRestClient.StartUpload(_repositoryName, cancellationToken);
 
-                var result = UploadInChunksInternalAsync(startUploadResult.Headers.Location, content, _maxChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+                var result = UploadInChunksInternalAsync(startUploadResult.Headers.Location, content, DefaultChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     _blobRestClient.CompleteUpload(result.Digest, result.Location, null, cancellationToken);
@@ -409,7 +408,7 @@ namespace Azure.Containers.ContainerRegistry
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
-                var result = await UploadInChunksInternalAsync(startUploadResult.Headers.Location, stream, _maxChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var result = await UploadInChunksInternalAsync(startUploadResult.Headers.Location, content, DefaultChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     await _blobRestClient.CompleteUploadAsync(result.Digest, result.Location, null, cancellationToken).ConfigureAwait(false);
@@ -946,7 +945,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="options">Options to configure the operation behavior.</param>
         /// <param name="cancellationToken"> The cancellation token to use.</param>
         /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
-        public virtual async Task<Response> DownloadBlobToAsync(string digest, Stream destination, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> DownloadBlobToAsync(string digest, Stream destination, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(destination, nameof(destination));

@@ -145,10 +145,17 @@ namespace Azure.Containers.ContainerRegistry
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBlobAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteManifest(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteManifestAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.DownloadBlobResult> DownloadBlob(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.DownloadBlobResult>> DownloadBlobAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.DownloadBlobResult> DownloadBlobContent(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.DownloadBlobResult>> DownloadBlobContentAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.DownloadBlobStreamingResult> DownloadBlobStreaming(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.DownloadBlobStreamingResult>> DownloadBlobStreamingAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DownloadBlobTo(string digest, System.IO.Stream destination, Azure.Containers.ContainerRegistry.DownloadBlobToOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DownloadBlobTo(string digest, System.IO.Stream destination, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DownloadBlobTo(string digest, string path, Azure.Containers.ContainerRegistry.DownloadBlobToOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DownloadBlobTo(string digest, string path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DownloadBlobToAsync(string digest, System.IO.Stream destination, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadBlobToAsync(string digest, string path, Azure.Containers.ContainerRegistry.DownloadBlobToOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadBlobToAsync(string digest, string path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.DownloadManifestResult> DownloadManifest(string tagOrDigest, System.Collections.Generic.IEnumerable<Azure.Containers.ContainerRegistry.ManifestMediaType> mediaTypes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.DownloadManifestResult> DownloadManifest(string tagOrDigest, Azure.Containers.ContainerRegistry.ManifestMediaType? mediaType = default(Azure.Containers.ContainerRegistry.ManifestMediaType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.DownloadManifestResult>> DownloadManifestAsync(string tagOrDigest, System.Collections.Generic.IEnumerable<Azure.Containers.ContainerRegistry.ManifestMediaType> mediaTypes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -232,6 +239,18 @@ namespace Azure.Containers.ContainerRegistry
         internal DownloadBlobResult() { }
         public System.BinaryData Content { get { throw null; } }
         public string Digest { get { throw null; } }
+    }
+    public partial class DownloadBlobStreamingResult : System.IDisposable
+    {
+        internal DownloadBlobStreamingResult() { }
+        public System.IO.Stream Content { get { throw null; } }
+        public string Digest { get { throw null; } }
+        public void Dispose() { }
+    }
+    public partial class DownloadBlobToOptions
+    {
+        public DownloadBlobToOptions(int maxChunkSize) { }
+        public int MaxChunkSize { get { throw null; } }
     }
     public partial class DownloadManifestResult
     {
@@ -317,28 +336,6 @@ namespace Azure.Containers.ContainerRegistry
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties> UpdateTagProperties(string tag, Azure.Containers.ContainerRegistry.ArtifactTagProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties>> UpdateTagPropertiesAsync(string tag, Azure.Containers.ContainerRegistry.ArtifactTagProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult> DownloadBlob(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult>> DownloadBlobAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobStreamingResult> DownloadBlobStreaming(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobStreamingResult>> DownloadBlobStreamingAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DownloadBlobTo(string digest, System.IO.Stream destination, Azure.Containers.ContainerRegistry.Specialized.DownloadBlobToOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DownloadBlobTo(string digest, string path, Azure.Containers.ContainerRegistry.Specialized.DownloadBlobToOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DownloadBlobTo(string digest, string path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadBlobToAsync(string digest, System.IO.Stream destination, Azure.Containers.ContainerRegistry.Specialized.DownloadBlobToOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadBlobToAsync(string digest, string path, Azure.Containers.ContainerRegistry.Specialized.DownloadBlobToOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadBlobToAsync(string digest, string path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DownloadBlobStreamingResult : System.IDisposable
-    {
-        internal DownloadBlobStreamingResult() { }
-        public System.IO.Stream Content { get { throw null; } }
-        public string Digest { get { throw null; } }
-        public void Dispose() { }
-    }
-    public partial class DownloadBlobToOptions
-    {
-        public DownloadBlobToOptions(int maxChunkSize) { }
-        public int MaxChunkSize { get { throw null; } }
     public partial class UploadBlobResult
     {
         internal UploadBlobResult() { }

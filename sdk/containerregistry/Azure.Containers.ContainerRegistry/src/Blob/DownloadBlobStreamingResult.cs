@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     /// <summary>
     /// The result from downloading a blob from the registry.
