@@ -104,13 +104,5 @@ namespace Azure.AI.OpenAI
             }
             return new CompletionsLogProbability(Optional.ToList(tokens), Optional.ToList(tokenLogprobs), Optional.ToList(topLogprobs), Optional.ToList(textOffset));
         }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CompletionsLogProbability FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCompletionsLogProbability(document.RootElement);
-        }
     }
 }

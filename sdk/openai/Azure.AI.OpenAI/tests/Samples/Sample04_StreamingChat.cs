@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             {
                 DefaultDeploymentOrModelName = "gpt-3.5-turbo",
             });
-
+            new OpenAIClient("foo");
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
                 Messages =
