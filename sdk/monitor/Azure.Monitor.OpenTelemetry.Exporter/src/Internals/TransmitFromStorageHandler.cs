@@ -13,13 +13,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         private readonly PersistentBlobProvider _blobProvider;
+        private readonly TransmissionStateManager _transmissionStateManager;
         private readonly System.Timers.Timer _transmitFromStorageTimer;
         private bool _disposed;
 
-        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider)
+        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager)
         {
             _applicationInsightsRestClient = applicationInsightsRestClient;
             _blobProvider = blobProvider;
+            _transmissionStateManager = transmissionStateManager;
             _transmitFromStorageTimer = new System.Timers.Timer();
             _transmitFromStorageTimer.Elapsed += TransmitFromStorage;
             _transmitFromStorageTimer.AutoReset = true;
@@ -29,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal void TransmitFromStorage(object? sender, ElapsedEventArgs? e)
         {
-            while (_blobProvider.TryGetBlob(out var blob) && blob.TryLease(1000))
+            while (_transmissionStateManager.State == TransmissionState.Closed && _blobProvider.TryGetBlob(out var blob) && blob.TryLease(1000))
             {
                 try
                 {
@@ -40,6 +42,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     if (result == ExportResult.Success)
                     {
+                        _transmissionStateManager.ResetConsecutiveErrors();
+                        _transmissionStateManager.CloseTransmission();
+
                         AzureMonitorExporterEventSource.Log.WriteInformational("TransmitFromStorageSuccess", "Successfully transmitted a blob from storage.");
 
                         // In case if the delete fails, there is a possibility
@@ -48,7 +53,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else
                     {
+                        _transmissionStateManager.EnableBackOff(httpMessage.Response);
                         HttpPipelineHelper.HandleFailures(httpMessage, blob, _blobProvider);
+                        break;
                     }
                 }
                 catch (Exception ex)
