@@ -237,7 +237,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             {
                 { $"{extensionPath}:MaxEventBatchSize", "123" },
                 { $"{extensionPath}:MinEventBatchSize", "100" },
-                { $"{extensionPath}:MaxWaitTime", "60" },
+                { $"{extensionPath}:MaxWaitTime", "00:01:00" },
                 { $"{extensionPath}:TrackLastEnqueuedEventProperties", "true" },
                 { $"{extensionPath}:PrefetchCount", "123" },
                 { $"{extensionPath}:BatchCheckpointFrequency", "5" },

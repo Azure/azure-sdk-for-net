@@ -52,7 +52,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
         public EventData[] ProcessWithStoredEvents(EventProcessorHostPartition partitionContext, List<EventData> events = null, bool timerTrigger = false, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(partitionContext, nameof(partitionContext));
             try
             {
                 _storedEventsGuard.Wait(cancellationToken);

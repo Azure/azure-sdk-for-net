@@ -147,7 +147,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             set
             {
-                if (value < 0)
+                if (value < 1)
                 {
                     throw new ArgumentException("Batch size must be larger than or equal to 0.");
                 }

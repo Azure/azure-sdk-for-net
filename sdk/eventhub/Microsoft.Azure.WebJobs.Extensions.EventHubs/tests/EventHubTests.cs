@@ -213,7 +213,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(100, options.MaxEventBatchSize);
             Assert.AreEqual(90, options.MinEventBatchSize);
-            Assert.AreEqual(60, options.MaxWaitTime);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), options.MaxWaitTime);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
             Assert.AreEqual(EventPosition.Latest, eventProcessorOptions.DefaultStartingPosition);
