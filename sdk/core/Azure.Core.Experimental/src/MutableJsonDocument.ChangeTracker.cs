@@ -13,6 +13,8 @@ namespace Azure.Core.Json
         {
             private List<MutableJsonChange>? _changes;
 
+            //private const char Delimiter = (char)1;
+
             internal bool HasChanges => _changes != null && _changes.Count > 0;
 
             internal bool AncestorChanged(string path, int highWaterMark)
@@ -146,7 +148,10 @@ namespace Azure.Core.Json
                 {
                     return value;
                 }
+
                 return $"{path}.{value}";
+
+                //return string.Concat(path, Delimiter, value);
             }
 
             internal static string PushProperty(string path, ReadOnlySpan<byte> value)
@@ -156,12 +161,16 @@ namespace Azure.Core.Json
                 {
                     return propertyName;
                 }
+
                 return $"{path}.{propertyName}";
+
+                //return string.Concat(path, Delimiter, propertyName);
             }
 
             internal static string PopProperty(string path)
             {
                 int lastDelimiter = path.LastIndexOf('.');
+                //int lastDelimiter = path.LastIndexOf(Delimiter);
                 if (lastDelimiter == -1)
                 {
                     return string.Empty;
