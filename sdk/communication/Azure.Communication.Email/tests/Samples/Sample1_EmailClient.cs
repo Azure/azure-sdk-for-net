@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Net.Mime;
+using System.Threading;
 
 namespace Azure.Communication.Email.Tests.Samples
 {
@@ -205,6 +206,53 @@ namespace Azure.Communication.Email.Tests.Samples
             string operationId = emailSendOperation.Id;
             Console.WriteLine($"Email operation id = {operationId}");
             #endregion Snippet:Azure_Communication_Email_Send_With_Attachments
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void SendSimpleEmailWithManualPollingForStatus()
+        {
+            EmailClient emailClient = CreateEmailClient();
+
+            #region Snippet:Azure_Communication_Email_Send_Simple_ManualPolling_Async
+            /// Send the email message with WaitUntil.Started
+            var emailSendOperation = emailClient.Send(
+                wait: WaitUntil.Started,
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
+                subject: "This is the subject",
+                htmlContent: "<html><body>This is the html body</body></html>");
+
+            /// Call UpdateStatus on the email send operation to poll for the status
+            /// manually.
+            try
+            {
+                while (true)
+                {
+                    emailSendOperation.UpdateStatus();
+                    if (emailSendOperation.HasCompleted)
+                    {
+                        break;
+                    }
+                    Thread.Sleep(100);
+                }
+
+                if (emailSendOperation.HasValue)
+                {
+                    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+                }
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Email send failed with Code = {ex.ErrorCode} and Message = {ex.Message}");
+            }
+
+            /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+            string operationId = emailSendOperation.Id;
+            Console.WriteLine($"Email operation id = {operationId}");
+            #endregion: Azure_Communication_Email_Send_Simple_ManualPolling_Async
         }
     }
 }
