@@ -127,8 +127,6 @@ namespace Azure.ResourceManager.PolicyInsights
     public partial class PolicyMetadataData : Azure.ResourceManager.Models.ResourceData
     {
         internal PolicyMetadataData() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public System.Uri AdditionalContentUri { get { throw null; } }
         public string AdditionalContentUriString { get { throw null; } }
         public string Category { get { throw null; } }
         public string Description { get { throw null; } }
@@ -607,8 +605,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     public partial class SlimPolicyMetadata : Azure.ResourceManager.Models.ResourceData
     {
         internal SlimPolicyMetadata() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public System.Uri AdditionalContentUri { get { throw null; } }
         public string AdditionalContentUriString { get { throw null; } }
         public string Category { get { throw null; } }
         public System.BinaryData Metadata { get { throw null; } }

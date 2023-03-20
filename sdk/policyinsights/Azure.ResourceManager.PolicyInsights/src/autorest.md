@@ -137,6 +137,8 @@ rename-mapping:
   RemediationDeployment.resourceLocation: -|azure-location
   TrackedResourceModificationDetails.deploymentId: -|arm-id
   PolicyTrackedResourcesResourceType: PolicyTrackedResourceType
+  PolicyMetadata.properties.additionalContentUrl: additionalContentUriString
+  SlimPolicyMetadata.properties.additionalContentUrl: additionalContentUriString
 
 directive:
   # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.
