@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metadata about the resource. </summary>
-    internal partial class DataCollectionRuleAssociationMetadata : Metadata
+    public partial class DataCollectionRuleAssociationMetadata : Metadata
     {
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationMetadata. </summary>
         internal DataCollectionRuleAssociationMetadata()
@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationMetadata. </summary>
         /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
-        internal DataCollectionRuleAssociationMetadata(string provisionedBy) : base(provisionedBy)
+        /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
+        internal DataCollectionRuleAssociationMetadata(string provisionedBy, string provisionedByResourceId) : base(provisionedBy, provisionedByResourceId)
         {
         }
     }

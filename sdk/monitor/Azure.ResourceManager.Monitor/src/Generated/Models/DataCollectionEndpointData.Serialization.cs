@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -59,6 +64,11 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("logsIngestion"u8);
                 writer.WriteObjectValue(LogsIngestion);
             }
+            if (Optional.IsDefined(MetricsIngestion))
+            {
+                writer.WritePropertyName("metricsIngestion"u8);
+                writer.WriteObjectValue(MetricsIngestion);
+            }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
@@ -75,6 +85,7 @@ namespace Azure.ResourceManager.Monitor
                 return null;
             }
             Optional<DataCollectionEndpointResourceKind> kind = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -86,8 +97,12 @@ namespace Azure.ResourceManager.Monitor
             Optional<string> immutableId = default;
             Optional<DataCollectionEndpointConfigurationAccess> configurationAccess = default;
             Optional<DataCollectionEndpointLogsIngestion> logsIngestion = default;
+            Optional<DataCollectionEndpointMetricsIngestion> metricsIngestion = default;
             Optional<DataCollectionEndpointNetworkAcls> networkAcls = default;
             Optional<DataCollectionEndpointProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<PrivateLinkScopedResource>> privateLinkScopedResources = default;
+            Optional<DataCollectionEndpointFailoverConfiguration> failoverConfiguration = default;
+            Optional<DataCollectionEndpointMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -98,6 +113,16 @@ namespace Azure.ResourceManager.Monitor
                         continue;
                     }
                     kind = new DataCollectionEndpointResourceKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -194,6 +219,16 @@ namespace Azure.ResourceManager.Monitor
                             logsIngestion = DataCollectionEndpointLogsIngestion.DeserializeDataCollectionEndpointLogsIngestion(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("metricsIngestion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            metricsIngestion = DataCollectionEndpointMetricsIngestion.DeserializeDataCollectionEndpointMetricsIngestion(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("networkAcls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -214,11 +249,46 @@ namespace Azure.ResourceManager.Monitor
                             provisioningState = new DataCollectionEndpointProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("privateLinkScopedResources"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<PrivateLinkScopedResource> array = new List<PrivateLinkScopedResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(PrivateLinkScopedResource.DeserializePrivateLinkScopedResource(item));
+                            }
+                            privateLinkScopedResources = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("failoverConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            failoverConfiguration = DataCollectionEndpointFailoverConfiguration.DeserializeDataCollectionEndpointFailoverConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("metadata"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            metadata = DataCollectionEndpointMetadata.DeserializeDataCollectionEndpointMetadata(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(etag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState));
+            return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, metricsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateLinkScopedResources), failoverConfiguration.Value, metadata.Value);
         }
     }
 }

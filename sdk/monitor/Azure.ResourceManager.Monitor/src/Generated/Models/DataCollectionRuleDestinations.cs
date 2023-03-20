@@ -19,8 +19,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of DataCollectionRuleDestinations. </summary>
         /// <param name="logAnalytics"> List of Log Analytics destinations. </param>
+        /// <param name="monitoringAccounts"> List of monitoring account destinations. </param>
         /// <param name="azureMonitorMetrics"> Azure Monitor Metrics destination. </param>
-        internal DataCollectionRuleDestinations(IList<LogAnalyticsDestination> logAnalytics, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics) : base(logAnalytics, azureMonitorMetrics)
+        /// <param name="eventHubs"> List of Event Hubs destinations. </param>
+        /// <param name="eventHubsDirect"> List of Event Hubs Direct destinations. </param>
+        /// <param name="storageBlobsDirect"> List of Storage Blob Direct destinations. To be used only for sending data directly to store from the agent. </param>
+        /// <param name="storageTablesDirect"> List of Storage Table Direct destinations. </param>
+        /// <param name="storageAccounts"> List of storage accounts destinations. </param>
+        internal DataCollectionRuleDestinations(IList<LogAnalyticsDestination> logAnalytics, IList<MonitoringAccountDestination> monitoringAccounts, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics, IList<EventHubDestination> eventHubs, IList<EventHubDirectDestination> eventHubsDirect, IList<StorageBlobDestination> storageBlobsDirect, IList<StorageTableDestination> storageTablesDirect, IList<StorageBlobDestination> storageAccounts) : base(logAnalytics, monitoringAccounts, azureMonitorMetrics, eventHubs, eventHubsDirect, storageBlobsDirect, storageTablesDirect, storageAccounts)
         {
         }
     }

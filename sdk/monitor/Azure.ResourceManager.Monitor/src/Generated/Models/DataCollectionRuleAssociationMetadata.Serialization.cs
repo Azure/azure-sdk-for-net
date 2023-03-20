@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class DataCollectionRuleAssociationMetadata
+    public partial class DataCollectionRuleAssociationMetadata
     {
         internal static DataCollectionRuleAssociationMetadata DeserializeDataCollectionRuleAssociationMetadata(JsonElement element)
         {
@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             Optional<string> provisionedBy = default;
+            Optional<string> provisionedByResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisionedBy"u8))
@@ -26,8 +27,13 @@ namespace Azure.ResourceManager.Monitor.Models
                     provisionedBy = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("provisionedByResourceId"u8))
+                {
+                    provisionedByResourceId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DataCollectionRuleAssociationMetadata(provisionedBy.Value);
+            return new DataCollectionRuleAssociationMetadata(provisionedBy.Value, provisionedByResourceId.Value);
         }
     }
 }

@@ -26,10 +26,70 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(MonitoringAccounts))
+            {
+                writer.WritePropertyName("monitoringAccounts"u8);
+                writer.WriteStartArray();
+                foreach (var item in MonitoringAccounts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(AzureMonitorMetrics))
             {
                 writer.WritePropertyName("azureMonitorMetrics"u8);
                 writer.WriteObjectValue(AzureMonitorMetrics);
+            }
+            if (Optional.IsCollectionDefined(EventHubs))
+            {
+                writer.WritePropertyName("eventHubs"u8);
+                writer.WriteStartArray();
+                foreach (var item in EventHubs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(EventHubsDirect))
+            {
+                writer.WritePropertyName("eventHubsDirect"u8);
+                writer.WriteStartArray();
+                foreach (var item in EventHubsDirect)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(StorageBlobsDirect))
+            {
+                writer.WritePropertyName("storageBlobsDirect"u8);
+                writer.WriteStartArray();
+                foreach (var item in StorageBlobsDirect)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(StorageTablesDirect))
+            {
+                writer.WritePropertyName("storageTablesDirect"u8);
+                writer.WriteStartArray();
+                foreach (var item in StorageTablesDirect)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(StorageAccounts))
+            {
+                writer.WritePropertyName("storageAccounts"u8);
+                writer.WriteStartArray();
+                foreach (var item in StorageAccounts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -41,7 +101,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             Optional<IList<LogAnalyticsDestination>> logAnalytics = default;
+            Optional<IList<MonitoringAccountDestination>> monitoringAccounts = default;
             Optional<DestinationsSpecAzureMonitorMetrics> azureMonitorMetrics = default;
+            Optional<IList<EventHubDestination>> eventHubs = default;
+            Optional<IList<EventHubDirectDestination>> eventHubsDirect = default;
+            Optional<IList<StorageBlobDestination>> storageBlobsDirect = default;
+            Optional<IList<StorageTableDestination>> storageTablesDirect = default;
+            Optional<IList<StorageBlobDestination>> storageAccounts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logAnalytics"u8))
@@ -59,6 +125,21 @@ namespace Azure.ResourceManager.Monitor.Models
                     logAnalytics = array;
                     continue;
                 }
+                if (property.NameEquals("monitoringAccounts"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<MonitoringAccountDestination> array = new List<MonitoringAccountDestination>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MonitoringAccountDestination.DeserializeMonitoringAccountDestination(item));
+                    }
+                    monitoringAccounts = array;
+                    continue;
+                }
                 if (property.NameEquals("azureMonitorMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -69,8 +150,83 @@ namespace Azure.ResourceManager.Monitor.Models
                     azureMonitorMetrics = DestinationsSpecAzureMonitorMetrics.DeserializeDestinationsSpecAzureMonitorMetrics(property.Value);
                     continue;
                 }
+                if (property.NameEquals("eventHubs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<EventHubDestination> array = new List<EventHubDestination>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EventHubDestination.DeserializeEventHubDestination(item));
+                    }
+                    eventHubs = array;
+                    continue;
+                }
+                if (property.NameEquals("eventHubsDirect"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<EventHubDirectDestination> array = new List<EventHubDirectDestination>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EventHubDirectDestination.DeserializeEventHubDirectDestination(item));
+                    }
+                    eventHubsDirect = array;
+                    continue;
+                }
+                if (property.NameEquals("storageBlobsDirect"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<StorageBlobDestination> array = new List<StorageBlobDestination>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(StorageBlobDestination.DeserializeStorageBlobDestination(item));
+                    }
+                    storageBlobsDirect = array;
+                    continue;
+                }
+                if (property.NameEquals("storageTablesDirect"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<StorageTableDestination> array = new List<StorageTableDestination>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(StorageTableDestination.DeserializeStorageTableDestination(item));
+                    }
+                    storageTablesDirect = array;
+                    continue;
+                }
+                if (property.NameEquals("storageAccounts"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<StorageBlobDestination> array = new List<StorageBlobDestination>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(StorageBlobDestination.DeserializeStorageBlobDestination(item));
+                    }
+                    storageAccounts = array;
+                    continue;
+                }
             }
-            return new DestinationsSpec(Optional.ToList(logAnalytics), azureMonitorMetrics.Value);
+            return new DestinationsSpec(Optional.ToList(logAnalytics), Optional.ToList(monitoringAccounts), azureMonitorMetrics.Value, Optional.ToList(eventHubs), Optional.ToList(eventHubsDirect), Optional.ToList(storageBlobsDirect), Optional.ToList(storageTablesDirect), Optional.ToList(storageAccounts));
         }
     }
 }

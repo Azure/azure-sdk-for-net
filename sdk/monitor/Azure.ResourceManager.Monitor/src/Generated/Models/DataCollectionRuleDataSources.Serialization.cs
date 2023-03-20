@@ -76,6 +76,41 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(WindowsFirewallLogs))
+            {
+                writer.WritePropertyName("windowsFirewallLogs"u8);
+                writer.WriteStartArray();
+                foreach (var item in WindowsFirewallLogs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PrometheusForwarder))
+            {
+                writer.WritePropertyName("prometheusForwarder"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrometheusForwarder)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PlatformTelemetry))
+            {
+                writer.WritePropertyName("platformTelemetry"u8);
+                writer.WriteStartArray();
+                foreach (var item in PlatformTelemetry)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DataImports))
+            {
+                writer.WritePropertyName("dataImports"u8);
+                writer.WriteObjectValue(DataImports);
+            }
             writer.WriteEndObject();
         }
 
@@ -91,6 +126,10 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<ExtensionDataSource>> extensions = default;
             Optional<IList<LogFilesDataSource>> logFiles = default;
             Optional<IList<IisLogsDataSource>> iisLogs = default;
+            Optional<IList<WindowsFirewallLogsDataSource>> windowsFirewallLogs = default;
+            Optional<IList<PrometheusForwarderDataSource>> prometheusForwarder = default;
+            Optional<IList<PlatformTelemetryDataSource>> platformTelemetry = default;
+            Optional<DataSourcesSpecDataImports> dataImports = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("performanceCounters"u8))
@@ -183,8 +222,63 @@ namespace Azure.ResourceManager.Monitor.Models
                     iisLogs = array;
                     continue;
                 }
+                if (property.NameEquals("windowsFirewallLogs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<WindowsFirewallLogsDataSource> array = new List<WindowsFirewallLogsDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(WindowsFirewallLogsDataSource.DeserializeWindowsFirewallLogsDataSource(item));
+                    }
+                    windowsFirewallLogs = array;
+                    continue;
+                }
+                if (property.NameEquals("prometheusForwarder"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<PrometheusForwarderDataSource> array = new List<PrometheusForwarderDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PrometheusForwarderDataSource.DeserializePrometheusForwarderDataSource(item));
+                    }
+                    prometheusForwarder = array;
+                    continue;
+                }
+                if (property.NameEquals("platformTelemetry"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<PlatformTelemetryDataSource> array = new List<PlatformTelemetryDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PlatformTelemetryDataSource.DeserializePlatformTelemetryDataSource(item));
+                    }
+                    platformTelemetry = array;
+                    continue;
+                }
+                if (property.NameEquals("dataImports"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataImports = DataSourcesSpecDataImports.DeserializeDataSourcesSpecDataImports(property.Value);
+                    continue;
+                }
             }
-            return new DataCollectionRuleDataSources(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions), Optional.ToList(logFiles), Optional.ToList(iisLogs));
+            return new DataCollectionRuleDataSources(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions), Optional.ToList(logFiles), Optional.ToList(iisLogs), Optional.ToList(windowsFirewallLogs), Optional.ToList(prometheusForwarder), Optional.ToList(platformTelemetry), dataImports.Value);
         }
     }
 }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metadata about the resource. </summary>
-    internal partial class Metadata
+    public partial class Metadata
     {
         /// <summary> Initializes a new instance of Metadata. </summary>
         internal Metadata()
@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of Metadata. </summary>
         /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
-        internal Metadata(string provisionedBy)
+        /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
+        internal Metadata(string provisionedBy, string provisionedByResourceId)
         {
             ProvisionedBy = provisionedBy;
+            ProvisionedByResourceId = provisionedByResourceId;
         }
 
         /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>
         public string ProvisionedBy { get; }
+        /// <summary> Resource Id of azure offering managing this resource on-behalf-of customer. </summary>
+        public string ProvisionedByResourceId { get; }
     }
 }

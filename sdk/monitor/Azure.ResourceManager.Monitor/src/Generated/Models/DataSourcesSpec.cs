@@ -22,6 +22,9 @@ namespace Azure.ResourceManager.Monitor.Models
             Extensions = new ChangeTrackingList<ExtensionDataSource>();
             LogFiles = new ChangeTrackingList<LogFilesDataSource>();
             IisLogs = new ChangeTrackingList<IisLogsDataSource>();
+            WindowsFirewallLogs = new ChangeTrackingList<WindowsFirewallLogsDataSource>();
+            PrometheusForwarder = new ChangeTrackingList<PrometheusForwarderDataSource>();
+            PlatformTelemetry = new ChangeTrackingList<PlatformTelemetryDataSource>();
         }
 
         /// <summary> Initializes a new instance of DataSourcesSpec. </summary>
@@ -31,7 +34,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="extensions"> The list of Azure VM extension data source configurations. </param>
         /// <param name="logFiles"> The list of Log files source configurations. </param>
         /// <param name="iisLogs"> The list of IIS logs source configurations. </param>
-        internal DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs)
+        /// <param name="windowsFirewallLogs"> The list of Windows Firewall logs source configurations. </param>
+        /// <param name="prometheusForwarder"> The list of Prometheus forwarder data source configurations. </param>
+        /// <param name="platformTelemetry"> The list of platform telemetry configurations. </param>
+        /// <param name="dataImports"> Specifications of pull based data sources. </param>
+        internal DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports)
         {
             PerformanceCounters = performanceCounters;
             WindowsEventLogs = windowsEventLogs;
@@ -39,6 +46,10 @@ namespace Azure.ResourceManager.Monitor.Models
             Extensions = extensions;
             LogFiles = logFiles;
             IisLogs = iisLogs;
+            WindowsFirewallLogs = windowsFirewallLogs;
+            PrometheusForwarder = prometheusForwarder;
+            PlatformTelemetry = platformTelemetry;
+            DataImports = dataImports;
         }
 
         /// <summary> The list of performance counter data source configurations. </summary>
@@ -53,5 +64,24 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<LogFilesDataSource> LogFiles { get; }
         /// <summary> The list of IIS logs source configurations. </summary>
         public IList<IisLogsDataSource> IisLogs { get; }
+        /// <summary> The list of Windows Firewall logs source configurations. </summary>
+        public IList<WindowsFirewallLogsDataSource> WindowsFirewallLogs { get; }
+        /// <summary> The list of Prometheus forwarder data source configurations. </summary>
+        public IList<PrometheusForwarderDataSource> PrometheusForwarder { get; }
+        /// <summary> The list of platform telemetry configurations. </summary>
+        public IList<PlatformTelemetryDataSource> PlatformTelemetry { get; }
+        /// <summary> Specifications of pull based data sources. </summary>
+        internal DataSourcesSpecDataImports DataImports { get; set; }
+        /// <summary> Definition of Event Hub configuration. </summary>
+        public DataImportSourcesEventHub DataImportsEventHub
+        {
+            get => DataImports is null ? default : DataImports.EventHub;
+            set
+            {
+                if (DataImports is null)
+                    DataImports = new DataSourcesSpecDataImports();
+                DataImports.EventHub = value;
+            }
+        }
     }
 }

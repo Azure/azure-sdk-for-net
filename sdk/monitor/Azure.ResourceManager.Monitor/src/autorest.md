@@ -8,13 +8,15 @@ azure-arm: true
 generate-model-factory: false
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/a61e5f218a0163431057ed9555eb60c58311792b/specification/monitor/resource-manager/readme.md
-tag: package-track2-stable
+require: https://github.com/Azure/azure-rest-api-specs/blob/fce14bf881523f16b14d8ecf325e004465cdcf56/specification/monitor/resource-manager/readme.md
+tag: package-track2-stable #package-preview-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true  #To be removed since it's set to become obsolete
+
 
 format-by-name-rules:
   "tenantId": "uuid"
@@ -396,9 +398,9 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/a61e5f218a0163431057ed9555eb60c58311792b/specification/monitor/resource-manager/Microsoft.Insights/preview/2018-11-27-preview/vmInsightsOnboarding_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a61e5f218a0163431057ed9555eb60c58311792b/specification/monitor/resource-manager/Microsoft.Insights/preview/2021-07-01-preview/privateLinkScopes_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a61e5f218a0163431057ed9555eb60c58311792b/specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/activityLogAlerts_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a61e5f218a0163431057ed9555eb60c58311792b/specification/monitor/resource-manager/Microsoft.Insights/preview/2021-09-01-preview/dataCollectionEndpoints_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a61e5f218a0163431057ed9555eb60c58311792b/specification/monitor/resource-manager/Microsoft.Insights/preview/2021-09-01-preview/dataCollectionRuleAssociations_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a61e5f218a0163431057ed9555eb60c58311792b/specification/monitor/resource-manager/Microsoft.Insights/preview/2021-09-01-preview/dataCollectionRules_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/fce14bf881523f16b14d8ecf325e004465cdcf56/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionEndpoints_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/fce14bf881523f16b14d8ecf325e004465cdcf56/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionRuleAssociations_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/fce14bf881523f16b14d8ecf325e004465cdcf56/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionRules_API.json
 # exclude these two files because they do not exist in previous stable version of the SDK
 # - https://github.com/Azure/azure-rest-api-specs/blob/a61e5f218a0163431057ed9555eb60c58311792b/specification/monitor/resource-manager/Microsoft.Monitor/preview/2021-06-03-preview/monitoringAccounts_API.json
 # - https://github.com/Azure/azure-rest-api-specs/blob/a61e5f218a0163431057ed9555eb60c58311792b/specification/monitor/resource-manager/Microsoft.Monitor/preview/2021-06-03-preview/operations_API.json # we do not need to support this

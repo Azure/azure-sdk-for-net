@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Enabled. </summary>
         public static MonitorPublicNetworkAccess Enabled { get; } = new MonitorPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MonitorPublicNetworkAccess Disabled { get; } = new MonitorPublicNetworkAccess(DisabledValue);
+        /// <summary> SecuredByPerimeter. </summary>
+        public static MonitorPublicNetworkAccess SecuredByPerimeter { get; } = new MonitorPublicNetworkAccess(SecuredByPerimeterValue);
         /// <summary> Determines if two <see cref="MonitorPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(MonitorPublicNetworkAccess left, MonitorPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorPublicNetworkAccess"/> values are not the same. </summary>

@@ -17,19 +17,39 @@ namespace Azure.ResourceManager.Monitor.Models
         public DestinationsSpec()
         {
             LogAnalytics = new ChangeTrackingList<LogAnalyticsDestination>();
+            MonitoringAccounts = new ChangeTrackingList<MonitoringAccountDestination>();
+            EventHubs = new ChangeTrackingList<EventHubDestination>();
+            EventHubsDirect = new ChangeTrackingList<EventHubDirectDestination>();
+            StorageBlobsDirect = new ChangeTrackingList<StorageBlobDestination>();
+            StorageTablesDirect = new ChangeTrackingList<StorageTableDestination>();
+            StorageAccounts = new ChangeTrackingList<StorageBlobDestination>();
         }
 
         /// <summary> Initializes a new instance of DestinationsSpec. </summary>
         /// <param name="logAnalytics"> List of Log Analytics destinations. </param>
+        /// <param name="monitoringAccounts"> List of monitoring account destinations. </param>
         /// <param name="azureMonitorMetrics"> Azure Monitor Metrics destination. </param>
-        internal DestinationsSpec(IList<LogAnalyticsDestination> logAnalytics, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics)
+        /// <param name="eventHubs"> List of Event Hubs destinations. </param>
+        /// <param name="eventHubsDirect"> List of Event Hubs Direct destinations. </param>
+        /// <param name="storageBlobsDirect"> List of Storage Blob Direct destinations. To be used only for sending data directly to store from the agent. </param>
+        /// <param name="storageTablesDirect"> List of Storage Table Direct destinations. </param>
+        /// <param name="storageAccounts"> List of storage accounts destinations. </param>
+        internal DestinationsSpec(IList<LogAnalyticsDestination> logAnalytics, IList<MonitoringAccountDestination> monitoringAccounts, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics, IList<EventHubDestination> eventHubs, IList<EventHubDirectDestination> eventHubsDirect, IList<StorageBlobDestination> storageBlobsDirect, IList<StorageTableDestination> storageTablesDirect, IList<StorageBlobDestination> storageAccounts)
         {
             LogAnalytics = logAnalytics;
+            MonitoringAccounts = monitoringAccounts;
             AzureMonitorMetrics = azureMonitorMetrics;
+            EventHubs = eventHubs;
+            EventHubsDirect = eventHubsDirect;
+            StorageBlobsDirect = storageBlobsDirect;
+            StorageTablesDirect = storageTablesDirect;
+            StorageAccounts = storageAccounts;
         }
 
         /// <summary> List of Log Analytics destinations. </summary>
         public IList<LogAnalyticsDestination> LogAnalytics { get; }
+        /// <summary> List of monitoring account destinations. </summary>
+        public IList<MonitoringAccountDestination> MonitoringAccounts { get; }
         /// <summary> Azure Monitor Metrics destination. </summary>
         internal DestinationsSpecAzureMonitorMetrics AzureMonitorMetrics { get; set; }
         /// <summary>
@@ -46,5 +66,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 AzureMonitorMetrics.Name = value;
             }
         }
+
+        /// <summary> List of Event Hubs destinations. </summary>
+        public IList<EventHubDestination> EventHubs { get; }
+        /// <summary> List of Event Hubs Direct destinations. </summary>
+        public IList<EventHubDirectDestination> EventHubsDirect { get; }
+        /// <summary> List of Storage Blob Direct destinations. To be used only for sending data directly to store from the agent. </summary>
+        public IList<StorageBlobDestination> StorageBlobsDirect { get; }
+        /// <summary> List of Storage Table Direct destinations. </summary>
+        public IList<StorageTableDestination> StorageTablesDirect { get; }
+        /// <summary> List of storage accounts destinations. </summary>
+        public IList<StorageBlobDestination> StorageAccounts { get; }
     }
 }
