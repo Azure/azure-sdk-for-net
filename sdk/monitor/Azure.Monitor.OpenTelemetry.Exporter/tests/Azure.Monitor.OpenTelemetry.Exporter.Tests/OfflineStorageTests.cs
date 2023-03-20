@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Reflection;
 using System.Threading;
 
 using Azure.Core.Pipeline;
@@ -14,6 +16,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
+using OpenTelemetry.Extensions.PersistentStorage;
 using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 
 using Xunit;
@@ -41,6 +44,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             ActivitySource.AddActivityListener(listener);
 
             HttpPipelineHelper.MinimumRetryInterval = 6000;
+        }
+
+        [Fact]
+        public void VerifyDirectory()
+        {
+            // TODO: this test may fail if the process does not have access to this specific directory.
+            // Need to refactor Transmitter so we can run tests without interacting with the file system.
+
+            var options = new AzureMonitorExporterOptions
+            {
+                ConnectionString = "InstrumentationKey=00001",
+                StorageDirectory = "C:\\Temp",
+            };
+
+            var transmitter = new AzureMonitorTransmitter(options);
+
+            var directoryPath = typeof(FileBlobProvider)
+                .GetField("directoryPath", BindingFlags.Instance | BindingFlags.NonPublic)
+                ?.GetValue(transmitter._fileBlobProvider)
+                ?.ToString();
+
+            Assert.StartsWith("C:\\Temp\\00001\\", directoryPath!);
         }
 
         [Fact]

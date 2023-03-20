@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, credential);
 
-            _fileBlobProvider = InitializeOfflineStorage(options);
+            _fileBlobProvider = InitializeOfflineStorage(options, _connectionVars);
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars);
         }
@@ -92,7 +93,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
         }
 
-        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options)
+        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
         {
             if (!options.DisableOfflineStorage)
             {
@@ -102,17 +103,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         ?? StorageHelper.GetDefaultStorageDirectory()
                         ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
 
-                    // TODO: Fallback to default location if location provided via options does not work.
+                    storageDirectory = Path.Combine(storageDirectory, connectionVars.InstrumentationKey);
+
                     AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
 
                     return new FileBlobProvider(storageDirectory);
                 }
                 catch (Exception ex)
                 {
-                    // TODO:
-                    // Remove this when we add an option to disable offline storage.
-                    // So if someone opts in for storage and we cannot initialize, we can throw.
-                    // Change needed on persistent storage side to throw if not able to create storage directory.
                     AzureMonitorExporterEventSource.Log.WriteError("FailedToInitializePersistentStorage", ex);
 
                     return null;
