@@ -4,8 +4,7 @@ languages:
 - csharp
 products:
 - azure
-- cognitive-services
-- text-translator
+- text-translation
 name: Azure.AI.Translation.Text samples for .NET
 description: Samples for the Azure.AI.Translation.Text client library.
 ---
