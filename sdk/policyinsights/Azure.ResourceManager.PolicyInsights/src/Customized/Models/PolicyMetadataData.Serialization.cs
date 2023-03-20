@@ -10,11 +10,11 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.PolicyInsights.Models
+namespace Azure.ResourceManager.PolicyInsights
 {
-    public partial class SlimPolicyMetadata
+    public partial class PolicyMetadataData
     {
-        internal static SlimPolicyMetadata DeserializeSlimPolicyMetadata(JsonElement element)
+        internal static PolicyMetadataData DeserializePolicyMetadataData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -23,13 +23,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<string> metadataId = default;
             Optional<string> category = default;
             Optional<string> title = default;
             Optional<string> owner = default;
             Optional<string> additionalContentUrl = default;
             Optional<BinaryData> metadata = default;
+            Optional<string> description = default;
+            Optional<string> requirements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -54,7 +56,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -101,11 +103,21 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                             metadata = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("requirements"u8))
+                        {
+                            requirements = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SlimPolicyMetadata(id, name, type, systemData.Value, metadataId.Value, category.Value, title.Value, owner.Value, additionalContentUrl.Value, metadata.Value);
+            return new PolicyMetadataData(id, name, type, systemData.Value, metadataId.Value, category.Value, title.Value, owner.Value, additionalContentUrl.Value, metadata.Value, description.Value, requirements.Value);
         }
     }
 }
