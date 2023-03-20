@@ -148,23 +148,25 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="version">The version of the secret.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="context">A <see cref="RequestContext"/> controlling the request lifetime, error handling, and per-call pipeline policies.</param>
         /// <returns>A response containing the <see cref="KeyVaultSecret"/> or <c>null</c> if not found.</returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<NullableResponse<KeyVaultSecret>> GetSecretIfExistsAsync(string name, string version = null, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<NullableResponse<KeyVaultSecret>> GetSecretAsync(string name, string version, RequestContext context)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecretIfExists)}");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
             scope.AddAttribute("secret", name);
             scope.AddAttribute("version", version);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, ResponseClassifier200404, () => new KeyVaultSecret(), cancellationToken, SecretsPath, name, "/", version).ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Get, context, () => new KeyVaultSecret(), SecretsPath, name, "/", version).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -182,23 +184,25 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="version">The version of the secret.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="context">A <see cref="RequestContext"/> controlling the request lifetime, error handling, and per-call pipeline policies.</param>
         /// <returns>A response containing the <see cref="KeyVaultSecret"/> or <c>null</c> if not found.</returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual NullableResponse<KeyVaultSecret> GetSecretIfExists(string name, string version = null, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual NullableResponse<KeyVaultSecret> GetSecret(string name, string version, RequestContext context)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecretIfExists)}");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
             scope.AddAttribute("secret", name);
             scope.AddAttribute("version", version);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, ResponseClassifier200404, () => new KeyVaultSecret(), cancellationToken, SecretsPath, name, "/", version);
+                return _pipeline.SendRequest(RequestMethod.Get, context, () => new KeyVaultSecret(), SecretsPath, name, "/", version);
             }
             catch (Exception e)
             {
@@ -208,7 +212,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecretAsync"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <c>GetSecretAsync</c>.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -235,7 +239,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecret"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <c>GetSecretc</c>.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -262,7 +266,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Lists the properties of all enabled and disabled secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecretAsync"/>.
+        /// Lists the properties of all enabled and disabled secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <c>GetSecretAsync</c>.
         /// </summary>
         /// <remarks>
         /// The Get Secrets operation is applicable to the entire vault. However, only
@@ -280,7 +284,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Lists the properties of all enabled and disabled secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecret"/>.
+        /// Lists the properties of all enabled and disabled secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <c>GetSecret</c>.
         /// </summary>
         /// <remarks>
         /// The Get Secrets operation is applicable to the entire vault. However, only
@@ -896,8 +900,5 @@ namespace Azure.Security.KeyVault.Secrets
                 throw;
             }
         }
-
-        private static ResponseClassifier s_responseClassifier200404;
-        private static ResponseClassifier ResponseClassifier200404 => s_responseClassifier200404 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 404 });
     }
 }

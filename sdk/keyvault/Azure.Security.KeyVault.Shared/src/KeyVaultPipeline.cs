@@ -55,11 +55,11 @@ namespace Azure.Security.KeyVault
             return firstPage.ToUri();
         }
 
-        public HttpMessage CreateMessage(RequestMethod method, ResponseClassifier classifier, Uri uri, bool appendApiVersion)
+        public HttpMessage CreateMessage(RequestMethod method, Uri uri, bool appendApiVersion)
         {
             // No need to allocate a RequestContext now, but if/when we do accept a RequestContext as a public parameter,
             // consider passing that with a default classifier instead of a separate classifier parameter.
-            HttpMessage message = _pipeline.CreateMessage(null, classifier);
+            HttpMessage message = _pipeline.CreateMessage();
             Request request = message.Request;
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -75,10 +75,10 @@ namespace Azure.Security.KeyVault
             return message;
         }
 
-        public HttpMessage CreateMessage(RequestMethod method, ResponseClassifier classifier, params string[] path)
+        public HttpMessage CreateMessage(RequestMethod method, RequestContext context, params string[] path)
         {
             // See comment in CreateMessage overload above for future design consideration.
-            HttpMessage message = _pipeline.CreateMessage(null, classifier);
+            HttpMessage message = _pipeline.CreateMessage(context);
             Request request = message.Request;
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -136,7 +136,7 @@ namespace Azure.Security.KeyVault
                     firstPageUri = new Uri(nextLink);
                 }
 
-                using HttpMessage message = CreateMessage(RequestMethod.Get, null, firstPageUri, false);
+                using HttpMessage message = CreateMessage(RequestMethod.Get, firstPageUri, false);
                 await SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
                 Response response = message.Response;
 
@@ -168,7 +168,7 @@ namespace Azure.Security.KeyVault
                     firstPageUri = new Uri(nextLink);
                 }
 
-                using HttpMessage message = CreateMessage(RequestMethod.Get, null, firstPageUri, false);
+                using HttpMessage message = CreateMessage(RequestMethod.Get, firstPageUri, false);
                 SendRequest(message, cancellationToken);
                 Response response = message.Response;
 
@@ -219,11 +219,11 @@ namespace Azure.Security.KeyVault
             return CreateResponse(message.Response, resultFactory());
         }
 
-        public async Task<NullableResponse<TResult>> SendRequestAsync<TResult>(RequestMethod method, ResponseClassifier classifier, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
+        public async Task<NullableResponse<TResult>> SendRequestAsync<TResult>(RequestMethod method, RequestContext context, Func<TResult> resultFactory, params string[] path)
             where TResult : IJsonDeserializable
         {
-            using HttpMessage message = CreateMessage(method, classifier, path);
-            await SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
+            using HttpMessage message = CreateMessage(method, context, path);
+            await SendRequestAsync(message, context?.CancellationToken ?? default).ConfigureAwait(false);
 
             return CreateResponse(message, resultFactory);
         }
@@ -231,7 +231,7 @@ namespace Azure.Security.KeyVault
         public async Task<Response<TResult>> SendRequestAsync<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, CancellationToken cancellationToken)
             where TResult : IJsonDeserializable
         {
-            using HttpMessage message = CreateMessage(method, null, uri, true);
+            using HttpMessage message = CreateMessage(method, uri, true);
             await SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
 
             return CreateResponse(message.Response, resultFactory());
@@ -246,11 +246,11 @@ namespace Azure.Security.KeyVault
             return CreateResponse(message.Response, resultFactory());
         }
 
-        public NullableResponse<TResult> SendRequest<TResult>(RequestMethod method, ResponseClassifier classifier, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
+        public NullableResponse<TResult> SendRequest<TResult>(RequestMethod method, RequestContext context, Func<TResult> resultFactory,params string[] path)
             where TResult : IJsonDeserializable
         {
-            using HttpMessage message = CreateMessage(method, classifier, path);
-            SendRequest(message, cancellationToken);
+            using HttpMessage message = CreateMessage(method, context, path);
+            SendRequest(message, context?.CancellationToken ?? default);
 
             return CreateResponse(message, resultFactory);
         }
@@ -258,7 +258,7 @@ namespace Azure.Security.KeyVault
         public Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, CancellationToken cancellationToken)
             where TResult : IJsonDeserializable
         {
-            using HttpMessage message = CreateMessage(method, null, uri, true);
+            using HttpMessage message = CreateMessage(method, uri, true);
             SendRequest(message, cancellationToken);
 
             return CreateResponse(message.Response, resultFactory());

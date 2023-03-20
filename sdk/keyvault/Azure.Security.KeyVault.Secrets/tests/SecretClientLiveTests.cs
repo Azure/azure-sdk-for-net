@@ -484,10 +484,13 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [RecordedTest]
         public async Task GetNonExistentSecretNoThrow()
         {
+            RequestContext context = new();
+            context.AddClassifier(404, false);
+
             ClientDiagnosticListener trace = new ClientDiagnosticListener(name => name.StartsWith("Azure."), IsAsync);
             try
             {
-                NullableResponse<KeyVaultSecret> response = await Client.GetSecretIfExistsAsync("ShouldNotExist");
+                NullableResponse<KeyVaultSecret> response = await Client.GetSecretAsync("ShouldNotExist", null, context);
 
                 Assert.AreEqual(404, response.GetRawResponse().Status);
                 Assert.IsFalse(response.HasValue);
@@ -499,7 +502,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 trace.Dispose();
             }
 
-            var scope = trace.AssertScope($"{nameof(SecretClient)}.{nameof(SecretClient.GetSecretIfExists)}");
+            var scope = trace.AssertScope($"{nameof(SecretClient)}.{nameof(SecretClient.GetSecret)}");
             Assert.IsFalse(scope.IsFailed);
         }
     }
