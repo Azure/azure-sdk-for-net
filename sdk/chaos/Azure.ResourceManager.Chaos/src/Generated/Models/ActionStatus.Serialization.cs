@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal static ActionStatus DeserializeActionStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> actionName = default;
             Optional<string> actionId = default;
             Optional<string> status = default;

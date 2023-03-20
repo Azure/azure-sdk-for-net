@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,46 +15,39 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(KeyVaultProperties))
+            {
+                writer.WritePropertyName("keyVaultProperties"u8);
+                writer.WriteObjectValue(KeyVaultProperties);
+            }
             if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
-            writer.WritePropertyName("keyVaultProperties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(KeyName))
-            {
-                writer.WritePropertyName("keyName"u8);
-                writer.WriteStringValue(KeyName);
-            }
-            if (Optional.IsDefined(KeyVersion))
-            {
-                writer.WritePropertyName("keyVersion"u8);
-                writer.WriteStringValue(KeyVersion);
-            }
-            if (Optional.IsDefined(KeyVaultUri))
-            {
-                writer.WritePropertyName("keyVaultUri"u8);
-                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(IdentityClientId))
-            {
-                writer.WritePropertyName("identityClientId"u8);
-                writer.WriteStringValue(IdentityClientId.Value);
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ServiceAccountEncryptionProperties DeserializeServiceAccountEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<CognitiveServicesKeyVaultProperties> keyVaultProperties = default;
             Optional<ServiceAccountEncryptionKeySource> keySource = default;
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<Guid> identityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("keyVaultProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    keyVaultProperties = CognitiveServicesKeyVaultProperties.DeserializeCognitiveServicesKeyVaultProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("keySource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -66,50 +58,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     keySource = new ServiceAccountEncryptionKeySource(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("keyName"u8))
-                        {
-                            keyName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("keyVersion"u8))
-                        {
-                            keyVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("keyVaultUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                keyVaultUri = null;
-                                continue;
-                            }
-                            keyVaultUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("identityClientId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            identityClientId = property0.Value.GetGuid();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new ServiceAccountEncryptionProperties(Optional.ToNullable(keySource), keyName.Value, keyVersion.Value, keyVaultUri.Value, Optional.ToNullable(identityClientId));
+            return new ServiceAccountEncryptionProperties(keyVaultProperties.Value, Optional.ToNullable(keySource));
         }
     }
 }

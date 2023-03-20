@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAuthPlatform DeserializeContainerAppAuthPlatform(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<string> runtimeVersion = default;
             foreach (var property in element.EnumerateObject())

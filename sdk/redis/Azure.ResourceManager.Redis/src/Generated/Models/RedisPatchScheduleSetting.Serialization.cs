@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisPatchScheduleSetting DeserializeRedisPatchScheduleSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RedisDayOfWeek dayOfWeek = default;
             int startHourUtc = default;
             Optional<TimeSpan> maintenanceWindow = default;

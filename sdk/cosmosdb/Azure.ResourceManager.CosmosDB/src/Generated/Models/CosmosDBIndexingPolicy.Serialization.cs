@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in CompositeIndexes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
@@ -76,6 +81,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBIndexingPolicy DeserializeCosmosDBIndexingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> automatic = default;
             Optional<CosmosDBIndexingMode> indexingMode = default;
             Optional<IList<CosmosDBIncludedPath>> includedPaths = default;
@@ -144,12 +153,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<IList<CosmosDBCompositePath>> array = new List<IList<CosmosDBCompositePath>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<CosmosDBCompositePath> array0 = new List<CosmosDBCompositePath>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(CosmosDBCompositePath.DeserializeCosmosDBCompositePath(item0));
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<CosmosDBCompositePath> array0 = new List<CosmosDBCompositePath>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(CosmosDBCompositePath.DeserializeCosmosDBCompositePath(item0));
+                            }
+                            array.Add(array0);
+                        }
                     }
                     compositeIndexes = array;
                     continue;

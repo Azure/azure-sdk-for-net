@@ -16,6 +16,10 @@ namespace Azure.AI.OpenAI
     {
         internal static Embeddings DeserializeEmbeddings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<EmbeddingItem> data = default;
             Optional<string> model = default;
             EmbeddingsUsage usage = default;

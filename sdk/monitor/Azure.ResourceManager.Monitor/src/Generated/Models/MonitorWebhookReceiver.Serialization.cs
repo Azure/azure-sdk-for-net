@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorWebhookReceiver DeserializeMonitorWebhookReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Uri serviceUri = default;
             Optional<bool> useCommonAlertSchema = default;

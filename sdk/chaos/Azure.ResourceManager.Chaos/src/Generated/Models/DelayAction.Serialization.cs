@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static DelayAction DeserializeDelayAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSpan duration = default;
             string type = default;
             string name = default;

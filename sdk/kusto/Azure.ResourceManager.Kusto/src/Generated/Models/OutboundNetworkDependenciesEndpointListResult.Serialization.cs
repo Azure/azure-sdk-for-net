@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static OutboundNetworkDependenciesEndpointListResult DeserializeOutboundNetworkDependenciesEndpointListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<OutboundNetworkDependenciesEndpoint> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

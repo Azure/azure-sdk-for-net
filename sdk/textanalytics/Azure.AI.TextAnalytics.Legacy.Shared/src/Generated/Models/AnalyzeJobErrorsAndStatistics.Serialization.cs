@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static AnalyzeJobErrorsAndStatistics DeserializeAnalyzeJobErrorsAndStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
             Optional<RequestStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())

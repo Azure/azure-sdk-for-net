@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static AnalyzeResult DeserializeAnalyzeResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AnalyzedTokenInfo> tokens = default;
             foreach (var property in element.EnumerateObject())
             {

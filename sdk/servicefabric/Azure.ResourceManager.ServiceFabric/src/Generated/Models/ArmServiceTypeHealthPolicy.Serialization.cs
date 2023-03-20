@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ArmServiceTypeHealthPolicy DeserializeArmServiceTypeHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxPercentUnhealthyServices = default;
             Optional<int> maxPercentUnhealthyPartitionsPerService = default;
             Optional<int> maxPercentUnhealthyReplicasPerPartition = default;

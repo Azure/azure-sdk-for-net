@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the CapacityReservation data model. </summary>
+    /// <summary>
+    /// A class representing the CapacityReservation data model.
+    /// Specifies information about the capacity reservation.
+    /// </summary>
     public partial class CapacityReservationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CapacityReservationData. </summary>

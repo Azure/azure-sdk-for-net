@@ -16,6 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static TaskState DeserializeTaskState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> taskName = default;
             State status = default;

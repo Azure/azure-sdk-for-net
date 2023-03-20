@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.EnergyServices.Models
 
         internal static DataPartitionAddOrRemoveContent DeserializeDataPartitionAddOrRemoveContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataPartitionName> name = default;
             foreach (var property in element.EnumerateObject())
             {

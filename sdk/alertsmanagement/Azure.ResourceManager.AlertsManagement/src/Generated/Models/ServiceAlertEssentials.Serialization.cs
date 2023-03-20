@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertEssentials DeserializeServiceAlertEssentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceAlertSeverity> severity = default;
             Optional<ServiceAlertSignalType> signalType = default;
             Optional<ServiceAlertState> alertState = default;

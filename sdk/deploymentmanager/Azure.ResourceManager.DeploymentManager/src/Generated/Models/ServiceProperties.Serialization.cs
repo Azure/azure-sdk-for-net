@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static ServiceProperties DeserializeServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string targetLocation = default;
             string targetSubscriptionId = default;
             foreach (var property in element.EnumerateObject())

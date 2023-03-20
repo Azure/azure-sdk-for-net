@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enabled");
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("reopenClosedIncident");
+            writer.WritePropertyName("reopenClosedIncident"u8);
             writer.WriteBooleanValue(IsClosedIncidentReopened);
-            writer.WritePropertyName("lookbackDuration");
+            writer.WritePropertyName("lookbackDuration"u8);
             writer.WriteStringValue(LookbackDuration, "P");
-            writer.WritePropertyName("matchingMethod");
+            writer.WritePropertyName("matchingMethod"u8);
             writer.WriteStringValue(MatchingMethod.ToString());
             if (Optional.IsCollectionDefined(GroupByEntities))
             {
-                writer.WritePropertyName("groupByEntities");
+                writer.WritePropertyName("groupByEntities"u8);
                 writer.WriteStartArray();
                 foreach (var item in GroupByEntities)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsCollectionDefined(GroupByAlertDetails))
             {
-                writer.WritePropertyName("groupByAlertDetails");
+                writer.WritePropertyName("groupByAlertDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in GroupByAlertDetails)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsCollectionDefined(GroupByCustomDetails))
             {
-                writer.WritePropertyName("groupByCustomDetails");
+                writer.WritePropertyName("groupByCustomDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in GroupByCustomDetails)
                 {
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsGroupingConfiguration DeserializeSecurityInsightsGroupingConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             bool reopenClosedIncident = default;
             TimeSpan lookbackDuration = default;
@@ -69,27 +73,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IList<string>> groupByCustomDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("reopenClosedIncident"))
+                if (property.NameEquals("reopenClosedIncident"u8))
                 {
                     reopenClosedIncident = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("lookbackDuration"))
+                if (property.NameEquals("lookbackDuration"u8))
                 {
                     lookbackDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("matchingMethod"))
+                if (property.NameEquals("matchingMethod"u8))
                 {
                     matchingMethod = new SecurityInsightsGroupingMatchingMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groupByEntities"))
+                if (property.NameEquals("groupByEntities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     groupByEntities = array;
                     continue;
                 }
-                if (property.NameEquals("groupByAlertDetails"))
+                if (property.NameEquals("groupByAlertDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     groupByAlertDetails = array;
                     continue;
                 }
-                if (property.NameEquals("groupByCustomDetails"))
+                if (property.NameEquals("groupByCustomDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

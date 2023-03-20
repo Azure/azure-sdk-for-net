@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationNavigation DeserializeGuestConfigurationNavigation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GuestConfigurationKind?> kind = default;
             Optional<string> name = default;
             Optional<string> version = default;

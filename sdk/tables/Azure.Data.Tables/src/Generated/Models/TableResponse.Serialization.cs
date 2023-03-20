@@ -14,6 +14,10 @@ namespace Azure.Data.Tables.Models
     {
         internal static TableResponse DeserializeTableResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> odataMetadata = default;
             Optional<string> tableName = default;
             Optional<string> odataType = default;

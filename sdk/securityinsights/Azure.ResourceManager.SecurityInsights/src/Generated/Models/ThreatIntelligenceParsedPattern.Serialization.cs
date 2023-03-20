@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PatternTypeKey))
             {
-                writer.WritePropertyName("patternTypeKey");
+                writer.WritePropertyName("patternTypeKey"u8);
                 writer.WriteStringValue(PatternTypeKey);
             }
             if (Optional.IsCollectionDefined(PatternTypeValues))
             {
-                writer.WritePropertyName("patternTypeValues");
+                writer.WritePropertyName("patternTypeValues"u8);
                 writer.WriteStartArray();
                 foreach (var item in PatternTypeValues)
                 {
@@ -36,16 +36,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static ThreatIntelligenceParsedPattern DeserializeThreatIntelligenceParsedPattern(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> patternTypeKey = default;
             Optional<IList<ThreatIntelligenceParsedPatternTypeValue>> patternTypeValues = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("patternTypeKey"))
+                if (property.NameEquals("patternTypeKey"u8))
                 {
                     patternTypeKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("patternTypeValues"))
+                if (property.NameEquals("patternTypeValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,6 +15,10 @@ namespace Azure.MixedReality.RemoteRendering
     {
         internal static AssetConversion DeserializeAssetConversion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             AssetConversionOptions settings = default;
             Optional<AssetConversionOutput> output = default;

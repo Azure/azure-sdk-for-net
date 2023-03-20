@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static TagResourceContractDetails DeserializeTagResourceContractDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AssociatedTagProperties tag = default;
             Optional<AssociatedApiProperties> api = default;
             Optional<AssociatedOperationProperties> operation = default;

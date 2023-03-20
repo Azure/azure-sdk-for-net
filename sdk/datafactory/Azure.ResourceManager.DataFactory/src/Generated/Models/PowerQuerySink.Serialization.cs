@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PowerQuerySink DeserializePowerQuerySink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> script = default;
             Optional<FactoryLinkedServiceReference> schemaLinkedService = default;
             Optional<FactoryLinkedServiceReference> rejectedDataLinkedService = default;

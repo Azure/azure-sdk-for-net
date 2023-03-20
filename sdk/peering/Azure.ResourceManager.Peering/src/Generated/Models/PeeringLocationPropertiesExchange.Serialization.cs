@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringLocationPropertiesExchange DeserializePeeringLocationPropertiesExchange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ExchangePeeringFacility>> peeringFacilities = default;
             foreach (var property in element.EnumerateObject())
             {

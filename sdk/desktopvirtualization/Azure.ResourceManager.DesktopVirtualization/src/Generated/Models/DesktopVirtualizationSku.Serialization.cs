@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static DesktopVirtualizationSku DeserializeDesktopVirtualizationSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<DesktopVirtualizationSkuTier> tier = default;
             Optional<string> size = default;

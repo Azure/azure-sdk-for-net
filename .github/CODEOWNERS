@@ -254,6 +254,9 @@
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
 
+# PRLabel: %Communication - Rooms
+/sdk/communication/Azure.Communication.Rooms/                      @minnieliu @paolamvhz @alexokun @Mrayyan @shwali-msft @allchiang-msft @mikehang-msft
+
 # ServiceLabel: %Compute %Service Attention
 #/<NotInRepo>/                                                     @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @jaylabell @sandeepraichura @hilaryw29 @MsGabsta
 
@@ -407,17 +410,17 @@
 #/<NotInRepo>/                                                     @madhurinms
 
 # PRLabel: %Iot
-/sdk/iot*                                                          @drwill-ms @timtay-microsoft @abhipsaMisra @andyk-ms @brycewang-microsoft @tmahmood-microsoft @ngastelum-ms
+/sdk/iot*                                                          @ethanann-ms @vighatke
+
+# PRLabel: %IotHub
+# ServiceLabel: %IotHub %Service Attention
+/sdk/iothub/                                                       @ethanann-ms @vighatke
 
 # ServiceLabel: %IotCentral %Service Attention
 /sdk/iotcentral/Microsoft.Azure.Management.IotCentral/             @iluican @jlian
 
 # ServiceLabel: %IotDPS %Service Attention
 #/<NotInRepo>/                                                     @iluican @jlian
-
-# PRLabel: %IotHub
-# ServiceLabel: %IotHub %Service Attention
-/sdk/iothub/                                                       @drwill-ms @timtay-microsoft @abhipsaMisra @andyk-ms @brycewang-microsoft @tmahmood-microsoft @ngastelum-ms
 
 # ServiceLabel: %IotHub %Service Attention
 /sdk/iothub/Microsoft.Azure.Management.IotHub/                     @rkmanda @chieftn
@@ -497,7 +500,6 @@
 # PRLabel: %Monitor - Exporter
 # ServiceLabel: %Monitor - Exporter %Service Attention
 /sdk/monitor/Azure.Monitor.OpenTelemetry.*/                        @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter*                 @SameergMS @dadunl
 
 # PRLabel: %Monitor - Distro
 # ServiceLabel: %Monitor - Distro %Service Attention
@@ -588,6 +590,9 @@
 
 # PRLabel: %Mixed Reality
 /sdk/objectanchors/                                                @crtreasu @rgarcia @JoshLove-msft
+
+# PRLabel: %Open AI
+/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
 
 # PRLabel: %Operational Insights
 # ServiceLabel: %Operational Insights %Service Attention
@@ -685,10 +690,10 @@
 #/<NotInRepo>/                                                     @azureSQLGitHub
 
 # PRLabel: %Storage
-/sdk/storage*                                                      @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
+/sdk/storage*                                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
+/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft
 
 # PRLabel: %Storage
 /sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc

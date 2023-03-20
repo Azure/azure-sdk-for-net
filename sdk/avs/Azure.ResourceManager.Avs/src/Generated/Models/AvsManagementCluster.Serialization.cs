@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AvsManagementCluster DeserializeAvsManagementCluster(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> clusterSize = default;
             Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
             Optional<int> clusterId = default;

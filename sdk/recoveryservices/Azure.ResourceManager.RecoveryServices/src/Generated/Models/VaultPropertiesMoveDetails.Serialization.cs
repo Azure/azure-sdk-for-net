@@ -21,11 +21,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultPropertiesMoveDetails DeserializeVaultPropertiesMoveDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationId = default;
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> completionTimeUtc = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> targetResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<ResourceIdentifier> targetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -55,12 +59,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (property.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetResourceId"u8))
                 {
-                    targetResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

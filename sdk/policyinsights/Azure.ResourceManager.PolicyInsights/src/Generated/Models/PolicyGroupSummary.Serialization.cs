@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyGroupSummary DeserializePolicyGroupSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> policyGroupName = default;
             Optional<PolicySummaryResults> results = default;
             foreach (var property in element.EnumerateObject())

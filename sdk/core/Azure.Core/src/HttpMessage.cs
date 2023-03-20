@@ -14,7 +14,7 @@ namespace Azure.Core
     /// </summary>
     public sealed class HttpMessage : IDisposable
     {
-        private ArrayBackedPropertyBag _propertyBag;
+        private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;
 
         /// <summary>
@@ -24,9 +24,11 @@ namespace Azure.Core
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
         {
+            Argument.AssertNotNull(request, nameof(Request));
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
+            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
 
         /// <summary>
@@ -197,9 +199,15 @@ namespace Azure.Core
         /// </summary>
         public void Dispose()
         {
-            Request?.Dispose();
-            _response?.Dispose();
+            Request.Dispose();
             _propertyBag.Dispose();
+
+            var response = _response;
+            if (response != null)
+            {
+                _response = null;
+                response.Dispose();
+            }
         }
 
         private class ResponseShouldNotBeUsedStream : Stream

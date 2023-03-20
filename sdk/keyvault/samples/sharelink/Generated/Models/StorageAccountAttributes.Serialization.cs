@@ -26,6 +26,10 @@ namespace Azure.Security.KeyVault.Storage.Models
 
         internal static StorageAccountAttributes DeserializeStorageAccountAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> updated = default;

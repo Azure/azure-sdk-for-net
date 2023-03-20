@@ -33,6 +33,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummaryInternal DeserializeAbstractiveSummaryInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             Optional<IList<SummaryContextInternal>> contexts = default;
             foreach (var property in element.EnumerateObject())

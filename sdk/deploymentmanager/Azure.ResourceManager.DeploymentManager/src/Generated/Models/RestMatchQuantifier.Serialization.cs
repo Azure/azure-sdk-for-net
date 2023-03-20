@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         public static RestMatchQuantifier ToRestMatchQuantifier(this string value)
         {
-            if (string.Equals(value, "All", StringComparison.InvariantCultureIgnoreCase)) return RestMatchQuantifier.All;
-            if (string.Equals(value, "Any", StringComparison.InvariantCultureIgnoreCase)) return RestMatchQuantifier.Any;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return RestMatchQuantifier.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Any")) return RestMatchQuantifier.Any;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RestMatchQuantifier value.");
         }
     }

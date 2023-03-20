@@ -89,6 +89,10 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaServicesAccountData DeserializeMediaServicesAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

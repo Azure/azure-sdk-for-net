@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DeploymentWithOSConfiguration DeserializeDeploymentWithOSConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> appLocation = default;
             Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
             Optional<SoftwareConfiguration> softwareConfiguration = default;

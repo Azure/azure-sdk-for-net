@@ -27,6 +27,11 @@ namespace Azure.Communication.CallAutomation
             }
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
+            if (Optional.IsDefined(SpeechLanguage))
+            {
+                writer.WritePropertyName("speechLanguage"u8);
+                writer.WriteStringValue(SpeechLanguage);
+            }
             if (Optional.IsDefined(DtmfOptions))
             {
                 writer.WritePropertyName("dtmfOptions"u8);

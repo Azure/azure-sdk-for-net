@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCookieExpiration DeserializeContainerAppCookieExpiration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppCookieExpirationConvention> convention = default;
             Optional<string> timeToExpiration = default;
             foreach (var property in element.EnumerateObject())

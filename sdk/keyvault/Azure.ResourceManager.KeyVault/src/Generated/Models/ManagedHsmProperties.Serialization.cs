@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static ManagedHsmProperties DeserializeManagedHsmProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<IList<string>> initialAdminObjectIds = default;
             Optional<Uri> hsmUri = default;

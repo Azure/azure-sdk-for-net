@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static ArcPasswordCredential DeserializeArcPasswordCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> secretText = default;
             Optional<string> keyId = default;
             Optional<DateTimeOffset> startDateTime = default;

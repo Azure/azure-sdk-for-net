@@ -42,12 +42,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static ProtectableContainer DeserializeProtectableContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("protectableContainerType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "StorageContainer": return AzureStorageProtectableContainer.DeserializeAzureStorageProtectableContainer(element);
-                    case "VMAppContainer": return AzureVmAppContainerProtectableContainer.DeserializeAzureVmAppContainerProtectableContainer(element);
+                    case "StorageContainer": return StorageProtectableContainer.DeserializeStorageProtectableContainer(element);
+                    case "VMAppContainer": return VmAppContainerProtectableContainer.DeserializeVmAppContainerProtectableContainer(element);
                 }
             }
             return UnknownProtectableContainer.DeserializeUnknownProtectableContainer(element);

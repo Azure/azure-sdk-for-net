@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DiagnosticMetricSample DeserializeDiagnosticMetricSample(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> roleInstance = default;
             Optional<double> total = default;

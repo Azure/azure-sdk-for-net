@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static DataConnectionValidationResults DeserializeDataConnectionValidationResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataConnectionValidationResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {

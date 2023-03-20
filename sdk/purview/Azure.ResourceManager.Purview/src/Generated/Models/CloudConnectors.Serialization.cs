@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Purview.Models
 
         internal static CloudConnectors DeserializeCloudConnectors(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> awsExternalId = default;
             foreach (var property in element.EnumerateObject())
             {

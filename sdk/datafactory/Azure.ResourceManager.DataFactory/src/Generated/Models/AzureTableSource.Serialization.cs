@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureTableSource DeserializeAzureTableSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> azureTableSourceQuery = default;
             Optional<BinaryData> azureTableSourceIgnoreTableNotFound = default;
             Optional<BinaryData> queryTimeout = default;

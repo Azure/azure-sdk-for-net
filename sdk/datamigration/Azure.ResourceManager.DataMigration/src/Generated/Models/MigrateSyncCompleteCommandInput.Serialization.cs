@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSyncCompleteCommandInput DeserializeMigrateSyncCompleteCommandInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string databaseName = default;
             Optional<DateTimeOffset> commitTimeStamp = default;
             foreach (var property in element.EnumerateObject())

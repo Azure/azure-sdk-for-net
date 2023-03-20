@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Compute
 
         internal static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ComputeSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

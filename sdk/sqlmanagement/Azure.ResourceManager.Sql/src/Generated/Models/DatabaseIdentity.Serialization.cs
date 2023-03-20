@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static DatabaseIdentity DeserializeDatabaseIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DatabaseIdentityType> type = default;
             Optional<Guid> tenantId = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;

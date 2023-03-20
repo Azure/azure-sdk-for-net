@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ArcConfiguration DeserializeArcConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArtifactStorageType> artifactsStorageType = default;
             Optional<string> artifactStorageClassName = default;
             Optional<string> artifactStorageMountPath = default;

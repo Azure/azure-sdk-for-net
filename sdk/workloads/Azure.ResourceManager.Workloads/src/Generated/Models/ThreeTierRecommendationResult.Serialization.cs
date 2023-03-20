@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static ThreeTierRecommendationResult DeserializeThreeTierRecommendationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dbVmSku = default;
             Optional<long> databaseInstanceCount = default;
             Optional<string> centralServerVmSku = default;

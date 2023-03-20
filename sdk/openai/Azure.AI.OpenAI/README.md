@@ -7,7 +7,7 @@ Use the client library for Azure OpenAI to:
 * [Create a completion for text][msdocs_openai_completion]
 * [Create a text embedding for comparisons][msdocs_openai_embedding]
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/tests/Samples)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.OpenAI) | [API reference documentation](https://learn.microsoft.com/azure/cognitive-services/openai/reference) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/openai/) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/tests/Samples)
 
 ## Getting started
 
@@ -39,7 +39,7 @@ Once you have the value of the endpoint string and subscription key, you can cre
 // Replace with your Azure OpenAI key
 string key = "YOUR_AZURE_OPENAI_KEY";
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myModelDeploymentId", new AzureKeyCredential(key));
 ```
 
 #### Create OpenAIClient with Azure Active Directory Credential
@@ -53,7 +53,7 @@ dotnet add package Azure.Identity
 
 ```C# Snippet:CreateOpenAIClientTokenCredential
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -102,12 +102,12 @@ The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredentia
 
 ```C# Snippet:GenerateChatbotResponse
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
 
 string prompt = "What is Azure OpenAI?";
 Console.Write($"Input: {prompt}");
 
-Response<Completions> completionsResponse = client.GetCompletions("myDeploymentId", prompt);
+Response<Completions> completionsResponse = client.GetCompletions(prompt);
 string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Chatbot: {completion}");
 ```
@@ -120,7 +120,7 @@ The `GenerateMultipleChatbotResponsesWithSubscriptionKey` method gives an exampl
 // Replace with your Azure OpenAI key
 string key = "YOUR_AZURE_OPENAI_KEY";
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myModelDeploymentId", new AzureKeyCredential(key));
 
 List<string> examplePrompts = new(){
     "How are you today?",
@@ -136,7 +136,7 @@ foreach (string prompt in examplePrompts)
     CompletionsOptions completionsOptions = new CompletionsOptions();
     completionsOptions.Prompt.Add(prompt);
 
-    Response<Completions> completionsResponse = client.GetCompletions("myModelDeployment", completionsOptions);
+    Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
     string completion = completionsResponse.Value.Choices[0].Text;
     Console.WriteLine($"Chatbot: {completion}");
 }
@@ -148,7 +148,7 @@ The `SummarizeText` method generates a summarization of the given input prompt.
 
 ```C# Snippet:SummarizeText
 string endpoint = "https://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
 
 string textToSummarize = @"
     Two independent experiments reported their results this morning at CERN, Europe's high-energy physics laboratory near Geneva in Switzerland. Both show convincing evidence of a new boson particle weighing around 125 gigaelectronvolts, which so far fits predictions of the Higgs previously made by theoretical physicists.
@@ -171,7 +171,7 @@ Console.Write($"Input: {summarizationPrompt}");
 CompletionsOptions completionsOptions = new CompletionsOptions();
 completionsOptions.Prompt.Add(summarizationPrompt);
 
-Response<Completions> completionsResponse = client.GetCompletions("myModelDeployment", completionsOptions);
+Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
 string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Summarization: {completion}");
 ```

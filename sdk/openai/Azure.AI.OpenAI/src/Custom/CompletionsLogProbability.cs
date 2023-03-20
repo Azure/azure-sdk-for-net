@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI
     {
         /// <summary> Log Probability of Tokens. </summary>
         [CodeGenMember("TokenLogprobs")]
-        public IReadOnlyList<float> TokenLogProbability { get; }
+        public IReadOnlyList<float?> TokenLogProbability { get; }
         /// <summary> Top Log Probabilities. </summary>
         [CodeGenMember("TopLogprobs")]
         public IReadOnlyList<IDictionary<string, float>> TopLogProbability { get; }

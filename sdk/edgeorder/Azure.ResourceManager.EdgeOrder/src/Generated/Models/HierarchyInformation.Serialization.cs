@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static HierarchyInformation DeserializeHierarchyInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> productFamilyName = default;
             Optional<string> productLineName = default;
             Optional<string> productName = default;

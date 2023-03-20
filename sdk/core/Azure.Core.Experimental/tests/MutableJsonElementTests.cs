@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.IO;
 using System.Text.Json;
-using Azure.Core.Dynamic;
+using Azure.Core.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests
@@ -169,6 +167,111 @@ namespace Azure.Core.Experimental.Tests
             {
                 Assert.AreEqual(expected++, el.GetInt32());
             }
+        }
+
+        [Test]
+        public void EnumeratedArrayValueCanBeChanged()
+        {
+            string json = "[0, 1, 2, 3]";
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            MutableJsonElement.ArrayEnumerator enumerator = mdoc.RootElement.EnumerateArray();
+
+            MutableJsonElement value = default;
+            foreach (MutableJsonElement item in enumerator)
+            {
+                value = item;
+            }
+
+            value.Set(5);
+            Assert.AreEqual(5, value.GetInt32());
+            Assert.AreEqual(5, mdoc.RootElement.GetIndexElement(3).GetInt32());
+        }
+
+        [Test]
+        public void CanEnumerateObject()
+        {
+            string json = """
+                {
+                  "Zero" : 0,
+                  "One" : 1,
+                  "Two" : 2,
+                  "Three" : 3
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            MutableJsonElement.ObjectEnumerator enumerator = mdoc.RootElement.EnumerateObject();
+
+            int expected = 0;
+            string[] expectedNames = new string[] { "Zero", "One", "Two", "Three" };
+
+            foreach ((string Name, MutableJsonElement Value) property in enumerator)
+            {
+                Assert.AreEqual(expectedNames[expected], property.Name);
+                Assert.AreEqual(expected, property.Value.GetInt32());
+                expected++;
+            }
+        }
+
+        [Test]
+        public void CanEnumerateObjectWithChanges()
+        {
+            string json = """
+                {
+                  "Zero" : 0,
+                  "One" : 1,
+                  "Two" : 2,
+                  "Three" : 3
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            string[] expectedNames = new string[] { "Zero", "One", "Two", "Three" };
+
+            for (int i = 0; i < 4; i++)
+            {
+                mdoc.RootElement.GetProperty(expectedNames[i]).Set(i + 1);
+            }
+
+            MutableJsonElement.ObjectEnumerator enumerator = mdoc.RootElement.EnumerateObject();
+
+            int index = 0;
+            foreach ((string Name, MutableJsonElement Value) property in enumerator)
+            {
+                Assert.AreEqual(expectedNames[index], property.Name);
+                Assert.AreEqual(index + 1, property.Value.GetInt32());
+                index++;
+            }
+        }
+
+        [Test]
+        public void EnumeratedPropertyValueCanBeChanged()
+        {
+            string json = """
+                {
+                  "Foo" : 0,
+                  "Bar" : 1
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            MutableJsonElement.ObjectEnumerator enumerator = mdoc.RootElement.EnumerateObject();
+
+            int index = 0;
+            MutableJsonElement value = default;
+            foreach ((string Name, MutableJsonElement Value) property in enumerator)
+            {
+                value = property.Value;
+                index++;
+            }
+
+            value.Set(5);
+
+            Assert.AreEqual(5, value.GetInt32());
+            Assert.AreEqual(5, mdoc.RootElement.GetProperty("Bar").GetInt32());
         }
     }
 }

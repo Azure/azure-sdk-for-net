@@ -14,6 +14,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static KeyPhraseTaskResult DeserializeKeyPhraseTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KeyPhraseResult> results = default;
             foreach (var property in element.EnumerateObject())
             {

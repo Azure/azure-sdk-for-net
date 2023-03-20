@@ -50,6 +50,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookCellOutputItem DeserializeNotebookCellOutputItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> executionCount = default;
             CellOutputType outputType = default;

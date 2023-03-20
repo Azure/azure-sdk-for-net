@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static LoggingRule DeserializeLoggingRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string action = default;
             LoggingDirection direction = default;
             LoggingDetail detailLevel = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static Message DeserializeMessage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timeStamp = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())

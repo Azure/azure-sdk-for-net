@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    /// <summary> A class representing the BatchAccountCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the BatchAccountCertificate data model.
+    /// Contains information about a certificate.
+    /// </summary>
     public partial class BatchAccountCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of BatchAccountCertificateData. </summary>

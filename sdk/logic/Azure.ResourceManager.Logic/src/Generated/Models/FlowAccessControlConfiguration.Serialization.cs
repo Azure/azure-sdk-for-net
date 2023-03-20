@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowAccessControlConfiguration DeserializeFlowAccessControlConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FlowAccessControlConfigurationPolicy> triggers = default;
             Optional<FlowAccessControlConfigurationPolicy> contents = default;
             Optional<FlowAccessControlConfigurationPolicy> actions = default;

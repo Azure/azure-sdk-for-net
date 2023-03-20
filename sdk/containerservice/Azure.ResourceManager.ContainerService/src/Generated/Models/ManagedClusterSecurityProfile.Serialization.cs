@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,13 +27,46 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("azureKeyVaultKms"u8);
                 writer.WriteObjectValue(AzureKeyVaultKms);
             }
+            if (Optional.IsDefined(WorkloadIdentity))
+            {
+                writer.WritePropertyName("workloadIdentity"u8);
+                writer.WriteObjectValue(WorkloadIdentity);
+            }
+            if (Optional.IsDefined(ImageCleaner))
+            {
+                writer.WritePropertyName("imageCleaner"u8);
+                writer.WriteObjectValue(ImageCleaner);
+            }
+            if (Optional.IsDefined(NodeRestriction))
+            {
+                writer.WritePropertyName("nodeRestriction"u8);
+                writer.WriteObjectValue(NodeRestriction);
+            }
+            if (Optional.IsCollectionDefined(CustomCATrustCertificates))
+            {
+                writer.WritePropertyName("customCATrustCertificates"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomCATrustCertificates)
+                {
+                    writer.WriteBase64StringValue(item, "D");
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
         internal static ManagedClusterSecurityProfile DeserializeManagedClusterSecurityProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedClusterSecurityProfileDefender> defender = default;
             Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
+            Optional<ManagedClusterSecurityProfileWorkloadIdentity> workloadIdentity = default;
+            Optional<ManagedClusterSecurityProfileImageCleaner> imageCleaner = default;
+            Optional<ManagedClusterSecurityProfileNodeRestriction> nodeRestriction = default;
+            Optional<IList<byte[]>> customCATrustCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defender"u8))
@@ -54,8 +89,53 @@ namespace Azure.ResourceManager.ContainerService.Models
                     azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(property.Value);
                     continue;
                 }
+                if (property.NameEquals("workloadIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    workloadIdentity = ManagedClusterSecurityProfileWorkloadIdentity.DeserializeManagedClusterSecurityProfileWorkloadIdentity(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("imageCleaner"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    imageCleaner = ManagedClusterSecurityProfileImageCleaner.DeserializeManagedClusterSecurityProfileImageCleaner(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("nodeRestriction"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    nodeRestriction = ManagedClusterSecurityProfileNodeRestriction.DeserializeManagedClusterSecurityProfileNodeRestriction(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("customCATrustCertificates"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<byte[]> array = new List<byte[]>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetBytesFromBase64("D"));
+                    }
+                    customCATrustCertificates = array;
+                    continue;
+                }
             }
-            return new ManagedClusterSecurityProfile(defender.Value, azureKeyVaultKms.Value);
+            return new ManagedClusterSecurityProfile(defender.Value, azureKeyVaultKms.Value, workloadIdentity.Value, imageCleaner.Value, nodeRestriction.Value, Optional.ToList(customCATrustCertificates));
         }
     }
 }

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBFailoverPolicy DeserializeCosmosDBFailoverPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<AzureLocation> locationName = default;
             Optional<int> failoverPriority = default;

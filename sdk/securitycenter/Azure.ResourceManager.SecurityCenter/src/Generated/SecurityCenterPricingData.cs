@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityCenterPricing data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityCenterPricing data model.
+    /// Microsoft Defender for Cloud is provided in two pricing tiers: free and standard, with the standard tier available with a trial period. The standard tier offers advanced security capabilities, while the free tier offers basic security features.
+    /// </summary>
     public partial class SecurityCenterPricingData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityCenterPricingData. </summary>

@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static ForwardingConfiguration DeserializeForwardingConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customForwardingPath = default;
             Optional<FrontDoorForwardingProtocol> forwardingProtocol = default;
             Optional<FrontDoorCacheConfiguration> cacheConfiguration = default;

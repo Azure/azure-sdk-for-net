@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static ListTableServices DeserializeListTableServices(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TableServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

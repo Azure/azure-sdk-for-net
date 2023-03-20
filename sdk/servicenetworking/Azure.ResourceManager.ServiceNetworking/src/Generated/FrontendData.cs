@@ -13,7 +13,10 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    /// <summary> A class representing the Frontend data model. </summary>
+    /// <summary>
+    /// A class representing the Frontend data model.
+    /// Frontend Subresource of Traffic Controller.
+    /// </summary>
     public partial class FrontendData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of FrontendData. </summary>

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeFileSourceInfo DeserializeEdgeFileSourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier shareId = default;
             foreach (var property in element.EnumerateObject())
             {

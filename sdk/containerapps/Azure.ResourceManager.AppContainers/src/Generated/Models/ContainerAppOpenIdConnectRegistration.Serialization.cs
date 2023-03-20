@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppOpenIdConnectRegistration DeserializeContainerAppOpenIdConnectRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             Optional<ContainerAppOpenIdConnectClientCredential> clientCredential = default;
             Optional<ContainerAppOpenIdConnectConfig> openIdConnectConfiguration = default;

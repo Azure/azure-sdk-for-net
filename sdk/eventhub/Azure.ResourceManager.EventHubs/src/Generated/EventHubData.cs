@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHub data model. </summary>
+    /// <summary>
+    /// A class representing the EventHub data model.
+    /// Single item in List or Get Event Hub operation
+    /// </summary>
     public partial class EventHubData : ResourceData
     {
         /// <summary> Initializes a new instance of EventHubData. </summary>

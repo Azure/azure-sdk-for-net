@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class ArmApplicationPackageLockingPolicy : IUtf8JsonSerializable
+    public partial class ArmApplicationPackageLockingPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,12 +26,27 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(AllowedDataActions))
+            {
+                writer.WritePropertyName("allowedDataActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedDataActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
         internal static ArmApplicationPackageLockingPolicy DeserializeArmApplicationPackageLockingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> allowedActions = default;
+            Optional<IList<string>> allowedDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedActions"u8))
@@ -49,8 +64,23 @@ namespace Azure.ResourceManager.Resources.Models
                     allowedActions = array;
                     continue;
                 }
+                if (property.NameEquals("allowedDataActions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    allowedDataActions = array;
+                    continue;
+                }
             }
-            return new ArmApplicationPackageLockingPolicy(Optional.ToList(allowedActions));
+            return new ArmApplicationPackageLockingPolicy(Optional.ToList(allowedActions), Optional.ToList(allowedDataActions));
         }
     }
 }

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedDatabaseSecurityAlertPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedDatabaseSecurityAlertPolicy data model.
+    /// A managed database security alert policy.
+    /// </summary>
     public partial class ManagedDatabaseSecurityAlertPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedDatabaseSecurityAlertPolicyData. </summary>

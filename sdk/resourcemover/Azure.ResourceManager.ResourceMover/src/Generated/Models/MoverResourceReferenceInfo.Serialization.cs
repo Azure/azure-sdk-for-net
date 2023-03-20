@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverResourceReferenceInfo DeserializeMoverResourceReferenceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier sourceArmResourceId = default;
             foreach (var property in element.EnumerateObject())
             {

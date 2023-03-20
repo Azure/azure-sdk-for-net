@@ -27,6 +27,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static GrpcExtensionDataTransfer DeserializeGrpcExtensionDataTransfer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sharedMemorySizeMiB = default;
             GrpcExtensionDataTransferMode mode = default;
             foreach (var property in element.EnumerateObject())

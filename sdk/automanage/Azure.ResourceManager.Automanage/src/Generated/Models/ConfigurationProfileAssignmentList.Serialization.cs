@@ -16,7 +16,11 @@ namespace Azure.ResourceManager.Automanage.Models
     {
         internal static ConfigurationProfileAssignmentList DeserializeConfigurationProfileAssignmentList(JsonElement element)
         {
-            Optional<IReadOnlyList<ConfigurationProfileAssignmentData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<AutomanageConfigurationProfileAssignmentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -26,10 +30,10 @@ namespace Azure.ResourceManager.Automanage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationProfileAssignmentData> array = new List<ConfigurationProfileAssignmentData>();
+                    List<AutomanageConfigurationProfileAssignmentData> array = new List<AutomanageConfigurationProfileAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(item));
+                        array.Add(AutomanageConfigurationProfileAssignmentData.DeserializeAutomanageConfigurationProfileAssignmentData(item));
                     }
                     value = array;
                     continue;

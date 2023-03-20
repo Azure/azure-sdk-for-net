@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseKustoPoolData DeserializeSynapseKustoPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SynapseDataSourceSku sku = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;

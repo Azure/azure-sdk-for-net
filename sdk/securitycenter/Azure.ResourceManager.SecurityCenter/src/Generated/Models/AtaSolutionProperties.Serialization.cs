@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AtaSolutionProperties DeserializeAtaSolutionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> lastEventReceived = default;
             Optional<string> deviceVendor = default;
             Optional<string> deviceType = default;

@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: Consumption
 namespace: Azure.ResourceManager.Consumption
@@ -35,7 +36,7 @@ override-operation-name:
   Balances_GetForBillingPeriodByBillingAccount: GetBalance
   PriceSheet_GetByBillingPeriod: GetPriceSheet
   AggregatedCost_GetByManagementGroup: GetAggregatedCost
-  AggregatedCost_GetForBillingPeriodByManagementGroup: GetAggregatedCostWithBillingPeriod
+  AggregatedCost_GetForBillingPeriodByManagementGroup: GetAggregatedCost
   Events_ListByBillingAccount: GetEvents
   Events_ListByBillingProfile: GetEvents
   Lots_ListByBillingAccount: GetLots

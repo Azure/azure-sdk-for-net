@@ -46,9 +46,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterHttpProxyConfig DeserializeManagedClusterHttpProxyConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> httpProxy = default;
             Optional<string> httpsProxy = default;
             Optional<IList<string>> noProxy = default;
+            Optional<IReadOnlyList<string>> effectiveNoProxy = default;
             Optional<string> trustedCA = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -77,13 +82,28 @@ namespace Azure.ResourceManager.ContainerService.Models
                     noProxy = array;
                     continue;
                 }
+                if (property.NameEquals("effectiveNoProxy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    effectiveNoProxy = array;
+                    continue;
+                }
                 if (property.NameEquals("trustedCa"u8))
                 {
                     trustedCA = property.Value.GetString();
                     continue;
                 }
             }
-            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCA.Value);
+            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), Optional.ToList(effectiveNoProxy), trustedCA.Value);
         }
     }
 }

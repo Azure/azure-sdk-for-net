@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildResultProperties DeserializeAppPlatformBuildResultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AppPlatformBuildResultProvisioningState> provisioningState = default;
             Optional<string> buildPodName = default;

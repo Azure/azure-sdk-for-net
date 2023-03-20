@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static CommunityGalleryImageVersionList DeserializeCommunityGalleryImageVersionList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<CommunityGalleryImageVersionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

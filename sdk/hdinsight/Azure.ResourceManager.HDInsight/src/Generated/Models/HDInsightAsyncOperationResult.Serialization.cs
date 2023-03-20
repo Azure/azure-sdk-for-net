@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightAsyncOperationResult DeserializeHDInsightAsyncOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HDInsightAsyncOperationState> status = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())

@@ -16,12 +16,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of AzureBlobContentSource. </summary>
         /// <param name="containerUrl"> Azure Blob Storage container URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> is null. </exception>
-        public AzureBlobContentSource(string containerUrl)
+        public AzureBlobContentSource(Uri containerUrl)
         {
             Argument.AssertNotNull(containerUrl, nameof(containerUrl));
 
             ContainerUrl = containerUrl;
         }
+
+        /// <summary> Azure Blob Storage container URL. </summary>
+        public Uri ContainerUrl { get; }
         /// <summary> Blob name prefix. </summary>
         public string Prefix { get; set; }
     }

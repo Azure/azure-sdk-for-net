@@ -14,7 +14,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static RecoveryServicesPrivateLinkServiceConnectionState DeserializeRecoveryServicesPrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<PrivateEndpointConnectionStatus> status = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<RecoveryServicesPrivateEndpointConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new PrivateEndpointConnectionStatus(property.Value.GetString());
+                    status = new RecoveryServicesPrivateEndpointConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))

@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -17,6 +18,19 @@ namespace Azure.ResourceManager.Resources
         {
             get => DeploymentPolicy is null ? ArmApplicationDeploymentMode.NotSpecified : DeploymentPolicy.DeploymentMode;
             set => DeploymentPolicy = new ArmApplicationDeploymentPolicy(value);
+        }
+
+        /// <summary> The deny assignment excluded actions. </summary>
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release.", false)]
+        public IList<string> LockingAllowedActions
+        {
+            get
+            {
+                if (LockingPolicy is null)
+                    LockingPolicy = new ArmApplicationPackageLockingPolicy();
+                return LockingPolicy.AllowedActions;
+            }
         }
     }
 }

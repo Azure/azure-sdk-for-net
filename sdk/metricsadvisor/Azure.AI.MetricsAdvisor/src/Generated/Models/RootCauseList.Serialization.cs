@@ -15,6 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static RootCauseList DeserializeRootCauseList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<IncidentRootCause> value = default;
             foreach (var property in element.EnumerateObject())
             {

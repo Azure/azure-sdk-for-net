@@ -3,16 +3,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 
-namespace Azure.Core.Dynamic
+namespace Azure.Core.Json
 {
     /// <summary>
     /// A mutable representation of a JSON element.
     /// </summary>
-    public partial struct MutableJsonElement
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public readonly partial struct MutableJsonElement
     {
         private readonly MutableJsonDocument _root;
         private readonly JsonElement _element;
@@ -50,7 +52,7 @@ namespace Azure.Core.Dynamic
         {
             if (!TryGetProperty(name, out MutableJsonElement value))
             {
-                throw new InvalidOperationException($"{_path} does not containe property called {name}");
+                throw new InvalidOperationException($"{_path} does not contain property called {name}");
             }
 
             return value;
@@ -260,9 +262,8 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Get an enumerator to enumerate the values in the JSON array represented by this MutableJsonElement.
+        /// Gets an enumerator to enumerate the values in the JSON array represented by this MutableJsonElement.
         /// </summary>
-        /// <returns></returns>
         public ArrayEnumerator EnumerateArray()
         {
             EnsureValid();
@@ -270,6 +271,18 @@ namespace Azure.Core.Dynamic
             EnsureArray();
 
             return new ArrayEnumerator(this);
+        }
+
+        /// <summary>
+        /// Gets an enumerator to enumerate the properties in the JSON object represented by this JsonElement.
+        /// </summary>
+        public ObjectEnumerator EnumerateObject()
+        {
+            EnsureValid();
+
+            EnsureObject();
+
+            return new ObjectEnumerator(this);
         }
 
         /// <summary>
@@ -538,6 +551,11 @@ namespace Azure.Core.Dynamic
             return new Utf8JsonReader(stream.GetBuffer().AsSpan().Slice(0, (int)stream.Position));
         }
 
+        internal void DisposeRoot()
+        {
+            _root.Dispose();
+        }
+
         private void EnsureObject()
         {
             if (_element.ValueKind != JsonValueKind.Object)
@@ -561,5 +579,8 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException("An ancestor node of this element has unapplied changes.  Please re-request this property from the RootElement.");
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        internal string DebuggerDisplay => $"ValueKind = {ValueKind} : \"{ToString()}\"";
     }
 }

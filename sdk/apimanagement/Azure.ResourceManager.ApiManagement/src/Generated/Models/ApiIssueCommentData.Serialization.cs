@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiIssueCommentData DeserializeApiIssueCommentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

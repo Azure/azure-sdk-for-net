@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static ServiceAccountThrottlingRule DeserializeServiceAccountThrottlingRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> key = default;
             Optional<float> renewalPeriod = default;
             Optional<float> count = default;

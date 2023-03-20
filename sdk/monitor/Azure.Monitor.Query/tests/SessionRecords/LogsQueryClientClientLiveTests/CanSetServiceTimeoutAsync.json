@@ -1,198 +1,187 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/e7bf7412-576d-4978-b47c-2edf669e3e2a/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "103",
+        "Content-Length": "104",
         "Content-Type": "application/json",
         "Prefer": "wait=1",
-        "traceparent": "00-e358b123afe3fd46b65ee21f62b89c7d-3accb5e59c693b4a-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210607.1",
-          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "8dcfe8ab93d7977cf96c8cc052cbc01a",
+        "traceparent": "00-a0a6b3edfb779747bc6e52a4ac49603c-44256be83016be43-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ef9cc9ec76ed8bd4fc2d73e1b2aa0d96",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "range x from 1 to 100000004898 step 1 | count",
-        "timespan": "2021-05-31T00:00:00.0000000Z/P7D"
+        "query": "range x from 1 to 100000003003 step 1 | count",
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 504,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "191",
+        "Content-Length": "189",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Jun 2021 16:40:01 GMT",
+        "Date": "Tue, 14 Mar 2023 22:25:19 GMT",
         "Preference-Applied": "wait=1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6cc656db9b-6mktq",
+        "Via": "1.1 draft-oms-85c67bc895-zpnpw",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
         "error": {
           "message": "Gateway timeout",
           "code": "GatewayTimeout",
-          "correlationId": "b7f96610-c1dc-472a-8171-4f37be236e1b",
+          "correlationId": "195a923c-c445-4ba5-a6f4-726cb7d817d8",
           "innererror": {
             "code": "GatewayTimeout",
-            "message": "Kusto query timed out"
+            "message": "ADX query timed out"
           }
         }
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/e7bf7412-576d-4978-b47c-2edf669e3e2a/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "103",
+        "Content-Length": "104",
         "Content-Type": "application/json",
         "Prefer": "wait=1",
-        "traceparent": "00-e358b123afe3fd46b65ee21f62b89c7d-3accb5e59c693b4a-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210607.1",
-          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "8dcfe8ab93d7977cf96c8cc052cbc01a",
+        "traceparent": "00-a0a6b3edfb779747bc6e52a4ac49603c-44256be83016be43-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ef9cc9ec76ed8bd4fc2d73e1b2aa0d96",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "range x from 1 to 100000004898 step 1 | count",
-        "timespan": "2021-05-31T00:00:00.0000000Z/P7D"
+        "query": "range x from 1 to 100000003003 step 1 | count",
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 504,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "191",
+        "Content-Length": "189",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Jun 2021 16:40:05 GMT",
+        "Date": "Tue, 14 Mar 2023 22:25:28 GMT",
         "Preference-Applied": "wait=1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6cc656db9b-fctsk",
+        "Via": "1.1 draft-oms-85c67bc895-bcfc8",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
         "error": {
           "message": "Gateway timeout",
           "code": "GatewayTimeout",
-          "correlationId": "bf646b8b-81d0-41e5-9923-60f405a1018c",
+          "correlationId": "d624c88f-f48a-494f-bfcd-9e2e66033cca",
           "innererror": {
             "code": "GatewayTimeout",
-            "message": "Kusto query timed out"
+            "message": "ADX query timed out"
           }
         }
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/e7bf7412-576d-4978-b47c-2edf669e3e2a/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "103",
+        "Content-Length": "104",
         "Content-Type": "application/json",
         "Prefer": "wait=1",
-        "traceparent": "00-e358b123afe3fd46b65ee21f62b89c7d-3accb5e59c693b4a-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210607.1",
-          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "8dcfe8ab93d7977cf96c8cc052cbc01a",
+        "traceparent": "00-a0a6b3edfb779747bc6e52a4ac49603c-44256be83016be43-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ef9cc9ec76ed8bd4fc2d73e1b2aa0d96",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "range x from 1 to 100000004898 step 1 | count",
-        "timespan": "2021-05-31T00:00:00.0000000Z/P7D"
+        "query": "range x from 1 to 100000003003 step 1 | count",
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 504,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "191",
+        "Content-Length": "189",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Jun 2021 16:40:08 GMT",
+        "Date": "Tue, 14 Mar 2023 22:25:37 GMT",
         "Preference-Applied": "wait=1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6cc656db9b-ckd8x",
+        "Via": "1.1 draft-oms-85c67bc895-ndbx2",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
         "error": {
           "message": "Gateway timeout",
           "code": "GatewayTimeout",
-          "correlationId": "1a7a13f9-4fbf-49d0-8d8b-4abb03f49481",
+          "correlationId": "c7809e56-a187-4ce4-a425-37d14ebfc63d",
           "innererror": {
             "code": "GatewayTimeout",
-            "message": "Kusto query timed out"
+            "message": "ADX query timed out"
           }
         }
       }
     },
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/e7bf7412-576d-4978-b47c-2edf669e3e2a/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "103",
+        "Content-Length": "104",
         "Content-Type": "application/json",
         "Prefer": "wait=1",
-        "traceparent": "00-e358b123afe3fd46b65ee21f62b89c7d-3accb5e59c693b4a-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210607.1",
-          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "8dcfe8ab93d7977cf96c8cc052cbc01a",
+        "traceparent": "00-a0a6b3edfb779747bc6e52a4ac49603c-44256be83016be43-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ef9cc9ec76ed8bd4fc2d73e1b2aa0d96",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "range x from 1 to 100000004898 step 1 | count",
-        "timespan": "2021-05-31T00:00:00.0000000Z/P7D"
+        "query": "range x from 1 to 100000003003 step 1 | count",
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 504,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "191",
+        "Content-Length": "189",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Jun 2021 16:40:13 GMT",
+        "Date": "Tue, 14 Mar 2023 22:25:49 GMT",
         "Preference-Applied": "wait=1",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6cc656db9b-kjwcx",
+        "Via": "1.1 draft-oms-85c67bc895-hcbn8",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
         "error": {
           "message": "Gateway timeout",
           "code": "GatewayTimeout",
-          "correlationId": "826e8a0a-68f4-4e27-aa14-cc71250f2771",
+          "correlationId": "e8f3454c-adc5-41c0-ac9a-99932bbd7e26",
           "innererror": {
             "code": "GatewayTimeout",
-            "message": "Kusto query timed out"
+            "message": "ADX query timed out"
           }
         }
       }
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-06-07T09:40:00.4185754-07:00",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DateTimeOffsetNow": "2023-03-14T15:25:09.8567499-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "429621551",
-    "WORKSPACE_ID": "e7bf7412-576d-4978-b47c-2edf669e3e2a"
+    "RandomSeed": "139558650",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static TableLevelSharingProperties DeserializeTableLevelSharingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> externalTablesToExclude = default;
             Optional<IList<string>> externalTablesToInclude = default;
             Optional<IList<string>> materializedViewsToExclude = default;

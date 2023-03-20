@@ -30,8 +30,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static InquiryValidation DeserializeInquiryValidation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
-            Optional<ErrorDetail> errorDetail = default;
+            Optional<BackupErrorDetail> errorDetail = default;
             Optional<string> additionalDetail = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    errorDetail = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalDetail"u8))

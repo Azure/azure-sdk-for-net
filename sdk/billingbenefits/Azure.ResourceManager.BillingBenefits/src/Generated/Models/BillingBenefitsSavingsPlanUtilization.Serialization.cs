@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static BillingBenefitsSavingsPlanUtilization DeserializeBillingBenefitsSavingsPlanUtilization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> trend = default;
             Optional<IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate>> aggregates = default;
             foreach (var property in element.EnumerateObject())

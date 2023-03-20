@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static RouteCompilationError DeserializeRouteCompilationError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<RouteErrorSeverity> severity = default;
             Optional<RouteErrorRange> location = default;

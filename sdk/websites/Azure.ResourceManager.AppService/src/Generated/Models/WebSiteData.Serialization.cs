@@ -190,6 +190,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static WebSiteData DeserializeWebSiteData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;

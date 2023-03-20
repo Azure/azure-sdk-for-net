@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureBlobFSWriteSettings DeserializeAzureBlobFSWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> blockSizeInMB = default;
             string type = default;
             Optional<BinaryData> maxConcurrentConnections = default;

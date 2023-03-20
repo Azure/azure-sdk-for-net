@@ -92,6 +92,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static ProgramDetails DeserializeProgramDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isVanity = default;
             Optional<IList<string>> preferredVanityNumbers = default;
             Optional<NumberType> numberType = default;
