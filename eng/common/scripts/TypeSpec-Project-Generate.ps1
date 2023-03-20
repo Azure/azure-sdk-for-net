@@ -45,7 +45,8 @@ function NpmInstallForProject([string]$workingDirectory) {
 
         Write-Host("Copying package.json from $replacementPackageJson")
         Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
-        npm install --no-lock-file
+        Copy-Item -Path /mnt/vss/_work/1/s/azure-sdk-for-net/.npmrc -Destination ".npmrc" -Force
+npm install --no-lock-file
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
     finally {
