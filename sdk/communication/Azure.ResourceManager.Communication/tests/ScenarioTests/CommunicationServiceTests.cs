@@ -56,65 +56,6 @@ namespace Azure.ResourceManager.Communication.Tests
             }
         }
 
-        [TestCase(null)]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task AddTag(bool? useTagResource)
-        {
-            SetTagResourceUsage(ArmClient, useTagResource);
-            string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
-            var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
-            await communication.AddTagAsync("testkey", "testvalue");
-            communication = await collection.GetAsync(communicationServiceName);
-            var tagValue = communication.Data.Tags.FirstOrDefault();
-            Assert.AreEqual(tagValue.Key, "testkey");
-            Assert.AreEqual(tagValue.Value, "testvalue");
-        }
-
-        [TestCase(null)]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task RemoveTag(bool? useTagResource)
-        {
-            SetTagResourceUsage(ArmClient, useTagResource);
-            string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
-            var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
-            await communication.AddTagAsync("testkey", "testvalue");
-            communication = await collection.GetAsync(communicationServiceName);
-            var tagValue = communication.Data.Tags.FirstOrDefault();
-            Assert.AreEqual(tagValue.Key, "testkey");
-            Assert.AreEqual(tagValue.Value, "testvalue");
-            await communication.RemoveTagAsync("testkey");
-            communication = await collection.GetAsync(communicationServiceName);
-            var tag = communication.Data.Tags;
-            Assert.IsTrue(tag.Count == 0);
-        }
-
-        [TestCase(null)]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task SetTags(bool? useTagResource)
-        {
-            SetTagResourceUsage(ArmClient, useTagResource);
-            string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            var collection = _resourceGroup.GetCommunicationServiceResources(Guid.Parse(_resourceGroup.Id.SubscriptionId), _resourceGroup.Id.ResourceGroupName);
-            var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
-            await communication.AddTagAsync("testkey", "testvalue");
-            communication = await collection.GetAsync(communicationServiceName);
-            var tagValue = communication.Data.Tags.FirstOrDefault();
-            Assert.AreEqual(tagValue.Key, "testkey");
-            Assert.AreEqual(tagValue.Value, "testvalue");
-            var tag = new Dictionary<string, string>() { { "newtestkey", "newtestvalue" } };
-            await communication.SetTagsAsync(tag);
-            communication = await collection.GetAsync(communicationServiceName);
-            tagValue = communication.Data.Tags.FirstOrDefault();
-            Assert.IsTrue(communication.Data.Tags.Count == 1);
-            Assert.AreEqual(tagValue.Key, "newtestkey");
-            Assert.AreEqual(tagValue.Value, "newtestvalue");
-        }
-
         [Test]
         public async Task GetKeys()
         {
