@@ -95,6 +95,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         public void Dispose()
         {
             _storedEventsGuard?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

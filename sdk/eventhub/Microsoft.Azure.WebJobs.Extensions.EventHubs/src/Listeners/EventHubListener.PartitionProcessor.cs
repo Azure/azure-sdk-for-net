@@ -27,10 +27,10 @@ using System.Diagnostics.Tracing;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
-	internal sealed partial class EventHubListener
+    internal sealed partial class EventHubListener
 	{
 		// We get a new instance each time Start() is called.
-		// We'll get a listener per partition - so they can potentially run in parallel even on a single machine.
+		// We'll get a PartitionProcessor instance per partition - they will run in parallel on a single machine.
 		internal class PartitionProcessor : IEventProcessor, IDisposable
 		{
 			private readonly ITriggeredFunctionExecutor _executor;
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 						CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken))
 				{
 					_mostRecentPartitionContext = context;
-					var events = messages == null ? Array.Empty<EventData>() : messages.ToArray();
+					var events = messages?.ToArray() ?? Array.Empty<EventData>();
 					EventData eventToCheckpoint = null;
 
 					int eventCount = events.Length;
@@ -131,11 +131,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
 						if (_minimumBatchesEnabled)
 						{
-							var triggerEvents = StoredEventsManager.ProcessWithStoredEvents(context, messages.ToList(), false, linkedCts.Token);
+							var triggerEvents = StoredEventsManager.ProcessWithStoredEvents(context, events, false, linkedCts.Token);
 
 							if (triggerEvents.Length > 0)
 							{
-								UpdateCheckpointContext(events, context);
+								UpdateCheckpointContext(triggerEvents, context);
 								await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
 								eventToCheckpoint = triggerEvents.Last();
 
@@ -310,6 +310,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 			public void Dispose()
 			{
 				Dispose(true);
+				GC.SuppressFinalize(this);
 			}
 
 			private static string GetOperationDetails(EventProcessorHostPartition context, string operation)
