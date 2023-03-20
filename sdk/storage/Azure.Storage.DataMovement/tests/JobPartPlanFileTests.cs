@@ -38,8 +38,8 @@ namespace Azure.Storage.DataMovement.Tests
                 jobPartNumber: jobPart);
 
             Assert.NotNull(file);
-            Assert.AreEqual(file._jobPlanFileName.JobPartNumber, jobPart);
-            Assert.AreEqual(file._jobPlanFileName.Id, transferId);
+            Assert.AreEqual(file.FileName.JobPartNumber, jobPart);
+            Assert.AreEqual(file.FileName.Id, transferId);
             Assert.AreEqual(file.FilePath, fileName.FullPath);
         }
 
@@ -65,9 +65,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             Assert.NotNull(file);
-            Assert.AreEqual(file._jobPlanFileName.JobPartNumber, jobPart);
-            Assert.AreEqual(file._jobPlanFileName.Id, transferId);
-            Assert.AreEqual(file._jobPlanFileName.FullPath, fileName.FullPath);
+            Assert.AreEqual(file.FileName.JobPartNumber, jobPart);
+            Assert.AreEqual(file.FileName.Id, transferId);
+            Assert.AreEqual(file.FileName.FullPath, fileName.FullPath);
             Assert.AreEqual(file.FilePath, fileName.FullPath);
         }
     }

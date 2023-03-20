@@ -21,7 +21,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         public void Dispose()
         {
-            if (string.IsNullOrEmpty(DirectoryPath))
+            if (!string.IsNullOrEmpty(DirectoryPath))
             {
                 try
                 {

@@ -18,18 +18,6 @@ namespace Azure.Storage.DataMovement
 {
     internal static partial class JobPlanExtensions
     {
-        public static JobPartPlanHeader ToJobStruct(this Stream stream)
-        {
-            BinaryReader reader = new BinaryReader(stream);
-            byte[] bytes = reader.ReadBytes(Unsafe.SizeOf<JobPartPlanHeader>());
-
-            GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-            JobPartPlanHeader header = (JobPartPlanHeader)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(JobPartPlanHeader));
-            handle.Free();
-
-            return header;
-        }
-
         public static StreamToUriJobPart ToJobPart(
             this StreamToUriTransferJob baseJob,
             Stream planFileStream,
@@ -37,7 +25,7 @@ namespace Azure.Storage.DataMovement
             StorageResource destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = planFileStream.ToJobStruct();
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
             // Apply credentials to the saved transfer job path
             StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
@@ -59,7 +47,7 @@ namespace Azure.Storage.DataMovement
             StorageResource destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = planFileStream.ToJobStruct();
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
 
             // Apply credentials to the saved transfer job path
             StorageTransferStatus jobPartStatus = (StorageTransferStatus) header.AtomicJobStatus;
@@ -81,7 +69,7 @@ namespace Azure.Storage.DataMovement
             StorageResource destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = planFileStream.ToJobStruct();
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
 
             // Apply credentials to the saved transfer job path
             StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.AtomicJobStatus;
@@ -103,7 +91,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = planFileStream.ToJobStruct();
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
@@ -127,7 +115,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = planFileStream.ToJobStruct();
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
@@ -151,7 +139,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer destinationResource)
         {
             // Convert stream to job plan header
-            JobPartPlanHeader header = planFileStream.ToJobStruct();
+            JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);;
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
@@ -210,8 +198,7 @@ namespace Azure.Storage.DataMovement
         internal static JobPartPlanHeader GetJobPartPlanHeader(this JobPartPlanFileName fileName)
         {
             JobPartPlanHeader result;
-            int bufferSize = Unsafe.SizeOf<JobPartPlanHeader>();
-            byte[] buffer = new byte[bufferSize];
+            int bufferSize = DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes;
 
             using MemoryMappedFile memoryMappedFile = MemoryMappedFile.CreateFromFile(fileName.ToString());
             using (MemoryMappedViewStream stream = memoryMappedFile.CreateViewStream(0, bufferSize, MemoryMappedFileAccess.Read))
@@ -220,8 +207,7 @@ namespace Azure.Storage.DataMovement
                 {
                     throw Errors.CannotReadMmfStream(fileName.ToString());
                 }
-                stream.Read(buffer, 0, bufferSize);
-                result = stream.ToJobStruct();
+                result = JobPartPlanHeader.Deserialize(stream);
             }
             return result;
         }

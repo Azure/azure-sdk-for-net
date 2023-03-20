@@ -292,9 +292,10 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Check if it's a single part transfer.
-                if ( _checkpointer.CurrentJobPartCount(
+                int partCount = await _checkpointer.CurrentJobPartCountAsync(
                     transferId: resumeId,
-                    cancellationToken: _cancellationToken) > 1)
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+                if (partCount > 1)
                 {
                     throw Errors.MismatchIdSingleContainer(resumeId);
                 }
@@ -330,7 +331,7 @@ namespace Azure.Storage.DataMovement
                     if (resumeJob)
                     {
                         using (Stream stream = await _checkpointer.ReadableStreamAsync(
-                            id: dataTransfer.Id,
+                            transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
                             readSize: 0,
@@ -368,7 +369,7 @@ namespace Azure.Storage.DataMovement
                     if (resumeJob)
                     {
                         using (Stream stream = await _checkpointer.ReadableStreamAsync(
-                            id: dataTransfer.Id,
+                            transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
                             readSize: 0,
@@ -399,7 +400,7 @@ namespace Azure.Storage.DataMovement
                     if (resumeJob)
                     {
                         using (Stream stream = await _checkpointer.ReadableStreamAsync(
-                            id: dataTransfer.Id,
+                            transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
                             readSize: 0,
@@ -458,9 +459,10 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Check if it's a single part transfer.
-                if (_checkpointer.CurrentJobPartCount(
+                int partCount = await _checkpointer.CurrentJobPartCountAsync(
                     transferId: resumeId,
-                    cancellationToken: _cancellationToken) > 1)
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+                if (partCount > 1)
                 {
                     throw Errors.MismatchIdSingleContainer(resumeId);
                 }
@@ -496,13 +498,13 @@ namespace Azure.Storage.DataMovement
                     if (resumeJob)
                     {
                         // Iterate through all job parts and append to the job
-                        int jobPartCount = _checkpointer.CurrentJobPartCount(
+                        int jobPartCount = await _checkpointer.CurrentJobPartCountAsync(
                             transferId: dataTransfer.Id,
-                            cancellationToken: _cancellationToken);
+                            cancellationToken: _cancellationToken).ConfigureAwait(false);
                         for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
                         {
                             using (Stream stream = await _checkpointer.ReadableStreamAsync(
-                                id: dataTransfer.Id,
+                                transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,
                                 readSize: 0,
@@ -541,13 +543,13 @@ namespace Azure.Storage.DataMovement
                     if (resumeJob)
                     {
                         // Iterate through all job parts and append to the job
-                        int jobPartCount = _checkpointer.CurrentJobPartCount(
+                        int jobPartCount = await _checkpointer.CurrentJobPartCountAsync(
                             transferId: dataTransfer.Id,
-                            cancellationToken: _cancellationToken);
+                            cancellationToken: _cancellationToken).ConfigureAwait(false);
                         for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
                         {
                             using (Stream stream = await _checkpointer.ReadableStreamAsync(
-                                id: dataTransfer.Id,
+                                transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,
                                 readSize: 0,
@@ -579,13 +581,13 @@ namespace Azure.Storage.DataMovement
                     if (resumeJob)
                     {
                         // Iterate through all job parts and append to the job
-                        int jobPartCount = _checkpointer.CurrentJobPartCount(
+                        int jobPartCount = await _checkpointer.CurrentJobPartCountAsync(
                             transferId: dataTransfer.Id,
-                            cancellationToken: _cancellationToken);
+                            cancellationToken: _cancellationToken).ConfigureAwait(false);
                         for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
                         {
                             using (Stream stream = await _checkpointer.ReadableStreamAsync(
-                                id: dataTransfer.Id,
+                                transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,
                                 readSize: 0,

@@ -345,7 +345,7 @@ namespace Azure.Storage.DataMovement
 
         internal async virtual Task SetCheckpointerStatus(StorageTransferStatus status)
         {
-            await _checkpointer.SetJobTransferStatus(
+            await _checkpointer.SetJobTransferStatusAsync(
                 transferId: _dataTransfer.Id,
                 status: status,
                 cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);

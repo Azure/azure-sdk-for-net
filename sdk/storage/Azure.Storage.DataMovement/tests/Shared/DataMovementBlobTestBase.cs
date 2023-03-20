@@ -18,6 +18,8 @@ using Azure.Core;
 using System.Threading;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Shared;
+using Azure.Storage.DataMovement.JobPlanModels;
+using System.Drawing;
 
 namespace Azure.Storage.DataMovement.Tests
 {

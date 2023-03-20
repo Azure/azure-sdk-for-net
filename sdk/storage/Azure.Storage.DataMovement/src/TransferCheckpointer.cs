@@ -77,14 +77,14 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract int CurrentJobPartCount(
+        public abstract Task<int> CurrentJobPartCountAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a stream to the stored memory stored checkpointing information.
         /// </summary>
-        /// <param name="id">The transfer ID.</param>
+        /// <param name="transferId">The transfer ID.</param>
         /// <param name="partNumber">The part number of the current transfer.</param>
         /// <param name="offset">The offset of the current transfer.</param>
         /// <param name="readSize">
@@ -96,12 +96,19 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The Stream to the checkpoint of the respective job ID and part number.</returns>
-        public abstract Task<Stream> ReadableStreamAsync(string id, int partNumber, long offset, long readSize, CancellationToken cancellationToken = default);
+        public abstract Task<Stream> ReadableStreamAsync(
+            string transferId,
+            int partNumber,
+            long offset,
+            long readSize,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Writes to the memory mapped file to store the checkpointing information.
+        ///
+        /// TODO: decide if we want to make this public, does not have a huge use to us currently.
         /// </summary>
-        /// <param name="id">The transfer ID.</param>
+        /// <param name="transferId">The transfer ID.</param>
         /// <param name="partNumber">The part number of the current transfer.</param>
         /// <param name="offset">The offset of the current transfer.</param>
         /// <param name="buffer">The buffer to write data from to the checkpoint.</param>
@@ -110,7 +117,12 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public abstract Task WriteToCheckpointAsync(string id, int partNumber, long offset, byte[] buffer, CancellationToken cancellationToken = default);
+        internal abstract Task WriteToCheckpointAsync(
+            string transferId,
+            int partNumber,
+            long offset,
+            byte[] buffer,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Sets the Job Transfer Status in the Job Part Plan files.
@@ -119,10 +131,10 @@ namespace Azure.Storage.DataMovement
         /// <param name="status"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task SetJobTransferStatus(
+        public abstract Task SetJobTransferStatusAsync(
             string transferId,
             StorageTransferStatus status,
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Sets the Job Part Transfer Status in the Job Part Plan files.
@@ -132,22 +144,24 @@ namespace Azure.Storage.DataMovement
         /// <param name="status"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task SetJobPartTransferStatus(
+        public abstract Task SetJobPartTransferStatusAsync(
             string transferId,
             int partNumber,
             StorageTransferStatus status,
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes transfer checkpoint information from checkpointer.
         /// </summary>
-        /// <param name="id">The transfer ID.</param>
+        /// <param name="transferId">The transfer ID.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>Returns a bool that is true if operation is successful, otherwise is false.</returns>
-        public abstract Task<bool> TryRemoveStoredTransferAsync(string id, CancellationToken cancellationToken = default);
+        public abstract Task<bool> TryRemoveStoredTransferAsync(
+            string transferId,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all the transfers contained in the checkpointer.

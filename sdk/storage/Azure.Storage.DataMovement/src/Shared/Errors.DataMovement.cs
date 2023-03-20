@@ -63,12 +63,15 @@ namespace Azure.Storage
         public static ArgumentException CollisionTransferIdCheckpointer(string transferId)
             => throw new ArgumentException($"Transfer Id Collision Checkpointer: The transfer id, {transferId}, already exists in the checkpointer.");
 
-        public static ArgumentException MissingTransferIdCheckpointer(string transferId, int partNumber)
+        public static ArgumentException MissingTransferIdAddPartCheckpointer(string transferId, int partNumber)
             => throw new ArgumentException($"Missing Transfer Id Checkpointer: The transfer id, {transferId}, could not be found in the checkpointer when" +
                 $"attempting to add a new job part, {partNumber}.");
 
         public static ArgumentException CannotReadMmfStream(string filePath)
             => throw new ArgumentException($"Unable to read Job Part Header from the job part plan file: {filePath}.");
+
+        public static ArgumentException MissingPartNumberCheckpointer(string transferId, int partNumber)
+            => throw new ArgumentException($"The transfer id, {transferId} and part number {partNumber} could not be found in the checkpointer.");
 
         public static ArgumentException MissingTransferIdCheckpointer(string transferId)
             => throw new ArgumentException($"The transfer id, {transferId}, could not be found in the checkpointer.");
