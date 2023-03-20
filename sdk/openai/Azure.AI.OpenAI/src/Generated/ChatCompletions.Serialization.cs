@@ -12,22 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class CompletionsOptions : IUtf8JsonSerializable
+    public partial class ChatCompletions
     {
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CompletionsOptions FromResponse(Response response)
+        internal static ChatCompletions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCompletionsOptions(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            return DeserializeChatCompletions(document.RootElement);
         }
     }
 }
