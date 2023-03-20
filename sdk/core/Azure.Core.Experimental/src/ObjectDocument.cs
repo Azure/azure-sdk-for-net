@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using static Azure.Core.Pipeline.TaskExtensions;
 
 // TODO: Remove when prototyping complete
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -16,6 +15,8 @@ namespace Azure.Core.Dynamic
     /// </summary>
     public abstract class ObjectDocument : IDisposable
     {
+        public abstract ObjectElement RootElement { get; }
+
         // Kind
         protected internal abstract ObjectValueKind GetValueKind(object element);
 

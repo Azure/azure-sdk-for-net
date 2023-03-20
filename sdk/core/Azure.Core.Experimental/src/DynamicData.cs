@@ -8,6 +8,9 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
+// TODO: Remove when prototyping complete
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Azure.Core.Dynamic
 {
     /// <summary>
@@ -23,14 +26,18 @@ namespace Azure.Core.Dynamic
         private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
+        private ObjectDocument _document;
         private ObjectElement _element;
         private DynamicDataOptions _options;
 
         internal DynamicData(ObjectElement element, DynamicDataOptions options = default)
         {
             _element = element;
+            _document = _element.GetDocument();
             _options = options;
         }
+
+        public ObjectDocument Document { get { return _document; } }
 
         internal void WriteTo(Stream stream) => _element.WriteTo(stream);
 
