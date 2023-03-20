@@ -152,7 +152,7 @@ NfsAccessPolicy = "rootSquash",
                 {
                     Target = "10.0.44.44",
                     UsageModel = "READ_ONLY",
-                    VerificationTimer = 30,
+                    VerificationDelayInSeconds = 30,
                 },
             };
             ArmOperation<StorageTargetResource> lro = await storageTarget.UpdateAsync(WaitUntil.Completed, data);
@@ -202,8 +202,8 @@ NamespacePath = "/blobnfs",
                 {
                     Target = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scgroup/providers/Microsoft.Storage/storageAccounts/blofnfs/blobServices/default/containers/blobnfs"),
                     UsageModel = "READ_WRITE",
-                    VerificationTimer = 28800,
-                    WriteBackTimer = 3600,
+                    VerificationDelayInSeconds = 28800,
+                    WriteBackDelayInSeconds = 3600,
                 },
             };
             ArmOperation<StorageTargetResource> lro = await storageTarget.UpdateAsync(WaitUntil.Completed, data);
@@ -246,7 +246,7 @@ NamespacePath = "/blobnfs",
                 {
                     Target = "10.0.44.44",
                     UsageModel = "READ_ONLY",
-                    VerificationTimer = 30,
+                    VerificationDelayInSeconds = 30,
                 },
             };
             ArmOperation<StorageTargetResource> lro = await storageTarget.UpdateAsync(WaitUntil.Completed, data);
