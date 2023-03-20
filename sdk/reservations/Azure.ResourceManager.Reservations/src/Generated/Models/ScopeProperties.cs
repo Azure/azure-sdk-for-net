@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ScopeProperties. </summary>
+    /// <summary> The scope and whether it is valid. </summary>
     public partial class ScopeProperties
     {
         /// <summary> Initializes a new instance of ScopeProperties. </summary>

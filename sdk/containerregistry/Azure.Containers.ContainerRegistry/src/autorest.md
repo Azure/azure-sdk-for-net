@@ -128,6 +128,7 @@ directive:
           "description": "Schema version",
           "x-ms-client-default": 2
         };
+    $.properties.config["x-ms-client-name"] = "configuration";
 ```
 
 # Take stream as manifest body

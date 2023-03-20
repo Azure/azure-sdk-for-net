@@ -35,7 +35,7 @@ BinaryData config = BinaryData.FromString("Sample config");
 UploadBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
 
 // Update manifest with config info
-manifest.Config = new OciDescriptor()
+manifest.Configuration = new OciDescriptor()
 {
     Digest = uploadConfigResult.Digest,
     SizeInBytes = uploadConfigResult.SizeInBytes,
@@ -75,7 +75,7 @@ using (FileStream stream = File.Create(manifestFile))
 }
 
 // Download and write out the config
-DownloadBlobResult configBlob = await client.DownloadBlobContentAsync(manifest.Config.Digest);
+DownloadBlobResult configBlob = await client.DownloadBlobContentAsync(manifest.Configuration.Digest);
 
 string configFile = Path.Combine(path, "config.json");
 using (FileStream stream = File.Create(configFile))

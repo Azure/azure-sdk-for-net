@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,11 +33,11 @@ namespace Azure.ResourceManager.Reservations
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetCatalogRequest(string subscriptionId, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId)
+        internal HttpMessage CreateGetCatalogRequest(string subscriptionId, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, string filter, float? skip, float? take)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,6 +68,18 @@ namespace Azure.ResourceManager.Reservations
             {
                 uri.AppendQuery("planId", planId, true);
             }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (take != null)
+            {
+                uri.AppendQuery("$take", take.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -78,31 +89,29 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Get the regions and skus that are available for RI purchase for the specified Azure subscription. </summary>
         /// <param name="subscriptionId"> Id of the subscription. </param>
         /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
+        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an Azure region or global. </param>
         /// <param name="publisherId"> Publisher id used to get the third party products. </param>
         /// <param name="offerId"> Offer id used to get the third party products. </param>
         /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="filter"> May be used to filter by Catalog properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. </param>
+        /// <param name="skip"> The number of reservations to skip from the list before returning results. </param>
+        /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<ReservationCatalog>>> GetCatalogAsync(string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CatalogsResult>> GetCatalogAsync(string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, string filter = null, float? skip = null, float? take = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGetCatalogRequest(subscriptionId, reservedResourceType, location, publisherId, offerId, planId);
+            using var message = CreateGetCatalogRequest(subscriptionId, reservedResourceType, location, publisherId, offerId, planId, filter, skip, take);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<ReservationCatalog> value = default;
+                        CatalogsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<ReservationCatalog> array = new List<ReservationCatalog>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(ReservationCatalog.DeserializeReservationCatalog(item));
-                        }
-                        value = array;
+                        value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -113,31 +122,29 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Get the regions and skus that are available for RI purchase for the specified Azure subscription. </summary>
         /// <param name="subscriptionId"> Id of the subscription. </param>
         /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
+        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an Azure region or global. </param>
         /// <param name="publisherId"> Publisher id used to get the third party products. </param>
         /// <param name="offerId"> Offer id used to get the third party products. </param>
         /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="filter"> May be used to filter by Catalog properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. </param>
+        /// <param name="skip"> The number of reservations to skip from the list before returning results. </param>
+        /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<ReservationCatalog>> GetCatalog(string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public Response<CatalogsResult> GetCatalog(string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, string filter = null, float? skip = null, float? take = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGetCatalogRequest(subscriptionId, reservedResourceType, location, publisherId, offerId, planId);
+            using var message = CreateGetCatalogRequest(subscriptionId, reservedResourceType, location, publisherId, offerId, planId, filter, skip, take);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<ReservationCatalog> value = default;
+                        CatalogsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<ReservationCatalog> array = new List<ReservationCatalog>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(ReservationCatalog.DeserializeReservationCatalog(item));
-                        }
-                        value = array;
+                        value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -205,6 +212,90 @@ namespace Azure.ResourceManager.Reservations
                         AppliedReservationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = AppliedReservationData.DeserializeAppliedReservationData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCatalogNextPageRequest(string nextLink, string subscriptionId, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, string filter, float? skip, float? take)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the regions and skus that are available for RI purchase for the specified Azure subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Id of the subscription. </param>
+        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
+        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an Azure region or global. </param>
+        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
+        /// <param name="offerId"> Offer id used to get the third party products. </param>
+        /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="filter"> May be used to filter by Catalog properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. </param>
+        /// <param name="skip"> The number of reservations to skip from the list before returning results. </param>
+        /// <param name="take"> To number of reservations to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CatalogsResult>> GetCatalogNextPageAsync(string nextLink, string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, string filter = null, float? skip = null, float? take = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateGetCatalogNextPageRequest(nextLink, subscriptionId, reservedResourceType, location, publisherId, offerId, planId, filter, skip, take);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CatalogsResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the regions and skus that are available for RI purchase for the specified Azure subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Id of the subscription. </param>
+        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
+        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an Azure region or global. </param>
+        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
+        /// <param name="offerId"> Offer id used to get the third party products. </param>
+        /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="filter"> May be used to filter by Catalog properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. </param>
+        /// <param name="skip"> The number of reservations to skip from the list before returning results. </param>
+        /// <param name="take"> To number of reservations to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CatalogsResult> GetCatalogNextPage(string nextLink, string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, string filter = null, float? skip = null, float? take = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateGetCatalogNextPageRequest(nextLink, subscriptionId, reservedResourceType, location, publisherId, offerId, planId, filter, skip, take);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CatalogsResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
