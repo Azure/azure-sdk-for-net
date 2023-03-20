@@ -15,4 +15,10 @@ extends:
         SubscriptionConfigurations:
           - $(sub-config-communication-int-test-resources-common)
           - $(sub-config-communication-int-test-resources-net)
-    Clouds: Public,Int
+      PPE:
+        SubscriptionConfigurations:
+          - $(sub-config-communication-ppe-test-resources-common)
+          - $(sub-config-communication-ppe-test-resources-net)
+    Clouds: 'Public,PPE,Int'
+    TestResourceDirectories:
+      - communication/Azure.Communication.Email/
