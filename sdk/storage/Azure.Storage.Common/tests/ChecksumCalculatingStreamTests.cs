@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Hashing;
+using System.Linq;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -332,9 +333,9 @@ namespace Azure.Storage.Tests
             await stream.CopyToInternal(Stream.Null, 1000, IsAsync, cancellationToken: default);
 
             // Assert callback invocations and final checksum are as expected
-            Assert.AreEqual(4, callbacks.Count);
-            Assert.AreEqual(1000, callbacks[2].Length);
-            Assert.AreEqual(24, callbacks[3].Length);
+            // some targets don't strictly obey CopyTo bufferSize, so just check remaining KB of data made it
+            Assert.GreaterOrEqual(callbacks.Count, 3);
+            Assert.AreEqual(Constants.KB, callbacks.Skip(2).Sum(arr => arr.Length));
             CollectionAssert.AreEqual(dataChecksum, streamChecksumCalculator.GetCurrentHash());
         }
 
