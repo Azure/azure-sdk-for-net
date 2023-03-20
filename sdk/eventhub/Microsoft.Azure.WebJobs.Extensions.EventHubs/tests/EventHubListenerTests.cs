@@ -203,13 +203,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var loggerMock = new Mock<ILogger>();
             var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
-            var mockStoredEvents = new ConcurrentQueue<EventData>();
+            var mockStoredEvents = new Queue<EventData>();
             mockStoredEvents.Enqueue(new EventData("E1"));
-            eventProcessor.StoredEventsManager.StoredEvents = mockStoredEvents;
+            eventProcessor.CachedEventsManager.CachedEvents = mockStoredEvents;
 
             await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.OwnershipLost);
 
-            Assert.IsFalse(eventProcessor.StoredEventsManager.HasStoredEvents);
+            Assert.IsFalse(eventProcessor.CachedEventsManager.HasCachedEvents);
         }
 
         [Test]

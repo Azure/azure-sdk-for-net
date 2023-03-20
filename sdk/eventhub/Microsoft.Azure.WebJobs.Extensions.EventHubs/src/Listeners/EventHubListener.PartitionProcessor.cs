@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -10,20 +9,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Azure.WebJobs.Host.Listeners;
-using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Azure.Core.Diagnostics;
-using Microsoft.Extensions.Azure;
-using System.Text;
-using Azure.Identity;
-using Azure.Core;
-using System.Diagnostics.Tracing;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
@@ -41,13 +32,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 			private int _batchCounter;
 			private bool _minimumBatchesEnabled;
 			private bool _disposed;
-			private Task _storedEventsBackgroundTask;
+			private Task _cachedEventsBackgroundTask;
 			private TimeSpan _maxWaitTime;
 			private ValueStopwatch _currentCycle;
 			private EventProcessorHostPartition _mostRecentPartitionContext;
-			private CancellationTokenSource _storedEventsBackgroundTaskCts;
+			private CancellationTokenSource _cachedEventsBackgroundTaskCts;
 
-			internal PartitionProcessorEventsManager StoredEventsManager { get; }
+			internal PartitionProcessorEventsManager CachedEventsManager { get; }
 
 			public PartitionProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch)
 			{
@@ -56,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 				_batchCheckpointFrequency = options.BatchCheckpointFrequency;
 				_logger = logger;
 				_minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default
-				StoredEventsManager = new PartitionProcessorEventsManager(maxBatchSize: options.MaxEventBatchSize, minBatchSize: options.MinEventBatchSize);
+				CachedEventsManager = new PartitionProcessorEventsManager(maxBatchSize: options.MaxEventBatchSize, minBatchSize: options.MinEventBatchSize);
 				_maxWaitTime = options.MaxWaitTime;
 			}
 
@@ -64,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 			{
 				// signal cancellation for any in progress executions
 				_cts.Cancel();
-				StoredEventsManager.PartitionClosing();
+				CachedEventsManager.PartitionClosing();
 
 				_logger.LogDebug(GetOperationDetails(context, $"CloseAsync, {reason.ToString()}"));
 				return Task.CompletedTask;
@@ -87,106 +78,103 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
 			public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages, CancellationToken processingCancellationToken)
 			{
-				using (CancellationTokenSource linkedCts =
-						CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken))
+				using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken);
+				_mostRecentPartitionContext = context;
+				var events = messages?.ToArray() ?? Array.Empty<EventData>();
+				EventData eventToCheckpoint = null;
+
+				int eventCount = events.Length;
+
+				if (_singleDispatch)
 				{
-					_mostRecentPartitionContext = context;
-					var events = messages?.ToArray() ?? Array.Empty<EventData>();
-					EventData eventToCheckpoint = null;
+					UpdateCheckpointContext(events, context);
 
-					int eventCount = events.Length;
-
-					if (_singleDispatch)
+					var triggerInput = new EventHubTriggerInput
 					{
-						UpdateCheckpointContext(events, context);
+						Events = events,
+						ProcessorPartition = context
+					};
 
-						var triggerInput = new EventHubTriggerInput
+					// Single dispatch
+					for (int i = 0; i < eventCount; i++)
+					{
+						if (linkedCts.Token.IsCancellationRequested)
 						{
-							Events = events,
-							ProcessorPartition = context
+							break;
+						}
+
+						EventHubTriggerInput eventHubTriggerInput = triggerInput.GetSingleEventTriggerInput(i);
+						TriggeredFunctionData input = new TriggeredFunctionData
+						{
+							TriggerValue = eventHubTriggerInput,
+							TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
 						};
 
-						// Single dispatch
-						for (int i = 0; i < eventCount; i++)
-						{
-							if (linkedCts.Token.IsCancellationRequested)
-							{
-								break;
-							}
-
-							EventHubTriggerInput eventHubTriggerInput = triggerInput.GetSingleEventTriggerInput(i);
-							TriggeredFunctionData input = new TriggeredFunctionData
-							{
-								TriggerValue = eventHubTriggerInput,
-								TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
-							};
-
-							await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
-							eventToCheckpoint = events[i];
-						}
+						await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
+						eventToCheckpoint = events[i];
 					}
-					else
+				}
+				else
+				{
+					// Batch dispatch
+
+					if (_minimumBatchesEnabled)
 					{
-						// Batch dispatch
+						var triggerEvents = CachedEventsManager.GetBatchofEventsWithCached(events, false);
 
-						if (_minimumBatchesEnabled)
+						if (triggerEvents.Length > 0)
 						{
-							var triggerEvents = StoredEventsManager.ProcessWithStoredEvents(context, events, false, linkedCts.Token);
+							UpdateCheckpointContext(triggerEvents, context);
+							await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
+							eventToCheckpoint = triggerEvents.Last();
 
-							if (triggerEvents.Length > 0)
+							if (_cachedEventsBackgroundTaskCts != null)
 							{
-								UpdateCheckpointContext(triggerEvents, context);
-								await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
-								eventToCheckpoint = triggerEvents.Last();
-
-								if (_storedEventsBackgroundTaskCts != null)
-								{
-									// If there is a background timer task, cancel it and dispose of the cancellation token.
-									_storedEventsBackgroundTaskCts.Cancel();
-									_storedEventsBackgroundTaskCts.Dispose();
-									_storedEventsBackgroundTaskCts = null;
-								}
-
-								if (StoredEventsManager.HasStoredEvents)
-								{
-									// If there are events waiting to be processed, create a new linked cancellation token and start or restart the
-									// timer on the newest stored events.
-									_storedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken);
-									_storedEventsBackgroundTask = MonitorStoredEvents(_storedEventsBackgroundTaskCts.Token);
-								}
+                                // If there is a background timer task, cancel it and dispose of the cancellation token.
+                                _cachedEventsBackgroundTaskCts.Cancel();
+                                _cachedEventsBackgroundTaskCts.Dispose();
+										 = null;
 							}
-							else
+
+							if (CachedEventsManager.HasCachedEvents)
 							{
-								if (StoredEventsManager.HasStoredEvents && _storedEventsBackgroundTask == null)
-								{
-									// If we don't have enough events and the timer hasn't been started yet, start it.
-									_storedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken);
-									_storedEventsBackgroundTask = MonitorStoredEvents(_storedEventsBackgroundTaskCts.Token);
-								}
+								// If there are events waiting to be processed, create a new linked cancellation token and start or restart the
+								// timer on the newest stored events.
+								_cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
+                                _cachedEventsBackgroundTask = MonitorCachedEvents(_cachedEventsBackgroundTaskCts.Token);
 							}
 						}
 						else
 						{
-							UpdateCheckpointContext(events, context);
-							await TriggerExecute(events, context, _cts.Token).ConfigureAwait(false);
-							eventToCheckpoint = events.LastOrDefault();
+							if (_cachedEventsBackgroundTask == null && CachedEventsManager.HasCachedEvents)
+							{
+								// If we don't have enough events and the timer hasn't been started yet, start it.
+								_cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
+                                _cachedEventsBackgroundTask = MonitorCachedEvents(_cachedEventsBackgroundTaskCts.Token);
+							}
 						}
-
-						// If total events is less than the batch size, leave them in the stored events list
-						// and wait to send until we receive enough events or total max wait time has passed.
 					}
-
-					// Checkpoint if we processed any events.
-					// Don't checkpoint if no events. This can reset the sequence counter to 0.
-					// Note: we intentionally checkpoint the batch regardless of function
-					// success/failure. EventHub doesn't support any sort "poison event" model,
-					// so that is the responsibility of the user's function currently. E.g.
-					// the function should have try/catch handling around all event processing
-					// code, and capture/log/persist failed events, since they won't be retried.
-					if (eventToCheckpoint != null)
+					else
 					{
-						await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
+						UpdateCheckpointContext(events, context);
+						await TriggerExecute(events, context, _cts.Token).ConfigureAwait(false);
+						eventToCheckpoint = events.LastOrDefault();
 					}
+
+					// If total events is less than the batch size, leave them in the stored events list
+					// and wait to send until we receive enough events or total max wait time has passed.
+				}
+
+				// Checkpoint if we processed any events.
+				// Don't checkpoint if no events. This can reset the sequence counter to 0.
+				// Note: we intentionally checkpoint the batch regardless of function
+				// success/failure. EventHub doesn't support any sort "poison event" model,
+				// so that is the responsibility of the user's function currently. E.g.
+				// the function should have try/catch handling around all event processing
+				// code, and capture/log/persist failed events, since they won't be retried.
+				if (eventToCheckpoint != null)
+				{
+					await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
 				}
 			}
 
@@ -207,16 +195,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
 				await _executor.TryExecuteAsync(input, cancellationToken).ConfigureAwait(false);
 
-				if (_storedEventsBackgroundTaskCts != null)
+				if (_cachedEventsBackgroundTaskCts != null)
 				{
 					// If there is a background timer task, cancel it and dispose of the cancellation token.
-					_storedEventsBackgroundTaskCts.Cancel();
-					_storedEventsBackgroundTaskCts.Dispose();
-					_storedEventsBackgroundTaskCts = null;
+					_cachedEventsBackgroundTaskCts.Cancel();
+					_cachedEventsBackgroundTaskCts.Dispose();
+					_cachedEventsBackgroundTaskCts = null;
 				}
 			}
 
-			private async Task MonitorStoredEvents(CancellationToken cancellationToken)
+			private async Task MonitorCachedEvents(CancellationToken cancellationToken)
 			{
 				try
 				{
@@ -228,7 +216,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 						await Task.Delay(remainingTime, cancellationToken).ConfigureAwait(false);
 					}
 
-					var triggerEvents = StoredEventsManager.ProcessWithStoredEvents(_mostRecentPartitionContext, timerTrigger: true, cancellationToken: cancellationToken);
+					var triggerEvents = CachedEventsManager.GetBatchofEventsWithCached(timerTrigger: true);
 
 					if (triggerEvents.Length > 0)
 					{
@@ -299,8 +287,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 					if (disposing)
 					{
 						_cts.Dispose();
-						StoredEventsManager.Dispose();
-						_storedEventsBackgroundTaskCts.Dispose();
+						CachedEventsManager.Dispose();
+						_cachedEventsBackgroundTaskCts.Dispose();
 					}
 
 					_disposed = true;

@@ -2,99 +2,81 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Concurrent;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Azure.Messaging.EventHubs;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Azure.Core;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
     internal class PartitionProcessorEventsManager : IDisposable
     {
-        private SemaphoreSlim _storedEventsGuard;
         private int _maxBatchSize;
         private int _minBatchSize;
+        private readonly object _cachedEventsLock = new object();
 
         // This is internal for mocking purposes only.
-        internal ConcurrentQueue<EventData> StoredEvents { get; set; }
+        internal Queue<EventData> CachedEvents { get; set; }
 
-        public bool HasStoredEvents
+        public bool HasCachedEvents
         {
             get
             {
-                try
+                lock (_cachedEventsLock)
                 {
-                    _storedEventsGuard.Wait();
-                    return !StoredEvents.IsEmpty;
-                }
-                finally
-                {
-                    _storedEventsGuard.Release();
+                    return CachedEvents.Count > 0;
                 }
             }
         }
 
         public PartitionProcessorEventsManager(int maxBatchSize, int minBatchSize)
         {
-            StoredEvents = new ConcurrentQueue<EventData>();
+            CachedEvents = new Queue<EventData>();
             _maxBatchSize = maxBatchSize;
             _minBatchSize = minBatchSize;
-            _storedEventsGuard = new SemaphoreSlim(1, 1);
         }
 
         public void PartitionClosing()
         {
-            StoredEvents = new ConcurrentQueue<EventData>();
+            CachedEvents.Clear();
         }
 
-        public EventData[] ProcessWithStoredEvents(EventProcessorHostPartition partitionContext, List<EventData> events = null, bool timerTrigger = false, CancellationToken cancellationToken = default)
+        public EventData[] GetBatchofEventsWithCached(EventData[] events = null, bool timerTrigger = false)
         {
-            try
+            EventData[] eventsToReturn;
+            lock (_cachedEventsLock)
             {
-                _storedEventsGuard.Wait(cancellationToken);
-                events ??= new List<EventData>();
-                var totalEvents = StoredEvents.Count + events.Count;
+                var totalEvents = CachedEvents.Count + events.Length;
 
                 foreach (var eventData in events)
                 {
-                    StoredEvents.Enqueue(eventData);
+                    CachedEvents.Enqueue(eventData);
                 }
 
                 if (totalEvents < _minBatchSize && !timerTrigger)
                 {
-                    return Array.Empty<EventData>();
+                    eventsToReturn = Array.Empty<EventData>();
                 }
                 else
                 {
-                    var eventsToReturn = new List<EventData>();
-                    for (int i = 0; i < _maxBatchSize; i++)
+                    var sizeOfBatch = totalEvents > _maxBatchSize ? _maxBatchSize : totalEvents;
+                    eventsToReturn = new EventData[sizeOfBatch];
+                    for (int i = 0; i < sizeOfBatch; i++)
                     {
-                        var hasNext = StoredEvents.TryDequeue(out var nextEvent);
-
-                        if (hasNext)
-                        {
-                            eventsToReturn.Add(nextEvent);
-                        }
-                        else
-                        {
-                            return eventsToReturn.ToArray();
-                        }
+                        var nextEvent = CachedEvents.Dequeue();
+                        eventsToReturn[i] = nextEvent;
                     }
-                    return eventsToReturn.ToArray();
                 }
             }
-            finally
-            {
-                _storedEventsGuard.Release();
-            }
+            return eventsToReturn;
         }
 
         public void Dispose()
         {
-            _storedEventsGuard?.Dispose();
             GC.SuppressFinalize(this);
         }
     }
