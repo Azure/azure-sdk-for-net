@@ -8,7 +8,7 @@
 
 - Removed `TokenCredential` from the extension methods `AddAzureMonitorTraceExporter()`, `AddAzureMonitorLogExporter()`, and `AddAzureMonitorMetricExporter()`.
   This is instead available on `AzureMonitorExporterOptions`.
-  ([]())
+  ([#35011](https://github.com/Azure/azure-sdk-for-net/pull/35011))
 
 ### Bugs Fixed
 
