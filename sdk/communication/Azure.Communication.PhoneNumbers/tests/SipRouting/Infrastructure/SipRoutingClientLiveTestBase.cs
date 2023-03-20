@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
@@ -13,18 +12,27 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
     public class SipRoutingClientLiveTestBase : RecordedTestBase<SipRoutingClientTestEnvironment>
     {
+        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
+        private const string DummyTestDomain = "testdomain.com";
+        private string testDomain;
         protected TestData? TestData;
 
         public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
         {
+            testDomain = TestEnvironment.Mode != RecordedTestMode.Playback ? TestEnvironment.GetTestDomain() ?? DummyTestDomain : DummyTestDomain;
+
             JsonPathSanitizers.Add("$..credential");
             SanitizedHeaders.Add("x-ms-content-sha256");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(testDomain, DummyTestDomain));
         }
 
         [SetUp]
         public void SetUpTestData()
         {
-            TestData = new TestData(Recording.Random.NewGuid());
+            var testRandom = Recording.Random;
+            var randomGuid = testRandom.NewGuid();
+            TestData = new TestData(testDomain, randomGuid.ToString());
         }
 
         public bool SkipSipRoutingLiveTests
