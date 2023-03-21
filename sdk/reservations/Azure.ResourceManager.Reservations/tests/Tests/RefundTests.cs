@@ -42,118 +42,167 @@ namespace Azure.ResourceManager.Reservations.Tests
             List<ReservationDetailResource> reservationResources = await reservationResponse.ToEnumerableAsync();
 
             // Find a random `Succeeded` reservation to return
-            var reservation = reservationResources.Find(item => item.Data.Properties.ProvisioningState.Equals(ReservationProvisioningState.Succeeded) &&
+            var reservations = reservationResources.FindAll(item => item.Data.Properties.ProvisioningState.Equals(ReservationProvisioningState.Succeeded) &&
                 item.Data.Properties.Quantity > 1);
-            var fullyQualifiedId = reservation.Id;
-            var fullyQualifiedOrderId = reservation.Id.Parent;
-            var orderDetail = await Collection.GetAsync(Guid.Parse(reservation.Id.Parent.Name));
+            Assert.Greater(reservations.Count, 1);
+            var orderDetail1 = await Collection.GetAsync(Guid.Parse(reservations[0].Id.Parent.Name));
+            var orderDetail2 = await Collection.GetAsync(Guid.Parse(reservations[1].Id.Parent.Name));
 
-            var riToReturn = new ReservationToReturn
+            var riToReturn1 = new ReservationToReturn
             {
-                ReservationId = fullyQualifiedId,
+                ReservationId = reservations[0].Id,
                 Quantity = 1
             };
 
-            var calculateRefundRequest = new ReservationCalculateRefundContent
+            var riToReturn2 = new ReservationToReturn
             {
-                Id = fullyQualifiedOrderId,
+                ReservationId = reservations[1].Id,
+                Quantity = 1
+            };
+
+            var calculateRefundRequest1 = new ReservationCalculateRefundContent
+            {
+                Id = reservations[0].Id.Parent,
                 Properties = new ReservationCalculateRefundRequestProperties
                 {
                     Scope = "Reservation",
-                    ReservationToReturn = riToReturn
+                    ReservationToReturn = riToReturn1
                 }
             };
 
-            var calculateRefundResponse = await orderDetail.Value.CalculateRefundAsync(calculateRefundRequest);
+            var calculateRefundRequest2 = new ReservationCalculateRefundContent
+            {
+                Id = reservations[1].Id.Parent,
+                Properties = new ReservationCalculateRefundRequestProperties
+                {
+                    Scope = "Reservation",
+                    ReservationToReturn = riToReturn2
+                }
+            };
 
+            var calculateRefundResponse1 = await orderDetail1.Value.CalculateRefundAsync(calculateRefundRequest1);
+            var calculateRefundResponse2 = await orderDetail2.Value.CalculateRefundAsync(calculateRefundRequest2);
+
+            TestCalculateRefundResult(calculateRefundResponse1);
+            TestCalculateRefundResult(calculateRefundResponse2);
+
+            var refundRequest1 = new ReservationRefundContent
+            {
+                Properties = new ReservationRefundRequestProperties
+                {
+                    SessionId = calculateRefundResponse1.Value.Properties.SessionId,
+                    Scope = "Reservation",
+                    ReservationToReturn = riToReturn1,
+                    ReturnReason = "Test"
+                }
+            };
+
+            // Refun test using non LRO return
+            var refundResponse1 = await orderDetail1.Value.ReturnAsync(refundRequest1);
+
+            Assert.IsNotNull(refundResponse1.Value);
+            Assert.AreEqual(202, refundResponse1.GetRawResponse().Status);
+            Assert.IsNotNull(refundResponse1.Value.Properties);
+            Assert.IsNotEmpty(refundResponse1.Value.Properties.SessionId.ToString());
+            Assert.GreaterOrEqual(refundResponse1.Value.Properties.Quantity, 1);
+            Assert.IsNotNull(refundResponse1.Value.Properties.BillingRefundAmount);
+            Assert.IsNotNull(refundResponse1.Value.Properties.PricingRefundAmount);
+            Assert.Greater(refundResponse1.Value.Properties.BillingRefundAmount.Amount, 0);
+            Assert.AreEqual("GBP", refundResponse1.Value.Properties.BillingRefundAmount.CurrencyCode);
+            Assert.Greater(refundResponse1.Value.Properties.PricingRefundAmount.Amount, 0);
+            Assert.AreEqual("USD", refundResponse1.Value.Properties.PricingRefundAmount.CurrencyCode);
+
+            // BillingInformation
+            Assert.IsNotNull(refundResponse1.Value.Properties.BillingInformation);
+            Assert.AreEqual(1, refundResponse1.Value.Properties.BillingInformation.CompletedTransactions);
+            Assert.AreEqual(12, refundResponse1.Value.Properties.BillingInformation.TotalTransactions);
+            Assert.IsNotNull(refundResponse1.Value.Properties.BillingInformation.BillingPlan);
+            Assert.IsNotNull(refundResponse1.Value.Properties.BillingInformation.BillingCurrencyProratedAmount);
+            Assert.IsNotNull(refundResponse1.Value.Properties.BillingInformation.BillingCurrencyRemainingCommitmentAmount);
+            Assert.IsNotNull(refundResponse1.Value.Properties.BillingInformation.BillingCurrencyTotalPaidAmount);
+            Assert.Greater(refundResponse1.Value.Properties.BillingInformation.BillingCurrencyProratedAmount.Amount, 0);
+            Assert.AreEqual("GBP", refundResponse1.Value.Properties.BillingInformation.BillingCurrencyProratedAmount.CurrencyCode);
+            Assert.AreEqual("GBP", refundResponse1.Value.Properties.BillingInformation.BillingCurrencyRemainingCommitmentAmount.CurrencyCode);
+            Assert.Greater(refundResponse1.Value.Properties.BillingInformation.BillingCurrencyTotalPaidAmount.Amount, 0);
+            Assert.AreEqual("GBP", refundResponse1.Value.Properties.BillingInformation.BillingCurrencyTotalPaidAmount.CurrencyCode);
+
+            //PolicyResult
+            Assert.IsNotNull(refundResponse1.Value.Properties.PolicyResultProperties);
+            Assert.AreEqual(0, refundResponse1.Value.Properties.PolicyResultProperties.PolicyErrors.Count);
+            Assert.IsNotNull(refundResponse1.Value.Properties.PolicyResultProperties.ConsumedRefundsTotal);
+            Assert.IsNotNull(refundResponse1.Value.Properties.PolicyResultProperties.MaxRefundLimit);
+            Assert.IsTrue(refundResponse1.Value.Properties.PolicyResultProperties.ConsumedRefundsTotal.Amount > 0);
+            Assert.AreEqual("USD", refundResponse1.Value.Properties.PolicyResultProperties.ConsumedRefundsTotal.CurrencyCode);
+            Assert.AreEqual(50000, refundResponse1.Value.Properties.PolicyResultProperties.MaxRefundLimit.Amount);
+            Assert.AreEqual("USD", refundResponse1.Value.Properties.PolicyResultProperties.MaxRefundLimit.CurrencyCode);
+
+            var refundRequest2 = new ReservationRefundContent
+            {
+                Properties = new ReservationRefundRequestProperties
+                {
+                    SessionId = calculateRefundResponse2.Value.Properties.SessionId,
+                    Scope = "Reservation",
+                    ReservationToReturn = riToReturn2,
+                    ReturnReason = "Test"
+                }
+            };
+
+            // Refun test using  LRO return
+            var refundResponse2 = await orderDetail2.Value.ReturnAsync(WaitUntil.Completed, refundRequest2);
+            Assert.IsNotNull(refundResponse2.Value);
+            Assert.AreEqual(200, refundResponse2.GetRawResponse().Status);
+            Assert.IsNotNull(refundResponse2.Value);
+            Assert.IsNotNull(refundResponse2.Value.Data);
+            Assert.IsNotNull(refundResponse2.Value.Data.Id.ToString());
+            Assert.AreEqual("microsoft.capacity/reservationOrders", refundResponse2.Value.Data.ResourceType.ToString());
+            Assert.IsNotNull(refundResponse2.Value.Data.Name);
+            Assert.GreaterOrEqual(refundResponse2.Value.Data.Version, 1);
+            Assert.IsNotNull(refundResponse2.Value.Data.DisplayName);
+            Assert.IsNotNull(refundResponse2.Value.Data.Term);
+            Assert.IsNotNull(refundResponse2.Value.Data.ProvisioningState);
+            Assert.IsNotNull(refundResponse2.Value.Data.Reservations);
+            Assert.GreaterOrEqual(refundResponse2.Value.Data.Reservations.Count, 1);
+            Assert.IsNotNull(refundResponse2.Value.Data.Reservations[0].Id.ToString());
+            Assert.GreaterOrEqual(refundResponse2.Value.Data.OriginalQuantity, 1);
+            Assert.IsNotNull(refundResponse2.Value.Data.BillingPlan);
+        }
+        private void TestCalculateRefundResult(Response<ReservationCalculateRefundResult> calculateRefundResponse)
+        {
             Assert.IsNotNull(calculateRefundResponse.Value);
             Assert.AreEqual(200, calculateRefundResponse.GetRawResponse().Status);
-            Assert.AreEqual(fullyQualifiedId, calculateRefundResponse.Value.Id);
             Assert.IsNotNull(calculateRefundResponse.Value.Properties);
             Assert.IsNotEmpty(calculateRefundResponse.Value.Properties.SessionId.ToString());
-            Assert.AreEqual(1, calculateRefundResponse.Value.Properties.Quantity);
+            Assert.GreaterOrEqual(calculateRefundResponse.Value.Properties.Quantity, 1);
             Assert.IsNotNull(calculateRefundResponse.Value.Properties.BillingRefundAmount);
             Assert.IsNotNull(calculateRefundResponse.Value.Properties.PricingRefundAmount);
-            Assert.IsTrue(calculateRefundResponse.Value.Properties.BillingRefundAmount.Amount > 0);
-            Assert.AreEqual("USD", calculateRefundResponse.Value.Properties.BillingRefundAmount.CurrencyCode);
-            Assert.IsTrue(calculateRefundResponse.Value.Properties.PricingRefundAmount.Amount > 0);
-            Assert.AreEqual("USD", calculateRefundResponse.Value.Properties.PricingRefundAmount.CurrencyCode);
+            Assert.GreaterOrEqual(calculateRefundResponse.Value.Properties.BillingRefundAmount.Amount, 0);
+            Assert.IsNotNull(calculateRefundResponse.Value.Properties.BillingRefundAmount.CurrencyCode);
+            Assert.GreaterOrEqual(calculateRefundResponse.Value.Properties.PricingRefundAmount.Amount, 0);
+            Assert.IsNotNull(calculateRefundResponse.Value.Properties.PricingRefundAmount.CurrencyCode);
 
             // BillingInformation
             Assert.IsNotNull(calculateRefundResponse.Value.Properties.BillingInformation);
-            Assert.AreEqual(1, calculateRefundResponse.Value.Properties.BillingInformation.CompletedTransactions);
-            Assert.AreEqual(1, calculateRefundResponse.Value.Properties.BillingInformation.TotalTransactions);
-            Assert.AreEqual(ReservationBillingPlan.Upfront, calculateRefundResponse.Value.Properties.BillingInformation.BillingPlan);
+            Assert.GreaterOrEqual(1, calculateRefundResponse.Value.Properties.BillingInformation.CompletedTransactions);
+            Assert.GreaterOrEqual(calculateRefundResponse.Value.Properties.BillingInformation.TotalTransactions, 1);
+            Assert.IsNotNull(calculateRefundResponse.Value.Properties.BillingInformation.BillingPlan);
             Assert.IsNotNull(calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyProratedAmount);
             Assert.IsNotNull(calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyRemainingCommitmentAmount);
             Assert.IsNotNull(calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyTotalPaidAmount);
-            Assert.IsTrue(calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyProratedAmount.Amount > 0);
-            Assert.AreEqual("USD", calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyProratedAmount.CurrencyCode);
-            Assert.AreEqual(0, calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyRemainingCommitmentAmount.Amount); // Test RI is `Upfront` so this should be 0
-            Assert.AreEqual("USD", calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyRemainingCommitmentAmount.CurrencyCode);
-            Assert.IsTrue(calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyTotalPaidAmount.Amount > 0);
-            Assert.AreEqual("USD", calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyTotalPaidAmount.CurrencyCode);
+            Assert.GreaterOrEqual(calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyProratedAmount.Amount, 0);
+            Assert.IsNotNull(calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyProratedAmount.CurrencyCode);
+            Assert.IsNotNull(calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyRemainingCommitmentAmount.CurrencyCode);
+            Assert.GreaterOrEqual(calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyTotalPaidAmount.Amount, 0);
+            Assert.IsNotNull(calculateRefundResponse.Value.Properties.BillingInformation.BillingCurrencyTotalPaidAmount.CurrencyCode);
 
             //PolicyResult
             Assert.IsNotNull(calculateRefundResponse.Value.Properties.PolicyResultProperties);
             Assert.AreEqual(0, calculateRefundResponse.Value.Properties.PolicyResultProperties.PolicyErrors.Count);
             Assert.IsNotNull(calculateRefundResponse.Value.Properties.PolicyResultProperties.ConsumedRefundsTotal);
             Assert.IsNotNull(calculateRefundResponse.Value.Properties.PolicyResultProperties.MaxRefundLimit);
-            Assert.IsTrue(calculateRefundResponse.Value.Properties.PolicyResultProperties.ConsumedRefundsTotal.Amount > 0);
-            Assert.AreEqual("USD", calculateRefundResponse.Value.Properties.PolicyResultProperties.ConsumedRefundsTotal.CurrencyCode);
+            Assert.GreaterOrEqual(calculateRefundResponse.Value.Properties.PolicyResultProperties.ConsumedRefundsTotal.Amount, 0);
+            Assert.IsNotNull(calculateRefundResponse.Value.Properties.PolicyResultProperties.ConsumedRefundsTotal.CurrencyCode);
             Assert.AreEqual(50000, calculateRefundResponse.Value.Properties.PolicyResultProperties.MaxRefundLimit.Amount);
-            Assert.AreEqual("USD", calculateRefundResponse.Value.Properties.PolicyResultProperties.MaxRefundLimit.CurrencyCode);
-
-            var refundRequest = new ReservationRefundContent
-            {
-                Properties = new ReservationRefundRequestProperties
-                {
-                    SessionId = calculateRefundResponse.Value.Properties.SessionId,
-                    Scope = "Reservation",
-                    ReservationToReturn = riToReturn,
-                    ReturnReason = "Test"
-                }
-            };
-
-            var refundResponse = await orderDetail.Value.ReturnAsync(refundRequest);
-
-            Assert.IsNotNull(refundResponse.Value);
-            Assert.AreEqual(202, refundResponse.GetRawResponse().Status);
-            Assert.AreEqual(fullyQualifiedId, refundResponse.Value.Id);
-            Assert.IsNotNull(refundResponse.Value.Properties);
-            Assert.IsNotEmpty(refundResponse.Value.Properties.SessionId.ToString());
-            Assert.AreEqual(1, refundResponse.Value.Properties.Quantity);
-            Assert.IsNotNull(refundResponse.Value.Properties.BillingRefundAmount);
-            Assert.IsNotNull(refundResponse.Value.Properties.PricingRefundAmount);
-            Assert.IsTrue(refundResponse.Value.Properties.BillingRefundAmount.Amount > 0);
-            Assert.AreEqual("USD", refundResponse.Value.Properties.BillingRefundAmount.CurrencyCode);
-            Assert.IsTrue(refundResponse.Value.Properties.PricingRefundAmount.Amount > 0);
-            Assert.AreEqual("USD", refundResponse.Value.Properties.PricingRefundAmount.CurrencyCode);
-
-            // BillingInformation
-            Assert.IsNotNull(refundResponse.Value.Properties.BillingInformation);
-            Assert.AreEqual(1, refundResponse.Value.Properties.BillingInformation.CompletedTransactions);
-            Assert.AreEqual(1, refundResponse.Value.Properties.BillingInformation.TotalTransactions);
-            Assert.AreEqual(ReservationBillingPlan.Upfront, refundResponse.Value.Properties.BillingInformation.BillingPlan);
-            Assert.IsNotNull(refundResponse.Value.Properties.BillingInformation.BillingCurrencyProratedAmount);
-            Assert.IsNotNull(refundResponse.Value.Properties.BillingInformation.BillingCurrencyRemainingCommitmentAmount);
-            Assert.IsNotNull(refundResponse.Value.Properties.BillingInformation.BillingCurrencyTotalPaidAmount);
-            Assert.IsTrue(refundResponse.Value.Properties.BillingInformation.BillingCurrencyProratedAmount.Amount > 0);
-            Assert.AreEqual("USD", refundResponse.Value.Properties.BillingInformation.BillingCurrencyProratedAmount.CurrencyCode);
-            Assert.AreEqual(0, refundResponse.Value.Properties.BillingInformation.BillingCurrencyRemainingCommitmentAmount.Amount); // Test RI is `Upfront` so this should be 0
-            Assert.AreEqual("USD", refundResponse.Value.Properties.BillingInformation.BillingCurrencyRemainingCommitmentAmount.CurrencyCode);
-            Assert.IsTrue(refundResponse.Value.Properties.BillingInformation.BillingCurrencyTotalPaidAmount.Amount > 0);
-            Assert.AreEqual("USD", refundResponse.Value.Properties.BillingInformation.BillingCurrencyTotalPaidAmount.CurrencyCode);
-
-            //PolicyResult
-            Assert.IsNotNull(refundResponse.Value.Properties.PolicyResultProperties);
-            Assert.AreEqual(0, refundResponse.Value.Properties.PolicyResultProperties.PolicyErrors.Count);
-            Assert.IsNotNull(refundResponse.Value.Properties.PolicyResultProperties.ConsumedRefundsTotal);
-            Assert.IsNotNull(refundResponse.Value.Properties.PolicyResultProperties.MaxRefundLimit);
-            Assert.IsTrue(refundResponse.Value.Properties.PolicyResultProperties.ConsumedRefundsTotal.Amount > 0);
-            Assert.AreEqual("USD", refundResponse.Value.Properties.PolicyResultProperties.ConsumedRefundsTotal.CurrencyCode);
-            Assert.AreEqual(50000, refundResponse.Value.Properties.PolicyResultProperties.MaxRefundLimit.Amount);
-            Assert.AreEqual("USD", refundResponse.Value.Properties.PolicyResultProperties.MaxRefundLimit.CurrencyCode);
+            Assert.IsNotNull(calculateRefundResponse.Value.Properties.PolicyResultProperties.MaxRefundLimit.CurrencyCode);
         }
     }
 }

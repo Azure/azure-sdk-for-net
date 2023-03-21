@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry.Specialized;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
@@ -26,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             BinaryData config = BinaryData.FromString("Sample config");
             var uploadConfigResult = await client.UploadBlobAsync(config);
 
-            manifest.Config = new OciDescriptor()
+            manifest.Configuration = new OciDescriptor()
             {
                 Digest = uploadConfigResult.Value.Digest,
                 SizeInBytes = uploadConfigResult.Value.SizeInBytes,
