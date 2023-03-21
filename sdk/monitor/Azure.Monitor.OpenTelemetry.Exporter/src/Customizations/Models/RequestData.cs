@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                 ?? "0";
 
-            Success = isSuccess(activity, ResponseCode, monitorTags.activityType);
+            Success = IsSuccess(activity, ResponseCode, monitorTags.activityType);
 
             Url = url.Truncate(SchemaConstants.RequestData_Url_MaxLength);
             Properties = new ChangeTrackingDictionary<string, string>();
@@ -43,9 +43,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             TraceHelper.AddPropertiesToTelemetry(Properties, ref monitorTags.UnMappedTags);
         }
 
-        internal static bool isSuccess(Activity activity, string responseCode, OperationType operationType)
+        internal static bool IsSuccess(Activity activity, string? responseCode, OperationType operationType)
         {
-            if (operationType == OperationType.Http && int.TryParse(responseCode, out int statusCode))
+            if (operationType == OperationType.Http
+                && responseCode != null
+                && int.TryParse(responseCode, out int statusCode))
             {
                 bool isSuccessStatusCode = statusCode != 0 && statusCode < 400;
                 return activity.Status != ActivityStatusCode.Error && isSuccessStatusCode;
