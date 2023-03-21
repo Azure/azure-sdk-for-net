@@ -109,6 +109,7 @@ namespace Azure.AI.OpenAI
         /// <remarks>
         ///     <see cref="Prompts"/> is equivalent to 'prompt' in the REST request schema.
         /// </remarks>
+        [CodeGenMember("Prompt")]
         public IList<string> Prompts { get; }
 
         /// <summary>
@@ -118,6 +119,7 @@ namespace Azure.AI.OpenAI
         /// <remarks>
         ///     <see cref="StopSequences"/> is equivalent to 'stop' in the REST request schema.
         /// </remarks>
+        [CodeGenMember("Stop")]
         public IList<string> StopSequences { get; }
 
         /// <summary>
@@ -145,12 +147,20 @@ namespace Azure.AI.OpenAI
         ///
         ///     <see cref="TokenSelectionBiases"/> is equivalent to 'logit_bias' in the REST request schema.
         /// </remarks>
+        [CodeGenMember("LogitBias")]
         public IDictionary<int, int> TokenSelectionBiases { get; }
 
         /// <summary> Gets or sets an identifier for a request for use in tracking and rate-limiting. </summary>
         public string User { get; set; }
 
+        [CodeGenMember("Model")]
         internal string NonAzureModel { get; set; }
+
+        [CodeGenMember("CacheLevel")]
+        private int? _cacheLevel;
+
+        [CodeGenMember("CompletionsConfig")]
+        private string _completionsConfig;
 
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>
         public CompletionsOptions()
@@ -158,6 +168,13 @@ namespace Azure.AI.OpenAI
             Prompts = new ChangeTrackingList<string>();
             TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
             StopSequences = new ChangeTrackingList<string>();
+            // Pending CodeGen update
+            _cacheLevel ??= default;
+            if (_cacheLevel != default)
+            { }
+            _completionsConfig ??= default;
+            if (_completionsConfig != default)
+            { }
         }
 
         internal CompletionsOptions(

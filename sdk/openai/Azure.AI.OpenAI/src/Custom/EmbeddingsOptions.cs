@@ -11,7 +11,6 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Schema to create a prompt completion from a deployment. </summary>
-    [CodeGenSuppress("Model", new System.Type[] {})]
     public partial class EmbeddingsOptions
     {
         /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
@@ -63,6 +62,7 @@ namespace Azure.AI.OpenAI
         /// </summary>
         public string Input { get; set; }
 
+        [CodeGenMember("Model")]
         internal string NonAzureModel { get; set; }
     }
 }
