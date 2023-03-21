@@ -12,6 +12,9 @@
 
 ### Other Changes
 
+- Bump api-version of `PolicyAssignments` to `2022-06-01`.
+- Bump api-version of `PolicyDefinitions` and `PolicySetDefinitions` to `2021-06-01`.
+
 ## 1.4.0 (2023-02-10)
 
 ### Features Added
