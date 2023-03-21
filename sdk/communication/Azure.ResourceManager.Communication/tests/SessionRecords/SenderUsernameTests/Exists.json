@@ -322,7 +322,7 @@
         "X-MSEdge-Ref": "Ref A: CB046A0C369C4C028D5151ADE4FE6743 Ref B: STBEDGE0117 Ref C: 2023-03-20T20:13:46Z"
       },
       "ResponseBody": {
-        "id": "subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/communication-rg-3876/providers/microsoft.communication/emailservices/email-test5471/domains/domain-7854.com/senderusernames/un-9677",
+        "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/communication-rg-3876/providers/microsoft.communication/emailservices/email-test5471/domains/domain-7854.com/senderusernames/un-9677",
         "name": "un-9677",
         "type": "emailservices/domains/senderusernames",
         "properties": {
@@ -367,7 +367,7 @@
       "ResponseBody": {
         "value": [
           {
-            "id": "subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/communication-rg-3876/providers/microsoft.communication/emailservices/email-test5471/domains/domain-7854.com/senderusernames/donotreply",
+            "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/communication-rg-3876/providers/microsoft.communication/emailservices/email-test5471/domains/domain-7854.com/senderusernames/donotreply",
             "name": "donotreply",
             "type": "emailservices/domains/senderusernames",
             "properties": {
@@ -376,7 +376,7 @@
             }
           },
           {
-            "id": "subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/communication-rg-3876/providers/microsoft.communication/emailservices/email-test5471/domains/domain-7854.com/senderusernames/un-9677",
+            "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/communication-rg-3876/providers/microsoft.communication/emailservices/email-test5471/domains/domain-7854.com/senderusernames/un-9677",
             "name": "un-9677",
             "type": "emailservices/domains/senderusernames",
             "properties": {
