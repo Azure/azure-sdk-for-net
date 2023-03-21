@@ -11,8 +11,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
 {
     public partial class AzureOrNot
     {
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
+        [TestCase(true, Ignore = "Only verifying that the sample builds")]
         public async Task GetCompletionsFromAzureOrNonAzureOpenAIAsync(bool useAzureOpenAI)
         {
             #region Snippet:UseAzureOrNonAzureOpenAI

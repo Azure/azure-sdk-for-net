@@ -60,10 +60,7 @@ dotnet add package Azure.Identity
 
 ```C# Snippet:CreateOpenAIClientTokenCredential
 string endpoint = "https://myaccount.openai.azure.com/";
-var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), new OpenAIClientOptions()
-{
-    DefaultDeploymentOrModelName = "myDeploymentId",
-});
+var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -112,15 +109,13 @@ The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredentia
 
 ```C# Snippet:GenerateChatbotResponse
 string endpoint = "https://myaccount.openai.azure.com/";
-var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), new OpenAIClientOptions()
-{
-    DefaultDeploymentOrModelName = "myDeploymentId",
-});
+var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
+string deploymentName = "text-davinci-003";
 string prompt = "What is Azure OpenAI?";
 Console.Write($"Input: {prompt}");
 
-Response<Completions> completionsResponse = client.GetCompletions(prompt);
+Response<Completions> completionsResponse = client.GetCompletions(deploymentName, prompt);
 string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Chatbot: {completion}");
 ```
@@ -133,10 +128,7 @@ The `GenerateMultipleChatbotResponsesWithSubscriptionKey` method gives an exampl
 // Replace with your Azure OpenAI key
 string key = "YOUR_AZURE_OPENAI_KEY";
 string endpoint = "https://myaccount.openai.azure.com/";
-var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key), new OpenAIClientOptions()
-{
-    DefaultDeploymentOrModelName = "myModelDeploymentId",
-});
+var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
 
 List<string> examplePrompts = new(){
     "How are you today?",
@@ -146,13 +138,15 @@ List<string> examplePrompts = new(){
     "Describe in single words only the good things that come into your mind about your mother.",
 };
 
+string deploymentName = "text-davinci-003";
+
 foreach (string prompt in examplePrompts)
 {
     Console.Write($"Input: {prompt}");
     CompletionsOptions completionsOptions = new CompletionsOptions();
     completionsOptions.Prompts.Add(prompt);
 
-    Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
+    Response<Completions> completionsResponse = client.GetCompletions(deploymentName, completionsOptions);
     string completion = completionsResponse.Value.Choices[0].Text;
     Console.WriteLine($"Chatbot: {completion}");
 }
@@ -164,10 +158,7 @@ The `SummarizeText` method generates a summarization of the given input prompt.
 
 ```C# Snippet:SummarizeText
 string endpoint = "https://myaccount.openai.azure.com/";
-var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), new OpenAIClientOptions()
-{
-    DefaultDeploymentOrModelName = "myDeploymentId"
-});
+var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
 string textToSummarize = @"
     Two independent experiments reported their results this morning at CERN, Europe's high-energy physics laboratory near Geneva in Switzerland. Both show convincing evidence of a new boson particle weighing around 125 gigaelectronvolts, which so far fits predictions of the Higgs previously made by theoretical physicists.
@@ -187,10 +178,14 @@ string summarizationPrompt = @$"
 ";
 
 Console.Write($"Input: {summarizationPrompt}");
-CompletionsOptions completionsOptions = new CompletionsOptions();
-completionsOptions.Prompts.Add(summarizationPrompt);
+var completionsOptions = new CompletionsOptions()
+{
+    Prompts = { summarizationPrompt },
+};
 
-Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
+string deploymentName = "text-davinci-003";
+
+Response<Completions> completionsResponse = client.GetCompletions(deploymentName, completionsOptions);
 string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Summarization: {completion}");
 ```
@@ -199,11 +194,7 @@ Console.WriteLine($"Summarization: {completion}");
 
 ```C# Snippet:StreamChatMessages
 string nonAzureOpenAIApiKey = "your-api-key-from-platform.openai.com";
-var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions()
-{
-    DefaultDeploymentOrModelName = "gpt-3.5-turbo",
-});
-new OpenAIClient("foo");
+var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions());
 var chatCompletionsOptions = new ChatCompletionsOptions()
 {
     Messages =
@@ -215,7 +206,9 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
     }
 };
 
-Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(chatCompletionsOptions);
+Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(
+    deploymentOrModelName: "gpt-3.5-turbo",
+    chatCompletionsOptions);
 using StreamingChatCompletions streamingChatCompletions = response.Value;
 
 await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())

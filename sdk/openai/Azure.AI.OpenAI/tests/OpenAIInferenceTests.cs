@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Castle.DynamicProxy;
 using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests
@@ -18,10 +17,13 @@ namespace Azure.AI.OpenAI.Tests
         {
         }
 
-        private async Task InternalCompletions(OpenAIClientServiceTarget serviceTarget)
+        [RecordedTest]
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        public async Task Completions(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetClient(serviceTarget, OpenAIClientDefaultScenario.None);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientDefaultScenario.Completions);
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
@@ -42,45 +44,41 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        public Task AzureCompletions() => InternalCompletions(OpenAIClientServiceTarget.Azure);
-
-        [RecordedTest]
-        public Task NonAzureCompletions() => InternalCompletions(OpenAIClientServiceTarget.NonAzure);
-
-        private async Task InternalSimpleCompletions(OpenAIClientServiceTarget serviceTarget)
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        public async Task SimpleCompletions(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetClient(serviceTarget, OpenAIClientDefaultScenario.Completions);
-            Response<Completions> response = await client.GetCompletionsAsync("Hello world!");
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(
+                serviceTarget,
+                OpenAIClientScenario.Completions);
+            Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, "Hello world!");
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
         }
 
         [RecordedTest]
-        public Task AzureSimpleCompletions() => InternalSimpleCompletions(OpenAIClientServiceTarget.Azure);
-
-        [RecordedTest]
-        public Task NonAzureSimpleCompletions() => InternalSimpleCompletions(OpenAIClientServiceTarget.NonAzure);
-
-        /// <summary>
-        /// Test Completions using a TokenCredential.
-        /// </summary>
-        [RecordedTest]
-        public async Task AzureCompletionsWithTokenCredential()
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure, Ignore = "Tokens not supported for non-Azure")]
+        public async Task CompletionsWithTokenCredential(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetAzureCompletionsClientWithTokenCredential();
-            CompletionsOptions requestOptions = new CompletionsOptions();
+            OpenAIClient client = GetTestClient(serviceTarget, OpenAIClientAuthenticationType.Token);
+            var requestOptions = new CompletionsOptions();
             requestOptions.Prompts.Add("Hello, world!");
             requestOptions.Prompts.Add("I can have multiple prompts");
             Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
-            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(CompletionsDeploymentId, requestOptions);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Choices.Count, Is.EqualTo(2));
         }
 
-        private async Task InternalEmbeddings(OpenAIClientServiceTarget serviceTarget)
+        [RecordedTest]
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        public async Task Embeddings(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetClient(serviceTarget, OpenAIClientDefaultScenario.None);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientDefaultScenario.Embeddings);
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Embeddings);
             var embeddingsRequest = new EmbeddingsOptions("Your text string goes here");
             Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsOptions>());
             Response<Embeddings> response = await client.GetEmbeddingsAsync(deploymentOrModelName, embeddingsRequest);
@@ -88,14 +86,12 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        public Task AzureEmbeddings() => InternalEmbeddings(OpenAIClientServiceTarget.Azure);
-
-        [RecordedTest]
-        public Task NonAzureEmbeddings() => InternalEmbeddings(OpenAIClientServiceTarget.NonAzure);
-
-        private async Task InternalCompletionsUsage(OpenAIClientServiceTarget serviceTarget)
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        public async Task CompletionsUsageField(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetClient(serviceTarget, OpenAIClientDefaultScenario.Completions);
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
             var requestOptions = new CompletionsOptions()
             {
                 Prompts =
@@ -108,7 +104,7 @@ namespace Azure.AI.OpenAI.Tests
                 LogProbabilityCount = 1,
             };
             int expectedChoiceCount = (requestOptions.ChoicesPerPrompt ?? 1) * requestOptions.Prompts.Count;
-            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, requestOptions);
             Assert.That(response.GetRawResponse(), Is.Not.Null.Or.Empty);
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
@@ -133,15 +129,14 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        public Task AzureCompletionsUsage() => InternalCompletionsUsage(OpenAIClientServiceTarget.Azure);
-
-        [RecordedTest]
-        public Task NonAzureCompletionsUsage() => InternalCompletionsUsage(OpenAIClientServiceTarget.NonAzure);
-
-        private async Task InternalChatCompletions(OpenAIClientServiceTarget serviceTarget)
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        public async Task ChatCompletions(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetClient(serviceTarget, OpenAIClientDefaultScenario.None);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientDefaultScenario.ChatCompletions);
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(
+                serviceTarget,
+                OpenAIClientScenario.ChatCompletions);
             var requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
@@ -153,7 +148,9 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 512,
             };
-            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(deploymentOrModelName, requestOptions);
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
+                deploymentOrModelName,
+                requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
@@ -168,16 +165,14 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        [Ignore("not supported")]
-        public Task AzureChatCompletions() => InternalChatCompletions(OpenAIClientServiceTarget.Azure);
-
-        [RecordedTest]
-        public Task NonAzureChatCompletions() => InternalChatCompletions(OpenAIClientServiceTarget.NonAzure);
-
-        private async Task InternalStreamingChatCompletions(OpenAIClientServiceTarget serviceTarget)
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        public async Task StreamingChatCompletions(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetClient(serviceTarget, OpenAIClientDefaultScenario.None);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientDefaultScenario.ChatCompletions);
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(
+                serviceTarget,
+                OpenAIClientScenario.ChatCompletions);
             var requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
@@ -210,16 +205,10 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(totalMessages, Is.GreaterThan(1));
         }
 
-        [RecordedTest]
-        [Ignore("not supported")]
-        public Task AzureStreamingChatCompletions() => InternalStreamingChatCompletions(OpenAIClientServiceTarget.Azure);
-
-        [RecordedTest]
-        public Task NonAzureStreamingChatCompletions() => InternalStreamingChatCompletions(OpenAIClientServiceTarget.NonAzure);
-
         private async Task InternalAdvancedCompletionsOptions(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetClient(serviceTarget, OpenAIClientDefaultScenario.Completions);
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
             string promptText = "Are bananas especially radioactive?";
             var requestOptions = new CompletionsOptions()
             {
@@ -230,7 +219,7 @@ namespace Azure.AI.OpenAI.Tests
                 Echo = true,
                 LogProbabilityCount = 1,
             };
-            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, requestOptions);
             Assert.That(response, Is.Not.Null);
             string rawResponse = response.GetRawResponse().Content.ToString();
             Assert.That(rawResponse, Is.Not.Null.Or.Empty);
@@ -246,29 +235,29 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        public Task AzureAdvancedCompletionsOptions() => InternalAdvancedCompletionsOptions(OpenAIClientServiceTarget.Azure);
-
-        [RecordedTest]
-        public Task NonAzureAdvancedCompletionsOptions() => InternalAdvancedCompletionsOptions(OpenAIClientServiceTarget.NonAzure);
-
-        [RecordedTest]
-        public void AzureBadDeploymentFails()
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure, Ignore = "Not applicable to non-Azure OpenAI")]
+        public void BadDeploymentFails(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetAzureClientWithInvalidDeployment();
-            CompletionsOptions completionsRequest = new CompletionsOptions();
+            OpenAIClient client = GetTestClient(serviceTarget);
+            var completionsRequest = new CompletionsOptions();
             completionsRequest.Prompts.Add("Hello world");
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await client.GetCompletionsAsync(completionsRequest);
+                await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest);
             });
             Assert.AreEqual(404, exception.Status);
             Assert.That(exception.ErrorCode, Is.EqualTo("DeploymentNotFound"));
         }
 
-        private async Task InternalTokenCutoff(OpenAIClientServiceTarget serviceTarget)
+        [RecordedTest]
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        public async Task TokenCutoff(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetClient(serviceTarget, OpenAIClientDefaultScenario.Completions);
-            CompletionsOptions requestOptions = new CompletionsOptions()
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
+            var requestOptions = new CompletionsOptions()
             {
                 Prompts =
                 {
@@ -277,7 +266,7 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 3,
             };
-            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
@@ -285,15 +274,13 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        public Task AzureTokenCutoff() => InternalTokenCutoff(OpenAIClientServiceTarget.Azure);
-
-        [RecordedTest]
-        public Task NonAzureTokenCutoff() => InternalTokenCutoff(OpenAIClientServiceTarget.NonAzure);
-
-        private async Task InternalStreamingCompletions(OpenAIClientServiceTarget serviceTarget)
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        public async Task StreamingCompletions(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetClient(serviceTarget, OpenAIClientDefaultScenario.Completions);
-            CompletionsOptions requestOptions = new CompletionsOptions()
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
+            var requestOptions = new CompletionsOptions()
             {
                 Prompts =
                 {
@@ -304,7 +291,9 @@ namespace Azure.AI.OpenAI.Tests
                 LogProbabilityCount = 1,
             };
 
-            Response<StreamingCompletions> response = await client.GetCompletionsStreamingAsync(requestOptions);
+            Response<StreamingCompletions> response = await client.GetCompletionsStreamingAsync(
+                deploymentOrModelName,
+                requestOptions);
             Assert.That(response, Is.Not.Null);
 
             // StreamingCompletions implements IDisposable; capturing the .Value field of `response` with a `using`
@@ -313,7 +302,7 @@ namespace Azure.AI.OpenAI.Tests
             using StreamingCompletions responseValue = response.Value;
 
             int originallyEnumeratedChoices = 0;
-            List<List<string>> originallyEnumeratedTextParts = new List<List<string>>();
+            var originallyEnumeratedTextParts = new List<List<string>>();
 
             await foreach (StreamingChoice choice in responseValue.GetChoicesStreaming())
             {
@@ -357,12 +346,6 @@ namespace Azure.AI.OpenAI.Tests
                 }
             }
         }
-
-        [RecordedTest]
-        public Task AzureStreamingCompletions() => InternalStreamingCompletions(OpenAIClientServiceTarget.Azure);
-
-        [RecordedTest]
-        public Task NonAzureStreamingCompletions() => InternalStreamingCompletions(OpenAIClientServiceTarget.NonAzure);
 
         // Lightweight reimplementation of .NET 7 .ToBlockingEnumerable().ToList()
         private static async Task<IReadOnlyList<T>> GetBlockingListFromIAsyncEnumerable<T>(

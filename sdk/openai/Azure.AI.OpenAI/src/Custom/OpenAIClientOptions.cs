@@ -13,21 +13,14 @@ namespace Azure.AI.OpenAI
     /// <summary> Client options for OpenAIClient. </summary>
     public partial class OpenAIClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01;
-
-        /// <summary>
-        /// Gets or sets the Azure OpenAI model deployment name (when using an <see cref="OpenAIClient"/> with Azure
-        /// OpenAI) or model name (when using an <see cref="OpenAIClient"/> with non-Azure OpenAI) that an
-        /// <see cref="OpenAIClient"/> instantiated with these <see cref="OpenAIClientOptions"/> should use when a
-        /// request method does not otherwise specify a deployment or model name.
-        /// </summary>
-        public string DefaultDeploymentOrModelName { get; set; }
+        private const ServiceVersion LatestVersion = ServiceVersion.V2023_03_15_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2022-12-01". </summary>
             V2022_12_01 = 1,
+            V2023_03_15_Preview = 2,
         }
 
         internal string Version { get; }
@@ -38,6 +31,7 @@ namespace Azure.AI.OpenAI
             Version = version switch
             {
                 ServiceVersion.V2022_12_01 => "2022-12-01",
+                ServiceVersion.V2023_03_15_Preview => "2023-03-15-preview",
                 _ => throw new NotSupportedException()
             };
         }

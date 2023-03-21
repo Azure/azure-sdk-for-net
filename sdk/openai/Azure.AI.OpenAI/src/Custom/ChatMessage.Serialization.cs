@@ -10,6 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
+    [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
     public partial class ChatMessage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

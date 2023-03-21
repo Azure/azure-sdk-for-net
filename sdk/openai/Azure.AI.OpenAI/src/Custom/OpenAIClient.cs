@@ -21,7 +21,6 @@ namespace Azure.AI.OpenAI
         private const string PublicOpenAIApiVersion = "1";
         private const string PublicOpenAIEndpoint = $"https://api.openai.com/v{PublicOpenAIApiVersion}";
 
-        private readonly string _defaultDeploymentOrModelName;
         private readonly string _nonAzureOpenAIApiKey;
 
         /// <summary>
@@ -53,7 +52,6 @@ namespace Azure.AI.OpenAI
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
-            _defaultDeploymentOrModelName = options.DefaultDeploymentOrModelName;
         }
 
         /// <inheritdoc cref="OpenAIClient(Uri, AzureKeyCredential, OpenAIClientOptions)"/>
@@ -92,7 +90,6 @@ namespace Azure.AI.OpenAI
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
-            _defaultDeploymentOrModelName = options.DefaultDeploymentOrModelName;
         }
 
         /// <inheritdoc cref="OpenAIClient(Uri, TokenCredential, OpenAIClientOptions)"/>
@@ -144,6 +141,7 @@ namespace Azure.AI.OpenAI
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
@@ -172,22 +170,14 @@ namespace Azure.AI.OpenAI
 
         /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
         public virtual Response<Completions> GetCompletions(
-            CompletionsOptions completionsOptions,
-            CancellationToken cancellationToken = default)
-            => GetCompletions(_defaultDeploymentOrModelName, completionsOptions, cancellationToken);
-
-        /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
-        public virtual Response<Completions> GetCompletions(
             string deploymentOrModelName,
             string prompt,
             CancellationToken cancellationToken = default)
-            => GetCompletions(deploymentOrModelName, GetDefaultCompletionsOptions(prompt), cancellationToken);
-
-        /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
-        public virtual Response<Completions> GetCompletions(
-            string prompt,
-            CancellationToken cancellationToken = default)
-            => GetCompletions(_defaultDeploymentOrModelName, GetDefaultCompletionsOptions(prompt), cancellationToken);
+        {
+            Argument.AssertNotNull(prompt, nameof(prompt));
+            CompletionsOptions simpleOptions = GetDefaultCompletionsOptions(prompt);
+            return GetCompletions(deploymentOrModelName, simpleOptions, cancellationToken);
+        }
 
         /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
         public virtual async Task<Response<Completions>> GetCompletionsAsync(
@@ -195,6 +185,7 @@ namespace Azure.AI.OpenAI
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
@@ -224,22 +215,14 @@ namespace Azure.AI.OpenAI
 
         /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
         public virtual Task<Response<Completions>> GetCompletionsAsync(
-            CompletionsOptions completionsOptions,
-            CancellationToken cancellationToken = default)
-            => GetCompletionsAsync(_defaultDeploymentOrModelName, completionsOptions, cancellationToken);
-
-        /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
-        public virtual Task<Response<Completions>> GetCompletionsAsync(
             string deploymentOrModelName,
             string prompt,
             CancellationToken cancellationToken = default)
-            => GetCompletionsAsync(deploymentOrModelName, GetDefaultCompletionsOptions(prompt), cancellationToken);
-
-        /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
-        public virtual Task<Response<Completions>> GetCompletionsAsync(
-            string prompt,
-            CancellationToken cancellationToken = default)
-            => GetCompletionsAsync(_defaultDeploymentOrModelName, GetDefaultCompletionsOptions(prompt), cancellationToken);
+        {
+            Argument.AssertNotNull(prompt, nameof(prompt));
+            CompletionsOptions simpleOptions = GetDefaultCompletionsOptions(prompt);
+            return GetCompletionsAsync(deploymentOrModelName, simpleOptions, cancellationToken);
+        }
 
         /// <summary>
         ///     Begin a completions request and get an object that can stream response data as it becomes available.
@@ -253,7 +236,9 @@ namespace Azure.AI.OpenAI
         /// <param name="cancellationToken">
         ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="completionsOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="deploymentOrModelName"/> or <paramref name="completionsOptions"/> is null.
+        /// </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns>
         /// A response that, if the request was successful, includes a <see cref="StreamingCompletions"/> instance.
@@ -263,6 +248,7 @@ namespace Azure.AI.OpenAI
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
@@ -297,17 +283,12 @@ namespace Azure.AI.OpenAI
         }
 
         /// <inheritdoc cref="GetCompletionsStreaming(string, CompletionsOptions, CancellationToken)"/>
-        public virtual Response<StreamingCompletions> GetCompletionsStreaming(
-            CompletionsOptions completionsOptions,
-            CancellationToken cancellationToken = default)
-            => GetCompletionsStreaming(_defaultDeploymentOrModelName, completionsOptions, cancellationToken);
-
-        /// <inheritdoc cref="GetCompletionsStreaming(string, CompletionsOptions, CancellationToken)"/>
         public virtual async Task<Response<StreamingCompletions>> GetCompletionsStreamingAsync(
             string deploymentOrModelName,
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
@@ -343,12 +324,6 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <inheritdoc cref="GetCompletionsStreaming(string, CompletionsOptions, CancellationToken)"/>
-        public virtual Task<Response<StreamingCompletions>> GetCompletionsStreamingAsync(
-            CompletionsOptions completionsOptions,
-            CancellationToken cancellationToken = default)
-            => GetCompletionsStreamingAsync(_defaultDeploymentOrModelName, completionsOptions, cancellationToken);
-
         /// <summary> Get chat completions for provided chat context messages. </summary>
         /// <param name="deploymentOrModelName">
         /// <inheritdoc
@@ -357,12 +332,15 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="chatCompletionsOptions"> The options for this chat completions request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="deploymentOrModelName"/> or <paramref name="chatCompletionsOptions"/> is null.
+        /// </exception>
         public virtual Response<ChatCompletions> GetChatCompletions(
             string deploymentOrModelName,
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
@@ -394,17 +372,12 @@ namespace Azure.AI.OpenAI
         }
 
         /// <inheritdoc cref="GetChatCompletions(string, ChatCompletionsOptions, CancellationToken)"/>
-        public virtual Response<ChatCompletions> GetChatCompletions(
-            ChatCompletionsOptions chatCompletionsOptions,
-            CancellationToken cancellationToken = default)
-            => GetChatCompletions(_defaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
-
-        /// <inheritdoc cref="GetChatCompletions(string, ChatCompletionsOptions, CancellationToken)"/>
         public virtual async Task<Response<ChatCompletions>> GetChatCompletionsAsync(
             string deploymentOrModelName,
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
@@ -436,12 +409,6 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <inheritdoc cref="GetChatCompletions(string, ChatCompletionsOptions, CancellationToken)"/>
-        public virtual Task<Response<ChatCompletions>> GetChatCompletionsAsync(
-            ChatCompletionsOptions chatCompletionsOptions,
-            CancellationToken cancellationToken = default)
-            => GetChatCompletionsAsync(_defaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
-
         /// <summary>
         ///     Begin a chat completions request and get an object that can stream response data as it becomes
         ///     available.
@@ -457,7 +424,9 @@ namespace Azure.AI.OpenAI
         /// <param name="cancellationToken">
         ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="deploymentOrModelName"/> or <paramref name="chatCompletionsOptions"/> is null.
+        /// </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response<StreamingChatCompletions> GetChatCompletionsStreaming(
@@ -465,6 +434,7 @@ namespace Azure.AI.OpenAI
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
@@ -499,17 +469,12 @@ namespace Azure.AI.OpenAI
         }
 
         /// <inheritdoc cref="GetChatCompletionsStreaming(string, ChatCompletionsOptions, CancellationToken)"/>
-        public virtual Response<StreamingChatCompletions> GetChatCompletionsStreaming(
-            ChatCompletionsOptions chatCompletionsOptions,
-            CancellationToken cancellationToken = default)
-            => GetChatCompletionsStreaming(_defaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
-
-        /// <inheritdoc cref="GetChatCompletionsStreaming(string, ChatCompletionsOptions, CancellationToken)"/>
         public virtual async Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
             string deploymentOrModelName,
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
@@ -546,12 +511,6 @@ namespace Azure.AI.OpenAI
                 throw;
             }
         }
-
-        /// <inheritdoc cref="GetChatCompletionsStreaming(string, ChatCompletionsOptions, CancellationToken)"/>
-        public virtual Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
-            ChatCompletionsOptions chatCompletionsOptions,
-            CancellationToken cancellationToken = default)
-            => GetChatCompletionsStreamingAsync(_defaultDeploymentOrModelName, chatCompletionsOptions, cancellationToken);
 
         /// <summary> Return the computed embeddings for a given prompt. </summary>
         /// <param name="deploymentOrModelName">
@@ -600,12 +559,6 @@ namespace Azure.AI.OpenAI
         }
 
         /// <inheritdoc cref="GetEmbeddings(string, EmbeddingsOptions, CancellationToken)"/>
-        public virtual Response<Embeddings> GetEmbeddings(
-            EmbeddingsOptions embeddingsOptions,
-            CancellationToken cancellationToken = default)
-            => GetEmbeddings(_defaultDeploymentOrModelName, embeddingsOptions, cancellationToken);
-
-        /// <inheritdoc cref="GetEmbeddings(string, EmbeddingsOptions, CancellationToken)"/>
         public virtual async Task<Response<Embeddings>> GetEmbeddingsAsync(
             string deploymentOrModelName,
             EmbeddingsOptions embeddingsOptions,
@@ -638,12 +591,6 @@ namespace Azure.AI.OpenAI
                 throw;
             }
         }
-
-        /// <inheritdoc cref="GetEmbeddings(string, EmbeddingsOptions, CancellationToken)"/>
-        public virtual Task<Response<Embeddings>> GetEmbeddingsAsync(
-            EmbeddingsOptions embeddingsOptions,
-            CancellationToken cancellationToken = default)
-            => GetEmbeddingsAsync(_defaultDeploymentOrModelName, embeddingsOptions, cancellationToken);
 
         private static RequestContent GetStreamingEnabledRequestContent(RequestContent originalRequestContent)
         {

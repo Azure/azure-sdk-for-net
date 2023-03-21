@@ -17,10 +17,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             // Replace with your Azure OpenAI key
             string key = "YOUR_AZURE_OPENAI_KEY";
             string endpoint = "https://myaccount.openai.azure.com/";
-            var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key), new OpenAIClientOptions()
-            {
-                DefaultDeploymentOrModelName = "myModelDeploymentId",
-            });
+            var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
 
             List<string> examplePrompts = new(){
                 "How are you today?",
@@ -30,13 +27,15 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 "Describe in single words only the good things that come into your mind about your mother.",
             };
 
+            string deploymentName = "text-davinci-003";
+
             foreach (string prompt in examplePrompts)
             {
                 Console.Write($"Input: {prompt}");
                 CompletionsOptions completionsOptions = new CompletionsOptions();
                 completionsOptions.Prompts.Add(prompt);
 
-                Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
+                Response<Completions> completionsResponse = client.GetCompletions(deploymentName, completionsOptions);
                 string completion = completionsResponse.Value.Choices[0].Text;
                 Console.WriteLine($"Chatbot: {completion}");
             }
