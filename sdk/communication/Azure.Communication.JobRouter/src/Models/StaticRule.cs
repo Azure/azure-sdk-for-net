@@ -9,9 +9,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("StaticRule")]
-#pragma warning disable CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("StaticRule")]
-#pragma warning restore CA1825 // Avoid zero-length array allocations
     public partial class StaticRule : RouterRule
     {
         /// <summary> The static value this rule always returns. </summary>
