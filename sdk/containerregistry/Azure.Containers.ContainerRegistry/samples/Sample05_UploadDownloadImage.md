@@ -17,8 +17,8 @@ Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 string repository = "sample-oci-image";
 string tag = "demo";
 
-// Create a new ContainerRegistryBlobClient
-ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
+// Create a new ContainerRegistryContentClient
+ContainerRegistryContentClient client = new(endpoint, repository, new DefaultAzureCredential());
 ```
 
 ## Upload an OCI Image

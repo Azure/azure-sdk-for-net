@@ -24,8 +24,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string repository = "sample-oci-image";
             string tag = "demo";
 
-            // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
+            // Create a new ContainerRegistryContentClient
+            ContainerRegistryContentClient client = new(endpoint, repository, new DefaultAzureCredential());
 
             #endregion
 
@@ -74,8 +74,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string repository = "sample-oci-image";
             string tag = "demo";
 
-            // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential());
+            // Create a new ContainerRegistryContentClient
+            ContainerRegistryContentClient client = new ContainerRegistryContentClient(endpoint, repository, new DefaultAzureCredential());
 
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
             Directory.CreateDirectory(path);
@@ -139,8 +139,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string repository = "sample-oci-image";
             string tag = "demo";
 
-            // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
+            // Create a new ContainerRegistryContentClient
+            ContainerRegistryContentClient client = new(endpoint, repository, new DefaultAzureCredential());
 
             #region Snippet:ContainerRegistry_Samples_DeleteBlob
             DownloadManifestResult result = await client.DownloadManifestAsync(tag);
@@ -167,8 +167,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             string repository = "library/hello-world";
 
-            // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential());
+            // Create a new ContainerRegistryContentClient
+            ContainerRegistryContentClient client = new ContainerRegistryContentClient(endpoint, repository, new DefaultAzureCredential());
 
 #region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
 
@@ -213,8 +213,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "custom-manifest");
             Directory.CreateDirectory(path);
 
-            // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
+            // Create a new ContainerRegistryContentClient
+            ContainerRegistryContentClient client = new(endpoint, repository, new DefaultAzureCredential());
 
 #region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
 
