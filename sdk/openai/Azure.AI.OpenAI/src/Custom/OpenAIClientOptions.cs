@@ -11,6 +11,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Client options for OpenAIClient. </summary>
+    [CodeGenSuppress("ServiceVersion")]
     public partial class OpenAIClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_03_15_Preview;
