@@ -139,9 +139,13 @@ namespace Azure.Core.Pipeline
             _activityAdapter?.Dispose();
         }
 
-        public void Failed(Exception e)
+        /// <summary>
+        /// Marks the scope as failed.
+        /// </summary>
+        /// <param name="exception">The exception to associate with the failed scope.</param>
+        public void Failed(Exception? exception = default)
         {
-            _activityAdapter?.MarkFailed(e);
+            _activityAdapter?.MarkFailed(exception);
         }
 
         /// <summary>
@@ -368,12 +372,16 @@ namespace Azure.Core.Pipeline
                 _currentActivity?.SetStartTime(startTime);
             }
 
-            public void MarkFailed(Exception exception)
+            public void MarkFailed(Exception? exception)
             {
-                _diagnosticSource?.Write(_activityName + ".Exception", exception);
+                if (exception != null)
+                {
+                    _diagnosticSource?.Write(_activityName + ".Exception", exception);
+                }
+
                 if (ActivityExtensions.SupportsActivitySource())
                 {
-                    _currentActivity?.SetErrorStatus(exception.ToString());
+                    _currentActivity?.SetErrorStatus(exception?.ToString());
                 }
             }
 
@@ -430,7 +438,7 @@ namespace Azure.Core.Pipeline
         private static Action<Activity, int>? SetIdFormatMethod;
         private static Func<Activity, string?>? GetTraceStateStringMethod;
         private static Action<Activity, string?>? SetTraceStateStringMethod;
-        private static Action<Activity, int, string>? SetErrorStatusMethod;
+        private static Action<Activity, int, string?>? SetErrorStatusMethod;
         private static Func<Activity, int>? GetIdFormatMethod;
         private static Action<Activity, string, object?>? ActivityAddTagMethod;
         private static Func<object, string, int, object?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
@@ -575,7 +583,7 @@ namespace Azure.Core.Pipeline
             SetTraceStateStringMethod(activity, tracestate);
         }
 
-        public static void SetErrorStatus(this Activity activity, string description)
+        public static void SetErrorStatus(this Activity activity, string? errorDescription)
         {
             if (SetErrorStatusMethod == null)
             {
@@ -600,13 +608,13 @@ namespace Azure.Core.Pipeline
 
                         var statusParameter = Expression.Parameter(typeof(int));
                         var descriptionParameter = Expression.Parameter(typeof(string));
-                        SetErrorStatusMethod = Expression.Lambda<Action<Activity, int, string>>(
+                        SetErrorStatusMethod = Expression.Lambda<Action<Activity, int, string?>>(
                             Expression.Call(ActivityParameter, method, Expression.Convert(statusParameter, methodParameters[0].ParameterType), descriptionParameter),
                             ActivityParameter, statusParameter, descriptionParameter).Compile();
                     }
                 }
             }
-            SetErrorStatusMethod(activity, 2 /* Error */, description);
+            SetErrorStatusMethod(activity, 2 /* Error */, errorDescription);
         }
 
         public static void AddObjectTag(this Activity activity, string name, object value)
