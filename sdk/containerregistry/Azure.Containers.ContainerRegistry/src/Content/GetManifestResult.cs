@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Text.Json;
 
 namespace Azure.Containers.ContainerRegistry
@@ -10,9 +9,9 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary>
     /// The result from downloading an OCI manifest from the registry.
     /// </summary>
-    public class DownloadManifestResult
+    public class GetManifestResult
     {
-        internal DownloadManifestResult(string digest, ManifestMediaType mediaType, BinaryData content)
+        internal GetManifestResult(string digest, ManifestMediaType mediaType, BinaryData content)
         {
             Digest = digest;
             MediaType = mediaType;

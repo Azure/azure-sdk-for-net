@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> The Azure Container Registry blob client, responsible for uploading and downloading
+    /// <summary> The Azure Container Registry content client, responsible for uploading and downloading
     /// blobs and manifests, the building blocks of artifacts. </summary>
     public class ContainerRegistryContentClient
     {
@@ -136,24 +136,24 @@ namespace Azure.Containers.ContainerRegistry
         public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
-        /// Uploads an artifact manifest.
+        /// Sets a manifest.
         /// </summary>
-        /// <param name="manifest">The manifest to upload.</param>
+        /// <param name="manifest">The manifest to set.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The result of the manifest upload.</returns>
-        public virtual Response<UploadManifestResult> UploadManifest(OciImageManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        /// <returns>The result of the set manifest operation.</returns>
+        public virtual Response<SetManifestResult> SetManifest(OciImageManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(UploadManifest)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(SetManifest)}");
             scope.Start();
             try
             {
                 using MemoryStream stream = SerializeManifest(manifest);
-                return UploadManifestInternalAsync(stream, tag, mediaType, false, cancellationToken).EnsureCompleted();
+                return SetManifestInternalAsync(stream, tag, mediaType, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -163,40 +163,40 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Uploads an artifact manifest.
+        /// Sets a manifest.
         /// </summary>
-        /// <param name="manifest">The <see cref="BinaryData"/> containing the serialized manifest to upload.</param>
+        /// <param name="manifest">The <see cref="BinaryData"/> containing the serialized manifest to set.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The result of the manifest upload.</returns>
-        public virtual Response<UploadManifestResult> UploadManifest(BinaryData manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        /// <returns>The result of the set manifest operation.</returns>
+        public virtual Response<SetManifestResult> SetManifest(BinaryData manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
 
-            return UploadManifest(manifest.ToStream(), tag, mediaType, cancellationToken);
+            return SetManifest(manifest.ToStream(), tag, mediaType, cancellationToken);
         }
 
         /// <summary>
-        /// Uploads an artifact manifest.
+        /// Sets a manifest.
         /// </summary>
-        /// <param name="manifest">The <see cref="Stream"/> containing the serialized manifest to upload.</param>
+        /// <param name="manifest">The <see cref="Stream"/> containing the serialized manifest to set.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The result of the manifest upload.</returns>
-        internal virtual Response<UploadManifestResult> UploadManifest(Stream manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        /// <returns>The result of the set manifest operation.</returns>
+        internal virtual Response<SetManifestResult> SetManifest(Stream manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(UploadManifest)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(SetManifest)}");
             scope.Start();
             try
             {
                 using MemoryStream manifestStream = CopyStreamAsync(manifest, false).EnsureCompleted();
-                return UploadManifestInternalAsync(manifestStream, tag, mediaType, false, cancellationToken).EnsureCompleted();
+                return SetManifestInternalAsync(manifestStream, tag, mediaType, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -206,24 +206,24 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Uploads an artifact manifest.
+        /// Sets a manifest.
         /// </summary>
-        /// <param name="manifest">The manifest to upload.</param>
+        /// <param name="manifest">The manifest to set.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The result of the manifest upload.</returns>
-        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(OciImageManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        /// <returns>The result of the set manifest operation.</returns>
+        public virtual async Task<Response<SetManifestResult>> SetManifestAsync(OciImageManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(UploadManifest)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(SetManifest)}");
             scope.Start();
             try
             {
                 using MemoryStream stream = SerializeManifest(manifest);
-                return await UploadManifestInternalAsync(stream, tag, mediaType, true, cancellationToken).ConfigureAwait(false);
+                return await SetManifestInternalAsync(stream, tag, mediaType, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -233,40 +233,40 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Uploads an artifact manifest.
+        /// Sets a manifest.
         /// </summary>
-        /// <param name="manifest">The <see cref="BinaryData"/> containing the serialized manifest to upload.</param>
+        /// <param name="manifest">The <see cref="BinaryData"/> containing the serialized manifest to set.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The result of the manifest upload.</returns>
-        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(BinaryData manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        /// <returns>The result of the set manifest operation.</returns>
+        public virtual async Task<Response<SetManifestResult>> SetManifestAsync(BinaryData manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
 
-            return await UploadManifestAsync(manifest.ToStream(), tag, mediaType, cancellationToken).ConfigureAwait(false);
+            return await SetManifestAsync(manifest.ToStream(), tag, mediaType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Uploads an artifact manifest.
+        /// Sets a manifest.
         /// </summary>
-        /// <param name="manifest">The <see cref="Stream"/> containing the serialized manifest to upload.</param>
+        /// <param name="manifest">The <see cref="Stream"/> containing the serialized manifest to set.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The result of the manifest upload.</returns>
-        internal virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(Stream manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        /// <returns>The result of the set manifest operation.</returns>
+        internal virtual async Task<Response<SetManifestResult>> SetManifestAsync(Stream manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(UploadManifest)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(SetManifest)}");
             scope.Start();
             try
             {
                 using MemoryStream manifestStream = await CopyStreamAsync(manifest, true).ConfigureAwait(false);
-                return await UploadManifestInternalAsync(manifestStream, tag, mediaType, true, cancellationToken).ConfigureAwait(false);
+                return await SetManifestInternalAsync(manifestStream, tag, mediaType, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -275,7 +275,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private async Task<Response<UploadManifestResult>> UploadManifestInternalAsync(MemoryStream manifest, string tag, ManifestMediaType? mediaType, bool async, CancellationToken cancellationToken)
+        private async Task<Response<SetManifestResult>> SetManifestInternalAsync(MemoryStream manifest, string tag, ManifestMediaType? mediaType, bool async, CancellationToken cancellationToken)
         {
             string contentDigest = BlobHelper.ComputeDigest(manifest);
             string tagOrDigest = tag ?? contentDigest;
@@ -287,7 +287,7 @@ namespace Azure.Containers.ContainerRegistry
 
             BlobHelper.ValidateDigest(contentDigest, response.Headers.DockerContentDigest);
 
-            return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+            return Response.FromValue(new SetManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
         }
 
         /// <summary>
@@ -533,32 +533,32 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Downloads a manifest.
+        /// Gets a manifest.
         /// </summary>
-        /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
-        /// <param name="mediaTypes">The set of media types to accept for the manifest being downloaded.</param>
+        /// <param name="tagOrDigest">The tag or digest of the manifest to get.</param>
+        /// <param name="mediaTypes">The set of media types to accept for the manifest.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>The download manifest result.</returns>
-        public virtual Response<DownloadManifestResult> DownloadManifest(string tagOrDigest, IEnumerable<ManifestMediaType> mediaTypes, CancellationToken cancellationToken = default)
+        public virtual Response<GetManifestResult> GetManifest(string tagOrDigest, IEnumerable<ManifestMediaType> mediaTypes, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
             Argument.AssertNotNull(mediaTypes, nameof(mediaTypes));
 
-            return DownloadManifest(tagOrDigest, string.Join(", ", mediaTypes), cancellationToken);
+            return GetManifest(tagOrDigest, string.Join(", ", mediaTypes), cancellationToken);
         }
 
         /// <summary>
-        /// Downloads a manifest.
+        /// Gets a manifest.
         /// </summary>
-        /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
-        /// <param name="mediaType">The media type of the manifest to download.  If not specified, all media types will be requested.</param>
+        /// <param name="tagOrDigest">The tag or digest of the manifest to get.</param>
+        /// <param name="mediaType">The media type of the manifest to get.  If not specified, all media types will be requested.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>The download manifest result.</returns>
-        public virtual Response<DownloadManifestResult> DownloadManifest(string tagOrDigest, ManifestMediaType? mediaType = null, CancellationToken cancellationToken = default)
+        /// <returns>The GET manifest result.</returns>
+        public virtual Response<GetManifestResult> GetManifest(string tagOrDigest, ManifestMediaType? mediaType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(DownloadManifest)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(GetManifest)}");
             scope.Start();
             try
             {
@@ -581,7 +581,7 @@ namespace Azure.Containers.ContainerRegistry
                     BlobHelper.ValidateDigest(contentDigest, digest);
                 }
 
-                return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
+                return Response.FromValue(new GetManifestResult(digest, contentType, rawResponse.Content), rawResponse);
             }
             catch (Exception e)
             {
@@ -591,32 +591,32 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Downloads a manifest.
+        /// Gets a manifest.
         /// </summary>
-        /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
-        /// <param name="mediaTypes">The set of media types to accept for the manifest being downloaded.</param>
+        /// <param name="tagOrDigest">The tag or digest of the manifest to get.</param>
+        /// <param name="mediaTypes">The set of media types to accept for the manifest.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>The download manifest result.</returns>
-        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(string tagOrDigest, IEnumerable<ManifestMediaType> mediaTypes, CancellationToken cancellationToken = default)
+        /// <returns>The manifest result.</returns>
+        public virtual async Task<Response<GetManifestResult>> GetManifestAsync(string tagOrDigest, IEnumerable<ManifestMediaType> mediaTypes, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
             Argument.AssertNotNull(mediaTypes, nameof(mediaTypes));
 
-            return await DownloadManifestAsync(tagOrDigest, string.Join(", ", mediaTypes), cancellationToken).ConfigureAwait(false);
+            return await GetManifestAsync(tagOrDigest, string.Join(", ", mediaTypes), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Downloads a manifest.
+        /// Get a manifest.
         /// </summary>
-        /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
-        /// <param name="mediaType">The media type of the manifest to download.  If not specified, all media types will be requested.</param>
+        /// <param name="tagOrDigest">The tag or digest of the manifest to get.</param>
+        /// <param name="mediaType">The media type of the manifest to get.  If not specified, all media types will be requested.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>The download manifest result.</returns>
-        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(string tagOrDigest, ManifestMediaType? mediaType = null, CancellationToken cancellationToken = default)
+        /// <returns>The manifest result.</returns>
+        public virtual async Task<Response<GetManifestResult>> GetManifestAsync(string tagOrDigest, ManifestMediaType? mediaType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(DownloadManifest)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryContentClient)}.{nameof(GetManifest)}");
             scope.Start();
             try
             {
@@ -639,7 +639,7 @@ namespace Azure.Containers.ContainerRegistry
                     BlobHelper.ValidateDigest(contentDigest, digest);
                 }
 
-                return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
+                return Response.FromValue(new GetManifestResult(digest, contentType, rawResponse.Content), rawResponse);
             }
             catch (Exception e)
             {

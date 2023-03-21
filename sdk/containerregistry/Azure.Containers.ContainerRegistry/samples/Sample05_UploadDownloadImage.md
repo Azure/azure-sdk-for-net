@@ -55,7 +55,7 @@ manifest.Layers.Add(new OciDescriptor()
 });
 
 // Finally, upload the manifest file
-await client.UploadManifestAsync(manifest, tag);
+await client.SetManifestAsync(manifest, tag);
 ```
 
 ## Download an OCI Image
@@ -65,7 +65,7 @@ The manifest describes the files that will need to be downloaded to pull the ful
 
 ```C# Snippet:ContainerRegistry_Samples_DownloadOciImageAsync
 // Download the manifest to obtain the list of files in the image
-DownloadManifestResult result = await client.DownloadManifestAsync(tag);
+GetManifestResult result = await client.GetManifestAsync(tag);
 OciImageManifest manifest = result.AsOciManifest();
 
 string manifestFile = Path.Combine(path, "manifest.json");
@@ -131,7 +131,7 @@ var manifestList = new
 
 // Finally, upload the manifest file
 BinaryData content = BinaryData.FromObjectAsJson(manifestList);
-await client.UploadManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
+await client.SetManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
 ```
 
 ## Download a custom manifest
@@ -144,7 +144,7 @@ List<ManifestMediaType> mediaTypes = new() {
     "application/vnd.docker.distribution.manifest.list.v2+json",
     "application/vnd.oci.image.index.v1+json" };
 
-DownloadManifestResult result = await client.DownloadManifestAsync("sample", mediaTypes);
+GetManifestResult result = await client.GetManifestAsync("sample", mediaTypes);
 
 if (result.MediaType == "application/vnd.docker.distribution.manifest.list.v2+json")
 {
@@ -161,8 +161,8 @@ else if (result.MediaType == "application/vnd.oci.image.index.v1+json")
 A manifest can be deleted as shown below.  It is also possible to delete a full image using the `ContainerRegistryClient` as shown in [Sample 2: Delete Image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample02b_DeleteImagesAsync.md).
 
 ```C# Snippet:ContainerRegistry_Samples_DeleteManifest
-DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
-await client.DeleteManifestAsync(downloadManifestResult.Digest);
+GetManifestResult GetManifestResult = await client.GetManifestAsync(tag);
+await client.DeleteManifestAsync(GetManifestResult.Digest);
 ```
 
 ## Delete a blob
@@ -170,7 +170,7 @@ await client.DeleteManifestAsync(downloadManifestResult.Digest);
 A blob can be deleted as shown below.  It is also possible to delete a full image using the `ContainerRegistryClient` as shown in [Sample 2: Delete Image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample02b_DeleteImagesAsync.md).
 
 ```C# Snippet:ContainerRegistry_Samples_DeleteBlob
-DownloadManifestResult result = await client.DownloadManifestAsync(tag);
+GetManifestResult result = await client.GetManifestAsync(tag);
 OciImageManifest manifest = result.AsOciManifest();
 
 foreach (OciDescriptor layerInfo in manifest.Layers)

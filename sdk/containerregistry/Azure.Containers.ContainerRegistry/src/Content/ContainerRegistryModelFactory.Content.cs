@@ -10,19 +10,19 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of <see cref="UploadManifestResult" />. </summary>
         /// <param name="digest"> The digest of the uploaded manifest, calculated by the registry. </param>
         /// <returns> A new <see cref="UploadManifestResult"/> instance for mocking. </returns>
-        public static UploadManifestResult UploadManifestResult(string digest = null)
+        public static SetManifestResult UploadManifestResult(string digest = null)
         {
-            return new UploadManifestResult(digest);
+            return new SetManifestResult(digest);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DownloadManifestResult" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetManifestResult" />. </summary>
         /// <param name="digest"> The manifest's digest, calculated by the registry. </param>
         /// <param name="mediaType">The media type of the downloaded manifest.</param>
         /// <param name="content">Manifest content that was downloaded.</param>
-        /// <returns> A new <see cref="DownloadManifestResult"/> instance for mocking. </returns>
-        public static DownloadManifestResult DownloadManifestResult(string digest = null, string mediaType = null, BinaryData content = null)
+        /// <returns> A new <see cref="GetManifestResult"/> instance for mocking. </returns>
+        public static GetManifestResult GetManifestResult(string digest = null, string mediaType = null, BinaryData content = null)
         {
-            return new DownloadManifestResult(digest, mediaType, content);
+            return new GetManifestResult(digest, mediaType, content);
         }
 
         /// <summary> Initializes a new instance of <see cref="UploadRegistryBlobResult" />. </summary>

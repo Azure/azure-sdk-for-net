@@ -59,7 +59,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             });
 
             // Finally, upload the manifest file
-            await client.UploadManifestAsync(manifest, tag);
+            await client.SetManifestAsync(manifest, tag);
 
             #endregion
         }
@@ -83,7 +83,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #region Snippet:ContainerRegistry_Samples_DownloadOciImageAsync
 
             // Download the manifest to obtain the list of files in the image
-            DownloadManifestResult result = await client.DownloadManifestAsync(tag);
+            GetManifestResult result = await client.GetManifestAsync(tag);
             OciImageManifest manifest = result.AsOciManifest();
 
             string manifestFile = Path.Combine(path, "manifest.json");
@@ -143,7 +143,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryContentClient client = new(endpoint, repository, new DefaultAzureCredential());
 
             #region Snippet:ContainerRegistry_Samples_DeleteBlob
-            DownloadManifestResult result = await client.DownloadManifestAsync(tag);
+            GetManifestResult result = await client.GetManifestAsync(tag);
             OciImageManifest manifest = result.AsOciManifest();
 
             foreach (OciDescriptor layerInfo in manifest.Layers)
@@ -153,8 +153,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #endregion
 
             #region Snippet:ContainerRegistry_Samples_DeleteManifest
-            DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
-            await client.DeleteManifestAsync(downloadManifestResult.Digest);
+            GetManifestResult GetManifestResult = await client.GetManifestAsync(tag);
+            await client.DeleteManifestAsync(GetManifestResult.Digest);
             #endregion
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Finally, upload the manifest file
             BinaryData content = BinaryData.FromObjectAsJson(manifestList);
-            await client.UploadManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
+            await client.SetManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
 
 #endregion
         }
@@ -223,7 +223,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 "application/vnd.docker.distribution.manifest.list.v2+json",
                 "application/vnd.oci.image.index.v1+json" };
 
-            DownloadManifestResult result = await client.DownloadManifestAsync("sample", mediaTypes);
+            GetManifestResult result = await client.GetManifestAsync("sample", mediaTypes);
 
             if (result.MediaType == "application/vnd.docker.distribution.manifest.list.v2+json")
             {

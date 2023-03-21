@@ -40,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             });
 
             // Finally, upload the manifest file
-            var result = await client.UploadManifestAsync(manifest, tag);
+            var result = await client.SetManifestAsync(manifest, tag);
 
             // return the manifest's digest
             return result.Value.Digest;
@@ -49,10 +49,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public static async Task AddTagAsync(this ContainerRegistryContentClient client, string reference, string tag)
         {
             // Get the image manifest
-            var manifestResult = await client.DownloadManifestAsync(reference);
+            var manifestResult = await client.GetManifestAsync(reference);
 
             // Upload the manifest with the new tag
-            await client.UploadManifestAsync(manifestResult.Value.Content.ToStream(), tag);
+            await client.SetManifestAsync(manifestResult.Value.Content.ToStream(), tag);
         }
     }
 }

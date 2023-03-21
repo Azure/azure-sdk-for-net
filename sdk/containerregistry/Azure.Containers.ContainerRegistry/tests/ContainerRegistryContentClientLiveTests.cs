@@ -30,20 +30,20 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanUploadOciManifest()
+        public async Task CanSetOciManifest()
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
 
-            await UploadManifestPrerequisites(client);
+            await SetManifestPrerequisites(client);
 
             // Act
             var manifest = ContainerRegistryTestDataHelpers.CreateManifest();
-            var uploadResult = await client.UploadManifestAsync(manifest);
-            string digest = uploadResult.Value.Digest;
+            var setResult = await client.SetManifestAsync(manifest);
+            string digest = setResult.Value.Digest;
 
             // Assert
-            var downloadResultValue = (await client.DownloadManifestAsync(digest)).Value;
+            var downloadResultValue = (await client.GetManifestAsync(digest)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.AsOciManifest());
 
@@ -52,12 +52,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanUploadOciManifestBinaryData()
+        public async Task CanSetOciManifestBinaryData()
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
 
-            await UploadManifestPrerequisites(client);
+            await SetManifestPrerequisites(client);
 
             // Act
             string payload = "" +
@@ -82,13 +82,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using Stream stream = new MemoryStream(Encoding.ASCII.GetBytes(payload));
             BinaryData manifest = BinaryData.FromStream(stream);
 
-            var uploadResult = await client.UploadManifestAsync(manifest);
-            string digest = uploadResult.Value.Digest;
+            var setResult = await client.SetManifestAsync(manifest);
+            string digest = setResult.Value.Digest;
 
             // Assert
-            var downloadResultValue = (await client.DownloadManifestAsync(digest)).Value;
-            Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.AsOciManifest());
+            var getResultValue = (await client.GetManifestAsync(digest)).Value;
+            Assert.AreEqual(digest, getResultValue.Digest);
+            ValidateManifest(getResultValue.AsOciManifest());
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -96,12 +96,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         [RecordedTest]
         [Ignore("We removed the overload that takes a stream from the public API.")]
-        public async Task CanUploadManifestFromNonSeekableStream()
+        public async Task CanSetManifestFromNonSeekableStream()
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
 
-            await UploadManifestPrerequisites(client);
+            await SetManifestPrerequisites(client);
 
             // Act
             string payload = "" +
@@ -125,20 +125,20 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             using Stream manifest = new NonSeekableMemoryStream(Encoding.ASCII.GetBytes(payload));
 
-            var uploadResult = await client.UploadManifestAsync(manifest);
-            string digest = uploadResult.Value.Digest;
+            var setResult = await client.SetManifestAsync(manifest);
+            string digest = setResult.Value.Digest;
 
             // Assert
-            var downloadResultValue = (await client.DownloadManifestAsync(digest)).Value;
-            Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.AsOciManifest());
+            var getResultValue = (await client.GetManifestAsync(digest)).Value;
+            Assert.AreEqual(digest, getResultValue.Digest);
+            ValidateManifest(getResultValue.AsOciManifest());
 
             // Clean up
             await client.DeleteManifestAsync(digest);
         }
 
         [RecordedTest]
-        public async Task CanUploadOciManifestWithTag()
+        public async Task CanSetOciManifestWithTag()
         {
             // Arrange
             string repository = "oci-artifact";
@@ -146,15 +146,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var registryClient = CreateClient();
             string tag = "v1";
 
-            await UploadManifestPrerequisites(client);
+            await SetManifestPrerequisites(client);
 
             // Act
             var manifest = ContainerRegistryTestDataHelpers.CreateManifest();
-            var uploadResult = await client.UploadManifestAsync(manifest, tag);
-            var digest = uploadResult.Value.Digest;
+            var setResult = await client.SetManifestAsync(manifest, tag);
+            var digest = setResult.Value.Digest;
 
             // Assert
-            var downloadResultValue = (await client.DownloadManifestAsync(digest)).Value;
+            var downloadResultValue = (await client.GetManifestAsync(digest)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.AsOciManifest());
 
@@ -170,7 +170,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanUploadOciManifestBinaryDataWithTag()
+        public async Task CanSetOciManifestBinaryDataWithTag()
         {
             // Arrange
             string repository = "oci-artifact";
@@ -178,7 +178,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var registryClient = CreateClient();
             string tag = "v1";
 
-            await UploadManifestPrerequisites(client);
+            await SetManifestPrerequisites(client);
 
             // Act
             string payload = "" +
@@ -202,13 +202,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             using Stream stream = new MemoryStream(Encoding.ASCII.GetBytes(payload));
             BinaryData manifest = BinaryData.FromStream(stream);
-            var uploadResult = await client.UploadManifestAsync(manifest, tag);
-            var digest = uploadResult.Value.Digest;
+            var setResult = await client.SetManifestAsync(manifest, tag);
+            var digest = setResult.Value.Digest;
 
             // Assert
-            var downloadResultValue = (await client.DownloadManifestAsync(digest)).Value;
-            Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.AsOciManifest());
+            var getResultValue = (await client.GetManifestAsync(digest)).Value;
+            Assert.AreEqual(digest, getResultValue.Digest);
+            ValidateManifest(getResultValue.AsOciManifest());
 
             var artifact = registryClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -217,16 +217,16 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var firstTag = await tags.FirstAsync();
             Assert.AreEqual(tag, firstTag.Name);
 
-            var downloadResultValue2 = (await client.DownloadManifestAsync(tag)).Value;
-            Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.AsOciManifest());
+            var getResultValue2 = (await client.GetManifestAsync(tag)).Value;
+            Assert.AreEqual(digest, getResultValue2.Digest);
+            ValidateManifest(getResultValue2.AsOciManifest());
 
             // Clean up
             await client.DeleteManifestAsync(digest);
         }
 
         [RecordedTest]
-        public async Task CanUploadDockerManifest()
+        public async Task CanSetDockerManifest()
         {
             // Arrange
 
@@ -240,19 +240,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using FileStream fs = File.OpenRead(path);
             BinaryData manifest = BinaryData.FromStream(fs);
 
-            UploadManifestResult result = await client.UploadManifestAsync(manifest, mediaType: ManifestMediaType.DockerManifest);
+            SetManifestResult result = await client.SetManifestAsync(manifest, mediaType: ManifestMediaType.DockerManifest);
 
             // Assert
             Assert.AreEqual("sha256:e6c1c9dcc9c45a3dbfa654f8c8fad5c91529c137c1e2f6eb0995931c0aa74d99", result.Digest);
 
             // The following fails because the manifest media type is set to OciImageManifest by default
             fs.Position = 0;
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.UploadManifestAsync(manifest));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.SetManifestAsync(manifest));
         }
 
         [RecordedTest]
         [Ignore("Test recordings serialize and compress message bodies: https://github.com/Azure/azure-sdk-tools/issues/3015")]
-        public async Task CanDownloadDockerManifest()
+        public async Task CanGetDockerManifest()
         {
             // Arrange
             var client = CreateBlobClient("library/hello-world");
@@ -262,7 +262,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // The following is the digest of the linux/amd64 manifest for library/hello-world.
             string digest = "sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4";
 
-            DownloadManifestResult result = await client.DownloadManifestAsync(digest);
+            GetManifestResult result = await client.GetManifestAsync(digest);
 
             // Assert
             Assert.AreEqual(digest, result.Digest);
@@ -271,7 +271,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         [RecordedTest]
         [Ignore("Test recordings serialize and compress message bodies: https://github.com/Azure/azure-sdk-tools/issues/3015")]
-        public async Task CanDownloadDockerManifest_AcceptMultipleMediaTypes()
+        public async Task CanGetDockerManifest_AcceptMultipleMediaTypes()
         {
             // Arrange
             var client = CreateBlobClient("library/hello-world");
@@ -281,14 +281,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // The following is the digest of the linux/amd64 manifest for library/hello-world.
             string digest = "sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4";
 
-            DownloadManifestResult result = await client.DownloadManifestAsync(digest, mediaTypes: new ManifestMediaType[] { ManifestMediaType.DockerManifest, ManifestMediaType.OciImageManifest });
+            GetManifestResult result = await client.GetManifestAsync(digest, mediaTypes: new ManifestMediaType[] { ManifestMediaType.DockerManifest, ManifestMediaType.OciImageManifest });
 
             // Assert
             Assert.AreEqual(digest, result.Digest);
             Assert.AreEqual(ManifestMediaType.DockerManifest, result.MediaType);
         }
 
-        private async Task UploadManifestPrerequisites(ContainerRegistryContentClient client)
+        private async Task SetManifestPrerequisites(ContainerRegistryContentClient client)
         {
             var layer = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
             var config = "config.json";
@@ -768,7 +768,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.DeleteBlobAsync(digest);
         }
 
-        private async Task<UploadManifestResult> Push(ContainerRegistryContentClient client)
+        private async Task<SetManifestResult> Push(ContainerRegistryContentClient client)
         {
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
 
@@ -814,7 +814,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Finally, upload manifest
-            return await client.UploadManifestAsync(manifest, "v1");
+            return await client.SetManifestAsync(manifest, "v1");
         }
 
         [RecordedTest]
@@ -826,8 +826,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
 
-            // Download Manifest
-            var manifestResult = await client.DownloadManifestAsync("v1");
+            // Get Manifest
+            var manifestResult = await client.GetManifestAsync("v1");
 
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
             Directory.CreateDirectory(path);

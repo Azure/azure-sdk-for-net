@@ -57,9 +57,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.That(async () => await client.DeleteBlobAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
             Assert.That(async () => await client.DeleteManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
             Assert.That(async () => await client.DownloadBlobContentAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
-            Assert.That(async () => await client.DownloadManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
-            Assert.That(async () => await client.UploadManifestAsync(manifest: (OciImageManifest)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
-            Assert.That(async () => await client.UploadManifestAsync(manifest: (BinaryData)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
+            Assert.That(async () => await client.GetManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
+            Assert.That(async () => await client.SetManifestAsync(manifest: (OciImageManifest)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
+            Assert.That(async () => await client.SetManifestAsync(manifest: (BinaryData)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
             Assert.That(async () => await client.UploadBlobAsync(content: (BinaryData)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `content` is not null.");
             Assert.That(async () => await client.UploadBlobAsync(content: (Stream)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `content` is not null.");
         }
@@ -93,23 +93,23 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
 
             // Request with digest
-            DownloadManifestResult result = await client.DownloadManifestAsync(digest);
+            GetManifestResult result = await client.GetManifestAsync(digest);
             Assert.AreEqual(manifestContent, result.Content.ToString());
 
             // Request with tag
-            result = await client.DownloadManifestAsync(tagName);
+            result = await client.GetManifestAsync(tagName);
             Assert.AreEqual(manifestContent, result.Content.ToString());
 
             // Request with digest that doesn't match the content
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await client.DownloadManifestAsync(digest.Replace('0', '1'));
+                await client.GetManifestAsync(digest.Replace('0', '1'));
             });
 
             // Request with tag, getting a response with invalid digest header.
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await client.DownloadManifestAsync(tagName);
+                await client.GetManifestAsync(tagName);
             });
         }
 

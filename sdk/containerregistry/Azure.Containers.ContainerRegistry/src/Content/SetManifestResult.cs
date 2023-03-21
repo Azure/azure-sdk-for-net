@@ -6,9 +6,9 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary>
     /// The result from uploading a manifest.
     /// </summary>
-    public class UploadManifestResult
+    public class SetManifestResult
     {
-        internal UploadManifestResult(string digest)
+        internal SetManifestResult(string digest)
         {
             Digest = digest;
         }
