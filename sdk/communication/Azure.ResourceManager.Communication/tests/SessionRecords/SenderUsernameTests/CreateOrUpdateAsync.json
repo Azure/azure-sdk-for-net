@@ -322,7 +322,7 @@
       "ResponseBody": {
         "value": [
           {
-            "id": "subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/communication-rg-6795/providers/microsoft.communication/emailservices/email-test5185/domains/domain-609.com/senderusernames/donotreply",
+            "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/communication-rg-6795/providers/microsoft.communication/emailservices/email-test5185/domains/domain-609.com/senderusernames/donotreply",
             "name": "donotreply",
             "type": "emailservices/domains/senderusernames",
             "properties": {
@@ -331,7 +331,7 @@
             }
           },
           {
-            "id": "subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/communication-rg-6795/providers/microsoft.communication/emailservices/email-test5185/domains/domain-609.com/senderusernames/un-9153",
+            "id": "/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourcegroups/communication-rg-6795/providers/microsoft.communication/emailservices/email-test5185/domains/domain-609.com/senderusernames/un-9153",
             "name": "un-9153",
             "type": "emailservices/domains/senderusernames",
             "properties": {
