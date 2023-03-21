@@ -1,6 +1,6 @@
 # Troubleshoot Azure App Configuration client library issues
 
-This troubleshooting guide contains instructions to diagnose frequently encountered issues while using the Azure App Configuration client library for .NET.
+This troubleshooting guide contains instructions to diagnose issues encountered while using the Azure App Configuration client library for .NET.
 
 ## Table of contents
 
