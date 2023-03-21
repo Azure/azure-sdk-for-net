@@ -132,7 +132,7 @@ namespace Azure.Communication.Email
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
         /// <param name="message"> Message payload for sending an email. </param>
-        /// <param name="operationId"> This is the ID used by the status monitor for this long running operation. </param>
+        /// <param name="operationId"> This is the ID provided by the customer to identify the long running operation. If an ID is not provided by the customer, the service will generate one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public async Task<ResponseWithHeaders<EmailSendHeaders>> SendAsync(EmailMessage message, Guid? operationId = null, CancellationToken cancellationToken = default)
@@ -156,7 +156,7 @@ namespace Azure.Communication.Email
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
         /// <param name="message"> Message payload for sending an email. </param>
-        /// <param name="operationId"> This is the ID used by the status monitor for this long running operation. </param>
+        /// <param name="operationId"> This is the ID provided by the customer to identify the long running operation. If an ID is not provided by the customer, the service will generate one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public ResponseWithHeaders<EmailSendHeaders> Send(EmailMessage message, Guid? operationId = null, CancellationToken cancellationToken = default)
