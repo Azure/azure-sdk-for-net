@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Communication.Tests
             }
         }
 
-        // [Test]
+        [Test]
         public async Task Exists()
         {
             string username = Recording.GenerateAssetName("un-");
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.IsTrue(exists);
         }
 
-        // [Test]
+        [Test]
         public async Task CreateOrUpdate()
         {
             string username = Recording.GenerateAssetName("un-");
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Communication.Tests
         //    Assert.AreNotEqual(senderUsername1.Data.DisplayName, senderUsername2.Data.DisplayName);
         //}
 
-        // [Test]
+        [Test]
         public async Task Delete()
         {
             string username = Recording.GenerateAssetName("un-");
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.IsFalse(exists);
         }
 
-        // [Test]
+        [Test]
         public async Task Get()
         {
             string username = Recording.GenerateAssetName("un-");
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.AreEqual(actualSenderUsername.Value.Data.DisplayName, displayName);
         }
 
-        // [Test]
+        [Test]
         public async Task GetAll()
         {
             string username = Recording.GenerateAssetName("un-");
