@@ -501,7 +501,7 @@ namespace Azure.Communication.Identity.Tests
         {
             try
             {
-                ServiceVersion invalidVersion = (ServiceVersion)4;
+                ServiceVersion invalidVersion = (ServiceVersion)(-1);
                 CommunicationIdentityClient client = CreateClient(default, invalidVersion);
             }
             catch (ArgumentOutOfRangeException ex)
