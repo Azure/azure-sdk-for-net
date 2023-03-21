@@ -13,6 +13,7 @@ using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 
 using Xunit;
