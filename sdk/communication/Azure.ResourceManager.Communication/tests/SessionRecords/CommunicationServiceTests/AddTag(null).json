@@ -889,7 +889,7 @@
             "capabilities": "None"
           },
           {
-            "resourceType": "resources",
+            "resourceType": "checkPolicyCompliance",
             "locations": [],
             "apiVersions": [
               "2018-05-01",
