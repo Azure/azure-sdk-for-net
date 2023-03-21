@@ -1870,7 +1870,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             account = await account.GetAsync();
 
-            Assert.AreEqual(StorageSkuName.StandardLrs, account.Data.Sku.Name);
+            Assert.AreEqual(StorageSkuName.StandardRagrs, account.Data.Sku.Name);
             Assert.AreEqual(location, account.Data.PrimaryLocation?.ToString());
         }
 
