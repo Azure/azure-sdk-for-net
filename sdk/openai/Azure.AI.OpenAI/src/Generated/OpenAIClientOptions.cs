@@ -20,6 +20,7 @@ namespace Azure.AI.OpenAI
         {
             /// <summary> Service version "2022-12-01". </summary>
             V2022_12_01 = 1,
+            /// <summary> Service version "2023-03-15-preview". </summary>
             V2023_03_15_Preview = 2,
         }
 
