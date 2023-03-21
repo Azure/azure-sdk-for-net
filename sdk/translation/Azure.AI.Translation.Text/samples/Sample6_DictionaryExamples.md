@@ -43,4 +43,4 @@ catch (RequestFailedException exception)
 
 See the [README] of the Text Translator client library for more information, including useful links and instructions.
 
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/README.md
+[README]: https://aka.ms/https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/README.md

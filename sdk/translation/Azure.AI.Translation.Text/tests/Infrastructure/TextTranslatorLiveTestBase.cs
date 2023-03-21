@@ -60,7 +60,7 @@ namespace Azure.AI.Translation.Text.Tests
             var response = await httpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
-            return response.Content.ReadAsStringAsync().Result;
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
     }
 }
