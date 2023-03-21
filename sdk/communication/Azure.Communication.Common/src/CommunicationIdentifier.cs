@@ -79,7 +79,7 @@ namespace Azure.Communication
             if (segments.Length != 3)
             {
                 return segments.Length == 2 && rawId.StartsWith(Bot, StringComparison.OrdinalIgnoreCase)
-                    ? new MicrosoftBotIdentifier(segments[1], true, CommunicationCloudEnvironment.Public)
+                    ? new MicrosoftBotIdentifier(segments[1], false, CommunicationCloudEnvironment.Public)
                     : new UnknownIdentifier(rawId);
             }
 
@@ -93,11 +93,11 @@ namespace Azure.Communication
                 TeamUserDodCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
                 TeamUserGcchCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
                 AcsUser or SpoolUser or AcsUserDodCloud or AcsUserGcchCloud => new CommunicationUserIdentifier(rawId),
-                BotGcchCloudGlobal => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Gcch),
-                BotPublicCloud => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Public),
-                BotDodCloudGlobal => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Dod),
-                BotGcchCloud => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
-                BotDodCloud => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
+                BotGcchCloudGlobal => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
+                BotPublicCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Public),
+                BotDodCloudGlobal => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
+                BotGcchCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Gcch),
+                BotDodCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Dod),
                 _ => new UnknownIdentifier(rawId),
             };
         }

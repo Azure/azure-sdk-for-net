@@ -21,7 +21,7 @@ namespace Azure.Communication
                 if (_rawId != null)
                     return _rawId;
 
-                if (IsGlobal)
+                if (!IsResourceAccountConfigured)
                 {
                     if (Cloud == CommunicationCloudEnvironment.Dod)
                     {
@@ -60,7 +60,7 @@ namespace Azure.Communication
         public string BotId { get; }
 
         /// <summary>True if the bot is global and false if the bot is tenantized.</summary>
-        public bool IsGlobal { get; }
+        public bool IsResourceAccountConfigured { get; }
 
         /// <summary> The cloud that the bot belongs to. </summary>
         public CommunicationCloudEnvironment Cloud { get; }
@@ -69,7 +69,7 @@ namespace Azure.Communication
         /// Initializes a new instance of <see cref="MicrosoftBotIdentifier"/>.
         /// </summary>
         /// <param name="botId">Id of the Microsoft bot. The unique Microsoft app ID for the bot as registered with the Bot Framework.</param>
-        /// <param name="isGlobal">Set this to true if the bot is global. If not provided, the default value will be false.</param>
+        /// <param name="isResourceAccountConfigured">Set this to true if the bot is global and resource account is configured. If not provided, the default value will be true.</param>
         /// <param name="cloud">The cloud that the Microsoft bot belongs to. A null value translates to the Public cloud.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when the <paramref name="botId"/> is null.
@@ -77,11 +77,11 @@ namespace Azure.Communication
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="botId"/> is empty.
         /// </exception>
-        public MicrosoftBotIdentifier(string botId, bool isGlobal = false, CommunicationCloudEnvironment? cloud = null)
+        public MicrosoftBotIdentifier(string botId, bool isResourceAccountConfigured = true, CommunicationCloudEnvironment? cloud = null)
         {
             Argument.AssertNotNullOrEmpty(botId, nameof(botId));
             BotId = botId;
-            IsGlobal = isGlobal;
+            IsResourceAccountConfigured = isResourceAccountConfigured;
             Cloud = cloud ?? CommunicationCloudEnvironment.Public;
         }
 
