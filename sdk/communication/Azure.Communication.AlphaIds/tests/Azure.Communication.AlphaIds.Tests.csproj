@@ -10,8 +10,13 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
-    <ProjectReference Include="..\..\Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj" />
     <ProjectReference Include="..\src\Azure.Communication.AlphaIds.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Shared\tests\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
+    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
   </ItemGroup>
   
   <ItemGroup>

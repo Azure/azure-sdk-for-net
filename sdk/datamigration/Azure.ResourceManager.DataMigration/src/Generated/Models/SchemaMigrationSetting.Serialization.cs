@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SchemaMigrationSetting DeserializeSchemaMigrationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SchemaMigrationOption> schemaOption = default;
             Optional<string> fileId = default;
             Optional<string> fileName = default;

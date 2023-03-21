@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry.Specialized;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
@@ -17,30 +15,30 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         public static async Task<string> UploadTestImageAsync(this ContainerRegistryBlobClient client, string tag = default)
         {
-            OciManifest manifest = new()
+            OciImageManifest manifest = new()
             {
                 SchemaVersion = 2
             };
 
             // Upload a config file
-            using Stream config = BinaryData.FromString("Sample config").ToStream();
+            BinaryData config = BinaryData.FromString("Sample config");
             var uploadConfigResult = await client.UploadBlobAsync(config);
 
-            manifest.Config = new OciBlobDescriptor()
+            manifest.Configuration = new OciDescriptor()
             {
                 Digest = uploadConfigResult.Value.Digest,
-                Size = uploadConfigResult.Value.Size,
+                SizeInBytes = uploadConfigResult.Value.SizeInBytes,
                 MediaType = "application/vnd.oci.image.config.v1+json"
             };
 
             // Upload a layer file
-            using Stream layer = BinaryData.FromString($"Sample layer {_random.Next()}").ToStream();
+            BinaryData layer = BinaryData.FromString($"Sample layer {_random.Next()}");
             var uploadLayerResult = await client.UploadBlobAsync(layer);
 
-            manifest.Layers.Add(new OciBlobDescriptor()
+            manifest.Layers.Add(new OciDescriptor()
             {
                 Digest = uploadLayerResult.Value.Digest,
-                Size = uploadLayerResult.Value.Size,
+                SizeInBytes = uploadLayerResult.Value.SizeInBytes,
                 MediaType = "application/vnd.oci.image.layer.v1.tar"
             });
 

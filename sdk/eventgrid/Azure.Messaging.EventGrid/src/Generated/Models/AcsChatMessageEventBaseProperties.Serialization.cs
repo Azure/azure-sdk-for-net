@@ -15,6 +15,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsChatMessageEventBaseProperties DeserializeAcsChatMessageEventBaseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> messageId = default;
             Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
             Optional<string> senderDisplayName = default;

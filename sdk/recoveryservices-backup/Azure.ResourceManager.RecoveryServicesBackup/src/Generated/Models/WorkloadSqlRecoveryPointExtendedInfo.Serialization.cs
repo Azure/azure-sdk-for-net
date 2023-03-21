@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadSqlRecoveryPointExtendedInfo DeserializeWorkloadSqlRecoveryPointExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dataDirectoryTimeInUTC = default;
             Optional<IList<SqlDataDirectory>> dataDirectoryPaths = default;
             foreach (var property in element.EnumerateObject())

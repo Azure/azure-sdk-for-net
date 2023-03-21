@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningPrivateLinkResource DeserializeMachineLearningPrivateLinkResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MachineLearningSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;

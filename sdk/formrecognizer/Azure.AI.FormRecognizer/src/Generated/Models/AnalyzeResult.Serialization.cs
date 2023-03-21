@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static AnalyzeResult DeserializeAnalyzeResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ApiVersion apiVersion = default;
             string modelId = default;
             StringIndexType stringIndexType = default;

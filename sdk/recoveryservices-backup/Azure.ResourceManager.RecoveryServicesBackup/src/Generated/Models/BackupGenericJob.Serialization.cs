@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupGenericJob DeserializeBackupGenericJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("jobType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

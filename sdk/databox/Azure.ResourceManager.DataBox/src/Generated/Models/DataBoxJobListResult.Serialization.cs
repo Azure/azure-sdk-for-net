@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxJobListResult DeserializeDataBoxJobListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxJobData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

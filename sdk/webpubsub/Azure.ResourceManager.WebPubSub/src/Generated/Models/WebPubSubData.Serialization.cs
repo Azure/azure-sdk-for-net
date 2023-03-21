@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static WebPubSubData DeserializeWebPubSubData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BillingInfoSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

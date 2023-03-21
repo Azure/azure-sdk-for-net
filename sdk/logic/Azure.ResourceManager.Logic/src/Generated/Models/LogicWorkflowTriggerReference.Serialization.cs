@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowTriggerReference DeserializeLogicWorkflowTriggerReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> flowName = default;
             Optional<string> triggerName = default;
             Optional<ResourceIdentifier> id = default;

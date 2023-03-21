@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmAppContainerProtectionContainer DeserializeVmAppContainerProtectionContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<WorkloadContainerExtendedInfo> extendedInfo = default;

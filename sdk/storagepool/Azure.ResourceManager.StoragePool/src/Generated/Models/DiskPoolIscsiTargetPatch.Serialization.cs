@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static DiskPoolIscsiTargetPatch DeserializeDiskPoolIscsiTargetPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> managedBy = default;
             Optional<IList<string>> managedByExtended = default;
             ResourceIdentifier id = default;

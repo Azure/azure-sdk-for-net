@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static LightHouseAuthorization DeserializeLightHouseAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string principalId = default;
             string roleDefinitionId = default;
             foreach (var property in element.EnumerateObject())

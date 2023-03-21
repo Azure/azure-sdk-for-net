@@ -14,6 +14,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static AcceptJobOfferResult DeserializeAcceptJobOfferResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string assignmentId = default;
             string jobId = default;
             string workerId = default;

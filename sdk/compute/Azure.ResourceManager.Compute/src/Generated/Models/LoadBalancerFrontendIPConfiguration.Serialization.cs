@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static LoadBalancerFrontendIPConfiguration DeserializeLoadBalancerFrontendIPConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<WritableSubResource> publicIPAddress = default;
             Optional<WritableSubResource> subnet = default;

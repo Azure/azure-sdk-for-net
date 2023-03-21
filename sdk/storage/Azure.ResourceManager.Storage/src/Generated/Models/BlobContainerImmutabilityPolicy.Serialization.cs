@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static BlobContainerImmutabilityPolicy DeserializeBlobContainerImmutabilityPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IReadOnlyList<UpdateHistoryEntry>> updateHistory = default;
             Optional<int> immutabilityPeriodSinceCreationInDays = default;

@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentTypeDetails DeserializeDocumentTypeDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<DocumentBuildMode> buildMode = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = default;

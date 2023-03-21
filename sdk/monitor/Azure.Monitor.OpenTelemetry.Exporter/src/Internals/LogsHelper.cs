@@ -64,7 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static string? GetMessageAndSetProperties(LogRecord logRecord, IDictionary<string, string> properties)
         {
-            string? message = logRecord.FormattedMessage;
+            string? message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
 
             if (logRecord.StateValues != null)
             {

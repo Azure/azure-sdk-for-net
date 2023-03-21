@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveOutputListResult DeserializeLiveOutputListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MediaLiveOutputData>> value = default;
             Optional<int> odataCount = default;
             Optional<string> odataNextLink = default;

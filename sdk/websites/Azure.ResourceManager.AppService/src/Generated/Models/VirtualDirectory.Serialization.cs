@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static VirtualDirectory DeserializeVirtualDirectory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> virtualPath = default;
             Optional<string> physicalPath = default;
             foreach (var property in element.EnumerateObject())

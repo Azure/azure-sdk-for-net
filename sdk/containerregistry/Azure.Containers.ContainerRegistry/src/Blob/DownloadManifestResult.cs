@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     /// <summary>
     /// The result from downloading an OCI manifest from the registry.
@@ -36,12 +36,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public BinaryData Content { get; }
 
         /// <summary>
-        /// Gets the downloaded manifest as an OciManifest.
+        /// Gets the downloaded manifest as an OciImageManifest.
         /// </summary>
         /// <returns></returns>
-        public OciManifest AsOciManifest()
+        public OciImageManifest AsOciManifest()
         {
-            return OciManifest.DeserializeOciManifest(JsonDocument.Parse(Content).RootElement);
+            return OciImageManifest.DeserializeOciImageManifest(JsonDocument.Parse(Content).RootElement);
         }
     }
 }

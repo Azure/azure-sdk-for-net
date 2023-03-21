@@ -24,6 +24,10 @@ namespace Azure.Communication.PhoneNumbers
 
         internal static PhoneNumberCapabilities DeserializePhoneNumberCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PhoneNumberCapabilityType calling = default;
             PhoneNumberCapabilityType sms = default;
             foreach (var property in element.EnumerateObject())

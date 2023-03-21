@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningManagedIdentityAuthTypeWorkspaceConnection DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningWorkspaceConnectionManagedIdentity> credentials = default;
             MachineLearningConnectionAuthType authType = default;
             Optional<MachineLearningConnectionCategory> category = default;

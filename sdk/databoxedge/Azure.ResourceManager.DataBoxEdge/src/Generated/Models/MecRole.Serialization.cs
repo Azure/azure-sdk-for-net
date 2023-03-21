@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static MecRole DeserializeMecRole(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxEdgeRoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;

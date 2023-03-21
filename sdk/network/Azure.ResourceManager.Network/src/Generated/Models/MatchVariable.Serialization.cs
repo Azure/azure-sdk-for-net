@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static MatchVariable DeserializeMatchVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WebApplicationFirewallMatchVariable variableName = default;
             Optional<string> selector = default;
             foreach (var property in element.EnumerateObject())

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     internal class ChunkedUploadResult
     {
@@ -13,13 +13,13 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Digest = digest;
             Location = location;
-            Size = size;
+            SizeInBytes = size;
         }
 
         public string Digest { get; }
 
         public string Location { get; }
 
-        public long Size { get; }
+        public long SizeInBytes { get; }
     }
 }

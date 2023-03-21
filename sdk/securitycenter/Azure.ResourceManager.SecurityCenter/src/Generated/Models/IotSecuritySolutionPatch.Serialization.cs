@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static IotSecuritySolutionPatch DeserializeIotSecuritySolutionPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<UserDefinedResourcesProperties> userDefinedResources = default;
             Optional<IList<RecommendationConfigurationProperties>> recommendationsConfiguration = default;

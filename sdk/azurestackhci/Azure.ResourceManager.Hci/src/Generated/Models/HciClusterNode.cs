@@ -19,22 +19,28 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="name"> Name of the cluster node. </param>
         /// <param name="id"> Id of the node in the cluster. </param>
         /// <param name="windowsServerSubscription"> State of Windows Server Subscription. </param>
+        /// <param name="nodeType"> Type of the cluster node hardware. </param>
+        /// <param name="ehcResourceId"> Edge Hardware Center Resource Id. </param>
         /// <param name="manufacturer"> Manufacturer of the cluster node hardware. </param>
         /// <param name="model"> Model name of the cluster node hardware. </param>
         /// <param name="osName"> Operating system running on the cluster node. </param>
         /// <param name="osVersion"> Version of the operating system running on the cluster node. </param>
+        /// <param name="osDisplayVersion"> Display version of the operating system running on the cluster node. </param>
         /// <param name="serialNumber"> Immutable id of the cluster node. </param>
         /// <param name="coreCount"> Number of physical cores on the cluster node. </param>
         /// <param name="memoryInGiB"> Total available memory on the cluster node (in GiB). </param>
-        internal HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, string manufacturer, string model, string osName, string osVersion, string serialNumber, float? coreCount, float? memoryInGiB)
+        internal HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, ClusterNodeType? nodeType, string ehcResourceId, string manufacturer, string model, string osName, string osVersion, string osDisplayVersion, string serialNumber, float? coreCount, float? memoryInGiB)
         {
             Name = name;
             Id = id;
             WindowsServerSubscription = windowsServerSubscription;
+            NodeType = nodeType;
+            EhcResourceId = ehcResourceId;
             Manufacturer = manufacturer;
             Model = model;
             OSName = osName;
             OSVersion = osVersion;
+            OSDisplayVersion = osDisplayVersion;
             SerialNumber = serialNumber;
             CoreCount = coreCount;
             MemoryInGiB = memoryInGiB;
@@ -46,6 +52,10 @@ namespace Azure.ResourceManager.Hci.Models
         public float? Id { get; }
         /// <summary> State of Windows Server Subscription. </summary>
         public WindowsServerSubscription? WindowsServerSubscription { get; }
+        /// <summary> Type of the cluster node hardware. </summary>
+        public ClusterNodeType? NodeType { get; }
+        /// <summary> Edge Hardware Center Resource Id. </summary>
+        public string EhcResourceId { get; }
         /// <summary> Manufacturer of the cluster node hardware. </summary>
         public string Manufacturer { get; }
         /// <summary> Model name of the cluster node hardware. </summary>
@@ -54,6 +64,8 @@ namespace Azure.ResourceManager.Hci.Models
         public string OSName { get; }
         /// <summary> Version of the operating system running on the cluster node. </summary>
         public string OSVersion { get; }
+        /// <summary> Display version of the operating system running on the cluster node. </summary>
+        public string OSDisplayVersion { get; }
         /// <summary> Immutable id of the cluster node. </summary>
         public string SerialNumber { get; }
         /// <summary> Number of physical cores on the cluster node. </summary>

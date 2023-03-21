@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static QuotaLimits DeserializeQuotaLimits(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ReservationQuotaData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

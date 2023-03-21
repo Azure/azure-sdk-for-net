@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static H265Video DeserializeH265Video(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> sceneChangeDetection = default;
             Optional<H265Complexity> complexity = default;
             Optional<IList<H265Layer>> layers = default;

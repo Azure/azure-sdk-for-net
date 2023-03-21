@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerServerVersionCapability DeserializePostgreSqlFlexibleServerServerVersionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<string>> supportedVersionsToUpgrade = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability>> supportedVcores = default;

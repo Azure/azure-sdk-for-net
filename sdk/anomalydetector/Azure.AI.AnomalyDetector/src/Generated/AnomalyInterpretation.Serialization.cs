@@ -15,6 +15,10 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static AnomalyInterpretation DeserializeAnomalyInterpretation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> variable = default;
             Optional<float?> contributionScore = default;
             Optional<CorrelationChanges> correlationChanges = default;

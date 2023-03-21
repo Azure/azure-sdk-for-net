@@ -46,6 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureBlobStorageLocation DeserializeAzureBlobStorageLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> container = default;
             string type = default;
             Optional<object> folderPath = default;

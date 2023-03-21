@@ -48,6 +48,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static VideoSink DeserializeVideoSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string videoName = default;
             Optional<VideoCreationProperties> videoCreationProperties = default;
             Optional<VideoPublishingOptions> videoPublishingOptions = default;

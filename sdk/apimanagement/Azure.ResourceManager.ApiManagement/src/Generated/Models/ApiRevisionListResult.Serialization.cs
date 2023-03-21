@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiRevisionListResult DeserializeApiRevisionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiRevisionContract>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

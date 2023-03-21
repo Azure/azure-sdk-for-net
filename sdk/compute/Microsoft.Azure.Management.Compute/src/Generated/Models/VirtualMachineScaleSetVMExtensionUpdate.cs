@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
@@ -19,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a VMSS VM Extension.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetVMExtensionUpdate : SubResourceReadOnly
+    public partial class VirtualMachineScaleSetVMExtensionUpdate : IResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -34,7 +35,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetVMExtensionUpdate class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
         /// <param name="name">The name of the extension.</param>
         /// <param name="type">Resource type</param>
         /// <param name="forceUpdateTag">How the extension handler should be
@@ -66,8 +66,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="protectedSettingsFromKeyVault">The extensions
         /// protected settings that are passed by reference, and consumed from
         /// key vault</param>
-        public VirtualMachineScaleSetVMExtensionUpdate(string id = default(string), string name = default(string), string type = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), bool? suppressFailures = default(bool?), KeyVaultSecretReference protectedSettingsFromKeyVault = default(KeyVaultSecretReference))
-            : base(id)
+        public VirtualMachineScaleSetVMExtensionUpdate(string name = default(string), string type = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), bool? suppressFailures = default(bool?), KeyVaultSecretReference protectedSettingsFromKeyVault = default(KeyVaultSecretReference))
         {
             Name = name;
             Type = type;

@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
 {
     public class CallAutomationEventParserTests
     {
-        private static string DTMF_RESULT_JSON = "{\"recognizeResult\":{},\"collectTonesResult\":{\"tones\":[\"five\"]},\"choiceResult\":{\"label\":null,\"recognizedPhrase\":null},\"recognitionType\":\"dtmf\",\"callConnectionId\":\"callConnectionId\",\"serverCallId\":\"serverCallId\",\"correlationId\":\"correlationId\",\"operationContext\":\"operationContext\",\"resultInformation\":{\"code\":200,\"subCode\":8531,\"message\":\"Action completed, max digits received\"}}";
+        private static string DTMF_RESULT_JSON = "{\"recognizeResult\":{},\"collectTonesResult\":{\"tones\":[\"five\", \"six\", \"pound\"]},\"choiceResult\":{\"label\":null,\"recognizedPhrase\":null},\"recognitionType\":\"dtmf\",\"callConnectionId\":\"callConnectionId\",\"serverCallId\":\"serverCallId\",\"correlationId\":\"correlationId\",\"operationContext\":\"operationContext\",\"resultInformation\":{\"code\":200,\"subCode\":8531,\"message\":\"Action completed, max digits received\"}}";
         private static string CHIOCE_RESULT_JSON = "{\"recognizeResult\":{},\"collectTonesResult\":{\"tones\":[]},\"choiceResult\":{\"label\":\"testLabel\",\"recognizedPhrase\":\"testRecognizePhrase\"},\"recognitionType\":\"choices\",\"callConnectionId\":\"callConnectionId\",\"serverCallId\":\"serverCallId\",\"correlationId\":\"correlationId\",\"operationContext\":\"operationContext\",\"resultInformation\":{\"code\":200,\"subCode\":8531,\"message\":\"Action completed, max digits received\"}}";
         [Test]
         public void EventParserShouldParseEventWithEventDataAndType()
@@ -465,6 +465,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("serverCallId", playFailed.ServerCallId);
                 Assert.AreEqual(400, playFailed.ResultInformation?.Code);
                 Assert.AreEqual(ReasonCode.PlayDownloadFailed, playFailed.ReasonCode);
+                Assert.AreEqual(8536, playFailed.ReasonCode.GetReasonCodeValue());
             }
             else
             {
@@ -523,8 +524,10 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
                 if (recognizeResult is CollectTonesResult collectToneRecognizedResult)
                 {
+                    string toneResults = collectToneRecognizedResult.ConvertToString();
                     Assert.NotZero(collectToneRecognizedResult.Tones.Count());
                     Assert.AreEqual(DtmfTone.Five, collectToneRecognizedResult.Tones.First());
+                    Assert.AreEqual(toneResults, "56#");
                 }
             }
             else

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static LogSchedulePolicy DeserializeLogSchedulePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> scheduleFrequencyInMins = default;
             string schedulePolicyType = default;
             foreach (var property in element.EnumerateObject())

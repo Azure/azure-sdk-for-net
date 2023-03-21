@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static UserArtifactSettings DeserializeUserArtifactSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> packageFileName = default;
             Optional<string> configFileName = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     {
         internal static UpgradableVersionPathResult DeserializeUpgradableVersionPathResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> supportedPath = default;
             foreach (var property in element.EnumerateObject())
             {

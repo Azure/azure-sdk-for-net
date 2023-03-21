@@ -86,6 +86,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchIndexerDataSourceConnection DeserializeSearchIndexerDataSourceConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             SearchIndexerDataSourceType type = default;

@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<FactorySecretBaseDefinition> pfx = default;
             Optional<BinaryData> username = default;

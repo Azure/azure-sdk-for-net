@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Compute
     {
         internal static CommunityGalleryImageData DeserializeCommunityGalleryImageData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             Optional<ResourceType> type = default;

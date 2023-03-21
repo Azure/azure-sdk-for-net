@@ -44,6 +44,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ManagedVirtualNetworkSettings DeserializeManagedVirtualNetworkSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> preventDataExfiltration = default;
             Optional<bool> linkedAccessCheckOnTargetResource = default;
             Optional<IList<string>> allowedAadTenantIdsForLinking = default;

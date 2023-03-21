@@ -25,6 +25,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkedIntegrationRuntimeType DeserializeLinkedIntegrationRuntimeType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("authorizationType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

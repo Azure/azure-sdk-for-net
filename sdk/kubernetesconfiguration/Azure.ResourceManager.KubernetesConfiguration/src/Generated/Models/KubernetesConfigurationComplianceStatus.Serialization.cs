@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     {
         internal static KubernetesConfigurationComplianceStatus DeserializeKubernetesConfigurationComplianceStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KubernetesConfigurationComplianceStateType> complianceState = default;
             Optional<DateTimeOffset> lastConfigApplied = default;
             Optional<string> message = default;

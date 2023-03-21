@@ -14,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ManifestListAttributes DeserializeManifestListAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;

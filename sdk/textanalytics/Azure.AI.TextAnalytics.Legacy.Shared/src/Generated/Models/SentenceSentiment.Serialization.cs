@@ -16,6 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static SentenceSentiment DeserializeSentenceSentiment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             SentenceSentimentValue sentiment = default;
             SentimentConfidenceScorePerLabel confidenceScores = default;

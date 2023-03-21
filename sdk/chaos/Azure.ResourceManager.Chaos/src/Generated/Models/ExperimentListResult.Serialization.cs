@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal static ExperimentListResult DeserializeExperimentListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ExperimentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

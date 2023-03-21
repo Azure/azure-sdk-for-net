@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static AvailableLabServicesSkuRestrictions DeserializeAvailableLabServicesSkuRestrictions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LabServicesSkuRestrictionType> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<LabServicesSkuRestrictionReasonCode> reasonCode = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBMetricAvailability DeserializeCosmosDBMetricAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timeGrain = default;
             Optional<string> retention = default;
             foreach (var property in element.EnumerateObject())

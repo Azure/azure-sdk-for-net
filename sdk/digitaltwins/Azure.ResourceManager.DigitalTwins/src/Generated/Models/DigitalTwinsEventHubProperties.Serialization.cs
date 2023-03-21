@@ -112,6 +112,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DigitalTwinsEventHubProperties DeserializeDigitalTwinsEventHubProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectionStringPrimaryKey = default;
             Optional<string> connectionStringSecondaryKey = default;
             Optional<Uri> endpointUri = default;

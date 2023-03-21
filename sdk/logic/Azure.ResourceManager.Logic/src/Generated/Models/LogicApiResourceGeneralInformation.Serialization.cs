@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiResourceGeneralInformation DeserializeLogicApiResourceGeneralInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> iconUrl = default;
             Optional<string> displayName = default;
             Optional<string> description = default;

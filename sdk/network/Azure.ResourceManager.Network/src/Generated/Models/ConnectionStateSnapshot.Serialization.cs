@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionStateSnapshot DeserializeConnectionStateSnapshot(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetworkConnectionState> connectionState = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;

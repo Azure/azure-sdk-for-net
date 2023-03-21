@@ -83,6 +83,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static TwinConfiguration DeserializeTwinConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> schemaVersion = default;
             Optional<IDictionary<string, string>> labels = default;

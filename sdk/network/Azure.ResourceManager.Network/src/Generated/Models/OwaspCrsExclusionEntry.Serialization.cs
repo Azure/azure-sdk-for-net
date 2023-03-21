@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static OwaspCrsExclusionEntry DeserializeOwaspCrsExclusionEntry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OwaspCrsExclusionEntryMatchVariable matchVariable = default;
             OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator = default;
             string selector = default;

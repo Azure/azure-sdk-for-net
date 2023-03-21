@@ -15,6 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static JobRouterError DeserializeJobRouterError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
             Optional<string> target = default;

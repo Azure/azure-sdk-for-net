@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.IotHub
     {
         internal static EventHubConsumerGroupInfoData DeserializeEventHubConsumerGroupInfoData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
             Optional<ETag?> etag = default;
             ResourceIdentifier id = default;
@@ -36,7 +40,14 @@ namespace Azure.ResourceManager.IotHub
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     properties = dictionary;
                     continue;

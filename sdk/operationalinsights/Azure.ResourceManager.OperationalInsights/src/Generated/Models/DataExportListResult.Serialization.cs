@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static DataExportListResult DeserializeDataExportListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OperationalInsightsDataExportData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiManagementPrivateLinkResourceListResult DeserializeApiManagementPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiManagementPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static ReportProperties DeserializeReportProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<ReportStatus> status = default;
             Optional<Guid> tenantId = default;

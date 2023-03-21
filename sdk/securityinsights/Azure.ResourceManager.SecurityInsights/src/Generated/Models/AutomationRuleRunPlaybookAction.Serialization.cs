@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRuleRunPlaybookAction DeserializeAutomationRuleRunPlaybookAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationRuleRunPlaybookActionProperties> actionConfiguration = default;
             int order = default;
             ActionType actionType = default;

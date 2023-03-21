@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         internal static IngestionPolicyPropertiesFormat DeserializeIngestionPolicyPropertiesFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IngestionType> ingestionType = default;
             Optional<IList<IngestionSourcesPropertiesFormat>> ingestionSources = default;
             foreach (var property in element.EnumerateObject())

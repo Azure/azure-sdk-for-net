@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ValidateOracleAzureDBForPostgreSqlSyncTaskProperties DeserializeValidateOracleAzureDBForPostgreSqlSyncTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrateOracleAzureDBPostgreSqlSyncTaskInput> input = default;
             Optional<IReadOnlyList<ValidateOracleAzureDBPostgreSqlSyncTaskOutput>> output = default;
             TaskType taskType = default;

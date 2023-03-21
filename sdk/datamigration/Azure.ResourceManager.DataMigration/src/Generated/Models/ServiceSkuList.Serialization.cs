@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ServiceSkuList DeserializeServiceSkuList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AvailableServiceSku>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

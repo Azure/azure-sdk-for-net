@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static DomainValidationProperties DeserializeDomainValidationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> validationToken = default;
             Optional<DateTimeOffset> expirationDate = default;
             foreach (var property in element.EnumerateObject())

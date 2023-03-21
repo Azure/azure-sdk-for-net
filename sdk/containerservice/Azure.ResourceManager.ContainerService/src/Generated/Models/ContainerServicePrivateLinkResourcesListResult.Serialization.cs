@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ContainerServicePrivateLinkResourcesListResult DeserializeContainerServicePrivateLinkResourcesListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContainerServicePrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

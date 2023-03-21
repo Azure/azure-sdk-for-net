@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12SecuritySettings DeserializeX12SecuritySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string authorizationQualifier = default;
             Optional<string> authorizationValue = default;
             string securityQualifier = default;

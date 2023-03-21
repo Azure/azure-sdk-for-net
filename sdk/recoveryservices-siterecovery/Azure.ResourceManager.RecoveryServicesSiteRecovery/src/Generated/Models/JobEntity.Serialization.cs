@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static JobEntity DeserializeJobEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobId = default;
             Optional<string> jobFriendlyName = default;
             Optional<string> targetObjectId = default;

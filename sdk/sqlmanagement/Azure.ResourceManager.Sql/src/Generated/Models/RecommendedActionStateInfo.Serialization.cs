@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static RecommendedActionStateInfo DeserializeRecommendedActionStateInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RecommendedActionCurrentState currentValue = default;
             Optional<RecommendedActionInitiatedBy> actionInitiatedBy = default;
             Optional<DateTimeOffset> lastModified = default;

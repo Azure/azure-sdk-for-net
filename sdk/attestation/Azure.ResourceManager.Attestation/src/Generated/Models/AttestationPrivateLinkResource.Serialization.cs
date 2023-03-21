@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Attestation.Models
 
         internal static AttestationPrivateLinkResource DeserializeAttestationPrivateLinkResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

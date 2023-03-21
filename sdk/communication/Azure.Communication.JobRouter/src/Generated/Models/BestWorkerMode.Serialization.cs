@@ -41,6 +41,10 @@ namespace Azure.Communication.JobRouter
 
         internal static BestWorkerMode DeserializeBestWorkerMode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RouterRule> scoringRule = default;
             Optional<ScoringRuleOptions> scoringRuleOptions = default;
             string kind = default;

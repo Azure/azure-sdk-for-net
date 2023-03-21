@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static HttpProxyConfiguration DeserializeHttpProxyConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> httpsProxy = default;
             foreach (var property in element.EnumerateObject())
             {

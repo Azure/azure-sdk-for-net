@@ -17,6 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkServiceError DeserializeSparkServiceError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<string> errorCode = default;
             Optional<SparkErrorSource> source = default;

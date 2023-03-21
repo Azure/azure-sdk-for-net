@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Analysis.Models
     {
         internal static AnalysisServers DeserializeAnalysisServers(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AnalysisServerData> value = default;
             foreach (var property in element.EnumerateObject())
             {

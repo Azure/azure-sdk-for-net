@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Monitor
 
         internal static MonitorPrivateLinkScopedResourceData DeserializeMonitorPrivateLinkScopedResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

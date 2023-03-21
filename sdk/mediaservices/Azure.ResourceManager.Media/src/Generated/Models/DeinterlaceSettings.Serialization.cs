@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static DeinterlaceSettings DeserializeDeinterlaceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeinterlaceParity> parity = default;
             Optional<DeinterlaceMode> mode = default;
             foreach (var property in element.EnumerateObject())

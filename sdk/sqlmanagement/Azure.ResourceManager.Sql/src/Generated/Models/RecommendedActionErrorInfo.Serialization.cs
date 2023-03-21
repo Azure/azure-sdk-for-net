@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static RecommendedActionErrorInfo DeserializeRecommendedActionErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorCode = default;
             Optional<ActionRetryableState> isRetryable = default;
             foreach (var property in element.EnumerateObject())

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Reservations.Tests.Helper
                 Sku = new ReservationsSkuName("Standard_B1ls"),
                 Location = new Core.AzureLocation("westeurope"),
                 ReservedResourceType = new ReservedResourceType("VirtualMachines"),
-                BillingScopeId = new Core.ResourceIdentifier("/subscriptions/fed2a274-8787-4a13-8371-f5282597b779"),
+                BillingScopeId = new Core.ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
                 Term = new ReservationTerm("P1Y"),
                 BillingPlan = new ReservationBillingPlan(billingPlan),
                 Quantity = 3,
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Tests.Helper
 
             if (scope.Equals("Single"))
             {
-                request.AppliedScopes.Add("/subscriptions/fed2a274-8787-4a13-8371-f5282597b779");
+                request.AppliedScopes.Add("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee");
             }
 
             return request;

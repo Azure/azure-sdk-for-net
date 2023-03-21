@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningInstanceTypeSchemaResources DeserializeMachineLearningInstanceTypeSchemaResources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> requests = default;
             Optional<IDictionary<string, string>> limits = default;
             foreach (var property in element.EnumerateObject())

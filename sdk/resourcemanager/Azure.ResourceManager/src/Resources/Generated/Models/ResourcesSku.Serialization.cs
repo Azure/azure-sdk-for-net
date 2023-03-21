@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ResourcesSku DeserializeResourcesSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> tier = default;
             Optional<string> size = default;

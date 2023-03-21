@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetPublicIPAddressConfiguration DeserializeVirtualMachineScaleSetPublicIPAddressConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<ComputePublicIPAddressSku> sku = default;
             Optional<int> idleTimeoutInMinutes = default;

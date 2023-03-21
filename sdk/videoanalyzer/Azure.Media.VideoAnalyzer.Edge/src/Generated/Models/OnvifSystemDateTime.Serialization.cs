@@ -35,6 +35,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OnvifSystemDateTime DeserializeOnvifSystemDateTime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OnvifSystemDateTimeType> type = default;
             Optional<string> time = default;
             Optional<string> timeZone = default;

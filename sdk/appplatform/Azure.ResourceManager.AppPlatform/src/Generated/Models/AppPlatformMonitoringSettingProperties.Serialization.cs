@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformMonitoringSettingProperties DeserializeAppPlatformMonitoringSettingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformMonitoringSettingState> provisioningState = default;
             Optional<AppPlatformErrorInfo> error = default;
             Optional<bool> traceEnabled = default;

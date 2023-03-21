@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static AzureFirstPartyManagedCertificateProperties DeserializeAzureFirstPartyManagedCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SecretType type = default;
             foreach (var property in element.EnumerateObject())
             {

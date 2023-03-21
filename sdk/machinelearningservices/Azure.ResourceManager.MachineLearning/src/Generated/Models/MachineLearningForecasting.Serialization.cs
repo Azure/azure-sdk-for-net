@@ -184,6 +184,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningForecasting DeserializeMachineLearningForecasting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ForecastingSettings> forecastingSettings = default;
             Optional<ForecastingPrimaryMetric> primaryMetric = default;
             Optional<ForecastingTrainingSettings> trainingSettings = default;

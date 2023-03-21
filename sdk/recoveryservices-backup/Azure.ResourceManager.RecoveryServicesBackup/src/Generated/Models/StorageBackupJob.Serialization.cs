@@ -104,6 +104,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static StorageBackupJob DeserializeStorageBackupJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> duration = default;
             Optional<IList<JobSupportedAction>> actionsInfo = default;
             Optional<IList<StorageErrorInfo>> errorDetails = default;

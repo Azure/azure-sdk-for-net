@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamAnalyticsClusterJob DeserializeStreamAnalyticsClusterJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<int> streamingUnits = default;
             Optional<StreamingJobState> jobState = default;

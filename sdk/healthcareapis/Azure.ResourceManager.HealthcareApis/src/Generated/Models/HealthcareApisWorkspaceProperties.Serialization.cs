@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisWorkspaceProperties DeserializeHealthcareApisWorkspaceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareApisProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;

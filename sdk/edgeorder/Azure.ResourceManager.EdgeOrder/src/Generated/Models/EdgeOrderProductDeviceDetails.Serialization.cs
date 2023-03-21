@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static EdgeOrderProductDeviceDetails DeserializeEdgeOrderProductDeviceDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serialNumber = default;
             Optional<string> managementResourceId = default;
             Optional<string> managementResourceTenantId = default;

@@ -125,6 +125,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static AzureMachineLearningSkill DeserializeAzureMachineLearningSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             Optional<string> key = default;
             Optional<string> resourceId = default;

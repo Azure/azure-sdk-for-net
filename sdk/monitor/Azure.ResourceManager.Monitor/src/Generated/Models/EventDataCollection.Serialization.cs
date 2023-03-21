@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static EventDataCollection DeserializeEventDataCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<EventDataInfo> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
