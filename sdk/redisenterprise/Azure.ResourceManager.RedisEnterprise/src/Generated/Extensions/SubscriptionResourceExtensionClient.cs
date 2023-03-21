@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RedisEnterpriseRegionSkuDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RedisEnterpriseRegionSkuDetail> GetSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRedisEnterpriseSkus", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisEnterpriseRegionSkuDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkus(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<RedisEnterpriseRegionSkuDetail> GetSkus(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRedisEnterpriseSkus", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
         }
     }
 }

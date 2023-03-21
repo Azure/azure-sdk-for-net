@@ -104,7 +104,6 @@ rename-rules:
 
 override-operation-name:
   OperationsStatus_Get: GetRedisEnterpriseOperationsStatus
-  Skus_List: GetRedisEnterpriseSkus
 
 directive:
   - from: redisenterprise.json
