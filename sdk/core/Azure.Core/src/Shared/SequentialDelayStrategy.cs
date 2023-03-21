@@ -33,7 +33,7 @@ namespace Azure.Core
         {
         }
 
-        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber)
+        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber, IDictionary<string, object?> context)
         {
             return retryNumber >= s_pollingSequence.Length ? _maxDelay : s_pollingSequence[retryNumber];
         }

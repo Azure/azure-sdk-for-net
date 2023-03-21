@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -26,7 +27,7 @@ namespace Azure.Core
             _delay = delay ?? TimeSpan.FromSeconds(0.8);
         }
 
-        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) => TimeSpan.FromMilliseconds(
+        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber, IDictionary<string, object?> context) => TimeSpan.FromMilliseconds(
             (1 << retryNumber) * _delay.TotalMilliseconds);
     }
 }

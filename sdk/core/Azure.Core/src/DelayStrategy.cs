@@ -67,8 +67,9 @@ namespace Azure.Core
         /// </summary>
         /// <param name="response"></param>
         /// <param name="retryNumber"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        protected abstract TimeSpan GetNextDelayCore(Response? response, int retryNumber);
+        protected abstract TimeSpan GetNextDelayCore(Response? response, int retryNumber, IDictionary<string, object?> context);
 
         /// <summary>
         /// Get the interval of next delay iteration.
@@ -77,15 +78,16 @@ namespace Azure.Core
         /// <param name="response"> Server response. </param>
         /// <param name="retryNumber"></param>
         /// <param name="serverDelayHint"></param>
+        /// <param name="context"></param>
         /// <returns> Delay interval of next iteration. </returns>
-        public virtual TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? serverDelayHint)
+        public TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? serverDelayHint, IDictionary<string, object?> context)
         {
             return
                 Max(
                     ApplyJitter(
                         Max(
                             serverDelayHint ?? TimeSpan.Zero,
-                            GetNextDelayCore(response, retryNumber))),
+                            GetNextDelayCore(response, retryNumber, context))),
                     _maxDelay);
         }
 

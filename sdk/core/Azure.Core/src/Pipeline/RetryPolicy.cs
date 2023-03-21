@@ -117,7 +117,13 @@ namespace Azure.Core.Pipeline
 
                 if (shouldRetry)
                 {
-                    TimeSpan delay = async ? await GetNextDelayAsync(message, _delayStrategy).ConfigureAwait(false) : GetNextDelay(message, _delayStrategy);
+                    if (message.RetryNumber == 0)
+                    {
+                        message.SetProperty(typeof(RetryPolicyPropertiesKey), new Dictionary<string, object?>());
+                    }
+                    message.TryGetProperty(typeof(RetryPolicyPropertiesKey), out object? value);
+                    var context = (IDictionary<string, object?>)value!;
+                    TimeSpan delay = async ? await GetNextDelayAsync(message, _delayStrategy, context).ConfigureAwait(false) : GetNextDelay(message, _delayStrategy, context);
                     if (delay > TimeSpan.Zero)
                     {
                         if (async)
@@ -212,16 +218,18 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <param name="strategy"></param>
+        /// <param name="delayContext"></param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected virtual TimeSpan GetNextDelay(HttpMessage message, DelayStrategy strategy) => GetNextDelayInternal(message, strategy);
+        protected virtual TimeSpan GetNextDelay(HttpMessage message, DelayStrategy strategy, IDictionary<string, object?> delayContext) => GetNextDelayInternal(message, strategy, delayContext);
 
         /// <summary>
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <param name="strategy"></param>
+        /// <param name="delayContext"></param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected virtual ValueTask<TimeSpan> GetNextDelayAsync(HttpMessage message, DelayStrategy strategy) => new(GetNextDelayInternal(message, strategy));
+        protected virtual ValueTask<TimeSpan> GetNextDelayAsync(HttpMessage message, DelayStrategy strategy, IDictionary<string, object?> delayContext) => new(GetNextDelayInternal(message, strategy, delayContext));
 
         /// <summary>
         /// This method can be overridden to introduce logic before each request attempt is sent. This will run even for the first attempt.
@@ -255,10 +263,17 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         protected internal virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
 
-        private static TimeSpan GetNextDelayInternal(HttpMessage message, DelayStrategy strategy) =>
-            strategy.GetNextDelay(
+        private static TimeSpan GetNextDelayInternal(HttpMessage message, DelayStrategy strategy, IDictionary<string, object?> context)
+        {
+            return strategy.GetNextDelay(
                 message.Response,
                 message.RetryNumber,
-                message.Response.Headers.RetryAfter);
+                message.Response.Headers.RetryAfter,
+                context);
+        }
+
+        private class RetryPolicyPropertiesKey
+        {
+        }
     }
 }
