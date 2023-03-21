@@ -15,6 +15,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
+    internal partial class AnalyzeDocumentRequest { }
+
     internal partial class AuthorizeCopyRequest { }
 
     internal partial class AzureBlobContentSource { }

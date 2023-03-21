@@ -16,6 +16,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentClassifierBuildOperationDetails DeserializeDocumentClassifierBuildOperationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DocumentClassifierDetails> result = default;
             string operationId = default;
             DocumentOperationStatus status = default;

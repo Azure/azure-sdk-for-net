@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target service version `2023-02-28-preview` by default. Version `2022-08-31` can still be targeted if specified in the `DocumentAnalysisClientOptions`.
 
 ## 4.0.0 (2022-09-08)
 

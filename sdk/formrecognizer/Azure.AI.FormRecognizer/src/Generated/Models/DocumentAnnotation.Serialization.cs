@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentAnnotation DeserializeDocumentAnnotation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DocumentAnnotationKind kind = default;
             IReadOnlyList<float> polygon = default;
             float confidence = default;

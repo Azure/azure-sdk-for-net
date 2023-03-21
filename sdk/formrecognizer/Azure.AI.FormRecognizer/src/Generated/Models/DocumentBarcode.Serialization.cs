@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentBarcode DeserializeDocumentBarcode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DocumentBarcodeKind kind = default;
             string value = default;
             Optional<IReadOnlyList<float>> polygon = default;

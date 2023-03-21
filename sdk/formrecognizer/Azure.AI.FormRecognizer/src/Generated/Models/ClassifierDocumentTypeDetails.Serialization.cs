@@ -30,6 +30,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         internal static ClassifierDocumentTypeDetails DeserializeClassifierDocumentTypeDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureBlobContentSource> azureBlobSource = default;
             Optional<AzureBlobFileListSource> azureBlobFileListSource = default;
             foreach (var property in element.EnumerateObject())

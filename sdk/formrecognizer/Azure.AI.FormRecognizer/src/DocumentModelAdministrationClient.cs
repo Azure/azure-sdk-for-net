@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Diagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint, options.VersionString);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));
-            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint, options.VersionString);
         }
 
         #region Build

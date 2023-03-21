@@ -28,6 +28,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         internal static AzureBlobContentSource DeserializeAzureBlobContentSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri containerUrl = default;
             Optional<string> prefix = default;
             foreach (var property in element.EnumerateObject())

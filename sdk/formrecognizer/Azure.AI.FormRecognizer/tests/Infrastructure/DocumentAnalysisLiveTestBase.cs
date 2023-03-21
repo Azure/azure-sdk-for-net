@@ -10,7 +10,8 @@ using NUnit.Framework;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     [ClientTestFixture(
-    DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31)]
+        DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31,
+        DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
     public class DocumentAnalysisLiveTestBase : RecordedTestBase<DocumentAnalysisTestEnvironment>
     {
         /// <summary>

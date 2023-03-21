@@ -16,6 +16,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static GetDocumentClassifiersResponse DeserializeGetDocumentClassifiersResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DocumentClassifierDetails> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())

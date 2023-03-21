@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static QuotaDetails DeserializeQuotaDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int used = default;
             int quota = default;
             DateTimeOffset quotaResetDateTime = default;

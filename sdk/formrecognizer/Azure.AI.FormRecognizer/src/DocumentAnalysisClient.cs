@@ -63,7 +63,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint, options.VersionString);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));
-            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint, options.VersionString);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 var response = await ServiceClient.DocumentModelsAnalyzeDocumentAsync(
                     modelId,
-                    ContentType1.ApplicationOctetStream,
+                    InternalContentType.ApplicationOctetStream,
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
                     options.Locale,
                     Constants.DefaultStringIndexType,
@@ -212,7 +212,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 var response = ServiceClient.DocumentModelsAnalyzeDocument(
                     modelId,
-                    ContentType1.ApplicationOctetStream,
+                    InternalContentType.ApplicationOctetStream,
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
                     options.Locale,
                     Constants.DefaultStringIndexType,
@@ -273,7 +273,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri.AbsoluteUri };
+                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri };
                 var response = await ServiceClient.DocumentModelsAnalyzeDocumentAsync(
                     modelId,
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
@@ -336,7 +336,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri.AbsoluteUri };
+                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri };
                 var response = ServiceClient.DocumentModelsAnalyzeDocument(
                     modelId,
                     options.Pages.Count == 0 ? null : string.Join(",", options.Pages),

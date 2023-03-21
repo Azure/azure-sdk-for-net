@@ -21,7 +21,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     internal partial class DocumentAnalysisRestClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -29,13 +30,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentAnalysisRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
-        public DocumentAnalysisRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for
+        /// example: https://westus2.api.cognitive.microsoft.com).
+        /// </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public DocumentAnalysisRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-02-28-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
         internal HttpMessage CreateDocumentModelsAnalyzeDocumentRequest(string modelId, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, IEnumerable<string> queryFields, AnalyzeDocumentRequest analyzeRequest)
@@ -44,7 +50,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
@@ -61,7 +67,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (features != null)
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
@@ -142,13 +148,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        internal HttpMessage CreateDocumentModelsAnalyzeDocumentRequest(string modelId, ContentType1 contentType, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, IEnumerable<string> queryFields, Stream analyzeRequest)
+        internal HttpMessage CreateDocumentModelsAnalyzeDocumentRequest(string modelId, InternalContentType contentType, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, IEnumerable<string> queryFields, Stream analyzeRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
@@ -165,7 +171,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (features != null)
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
@@ -196,7 +202,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <remarks> Analyzes document with document model. </remarks>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders>> DocumentModelsAnalyzeDocumentAsync(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders>> DocumentModelsAnalyzeDocumentAsync(string modelId, InternalContentType contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -227,7 +233,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <remarks> Analyzes document with document model. </remarks>
-        public ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders> DocumentModelsAnalyzeDocument(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders> DocumentModelsAnalyzeDocument(string modelId, InternalContentType contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -252,7 +258,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
@@ -269,7 +275,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (features != null)
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
@@ -354,13 +360,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeResults/", false);
             uri.AppendPath(resultId, true);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -438,10 +444,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:build", false);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -505,10 +511,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:compose", false);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -572,10 +578,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:authorizeCopy", false);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -647,12 +653,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath(":copyTo", false);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -726,10 +732,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations", false);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -783,11 +789,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -855,10 +861,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels", false);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -912,11 +918,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -984,11 +990,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1046,10 +1052,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentClassifiers:build", false);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1113,10 +1119,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentClassifiers", false);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1170,11 +1176,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentClassifiers/", false);
             uri.AppendPath(classifierId, true);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1242,11 +1248,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentClassifiers/", false);
             uri.AppendPath(classifierId, true);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1304,7 +1310,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentClassifiers/", false);
             uri.AppendPath(classifierId, true);
@@ -1313,7 +1319,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (classifyRequest != null)
@@ -1378,13 +1384,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        internal HttpMessage CreateDocumentClassifiersClassifyDocumentRequest(string classifierId, ContentType1 contentType, StringIndexType? stringIndexType, Stream classifyRequest)
+        internal HttpMessage CreateDocumentClassifiersClassifyDocumentRequest(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType, Stream classifyRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentClassifiers/", false);
             uri.AppendPath(classifierId, true);
@@ -1393,7 +1399,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (classifyRequest != null)
@@ -1412,7 +1418,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
         /// <remarks> Classifies document with document classifier. </remarks>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders>> DocumentClassifiersClassifyDocumentAsync(string classifierId, ContentType1 contentType, StringIndexType? stringIndexType = null, Stream classifyRequest = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders>> DocumentClassifiersClassifyDocumentAsync(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType = null, Stream classifyRequest = null, CancellationToken cancellationToken = default)
         {
             if (classifierId == null)
             {
@@ -1439,7 +1445,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
         /// <remarks> Classifies document with document classifier. </remarks>
-        public ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders> DocumentClassifiersClassifyDocument(string classifierId, ContentType1 contentType, StringIndexType? stringIndexType = null, Stream classifyRequest = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders> DocumentClassifiersClassifyDocument(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType = null, Stream classifyRequest = null, CancellationToken cancellationToken = default)
         {
             if (classifierId == null)
             {
@@ -1464,7 +1470,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentClassifiers/", false);
             uri.AppendPath(classifierId, true);
@@ -1473,7 +1479,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (classifyRequest != null)
@@ -1542,13 +1548,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentClassifiers/", false);
             uri.AppendPath(classifierId, true);
             uri.AppendPath("/analyzeResults/", false);
             uri.AppendPath(resultId, true);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1626,10 +1632,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/info", false);
-            uri.AppendQuery("api-version", "2023-02-28-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1683,7 +1689,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -1753,7 +1759,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -1823,7 +1829,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;

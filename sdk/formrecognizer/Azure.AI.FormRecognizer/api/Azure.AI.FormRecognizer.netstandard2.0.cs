@@ -406,12 +406,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     }
     public partial class DocumentAnalysisClientOptions : Azure.Core.ClientOptions
     {
-        public DocumentAnalysisClientOptions(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion version = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31) { }
+        public DocumentAnalysisClientOptions(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion version = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview) { }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience? Audience { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V2022_08_31 = 1,
+            V2023_02_28_Preview = 2,
         }
     }
     public static partial class DocumentAnalysisModelFactory

@@ -16,6 +16,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentClassifierDetails DeserializeDocumentClassifierDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string classifierId = default;
             Optional<string> description = default;
             DateTimeOffset createdDateTime = default;

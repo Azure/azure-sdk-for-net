@@ -25,6 +25,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         internal static AzureBlobFileListSource DeserializeAzureBlobFileListSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri containerUrl = default;
             string fileList = default;
             foreach (var property in element.EnumerateObject())

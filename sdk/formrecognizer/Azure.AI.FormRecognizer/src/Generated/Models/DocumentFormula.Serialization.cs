@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentFormula DeserializeDocumentFormula(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DocumentFormulaKind kind = default;
             string value = default;
             Optional<IReadOnlyList<float>> polygon = default;
