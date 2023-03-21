@@ -331,8 +331,23 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             vnet.Subnets[0].Delegations.Add(delegation);
             VirtualNetworkCollection vnetColletion = resourceGroup.GetVirtualNetworks();
             VirtualNetworkResource virtualNetwork = (await vnetColletion.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
-            SubnetData subnetResource = virtualNetwork.Data.Subnets[0];
-            DefaultSubnetId = subnetResource.Id;
+            ResourceIdentifier subnetID;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                subnetID = SubnetResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, vnetName, "default");
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    var vnetResource = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+                    var subnetCollection = vnetResource.Value.GetSubnets();
+                    //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
+                    subnetID = vnetResource.Value.Data.Subnets[0].Id;
+                }
+            }
+            //SubnetData subnetResource = virtualNetwork.Data.Subnets[0];
+            DefaultSubnetId = subnetID;
             //wait a bit this may take a while
             if (Mode != RecordedTestMode.Playback)
             {
