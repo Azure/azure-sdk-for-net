@@ -44,11 +44,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 Audience = audience
             });
 
-            if (chunkSize.HasValue)
-            {
-                options.MaxChunkSize = chunkSize.Value;
-            }
-
             return InstrumentClient(new ContainerRegistryContentClient(
                     new Uri(endpoint),
                     repository,

@@ -93,7 +93,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             }
 
             // Download and write out the config
-            DownloadRegistryBlobResult configBlob = await client.DownloadBlobAsync(manifest.Configuration.Digest);
+            DownloadRegistryBlobResult configBlob = await client.DownloadBlobContentAsync(manifest.Configuration.Digest);
 
             string configFile = Path.Combine(path, "config.json");
             using (FileStream stream = File.Create(configFile))
