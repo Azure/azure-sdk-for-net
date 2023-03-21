@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Property `RegistryUri` in class `ContainerAppRegistryInfo` is now obsoleted, please use `RegistryServer` instead.
+
 ### Bugs Fixed
 
 ### Other Changes
