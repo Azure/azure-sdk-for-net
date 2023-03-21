@@ -11,9 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter.Models
 {
     [CodeGenModel("RouterJob")]
-#pragma warning disable CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("RouterJob")]
-#pragma warning restore CA1825 // Avoid zero-length array allocations
     public partial class RouterJob
     {
         /// <summary> Initializes a new instance of RouterJob. </summary>

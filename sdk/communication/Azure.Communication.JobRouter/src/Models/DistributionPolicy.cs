@@ -7,9 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter.Models
 {
     [CodeGenModel("DistributionPolicy")]
-#pragma warning disable CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("DistributionPolicy")]
-#pragma warning restore CA1825 // Avoid zero-length array allocations
     public partial class DistributionPolicy
     {
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
