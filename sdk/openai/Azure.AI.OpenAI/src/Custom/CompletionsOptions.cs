@@ -9,15 +9,6 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    [CodeGenSuppress("CacheLevel", new System.Type[] {})]
-
-    [CodeGenSuppress("CompletionConfig", new System.Type[] { })]
-    [CodeGenSuppress("LogitBias", new System.Type[] { })]
-    [CodeGenSuppress("Model", new System.Type[] { })]
-    [CodeGenSuppress("Prompt", new System.Type[] { })]
-    [CodeGenSuppress("Stop", new System.Type[] { })]
-    [CodeGenSuppress("Stop", new System.Type[] { })]
-
     public partial class CompletionsOptions
     {
         /// <summary>

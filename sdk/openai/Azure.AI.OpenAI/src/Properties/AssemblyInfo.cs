@@ -7,3 +7,4 @@ using Azure.Core;
 [assembly: CodeGenOverrideServiceVersions(
     "2022-12-01",
     "2023-03-15-preview")]
+[assembly: CodeGenSuppressType("Azure.AI.OpenAI.CompletionsOptions")]
