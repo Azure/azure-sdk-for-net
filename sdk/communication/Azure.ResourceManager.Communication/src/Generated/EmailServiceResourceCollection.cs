@@ -21,15 +21,13 @@ namespace Azure.ResourceManager.Communication
 {
     /// <summary>
     /// A class representing a collection of <see cref="EmailServiceResource" /> and their operations.
-    /// Each <see cref="EmailServiceResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get an <see cref="EmailServiceResourceCollection" /> instance call the GetEmailServiceResources method from an instance of <see cref="TenantResource" />.
+    /// Each <see cref="EmailServiceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="EmailServiceResourceCollection" /> instance call the GetEmailServiceResources method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
     public partial class EmailServiceResourceCollection : ArmCollection, IEnumerable<EmailServiceResource>, IAsyncEnumerable<EmailServiceResource>
     {
         private readonly ClientDiagnostics _emailServiceResourceEmailServicesClientDiagnostics;
         private readonly EmailServicesRestOperations _emailServiceResourceEmailServicesRestClient;
-        private readonly Guid _subscriptionId;
-        private readonly string _resourceGroupName;
 
         /// <summary> Initializes a new instance of the <see cref="EmailServiceResourceCollection"/> class for mocking. </summary>
         protected EmailServiceResourceCollection()
@@ -39,14 +37,8 @@ namespace Azure.ResourceManager.Communication
         /// <summary> Initializes a new instance of the <see cref="EmailServiceResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal EmailServiceResourceCollection(ArmClient client, ResourceIdentifier id, Guid subscriptionId, string resourceGroupName) : base(client, id)
+        internal EmailServiceResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
             _emailServiceResourceEmailServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", EmailServiceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EmailServiceResource.ResourceType, out string emailServiceResourceEmailServicesApiVersion);
             _emailServiceResourceEmailServicesRestClient = new EmailServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, emailServiceResourceEmailServicesApiVersion);
@@ -57,8 +49,8 @@ namespace Azure.ResourceManager.Communication
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -89,8 +81,8 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _emailServiceResourceEmailServicesRestClient.CreateOrUpdateAsync(_subscriptionId, _resourceGroupName, emailServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(Client), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, _emailServiceResourceEmailServicesRestClient.CreateCreateOrUpdateRequest(_subscriptionId, _resourceGroupName, emailServiceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _emailServiceResourceEmailServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(Client), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, _emailServiceResourceEmailServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,8 +122,8 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _emailServiceResourceEmailServicesRestClient.CreateOrUpdate(_subscriptionId, _resourceGroupName, emailServiceName, data, cancellationToken);
-                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(Client), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, _emailServiceResourceEmailServicesRestClient.CreateCreateOrUpdateRequest(_subscriptionId, _resourceGroupName, emailServiceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _emailServiceResourceEmailServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, data, cancellationToken);
+                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(Client), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, _emailServiceResourceEmailServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -168,7 +160,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _emailServiceResourceEmailServicesRestClient.GetAsync(_subscriptionId, _resourceGroupName, emailServiceName, cancellationToken).ConfigureAwait(false);
+                var response = await _emailServiceResourceEmailServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EmailServiceResource(Client, response.Value), response.GetRawResponse());
@@ -205,7 +197,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _emailServiceResourceEmailServicesRestClient.Get(_subscriptionId, _resourceGroupName, emailServiceName, cancellationToken);
+                var response = _emailServiceResourceEmailServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EmailServiceResource(Client, response.Value), response.GetRawResponse());
@@ -234,8 +226,8 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EmailServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupRequest(_subscriptionId, _resourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, _subscriptionId, _resourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, "EmailServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -256,8 +248,8 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EmailServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupRequest(_subscriptionId, _resourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, _subscriptionId, _resourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, "EmailServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -286,7 +278,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _emailServiceResourceEmailServicesRestClient.GetAsync(_subscriptionId, _resourceGroupName, emailServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _emailServiceResourceEmailServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,7 +313,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _emailServiceResourceEmailServicesRestClient.Get(_subscriptionId, _resourceGroupName, emailServiceName, cancellationToken: cancellationToken);
+                var response = _emailServiceResourceEmailServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

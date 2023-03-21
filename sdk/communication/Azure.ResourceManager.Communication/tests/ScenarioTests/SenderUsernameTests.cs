@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.Communication.Tests
         private string _domainResourceName;
         private string _location;
         private string _dataLocation;
-        private Guid _subscriptionId;
-        private string _resourceGroupName;
 
         public SenderUsernameTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
@@ -35,19 +33,14 @@ namespace Azure.ResourceManager.Communication.Tests
         [OneTimeSetUp]
         public async Task OneTimeSetup()
         {
-            _tenantResource = await GlobalClient.GetTenants().GetAllAsync().FirstOrDefaultAsync(t => t != null);
-
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName(ResourceGroupPrefix), new ResourceGroupData(new AzureLocation("westus")));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName(ResourceGroupPrefix), new ResourceGroupData(new AzureLocation("westus2")));
             ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
-
             _location = ResourceLocation;
             _dataLocation = ResourceDataLocation;
-            _subscriptionId = Guid.Parse(rg.Id.SubscriptionId);
-            _resourceGroupName = _resourceGroupIdentifier.ResourceGroupName;
 
             _emailServiceName = SessionRecording.GenerateAssetName("email-test");
-            _emailService = await CreateDefaultEmailServices(_subscriptionId, _resourceGroupName, _emailServiceName, _tenantResource);
+            _emailService = await CreateDefaultEmailServices(_emailServiceName, _resourceGroup);
 
             _domainResourceName = SessionRecording.GenerateAssetName("domain-") + ".com";
             _domainResource = await CreateDefaultDomain(_domainResourceName, _emailService);
@@ -62,7 +55,7 @@ namespace Azure.ResourceManager.Communication.Tests
 
             _tenantResource = await ArmClient.GetTenants().GetAllAsync().FirstOrDefaultAsync(t => t != null);
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
-            var collection = _tenantResource.GetEmailServiceResources(_subscriptionId, _resourceGroupName);
+            var collection = _resourceGroup.GetEmailServiceResources();
             _emailService = await collection.GetAsync(_emailServiceName);
             _domainResource = await _emailService.GetCommunicationDomainResourceAsync(_domainResourceName);
         }

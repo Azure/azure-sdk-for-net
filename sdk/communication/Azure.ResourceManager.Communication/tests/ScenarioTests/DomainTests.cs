@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,37 +14,28 @@ namespace Azure.ResourceManager.Communication.Tests
 {
     public class DomainTests : CommunicationManagementClientLiveTestBase
     {
-        private TenantResource _tenantResource;
-        private EmailServiceResource _emailService;
         private ResourceGroupResource _resourceGroup;
+        private EmailServiceResource _emailService;
         private ResourceIdentifier _resourceGroupIdentifier;
+        private string _emailServiceName;
         private string _location;
         private string _dataLocation;
-        private Guid _subscriptionId;
-        private string _emailServiceName;
-        private string _resourceGroupName;
 
         public DomainTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         [OneTimeSetUp]
         public async Task OneTimeSetup()
         {
-            _tenantResource = await GlobalClient.GetTenants().GetAllAsync().FirstOrDefaultAsync(t => t != null);
-
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName(ResourceGroupPrefix), new ResourceGroupData(new AzureLocation("westus")));
             ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
+            _emailServiceName = SessionRecording.GenerateAssetName("email-test");
+            await CreateDefaultEmailServices(_emailServiceName, rg);
             _location = ResourceLocation;
             _dataLocation = ResourceDataLocation;
-            _subscriptionId = Guid.Parse(rg.Id.SubscriptionId);
-            _resourceGroupName = _resourceGroupIdentifier.ResourceGroupName;
-
-            _emailServiceName = SessionRecording.GenerateAssetName("email-test");
-            await CreateDefaultEmailServices(_subscriptionId, _resourceGroupName, _emailServiceName, _tenantResource);
-
             await StopSessionRecordingAsync();
         }
 
@@ -53,9 +43,8 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task SetUp()
         {
             ArmClient = GetArmClient();
-            _tenantResource = await ArmClient.GetTenants().GetAllAsync().FirstOrDefaultAsync(t => t != null);
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
-            _emailService = await _tenantResource.GetEmailServiceResourceAsync(_subscriptionId, _resourceGroupName, _emailServiceName);
+            _emailService = await _resourceGroup.GetEmailServiceResourceAsync(_emailServiceName);
         }
 
         [TearDown]

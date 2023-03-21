@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="username"> A sender senderUsername to be used when sending emails. </param>
         /// <param name="displayName"> The display name for the senderUsername. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. Unknown is the default state for Communication Services. </param>
-        internal SenderUsernameResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string dataLocation, string username, string displayName, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal SenderUsernameResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string dataLocation, string username, string displayName, CommunicationServiceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             DataLocation = dataLocation;
             Username = username;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Communication
         /// <summary> The display name for the senderUsername. </summary>
         public string DisplayName { get; set; }
         /// <summary> Provisioning state of the resource. Unknown is the default state for Communication Services. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public CommunicationServiceProvisioningState? ProvisioningState { get; }
     }
 }

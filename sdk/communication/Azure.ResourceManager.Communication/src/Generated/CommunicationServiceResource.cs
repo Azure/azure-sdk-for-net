@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Communication
     /// A Class representing a CommunicationServiceResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CommunicationServiceResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCommunicationServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetCommunicationServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCommunicationServiceResource method.
     /// </summary>
     public partial class CommunicationServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommunicationServiceResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(Guid subscriptionId, string resourceGroupName, string communicationServiceName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}";
             return new ResourceIdentifier(resourceId);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _communicationServiceResourceCommunicationServicesRestClient.Get(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _communicationServiceResourceCommunicationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _communicationServiceResourceCommunicationServicesRestClient.DeleteAsync(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationArmOperation(_communicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, _communicationServiceResourceCommunicationServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation(_communicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, _communicationServiceResourceCommunicationServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,8 +208,8 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _communicationServiceResourceCommunicationServicesRestClient.Delete(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CommunicationArmOperation(_communicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, _communicationServiceResourceCommunicationServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _communicationServiceResourceCommunicationServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CommunicationArmOperation(_communicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, _communicationServiceResourceCommunicationServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _communicationServiceResourceCommunicationServicesRestClient.UpdateAsync(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _communicationServiceResourceCommunicationServicesRestClient.Update(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var response = _communicationServiceResourceCommunicationServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _communicationServiceResourceCommunicationServicesRestClient.LinkNotificationHubAsync(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.LinkNotificationHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _communicationServiceResourceCommunicationServicesRestClient.LinkNotificationHub(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, content, cancellationToken);
+                var response = _communicationServiceResourceCommunicationServicesRestClient.LinkNotificationHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _communicationServiceResourceCommunicationServicesRestClient.ListKeysAsync(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _communicationServiceResourceCommunicationServicesRestClient.ListKeys(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _communicationServiceResourceCommunicationServicesRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _communicationServiceResourceCommunicationServicesRestClient.RegenerateKeyAsync(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _communicationServiceResourceCommunicationServicesRestClient.RegenerateKey(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, content, cancellationToken);
+                var response = _communicationServiceResourceCommunicationServicesRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Communication
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Communication
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _communicationServiceResourceCommunicationServicesRestClient.Get(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _communicationServiceResourceCommunicationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Communication
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Communication
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _communicationServiceResourceCommunicationServicesRestClient.Get(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _communicationServiceResourceCommunicationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.Communication
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Communication
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _communicationServiceResourceCommunicationServicesRestClient.Get(Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _communicationServiceResourceCommunicationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Communication
             Optional<string> dataLocation = default;
             Optional<string> username = default;
             Optional<string> displayName = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<CommunicationServiceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Communication
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new CommunicationServiceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
