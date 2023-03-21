@@ -75,7 +75,7 @@ using (FileStream stream = File.Create(manifestFile))
 }
 
 // Download and write out the config
-DownloadBlobResult configBlob = await client.DownloadBlobAsync(manifest.Configuration.Digest);
+DownloadBlobResult configBlob = await client.DownloadBlobContentAsync(manifest.Configuration.Digest);
 
 string configFile = Path.Combine(path, "config.json");
 using (FileStream stream = File.Create(configFile))

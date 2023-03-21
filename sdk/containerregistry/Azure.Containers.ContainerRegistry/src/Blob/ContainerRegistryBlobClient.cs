@@ -21,7 +21,6 @@ namespace Azure.Containers.ContainerRegistry
     public class ContainerRegistryBlobClient
     {
         private const int DefaultChunkSize = 4 * 1024 * 1024; // 4MB
-        private readonly int _maxChunkSize;
 
         private readonly Uri _endpoint;
         private readonly string _registryName;
@@ -32,6 +31,7 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ContainerRegistryRestClient _restClient;
         private readonly IContainerRegistryAuthenticationClient _acrAuthClient;
         private readonly ContainerRegistryBlobRestClient _blobRestClient;
+        private readonly int _maxRetries;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts,
@@ -103,7 +103,7 @@ namespace Azure.Containers.ContainerRegistry
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _repositoryName = repositoryName;
-            _maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
+            _maxRetries = options.Retry.MaxRetries;
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
@@ -285,7 +285,7 @@ namespace Azure.Containers.ContainerRegistry
                 await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifest, contentType, cancellationToken).ConfigureAwait(false) :
                 _restClient.CreateManifest(_repositoryName, tagOrDigest, manifest, contentType, cancellationToken);
 
-            ValidateDigest(contentDigest, response.Headers.DockerContentDigest);
+            BlobHelper.ValidateDigest(contentDigest, response.Headers.DockerContentDigest);
 
             return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
         }
@@ -362,12 +362,12 @@ namespace Azure.Containers.ContainerRegistry
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     _blobRestClient.StartUpload(_repositoryName, cancellationToken);
 
-                var result = UploadInChunksInternalAsync(startUploadResult.Headers.Location, content, _maxChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+                var result = UploadInChunksInternalAsync(startUploadResult.Headers.Location, content, DefaultChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     _blobRestClient.CompleteUpload(result.Digest, result.Location, null, cancellationToken);
 
-                ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
+                BlobHelper.ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
                 return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
             }
@@ -408,12 +408,12 @@ namespace Azure.Containers.ContainerRegistry
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
-                var result = await UploadInChunksInternalAsync(startUploadResult.Headers.Location, content, _maxChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var result = await UploadInChunksInternalAsync(startUploadResult.Headers.Location, content, DefaultChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     await _blobRestClient.CompleteUploadAsync(result.Digest, result.Location, null, cancellationToken).ConfigureAwait(false);
 
-                ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
+                BlobHelper.ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
                 return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
             }
@@ -574,11 +574,11 @@ namespace Azure.Containers.ContainerRegistry
 
                 if (ReferenceIsDigest(tagOrDigest))
                 {
-                    ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
+                    BlobHelper.ValidateDigest(contentDigest, tagOrDigest, BlobHelper.ManifestDigestDoestMatchRequestedMessage);
                 }
                 else
                 {
-                    ValidateDigest(contentDigest, digest);
+                    BlobHelper.ValidateDigest(contentDigest, digest);
                 }
 
                 return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
@@ -632,11 +632,11 @@ namespace Azure.Containers.ContainerRegistry
 
                 if (ReferenceIsDigest(tagOrDigest))
                 {
-                    ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
+                    BlobHelper.ValidateDigest(contentDigest, tagOrDigest, BlobHelper.ManifestDigestDoestMatchRequestedMessage);
                 }
                 else
                 {
-                    ValidateDigest(contentDigest, digest);
+                    BlobHelper.ValidateDigest(contentDigest, digest);
                 }
 
                 return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
@@ -675,35 +675,25 @@ namespace Azure.Containers.ContainerRegistry
             return reference.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase);
         }
 
-        private static void ValidateDigest(string clientDigest, string serverDigest, string message = default)
-        {
-            message ??= "The server-computed digest does not match the client-computed digest.";
-
-            if (!clientDigest.Equals(serverDigest, StringComparison.OrdinalIgnoreCase))
-            {
-                throw new RequestFailedException(message);
-            }
-        }
-
         /// <summary>
         /// Download a container registry blob.
         /// This API is a prefered way to fetch blobs that can fit into memory.
         /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
         /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
-        /// To download a blob that does not fit in memory, please use the <see cref="DownloadBlobTo"/> method instead.
+        /// To download a blob that does not fit in memory, consider using the <see cref="DownloadBlobTo(string, Stream, CancellationToken)"/> method instead.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<DownloadBlobResult> DownloadBlob(string digest, CancellationToken cancellationToken = default)
+        public virtual Response<DownloadBlobResult> DownloadBlobContent(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlobContent)}");
             scope.Start();
             try
             {
-                return DownloadBlobInternalAsync(digest, false, cancellationToken).EnsureCompleted();
+                return DownloadBlobContentInternalAsync(digest, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -717,20 +707,20 @@ namespace Azure.Containers.ContainerRegistry
         /// This API is a prefered way to fetch blobs that can fit into memory.
         /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
         /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
-        /// To download a blob that does not fit in memory, please use the <see cref="DownloadBlobToAsync"/> method instead.
+        /// To download a blob that does not fit in memory, consider using the <see cref="DownloadBlobToAsync(string, Stream, CancellationToken)"/> method instead.
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<DownloadBlobResult>> DownloadBlobAsync(string digest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DownloadBlobResult>> DownloadBlobContentAsync(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlobContent)}");
             scope.Start();
             try
             {
-                return await DownloadBlobInternalAsync(digest, true, cancellationToken).ConfigureAwait(false);
+                return await DownloadBlobContentInternalAsync(digest, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -739,20 +729,118 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private async Task<Response<DownloadBlobResult>> DownloadBlobInternalAsync(string digest, bool async, CancellationToken cancellationToken)
+        private async Task<Response<DownloadBlobResult>> DownloadBlobContentInternalAsync(string digest, bool async, CancellationToken cancellationToken)
         {
             ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = async ?
                 await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
                 _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
 
-            var contentDigest = BlobHelper.ComputeDigest(blobResult.Value);
-            ValidateDigest(contentDigest, digest);
-
             BinaryData data = async ?
                 await BinaryData.FromStreamAsync(blobResult.Value, cancellationToken).ConfigureAwait(false) :
                 BinaryData.FromStream(blobResult.Value);
 
+            string contentDigest = BlobHelper.ComputeDigest(data);
+            BlobHelper.ValidateDigest(contentDigest, digest);
+
             return Response.FromValue(new DownloadBlobResult(digest, data), blobResult.GetRawResponse());
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual Response<DownloadBlobStreamingResult> DownloadBlobStreaming(string digest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlobStreaming)}");
+            scope.Start();
+            try
+            {
+                return DownloadBlobStreamingInternalAsync(digest, false, cancellationToken).EnsureCompleted();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual async Task<Response<DownloadBlobStreamingResult>> DownloadBlobStreamingAsync(string digest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlobStreaming)}");
+            scope.Start();
+            try
+            {
+                return await DownloadBlobStreamingInternalAsync(digest, true, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<Response<DownloadBlobStreamingResult>> DownloadBlobStreamingInternalAsync(string digest, bool async, CancellationToken cancellationToken)
+        {
+            ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = async ?
+                await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
+                _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
+
+            // Wrap the response Content in a RetriableStream so we
+            // can return it before it's finished downloading, but still
+            // allow retrying if it fails.
+            Stream retriableStream = RetriableStream.Create(
+                blobResult.Value,
+                offset => _blobRestClient.GetChunk(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).Value,
+                async offset => await _blobRestClient.GetChunkAsync(_repositoryName, digest, new HttpRange(offset).ToString(), cancellationToken).ConfigureAwait(false),
+                _pipeline.ResponseClassifier,
+                _maxRetries);
+
+            ValidatingStream stream = new(retriableStream, (int)blobResult.Headers.ContentLength.Value, digest);
+
+            return Response.FromValue(new DownloadBlobStreamingResult(digest, stream), blobResult.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="path">A file path to write the downloaded content to.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        public virtual Response DownloadBlobTo(string digest, string path, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(path, nameof(path));
+
+            return DownloadBlobTo(digest, path, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken);
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="path">A file path to write the downloaded content to.</param>
+        /// <param name="options">Options to configure the operation behavior.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        internal virtual Response DownloadBlobTo(string digest, string path, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(path, nameof(path));
+            Argument.AssertNotNull(options, nameof(options));
+
+            using Stream destination = File.Create(path);
+            return DownloadBlobTo(digest, destination, cancellationToken);
         }
 
         /// <summary>
@@ -767,17 +855,69 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(destination, nameof(destination));
 
+            return DownloadBlobTo(digest, destination, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken);
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="destination">Destination for the downloaded blob.</param>
+        /// <param name="options">Options to configure the operation behavior.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        internal virtual Response DownloadBlobTo(string digest, Stream destination, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(destination, nameof(destination));
+            Argument.AssertNotNull(options, nameof(options));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlobTo)}");
             scope.Start();
             try
             {
-                return DownloadBlobToInternalAsync(digest, destination, false, cancellationToken).EnsureCompleted();
+                return DownloadBlobToInternalAsync(digest, destination, options, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.  This approach will download the blob
+        /// to the destination stream in sequential chunks of bytes.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="path">A file path to write the downloaded content to.</param>
+        /// <param name="cancellationToken"> The cancellation token to use.</param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        public virtual async Task<Response> DownloadBlobToAsync(string digest, string path, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(path, nameof(path));
+
+            return await DownloadBlobToAsync(digest, path, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.  This approach will download the blob
+        /// to the destination stream in sequential chunks of bytes.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="path">A file path to write the downloaded content to.</param>
+        /// <param name="options">Options to configure the operation behavior.</param>
+        /// <param name="cancellationToken"> The cancellation token to use.</param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        internal virtual async Task<Response> DownloadBlobToAsync(string digest, string path, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(path, nameof(path));
+            Argument.AssertNotNull(options, nameof(options));
+
+            using Stream destination = File.Create(path);
+            return await DownloadBlobToAsync(digest, destination, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -793,11 +933,28 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(destination, nameof(destination));
 
+            return await DownloadBlobToAsync(digest, destination, new DownloadBlobToOptions(DefaultChunkSize), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Download a blob to a passed-in destination stream.  This approach will download the blob
+        /// to the destination stream in sequential chunks of bytes.
+        /// </summary>
+        /// <param name="digest">The digest of the blob to download.</param>
+        /// <param name="destination">Destination for the downloaded blob.</param>
+        /// <param name="options">Options to configure the operation behavior.</param>
+        /// <param name="cancellationToken"> The cancellation token to use.</param>
+        /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
+        internal virtual async Task<Response> DownloadBlobToAsync(string digest, Stream destination, DownloadBlobToOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(destination, nameof(destination));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlobTo)}");
             scope.Start();
             try
             {
-                return await DownloadBlobToInternalAsync(digest, destination, true, cancellationToken).ConfigureAwait(false);
+                return await DownloadBlobToInternalAsync(digest, destination, options, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -806,9 +963,9 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private async Task<Response> DownloadBlobToInternalAsync(string digest, Stream destination, bool async, CancellationToken cancellationToken)
+        private async Task<Response> DownloadBlobToInternalAsync(string digest, Stream destination, DownloadBlobToOptions options, bool async, CancellationToken cancellationToken)
         {
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(_maxChunkSize);
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(options.MaxChunkSize);
             long bytesDownloaded = 0;
             using SHA256 sha256 = SHA256.Create();
             long? blobSize = default;
@@ -819,8 +976,8 @@ namespace Azure.Containers.ContainerRegistry
                 do
                 {
                     int chunkSize = blobSize.HasValue ?
-                        (int)Math.Min(blobSize.Value - bytesDownloaded, _maxChunkSize) :
-                        _maxChunkSize;
+                        (int)Math.Min(blobSize.Value - bytesDownloaded, options.MaxChunkSize) :
+                        options.MaxChunkSize;
                     HttpRange range = new HttpRange(bytesDownloaded, chunkSize);
 
                     var chunkResult = async ?
@@ -828,7 +985,7 @@ namespace Azure.Containers.ContainerRegistry
                         _blobRestClient.GetChunk(_repositoryName, digest, range.ToString(), cancellationToken);
 
                     blobSize ??= GetBlobSizeFromContentRange(chunkResult.Headers.ContentRange);
-                    chunkSize = (int)chunkResult.Value.Length;
+                    chunkSize = (int)chunkResult.Headers.ContentLength.Value;
 
                     if (async)
                     {
@@ -851,9 +1008,8 @@ namespace Azure.Containers.ContainerRegistry
 
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
-                var computedDigest = BlobHelper.FormatDigest(sha256.Hash);
-
-                ValidateDigest(computedDigest, digest);
+                string computedDigest = BlobHelper.FormatDigest(sha256.Hash);
+                BlobHelper.ValidateDigest(computedDigest, digest);
 
                 if (async)
                 {
