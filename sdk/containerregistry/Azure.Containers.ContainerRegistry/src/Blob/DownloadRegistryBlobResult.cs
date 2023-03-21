@@ -8,9 +8,9 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary>
     /// The result from downloading a blob from the registry.
     /// </summary>
-    public class DownloadBlobResult
+    public class DownloadRegistryBlobResult
     {
-        internal DownloadBlobResult(string digest, BinaryData content)
+        internal DownloadRegistryBlobResult(string digest, BinaryData content)
         {
             Digest = digest;
             Content = content;

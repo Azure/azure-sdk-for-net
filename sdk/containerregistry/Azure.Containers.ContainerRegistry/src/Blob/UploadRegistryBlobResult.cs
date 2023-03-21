@@ -6,9 +6,9 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary>
     /// The result from uploading a blob.
     /// </summary>
-    public class UploadBlobResult
+    public class UploadRegistryBlobResult
     {
-        internal UploadBlobResult(string digest, long size)
+        internal UploadRegistryBlobResult(string digest, long size)
         {
             Digest = digest;
             SizeInBytes = size;

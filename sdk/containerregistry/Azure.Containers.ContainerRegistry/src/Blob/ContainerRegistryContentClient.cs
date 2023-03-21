@@ -338,7 +338,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="content">The blob content.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
-        public virtual Response<UploadBlobResult> UploadBlob(BinaryData content, CancellationToken cancellationToken = default)
+        public virtual Response<UploadRegistryBlobResult> UploadBlob(BinaryData content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -351,7 +351,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="content">The stream containing the blob data.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
-        public virtual Response<UploadBlobResult> UploadBlob(Stream content, CancellationToken cancellationToken = default)
+        public virtual Response<UploadRegistryBlobResult> UploadBlob(Stream content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -369,7 +369,7 @@ namespace Azure.Containers.ContainerRegistry
 
                 ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadRegistryBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -384,7 +384,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="content">The blob content.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
-        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(BinaryData content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadRegistryBlobResult>> UploadBlobAsync(BinaryData content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -397,7 +397,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="content">The stream containing the blob data.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The result of the blob upload.  The raw response associated with this result is the response from the final complete upload request.</returns>
-        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadRegistryBlobResult>> UploadBlobAsync(Stream content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -415,7 +415,7 @@ namespace Azure.Containers.ContainerRegistry
 
                 ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadRegistryBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -695,7 +695,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<DownloadBlobResult> DownloadBlob(string digest, CancellationToken cancellationToken = default)
+        public virtual Response<DownloadRegistryBlobResult> DownloadBlob(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
@@ -722,7 +722,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<DownloadBlobResult>> DownloadBlobAsync(string digest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DownloadRegistryBlobResult>> DownloadBlobAsync(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
@@ -739,7 +739,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private async Task<Response<DownloadBlobResult>> DownloadBlobInternalAsync(string digest, bool async, CancellationToken cancellationToken)
+        private async Task<Response<DownloadRegistryBlobResult>> DownloadBlobInternalAsync(string digest, bool async, CancellationToken cancellationToken)
         {
             ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = async ?
                 await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
@@ -752,7 +752,7 @@ namespace Azure.Containers.ContainerRegistry
                 await BinaryData.FromStreamAsync(blobResult.Value, cancellationToken).ConfigureAwait(false) :
                 BinaryData.FromStream(blobResult.Value);
 
-            return Response.FromValue(new DownloadBlobResult(digest, data), blobResult.GetRawResponse());
+            return Response.FromValue(new DownloadRegistryBlobResult(digest, data), blobResult.GetRawResponse());
         }
 
         /// <summary>

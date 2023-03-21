@@ -36,7 +36,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Upload a config file
             BinaryData config = BinaryData.FromString("Sample config");
-            UploadBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
+            UploadRegistryBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
 
             // Update manifest with config info
             manifest.Configuration = new OciDescriptor()
@@ -48,7 +48,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Upload a layer file
             BinaryData layer = BinaryData.FromString("Sample layer");
-            UploadBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
+            UploadRegistryBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
 
             // Update manifest with layer info
             manifest.Layers.Add(new OciDescriptor()
@@ -93,7 +93,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             }
 
             // Download and write out the config
-            DownloadBlobResult configBlob = await client.DownloadBlobAsync(manifest.Configuration.Digest);
+            DownloadRegistryBlobResult configBlob = await client.DownloadBlobAsync(manifest.Configuration.Digest);
 
             string configFile = Path.Combine(path, "config.json");
             using (FileStream stream = File.Create(configFile))

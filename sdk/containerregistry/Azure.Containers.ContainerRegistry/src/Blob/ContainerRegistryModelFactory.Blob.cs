@@ -29,18 +29,18 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> The digest of the uploaded blob, calculated by the registry. </param>
         /// <param name="sizeInBytes">The size of the uploaded blob.</param>
         /// <returns> A new <see cref="UploadBlobResult"/> instance for mocking. </returns>
-        public static UploadBlobResult UploadBlobResult(string digest, long sizeInBytes)
+        public static UploadRegistryBlobResult UploadBlobResult(string digest, long sizeInBytes)
         {
-            return new UploadBlobResult(digest, sizeInBytes);
+            return new UploadRegistryBlobResult(digest, sizeInBytes);
         }
 
         /// <summary> Initializes a new instance of <see cref="DownloadBlobResult" />. </summary>
         /// <param name="digest"> The blob's digest, calculated by the registry. </param>
         /// <param name="content">The blob content.</param>
         /// <returns> A new <see cref="DownloadBlobResult"/> instance for mocking. </returns>
-        public static DownloadBlobResult DownloadBlobResult(string digest = null, BinaryData content = null)
+        public static DownloadRegistryBlobResult DownloadBlobResult(string digest = null, BinaryData content = null)
         {
-            return new DownloadBlobResult(digest, content);
+            return new DownloadRegistryBlobResult(digest, content);
         }
     }
 }

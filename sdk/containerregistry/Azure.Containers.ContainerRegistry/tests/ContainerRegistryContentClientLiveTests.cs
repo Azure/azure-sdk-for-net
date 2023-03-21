@@ -338,7 +338,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             BinaryData data = BinaryData.FromBytes(GetConstantBuffer(blobSize, 1));
 
             string digest = BlobHelper.ComputeDigest(data.ToStream());
-            UploadBlobResult uploadResult = await client.UploadBlobAsync(data);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(data);
 
             Assert.AreEqual(digest, uploadResult.Digest);
             Assert.AreEqual(data.ToMemory().Length, uploadResult.SizeInBytes);
@@ -369,7 +369,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using (var stream = new MemoryStream(data))
             {
                 digest = BlobHelper.ComputeDigest(stream);
-                UploadBlobResult uploadResult = await client.UploadBlobAsync(stream);
+                UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(stream);
                 streamLength = stream.Length;
 
                 Assert.AreEqual(digest, uploadResult.Digest);
@@ -395,7 +395,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateBlobClient(repositoryId, chunkSize);
 
             var data = GetConstantBuffer(blobSize, 1);
-            UploadBlobResult uploadResult = default;
+            UploadRegistryBlobResult uploadResult = default;
             string digest = default;
 
             using (var stream = new MemoryStream(data))
@@ -425,7 +425,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateBlobClient(repositoryId, chunkSize);
 
             var data = GetConstantBuffer(blobSize, 2);
-            UploadBlobResult uploadResult = default;
+            UploadRegistryBlobResult uploadResult = default;
             string digest = default;
 
             using (var stream = new MemoryStream(data))
@@ -453,7 +453,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateBlobClient(repositoryId, chunkSize);
 
             var data = GetConstantBuffer(blobSize, 3);
-            UploadBlobResult uploadResult = default;
+            UploadRegistryBlobResult uploadResult = default;
             string digest = default;
 
             using (var stream = new MemoryStream(data))
@@ -481,7 +481,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateBlobClient(repositoryId, chunkSize);
 
             var data = GetConstantBuffer(blobSize, 3);
-            UploadBlobResult uploadResult = default;
+            UploadRegistryBlobResult uploadResult = default;
             string digest = BlobHelper.ComputeDigest(new MemoryStream(data));
 
             using (var stream = new NonSeekableMemoryStream(data))
@@ -511,11 +511,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var data = GetConstantBuffer(blobSize, 1);
 
             using var stream = new MemoryStream(data);
-            UploadBlobResult uploadResult = await client.UploadBlobAsync(stream);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(stream);
             var digest = uploadResult.Digest;
 
             // Act
-            Response<DownloadBlobResult> downloadResult = await client.DownloadBlobAsync(digest);
+            Response<DownloadRegistryBlobResult> downloadResult = await client.DownloadBlobAsync(digest);
 
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             Assert.AreEqual(stream.Length, downloadResult.Value.Content.ToArray().Length);
@@ -535,7 +535,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var data = GetConstantBuffer(blobSize, 1);
 
             using var uploadStream = new MemoryStream(data);
-            UploadBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
             var digest = uploadResult.Digest;
 
             // Act
@@ -563,7 +563,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var data = GetConstantBuffer(blobSize, 10);
 
             using var uploadStream = new MemoryStream(data);
-            UploadBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
             var digest = uploadResult.Digest;
 
             // Act
@@ -597,7 +597,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var data = GetConstantBuffer(blobSize, 11);
 
             using var uploadStream = new MemoryStream(data);
-            UploadBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
             var digest = uploadResult.Digest;
 
             // Act
@@ -811,7 +811,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string configFileName = Path.Combine(path, "config.json");
             using (FileStream fs = File.Create(configFileName))
             {
-                DownloadBlobResult layerResult = await client.DownloadBlobAsync(manifest.Configuration.Digest);
+                DownloadRegistryBlobResult layerResult = await client.DownloadBlobAsync(manifest.Configuration.Digest);
                 await layerResult.Content.ToStream().CopyToAsync(fs);
             }
 
@@ -822,7 +822,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 using (FileStream fs = File.Create(fileName))
                 {
-                    DownloadBlobResult layerResult = await client.DownloadBlobAsync(manifest.Configuration.Digest);
+                    DownloadRegistryBlobResult layerResult = await client.DownloadBlobAsync(manifest.Configuration.Digest);
                     await layerResult.Content.ToStream().CopyToAsync(fs);
                 }
             }
