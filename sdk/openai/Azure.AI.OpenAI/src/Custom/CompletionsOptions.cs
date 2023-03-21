@@ -159,8 +159,8 @@ namespace Azure.AI.OpenAI
         [CodeGenMember("CacheLevel")]
         private int? _cacheLevel;
 
-        [CodeGenMember("CompletionsConfig")]
-        private string _completionsConfig;
+        [CodeGenMember("CompletionConfig")]
+        private string _completionConfig;
 
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>
         public CompletionsOptions()
@@ -172,8 +172,8 @@ namespace Azure.AI.OpenAI
             _cacheLevel ??= default;
             if (_cacheLevel != default)
             { }
-            _completionsConfig ??= default;
-            if (_completionsConfig != default)
+            _completionConfig ??= default;
+            if (_completionConfig != default)
             { }
         }
 
@@ -186,8 +186,11 @@ namespace Azure.AI.OpenAI
             string user,
             int? choicesPerPrompt,
             int? logProbabilityCount,
+            string nonAzureModel,
             bool? echo,
             IList<string> stopSequences,
+            string completionConfig,
+            int? cacheLevel,
             float? presencePenalty,
             float? frequencyPenalty,
             int? generationSampleCount)
@@ -200,11 +203,14 @@ namespace Azure.AI.OpenAI
             User = user;
             ChoicesPerPrompt = choicesPerPrompt;
             LogProbabilityCount = logProbabilityCount;
+            NonAzureModel = nonAzureModel;
             Echo = echo;
             StopSequences = stopSequences.ToList();
             PresencePenalty = presencePenalty;
             FrequencyPenalty = frequencyPenalty;
             GenerationSampleCount = generationSampleCount;
+            _completionConfig = completionConfig;
+            _cacheLevel = cacheLevel;
         }
-    }
+}
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml.Linq;
 using Azure;
 using Azure.Core;
 

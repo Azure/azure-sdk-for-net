@@ -334,7 +334,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new CompletionsOptions(Optional.ToList(prompt), Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user, Optional.ToNullable(n), Optional.ToNullable(logprobs), Optional.ToNullable(echo), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf));
+            return new CompletionsOptions(Optional.ToList(prompt), Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user, Optional.ToNullable(n), Optional.ToNullable(logprobs), string.Empty, Optional.ToNullable(echo), Optional.ToList(stop), string.Empty, 0, Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf));
         }
     }
 }
