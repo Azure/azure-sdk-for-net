@@ -352,21 +352,16 @@ namespace Azure.ResourceManager.Communication
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
 
-            if (senderUsername != "donotreply")
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, emailServiceName, domainName, senderUsername);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
             {
-                using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, emailServiceName, domainName, senderUsername);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw new RequestFailedException(message.Response);
-                }
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
             }
-
-            return new MockResponse();
         }
 
         /// <summary> Operation to delete a SenderUsernames resource. </summary>
@@ -385,21 +380,16 @@ namespace Azure.ResourceManager.Communication
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
 
-            if (senderUsername != "donotreply")
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, emailServiceName, domainName, senderUsername);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
             {
-                using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, emailServiceName, domainName, senderUsername);
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw new RequestFailedException(message.Response);
-                }
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
             }
-
-            return new MockResponse();
         }
 
         internal HttpMessage CreateListByDomainsNextPageRequest(string nextLink, Guid subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
@@ -477,40 +467,6 @@ namespace Azure.ResourceManager.Communication
                     }
                 default:
                     throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal class MockResponse : Response
-        {
-            public override int Status => 204;
-
-            public override string ReasonPhrase => "NoContent";
-
-            public override Stream ContentStream { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public override string ClientRequestId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-            public override void Dispose()
-            {
-            }
-
-            protected override bool ContainsHeader(string name)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override IEnumerable<HttpHeader> EnumerateHeaders()
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool TryGetHeader(string name, out string value)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
-            {
-                throw new NotImplementedException();
             }
         }
     }
