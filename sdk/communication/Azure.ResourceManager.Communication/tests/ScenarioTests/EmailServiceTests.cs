@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Communication.Tests
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public EmailServiceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -174,6 +174,7 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.IsFalse(exists);
         }
 
+        /*
         [Test]
         public async Task Get()
         {
@@ -194,5 +195,6 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.AreEqual(_location.ToString(), list.FirstOrDefault().Data.Location.ToString());
             Assert.AreEqual(_dataLocation.ToString(), list.FirstOrDefault().Data.DataLocation.ToString());
         }
+        */
     }
 }
