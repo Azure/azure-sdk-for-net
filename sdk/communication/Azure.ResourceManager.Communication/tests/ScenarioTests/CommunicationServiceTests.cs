@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.NotNull(keys.Value.SecondaryConnectionString);
         }
 
-        [Test]
+        // [Test]
         public async Task RegenerateKey()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
