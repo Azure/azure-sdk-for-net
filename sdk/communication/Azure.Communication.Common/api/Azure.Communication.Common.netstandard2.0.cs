@@ -55,10 +55,10 @@ namespace Azure.Communication
     }
     public partial class MicrosoftBotIdentifier : Azure.Communication.CommunicationIdentifier
     {
-        public MicrosoftBotIdentifier(string botId, bool isGlobal = false, Azure.Communication.CommunicationCloudEnvironment? cloud = default(Azure.Communication.CommunicationCloudEnvironment?)) { }
+        public MicrosoftBotIdentifier(string botId, bool isResourceAccountConfigured = true, Azure.Communication.CommunicationCloudEnvironment? cloud = default(Azure.Communication.CommunicationCloudEnvironment?)) { }
         public string BotId { get { throw null; } }
         public Azure.Communication.CommunicationCloudEnvironment Cloud { get { throw null; } }
-        public bool IsGlobal { get { throw null; } }
+        public bool IsResourceAccountConfigured { get { throw null; } }
         public override string RawId { get { throw null; } }
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
         public override string ToString() { throw null; }
