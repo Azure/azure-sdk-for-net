@@ -34,13 +34,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<string> userAssignedIdentityResourceId = default;
+            Optional<ResourceIdentifier> userAssignedIdentityResourceId = default;
             Optional<RedisEnterpriseCustomerManagedKeyIdentityType> identityType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentityResourceId"u8))
                 {
-                    userAssignedIdentityResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    userAssignedIdentityResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identityType"u8))

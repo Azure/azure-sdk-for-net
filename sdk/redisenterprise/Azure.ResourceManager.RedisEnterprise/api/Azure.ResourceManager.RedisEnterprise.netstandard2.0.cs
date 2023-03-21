@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         public RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity() { }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyIdentityType? IdentityType { get { throw null; } set { } }
-        public string UserAssignedIdentityResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentityResourceId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RedisEnterpriseCustomerManagedKeyIdentityType : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyIdentityType>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         internal RedisEnterpriseRegionSkuDetail() { }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseLocationInfo LocationInfo { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuName? SkuDetailsName { get { throw null; } }
     }
     public partial class RedisEnterpriseSku

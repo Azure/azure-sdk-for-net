@@ -18,14 +18,19 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<RedisEnterpriseLocationInfo> locationInfo = default;
             Optional<SkuDetail> skuDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("locationInfo"u8))
@@ -49,7 +54,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RedisEnterpriseRegionSkuDetail(resourceType.Value, locationInfo.Value, skuDetails.Value);
+            return new RedisEnterpriseRegionSkuDetail(Optional.ToNullable(resourceType), locationInfo.Value, skuDetails.Value);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Details about the location requested and the available skus in the location. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="resourceType"> Resource type which has the SKU, such as Microsoft.Cache/redisEnterprise. </param>
         /// <param name="locationInfo"> Details about location and its capabilities. </param>
         /// <param name="skuDetails"> Details about available skus. </param>
-        internal RedisEnterpriseRegionSkuDetail(string resourceType, RedisEnterpriseLocationInfo locationInfo, SkuDetail skuDetails)
+        internal RedisEnterpriseRegionSkuDetail(ResourceType? resourceType, RedisEnterpriseLocationInfo locationInfo, SkuDetail skuDetails)
         {
             ResourceType = resourceType;
             LocationInfo = locationInfo;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Resource type which has the SKU, such as Microsoft.Cache/redisEnterprise. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> Details about location and its capabilities. </summary>
         public RedisEnterpriseLocationInfo LocationInfo { get; }
         /// <summary> Details about available skus. </summary>
