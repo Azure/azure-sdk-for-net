@@ -15,10 +15,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         public static async Task<string> UploadTestImageAsync(this ContainerRegistryContentClient client, string tag = default)
         {
-            OciImageManifest manifest = new()
-            {
-                SchemaVersion = 2
-            };
+            OciImageManifest manifest = new(schemaVersion: 2);
 
             // Upload a config file
             BinaryData config = BinaryData.FromString("Sample config");

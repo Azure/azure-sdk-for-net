@@ -28,7 +28,7 @@ In this sample, the manifest is updated with information about each file associa
 
 ```C# Snippet:ContainerRegistry_Samples_UploadOciImageAsync
 // Create a manifest to list files in this image
-OciImageManifest manifest = new();
+OciImageManifest manifest = new(schemaVersion: 2);
 
 // Upload a config file
 BinaryData config = BinaryData.FromString("Sample config");

@@ -125,8 +125,7 @@ directive:
     delete $["allOf"];
     $.properties["schemaVersion"] = {
           "type": "integer",
-          "description": "Schema version",
-          "x-ms-client-default": 2
+          "description": "Schema version"
         };
     $.properties.config["x-ms-client-name"] = "configuration";
 ```

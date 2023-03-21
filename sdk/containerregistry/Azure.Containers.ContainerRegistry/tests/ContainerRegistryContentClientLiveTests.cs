@@ -772,8 +772,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
 
-            OciImageManifest manifest = new OciImageManifest();
-            manifest.SchemaVersion = 2;
+            OciImageManifest manifest = new(schemaVersion: 2);
 
             // Upload config
             var configFilePath = Path.Combine(path, "config.json");
