@@ -10,6 +10,7 @@ This troubleshooting guide contains instructions to diagnose issues encountered 
   * [AuthenticationFailedException](#authenticationfailedexception)
   * [CredentialUnavailableException](#credentialunavailableexception)
   * [Permission Issues](#permission-issues)
+* [Get additional help](#get-additional-help)
 
 ## General troubleshooting
 
