@@ -51,8 +51,7 @@ namespace Azure.ResourceManager.Communication
             {
                 if (property.NameEquals("id"u8))
                 {
-                    var resourceId = property.Value.GetString();
-                    id = new ResourceIdentifier(resourceId.StartsWith("/") ? resourceId : $"/{resourceId}");
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
