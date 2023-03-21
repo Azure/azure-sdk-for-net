@@ -71,5 +71,12 @@ rename-mapping:
   DnsRecord.ttl: TimeToLiveInSeconds
   DnsRecord: VerificationDnsRecord
   DomainsProvisioningState: DomainProvisioningState
+  ProvisioningState: CommunicationServiceProvisioningState
+
+directive:
+ - from: types.json
+   where: $.parameters.SubscriptionIdParameter
+   transform: >
+     delete $["format"];
 
 ```

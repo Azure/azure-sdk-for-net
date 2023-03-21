@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _senderUsernameResourceSenderUsernamesRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, senderUsername, data, cancellationToken).ConfigureAwait(false);
+                var response = await _senderUsernameResourceSenderUsernamesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, senderUsername, data, cancellationToken).ConfigureAwait(false);
                 var operation = new CommunicationArmOperation<SenderUsernameResource>(Response.FromValue(new SenderUsernameResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _senderUsernameResourceSenderUsernamesRestClient.CreateOrUpdate(Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, senderUsername, data, cancellationToken);
+                var response = _senderUsernameResourceSenderUsernamesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, senderUsername, data, cancellationToken);
                 var operation = new CommunicationArmOperation<SenderUsernameResource>(Response.FromValue(new SenderUsernameResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _senderUsernameResourceSenderUsernamesRestClient.GetAsync(Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, senderUsername, cancellationToken).ConfigureAwait(false);
+                var response = await _senderUsernameResourceSenderUsernamesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, senderUsername, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SenderUsernameResource(Client, response.Value), response.GetRawResponse());
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _senderUsernameResourceSenderUsernamesRestClient.Get(Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, senderUsername, cancellationToken);
+                var response = _senderUsernameResourceSenderUsernamesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, senderUsername, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SenderUsernameResource(Client, response.Value), response.GetRawResponse());
@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="SenderUsernameResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SenderUsernameResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _senderUsernameResourceSenderUsernamesRestClient.CreateListByDomainsRequest(Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _senderUsernameResourceSenderUsernamesRestClient.CreateListByDomainsNextPageRequest(nextLink, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _senderUsernameResourceSenderUsernamesRestClient.CreateListByDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _senderUsernameResourceSenderUsernamesRestClient.CreateListByDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SenderUsernameResource(Client, SenderUsernameResourceData.DeserializeSenderUsernameResourceData(e)), _senderUsernameResourceSenderUsernamesClientDiagnostics, Pipeline, "SenderUsernameResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="SenderUsernameResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SenderUsernameResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _senderUsernameResourceSenderUsernamesRestClient.CreateListByDomainsRequest(Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _senderUsernameResourceSenderUsernamesRestClient.CreateListByDomainsNextPageRequest(nextLink, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _senderUsernameResourceSenderUsernamesRestClient.CreateListByDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _senderUsernameResourceSenderUsernamesRestClient.CreateListByDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SenderUsernameResource(Client, SenderUsernameResourceData.DeserializeSenderUsernameResourceData(e)), _senderUsernameResourceSenderUsernamesClientDiagnostics, Pipeline, "SenderUsernameResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = await _senderUsernameResourceSenderUsernamesRestClient.GetAsync(Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, senderUsername, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _senderUsernameResourceSenderUsernamesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, senderUsername, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Communication
             scope.Start();
             try
             {
-                var response = _senderUsernameResourceSenderUsernamesRestClient.Get(Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, senderUsername, cancellationToken: cancellationToken);
+                var response = _senderUsernameResourceSenderUsernamesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, senderUsername, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
