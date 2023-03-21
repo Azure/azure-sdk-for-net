@@ -94,7 +94,7 @@ namespace Azure.Communication.Chat
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
             HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationTokenCredential);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, _chatClientOptions.ApiVersion);
-            _communicationSignalingClient = new CommunicationSignalingClient();
+            _communicationSignalingClient = new CommunicationSignalingClient(communicationTokenCredential);
         }
 
         /// <summary>Initializes a new instance of <see cref="ChatClient"/> for mocking.</summary>

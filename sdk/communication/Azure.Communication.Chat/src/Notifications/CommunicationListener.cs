@@ -6,10 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Chat.Notifications.Models;
 using Azure.Core;
+using Microsoft.Trouter;
 
 namespace Azure.Communication.Chat.Notifications
 {
-    internal class CommunicationListener
+    internal class CommunicationListener : TrouterListener
     {
         private ChatEventType _eventType;
         private SyncAsyncEventHandler<ChatMessageReceivedEvent> _eventHandler;
@@ -25,11 +26,18 @@ namespace Azure.Communication.Chat.Notifications
             _eventHandler = eventHandler;
         }
 
-        private void ProcessRequest()
+        public override Task<TrouterResponse> ProcessRequestAsync(TrouterRequest request, CancellationToken cancellationToken = default)
         {
             var s = new ChatMessageReceivedEvent(false);
 
             _eventHandler(s);
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
+            Console.WriteLine("this works");
+
+            Console.WriteLine("*******");
+#pragma warning restore CA1303 // Do not pass literals as localized parameters
+                              // Avoid this trouter response return and may be have a void method
+            return Task.FromResult(new TrouterResponse ());
         }
 
         //public override async Task<TrouterResponse> ProcessRequestAsync(TrouterRequest request, CancellationToken cancellationToken = default)
