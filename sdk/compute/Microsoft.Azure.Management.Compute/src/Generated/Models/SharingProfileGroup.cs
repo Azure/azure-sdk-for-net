@@ -32,9 +32,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the SharingProfileGroup class.
         /// </summary>
         /// <param name="type">This property allows you to specify the type of
-        /// sharing group. &lt;br&gt;&lt;br&gt; Possible values are:
-        /// &lt;br&gt;&lt;br&gt; **Subscriptions** &lt;br&gt;&lt;br&gt;
-        /// **AADTenants**. Possible values include: 'Subscriptions',
+        /// sharing group. Possible values are: **Subscriptions,**
+        /// **AADTenants.**. Possible values include: 'Subscriptions',
         /// 'AADTenants'</param>
         /// <param name="ids">A list of subscription/tenant ids the gallery is
         /// aimed to be shared to.</param>
@@ -52,10 +51,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets this property allows you to specify the type of
-        /// sharing group. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values
-        /// are: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Subscriptions**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **AADTenants**. Possible
-        /// values include: 'Subscriptions', 'AADTenants'
+        /// sharing group. Possible values are: **Subscriptions,**
+        /// **AADTenants.**. Possible values include: 'Subscriptions',
+        /// 'AADTenants'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

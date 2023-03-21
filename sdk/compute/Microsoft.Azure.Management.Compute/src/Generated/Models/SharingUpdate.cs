@@ -34,11 +34,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the SharingUpdate class.
         /// </summary>
         /// <param name="operationType">This property allows you to specify the
-        /// operation type of gallery sharing update. &lt;br&gt;&lt;br&gt;
-        /// Possible values are: &lt;br&gt;&lt;br&gt; **Add**
-        /// &lt;br&gt;&lt;br&gt; **Remove** &lt;br&gt;&lt;br&gt; **Reset**.
-        /// Possible values include: 'Add', 'Remove', 'Reset',
-        /// 'EnableCommunity'</param>
+        /// operation type of gallery sharing update. Possible values are:
+        /// **Add,** **Remove,** **Reset.**. Possible values include: 'Add',
+        /// 'Remove', 'Reset', 'EnableCommunity'</param>
         /// <param name="groups">A list of sharing profile groups.</param>
         public SharingUpdate(string operationType, IList<SharingProfileGroup> groups = default(IList<SharingProfileGroup>))
         {
@@ -54,11 +52,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets this property allows you to specify the operation type
-        /// of gallery sharing update. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-        /// Possible values are: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Add**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Remove**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Reset**. Possible values
-        /// include: 'Add', 'Remove', 'Reset', 'EnableCommunity'
+        /// of gallery sharing update. Possible values are: **Add,**
+        /// **Remove,** **Reset.**. Possible values include: 'Add', 'Remove',
+        /// 'Reset', 'EnableCommunity'
         /// </summary>
         [JsonProperty(PropertyName = "operationType")]
         public string OperationType { get; set; }

@@ -38,8 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="location">Resource location</param>
         /// <param name="supportedOSType">This property allows you to specify
         /// the supported type of the OS that application is built for.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
-        /// **Windows** &lt;br&gt;&lt;br&gt; **Linux**. Possible values
+        /// Possible values are: **Windows,** **Linux.**. Possible values
         /// include: 'Windows', 'Linux'</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
@@ -113,11 +112,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets this property allows you to specify the supported type
-        /// of the OS that application is built for.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Windows**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Linux**. Possible values
-        /// include: 'Windows', 'Linux'
+        /// of the OS that application is built for. Possible values are:
+        /// **Windows,** **Linux.**. Possible values include: 'Windows',
+        /// 'Linux'
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportedOSType")]
         public OperatingSystemTypes SupportedOSType { get; set; }

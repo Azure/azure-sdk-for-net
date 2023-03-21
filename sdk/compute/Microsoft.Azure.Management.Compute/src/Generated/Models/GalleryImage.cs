@@ -38,8 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="location">Resource location</param>
         /// <param name="osType">This property allows you to specify the type
         /// of the OS that is included in the disk when creating a VM from a
-        /// managed image. &lt;br&gt;&lt;br&gt; Possible values are:
-        /// &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**.
+        /// managed image. Possible values are: **Windows,** **Linux.**.
         /// Possible values include: 'Windows', 'Linux'</param>
         /// <param name="osState">This property allows the user to specify
         /// whether the virtual machines created under this image are
@@ -122,10 +121,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets this property allows you to specify the type of the OS
         /// that is included in the disk when creating a VM from a managed
-        /// image. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Windows**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Linux**. Possible values
-        /// include: 'Windows', 'Linux'
+        /// image. Possible values are: **Windows,** **Linux.**. Possible
+        /// values include: 'Windows', 'Linux'
         /// </summary>
         [JsonProperty(PropertyName = "properties.osType")]
         public OperatingSystemTypes OsType { get; set; }
