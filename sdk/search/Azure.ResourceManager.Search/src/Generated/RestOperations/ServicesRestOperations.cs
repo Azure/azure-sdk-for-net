@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Search
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-08-01";
+            _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets a list of all search services in the given resource group. </summary>
+        /// <summary> Gets a list of all Search services in the given resource group. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets a list of all search services in the given resource group. </summary>
+        /// <summary> Gets a list of all Search services in the given resource group. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets a list of all search services in the given subscription. </summary>
+        /// <summary> Gets a list of all Search services in the given subscription. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets a list of all search services in the given subscription. </summary>
+        /// <summary> Gets a list of all Search services in the given subscription. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets a list of all search services in the given resource group. </summary>
+        /// <summary> Gets a list of all Search services in the given resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets a list of all search services in the given resource group. </summary>
+        /// <summary> Gets a list of all Search services in the given resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets a list of all search services in the given subscription. </summary>
+        /// <summary> Gets a list of all Search services in the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets a list of all search services in the given subscription. </summary>
+        /// <summary> Gets a list of all Search services in the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>

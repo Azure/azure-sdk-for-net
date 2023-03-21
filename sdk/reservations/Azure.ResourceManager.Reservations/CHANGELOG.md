@@ -4,11 +4,12 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Bumped API version to 2022-11-01 for Reservations
 
 ### Other Changes
+
+- Reservation Return API is changed to be long running operation
+- Introduced new properties based on the 2022-11-01 version of swagger
 
 ## 1.2.0 (2023-02-15)
 

@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private static string? s_sdkVersion => SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter));
 
-        private static string s_operatingSystem = GetOS();
+        private static string? s_operatingSystem = GetOS();
 
         private readonly string? _customer_Ikey;
 
@@ -186,7 +186,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 _resourceProviderId = _resourceProviderId = vmMetadata.vmId + "/" + vmMetadata.subscriptionId;
 
                 // osType takes precedence.
-                s_operatingSystem = vmMetadata.osType.ToLower(CultureInfo.InvariantCulture);
+                s_operatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture);
 
                 return;
             }

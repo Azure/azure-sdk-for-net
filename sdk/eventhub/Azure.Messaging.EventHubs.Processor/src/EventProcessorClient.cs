@@ -345,7 +345,7 @@ namespace Azure.Messaging.EventHubs
         ///   The client diagnostics for this processor.
         /// </summary>
         ///
-        private MessagingClientDiagnostics ClientDiagnostics { get; }
+        internal MessagingClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
@@ -463,6 +463,12 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                EventHubName);
         }
 
         /// <summary>
@@ -492,6 +498,12 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                EventHubName);
         }
 
         /// <summary>
@@ -521,6 +533,12 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                EventHubName);
         }
 
         /// <summary>
@@ -550,6 +568,12 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                EventHubName);
         }
 
         /// <summary>

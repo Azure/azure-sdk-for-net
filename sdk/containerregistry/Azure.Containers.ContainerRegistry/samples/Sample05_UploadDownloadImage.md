@@ -12,16 +12,13 @@ Create a `ContainerRegistryBlobClient` for the registry, passing the repository,
 
 ```C# Snippet:ContainerRegistry_Samples_CreateBlobClient
 // Get the service endpoint from the environment
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 string repository = "sample-oci-image";
 string tag = "demo";
 
 // Create a new ContainerRegistryBlobClient
-ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
-{
-    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-});
+ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
 ```
 
 ## Upload an OCI Image
@@ -38,10 +35,10 @@ BinaryData config = BinaryData.FromString("Sample config");
 UploadBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
 
 // Update manifest with config info
-manifest.Config = new OciBlobDescriptor()
+manifest.Configuration = new OciDescriptor()
 {
     Digest = uploadConfigResult.Digest,
-    SizeInBytes = config.ToMemory().Length,
+    SizeInBytes = uploadConfigResult.SizeInBytes,
     MediaType = "application/vnd.oci.image.config.v1+json"
 };
 
@@ -50,10 +47,10 @@ BinaryData layer = BinaryData.FromString("Sample layer");
 UploadBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
 
 // Update manifest with layer info
-manifest.Layers.Add(new OciBlobDescriptor()
+manifest.Layers.Add(new OciDescriptor()
 {
     Digest = uploadLayerResult.Digest,
-    SizeInBytes = layer.ToMemory().Length,
+    SizeInBytes = uploadLayerResult.SizeInBytes,
     MediaType = "application/vnd.oci.image.layer.v1.tar"
 });
 
@@ -78,7 +75,7 @@ using (FileStream stream = File.Create(manifestFile))
 }
 
 // Download and write out the config
-DownloadBlobResult configBlob = await client.DownloadBlobAsync(manifest.Config.Digest);
+DownloadBlobResult configBlob = await client.DownloadBlobAsync(manifest.Configuration.Digest);
 
 string configFile = Path.Combine(path, "config.json");
 using (FileStream stream = File.Create(configFile))
@@ -87,12 +84,12 @@ using (FileStream stream = File.Create(configFile))
 }
 
 // Download and write out the layers
-foreach (OciBlobDescriptor layer in manifest.Layers)
+foreach (OciDescriptor layerInfo in manifest.Layers)
 {
-    string layerFile = Path.Combine(path, TrimSha(layer.Digest));
+    string layerFile = Path.Combine(path, TrimSha(layerInfo.Digest));
     using (FileStream stream = File.Create(layerFile))
     {
-        await client.DownloadBlobToAsync(layer.Digest, stream);
+        await client.DownloadBlobToAsync(layerInfo.Digest, stream);
     }
 }
 
@@ -156,5 +153,28 @@ if (result.MediaType == "application/vnd.docker.distribution.manifest.list.v2+js
 else if (result.MediaType == "application/vnd.oci.image.index.v1+json")
 {
     Console.WriteLine("Manifest is an OCI index.");
+}
+```
+
+## Delete a manifest
+
+A manifest can be deleted as shown below.  It is also possible to delete a full image using the `ContainerRegistryClient` as shown in [Sample 2: Delete Image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample02b_DeleteImagesAsync.md).
+
+```C# Snippet:ContainerRegistry_Samples_DeleteManifest
+DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
+await client.DeleteManifestAsync(downloadManifestResult.Digest);
+```
+
+## Delete a blob
+
+A blob can be deleted as shown below.  It is also possible to delete a full image using the `ContainerRegistryClient` as shown in [Sample 2: Delete Image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample02b_DeleteImagesAsync.md).
+
+```C# Snippet:ContainerRegistry_Samples_DeleteBlob
+DownloadManifestResult result = await client.DownloadManifestAsync(tag);
+OciImageManifest manifest = result.AsOciManifest();
+
+foreach (OciDescriptor layerInfo in manifest.Layers)
+{
+    await client.DeleteBlobAsync(layerInfo.Digest);
 }
 ```
