@@ -214,7 +214,7 @@ namespace Azure.Communication.Email.Tests.Samples
         {
             EmailClient emailClient = CreateEmailClient();
 
-            #region Snippet:Azure_Communication_Email_Send_Simple_ManualPolling_Async
+            #region Snippet:Azure_Communication_Email_Send_Simple_ManualPolling
             /// Send the email message with WaitUntil.Started
             var emailSendOperation = emailClient.Send(
                 wait: WaitUntil.Started,
@@ -252,7 +252,7 @@ namespace Azure.Communication.Email.Tests.Samples
             /// Get the OperationId so that it can be used for tracking the message for troubleshooting
             string operationId = emailSendOperation.Id;
             Console.WriteLine($"Email operation id = {operationId}");
-            #endregion: Azure_Communication_Email_Send_Simple_ManualPolling_Async
+            #endregion: Azure_Communication_Email_Send_Simple_ManualPolling
         }
     }
 }

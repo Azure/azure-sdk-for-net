@@ -355,7 +355,8 @@ namespace Azure.Communication.Email.Tests
                 status = EmailSendStatus.Running.ToString(),
             };
             var mockSendMailResponse = new MockResponse((int)HttpStatusCode.Accepted);
-            mockSendMailResponse.SetContent(JsonConvert.SerializeObject(mockEmailSendResult));
+            mockSendMailResponse.SetContent(JsonConvert.SerializeObject(mockEmailSendResult))
+                .WithHeader("Content-Type", "application/json; charset=utf-8");
 
             var mockIntermediateGetStatusResult = new
             {
@@ -363,7 +364,8 @@ namespace Azure.Communication.Email.Tests
                 status = EmailSendStatus.Running.ToString(),
             };
             var mockIntermediateGetStatusResponse = new MockResponse((int)HttpStatusCode.OK);
-            mockIntermediateGetStatusResponse.SetContent(JsonConvert.SerializeObject(mockIntermediateGetStatusResult));
+            mockIntermediateGetStatusResponse.SetContent(JsonConvert.SerializeObject(mockIntermediateGetStatusResult))
+                .WithHeader("Content-Type", "application/json; charset=utf-8");
 
             string mockFinalGetStatusResult;
             if (finalEmailSendStatus == EmailSendStatus.Succeeded)
@@ -391,7 +393,8 @@ namespace Azure.Communication.Email.Tests
                 mockFinalGetStatusResult = JsonConvert.SerializeObject(mockGetStatusResultObj);
             }
             var mockFinalGetStatusResponse = new MockResponse((int)finalStatusCode);
-            mockFinalGetStatusResponse.SetContent(mockFinalGetStatusResult);
+            mockFinalGetStatusResponse.SetContent(mockFinalGetStatusResult)
+                .WithHeader("Content-Type", "application/json; charset=utf-8");
 
             var emailClientOptions = new EmailClientOptions
             {

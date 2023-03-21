@@ -72,19 +72,26 @@ var emailSendOperation = await emailClient.SendAsync(
 
 /// Call UpdateStatus on the email send operation to poll for the status
 /// manually.
-while (true)
+try
 {
-    await emailSendOperation.UpdateStatusAsync();
-    if (emailSendOperation.HasCompleted)
+    while (true)
     {
-        break;
+        await emailSendOperation.UpdateStatusAsync();
+        if (emailSendOperation.HasCompleted)
+        {
+            break;
+        }
+        await Task.Delay(100);
     }
-    await Task.Delay(100);
-}
 
-if (emailSendOperation.HasValue)
+    if (emailSendOperation.HasValue)
+    {
+        Console.WriteLine($"Email queued for delivery. Status = {emailSendOperation.Value.Status}");
+    }
+}
+catch (RequestFailedException ex)
 {
-    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+    Console.WriteLine($"Email send failed with Code = {ex.ErrorCode} and Message = {ex.Message}");
 }
 
 /// Get the OperationId so that it can be used for tracking the message for troubleshooting

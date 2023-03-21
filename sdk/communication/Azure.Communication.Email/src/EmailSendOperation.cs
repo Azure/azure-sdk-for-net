@@ -178,8 +178,7 @@ namespace Azure.Communication.Email
             }
             else if (update.Value.Status == EmailSendStatus.Failed || update.Value.Status == EmailSendStatus.Canceled)
             {
-                RequestFailedException requestFailedException = _client._clientDiagnostics.CreateRequestFailedException(rawResponse);
-                return OperationState<EmailSendResult>.Failure(rawResponse, requestFailedException);
+                return OperationState<EmailSendResult>.Failure(rawResponse);
             }
 
             return OperationState<EmailSendResult>.Pending(rawResponse);
