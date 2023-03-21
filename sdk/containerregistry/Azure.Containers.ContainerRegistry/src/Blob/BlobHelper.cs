@@ -10,6 +10,9 @@ namespace Azure.Containers.ContainerRegistry
 {
     internal class BlobHelper
     {
+        private const string ClientAndServerDigestsDontMatchMessage = "The server-computed digest does not match the client-computed digest.";
+        internal const string ManifestDigestDoestMatchRequestedMessage = "The digest of the received manifest does not match the requested digest reference.";
+
         internal static string ComputeDigest(Stream stream)
         {
             // According to https://docs.docker.com/registry/spec/api/#content-digests, compliant
@@ -32,13 +35,9 @@ namespace Azure.Containers.ContainerRegistry
 
         internal static string ComputeDigest(BinaryData data)
         {
-#if NET6_0_OR_GREATER
-     return FormatDigest(SHA256.HashData(data));
-#else
             using SHA256 sha256 = SHA256.Create();
             var hashValue = sha256.ComputeHash(data.ToArray());
             return FormatDigest(hashValue);
-#endif
         }
 
         internal static string FormatDigest(byte[] hash)
@@ -61,11 +60,9 @@ namespace Azure.Containers.ContainerRegistry
 
         internal static void ValidateDigest(string clientDigest, string serverDigest, string message = default)
         {
-            message ??= "The server-computed digest does not match the client-computed digest.";
-
             if (!clientDigest.Equals(serverDigest, StringComparison.OrdinalIgnoreCase))
             {
-                throw new RequestFailedException(200, message);
+                throw new RequestFailedException(200, message ?? ClientAndServerDigestsDontMatchMessage);
             }
         }
     }

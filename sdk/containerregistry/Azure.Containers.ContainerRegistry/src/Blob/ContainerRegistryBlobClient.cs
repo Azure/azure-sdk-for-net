@@ -574,7 +574,7 @@ namespace Azure.Containers.ContainerRegistry
 
                 if (ReferenceIsDigest(tagOrDigest))
                 {
-                    BlobHelper.ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
+                    BlobHelper.ValidateDigest(contentDigest, tagOrDigest, BlobHelper.ManifestDigestDoestMatchRequestedMessage);
                 }
                 else
                 {
@@ -632,7 +632,7 @@ namespace Azure.Containers.ContainerRegistry
 
                 if (ReferenceIsDigest(tagOrDigest))
                 {
-                    BlobHelper.ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
+                    BlobHelper.ValidateDigest(contentDigest, tagOrDigest, BlobHelper.ManifestDigestDoestMatchRequestedMessage);
                 }
                 else
                 {
