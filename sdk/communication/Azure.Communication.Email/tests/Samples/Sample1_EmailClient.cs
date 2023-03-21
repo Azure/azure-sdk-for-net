@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication.Email;
-using System.Threading.Tasks;
 #region Snippet:Azure_Communication_Email_UsingStatements
 //@@ using Azure.Communication.Email;
 #endregion Snippet:Azure_Communication_Email_UsingStatements
@@ -28,19 +26,27 @@ namespace Azure.Communication.Email.Tests.Samples
             EmailClient emailClient = CreateEmailClient();
 
             #region Snippet:Azure_Communication_Email_Send_Simple_AutoPolling
-            var emailSendOperation = emailClient.Send(
-                wait: WaitUntil.Completed,
-                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                //@@ recipientAddress: "<recipient email address>"
-                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
-                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
-                subject: "This is the subject",
-                htmlContent: "<html><body>This is the html body</body></html>");
-            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+            //@@ try
+            //@@ {
+                var emailSendOperation = emailClient.Send(
+                    wait: WaitUntil.Completed,
+                    //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                    //@@ recipientAddress: "<recipient email address>"
+                    /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                    /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
+                    subject: "This is the subject",
+                    htmlContent: "<html><body>This is the html body</body></html>");
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-            /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-            string operationId = emailSendOperation.Id;
-            Console.WriteLine($"Email operation id = {operationId}");
+                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+                string operationId = emailSendOperation.Id;
+                Console.WriteLine($"Email operation id = {operationId}");
+            //@@ }
+            //@@ catch ( RequestFailedException ex )
+            //@@ {
+                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_Simple_AutoPolling
 
             Assert.False(string.IsNullOrEmpty(operationId));
@@ -68,17 +74,25 @@ namespace Azure.Communication.Email.Tests.Samples
                 /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
                 content: emailContent);
 
-            var emailSendOperation = emailClient.Send(
-                wait: WaitUntil.Completed,
-                message: emailMessage);
-            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+            //@@ try
+            //@@ {
+                var emailSendOperation = emailClient.Send(
+                    wait: WaitUntil.Completed,
+                    message: emailMessage);
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-            /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-            string operationId = emailSendOperation.Id;
-            Console.WriteLine($"Email operation id = {operationId}");
-            #endregion Snippet:Azure_Communication_Email_Send_With_MoreOptions
+                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+                string operationId = emailSendOperation.Id;
+                Console.WriteLine($"Email operation id = {operationId}");
+            //@@ }
+            //@@ catch ( RequestFailedException ex )
+            //@@ {
+                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ }
+                #endregion Snippet:Azure_Communication_Email_Send_With_MoreOptions
 
-            Assert.False(string.IsNullOrEmpty(operationId));
+                Assert.False(string.IsNullOrEmpty(operationId));
         }
 
         [Test]
@@ -149,12 +163,20 @@ namespace Azure.Communication.Email.Tests.Samples
                 emailRecipients,
                 emailContent);
 
-            EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
-            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+            //@@ try
+            //@@ {
+                EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-            /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-            string operationId = emailSendOperation.Id;
-            Console.WriteLine($"Email operation id = {operationId}");
+                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+                string operationId = emailSendOperation.Id;
+                Console.WriteLine($"Email operation id = {operationId}");
+            //@@ }
+            //@@ catch ( RequestFailedException ex )
+            //@@ {
+                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_Multiple_Recipients
 
             Assert.False(string.IsNullOrEmpty(operationId));
@@ -199,12 +221,20 @@ namespace Azure.Communication.Email.Tests.Samples
 
             emailMessage.Attachments.Add(emailAttachment);
 
-            EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
-            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+            //@@ try
+            //@@ {
+                EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-            /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-            string operationId = emailSendOperation.Id;
-            Console.WriteLine($"Email operation id = {operationId}");
+                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+                string operationId = emailSendOperation.Id;
+                Console.WriteLine($"Email operation id = {operationId}");
+            //@@ }
+            //@@ catch ( RequestFailedException ex )
+            //@@ {
+                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_With_Attachments
         }
 
