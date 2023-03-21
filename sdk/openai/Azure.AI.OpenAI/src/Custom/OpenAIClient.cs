@@ -19,6 +19,8 @@ namespace Azure.AI.OpenAI
     [CodeGenSuppress("GetCompletionsAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("GetEmbeddings", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("GetEmbeddingsAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("CreateGetCompletionsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("CreateGetEmbeddingsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     public partial class OpenAIClient
     {
         private const int DefaultMaxCompletionsTokens = 100;

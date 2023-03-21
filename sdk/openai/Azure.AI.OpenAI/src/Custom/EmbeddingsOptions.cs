@@ -33,6 +33,7 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
         /// <param name="user"> The ID of the end-user, for use in tracking and rate-limiting. </param>
         /// <param name="inputType"> input type of embedding search to use. </param>
+        /// <param name="nonAzureModel"> ID of the model to use. </param>
         /// <param name="input">
         /// Input text to get embeddings for, encoded as a string.
         /// To get embeddings for multiple inputs in a single request, pass an array of strings.
@@ -41,10 +42,11 @@ namespace Azure.AI.OpenAI
         /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
         /// as we have observed inferior results when newlines are present.
         /// </param>
-        internal EmbeddingsOptions(string user, string inputType, string input)
+        internal EmbeddingsOptions(string user, string inputType, string nonAzureModel, string input)
         {
             User = user;
             InputType = inputType;
+            NonAzureModel = nonAzureModel;
             Input = input;
         }
 

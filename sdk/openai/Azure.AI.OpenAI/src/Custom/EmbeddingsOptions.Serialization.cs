@@ -70,7 +70,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new EmbeddingsOptions(user, inputType, input);
+            return new EmbeddingsOptions(user, inputType, model, input);
         }
     }
 }
