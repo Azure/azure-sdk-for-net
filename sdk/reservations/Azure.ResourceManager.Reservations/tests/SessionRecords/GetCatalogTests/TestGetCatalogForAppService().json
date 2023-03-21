@@ -1,39 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-eaf8a79d1fa7474023057a538c12b398-8239e17e76d02a7b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "32289fcd38f0eea3fadb2b743eabbd84",
+        "traceparent": "00-a0eb8b895914d236cbcaa3aa835e8d7f-93a0a2aab6f88e0a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "80574516256257534346fd640b561043",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:09:56 GMT",
+        "Date": "Fri, 10 Mar 2023 06:31:55 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0b64c934-bc5e-42e5-ad0e-a8b2a95b8943",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "0b64c934-bc5e-42e5-ad0e-a8b2a95b8943",
-        "x-ms-routing-request-id": "WESTUS:20220516T230957Z:0b64c934-bc5e-42e5-ad0e-a8b2a95b8943"
+        "x-ms-correlation-request-id": "867822b1-c94a-41bb-9d05-f5e406f2705d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "867822b1-c94a-41bb-9d05-f5e406f2705d",
+        "x-ms-routing-request-id": "WESTUS:20230310T063156Z:867822b1-c94a-41bb-9d05-f5e406f2705d"
       },
       "ResponseBody": {
-        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
-        "displayName": "Azure subscription 1",
+        "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -43,40 +43,2676 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=AppService\u0026location=westus2",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=AppService\u0026location=westus2",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9765fb89052e5c17bb1afb397b6e4315-fe54761216b2c096-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "582d7fd35df49ef9ea78f50f4c860593",
+        "traceparent": "00-58cae33312d061480012e425ebc63a15-47c456fdd01f8c38-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "63da004fb816e85d4990ace3ca32dedb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "19192",
+        "Content-Length": "29277",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:09:57 GMT",
+        "Date": "Fri, 10 Mar 2023 06:31:56 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f38436a4-3166-4061-bf49-6c8ad840dfd7",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "582d7fd35df49ef9ea78f50f4c860593",
-        "x-ms-routing-request-id": "WESTUS:20220516T230958Z:f38436a4-3166-4061-bf49-6c8ad840dfd7",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-correlation-request-id": "d2b80956-da05-4c8d-84ac-46842dc33484",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "63da004fb816e85d4990ace3ca32dedb",
+        "x-ms-routing-request-id": "WESTUS:20230310T063157Z:d2b80956-da05-4c8d-84ac-46842dc33484",
+        "x-ms-version": "1.0.2251.115"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022standard_p3_v3_windows\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:8304.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:20292.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022P3 v3\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002203b24ed6-30f6-5940-993a-2b25e36ebb38\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022P3 v3\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022standard_p2_v3_windows\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:4152.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:10146.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022P2 v3\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022ffac7b5b-f7aa-5047-a4f0-18aabded05aa\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022P2 v3\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022standard_p1_v3_windows\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:2076.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:5073.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022P1 v3\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002265b98b51-6e38-5b39-a029-2823bd34e07e\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022P1 v3\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_isolated_plan_stamp_fee_linux\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:20136.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated Plan-Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated Plan - Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Stamp\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022ae9b45d9-537c-4761-9136-f2b183e80b9c\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Fee/Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Stamp\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P1Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_isolated_plan_stamp_fee\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:21193.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Stamp\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022df799a7b-1f19-483d-ac6c-8874041cef3a\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Fee/Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Stamp\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P1Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i3_v2_linux\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:8796.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:17136.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I3 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00226ea02e5f-4510-5f48-afae-f544ef4dfdf5\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I3 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i1_v2_linux\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:2199.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:4284.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I1 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002258d27f57-30b3-538d-83dd-89925389c58d\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I1 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_v2_asip_linux\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:780.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1620.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022ASIP\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00224405fd94-186e-5a96-94a4-37cd3450c482\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Compute Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022ASIP\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i2_v2_linux\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:4398.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:8568.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I2 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00224c7fba6a-b5a6-54ba-aa64-b03ea9e17e9c\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I2 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i5_v2_linux\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:35321.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:68959.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I5 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022b4cbdc8f-7dea-55b3-97ae-0067e7a7d8bf\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I5 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i4_v2_linux\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:17661.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:34480.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I4 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022cb19b7fa-22ae-58f0-b9b1-306a1c2420d4\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I4 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i6_v2_linux\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:70641.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:137918.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan - Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I6 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002248479f6e-f743-5189-9c9e-08677adc7abf\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I6 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i2_v2_windows\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:6798.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:15612.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I2 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022d7f16d0f-24c1-5032-8d07-456d5bbc55ac\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I2 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_idh_v2\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:25965.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:53927.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022IDH v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00221c6a7f17-b1c0-5e0c-beb8-58062ac88425\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Compute Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022IDH v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i1_v2_windows\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:3399.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:7806.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I1 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00223f87894a-a59b-526f-be8f-e47ac0008541\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I1 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i3_v2_windows\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:13596.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:31224.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I3 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022f7df05c6-ceda-5f72-9e2b-3b18c0b70a79\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I3 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_v2_asip_windows\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1236.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:2566.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022ASIP\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022bc698154-52ea-5efa-b315-c37c2290630f\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Compute Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022ASIP\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i6_v2_windows\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:109045.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:250607.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I6 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022d7edd046-27a7-5df2-8416-5b5a38bb4110\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I6 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i4_v2_windows\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:27262.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:62652.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I4 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002274f8e734-d88f-5bcb-9ad9-ce3a9e0729f9\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I4 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022app_service_i5_v2_windows\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:54523.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:125304.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Isolated v2 Plan\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022I5 v2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002218baac71-cf4f-5dd4-beb8-90596cb3aacb\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022I5 v2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022azure_app_service_premium_v3_plan_linux_p3_v3\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:3530.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:7332.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan - Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan - Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022P3 v3\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022cb00bbe5-be4e-5fa8-98d9-58996d1d8d1a\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022P3 v3\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022azure_app_service_premium_v3_plan_linux_p2_v3\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1770.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:3678.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan - Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan - Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022P2 v3\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002242734e60-c153-55e6-9c14-103c04cb2ae9\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022P2 v3\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022AppService\u0022,\u0022name\u0022:\u0022azure_app_service_premium_v3_plan_linux_p1_v3\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus2\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:885.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1839.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan - Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure App Service Premium v3 Plan - Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022P1 v3\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00225efd07c9-6b02-5d24-b0a7-335ed1116e5f\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 App Service Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022P1 v3\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "AppService",
+            "name": "standard_p3_v3_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 8304.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 20292.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "P3 v3"
+              },
+              {
+                "name": "MeterId",
+                "value": "03b24ed6-30f6-5940-993a-2b25e36ebb38"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P3 v3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "standard_p2_v3_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 4152.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 10146.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "P2 v3"
+              },
+              {
+                "name": "MeterId",
+                "value": "ffac7b5b-f7aa-5047-a4f0-18aabded05aa"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P2 v3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "standard_p1_v3_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2076.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 5073.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "P1 v3"
+              },
+              {
+                "name": "MeterId",
+                "value": "65b98b51-6e38-5b39-a029-2823bd34e07e"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P1 v3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "standard_p4_mv3_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 18018.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 43373.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "P4mv3"
+              },
+              {
+                "name": "MeterId",
+                "value": "e018d097-53e0-57f8-a677-3d04244ad80f"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P4mv3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "standard_p1_mv3_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2252.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 5422.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "P1mv3"
+              },
+              {
+                "name": "MeterId",
+                "value": "c2b15e28-a5e3-52b8-a571-be225758a981"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P1mv3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "standard_p3_mv3_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 9009.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 21686.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "P3mv3"
+              },
+              {
+                "name": "MeterId",
+                "value": "eb1df939-cb61-5515-a953-32a49b847466"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P3mv3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "standard_p0_v3_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1280.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 3030.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "P0v3"
+              },
+              {
+                "name": "MeterId",
+                "value": "0f80bde9-e8f7-544b-b6f7-7c5d08bcd631"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P0v3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "standard_p5_mv3_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 36035.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 86745.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "P5mv3"
+              },
+              {
+                "name": "MeterId",
+                "value": "1327f8f0-30b2-5cb1-a3fc-1a6a7f30ea5c"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P5mv3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "standard_p2_mv3_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 4504.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 10843.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "P2mv3"
+              },
+              {
+                "name": "MeterId",
+                "value": "994967db-4863-547f-b9e2-42d4ae952a94"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P2mv3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_isolated_plan_stamp_fee_linux",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 20136.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated Plan-Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "Stamp"
+              },
+              {
+                "name": "MeterId",
+                "value": "ae9b45d9-537c-4761-9136-f2b183e80b9c"
+              },
+              {
+                "name": "MeterType",
+                "value": "Fee/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Stamp"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P1Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_isolated_plan_stamp_fee",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 21193.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "Stamp"
+              },
+              {
+                "name": "MeterId",
+                "value": "df799a7b-1f19-483d-ac6c-8874041cef3a"
+              },
+              {
+                "name": "MeterType",
+                "value": "Fee/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Stamp"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P1Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i3_v2_linux",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 8796.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 17136.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "I3 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "6ea02e5f-4510-5f48-afae-f544ef4dfdf5"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I3 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i1_v2_linux",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2199.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 4284.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "I1 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "58d27f57-30b3-538d-83dd-89925389c58d"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I1 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_v2_asip_linux",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 780.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1620.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "ASIP"
+              },
+              {
+                "name": "MeterId",
+                "value": "4405fd94-186e-5a96-94a4-37cd3450c482"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "ASIP"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i2_v2_linux",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 4398.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 8568.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "I2 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "4c7fba6a-b5a6-54ba-aa64-b03ea9e17e9c"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I2 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i5_v2_linux",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 35321.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 68959.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "I5 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "b4cbdc8f-7dea-55b3-97ae-0067e7a7d8bf"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I5 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i4_v2_linux",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 17661.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 34480.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "I4 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "cb19b7fa-22ae-58f0-b9b1-306a1c2420d4"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I4 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i6_v2_linux",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 70641.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 137918.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "I6 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "48479f6e-f743-5189-9c9e-08677adc7abf"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I6 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i2_v2_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 6798.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 15612.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "I2 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "d7f16d0f-24c1-5032-8d07-456d5bbc55ac"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I2 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_idh_v2",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 25965.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 53927.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "IDH v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "1c6a7f17-b1c0-5e0c-beb8-58062ac88425"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "IDH v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i1_v2_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 3399.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 7806.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "I1 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "3f87894a-a59b-526f-be8f-e47ac0008541"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I1 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i3_v2_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 13596.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 31224.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "I3 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "f7df05c6-ceda-5f72-9e2b-3b18c0b70a79"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I3 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_v2_asip_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1236.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2566.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "ASIP"
+              },
+              {
+                "name": "MeterId",
+                "value": "bc698154-52ea-5efa-b315-c37c2290630f"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Compute Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "ASIP"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i6_v2_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 109045.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 250607.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "I6 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "d7edd046-27a7-5df2-8416-5b5a38bb4110"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I6 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i4_v2_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 27262.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 62652.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "I4 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "74f8e734-d88f-5bcb-9ad9-ce3a9e0729f9"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I4 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "app_service_i5_v2_windows",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 54523.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 125304.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Isolated v2 Plan"
+              },
+              {
+                "name": "SkuName",
+                "value": "I5 v2"
+              },
+              {
+                "name": "MeterId",
+                "value": "18baac71-cf4f-5dd4-beb8-90596cb3aacb"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "I5 v2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "azure_app_service_premium_v3_plan_linux_p3_v3",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 3530.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 7332.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "P3 v3"
+              },
+              {
+                "name": "MeterId",
+                "value": "cb00bbe5-be4e-5fa8-98d9-58996d1d8d1a"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P3 v3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "azure_app_service_premium_v3_plan_linux_p2_v3",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1770.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 3678.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "P2 v3"
+              },
+              {
+                "name": "MeterId",
+                "value": "42734e60-c153-55e6-9c14-103c04cb2ae9"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P2 v3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "azure_app_service_premium_v3_plan_linux_p1_v3",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 885.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1839.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "P1 v3"
+              },
+              {
+                "name": "MeterId",
+                "value": "5efd07c9-6b02-5d24-b0a7-335ed1116e5f"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P1 v3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "azure_app_service_premium_v3_plan_linux_p4mv3",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 8473.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 17597.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "P4mv3"
+              },
+              {
+                "name": "MeterId",
+                "value": "9e749579-b359-5b9b-a795-d1b8f5647460"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P4mv3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "azure_app_service_premium_v3_plan_linux_p3mv3",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 4236.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 8799.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "P3mv3"
+              },
+              {
+                "name": "MeterId",
+                "value": "c916c073-9a80-59fd-abb6-5f918b23c22e"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P3mv3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "azure_app_service_premium_v3_plan_linux_p1mv3",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1059.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2200.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "P1mv3"
+              },
+              {
+                "name": "MeterId",
+                "value": "87ba0033-6c8d-573b-959f-93726697bc6d"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P1mv3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "azure_app_service_premium_v3_plan_linux_p5mv3",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 16945.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 35194.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "P5mv3"
+              },
+              {
+                "name": "MeterId",
+                "value": "91eb5d90-e6b8-5718-8515-33668e1749cc"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P5mv3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "azure_app_service_premium_v3_plan_linux_p0_v3",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 575.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1194.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "P0v3"
+              },
+              {
+                "name": "MeterId",
+                "value": "2fbf8f1e-c27b-5d98-b589-10f9471a4715"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P0v3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "AppService",
+            "name": "azure_app_service_premium_v3_plan_linux_p2mv3",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus2"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2118.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 4399.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure App Service Premium v3 Plan - Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "P2mv3"
+              },
+              {
+                "name": "MeterId",
+                "value": "669de2ae-780f-5efd-aa4a-6d9129f10c56"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 App Service Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P2mv3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          }
+        ],
+        "totalItems": 35
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "2091083306",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "910623652",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     [CodeGenModel("OciDescriptor")]
     public partial class OciDescriptor

@@ -1,14 +1,8 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
+## 1.2.0-beta.1 (2023-04-11)
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+Added Client Builder Extension methods for `LogsQueryClient` and `MetricsQueryClient`
 
 ## 1.1.0 (2022-01-25)
 

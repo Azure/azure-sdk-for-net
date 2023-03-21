@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     public partial class OciAnnotations : IUtf8JsonSerializable
     {
@@ -30,17 +30,17 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("org.opencontainers.image.url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Url.AbsoluteUri);
             }
             if (Optional.IsDefined(Documentation))
             {
                 writer.WritePropertyName("org.opencontainers.image.documentation"u8);
-                writer.WriteStringValue(Documentation);
+                writer.WriteStringValue(Documentation.AbsoluteUri);
             }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("org.opencontainers.image.source"u8);
-                writer.WriteStringValue(Source);
+                writer.WriteStringValue(Source.AbsoluteUri);
             }
             if (Optional.IsDefined(Version))
             {
@@ -93,9 +93,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
             Optional<DateTimeOffset> orgOpencontainersImageCreated = default;
             Optional<string> orgOpencontainersImageAuthors = default;
-            Optional<string> orgOpencontainersImageUrl = default;
-            Optional<string> orgOpencontainersImageDocumentation = default;
-            Optional<string> orgOpencontainersImageSource = default;
+            Optional<Uri> orgOpencontainersImageUrl = default;
+            Optional<Uri> orgOpencontainersImageDocumentation = default;
+            Optional<Uri> orgOpencontainersImageSource = default;
             Optional<string> orgOpencontainersImageVersion = default;
             Optional<string> orgOpencontainersImageRevision = default;
             Optional<string> orgOpencontainersImageVendor = default;
@@ -124,17 +124,32 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 }
                 if (property.NameEquals("org.opencontainers.image.url"u8))
                 {
-                    orgOpencontainersImageUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    orgOpencontainersImageUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("org.opencontainers.image.documentation"u8))
                 {
-                    orgOpencontainersImageDocumentation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    orgOpencontainersImageDocumentation = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("org.opencontainers.image.source"u8))
                 {
-                    orgOpencontainersImageSource = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    orgOpencontainersImageSource = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("org.opencontainers.image.version"u8))

@@ -99,6 +99,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 - [Metrics query](#metrics-query)
   - [Handle metrics query response](#handle-metrics-query-response)
   - [Query metrics with options](#query-metrics-with-options)
+- [Register the client with dependency injection](#register-the-client-with-dependency-injection)
 
 ### Logs query
 
@@ -503,6 +504,10 @@ foreach (MetricTimeSeriesElement element in metric.TimeSeries)
     }
 }
 ```
+
+#### Register the client with dependency injection
+
+To register `LogsQueryClient` with the dependency injection (DI) container, invoke the `AddLogsQueryClient` method. To register `MetricsQueryClient` with the dependency injection (DI) container, invoke the `AddMetricsQueryClient` method. For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).
 
 ## Troubleshooting
 
