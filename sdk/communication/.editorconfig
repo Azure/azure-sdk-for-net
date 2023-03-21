@@ -1,2 +1,0 @@
-[*.{cs,vb}]
-dotnet_diagnostic.CA1825.severity = none
