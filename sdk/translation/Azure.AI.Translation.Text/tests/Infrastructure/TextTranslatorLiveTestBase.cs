@@ -39,13 +39,13 @@ namespace Azure.AI.Translation.Text.Tests
 
             if (token != null)
             {
-                return InstrumentClient(new TextTranslationClient(endpoint, token, InstrumentClientOptions(options)));
+                return InstrumentClient(new TextTranslationClient(token, endpoint, InstrumentClientOptions(options)));
             }
             else
             {
                 credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
                 region ??= TestEnvironment.Region;
-                return InstrumentClient(new TextTranslationClient(endpoint, credential, region: region, InstrumentClientOptions(options)));
+                return InstrumentClient(new TextTranslationClient(credential, endpoint, region: region, InstrumentClientOptions(options)));
             }
         }
 

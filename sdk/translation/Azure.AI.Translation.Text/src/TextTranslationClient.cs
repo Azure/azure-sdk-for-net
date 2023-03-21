@@ -29,18 +29,18 @@ namespace Azure.AI.Translation.Text
         /// <param name="credential">Azure Key Credential</param>
         /// <param name="region">Azure Resource Region</param>
         /// <param name="options">Translate Client Options</param>
-        public TextTranslationClient(AzureKeyCredential credential, string region = DEFAULT_REGION, TextTranslationClientOptions options = null) : this(DEFAULT_ENDPOINT, credential, region, options)
+        public TextTranslationClient(AzureKeyCredential credential, string region = DEFAULT_REGION, TextTranslationClientOptions options = default) : this(credential, DEFAULT_ENDPOINT, region, options)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Service Endpoint</param>
         /// <param name="credential">Azure Key Credential</param>
+        /// <param name="endpoint">Service Endpoint</param>
         /// <param name="region">Azure Resource Region</param>
         /// <param name="options">Translate Client Options</param>
-        public TextTranslationClient(Uri endpoint, AzureKeyCredential credential, string region = DEFAULT_REGION, TextTranslationClientOptions options = null) : this(endpoint, options)
+        public TextTranslationClient(AzureKeyCredential credential, Uri endpoint, string region = DEFAULT_REGION, TextTranslationClientOptions options = default) : this(endpoint, options)
         {
             options = options ?? new TextTranslationClientOptions();
 
@@ -67,17 +67,17 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         /// <param name="credential">Cognitive Services Token</param>
         /// <param name="options">Translate Client Options</param>
-        public TextTranslationClient(TokenCredential credential, TextTranslationClientOptions options = null) : this(DEFAULT_ENDPOINT, credential, options)
+        public TextTranslationClient(TokenCredential credential, TextTranslationClientOptions options = default) : this(credential, DEFAULT_ENDPOINT, options)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Service Endpoint</param>
         /// <param name="credential">Cognitive Services Token</param>
+        /// <param name="endpoint">Service Endpoint</param>
         /// <param name="options">Translate Client Options</param>
-        public TextTranslationClient(Uri endpoint, TokenCredential credential, TextTranslationClientOptions options = null) : this(endpoint, options)
+        public TextTranslationClient(TokenCredential credential, Uri endpoint, TextTranslationClientOptions options = default) : this(endpoint, options)
         {
             var policy = new BearerTokenAuthenticationPolicy(credential, TOKEN_SCOPE);
             options = options ?? new TextTranslationClientOptions();

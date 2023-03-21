@@ -36,7 +36,7 @@ Once you have your resource configured and you have your custom endpoint value a
 ```C# Snippet:CreateTextTranslationClientCustom
 Uri endpoint = new("<endpoint>");
 AzureKeyCredential credential = new("<apiKey>");
-TextTranslationClient client = new(endpoint, credential);
+TextTranslationClient client = new(credential, endpoint);
 ```
 
 ## Create a `TextTranslationClient` using a Token Authentication
