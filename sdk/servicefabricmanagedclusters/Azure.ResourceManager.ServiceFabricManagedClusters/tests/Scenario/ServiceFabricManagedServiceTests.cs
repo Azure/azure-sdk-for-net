@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
+namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 {
     internal class ServiceFabricManagedServiceTests : ServiceFabricManagedClustersManagementTestBase
     {

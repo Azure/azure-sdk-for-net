@@ -67,5 +67,35 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             var clusterLro = await resourceGroup.GetServiceFabricManagedClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             return clusterLro.Value;
         }
+
+        protected async Task<ServiceFabricManagedNodeTypeResource> CreateServiceFabricManagedNodeType(ServiceFabricManagedClusterResource cluster, string nodeTypeName, bool isPrimaryNode)
+        {
+            var data = new ServiceFabricManagedNodeTypeData()
+            {
+                ApplicationPorts = new EndpointRangeDescription(20000, 30000),
+                DataDiskLetter = "S",
+                DataDiskSizeInGB = 256,
+                DataDiskType = ServiceFabricManagedDataDiskType.StandardSsdLrs,
+                EphemeralPorts = new EndpointRangeDescription(49152, 65534),
+                IsPrimary = isPrimaryNode,
+                VmImageOffer = "WindowsServer",
+                VmImagePublisher = "MicrosoftWindowsServer",
+                VmImageSku = "2019-Datacenter",
+                VmImageVersion = "latest",
+                VmInstanceCount = 6,
+                VmSize = "Standard_D2_v2"
+            };
+            var noteTypeLro = await cluster.GetServiceFabricManagedNodeTypes().CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, data);
+            return noteTypeLro.Value;
+        }
+
+        protected async Task<ServiceFabricManagedApplicationTypeResource> CreateSFMAppType(ServiceFabricManagedClusterResource cluster, string appTypeName)
+        {
+            var data = new ServiceFabricManagedApplicationTypeData(DefaultLocation)
+            {
+            };
+            var appType = await cluster.GetServiceFabricManagedApplicationTypes().CreateOrUpdateAsync(WaitUntil.Completed, appTypeName, data);
+            return appType.Value;
+        }
     }
 }
