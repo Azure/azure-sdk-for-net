@@ -114,9 +114,9 @@ namespace Azure.Data.AppConfiguration.Samples
         }
 
         [Test]
-        public void ThrowNotFoundErrorSync()
+        public void ThrowError()
         {
-            #region Snippet:ThrowNotFoundErrorSync
+            #region Snippet:ThrowNotFoundError
 #if !SNIPPET
             var connectionString = TestEnvironment.ConnectionString;
 #endif
@@ -124,6 +124,7 @@ namespace Azure.Data.AppConfiguration.Samples
             string connectionString = "<connection_string>";
 #endif
             var client = new ConfigurationClient(connectionString);
+
             try
             {
                 ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
@@ -132,30 +133,24 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 Console.WriteLine("Key wasn't found.");
             }
-            #endregion Snippet:ThrowNotFoundErrorSync
-        }
+            #endregion Snippet:ThrowNotFoundError
 
-        [Test]
-        public async Task ThrowNotFoundErrorAsync()
-        {
-            #region Snippet:ThrowNotFoundErrorAsync
-#if !SNIPPET
-            var connectionString = TestEnvironment.ConnectionString;
-#endif
+            #region Snippet:ThrowAuthenticationError
 #if SNIPPET
-            string connectionString = "<connection_string>";
-#endif
-            var client = new ConfigurationClient(connectionString);
+            // Create a ConfigurationClient using the DefaultAzureCredential
+            string endpoint = "<endpoint>";
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
             try
             {
-                ConfigurationSetting setting = await client.GetConfigurationSettingAsync("nonexistent_key");
+                client.GetConfigurationSetting("key");
             }
-            catch (RequestFailedException ex) when (ex.Status == 404)
+            catch (AuthenticationFailedException e)
             {
-                Console.WriteLine("Key wasn't found.");
+                Console.WriteLine($"Authentication Failed. {e.Message}");
             }
-            #endregion Snippet:ThrowNotFoundErrorAsync
+#endif
+            #endregion Snippet:ThrowAuthenticationError
         }
 
         [OneTimeTearDown]

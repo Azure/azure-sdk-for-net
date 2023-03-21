@@ -15,11 +15,12 @@ This troubleshooting guide contains instructions to diagnose issues encountered 
 
 All app configuration service operations will throw a [RequestFailedException](https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet) on failure. When you interact with the library, errors returned by the service correspond to the same HTTP status codes returned for [REST API](https://learn.microsoft.com/azure/azure-app-configuration/rest-api/) requests. For example, if you try to retrieve a Configuration Setting that doesn't exist in your Configuration Store, an HTTP `404` status is returned, indicating `Not Found`.
 
-Here's an example of how to catch an exception using synchronous method:
+Here's an example of how to catch an exception:
 
-```C# Snippet:ThrowNotFoundErrorSync
+```C# Snippet:ThrowNotFoundError
 string connectionString = "<connection_string>";
 var client = new ConfigurationClient(connectionString);
+
 try
 {
     ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
@@ -30,45 +31,32 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 }
 ```
 
-Here's an example of how to catch an exception using asynchronous method:
-
-```C# Snippet:ThrowNotFoundErrorAsync
-string connectionString = "<connection_string>";
-var client = new ConfigurationClient(connectionString);
-
-try
-{
-    ConfigurationSetting setting = await client.GetConfigurationSettingAsync("nonexistent_key");
-}
-catch (RequestFailedException ex) when (ex.Status == 404)
-{
-    Console.WriteLine("Key wasn't found.");
-}
-```
-
 You will notice that additional information is logged, like the Client Request ID of the operation.
 
 ```shell
-Message: Azure.RequestFailedException : StatusCode: 404, ReasonPhrase: 'Not Found', Version: 1.1, Content: System.Net.Http.NoWriteNoSeekStreamContent, Headers:
-{
-  Connection: keep-alive
-  Date: Thu, 11 Apr 2019 00:16:57 GMT
-  Server: nginx/1.13.9
-  x-ms-client-request-id: cc49570c-9143-411e-a6c8-3287dd114034
-  x-ms-request-id: 2ad025f7-1fe8-4da0-8648-8290e774ed61
-  x-ms-correlation-request-id: 2ad025f7-1fe8-4da0-8648-8290e774ed61
-  Strict-Transport-Security: max-age=15724800; includeSubDomains;
-  Content-Length: 0
-}
+Azure.RequestFailedException: Service request failed.
+Status: 404 (Not Found)
+
+Headers:
+Server: openresty/1.21.4.1
+Date: Tue, 21 Mar 2023 19:04:22 GMT
+Connection: keep-alive
+Sync-Token: zAJw6V16=NTo1IzIyNjUyMDYx;sn=22652061
+x-ms-request-id: f14a1cb0-018a-4ab5-9ace-9d4917c4e913
+x-ms-client-request-id: 68a07c4e-15a6-4b72-bbf7-cbe00c453eb0
+x-ms-correlation-request-id: f14a1cb0-018a-4ab5-9ace-9d4917c4e913
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: REDACTED
+Strict-Transport-Security: max-age=15724800; includeSubDomains
+Content-Length: 0
 ```
 
 ### Enable client logging
 
-To troubleshoot issues with the library, first enable logging to monitor the behavior of the application. The errors and warnings in the logs generally provide useful insights into what went wrong and sometimes include corrective actions to fix issues.
+To troubleshoot issues with the library, first enable logging to monitor the behavior of the application. The errors and warnings in the logs generally provide useful insights into what went wrong and sometimes include corrective actions to fix issues.To learn more about capturing logs, see [Azure SDK diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
-This library uses the standard [logging](https://docs.microsoft.com/dotnet/azure/sdk/logging) library. Basic information about HTTP sessions, such as URLs and headers, is logged at the `INFO` level.
-
-The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
+This library uses the [logging](https://docs.microsoft.com/dotnet/azure/sdk/logging) library. Basic information about HTTP sessions, such as URLs and headers, is logged at the `INFO` level. The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
 
 ```csharp
 using Azure.Core.Diagnostics;
@@ -90,6 +78,7 @@ ConfigurationClientOptions options = new ConfigurationClientOptions()
     }
 };
 ```
+
 #### Logging redacted headers and query parameters
 
 Some sensitive headers and query parameters are not logged by default and are displayed as "REDACTED", to include them in logs use the `Diagnostics.LoggedHeaderNames` and `Diagnostics.LoggedQueryParameters` client options.
@@ -118,11 +107,9 @@ ConfigurationClientOptions options = new ConfigurationClientOptions()
 };
 ```
 
-To learn about other logging mechanisms, see [Azure SDK diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
-
 ## Troubleshooting authentication issues
 
-Azure App Configuration supports Azure Active Directory authentication. To provide a valid credential, you can use the `Azure.Identity` package. For more information on getting started, see the [Azure App Configuration library's README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/appconfiguration/Azure.Data.AppConfiguration#authenticate-the-client). For details on the credential types supported in `Azure.Identity`, see the [Azure Identity library's documentation](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme).
+Azure App Configuration supports Azure Active Directory authentication. To provide a valid credential, you can use the `Azure.Identity` package. For more information on getting started, see the [Azure App Configuration library's README](https://learn.microsoft.com/dotnet/api/overview/azure/data.appconfiguration-readme?view=azure-dotnet#authenticate-the-client). For details on the credential types supported in `Azure.Identity`, see the [Azure Identity library's documentation](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme).
 
 Here are the authentication exceptions and ways to handle it:
 
@@ -132,13 +119,10 @@ Exceptions arising from authentication errors can be raised on any service clien
 
 To distinguish these failures from failures in the service client, Azure Identity classes raise the `AuthenticationFailedException` with details describing the source of the error in the exception message and possibly the error message. Depending on the application, these errors may or may not be recoverable.
 
-``` c#
-using Azure.Identity;
-using Azure.Data.AppConfiguration;
-
+```C# Snippet:ThrowAuthenticationError
 // Create a ConfigurationClient using the DefaultAzureCredential
 string endpoint = "<endpoint>";
-ConfigurationClient client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
 try
 {
@@ -159,3 +143,7 @@ The `CredentialUnavailableExcpetion` is a special exception type derived from `A
 Calls to service clients resulting in `RequestFailedException` with a `StatusCode` of 401 or 403 often indicate the caller doesn't have sufficient permissions for the specified API. Check the service documentation to determine which RBAC roles are needed for the specific request, and ensure the authenticated user or service principal have been granted the appropriate roles on the resource.
 
 For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md).
+
+## Get additional help
+
+For more information on ways to request support, please see: [Support](https://github.com/Azure/azure-sdk-for-net/blob/main/SUPPORT.md).
