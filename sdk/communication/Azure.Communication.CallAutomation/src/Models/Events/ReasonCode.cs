@@ -98,9 +98,9 @@ namespace Azure.Communication.CallAutomation
         public override string ToString() => _value;
 
         /// <summary>
-        /// Cast ReasonCode string value to an integer subcode.
+        /// Retrieves the integer value associated with the specified ReasonCode.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The integer value corresponding to the provided ReasonCode.</returns>
         /// <exception cref="Exception"></exception>
         public int GetReasonCodeValue()
         {
