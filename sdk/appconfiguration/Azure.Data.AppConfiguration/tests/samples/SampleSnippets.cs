@@ -114,7 +114,7 @@ namespace Azure.Data.AppConfiguration.Samples
         }
 
         [Test]
-        public void ThrowError()
+        public void ThrowNotFoundError()
         {
             #region Snippet:ThrowNotFoundError
 #if !SNIPPET
@@ -134,7 +134,11 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine("Key wasn't found.");
             }
             #endregion Snippet:ThrowNotFoundError
+        }
 
+        [Test]
+        public void ThrowAuthenticationError()
+        {
             #region Snippet:ThrowAuthenticationError
 #if SNIPPET
             // Create a ConfigurationClient using the DefaultAzureCredential
