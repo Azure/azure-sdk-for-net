@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     /// <summary>
     /// The result from downloading an OCI manifest from the registry.

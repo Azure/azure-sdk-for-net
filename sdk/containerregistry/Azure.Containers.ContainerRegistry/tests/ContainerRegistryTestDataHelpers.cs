@@ -1,13 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry.Specialized;
-
 namespace Azure.Containers.ContainerRegistry.Tests
 {
     internal static class ContainerRegistryTestDataHelpers
@@ -21,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             OciImageManifest manifest = new OciImageManifest()
             {
                 SchemaVersion = 2,
-                Config = new OciDescriptor()
+                Configuration = new OciDescriptor()
                 {
                     MediaType = "application/vnd.acme.rocket.config",
                     Digest = "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
