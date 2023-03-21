@@ -9,9 +9,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("ManualReclassifyExceptionAction")]
-#pragma warning disable CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("ManualReclassifyExceptionAction")]
-#pragma warning restore CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("ManualReclassifyExceptionAction", typeof(string))]
     public partial class ManualReclassifyExceptionAction
     {
