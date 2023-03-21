@@ -131,6 +131,10 @@ namespace Azure.Containers.ContainerRegistry
         public static bool operator !=(Azure.Containers.ContainerRegistry.ContainerRegistryAudience left, Azure.Containers.ContainerRegistry.ContainerRegistryAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class ContainerRegistryBinaryDataExtensions
+    {
+        public static Azure.Containers.ContainerRegistry.OciImageManifest AsOciImageManifest(this System.BinaryData manifest) { throw null; }
+    }
     public partial class ContainerRegistryClient
     {
         protected ContainerRegistryClient() { }
@@ -198,7 +202,7 @@ namespace Azure.Containers.ContainerRegistry
         public static Azure.Containers.ContainerRegistry.ArtifactTagProperties ArtifactTagProperties(string registryLoginServer = null, string repositoryName = null, string name = null, string digest = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), bool? canDelete = default(bool?), bool? canWrite = default(bool?), bool? canList = default(bool?), bool? canRead = default(bool?)) { throw null; }
         public static Azure.Containers.ContainerRegistry.ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = null, string name = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), int manifestCount = 0, int tagCount = 0, bool? canDelete = default(bool?), bool? canWrite = default(bool?), bool? canList = default(bool?), bool? canRead = default(bool?)) { throw null; }
         public static Azure.Containers.ContainerRegistry.DownloadRegistryBlobResult DownloadRegistryBlobResult(string digest = null, System.BinaryData content = null) { throw null; }
-        public static Azure.Containers.ContainerRegistry.GetManifestResult GetManifestResult(string digest = null, string mediaType = null, System.BinaryData content = null) { throw null; }
+        public static Azure.Containers.ContainerRegistry.GetManifestResult GetManifestResult(string digest = null, string mediaType = null, System.BinaryData manifest = null) { throw null; }
         public static Azure.Containers.ContainerRegistry.SetManifestResult UploadManifestResult(string digest = null) { throw null; }
         public static Azure.Containers.ContainerRegistry.UploadRegistryBlobResult UploadRegistryBlobResult(string digest, long sizeInBytes) { throw null; }
     }
@@ -247,10 +251,9 @@ namespace Azure.Containers.ContainerRegistry
     public partial class GetManifestResult
     {
         internal GetManifestResult() { }
-        public System.BinaryData Content { get { throw null; } }
         public string Digest { get { throw null; } }
+        public System.BinaryData Manifest { get { throw null; } }
         public Azure.Containers.ContainerRegistry.ManifestMediaType MediaType { get { throw null; } }
-        public Azure.Containers.ContainerRegistry.OciImageManifest AsOciManifest() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManifestMediaType : System.IEquatable<Azure.Containers.ContainerRegistry.ManifestMediaType>

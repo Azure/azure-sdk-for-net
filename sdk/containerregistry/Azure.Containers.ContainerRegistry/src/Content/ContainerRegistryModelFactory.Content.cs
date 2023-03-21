@@ -18,11 +18,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of <see cref="GetManifestResult" />. </summary>
         /// <param name="digest"> The manifest's digest, calculated by the registry. </param>
         /// <param name="mediaType">The media type of the downloaded manifest.</param>
-        /// <param name="content">Manifest content that was downloaded.</param>
+        /// <param name="manifest">Manifest content that was downloaded.</param>
         /// <returns> A new <see cref="GetManifestResult"/> instance for mocking. </returns>
-        public static GetManifestResult GetManifestResult(string digest = null, string mediaType = null, BinaryData content = null)
+        public static GetManifestResult GetManifestResult(string digest = null, string mediaType = null, BinaryData manifest = null)
         {
-            return new GetManifestResult(digest, mediaType, content);
+            return new GetManifestResult(digest, mediaType, manifest);
         }
 
         /// <summary> Initializes a new instance of <see cref="UploadRegistryBlobResult" />. </summary>

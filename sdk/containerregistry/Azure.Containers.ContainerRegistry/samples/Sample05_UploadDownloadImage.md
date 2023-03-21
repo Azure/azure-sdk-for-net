@@ -66,12 +66,12 @@ The manifest describes the files that will need to be downloaded to pull the ful
 ```C# Snippet:ContainerRegistry_Samples_DownloadOciImageAsync
 // Download the manifest to obtain the list of files in the image
 GetManifestResult result = await client.GetManifestAsync(tag);
-OciImageManifest manifest = result.AsOciManifest();
+OciImageManifest manifest = result.Manifest.AsOciImageManifest();
 
 string manifestFile = Path.Combine(path, "manifest.json");
 using (FileStream stream = File.Create(manifestFile))
 {
-    await result.Content.ToStream().CopyToAsync(stream);
+    await result.Manifest.ToStream().CopyToAsync(stream);
 }
 
 // Download and write out the config
@@ -171,7 +171,7 @@ A blob can be deleted as shown below.  It is also possible to delete a full imag
 
 ```C# Snippet:ContainerRegistry_Samples_DeleteBlob
 GetManifestResult result = await client.GetManifestAsync(tag);
-OciImageManifest manifest = result.AsOciManifest();
+OciImageManifest manifest = result.Manifest.AsOciImageManifest();
 
 foreach (OciDescriptor layerInfo in manifest.Layers)
 {

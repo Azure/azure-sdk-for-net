@@ -52,7 +52,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var manifestResult = await client.GetManifestAsync(reference);
 
             // Upload the manifest with the new tag
-            await client.SetManifestAsync(manifestResult.Value.Content.ToStream(), tag);
+            await client.SetManifestAsync(manifestResult.Value.Manifest.ToStream(), tag);
         }
     }
 }

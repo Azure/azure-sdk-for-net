@@ -94,11 +94,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Request with digest
             GetManifestResult result = await client.GetManifestAsync(digest);
-            Assert.AreEqual(manifestContent, result.Content.ToString());
+            Assert.AreEqual(manifestContent, result.Manifest.ToString());
 
             // Request with tag
             result = await client.GetManifestAsync(tagName);
-            Assert.AreEqual(manifestContent, result.Content.ToString());
+            Assert.AreEqual(manifestContent, result.Manifest.ToString());
 
             // Request with digest that doesn't match the content
             Assert.ThrowsAsync<RequestFailedException>(async () =>

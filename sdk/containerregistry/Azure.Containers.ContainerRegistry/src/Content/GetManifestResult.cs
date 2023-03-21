@@ -2,20 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary>
-    /// The result from downloading an OCI manifest from the registry.
+    /// The result of a get manifest operation.
     /// </summary>
     public class GetManifestResult
     {
-        internal GetManifestResult(string digest, ManifestMediaType mediaType, BinaryData content)
+        internal GetManifestResult(string digest, ManifestMediaType mediaType, BinaryData manifest)
         {
             Digest = digest;
             MediaType = mediaType;
-            Content = content;
+            Manifest = manifest;
         }
 
         /// <summary>
@@ -30,17 +29,8 @@ namespace Azure.Containers.ContainerRegistry
         public ManifestMediaType MediaType { get; }
 
         /// <summary>
-        /// The serialized content that was downloaded.
+        /// The serialized manifest.
         /// </summary>
-        public BinaryData Content { get; }
-
-        /// <summary>
-        /// Gets the downloaded manifest as an OciImageManifest.
-        /// </summary>
-        /// <returns></returns>
-        public OciImageManifest AsOciManifest()
-        {
-            return OciImageManifest.DeserializeOciImageManifest(JsonDocument.Parse(Content).RootElement);
-        }
+        public BinaryData Manifest { get; }
     }
 }
