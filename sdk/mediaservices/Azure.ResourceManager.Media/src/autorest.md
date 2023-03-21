@@ -9,7 +9,8 @@ generate-model-factory: false
 csharp: true
 library-name: Media
 namespace: Azure.ResourceManager.Media
-require: https://github.com/Azure/azure-rest-api-specs/blob/c91eca4e2081703002581da6f58f9d9332e1afd1/specification/mediaservices/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/daeb320057bd56a88379c377d934150ef48d143f/specification/mediaservices/resource-manager/readme.md
+tag: package-2023-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -224,6 +225,7 @@ rename-mapping:
   Video: MediaVideoBase
   VideoLayer.adaptiveBFrame: UseAdaptiveBFrame
   Visibility: PlayerVisibility
+  MinimumTlsVersion: MediaServicesMinimumTlsVersion
 
 directive:
   - remove-operation: OperationResults_Get
@@ -280,4 +282,11 @@ directive:
       $.LiveEventPreview.properties.accessControl["x-nullable"] = true;
       $.LiveEventInput.properties.accessControl["x-nullable"] = true;
       $.LiveOutputProperties.properties.rewindWindowLength["x-nullable"] = true;
+
+models-to-treat-empty-string-as-null:
+- LiveEventInput
+  
+additional-intrinsic-types-to-treat-empty-string-as-null:
+- TimeSpan
+
 ```
