@@ -168,10 +168,12 @@ output-folder: $(this-folder)/Resources/Generated
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyAssignments.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/policyAssignments.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyDefinitions.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policySetDefinitions.json
+    # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policyDefinitions.json
+    # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policySetDefinitions.json
     # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/preview/2020-07-01-preview/policyExemptions.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
@@ -262,10 +264,20 @@ rename-rules:
   SSO: Sso
   URI: Uri
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 rename-mapping:
   PolicyAssignment.identity: ManagedIdentity
+  Override: PolicyOverride
+  OverrideKind: PolicyOverrideKind
+  Selector: ResourceSelectorExpression
+  SelectorKind: ResourceSelectorKind
+  Location: LocationExpanded
+
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
+  - remove-operation: PolicyAssignments_UpdateById
   - remove-operation: PolicyAssignments_DeleteById
   - remove-operation: PolicyAssignments_CreateById
   - remove-operation: PolicyAssignments_GetById
@@ -291,6 +303,7 @@ directive:
   - remove-operation: Resources_Delete
   - remove-operation: Providers_RegisterAtManagementGroupScope
   - remove-operation: Subscriptions_CheckZonePeers
+  - remove-operation: AuthorizationOperations_List
   - from: swagger-document
     where: $.definitions.ExtendedLocation
     transform: >
@@ -350,14 +363,10 @@ directive:
       from: Resources_ValidateMoveResources
       to: ResourceGroups_ValidateMoveResources
 
-# TODO - remove when Azure.ErrorResponse is marked as PropertyReferenceType
-  - from: types.json
-    where: $.definitions.ErrorResponse
-    transform: $["x-ms-client-name"] = "ResponseError"
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignment.properties.systemData
+    transform: return undefined; # remove this property because we already included this property in its base class and the type replacement somehow does not work in resourcemanager
 
-  - rename-model:
-      from: Location
-      to: LocationExpanded
   - rename-model:
       from: Provider
       to: ResourceProvider
