@@ -72,7 +72,10 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             await foreach (var username in _domainResource.GetSenderUsernameResources().GetAllAsync())
             {
-                await username.DeleteAsync(WaitUntil.Completed);
+                if (!StringComparer.OrdinalIgnoreCase.Equals(username.Data.Name, "donotreply"))
+                {
+                    await username.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
