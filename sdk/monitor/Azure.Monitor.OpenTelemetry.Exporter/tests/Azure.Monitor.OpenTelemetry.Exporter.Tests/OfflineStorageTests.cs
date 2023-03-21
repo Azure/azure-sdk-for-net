@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Threading;
 
@@ -54,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var options = new AzureMonitorExporterOptions
             {
-                ConnectionString = "InstrumentationKey=00001",
+                ConnectionString = "InstrumentationKey=testikey",
                 StorageDirectory = "C:\\Temp",
             };
 
@@ -65,7 +64,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ?.GetValue(transmitter._fileBlobProvider)
                 ?.ToString();
 
-            Assert.StartsWith("C:\\Temp\\00001\\", directoryPath!);
+            Assert.StartsWith("C:\\Temp\\testikey\\", directoryPath!);
+        }
+
+        [Fact]
+        public void VerifyDefaultDirectory()
+        {
+            // TODO: this test may fail if the process does not have access to this specific directory.
+            // Need to refactor Transmitter so we can run tests without interacting with the file system.
+
+            var options = new AzureMonitorExporterOptions
+            {
+                ConnectionString = "InstrumentationKey=testikey",
+            };
+
+            var transmitter = new AzureMonitorTransmitter(options);
+
+            var directoryPath = typeof(FileBlobProvider)
+                .GetField("directoryPath", BindingFlags.Instance | BindingFlags.NonPublic)
+                ?.GetValue(transmitter._fileBlobProvider)
+                ?.ToString();
+
+            // Note: Default root directory will be variable depending on OS and permissions.
+            Assert.Contains("\\Microsoft\\AzureMonitor\\testikey\\", directoryPath!);
         }
 
         [Fact]
