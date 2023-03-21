@@ -15,8 +15,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true  #To be removed since it's set to become obsolete
-
 
 format-by-name-rules:
   "tenantId": "uuid"
