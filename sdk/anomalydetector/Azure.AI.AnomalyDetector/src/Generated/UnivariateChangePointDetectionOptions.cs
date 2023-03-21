@@ -33,6 +33,43 @@ namespace Azure.AI.AnomalyDetector
             Granularity = granularity;
         }
 
+        /// <summary> Initializes a new instance of UnivariateChangePointDetectionOptions. </summary>
+        /// <param name="series">
+        /// Time series data points. Points should be sorted by timestamp in ascending
+        /// order to match the change point detection result.
+        /// </param>
+        /// <param name="granularity">
+        /// Can only be one of yearly, monthly, weekly, daily, hourly, minutely or
+        /// secondly. Granularity is used for verify whether input series is valid.
+        /// </param>
+        /// <param name="customInterval">
+        /// Custom Interval is used to set non-standard time interval, for example, if the
+        /// series is 5 minutes, request can be set as {"granularity":"minutely",
+        /// "customInterval":5}.
+        /// </param>
+        /// <param name="period">
+        /// Optional argument, periodic value of a time series. If the value is null or
+        /// does not present, the API will determine the period automatically.
+        /// </param>
+        /// <param name="stableTrendWindow">
+        /// Optional argument, advanced model parameter, a default stableTrendWindow will
+        /// be used in detection.
+        /// </param>
+        /// <param name="threshold">
+        /// Optional argument, advanced model parameter, between 0.0-1.0, the lower the
+        /// value is, the larger the trend error will be which means less change point will
+        /// be accepted.
+        /// </param>
+        internal UnivariateChangePointDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity granularity, int? customInterval, int? period, int? stableTrendWindow, float? threshold)
+        {
+            Series = series.ToList();
+            Granularity = granularity;
+            CustomInterval = customInterval;
+            Period = period;
+            StableTrendWindow = stableTrendWindow;
+            Threshold = threshold;
+        }
+
         /// <summary>
         /// Time series data points. Points should be sorted by timestamp in ascending
         /// order to match the change point detection result.
