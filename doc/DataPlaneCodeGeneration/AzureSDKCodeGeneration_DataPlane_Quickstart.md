@@ -8,7 +8,7 @@ Azure SDK Code Generation takes a [TypeSpec](https://microsoft.github.io/typespe
 
 ## Prerequisites
 
-For first time to setup of a new sdk package, please verify you have met the prerequisites, including runtime environment, typespec project, sdk project folder. You can refer to [SDK Generation Prerequisites](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKGeneration_Prerequistites.md) to setup.
+For first time to set up of a new SDK package, please verify you have met the prerequisites, including runtime environment, TypeSpec project, and SDK project folder. You can refer to [SDK Generation Prerequisites](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKGeneration_Prerequistites.md) to set up.
 
 ## Generate SDK
 
