@@ -23,11 +23,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("policyEnforced");
                 writer.WriteBooleanValue(IsPolicyEnforced.Value);
             }
-            if (Optional.IsDefined(VaultId))
-            {
-                writer.WritePropertyName("vaultId");
-                writer.WriteStringValue(VaultId);
-            }
             if (Optional.IsDefined(IsBackupEnabled))
             {
                 writer.WritePropertyName("backupEnabled");
