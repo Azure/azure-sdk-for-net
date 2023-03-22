@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="status"></param>
         /// <param name="body"> Contains the tables, columns &amp; rows resulting from a query. </param>
         /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
-        internal BatchQueryResponse(string id, int? status, LogsBatchQueryResult body, IReadOnlyDictionary<string, string> headers)
+        internal BatchQueryResponse(string id, long? status, LogsBatchQueryResult body, IReadOnlyDictionary<string, string> headers)
         {
             Id = id;
             Status = status;
@@ -35,7 +35,7 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Gets the id. </summary>
         public string Id { get; }
         /// <summary> Gets the status. </summary>
-        public int? Status { get; }
+        public long? Status { get; }
         /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
         public LogsBatchQueryResult Body { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>

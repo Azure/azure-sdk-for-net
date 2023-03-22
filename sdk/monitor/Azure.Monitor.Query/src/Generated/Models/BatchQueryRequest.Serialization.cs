@@ -33,12 +33,12 @@ namespace Azure.Monitor.Query.Models
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
+                writer.WriteStringValue(Path.Value.ToString());
             }
             if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
-                writer.WriteStringValue(Method);
+                writer.WriteStringValue(Method.Value.ToString());
             }
             writer.WritePropertyName("workspace"u8);
             writer.WriteStringValue(Workspace);
