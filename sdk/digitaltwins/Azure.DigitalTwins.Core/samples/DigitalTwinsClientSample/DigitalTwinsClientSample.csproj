@@ -31,8 +31,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Azure.DigitalTwins.Core.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Blobs\" />
-  </ItemGroup>
 </Project>
