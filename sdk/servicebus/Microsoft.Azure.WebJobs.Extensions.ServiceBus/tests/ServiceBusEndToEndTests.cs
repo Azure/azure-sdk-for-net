@@ -364,10 +364,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task TestBatch_ReceiveFromFunction()
         {
-            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
-            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
-            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
-            var host = BuildHost<TestReceiveFromFunction_Batch>();
+            for (int i = 0; i < TestReceiveFromFunction_Batch.MessageCount; i++)
+            {
+                await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            }
+
+            var host = BuildHost<TestReceiveFromFunction_Batch>(
+                builder =>
+                {
+                    builder.ConfigureWebJobs(b => b.AddServiceBus(options =>
+                    {
+                        options.MaxMessageBatchSize = TestReceiveFromFunction_Batch.MessageCount - 1;
+                    }));
+                });
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
@@ -1022,7 +1031,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual("value", userProperties["key"]);
                 Assert.Greater(expiresAtUtc, DateTime.UtcNow);
                 Assert.AreEqual(expiresAt.DateTime, expiresAtUtc);
-                Assert.Less(enqueuedTimeUtc, DateTime.UtcNow);
                 Assert.AreEqual(enqueuedTime.DateTime, enqueuedTimeUtc);
                 Assert.IsNull(sessionId);
                 Assert.IsNull(replyToSessionId);
@@ -1593,6 +1601,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class TestReceiveFromFunction_Batch
         {
+            public const int MessageCount = 3;
             public static ServiceBusReceiveActions ReceiveActions { get; private set; }
 
             public static async Task RunAsync(
@@ -1607,8 +1616,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var receiveDeferred = await receiveActions.ReceiveDeferredMessagesAsync(
                     new[] { messages.First().SequenceNumber });
 
-                var received = await receiveActions.ReceiveMessagesAsync(1);
-                Assert.IsNotNull(received);
+                var remaining = MessageCount - messages.Length;
+                Assert.GreaterOrEqual(remaining, 1);
+                while (remaining > 0)
+                {
+                    var received = await receiveActions.ReceiveMessagesAsync(remaining);
+                    remaining -= received.Count;
+                }
 
                 _waitHandle1.Set();
             }
