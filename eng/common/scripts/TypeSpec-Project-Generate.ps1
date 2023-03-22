@@ -14,6 +14,78 @@ $ErrorActionPreference = "Stop"
 . $PSScriptRoot/common.ps1
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
+function GetNpmPackageVersion([string]$packagePath) {
+    $packagePath = Resolve-Path $packagePath
+    $packageFolder = Split-Path -Parent $packagePath
+    $packageName = Split-Path -Leaf $packagePath
+    Push-Location $packageFolder
+    try {
+        $packageVersion = node -p -e "require('./$packageName').version"
+        return $packageVersion
+    }
+    finally {
+        Pop-Location
+    }
+}
+
+function GetEmitterDependencyVersion([string]$packagePath) {
+    $emitterName = &$GetEmitterNameFn
+    $matchString = "`"$emitterName`": `"(.*?)`""
+    If ((Get-Content -Raw $packagePath) -match $matchString) {
+        return $Matches[1]
+    }
+}
+
+function NpmInstallAtRoot() {
+    $root = git rev-parse --show-toplevel
+    Push-Location $root
+    try {
+        #default to root/eng/emitter-package.json but you can override by writing
+        #Get-${Language}-EmitterPackageJsonPath in your Language-Settings.ps1
+        $replacementPackageJson = "$PSScriptRoot/../../emitter-package.json"
+        if (Test-Path "Function:$GetEmitterPackageJsonPathFn") {
+            $replacementPackageJson = &$GetEmitterPackageJsonPathFn
+        }
+
+        $emitterName = &$GetEmitterNameFn
+        $installedPath = Join-Path $root "node_modules" $emitterName "package.json"
+        if (Test-Path $installedPath) {
+            $installedVersion = GetNpmPackageVersion $installedPath
+            Write-Host "Installed emitter version: $installedVersion"
+
+            $replacementVersion = GetEmitterDependencyVersion $replacementPackageJson
+            Write-Host "Replacement emitter version: $replacementVersion"
+
+            if ($installedVersion -eq $replacementVersion) {
+                Write-Host "Emitter already installed. Skip installing."
+                return
+            }
+        }
+
+        Write-Host "Installing package at $root"
+
+        if (Test-Path "node_modules") {
+            Remove-Item -Path "node_modules" -Force -Recurse
+        }
+
+        Write-Host("Copying package.json from $replacementPackageJson")
+        Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
+        npm install --no-lock-file
+
+        if (Test-Path "package.json") {
+            Remove-Item -Path "package.json" -Force
+        }
+        if (Test-Path "package-lock.json") {
+            Remove-Item -Path "package-lock.json" -Force
+        }
+
+        if ($LASTEXITCODE) { exit $LASTEXITCODE }
+    }
+    finally {
+        Pop-Location
+    }
+}
+
 function NpmInstallForProject([string]$workingDirectory) {
     Push-Location $workingDirectory
     try {
@@ -36,17 +108,10 @@ function NpmInstallForProject([string]$workingDirectory) {
             Remove-Item -Path "package-lock.json" -Force
         }
 
-        #default to root/eng/emitter-package.json but you can override by writing
-        #Get-${Language}-EmitterPackageJsonPath in your Language-Settings.ps1
-        $replacementPackageJson = "$PSScriptRoot/../../emitter-package.json"
-        if (Test-Path "Function:$GetEmitterPackageJsonPathFn") {
-            $replacementPackageJson = &$GetEmitterPackageJsonPathFn
-        }
-
-        Write-Host("Copying package.json from $replacementPackageJson")
-        Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
-        npm install --no-lock-file
-        if ($LASTEXITCODE) { exit $LASTEXITCODE }
+        $lockFile = Join-Path (git rev-parse --show-toplevel) "temp.lock"
+        FileLockEnter($lockFile)
+        NpmInstallAtRoot
+        FileLockExit($lockFile)
     }
     finally {
         Pop-Location
