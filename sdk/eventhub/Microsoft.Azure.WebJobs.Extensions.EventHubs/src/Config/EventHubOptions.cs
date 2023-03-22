@@ -137,8 +137,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private int _minEventBatchSize;
 
         /// <summary>
-        /// Gets or sets the minimum number of events delivered in a batch. This setting applies only to functions that
-        /// receive multiple events. This value must be less than <see cref="MaxEventBatchSize"/>. This value is used in
+        /// Gets or sets the minimum number of events desired for a batch. This setting applies only to functions that
+        /// receive multiple events. This value must be less than <see cref="MaxEventBatchSize"/> and is used in
         /// conjunction with <see cref="MaxWaitTime"/>. Default 1.
         /// </summary>
         public int MinEventBatchSize
