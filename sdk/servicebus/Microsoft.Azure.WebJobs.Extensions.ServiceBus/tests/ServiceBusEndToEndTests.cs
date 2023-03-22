@@ -1031,6 +1031,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual("value", userProperties["key"]);
                 Assert.Greater(expiresAtUtc, DateTime.UtcNow);
                 Assert.AreEqual(expiresAt.DateTime, expiresAtUtc);
+                // account for clock skew
+                Assert.Less(enqueuedTimeUtc, DateTime.UtcNow.AddMinutes(5));
                 Assert.AreEqual(enqueuedTime.DateTime, enqueuedTimeUtc);
                 Assert.IsNull(sessionId);
                 Assert.IsNull(replyToSessionId);
@@ -1277,6 +1279,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.AreEqual("value", userPropertiesArray[i]["key"]);
                     Assert.Greater(expiresAtUtcArray[i], DateTime.UtcNow);
                     Assert.AreEqual(expiresAtArray[i].DateTime, expiresAtUtcArray[i]);
+                    // account for clock skew
+                    Assert.Less(enqueuedTimeUtcArray[i], DateTime.UtcNow.AddMinutes(5));
                     Assert.AreEqual(enqueuedTimeArray[i].DateTime, enqueuedTimeUtcArray[i]);
                     Assert.IsNull(sessionIdArray[i]);
                     Assert.IsNull(replyToSessionIdArray[i]);
