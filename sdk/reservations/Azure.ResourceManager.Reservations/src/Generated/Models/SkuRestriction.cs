@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The SkuRestriction. </summary>
+    /// <summary> Restriction of a sku. </summary>
     public partial class SkuRestriction
     {
         /// <summary> Initializes a new instance of SkuRestriction. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of SkuRestriction. </summary>
         /// <param name="skuRestrictionType"> The type of restrictions. </param>
-        /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
+        /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the sku is restricted. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
         internal SkuRestriction(string skuRestrictionType, IReadOnlyList<string> values, string reasonCode)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> The type of restrictions. </summary>
         public string SkuRestrictionType { get; }
-        /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
+        /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the sku is restricted. </summary>
         public IReadOnlyList<string> Values { get; }
         /// <summary> The reason for restriction. </summary>
         public string ReasonCode { get; }

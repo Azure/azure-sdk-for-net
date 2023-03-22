@@ -3,8 +3,8 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary><see cref="AddParticipantsEventResult"/> is returned from WaitForEvent of <see cref="AddParticipantResult"/>.</summary>
-    public class AddParticipantsEventResult
+    /// <summary><see cref="AddParticipantEventResult"/> is returned from WaitForEvent of <see cref="AddParticipantResult"/>.</summary>
+    public class AddParticipantEventResult
     {
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public CommunicationIdentifier Participant { get; }
 
-        internal AddParticipantsEventResult(bool isSuccessEvent, AddParticipantSucceeded successEvent, AddParticipantFailed failureEvent, CommunicationIdentifier participant)
+        internal AddParticipantEventResult(bool isSuccessEvent, AddParticipantSucceeded successEvent, AddParticipantFailed failureEvent, CommunicationIdentifier participant)
         {
             IsSuccessEvent = isSuccessEvent;
             SuccessEvent = successEvent;

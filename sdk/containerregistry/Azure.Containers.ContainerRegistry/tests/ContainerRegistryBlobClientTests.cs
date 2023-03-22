@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -40,7 +41,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [Test]
         public void ConstructorValidatesArguments()
         {
-            Assert.That(() => new ContainerRegistryBlobClient(null, "<repo>", GetCredential() ), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
+            Assert.That(() => new ContainerRegistryBlobClient(null, "<repo>", GetCredential()), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
 
             Assert.That(() => new ContainerRegistryBlobClient(_url, "<repo>", credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null credential.");
 
@@ -55,13 +56,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             Assert.That(async () => await client.DeleteBlobAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
             Assert.That(async () => await client.DeleteManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
-            Assert.That(async () => await client.DownloadBlobAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
+            Assert.That(async () => await client.DownloadBlobContentAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
             Assert.That(async () => await client.DownloadManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
-            Assert.That(async () => await client.UploadManifestAsync(manifest: null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
-            Assert.That(async () => await client.UploadManifestAsync(content: null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `content` is not null.");
-            Assert.That(async () => await client.UploadManifestAsync(stream: null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `stream` is not null.");
-            Assert.That(async () => await client.UploadBlobAsync(content: null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `content` is not null.");
-            Assert.That(async () => await client.UploadBlobAsync(stream: null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `stream` is not null.");
+            Assert.That(async () => await client.UploadManifestAsync(manifest: (OciImageManifest)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
+            Assert.That(async () => await client.UploadManifestAsync(manifest: (BinaryData)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");
+            Assert.That(async () => await client.UploadBlobAsync(content: (BinaryData)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `content` is not null.");
+            Assert.That(async () => await client.UploadBlobAsync(content: (Stream)null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `content` is not null.");
         }
 
         /// <summary>
@@ -111,6 +111,114 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 await client.DownloadManifestAsync(tagName);
             });
+        }
+
+        /// <summary>
+        /// Validates digest checks for DownloadStreaming.
+        /// </summary>
+        [Test]
+        public async Task DownloadStreamingValidatesDigest()
+        {
+            // Arrange
+            Uri endpoint = new("https://example.acr.io");
+            string repository = "TestRepository";
+
+            Func<int, byte> f1 = i => (byte)i;
+            Func<int, byte> f2 = i => (byte)(i * 2);
+
+            MockReadOnlyStream reference = new MockReadOnlyStream(1024, f1);
+
+            string digest = BlobHelper.ComputeDigest(reference);
+            BinaryData expected = BinaryData.FromStream(reference);
+
+            MockReadOnlyStream stream1 = new(1024, f1);
+            MockReadOnlyStream stream2 = new(1024, f2);
+
+            ContainerRegistryClientOptions options = new()
+            {
+                Transport = new MockTransport(
+                    new MockResponse(200) { ContentStream = stream1 }.AddHeader("Docker-Content-Digest", digest).AddHeader("Content-Length", "1024"),
+                    new MockResponse(200) { ContentStream = stream2 }.AddHeader("Docker-Content-Digest", digest).AddHeader("Content-Length", "1024"))
+            };
+
+            ContainerRegistryBlobClient client = new(endpoint, repository, new MockCredential(), options);
+
+            // Act
+
+            // Request stream with content that matches digest.
+            DownloadBlobStreamingResult result = await client.DownloadBlobStreamingAsync(digest);
+            Assert.AreEqual(expected.ToArray(), BinaryData.FromStream(result.Content).ToArray());
+
+            // Request stream with different content.
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                DownloadBlobStreamingResult result = await client.DownloadBlobStreamingAsync(digest);
+                BinaryData content = BinaryData.FromStream(result.Content);
+            });
+        }
+
+        private class MockReadOnlyStream : Stream
+        {
+            private readonly Func<int, byte> _contentFactory;
+
+            public MockReadOnlyStream(long length, Func<int, byte> contentFactory)
+            {
+                Length = length;
+                _contentFactory = contentFactory;
+            }
+
+            public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            {
+                var left = (int)Math.Min(count, Length - Position);
+
+                Position += left;
+
+                for (int i = 0; i < left; i++)
+                {
+                    buffer[offset + i] = _contentFactory(i);
+                }
+
+                return Task.FromResult(left);
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                return ReadAsync(buffer, offset, count).GetAwaiter().GetResult();
+            }
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool CanRead { get; } = true;
+            public override bool CanSeek { get; }
+            public override long Length { get; }
+            public override long Position { get; set; }
+            public bool IsDisposed { get; set; }
+
+            public override bool CanWrite => false;
+
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+                IsDisposed = true;
+            }
+
+            public override void Write(byte[] buffer, int offset, int count)
+            {
+                throw new NotSupportedException();
+            }
+
+            public override void SetLength(long value)
+            {
+                throw new NotSupportedException();
+            }
+
+            public override void Flush()
+            {
+                // Flush is allowed on read-only stream
+            }
         }
     }
 }
