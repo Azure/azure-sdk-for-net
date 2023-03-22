@@ -24,19 +24,19 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string repository = "sample-oci-image";
             string tag = "demo";
 
-            // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
+            // Create a new ContainerRegistryContentClient
+            ContainerRegistryContentClient client = new(endpoint, repository, new DefaultAzureCredential());
 
             #endregion
 
             #region Snippet:ContainerRegistry_Samples_UploadOciImageAsync
 
             // Create a manifest to list files in this image
-            OciImageManifest manifest = new();
+            OciImageManifest manifest = new(schemaVersion: 2);
 
             // Upload a config file
             BinaryData config = BinaryData.FromString("Sample config");
-            UploadBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
+            UploadRegistryBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
 
             // Update manifest with config info
             manifest.Configuration = new OciDescriptor()
@@ -48,7 +48,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Upload a layer file
             BinaryData layer = BinaryData.FromString("Sample layer");
-            UploadBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
+            UploadRegistryBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
 
             // Update manifest with layer info
             manifest.Layers.Add(new OciDescriptor()
@@ -59,7 +59,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             });
 
             // Finally, upload the manifest file
-            await client.UploadManifestAsync(manifest, tag);
+            await client.SetManifestAsync(manifest, tag);
 
             #endregion
         }
@@ -74,8 +74,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string repository = "sample-oci-image";
             string tag = "demo";
 
-            // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential());
+            // Create a new ContainerRegistryContentClient
+            ContainerRegistryContentClient client = new ContainerRegistryContentClient(endpoint, repository, new DefaultAzureCredential());
 
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
             Directory.CreateDirectory(path);
@@ -83,17 +83,17 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #region Snippet:ContainerRegistry_Samples_DownloadOciImageAsync
 
             // Download the manifest to obtain the list of files in the image
-            DownloadManifestResult result = await client.DownloadManifestAsync(tag);
-            OciImageManifest manifest = result.AsOciManifest();
+            GetManifestResult result = await client.GetManifestAsync(tag);
+            OciImageManifest manifest = result.Manifest.ToObjectFromJson<OciImageManifest>();
 
             string manifestFile = Path.Combine(path, "manifest.json");
             using (FileStream stream = File.Create(manifestFile))
             {
-                await result.Content.ToStream().CopyToAsync(stream);
+                await result.Manifest.ToStream().CopyToAsync(stream);
             }
 
             // Download and write out the config
-            DownloadBlobResult configBlob = await client.DownloadBlobContentAsync(manifest.Configuration.Digest);
+            DownloadRegistryBlobResult configBlob = await client.DownloadBlobContentAsync(manifest.Configuration.Digest);
 
             string configFile = Path.Combine(path, "config.json");
             using (FileStream stream = File.Create(configFile))
@@ -139,12 +139,12 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string repository = "sample-oci-image";
             string tag = "demo";
 
-            // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
+            // Create a new ContainerRegistryContentClient
+            ContainerRegistryContentClient client = new(endpoint, repository, new DefaultAzureCredential());
 
             #region Snippet:ContainerRegistry_Samples_DeleteBlob
-            DownloadManifestResult result = await client.DownloadManifestAsync(tag);
-            OciImageManifest manifest = result.AsOciManifest();
+            GetManifestResult result = await client.GetManifestAsync(tag);
+            OciImageManifest manifest = result.Manifest.ToObjectFromJson<OciImageManifest>();
 
             foreach (OciDescriptor layerInfo in manifest.Layers)
             {
@@ -153,8 +153,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #endregion
 
             #region Snippet:ContainerRegistry_Samples_DeleteManifest
-            DownloadManifestResult downloadManifestResult = await client.DownloadManifestAsync(tag);
-            await client.DeleteManifestAsync(downloadManifestResult.Digest);
+            GetManifestResult manifestResult = await client.GetManifestAsync(tag);
+            await client.DeleteManifestAsync(manifestResult.Digest);
             #endregion
         }
 
@@ -167,8 +167,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             string repository = "library/hello-world";
 
-            // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential());
+            // Create a new ContainerRegistryContentClient
+            ContainerRegistryContentClient client = new ContainerRegistryContentClient(endpoint, repository, new DefaultAzureCredential());
 
 #region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
 
@@ -193,7 +193,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Finally, upload the manifest file
             BinaryData content = BinaryData.FromObjectAsJson(manifestList);
-            await client.UploadManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
+            await client.SetManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
 
 #endregion
         }
@@ -213,8 +213,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "custom-manifest");
             Directory.CreateDirectory(path);
 
-            // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential());
+            // Create a new ContainerRegistryContentClient
+            ContainerRegistryContentClient client = new(endpoint, repository, new DefaultAzureCredential());
 
 #region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
 
@@ -223,7 +223,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 "application/vnd.docker.distribution.manifest.list.v2+json",
                 "application/vnd.oci.image.index.v1+json" };
 
-            DownloadManifestResult result = await client.DownloadManifestAsync("sample", mediaTypes);
+            GetManifestResult result = await client.GetManifestAsync("sample", mediaTypes);
 
             if (result.MediaType == "application/vnd.docker.distribution.manifest.list.v2+json")
             {
