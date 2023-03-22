@@ -137,13 +137,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                                 UpdateCheckpointContext(triggerEvents, context);
                                 await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
                                 eventToCheckpoint = triggerEvents.Last();
-                                if (_cachedEventsBackgroundTaskCts != null)
-                                {
-                                    // If there is a background timer task, cancel it and dispose of the cancellation token.
-                                    _cachedEventsBackgroundTaskCts.Cancel();
-                                    _cachedEventsBackgroundTaskCts.Dispose();
-                                    _cachedEventsBackgroundTaskCts = null;
-                                }
+
+                                // If there is a background timer task, cancel it and dispose of the cancellation token.
+                                _cachedEventsBackgroundTaskCts?.Cancel();
+                                _cachedEventsBackgroundTaskCts?.Dispose();
+                                _cachedEventsBackgroundTaskCts = null;
                             }
 
                             if (_cachedEventsBackgroundTaskCts == null && CachedEventsManager.HasCachedEvents)

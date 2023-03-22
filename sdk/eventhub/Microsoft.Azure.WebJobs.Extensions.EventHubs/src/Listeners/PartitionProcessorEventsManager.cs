@@ -38,7 +38,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         public EventData[] GetBatchofEventsWithCached(EventData[] events = null, bool allowPartialBatch= false)
         {
             EventData[] eventsToReturn;
-            var totalEvents = CachedEvents.Count + events.Length;
+            var inputEvents = events?.Length ?? 0;
+            var totalEvents = CachedEvents.Count + inputEvents;
 
             foreach (var eventData in events)
             {
