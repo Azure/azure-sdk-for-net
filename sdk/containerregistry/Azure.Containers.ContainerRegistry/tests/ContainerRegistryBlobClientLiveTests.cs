@@ -344,7 +344,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(data.ToMemory().Length, uploadResult.SizeInBytes);
 
             // Assert
-            var downloadResult = await client.DownloadBlobAsync(digest);
+            var downloadResult = await client.DownloadBlobContentAsync(digest);
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             Assert.AreEqual(data.ToMemory().Length, downloadResult.Value.Content.ToMemory().Length);
 
@@ -370,13 +370,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 digest = BlobHelper.ComputeDigest(stream);
                 UploadBlobResult uploadResult = await client.UploadBlobAsync(stream);
-                streamLength = stream.Length;
+                streamLength = uploadResult.SizeInBytes;
 
                 Assert.AreEqual(digest, uploadResult.Digest);
             }
 
             // Assert
-            var downloadResult = await client.DownloadBlobAsync(digest);
+            var downloadResult = await client.DownloadBlobContentAsync(digest);
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             Assert.AreEqual(streamLength, downloadResult.Value.Content.ToArray().Length);
 
@@ -385,14 +385,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        [Ignore(reason: "We don't currently support configurable chunk size on upload.")]
         public async Task CanUploadBlobInEqualSizeChunks()
         {
             // Arrange
             int blobSize = 1024;
-            int chunkSize = 1024 / 4; // Four equal-sized chunks
+            //int chunkSize = 1024 / 4; // Four equal-sized chunks
 
             var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId, chunkSize);
+            var client = CreateBlobClient(repositoryId /*, chunkSize*/);
 
             var data = GetConstantBuffer(blobSize, 1);
             UploadBlobResult uploadResult = default;
@@ -413,16 +414,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        [Ignore(reason: "We don't currently support configurable chunk size on upload.")]
         public async Task CanUploadBlobInUnequalChunks()
         {
             // Arrange
             int blobSize = 1024;
-            int chunkSize = 1024 / 4;    // Equal-sized chunks
+            //int chunkSize = 1024 / 4;    // Equal-sized chunks
             int remainderChunkSize = 20;
             blobSize += remainderChunkSize;
 
             var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId, chunkSize);
+            var client = CreateBlobClient(repositoryId /*, chunkSize*/);
 
             var data = GetConstantBuffer(blobSize, 2);
             UploadBlobResult uploadResult = default;
@@ -443,14 +445,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        [Ignore(reason: "We don't currently support configurable chunk size on upload.")]
         public async Task CanUploadBlobInSingleChunk()
         {
             // Arrange
             int blobSize = 512;
-            int chunkSize = 1024;
+            //int chunkSize = 1024;
 
             var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId, chunkSize);
+            var client = CreateBlobClient(repositoryId /*, chunkSize*/);
 
             var data = GetConstantBuffer(blobSize, 3);
             UploadBlobResult uploadResult = default;
@@ -475,10 +478,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             int blobSize = 1024;
-            int chunkSize = 1024 / 4; // Four equal-sized chunks
-
             var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId, chunkSize);
+            var client = CreateBlobClient(repositoryId);
 
             var data = GetConstantBuffer(blobSize, 3);
             UploadBlobResult uploadResult = default;
@@ -501,7 +502,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         #region Download Blob Tests
 
         [RecordedTest]
-        public async Task CanDownloadBlob()
+        public async Task CanDownloadBlobContent()
         {
             // Arrange
             var repositoryId = Recording.Random.NewGuid().ToString();
@@ -515,12 +516,41 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var digest = uploadResult.Digest;
 
             // Act
-            Response<DownloadBlobResult> downloadResult = await client.DownloadBlobAsync(digest);
+            Response<DownloadBlobResult> downloadResult = await client.DownloadBlobContentAsync(digest);
 
             Assert.AreEqual(digest, downloadResult.Value.Digest);
             Assert.AreEqual(stream.Length, downloadResult.Value.Content.ToArray().Length);
 
             // Clean up
+            await client.DeleteBlobAsync(digest);
+        }
+
+        [RecordedTest]
+        public async Task CanDownloadBlobStreaming()
+        {
+            // Arrange
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryBlobClient client = CreateBlobClient(repositoryId);
+
+            int blobSize = 1024;
+            byte[] data = GetConstantBuffer(blobSize, 1);
+
+            using Stream stream = new MemoryStream(data);
+            UploadBlobResult uploadResult = await client.UploadBlobAsync(stream);
+            string digest = uploadResult.Digest;
+
+            // Act
+            Response<DownloadBlobStreamingResult> downloadResult = await client.DownloadBlobStreamingAsync(digest);
+            Stream downloadedStream = downloadResult.Value.Content;
+            BinaryData content = BinaryData.FromStream(downloadedStream);
+
+            // Assert
+            Assert.AreEqual(digest, downloadResult.Value.Digest);
+            Assert.AreEqual(stream.Length, content.ToMemory().Length);
+            Assert.AreEqual(data, content.ToArray());
+
+            // Clean up
+            downloadedStream.Dispose();
             await client.DeleteBlobAsync(digest);
         }
 
@@ -551,6 +581,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        [Ignore(reason: "We don't currently support configurable chunk size on download.")]
         public async Task CanDownloadBlobToStreamInEqualSizeChunks()
         {
             // Arrange
@@ -558,7 +589,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int chunkSize = 1024 / 4; // Four equal-sized chunks
 
             var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId, chunkSize);
+            var client = CreateBlobClient(repositoryId);
 
             var data = GetConstantBuffer(blobSize, 10);
 
@@ -568,7 +599,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             using var downloadStream = new MemoryStream();
-            await client.DownloadBlobToAsync(digest, downloadStream);
+            await client.DownloadBlobToAsync(digest, downloadStream, new DownloadBlobToOptions(chunkSize));
             downloadStream.Position = 0;
 
             BinaryData downloadedData = BinaryData.FromStream(downloadStream);
@@ -583,6 +614,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        [Ignore(reason: "We don't currently support configurable chunk size on download.")]
         public async Task CanDownloadBlobToStreamInUnequalChunks()
         {
             // Arrange
@@ -592,7 +624,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             blobSize += remainderChunkSize;
 
             var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId, chunkSize);
+            var client = CreateBlobClient(repositoryId);
 
             var data = GetConstantBuffer(blobSize, 11);
 
@@ -602,7 +634,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             using var downloadStream = new MemoryStream();
-            await client.DownloadBlobToAsync(digest, downloadStream);
+            await client.DownloadBlobToAsync(digest, downloadStream, new DownloadBlobToOptions(chunkSize));
             downloadStream.Position = 0;
 
             BinaryData downloadedData = BinaryData.FromStream(downloadStream);
@@ -811,7 +843,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string configFileName = Path.Combine(path, "config.json");
             using (FileStream fs = File.Create(configFileName))
             {
-                DownloadBlobResult layerResult = await client.DownloadBlobAsync(manifest.Configuration.Digest);
+                DownloadBlobResult layerResult = await client.DownloadBlobContentAsync(manifest.Configuration.Digest);
                 await layerResult.Content.ToStream().CopyToAsync(fs);
             }
 
@@ -822,7 +854,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 using (FileStream fs = File.Create(fileName))
                 {
-                    DownloadBlobResult layerResult = await client.DownloadBlobAsync(manifest.Configuration.Digest);
+                    DownloadBlobResult layerResult = await client.DownloadBlobContentAsync(manifest.Configuration.Digest);
                     await layerResult.Content.ToStream().CopyToAsync(fs);
                 }
             }
