@@ -145,12 +145,11 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task CreateDeleteBackup()
         {
             Console.WriteLine($"{DateTime.Now} Test CreateDeleteBackup");
-
-            //Update volume to enable backups
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, true);
+            //Update volume to enable backups, this one tests vaultid for backwards compat (null, false, true
+            NetAppVolumeBackupConfiguration backupConfiguration = new() { IsPolicyEnforced = true };
             NetAppVolumePatchDataProtection dataProtectionProperties = new()
             {
-                Backup = backupPolicyProperties
+                Backup = backupConfiguration
             };
             NetAppVolumePatch volumePatch = new(_defaultLocation)
             {
@@ -166,8 +165,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
-            Assert.AreEqual(backupPolicyProperties.VaultId, backupVolumeResource.Data.DataProtection.Backup.VaultId);
-            Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
+            Assert.AreEqual(backupConfiguration.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
             var backupName = Recording.GenerateAssetName("backup-");
@@ -255,6 +253,40 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(await accountBackupCollection.ExistsAsync(backupName));
             exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await accountBackupCollection.GetAsync(backupName); });
             Assert.AreEqual(404, exception.Status);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateVolumWithBackupConfigWithVaultIdShouldWorkUsing2022_05_01()
+        {
+            List<NetAppVault> _vaults;
+            NetAppVault _vault;
+            _vaults = await _netAppAccount.GetVaultsAsync().ToEnumerableAsync();
+            _vault = _vaults.FirstOrDefault();
+            _vaults.Should().HaveCount(1);
+            Assert.IsNotNull(_vault);
+
+            NetAppVolumeBackupConfiguration backupConfiguration = new() { IsPolicyEnforced = true, VaultId = _vault.Id };
+            NetAppVolumePatchDataProtection dataProtectionProperties = new()
+            {
+                Backup = backupConfiguration
+            };
+            NetAppVolumePatch volumePatch = new(_defaultLocation)
+            {
+                DataProtection = dataProtectionProperties
+            };
+            NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(5000);
+            }
+            //Validate volume is backup enabled
+            NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
+            Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
+            Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
+            Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
+            //Assert.AreEqual(backupConfiguration.VaultId, backupVolumeResource.Data.DataProtection.Backup.VaultId);
+            Assert.AreEqual(backupConfiguration.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
         }
 
         [Test]

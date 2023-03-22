@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         [SetUp]
         public async Task SetUp()
         {
+            //_pool1Name = Recording.GenerateAssetName("pool1");
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync(_accountNamePrefix, _resourceGroup, DefaultLocation);
             NetAppAccountCollection netAppAccountCollection = _resourceGroup.GetNetAppAccounts();
