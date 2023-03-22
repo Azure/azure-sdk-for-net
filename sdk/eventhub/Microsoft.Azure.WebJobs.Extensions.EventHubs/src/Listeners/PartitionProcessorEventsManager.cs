@@ -41,9 +41,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             var inputEvents = events?.Length ?? 0;
             var totalEvents = CachedEvents.Count + inputEvents;
 
-            foreach (var eventData in events)
+            if (events != null)
             {
-                CachedEvents.Enqueue(eventData);
+                foreach (var eventData in events)
+                {
+                    CachedEvents.Enqueue(eventData);
+                }
             }
 
             if (totalEvents < _minBatchSize && !allowPartialBatch)
