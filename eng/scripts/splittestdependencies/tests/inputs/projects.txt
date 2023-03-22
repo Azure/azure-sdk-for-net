@@ -161,7 +161,6 @@ $(RepoRoot)sdk\tables\Microsoft.Azure.WebJobs.Extensions.Tables\tests\Microsoft.
 $(RepoRoot)sdk\template\Azure.Template\tests\Azure.Template.Tests.csproj
 $(RepoRoot)sdk\textanalytics\Azure.AI.TextAnalytics\tests\Azure.AI.TextAnalytics.Tests.csproj
 $(RepoRoot)sdk\timeseriesinsights\Azure.IoT.TimeSeriesInsights\tests\Azure.IoT.TimeSeriesInsights.Tests.csproj
-$(RepoRoot)sdk\translation\Azure.AI.Translation.Text\tests\Azure.AI.Translation.Text.Tests.csproj
 $(RepoRoot)sdk\translation\Azure.AI.Translation.Document\tests\Azure.AI.Translation.Document.Tests.csproj
 $(RepoRoot)sdk\videoanalyzer\Azure.Media.VideoAnalyzer.Edge\tests\Azure.Media.VideoAnalyzer.Edge.Tests.csproj
 $(RepoRoot)sdk\webpubsub\Azure.Messaging.WebPubSub\tests\Azure.Messaging.WebPubSub.Tests.csproj
