@@ -100,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     var storageDirectory = StorageHelper.GetStorageDirectory(options.StorageDirectory, connectionVars.InstrumentationKey);
 
-                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
+                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", $"Data for ikey '{connectionVars.InstrumentationKey}' will be stored at: {storageDirectory}");
 
                     return new FileBlobProvider(storageDirectory);
                 }
