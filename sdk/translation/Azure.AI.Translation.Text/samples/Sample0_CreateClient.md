@@ -12,7 +12,7 @@ update the API key without creating a new client.
 
 With the value of the `AzureKeyCredential`, you can create the [TextTranslationClient][translator_client_class]:
 
-```C# Snippet:CreateTextTranslationClient
+```C#
 AzureKeyCredential credential = new("<apiKey>");
 TextTranslationClient client = new(credential);
 ```
@@ -23,7 +23,7 @@ Once you have the value for the API key and Region, create an `AzureKeyCredentia
 
 With the value of the `AzureKeyCredential` and a `Region`, you can create the [TextTranslationClient][translator_client_class]:
 
-```C# Snippet:CreateTextTranslationClient
+```C#
 AzureKeyCredential credential = new("<apiKey>");
 TextTranslationClient client = new(credential, "<region>");
 ```
@@ -33,7 +33,7 @@ When Translator service is configured to use [Virtual Network (VNET)][translator
 
 Once you have your resource configured and you have your custom endpoint value and your API key, you can create the [TextTranslationClient][translator_client_class]:
 
-```C# Snippet:CreateTextTranslationClientCustom
+```C#
 Uri endpoint = new("<endpoint>");
 AzureKeyCredential credential = new("<apiKey>");
 TextTranslationClient client = new(credential, endpoint);
@@ -45,7 +45,7 @@ Instead of API key and Region authentication you can use JWT token. For informat
 
 Once you have the value for the token, create an class that extends `Azure.Core.TokenCredentials`. With the value of the `AzureKeyCredential` and your service returning tokens, you can create the [TextTranslationClient][translator_client_class]:
 
-```C# Snippet:CreateTextTranslationClientToken
+```C#
 TokenCredential credential = new("<token>");
 TextTranslationClient client = new(credential);
 ```

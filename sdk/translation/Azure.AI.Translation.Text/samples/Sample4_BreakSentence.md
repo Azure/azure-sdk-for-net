@@ -4,7 +4,7 @@
 
 To create a new `TextTranslationClient`, you will need the service endpoint and credentials of your Translator resource. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
 
-```C# Snippet:CreateTextTranslationClient
+```C#
 AzureKeyCredential credential = new("<apiKey>");
 TextTranslationClient client = new(credential, "<region>");
 ```
@@ -14,7 +14,7 @@ The values of the `apiKey` and `region` variables can be retrieved from environm
 ### Break Sentence with language and script parameters
 When the input language is known, you can provide those to the service call.
 
-```C# Snippet:Sample4_BreakSentence
+```C#
 try
 {
     string sourceLanguage = "zh-Hans";
@@ -43,7 +43,7 @@ catch (RequestFailedException exception)
 ### Break Sentence with auto-detection
 You can ommit source languge of the input text. In this case, API will try to auto-detect the language.
 
-```C# Snippet:Sample4_BreakSentenceWithAutoDetection
+```C#
 try
 {
     IEnumerable<string> inputTextElements = new[]

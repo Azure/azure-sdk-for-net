@@ -4,7 +4,7 @@
 
 To create a new `TextTranslationClient`, you will need the service endpoint and credentials of your Translator resource. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
 
-```C# Snippet:CreateTextTranslationClient
+```C#
 AzureKeyCredential credential = new("<apiKey>");
 TextTranslationClient client = new(credential, "<region>");
 ```
@@ -15,7 +15,7 @@ The values of the `apiKey` and `region` variables can be retrieved from environm
 
 Returns grammatical structure and context examples for the source term and target term pair.
 
-```C# Snippet:Sample6_DictionaryExamples
+```C#
 try
 {
     string sourceLanguage = "en";

@@ -6,7 +6,7 @@ This sample demonstrates how to get languages that are supported by other operat
 
 To create a new `TextTranslationClient`, you will need the service endpoint and credentials of your Translator resource. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
 
-```C# Snippet:CreateTextTranslationClient
+```C#
 AzureKeyCredential credential = new("<apiKey>");
 TextTranslationClient client = new(credential, "<region>");
 ```
@@ -16,7 +16,7 @@ The values of the `apiKey` and `region` variables can be retrieved from environm
 ## Get Supported Languages for ALL other operations
 This will return language metadata from all supported scopes.
 
-```C# Snippet:Sample1_GetLanguages
+```C#
 try
 {
     Response<GetLanguagesResult> response = await client.GetLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
@@ -54,7 +54,7 @@ catch (RequestFailedException exception)
 ### Get Supported Languages for a given scope
 You can limit the scope of the response of the languages API by providing the optional paramter `scope`. A comma-separated list of names defining the group of languages to return. Allowed group names are: `translation`, `transliteration` and `dictionary`. If no scope is given, then all groups are returned, which is equivalent to passing `translation,transliteration,dictionary`.
 
-```C# Snippet:Sample1_GetLanguagesScope
+```C#
 try
 {
     string scope = "translation";
@@ -94,7 +94,7 @@ catch (RequestFailedException exception)
 You can select the language to use for user interface strings. Some of the fields in the response are names of languages or names of regions. Use this parameter to define the language in which these names are returned. The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr` to request names in French or use the value `zh-Hant` to request names in Chinese Traditional.
 Names are provided in the English language when a target language is not specified or when localization is not available.
 
-```C# Snippet:Sample1_GetLanguagesAcceptLanguage
+```C#
 try
 {
     string acceptLanguage = "es";

@@ -61,7 +61,7 @@ update the API key without creating a new client.
 
 With the value of the endpoint, `AzureKeyCredential` and a `Region`, you can create the [TextTranslationClient][translator_client_class]:
 
-```C# Snippet:CreateTextTranslationClient
+```C#
 AzureKeyCredential credential = new("<apiKey>");
 TextTranslationClient client = new(credential, "<region>");
 ```
@@ -104,7 +104,7 @@ The following section provides several code snippets using the `client` [created
 
 Gets the set of languages currently supported by other operations of the Translator.
 
-```C# Snippet:Sample1_GetLanguages
+```C#
 try
 {
     Response<GetLanguagesResult> response = await client.GetLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
@@ -127,7 +127,7 @@ Please refer to the service documentation for a conceptual discussion of [langua
 
 Renders single source-language text to multiple target-language texts with a single request.
 
-```C# Snippet:Sample2_Translate
+```C#
 try
 {
     string targetLanguage = "cs";
@@ -155,7 +155,7 @@ Please refer to the service documentation for a conceptual discussion of [transl
 
 Converts characters or letters of a source language to the corresponding characters or letters of a target language.
 
-```C# Snippet:Sample3_Transliterate
+```C#
 try
 {
     string language = "zh-Hans";
@@ -185,7 +185,7 @@ Please refer to the service documentation for a conceptual discussion of [transl
 
 Identifies the positioning of sentence boundaries in a piece of text.
 
-```C# Snippet:Sample4_BreakSentence
+```C#
 try
 {
     string inputText = "How are you? I am fine. What did you do today?";
@@ -213,7 +213,7 @@ Please refer to the service documentation for a conceptual discussion of [break 
 
 Returns equivalent words for the source term in the target language.
 
-```C# Snippet:Sample5_DictionaryLookup
+```C#
 try
 {
     string sourceLanguage = "en";
@@ -243,7 +243,7 @@ Please refer to the service documentation for a conceptual discussion of [dictio
 
 Returns grammatical structure and context examples for the source term and target term pair.
 
-```C# Snippet:Sample6_DictionaryExamples
+```C#
 try
 {
     string sourceLanguage = "en";
@@ -279,7 +279,7 @@ When you interact with the Translator Service using the TextTranslator client li
 
 For example, if you submit a translation request without a target translate language, a `400` error is returned, indicating "Bad Request".
 
-```C# Snippet:BadRequest
+```C#
 try
 {
     var translation = client.TranslateAsync(Array.Empty<string>(), new[] { new InputText { Text = "This is a Test" } }).ConfigureAwait(false);
