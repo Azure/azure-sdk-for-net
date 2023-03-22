@@ -12,15 +12,17 @@ namespace Azure.DigitalTwins.Core.Samples
         /// </summary>
         /// <param name="options">reference to options passed in by user</param>
         /// <returns>true/false representing status of upload</returns>
-        public static async Task<bool> UploadInputBlobAsync(Options options)
+        public static async Task<bool> UploadInputBlobToStorageContainerAsync(Options options)
         {
+            string filename = "sampleInputBlob.ndjson";
             try
             {
-                BlobServiceClient serviceClient = new BlobServiceClient(new Uri(options.StorageAccountEndpoint), new DefaultAzureCredential());
-                BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(options.StorageAccountContainerName);
-                BlobClient blobClient = containerClient.GetBlobClient("sample-blob");
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(new Uri(options.StorageAccountContainerEndpoint));
+                BlobServiceClient serviceClient = new BlobServiceClient(blobUriBuilder.ToUri(), new DefaultAzureCredential());
+                BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(blobUriBuilder.BlobContainerName);
+                BlobClient blobClient = containerClient.GetBlobClient(filename);
 
-                string localFilePath = "Blobs/sampleInputBlob.ndjson";
+                string localFilePath = "./" + filename;
 
                 // upload the input blob file. overwrite if it already exists
                 await blobClient.UploadAsync(localFilePath, overwrite: true);
