@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 
 using Xunit;
@@ -9,14 +10,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class StorageHelperTests
     {
+        private static char ds = Path.DirectorySeparatorChar;
+
         [Fact]
         public void VerifyDirectory()
         {
             var directoryPath = StorageHelper.GetStorageDirectory(
-                configuredStorageDirectory: "C:\\Temp",
+                configuredStorageDirectory: $"C:{ds}Temp",
                 instrumentationKey: "testikey");
 
-            Assert.StartsWith("C:\\Temp\\testikey\\", directoryPath);
+            Assert.StartsWith($"C:{ds}Temp{ds}testikey", directoryPath);
         }
 
         [Fact]
@@ -27,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 instrumentationKey: "testikey");
 
             // Note: Default root directory will be variable depending on OS and permissions.
-            Assert.Contains("\\Microsoft\\AzureMonitor\\testikey\\", directoryPath);
+            Assert.Contains($"{ds}Microsoft{ds}AzureMonitor{ds}testikey", directoryPath);
         }
     }
 }
