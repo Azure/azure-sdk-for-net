@@ -179,6 +179,7 @@ namespace Azure.Data.AppConfiguration
         public Azure.Data.AppConfiguration.SettingFields Fields { get { throw null; } set { } }
         public string KeyFilter { get { throw null; } set { } }
         public string LabelFilter { get { throw null; } set { } }
+        public string SnapshotName { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
