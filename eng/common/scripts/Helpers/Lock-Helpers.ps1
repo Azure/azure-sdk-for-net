@@ -1,5 +1,4 @@
 function FileLockEnter([string]$FilePath) {
-    $FilePath = Resolve-Path $FilePath
     while (Test-Path -Path $FilePath) {
         Start-Sleep -Seconds 5
     }
@@ -14,6 +13,5 @@ function FileLockEnter([string]$FilePath) {
 }
 
 function FileLockExit([string]$FilePath) {
-    $FilePath = Resolve-Path $FilePath
     Remove-Item $FilePath -Force 
 }
