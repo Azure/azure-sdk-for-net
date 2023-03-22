@@ -387,7 +387,12 @@ MaxDeliveryCount = 10,
                         },
                     },
                     Features = IotHubCapability.None,
-                    EnableDataResidency = false,
+                    EnableDataResidency = true,
+                    RootCertificate = new RootCertificateProperties()
+                    {
+                        EnableRootCertificateV2 = true,
+                    },
+                    IPVersion = IPVersion.IPv4IPv6,
                 },
                 Tags =
 {

@@ -522,7 +522,11 @@ namespace Azure.ResourceManager.IotHub.Samples
             IotHubDescriptionResource iotHubDescription = client.GetIotHubDescriptionResource(iotHubDescriptionResourceId);
 
             // invoke the operation
-            ExportDevicesContent content = new ExportDevicesContent(new Uri("testBlob"), true);
+            ExportDevicesContent content = new ExportDevicesContent(new Uri("testBlob"), true)
+            {
+                AuthenticationType = IotHubAuthenticationType.IdentityBased,
+                UserAssignedIdentity = new ResourceIdentifier("/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1"),
+            };
             IotHubJobInfo result = await iotHubDescription.ExportDevicesAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
