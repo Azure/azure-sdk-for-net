@@ -146,13 +146,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
 
             // Request stream with content that matches digest.
-            DownloadBlobStreamingResult result = await client.DownloadBlobStreamingAsync(digest);
+            DownloadRegistryBlobStreamingResult result = await client.DownloadBlobStreamingAsync(digest);
             Assert.AreEqual(expected.ToArray(), BinaryData.FromStream(result.Content).ToArray());
 
             // Request stream with different content.
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                DownloadBlobStreamingResult result = await client.DownloadBlobStreamingAsync(digest);
+                DownloadRegistryBlobStreamingResult result = await client.DownloadBlobStreamingAsync(digest);
                 BinaryData content = BinaryData.FromStream(result.Content);
             });
         }

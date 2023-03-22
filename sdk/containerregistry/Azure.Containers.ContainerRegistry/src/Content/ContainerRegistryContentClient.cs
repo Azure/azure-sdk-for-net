@@ -750,7 +750,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<DownloadBlobStreamingResult> DownloadBlobStreaming(string digest, CancellationToken cancellationToken = default)
+        public virtual Response<DownloadRegistryBlobStreamingResult> DownloadBlobStreaming(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
@@ -772,7 +772,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<DownloadBlobStreamingResult>> DownloadBlobStreamingAsync(string digest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DownloadRegistryBlobStreamingResult>> DownloadBlobStreamingAsync(string digest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
@@ -789,7 +789,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private async Task<Response<DownloadBlobStreamingResult>> DownloadBlobStreamingInternalAsync(string digest, bool async, CancellationToken cancellationToken)
+        private async Task<Response<DownloadRegistryBlobStreamingResult>> DownloadBlobStreamingInternalAsync(string digest, bool async, CancellationToken cancellationToken)
         {
             ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = async ?
                 await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
@@ -807,7 +807,7 @@ namespace Azure.Containers.ContainerRegistry
 
             ValidatingStream stream = new(retriableStream, (int)blobResult.Headers.ContentLength.Value, digest);
 
-            return Response.FromValue(new DownloadBlobStreamingResult(digest, stream), blobResult.GetRawResponse());
+            return Response.FromValue(new DownloadRegistryBlobStreamingResult(digest, stream), blobResult.GetRawResponse());
         }
 
         /// <summary>

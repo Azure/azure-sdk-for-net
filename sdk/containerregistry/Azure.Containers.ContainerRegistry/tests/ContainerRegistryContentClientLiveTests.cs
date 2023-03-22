@@ -540,7 +540,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string digest = uploadResult.Digest;
 
             // Act
-            Response<DownloadBlobStreamingResult> downloadResult = await client.DownloadBlobStreamingAsync(digest);
+            Response<DownloadRegistryBlobStreamingResult> downloadResult = await client.DownloadBlobStreamingAsync(digest);
             Stream downloadedStream = downloadResult.Value.Content;
             BinaryData content = BinaryData.FromStream(downloadedStream);
 
