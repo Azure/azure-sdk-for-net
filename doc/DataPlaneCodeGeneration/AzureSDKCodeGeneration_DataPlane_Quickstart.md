@@ -31,4 +31,4 @@ dotnet build /t:GenerateCode
 
 ## Add package ship requirements
 
-Before library package can be released, you will need to add tests and samples. You will also need to update the changelogs and README's as necessary. Please refer to [Azure SDK Package Ship Requirements](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Azure_SDK_Package_Ship_Requirements.md) to add those requirements.
+Before a library package can be released, you will need to add tests and samples. You will also need to update the CHANGELOG.md and README.md as necessary. Please refer to [Azure SDK Package Ship Requirements](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Azure_SDK_Package_Ship_Requirements.md) for those requirements.
