@@ -16,6 +16,7 @@
     <!--using the preview version of Azure.Identity to have access to KnownAuthorityHosts static class.-->
     <PackageReference Include="Azure.Identity" Version="1.2.1" />
     <PackageReference Include="CommandLineParser" Version="2.7.82" />
+    <PackageReference Include="Azure.Storage.Blobs" />
 
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
   </ItemGroup>
@@ -29,5 +30,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Azure.DigitalTwins.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Blobs\" />
   </ItemGroup>
 </Project>
