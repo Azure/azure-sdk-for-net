@@ -12,10 +12,10 @@
 
 ## Set up TypeSpec project
 
-Make sure you have typespec project in API specification repo, e.g. [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) repo or you can follow [Typespec Getting Started](https://github.com/microsoft/typespec/#using-node--npm) to initialize your typespec project, and refer to [Typespec Structure Guidelines](https://github.com/Azure/azure-rest-api-specs/blob/main/documentation/cadl-structure-guidelines.md) to configure your typespec project.
+Make sure you have typespec project in API specification repo, e.g. [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) repo or you can follow [TypeSpec Getting Started](https://github.com/microsoft/typespec/#using-node--npm) to initialize your typespec project, and refer to [TypeSpec Structure Guidelines](https://github.com/Azure/azure-rest-api-specs/blob/main/documentation/cadl-structure-guidelines.md) to configure your typespec project.
 
 ## Set up SDK Project Folder
 
-We will generate the SDK library under SDK project folder `sdk\<service name>\<package name>` of `azure-sdk-for-net` repo. e.g. /home/azure-sdk-for-net/sdk/anomalydetector/Azure.AI.AnomalyDetector).
+We will generate the SDK library under SDK project folder `sdk\<service name>\<package name>` of `azure-sdk-for-net` repo. e.g. /home/azure-sdk-for-net/sdk/anomalydetector/Azure.AI.AnomalyDetector.
 
 Make sure that the SDK project folder exists in .NET SDK repo, e.g. [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. If the SDK project folder does not exist, you can refer to [SDK project directory Set up](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKPackage_Setup.md) to create one.
