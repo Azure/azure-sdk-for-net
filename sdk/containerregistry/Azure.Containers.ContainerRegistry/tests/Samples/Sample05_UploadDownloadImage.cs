@@ -153,8 +153,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #endregion
 
             #region Snippet:ContainerRegistry_Samples_DeleteManifest
-            GetManifestResult GetManifestResult = await client.GetManifestAsync(tag);
-            await client.DeleteManifestAsync(GetManifestResult.Digest);
+            GetManifestResult manifestResult = await client.GetManifestAsync(tag);
+            await client.DeleteManifestAsync(manifestResult.Digest);
             #endregion
         }
 

@@ -29,7 +29,7 @@ namespace Azure.Containers.ContainerRegistry
         public ManifestMediaType MediaType { get; }
 
         /// <summary>
-        /// The serialized manifest.
+        /// The manifest JSON.
         /// </summary>
         public BinaryData Manifest { get; }
     }

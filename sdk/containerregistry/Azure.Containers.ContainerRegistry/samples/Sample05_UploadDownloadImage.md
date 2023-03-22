@@ -161,8 +161,8 @@ else if (result.MediaType == "application/vnd.oci.image.index.v1+json")
 A manifest can be deleted as shown below.  It is also possible to delete a full image using the `ContainerRegistryClient` as shown in [Sample 2: Delete Image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample02b_DeleteImagesAsync.md).
 
 ```C# Snippet:ContainerRegistry_Samples_DeleteManifest
-GetManifestResult getManifestResult = await client.GetManifestAsync(tag);
-await client.DeleteManifestAsync(getManifestResult.Digest);
+GetManifestResult manifestResult = await client.GetManifestAsync(tag);
+await client.DeleteManifestAsync(manifestResult.Digest);
 ```
 
 ## Delete a blob
