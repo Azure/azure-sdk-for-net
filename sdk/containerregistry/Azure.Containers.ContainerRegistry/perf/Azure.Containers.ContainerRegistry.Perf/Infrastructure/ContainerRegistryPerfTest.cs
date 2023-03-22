@@ -17,6 +17,11 @@ namespace Azure.Containers.ContainerRegistry.Perf
 {
     public abstract class ContainerRegistryPerfTest : PerfTest<PerfOptions>
     {
+        public const string RepositoryName = $"library/node";
+        public const string TagName = "test-perf";
+
+        public const int BlobSize = 10 * 1024;
+
         public ContainerRegistryPerfTest(PerfOptions options) : base(options)
         {
         }

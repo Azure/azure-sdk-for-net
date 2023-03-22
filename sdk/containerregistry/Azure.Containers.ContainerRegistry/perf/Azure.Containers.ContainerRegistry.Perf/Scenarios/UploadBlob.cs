@@ -8,18 +8,14 @@ using Azure.Test.Perf;
 
 namespace Azure.Containers.ContainerRegistry.Perf
 {
-    public sealed class ListArtifacts : ContainerRegistryPerfTest
+    public sealed class UploadBlob : ContainerRegistryPerfTest
     {
-        private readonly ContainerRegistryClient _client;
+        private readonly ContainerRegistryContentClient _client;
         private ContainerRepository _repository;
 
-        public ListArtifacts(PerfOptions options) : base(options)
+        public UploadBlob(PerfOptions options) : base(options)
         {
-            _client = new ContainerRegistryClient(new Uri(PerfTestEnvironment.Instance.Endpoint), PerfTestEnvironment.Instance.Credential,
-                new ContainerRegistryClientOptions()
-                {
-                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-                });
+            _client = new ContainerRegistryClient(new Uri(PerfTestEnvironment.Instance.Endpoint), PerfTestEnvironment.Instance.Credential);
         }
 
         public override async Task GlobalSetupAsync()
@@ -27,29 +23,26 @@ namespace Azure.Containers.ContainerRegistry.Perf
             // Global setup code that runs once at the beginning of test execution.
             await base.GlobalSetupAsync();
 
-            await ImportImageAsync(PerfTestEnvironment.Instance.Registry, RepositoryName, TagName);
+            await ImportImageAsync(PerfTestEnvironment.Instance.Registry, RepositoryName, "latest");
         }
 
         public override async Task SetupAsync()
         {
             await base.SetupAsync();
 
-            _repository = _client.GetRepository(RepositoryName);
+            _repository = _client.GetRepository($"library/node");
         }
 
         public override void Run(CancellationToken cancellationToken)
         {
-            foreach (var manifest in _repository.GetAllManifestProperties())
-            {
-                 _client.GetArtifact(RepositoryName, manifest.Digest);
-            }
+            _clie
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
             await foreach (var manifest in _repository.GetAllManifestPropertiesAsync())
             {
-                _client.GetArtifact(RepositoryName, manifest.Digest);
+                _client.GetArtifact($"library/node", manifest.Digest);
             }
         }
     }
