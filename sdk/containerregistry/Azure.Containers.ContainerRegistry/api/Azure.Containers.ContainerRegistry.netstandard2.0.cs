@@ -131,10 +131,6 @@ namespace Azure.Containers.ContainerRegistry
         public static bool operator !=(Azure.Containers.ContainerRegistry.ContainerRegistryAudience left, Azure.Containers.ContainerRegistry.ContainerRegistryAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public static partial class ContainerRegistryBinaryDataExtensions
-    {
-        public static Azure.Containers.ContainerRegistry.OciImageManifest AsOciImageManifest(this System.BinaryData manifest) { throw null; }
-    }
     public partial class ContainerRegistryClient
     {
         protected ContainerRegistryClient() { }

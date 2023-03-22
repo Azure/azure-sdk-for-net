@@ -84,7 +84,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Download the manifest to obtain the list of files in the image
             GetManifestResult result = await client.GetManifestAsync(tag);
-            OciImageManifest manifest = result.Manifest.AsOciImageManifest();
+            OciImageManifest manifest = result.Manifest.ToObjectFromJson<OciImageManifest>();
 
             string manifestFile = Path.Combine(path, "manifest.json");
             using (FileStream stream = File.Create(manifestFile))
@@ -144,7 +144,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             #region Snippet:ContainerRegistry_Samples_DeleteBlob
             GetManifestResult result = await client.GetManifestAsync(tag);
-            OciImageManifest manifest = result.Manifest.AsOciImageManifest();
+            OciImageManifest manifest = result.Manifest.ToObjectFromJson<OciImageManifest>();
 
             foreach (OciDescriptor layerInfo in manifest.Layers)
             {

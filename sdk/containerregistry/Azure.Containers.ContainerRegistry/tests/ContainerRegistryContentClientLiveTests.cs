@@ -45,7 +45,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             var downloadResultValue = (await client.GetManifestAsync(digest)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest.AsOciImageManifest());
+            ValidateManifest(downloadResultValue.Manifest.ToObjectFromJson<OciImageManifest>());
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -88,7 +88,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             var getResultValue = (await client.GetManifestAsync(digest)).Value;
             Assert.AreEqual(digest, getResultValue.Digest);
-            ValidateManifest(getResultValue.Manifest.AsOciImageManifest());
+            ValidateManifest(getResultValue.Manifest.ToObjectFromJson<OciImageManifest>());
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -131,7 +131,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             var getResultValue = (await client.GetManifestAsync(digest)).Value;
             Assert.AreEqual(digest, getResultValue.Digest);
-            ValidateManifest(getResultValue.Manifest.AsOciImageManifest());
+            ValidateManifest(getResultValue.Manifest.ToObjectFromJson<OciImageManifest>());
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -156,7 +156,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             var downloadResultValue = (await client.GetManifestAsync(digest)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest(downloadResultValue.Manifest.AsOciImageManifest());
+            ValidateManifest(downloadResultValue.Manifest.ToObjectFromJson<OciImageManifest>());
 
             var artifact = registryClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -208,7 +208,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             var getResultValue = (await client.GetManifestAsync(digest)).Value;
             Assert.AreEqual(digest, getResultValue.Digest);
-            ValidateManifest(getResultValue.Manifest.AsOciImageManifest());
+            ValidateManifest(getResultValue.Manifest.ToObjectFromJson<OciImageManifest>());
 
             var artifact = registryClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -219,7 +219,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             var getResultValue2 = (await client.GetManifestAsync(tag)).Value;
             Assert.AreEqual(digest, getResultValue2.Digest);
-            ValidateManifest(getResultValue2.Manifest.AsOciImageManifest());
+            ValidateManifest(getResultValue2.Manifest.ToObjectFromJson<OciImageManifest>());
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -836,7 +836,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 await manifestResult.Value.Manifest.ToStream().CopyToAsync(fs);
             }
-            OciImageManifest manifest = manifestResult.Value.Manifest.AsOciImageManifest();
+            OciImageManifest manifest = manifestResult.Value.Manifest.ToObjectFromJson<OciImageManifest>();
 
             // Download Config
             string configFileName = Path.Combine(path, "config.json");
