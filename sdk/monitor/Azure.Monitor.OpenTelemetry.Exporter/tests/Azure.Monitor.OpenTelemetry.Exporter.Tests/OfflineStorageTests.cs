@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Transmit
             var mockResponse = new MockResponse(200).SetContent("Ok");
-            using var transmitter = GetTransmitter(new[] { mockResponse });
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
@@ -71,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
-            using var transmitter = GetTransmitter(new[] { mockResponse });
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
@@ -91,7 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var mockResponse = new MockResponse(429)
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("Too Many Requests");
-            using var transmitter = GetTransmitter(new[] { mockResponse });
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
@@ -117,7 +117,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var mockResponse = new MockResponse(206)
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("{\"itemsReceived\": 3,\"itemsAccepted\": 1,\"errors\":[{\"index\": 0,\"statusCode\": 429,\"message\": \"Throttle\"},{\"index\": 1,\"statusCode\": 429,\"message\": \"Throttle\"}]}");
-            using var transmitter = GetTransmitter(new[] { mockResponse });
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
@@ -150,7 +150,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var mockFileProvider = new MockFileProvider();
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
-            var transmitter = GetTransmitter(new[] { mockResponse });
+            var transmitter = GetTransmitter(mockResponse);
             transmitter._fileBlobProvider = mockFileProvider;
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
@@ -181,7 +181,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Transmit
             var mockResponseError = new MockResponse(500).SetContent("Internal Server Error");
             var mockResponseSuccess = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
-            var transmitter = GetTransmitter(new[] { mockResponseError, mockResponseSuccess });
+            var transmitter = GetTransmitter(mockResponseError, mockResponseSuccess);
 
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
@@ -210,7 +210,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Transmit
             var mockResponseError = new MockResponse(500).SetContent("Internal Server Error");
             var mockResponseSuccess = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
-            var transmitter = GetTransmitter(new[] { mockResponseError, mockResponseSuccess });
+            var transmitter = GetTransmitter(mockResponseError, mockResponseSuccess);
 
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
@@ -248,7 +248,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 ;
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
-            var transmitter = GetTransmitter(new[]{ mockResponse, mockResponse});
+            var transmitter = GetTransmitter(mockResponse, mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
@@ -270,7 +270,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.Dispose();
         }
 
-        private static AzureMonitorTransmitter GetTransmitter(MockResponse[] mockResponse)
+        private static AzureMonitorTransmitter GetTransmitter(params MockResponse[] mockResponse)
         {
             MockTransport mockTransport = new MockTransport(mockResponse);
             AzureMonitorExporterOptions options = new AzureMonitorExporterOptions

@@ -159,7 +159,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         if (content != null)
                         {
                             blob.TryDelete();
-                            blobProvider?.SaveTelemetry(content);
+                            blobProvider.SaveTelemetry(content);
                         }
                         break;
                     case ResponseStatusCodes.RequestTimeout:
