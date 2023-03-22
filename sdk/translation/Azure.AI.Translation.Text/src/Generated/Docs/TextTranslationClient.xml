@@ -152,8 +152,8 @@ Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("languag
 Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("score").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("to").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("transliteration").GetProperty("script").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("transliteration").GetProperty("text").ToString());
+Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("transliteration").GetProperty("script").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("alignment").GetProperty("proj").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("sentLen").GetProperty("srcSentLen")[0].ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("sentLen").GetProperty("transSentLen")[0].ToString());
@@ -185,8 +185,8 @@ The score is between zero and one and a low score indicates a low confidence.
       to: string, # Required. A string representing the language code of the target language.
       text: string, # Required. A string giving the translated text.
       transliteration: {
-        script: string, # Required. A string specifying the target script.
-        text: string, # Required. A string giving the translated text in the target script.
+        text: string, # Required. A string which is the result of converting the input string to the output script.
+        script: string, # Required. A string specifying the script used in the output.
       }, # Optional. An object giving the translated text in the script specified by the toScript parameter.
       alignment: {
         proj: string, # Required. Maps input text to translated text. The alignment information is only provided when the request 
@@ -253,8 +253,8 @@ Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("languag
 Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("score").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("to").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
-Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("transliteration").GetProperty("script").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("transliteration").GetProperty("text").ToString());
+Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("transliteration").GetProperty("script").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("alignment").GetProperty("proj").ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("sentLen").GetProperty("srcSentLen")[0].ToString());
 Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("sentLen").GetProperty("transSentLen")[0].ToString());
@@ -286,8 +286,8 @@ The score is between zero and one and a low score indicates a low confidence.
       to: string, # Required. A string representing the language code of the target language.
       text: string, # Required. A string giving the translated text.
       transliteration: {
-        script: string, # Required. A string specifying the target script.
-        text: string, # Required. A string giving the translated text in the target script.
+        text: string, # Required. A string which is the result of converting the input string to the output script.
+        script: string, # Required. A string specifying the script used in the output.
       }, # Optional. An object giving the translated text in the script specified by the toScript parameter.
       alignment: {
         proj: string, # Required. Maps input text to translated text. The alignment information is only provided when the request 

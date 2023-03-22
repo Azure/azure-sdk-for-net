@@ -21,7 +21,7 @@ namespace Azure.AI.Translation.Text
             }
             string to = default;
             string text = default;
-            Optional<Transliteration> transliteration = default;
+            Optional<TransliteratedText> transliteration = default;
             Optional<TranslatedTextAlignment> alignment = default;
             Optional<SentenceLength> sentLen = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +43,7 @@ namespace Azure.AI.Translation.Text
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    transliteration = Transliteration.DeserializeTransliteration(property.Value);
+                    transliteration = TransliteratedText.DeserializeTransliteratedText(property.Value);
                     continue;
                 }
                 if (property.NameEquals("alignment"u8))

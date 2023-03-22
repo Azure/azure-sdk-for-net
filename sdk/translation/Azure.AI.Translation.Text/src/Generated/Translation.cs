@@ -32,7 +32,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="transliteration"> An object giving the translated text in the script specified by the toScript parameter. </param>
         /// <param name="alignment"> Alignment information. </param>
         /// <param name="sentLen"> Sentence boundaries in the input and output texts. </param>
-        internal Translation(string to, string text, Transliteration transliteration, TranslatedTextAlignment alignment, SentenceLength sentLen)
+        internal Translation(string to, string text, TransliteratedText transliteration, TranslatedTextAlignment alignment, SentenceLength sentLen)
         {
             To = to;
             Text = text;
@@ -46,7 +46,7 @@ namespace Azure.AI.Translation.Text
         /// <summary> A string giving the translated text. </summary>
         public string Text { get; }
         /// <summary> An object giving the translated text in the script specified by the toScript parameter. </summary>
-        public Transliteration Transliteration { get; }
+        public TransliteratedText Transliteration { get; }
         /// <summary> Alignment information. </summary>
         public TranslatedTextAlignment Alignment { get; }
         /// <summary> Sentence boundaries in the input and output texts. </summary>

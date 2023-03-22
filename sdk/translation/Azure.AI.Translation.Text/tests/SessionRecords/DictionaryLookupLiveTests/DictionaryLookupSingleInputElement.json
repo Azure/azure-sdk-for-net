@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-a294174126c58a4d9d32dc3635d26b25-fb020f564859fd43-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "080938345fefa8a5fbea7e70c42f7228",
+        "traceparent": "00-833a871632ea0d4d9b63064590c2e206-16b4d06a12eb9542-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
+        "x-ms-client-request-id": "dab09e17e630756a7acf01d9152e02bb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022fly\u0022}]",
@@ -23,17 +23,17 @@
         ],
         "Content-Length": "2387",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Mar 2023 19:53:29 GMT",
+        "Date": "Wed, 22 Mar 2023 21:04:54 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "3",
-        "X-RequestId": "DTLK.MW1P.99BD.0320T1953.4983542"
+        "X-RequestId": "DTLK.MW1P.99BD.0322T2104.A233CC3"
       },
       "ResponseBody": "[{\u0022normalizedSource\u0022:\u0022fly\u0022,\u0022displaySource\u0022:\u0022fly\u0022,\u0022translations\u0022:[{\u0022normalizedTarget\u0022:\u0022volar\u0022,\u0022displayTarget\u0022:\u0022volar\u0022,\u0022posTag\u0022:\u0022VERB\u0022,\u0022confidence\u0022:0.4081,\u0022prefixWord\u0022:\u0022\u0022,\u0022backTranslations\u0022:[{\u0022normalizedText\u0022:\u0022fly\u0022,\u0022displayText\u0022:\u0022fly\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:4637},{\u0022normalizedText\u0022:\u0022flying\u0022,\u0022displayText\u0022:\u0022flying\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:1365},{\u0022normalizedText\u0022:\u0022blow\u0022,\u0022displayText\u0022:\u0022blow\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:503},{\u0022normalizedText\u0022:\u0022flight\u0022,\u0022displayText\u0022:\u0022flight\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:135}]},{\u0022normalizedTarget\u0022:\u0022mosca\u0022,\u0022displayTarget\u0022:\u0022mosca\u0022,\u0022posTag\u0022:\u0022NOUN\u0022,\u0022confidence\u0022:0.2668,\u0022prefixWord\u0022:\u0022\u0022,\u0022backTranslations\u0022:[{\u0022normalizedText\u0022:\u0022fly\u0022,\u0022displayText\u0022:\u0022fly\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:1697},{\u0022normalizedText\u0022:\u0022flyweight\u0022,\u0022displayText\u0022:\u0022flyweight\u0022,\u0022numExamples\u0022:0,\u0022frequencyCount\u0022:48},{\u0022normalizedText\u0022:\u0022flies\u0022,\u0022displayText\u0022:\u0022flies\u0022,\u0022numExamples\u0022:9,\u0022frequencyCount\u0022:34}]},{\u0022normalizedTarget\u0022:\u0022operan\u0022,\u0022displayTarget\u0022:\u0022operan\u0022,\u0022posTag\u0022:\u0022VERB\u0022,\u0022confidence\u0022:0.1144,\u0022prefixWord\u0022:\u0022\u0022,\u0022backTranslations\u0022:[{\u0022normalizedText\u0022:\u0022operate\u0022,\u0022displayText\u0022:\u0022operate\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:1344},{\u0022normalizedText\u0022:\u0022fly\u0022,\u0022displayText\u0022:\u0022fly\u0022,\u0022numExamples\u0022:1,\u0022frequencyCount\u0022:422}]},{\u0022normalizedTarget\u0022:\u0022pilotar\u0022,\u0022displayTarget\u0022:\u0022pilotar\u0022,\u0022posTag\u0022:\u0022VERB\u0022,\u0022confidence\u0022:0.095,\u0022prefixWord\u0022:\u0022\u0022,\u0022backTranslations\u0022:[{\u0022normalizedText\u0022:\u0022fly\u0022,\u0022displayText\u0022:\u0022fly\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:104},{\u0022normalizedText\u0022:\u0022pilot\u0022,\u0022displayText\u0022:\u0022pilot\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:61}]},{\u0022normalizedTarget\u0022:\u0022moscas\u0022,\u0022displayTarget\u0022:\u0022moscas\u0022,\u0022posTag\u0022:\u0022VERB\u0022,\u0022confidence\u0022:0.0644,\u0022prefixWord\u0022:\u0022\u0022,\u0022backTranslations\u0022:[{\u0022normalizedText\u0022:\u0022flies\u0022,\u0022displayText\u0022:\u0022flies\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:1219},{\u0022normalizedText\u0022:\u0022fly\u0022,\u0022displayText\u0022:\u0022fly\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:143}]},{\u0022normalizedTarget\u0022:\u0022marcha\u0022,\u0022displayTarget\u0022:\u0022marcha\u0022,\u0022posTag\u0022:\u0022NOUN\u0022,\u0022confidence\u0022:0.0514,\u0022prefixWord\u0022:\u0022\u0022,\u0022backTranslations\u0022:[{\u0022normalizedText\u0022:\u0022march\u0022,\u0022displayText\u0022:\u0022March\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:5355},{\u0022normalizedText\u0022:\u0022up\u0022,\u0022displayText\u0022:\u0022up\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:1277},{\u0022normalizedText\u0022:\u0022running\u0022,\u0022displayText\u0022:\u0022running\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:752},{\u0022normalizedText\u0022:\u0022going\u0022,\u0022displayText\u0022:\u0022going\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:570},{\u0022normalizedText\u0022:\u0022fly\u0022,\u0022displayText\u0022:\u0022fly\u0022,\u0022numExamples\u0022:15,\u0022frequencyCount\u0022:253}]}]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "1187000180",
+    "RandomSeed": "1404354090",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"

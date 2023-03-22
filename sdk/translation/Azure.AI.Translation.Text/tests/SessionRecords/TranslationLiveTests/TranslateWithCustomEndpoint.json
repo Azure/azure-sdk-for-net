@@ -9,31 +9,31 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-9942356bc1ff054797b558eb5d6921ad-e8414c1fafc35547-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "21f232fc8104c61247dcf59fde50c86e",
+        "traceparent": "00-ef2f7a2a54d616428d5a6fe1e7f23cfa-4da2e3d0585a0241-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
+        "x-ms-client-request-id": "8919cf1ccdd8e37297872a8464f6e782",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022It is a beautiful morning\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "X-RequestId,X-Metered-Usage",
-        "apim-request-id": "791ebfe9-81e5-495e-a58e-3d834e1ba024",
+        "apim-request-id": "b7503a36-01db-4c54-a96c-f59f0912f851",
         "Content-Length": "108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Mar 2023 19:53:31 GMT",
+        "Date": "Wed, 22 Mar 2023 21:22:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "25",
         "x-ms-region": "West US",
         "X-MT-System": "Microsoft",
-        "X-RequestId": "TRAN.MW1P.9A67.0320T1953.473DB87"
+        "X-RequestId": "TRAN.MW1P.99BF.0322T2122.5C1E14B"
       },
       "ResponseBody": "[{\u0022detectedLanguage\u0022:{\u0022language\u0022:\u0022en\u0022,\u0022score\u0022:1.0},\u0022translations\u0022:[{\u0022text\u0022:\u0022Je kr\u00E1sn\u00E9 r\u00E1no\u0022,\u0022to\u0022:\u0022cs\u0022}]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "297152757",
+    "RandomSeed": "1380143357",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_CUSTOM_ENDPOINT": "https://tdac18127a4f4f2c8.cognitiveservices.azure.com",
     "TEXT_TRANSLATION_REGION": "westus"

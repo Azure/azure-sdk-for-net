@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-2f87dec088d3564391bf749739ab16b2-d719d7c919ea0e48-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "3a01cc576032f695141c076e48bf4b1f",
+        "traceparent": "00-2ab38aa13cde9b4e913b6c8340e99692-cc7d4108bbcc3a4f-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
+        "x-ms-client-request-id": "958f38dba756bf9949589d34166396e6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022hello world\u0022},{\u0022Text\u0022:\u0022\\u0627\\u0644\\u0639\\u0627\\u0644\\u0645 \\u0647\\u0648 \\u0645\\u0643\\u0627\\u0646 \\u0645\\u062B\\u064A\\u0631 \\u062C\\u062F\\u0627 \\u0644\\u0644\\u0627\\u0647\\u062A\\u0645\\u0627\\u0645\u0022}]",
@@ -20,16 +20,16 @@
         "Access-Control-Expose-Headers": "X-RequestId",
         "Content-Length": "133",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Mar 2023 19:53:29 GMT",
+        "Date": "Wed, 22 Mar 2023 21:04:54 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "X-RequestId": "BKST.MW1P.99BD.0320T1953.49834DA"
+        "X-RequestId": "BKST.MW1P.99BD.0322T2104.A233C73"
       },
       "ResponseBody": "[{\u0022detectedLanguage\u0022:{\u0022language\u0022:\u0022en\u0022,\u0022score\u0022:1.0},\u0022sentLen\u0022:[11]},{\u0022detectedLanguage\u0022:{\u0022language\u0022:\u0022ar\u0022,\u0022score\u0022:1.0},\u0022sentLen\u0022:[32]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "423563185",
+    "RandomSeed": "453645341",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"

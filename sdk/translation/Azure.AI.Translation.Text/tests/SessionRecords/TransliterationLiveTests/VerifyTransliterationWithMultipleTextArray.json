@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-8a07257be84db4498cf1060e3b0b6aa3-0d3792ce7c5b8542-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "a69f3571d704097e3456653369ee939d",
+        "traceparent": "00-bc81a9b54ff7454ea16cb6950727779b-6b08c3a2973bff46-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
+        "x-ms-client-request-id": "576220904db11da277d7ef64e71fde84",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022\\u092F\\u0939\\u090F\\u0915\\u0915\\u0938\\u094C\\u091F\\u0940\\u0939\\u0948\\u092F\\u0939\\u090F\\u0915\\u0915\\u0938\\u094C\\u091F\\u0940\\u0939\\u0948\u0022},{\u0022Text\u0022:\u0022\\u092F\\u0939\\u090F\\u0915\\u0915\\u0938\\u094C\\u091F\\u0940\\u0939\\u0948\u0022}]",
@@ -23,17 +23,17 @@
         ],
         "Content-Length": "96",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Mar 2023 19:53:33 GMT",
+        "Date": "Wed, 22 Mar 2023 21:04:58 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "33",
-        "X-RequestId": "TLIT.MW1P.99BD.0320T1953.49838FD"
+        "X-RequestId": "TLIT.MW1P.99BD.0322T2104.A2340D4"
       },
       "ResponseBody": "[{\u0022text\u0022:\u0022yhekakasautihekasautihai\u0022,\u0022script\u0022:\u0022Latn\u0022},{\u0022text\u0022:\u0022yhekakasoutihai\u0022,\u0022script\u0022:\u0022Latn\u0022}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "1166063607",
+    "RandomSeed": "118858473",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"

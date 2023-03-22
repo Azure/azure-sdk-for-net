@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-af8fdd8e2886d9459eb2bed9d05e0200-415654f587014342-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "2a20524d77b74061cad64aa939828a98",
+        "traceparent": "00-43926b3f60ba17499537c8e92341099b-4f2e760a82a11245-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
+        "x-ms-client-request-id": "872835d9cada05ba54932fcb9363a966",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022\\u003Cspan class=notranslate\\u003E\\u4ECA\\u5929\\u662F\\u600E\\u4E48\\u56DE\\u4E8B\\u662F\\u003C/span\\u003E\\u975E\\u5E38\\u53EF\\u6015\\u7684\u0022}]",
@@ -23,18 +23,18 @@
         ],
         "Content-Length": "107",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Mar 2023 19:53:32 GMT",
+        "Date": "Wed, 22 Mar 2023 21:18:36 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "44",
         "X-MT-System": "Microsoft",
-        "X-RequestId": "TRAN.MW1P.99BD.0320T1953.4983899"
+        "X-RequestId": "TRAN.MW1P.99BD.0322T2118.A26344C"
       },
       "ResponseBody": "[{\u0022translations\u0022:[{\u0022text\u0022:\u0022\u003Cspan class=notranslate\u003E\u4ECA\u5929\u662F\u600E\u4E48\u56DE\u4E8B\u662F\u003C/span\u003Every scary\u0022,\u0022to\u0022:\u0022en\u0022}]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "1966854085",
+    "RandomSeed": "24462647",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"

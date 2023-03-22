@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Translation text type. </summary>
-    public enum TextType
+    public readonly partial struct TextType : IEquatable<TextType>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="TextType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TextType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string PlainValue = "plain";
+        private const string HtmlValue = "html";
+
         /// <summary> plain. </summary>
-        Plain,
+        public static TextType Plain { get; } = new TextType(PlainValue);
         /// <summary> html. </summary>
-        Html
+        public static TextType Html { get; } = new TextType(HtmlValue);
+        /// <summary> Determines if two <see cref="TextType"/> values are the same. </summary>
+        public static bool operator ==(TextType left, TextType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="TextType"/> values are not the same. </summary>
+        public static bool operator !=(TextType left, TextType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="TextType"/>. </summary>
+        public static implicit operator TextType(string value) => new TextType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is TextType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(TextType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

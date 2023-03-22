@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-fb762656fc4b6741b8dd4104197822fe-0879efbda4b39448-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "18abfb05c5bbbae2da474c42b0edf71b",
+        "traceparent": "00-f7db436020d58c4aab5e356d20e5e4c9-3c970b1197dd5a41-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
+        "x-ms-client-request-id": "4307d09d8a004fe9241ccb2594983d92",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022The word \\u003C mstrans:dictionary translation =\\u0022wordomatic\\u0022\\u003Ewordomatic\\u003C/mstrans:dictionary\\u003E is a dictionary entry.\u0022}]",
@@ -23,18 +23,18 @@
         ],
         "Content-Length": "164",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Mar 2023 19:53:32 GMT",
+        "Date": "Wed, 22 Mar 2023 21:18:36 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "110",
         "X-MT-System": "Microsoft",
-        "X-RequestId": "TRAN.MW1P.99BD.0320T1953.4983871"
+        "X-RequestId": "TRAN.MW1P.99BD.0322T2118.A26340B"
       },
       "ResponseBody": "[{\u0022translations\u0022:[{\u0022text\u0022:\u0022La palabra \u003C mstrans:dictionary translation =\\\u0022wordomatic\\\u0022\u003Ewordomatic\u003C/mstrans:dictionary\u003E es una entrada de diccionario.\u0022,\u0022to\u0022:\u0022es\u0022}]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "1315813765",
+    "RandomSeed": "1221237545",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"

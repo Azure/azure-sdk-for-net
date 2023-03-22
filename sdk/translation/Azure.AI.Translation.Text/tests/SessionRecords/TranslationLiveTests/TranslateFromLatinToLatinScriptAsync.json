@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-ba7907b1ca187944aa836b0b61237172-98065e415f58c142-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230316.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "f5bb4e755ec2aee2f9184e7687c3d023",
+        "traceparent": "00-dcd74d849b63304aa27113934e366ee1-423c1ae3a4eeb34e-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
+        "x-ms-client-request-id": "0daecbc66f0bbd695350cff3d2d9831d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022ap kaise ho\u0022}]",
@@ -23,18 +23,18 @@
         ],
         "Content-Length": "213",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 20 Mar 2023 19:53:32 GMT",
+        "Date": "Wed, 22 Mar 2023 21:18:35 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "11",
         "X-MT-System": "Microsoft",
-        "X-RequestId": "TRAN.MW1P.99BD.0320T1953.498381C"
+        "X-RequestId": "TRAN.MW1P.99BD.0322T2118.A2633AC"
       },
       "ResponseBody": "[{\u0022sourceText\u0022:{\u0022text\u0022:\u0022\u090F\u092A\u0940 \u0915\u0948\u0938\u0947 \u0939\u094B\u0022},\u0022translations\u0022:[{\u0022text\u0022:\u0022\u0B8E\u0BAA\u0BCD\u0BAA\u0B9F\u0BBF \u0B87\u0BB0\u0BC1\u0B95\u0BCD\u0B95\u0BBF\u0BB1\u0BBE\u0BAF\u0BCD?\u0022,\u0022transliteration\u0022:{\u0022text\u0022:\u0022eppadi irukkiraai?\u0022,\u0022script\u0022:\u0022Latn\u0022},\u0022to\u0022:\u0022ta\u0022}]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "13733125",
+    "RandomSeed": "1415600232",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"
