@@ -282,11 +282,4 @@ directive:
       $.LiveEventPreview.properties.accessControl["x-nullable"] = true;
       $.LiveEventInput.properties.accessControl["x-nullable"] = true;
       $.LiveOutputProperties.properties.rewindWindowLength["x-nullable"] = true;
-
-models-to-treat-empty-string-as-null:
-- LiveEventInput
-  
-additional-intrinsic-types-to-treat-empty-string-as-null:
-- TimeSpan
-
 ```
