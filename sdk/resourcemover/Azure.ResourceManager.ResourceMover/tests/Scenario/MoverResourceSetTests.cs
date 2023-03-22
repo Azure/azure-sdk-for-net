@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         protected internal const string ExpectedValue = "tagValue";
 
         public MoverResourceSetTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -116,7 +116,8 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             string vnetName = Recording.GenerateAssetName("Vnet-");
             VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
             string moverResourceName = Recording.GenerateAssetName("MoverResource-");
-            MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName);
+            string targetVnetName = Recording.GenerateAssetName("targetVnet-");
+            MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName, targetVnetName);
 
             // Validate that the Vnet has an dependency.
             ArmOperation<MoverOperationStatus> lro = await moverResourceSet.ResolveDependenciesAsync(WaitUntil.Completed);
