@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 title: Container Registry
 input-file:
- - $(this-folder)/../../../../../swagger_azure-rest-api-specs/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/c8d9a26a2857828e095903efa72512cf3a76c15d/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json
 model-namespace: false
 generation1-convenience-client: true
 ```
