@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="MetricsQueryClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        public static IAzureClientBuilder<MetricsQueryClient, MetricsQueryClientOptions> AddLogsQueryClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<MetricsQueryClient, MetricsQueryClientOptions> AddMetricsQueryClient<TBuilder>(this TBuilder builder)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<MetricsQueryClient, MetricsQueryClientOptions>((options, cred) => new MetricsQueryClient(cred, options));
