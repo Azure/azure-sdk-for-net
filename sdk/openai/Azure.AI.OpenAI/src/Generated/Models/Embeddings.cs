@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Azure.OpenAI.Models
 {
     /// <summary> Expected response schema to embeddings request. </summary>
     public partial class Embeddings

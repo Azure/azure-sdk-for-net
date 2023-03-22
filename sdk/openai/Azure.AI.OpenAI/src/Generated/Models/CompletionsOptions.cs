@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Azure.OpenAI.Models
 {
     /// <summary> Post body schema to create a prompt completion from a deployment. </summary>
     public partial class CompletionsOptions
@@ -42,7 +42,7 @@ namespace Azure.AI.OpenAI
         /// Minimum of 0 and maximum of 2 allowed.
         /// 
         /// </param>
-        /// <param name="nucleusSamplingFactor">
+        /// <param name="topP">
         /// An alternative to sampling with temperature, called nucleus sampling, where the
         /// model considers the results of the tokens with top_p probability mass. So 0.1
         /// means only the tokens comprising the top 10% probability mass are
@@ -65,11 +65,11 @@ namespace Azure.AI.OpenAI
         /// &lt;|endoftext|&gt; token from being generated.
         /// </param>
         /// <param name="user"> The ID of the end-user, for use in tracking and rate-limiting. </param>
-        /// <param name="snippetCount">
+        /// <param name="n">
         /// How many snippets to generate for each prompt. Minimum of 1 and maximum of 128
         /// allowed.
         /// </param>
-        /// <param name="logProbability">
+        /// <param name="logprobs">
         /// Include the log probabilities on the `logprobs` most likely tokens, as well the
         /// chosen tokens. So for example, if `logprobs` is 10, the API will return a list
         /// of the 10 most likely tokens. If `logprobs` is 0, only the chosen tokens will
@@ -92,20 +92,20 @@ namespace Azure.AI.OpenAI
         /// How much to penalize new tokens based on whether they appear in the text so
         /// far. Increases the model's likelihood to talk about new topics.
         /// </param>
-        /// <param name="generationSampleCount">
+        /// <param name="bestOf">
         /// How many generations to create server side, and display only the best. Will not
         /// stream intermediate progress if best_of &gt; 1. Has maximum value of 128.
         /// </param>
-        internal CompletionsOptions(IList<string> prompt, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> logitBias, string user, int? snippetCount, int? logProbability, string model, bool? echo, IList<string> stop, string completionConfig, int? cacheLevel, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount)
+        internal CompletionsOptions(IList<string> prompt, int? maxTokens, float? temperature, float? topP, IDictionary<string, int> logitBias, string user, int? n, int? logprobs, string model, bool? echo, IList<string> stop, string completionConfig, int? cacheLevel, float? presencePenalty, float? frequencyPenalty, int? bestOf)
         {
             Prompt = prompt.ToList();
             MaxTokens = maxTokens;
             Temperature = temperature;
-            NucleusSamplingFactor = nucleusSamplingFactor;
+            TopP = topP;
             LogitBias = logitBias;
             User = user;
-            SnippetCount = snippetCount;
-            LogProbability = logProbability;
+            N = n;
+            Logprobs = logprobs;
             Model = model;
             Echo = echo;
             Stop = stop.ToList();
@@ -113,7 +113,7 @@ namespace Azure.AI.OpenAI
             CacheLevel = cacheLevel;
             PresencePenalty = presencePenalty;
             FrequencyPenalty = frequencyPenalty;
-            GenerationSampleCount = generationSampleCount;
+            BestOf = bestOf;
         }
 
         /// <summary>
@@ -139,6 +139,17 @@ namespace Azure.AI.OpenAI
         /// </summary>
         public float? Temperature { get; set; }
         /// <summary>
+        /// An alternative to sampling with temperature, called nucleus sampling, where the
+        /// model considers the results of the tokens with top_p probability mass. So 0.1
+        /// means only the tokens comprising the top 10% probability mass are
+        /// considered.
+        /// We generally recommend using this or `temperature` but not
+        /// both.
+        /// Minimum of 0 and maximum of 1 allowed.
+        /// 
+        /// </summary>
+        public float? TopP { get; set; }
+        /// <summary>
         /// Defaults to null. Modify the likelihood of specified tokens appearing in the
         /// completion. Accepts a json object that maps tokens (specified by their token ID
         /// in the GPT tokenizer) to an associated bias value from -100 to 100. You can use
@@ -153,6 +164,18 @@ namespace Azure.AI.OpenAI
         public IDictionary<string, int> LogitBias { get; }
         /// <summary> The ID of the end-user, for use in tracking and rate-limiting. </summary>
         public string User { get; set; }
+        /// <summary>
+        /// How many snippets to generate for each prompt. Minimum of 1 and maximum of 128
+        /// allowed.
+        /// </summary>
+        public int? N { get; set; }
+        /// <summary>
+        /// Include the log probabilities on the `logprobs` most likely tokens, as well the
+        /// chosen tokens. So for example, if `logprobs` is 10, the API will return a list
+        /// of the 10 most likely tokens. If `logprobs` is 0, only the chosen tokens will
+        /// have logprobs returned. Minimum of 0 and maximum of 100 allowed.
+        /// </summary>
+        public int? Logprobs { get; set; }
         /// <summary> The name of the model to use. </summary>
         public string Model { get; set; }
         /// <summary> Echo back the prompt in addition to the completion. </summary>
@@ -177,5 +200,10 @@ namespace Azure.AI.OpenAI
         /// far. Increases the model's likelihood to talk about new topics.
         /// </summary>
         public float? FrequencyPenalty { get; set; }
+        /// <summary>
+        /// How many generations to create server side, and display only the best. Will not
+        /// stream intermediate progress if best_of &gt; 1. Has maximum value of 128.
+        /// </summary>
+        public int? BestOf { get; set; }
     }
 }

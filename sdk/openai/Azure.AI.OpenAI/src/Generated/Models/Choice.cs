@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI
+using Azure.AI.OpenAI;
+
+namespace Azure.OpenAI.Models
 {
     /// <summary> Choice model within completion response. </summary>
     public partial class Choice

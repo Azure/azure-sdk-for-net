@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Azure.OpenAI.Models
 {
     public partial class CompletionsOptions : IUtf8JsonSerializable
     {
@@ -51,12 +51,12 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("temperature");
                 }
             }
-            if (Optional.IsDefined(NucleusSamplingFactor))
+            if (Optional.IsDefined(TopP))
             {
-                if (NucleusSamplingFactor != null)
+                if (TopP != null)
                 {
                     writer.WritePropertyName("top_p"u8);
-                    writer.WriteNumberValue(NucleusSamplingFactor.Value);
+                    writer.WriteNumberValue(TopP.Value);
                 }
                 else
                 {
@@ -79,24 +79,24 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(SnippetCount))
+            if (Optional.IsDefined(N))
             {
-                if (SnippetCount != null)
+                if (N != null)
                 {
                     writer.WritePropertyName("n"u8);
-                    writer.WriteNumberValue(SnippetCount.Value);
+                    writer.WriteNumberValue(N.Value);
                 }
                 else
                 {
                     writer.WriteNull("n");
                 }
             }
-            if (Optional.IsDefined(LogProbability))
+            if (Optional.IsDefined(Logprobs))
             {
-                if (LogProbability != null)
+                if (Logprobs != null)
                 {
                     writer.WritePropertyName("logprobs"u8);
-                    writer.WriteNumberValue(LogProbability.Value);
+                    writer.WriteNumberValue(Logprobs.Value);
                 }
                 else
                 {
@@ -171,12 +171,12 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("frequency_penalty");
                 }
             }
-            if (Optional.IsDefined(GenerationSampleCount))
+            if (Optional.IsDefined(BestOf))
             {
-                if (GenerationSampleCount != null)
+                if (BestOf != null)
                 {
                     writer.WritePropertyName("best_of"u8);
-                    writer.WriteNumberValue(GenerationSampleCount.Value);
+                    writer.WriteNumberValue(BestOf.Value);
                 }
                 else
                 {
