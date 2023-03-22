@@ -84,6 +84,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 				_mostRecentPartitionContext = context;
 				var events = messages.ToArray();
 				EventData eventToCheckpoint = null;
+				var acquiredSemaphore = false;
 
 				int eventCount = events.Length;
 
@@ -128,6 +129,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             {
                                 await _cachedEventsGuard.WaitAsync(linkedCts.Token).ConfigureAwait(false);
                             }
+							acquiredSemaphore = true;
                             var triggerEvents = CachedEventsManager.GetBatchofEventsWithCached(events, false);
 
                             if (triggerEvents.Length > 0)
@@ -135,18 +137,28 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                                 UpdateCheckpointContext(triggerEvents, context);
                                 await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
                                 eventToCheckpoint = triggerEvents.Last();
+                                if (_cachedEventsBackgroundTaskCts != null)
+                                {
+                                    // If there is a background timer task, cancel it and dispose of the cancellation token.
+                                    _cachedEventsBackgroundTaskCts.Cancel();
+                                    _cachedEventsBackgroundTaskCts.Dispose();
+                                    _cachedEventsBackgroundTaskCts = null;
+                                }
                             }
 
                             if (_cachedEventsBackgroundTaskCts == null && CachedEventsManager.HasCachedEvents)
                             {
                                 // If there are events waiting to be processed, and no background task running, start a monitoring cycle
                                 _cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
-                                _cachedEventsBackgroundTask = MonitorCachedEvents(_cachedEventsBackgroundTaskCts.Token);
+                                _cachedEventsBackgroundTask = MonitorCachedEvents(_cachedEventsBackgroundTaskCts);
                             }
                         }
                         finally
 						{
-							_cachedEventsGuard.Release();
+							if (acquiredSemaphore)
+							{
+                                _cachedEventsGuard.Release();
+                            }
 						}
 					}
 					else
@@ -189,48 +201,58 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 				};
 
 				await _executor.TryExecuteAsync(input, cancellationToken).ConfigureAwait(false);
-
-				if (_cachedEventsBackgroundTaskCts != null)
-				{
-					// If there is a background timer task, cancel it and dispose of the cancellation token.
-					_cachedEventsBackgroundTaskCts.Cancel();
-					_cachedEventsBackgroundTaskCts.Dispose();
-					_cachedEventsBackgroundTaskCts = null;
-				}
 			}
 
-			private async Task MonitorCachedEvents(CancellationToken cancellationToken)
+			private async Task MonitorCachedEvents(CancellationTokenSource backgroundCancellationTokenSource)
 			{
+				var acquiredSemaphore = false;
 				try
 				{
 					_currentCycle = ValueStopwatch.StartNew();
 
-					while (_currentCycle.GetElapsedTime() < _maxWaitTime && !cancellationToken.IsCancellationRequested)
+					// Wait max wait time after starting this task before checking the number of events
+					while (_currentCycle.GetElapsedTime() < _maxWaitTime && !backgroundCancellationTokenSource.Token.IsCancellationRequested)
 					{
-						var remainingTime = RemainingTime(_currentCycle.GetElapsedTime());
-						await Task.Delay(remainingTime, cancellationToken).ConfigureAwait(false);
+						var remainingTime = GetRemainingTime(_currentCycle.GetElapsedTime());
+						await Task.Delay(remainingTime, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
 					}
 
-                    if (!_cachedEventsGuard.Wait(0, cancellationToken))
+                    if (!_cachedEventsGuard.Wait(0, backgroundCancellationTokenSource.Token))
                     {
-                        await _cachedEventsGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                        await _cachedEventsGuard.WaitAsync(backgroundCancellationTokenSource.Token).ConfigureAwait(false);
                     }
+					acquiredSemaphore = true;
 
                     var triggerEvents = CachedEventsManager.GetBatchofEventsWithCached(allowPartialBatch: true);
 
 					if (triggerEvents.Length > 0)
 					{
-						await TriggerExecute(triggerEvents, _mostRecentPartitionContext, cancellationToken).ConfigureAwait(false);
+						await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
 						await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
-					}
-					_cachedEventsGuard.Release();
-				}
+                    }
+
+					// After one wait cycle, cancel and null the background task cancellation token source. It can be assumed that there will never be more than the
+					// minimum batch size number of events in the cache. The monitoring cycle will be restarted by the process events handler if needed.
+                    backgroundCancellationTokenSource.Cancel();
+                    backgroundCancellationTokenSource.Dispose();
+                    _cachedEventsBackgroundTaskCts = null;
+                }
 				catch (TaskCanceledException)
 				{
-				}
+                    // If this monitoring cycle was canceled, then null the background task cancellation token source and dispose the cancellation token.
+                    backgroundCancellationTokenSource.Dispose();
+                    _cachedEventsBackgroundTaskCts = null;
+                }
+				finally
+				{
+					if (acquiredSemaphore)
+					{
+						_cachedEventsGuard.Release();
+					}
+                }
 			}
 
-			private TimeSpan RemainingTime(TimeSpan elapsed)
+			private TimeSpan GetRemainingTime(TimeSpan elapsed)
 			{
 				if ((_maxWaitTime == Timeout.InfiniteTimeSpan) || (_maxWaitTime == TimeSpan.Zero) || (elapsed == TimeSpan.Zero))
 				{
