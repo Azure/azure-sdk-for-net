@@ -14,7 +14,7 @@ For first time to setup of a new sdk package, please verify you have met the pre
 
 We will generate SDK under the SDK project folder of `azure-sdk-for-net`.
 
-### configuration (optional)
+### Configuration (optional)
 
 You can update `tsp-location.yaml` under sdk project folder to set the typespec project.
 
