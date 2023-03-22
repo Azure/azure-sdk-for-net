@@ -10,6 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class StorageHelperTests
     {
+        // The directory separator is either `/` or `\` depending on the Platform, making unit testing tricky.
         private static char ds = Path.DirectorySeparatorChar;
 
         [Fact]

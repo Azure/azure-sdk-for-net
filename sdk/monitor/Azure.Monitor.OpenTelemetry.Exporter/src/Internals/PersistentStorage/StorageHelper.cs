@@ -72,7 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 
             try
             {
-                createdDirectoryPath = Path.Combine(path, "Microsoft\\AzureMonitor");
+                createdDirectoryPath = Path.Combine(path, "Microsoft", "AzureMonitor");
                 Directory.CreateDirectory(createdDirectoryPath);
                 return true;
             }
