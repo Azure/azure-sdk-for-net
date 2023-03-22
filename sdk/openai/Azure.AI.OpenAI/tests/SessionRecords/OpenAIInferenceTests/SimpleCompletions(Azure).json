@@ -1,0 +1,66 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-03-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "44",
+        "Content-Type": "application/json",
+        "traceparent": "00-0e7141f86b80b7d1a013ee47e43a7a34-6b2b955af915431c-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "c71dc56358f5e00dd02724e3136cb02d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world!"
+        ],
+        "max_tokens": 100
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "065ac8cf-7960-46d9-b38b-106942622ee1",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "629",
+        "Content-Type": "application/json",
+        "Date": "Tue, 21 Mar 2023 00:36:37 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "3984.7568",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c71dc56358f5e00dd02724e3136cb02d",
+        "x-ms-region": "East US",
+        "X-Request-ID": "cffa7c2b-3b29-4f43-8d31-11b80431744c"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6wKHKDcnHodfhBdeb42azdNJuIg7l",
+        "object": "text_completion",
+        "created": 1679358994,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": " My name is \u0022 \u002B first_name \u002B \u0022 \u0022 \u002B last_name \u002B \u0022. My favorite color is \u0022 \u002B color \u002B \u0022. I love to eat \u0022 \u002B food \u002B \u0022 .\u0022 \u002B \u0022 I enjoy doing \u0022 \u002B hobby \u002B \u0022 when I\u0027m not to busy!\u0022;  \n};\n\nconsole.log(myProfile)\n\n// Why not to use var?\n/* Declaring your variables with var is problematic because it doesn\u0027t create a true block scope. In contrast, const and",
+            "index": 0,
+            "finish_reason": "length",
+            "logprobs": null
+          }
+        ],
+        "usage": {
+          "completion_tokens": 100,
+          "prompt_tokens": 3,
+          "total_tokens": 103
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "541635617"
+  }
+}
