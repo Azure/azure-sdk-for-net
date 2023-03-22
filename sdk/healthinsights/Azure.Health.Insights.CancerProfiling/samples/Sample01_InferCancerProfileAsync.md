@@ -7,7 +7,7 @@ To create a new `CancerProfilingClient` to get the inferred cancer staging, you 
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
-```C# Snippet:CreateCancerProfilingClient
+```C# Snippet:CreateCancerProfilingClientAsync
 // Read endpoint and apiKey
 string endpoint = TestEnvironment.Endpoint;
 string apiKey = TestEnvironment.ApiKey;
@@ -23,7 +23,7 @@ CancerProfilingClient client = new CancerProfilingClient(endpointUri, credential
 
 To get the inferred pTNM staging and histology codes for an oncology patient, call `InferCancerProfileAsync` on an instance of `OncoPhenotypeData`.  The result is a Long Running operation of type `OncoPhenotypeResult`.
 
-```C# Snippet:HealthInsightsOncoPhenotypeData
+```C# Snippet:HealthInsightsOncoPhenotypeDataAsync
 // Create Patient
 PatientRecord patient1 = new PatientRecord("patient_id")
 {

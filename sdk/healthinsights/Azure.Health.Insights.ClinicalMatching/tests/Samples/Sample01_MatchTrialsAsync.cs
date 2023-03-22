@@ -18,7 +18,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests.Samples
         [Test]
         public async Task MatchTrialsAsync()
         {
-            #region Snippet:CreateClinicalMatchingClient
+            #region Snippet:CreateClinicalMatchingClientAsync
 
             // Read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests.Samples
 
             #endregion
 
-            #region Snippet:HealthInsightsTrialMatcherCreateTrialMatcherData
+            #region Snippet:HealthInsightsTrialMatcherCreateTrialMatcherDataAsync
             // Create patient
             PatientRecord patient1 = new PatientRecord("patient_id")
             {

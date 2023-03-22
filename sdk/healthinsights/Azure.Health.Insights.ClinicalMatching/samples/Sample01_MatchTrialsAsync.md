@@ -7,7 +7,7 @@ To create a new `ClinicalMatchingClient` to get all matching clinical trials for
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
-```C# Snippet:CreateClinicalMatchingClient
+```C# Snippet:CreateClinicalMatchingClientAsync
 // Read endpoint and apiKey
 string endpoint = TestEnvironment.Endpoint;
 string apiKey = TestEnvironment.ApiKey;
@@ -23,7 +23,7 @@ ClinicalMatchingClient clinicalMatchingClient = new ClinicalMatchingClient(endpo
 
 To get matching clinical trials for a patient, call `MatchTrialsAsync` on an instance of `TrialMatcherData`.  The result is a Long Running operation of type `TrialMatcherResult`.
 
-```C# Snippet:HealthInsightsTrialMatcherCreateTrialMatcherData
+```C# Snippet:HealthInsightsTrialMatcherCreateTrialMatcherDataAsync
 // Create patient
 PatientRecord patient1 = new PatientRecord("patient_id")
 {

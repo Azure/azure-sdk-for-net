@@ -145,7 +145,7 @@ Call InferCancerProfile to submit an Oncology request and get the Onco-Phenotype
 OncoPhenotypeResult oncoPhenotypeResult = default;
 try
 {
-    Operation<OncoPhenotypeResult> operation = await client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
+    Operation<OncoPhenotypeResult> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
     Response resp = operation.GetRawResponse();
     oncoPhenotypeResult = OncoPhenotypeResult.FromResponse(resp);
 }

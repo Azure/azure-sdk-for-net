@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.CancerProfiling.Tests.Samples
         [Test]
         public async Task InferCancerProfileAsync()
         {
-            #region Snippet:CreateCancerProfilingClient
+            #region Snippet:CreateCancerProfilingClientAsync
 
             // Read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.CancerProfiling.Tests.Samples
 
             #endregion
 
-            #region Snippet:HealthInsightsOncoPhenotypeData
+            #region Snippet:HealthInsightsOncoPhenotypeDataAsync
             // Create Patient
             PatientRecord patient1 = new PatientRecord("patient_id")
             {
