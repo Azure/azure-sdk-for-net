@@ -108,7 +108,7 @@ var Configuration = new TrialMatcherModelConfiguration(clinicalTrials);
 var trialMatcherData = new TrialMatcherData(new List<PatientRecord> { patient1 }) { Configuration = Configuration };
 ```
 
-Call MatchTrialsAsync to submit a trial matching request and get the matching trials response
+Call MatchTrialsAsync to submit a trial matching async request and get the matching trials response
 
 ```C# Snippet:HealthInsightsClinicalMatchingMatchTrialsAsync
 TrialMatcherResult trialMatcherResult = default;

@@ -15,10 +15,12 @@ These code samples show common scenario operations with the Azure Health Insight
 
 |**Sample Name**|**Description**|
 |----------------|-------------|
-|[Sample_InferCancerProfile][sample_get_the_inferred_cancer_staging_for_an_oncology_patient] |Get the inferred cancer staging for an oncology patient.|
+|[Sample01_InferCancerProfile][sample_get_the_inferred_cancer_staging_for_an_oncology_patient] |Get the inferred cancer staging for an oncology patient (Sync).|
+|[Sample01_InferCancerProfileAsync][sample_get_the_inferred_cancer_staging_for_an_oncology_patient_async] |Get the inferred cancer staging for an oncology patient (Async).|
 
 
 <!-- LINKS
-[sample_get_the_inferred_cancer_staging_for_an_oncology_patient]: https://github.com/Azure/azure-sdk-for-net-pr/tree/main/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/samples/Sample_InferCancerProfile.md
+[sample_get_the_inferred_cancer_staging_for_an_oncology_patient_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/samples/Sample01_InferCancerProfile.md
+[sample_get_the_inferred_cancer_staging_for_an_oncology_patient]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/samples/Sample01_InferCancerProfileAsync.md
 -->
 

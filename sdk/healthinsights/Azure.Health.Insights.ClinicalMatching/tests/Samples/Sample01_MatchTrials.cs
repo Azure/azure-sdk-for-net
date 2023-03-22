@@ -16,7 +16,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests.Samples
     public partial class HealthInsightsSamples : SamplesBase<HealthInsightsTestEnvironment>
     {
         [Test]
-        public async Task CreateTrialMatcherJob()
+        public void MatchTrials()
         {
             #region Snippet:CreateClinicalMatchingClient
 
@@ -117,12 +117,12 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests.Samples
             var trialMatcherData = new TrialMatcherData(new List<PatientRecord> { patient1 }) { Configuration = Configuration };
             #endregion
 
-            #region Snippet:HealthInsightsClinicalMatchingMatchTrialsAsync
+            #region Snippet:HealthInsightsClinicalMatchingMatchTrials
             TrialMatcherResult trialMatcherResult = default;
             try
             {
-                // Using ClinicalMatchingClient + MatchTrialsAsync
-                Operation<TrialMatcherResult> operation = await clinicalMatchingClient.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+                // Using ClinicalMatchingClient + MatchTrials
+                Operation<TrialMatcherResult> operation = clinicalMatchingClient.MatchTrials(WaitUntil.Completed, trialMatcherData);
                 Response resp = operation.GetRawResponse();
                 trialMatcherResult = TrialMatcherResult.FromResponse(resp);
             }
@@ -133,7 +133,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests.Samples
             }
             #endregion
 
-            #region Snippet:HealthInsightsTrialMatcherMatchTrialsAsyncViewResults
+            #region Snippet:HealthInsightsTrialMatcherMatchTrialsViewResults
             // View the match trials (eligible/ineligible)
             if (trialMatcherResult.Status == JobStatus.Succeeded)
             {
