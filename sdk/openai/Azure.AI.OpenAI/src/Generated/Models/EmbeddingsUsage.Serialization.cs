@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Azure.OpenAI.Models
 {
     public partial class EmbeddingsUsage
     {
