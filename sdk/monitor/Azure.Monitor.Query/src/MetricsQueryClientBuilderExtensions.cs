@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.Azure
     /// <summary> Extension methods to add <see cref="MetricsQueryClient"/> to client builder. </summary>
     public static class MetricsQueryClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="MetricsQueryClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="MetricsQueryClient"/> instance with the default endpoint <c>https://management.azure.com/</c> for the public cloud. </summary>
         /// <param name="builder"> The builder to register with. </param>
         public static IAzureClientBuilder<MetricsQueryClient, MetricsQueryClientOptions> AddMetricsQueryClient<TBuilder>(this TBuilder builder)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary> Registers a <see cref="MetricsQueryClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The resource manager service endpoint to use. For example <c>https://management.azure.com/</c> for public cloud. </param>
+        /// <param name="endpoint"> The resource manager service endpoint to use. </param>
         public static IAzureClientBuilder<MetricsQueryClient, MetricsQueryClientOptions> AddMetricsQueryClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
