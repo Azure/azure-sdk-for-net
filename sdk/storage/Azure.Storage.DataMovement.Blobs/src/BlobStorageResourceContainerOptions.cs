@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using Azure.Storage.DataMovement;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Models;
 
@@ -34,5 +31,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Only applies when calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
         /// </summary>
         public TransferCopyMethod CopyMethod { get; set; }
+
+        /// <summary>
+        /// The <see cref="BlobType"/> that will be used when uploading blobs to the destiantion.
+        ///
+        /// Defaults to <see cref="BlobType.Block"/>.
+        /// </summary>
+        public BlobType BlobType { get; set; } = BlobType.Block;
     }
 }
