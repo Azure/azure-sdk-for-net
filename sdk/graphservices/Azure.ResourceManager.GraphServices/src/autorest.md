@@ -14,7 +14,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+
+directive:
+    - remove-operation: 'Operation_List'
 
 format-by-name-rules:
   'tenantId': 'uuid'
