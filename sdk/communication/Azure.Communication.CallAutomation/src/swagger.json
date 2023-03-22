@@ -1926,7 +1926,7 @@
     "DialogInputType": {
       "description": "Determines the type of the dialog.",
       "enum": [
-        "pVA"
+        "DLGaaS"
       ],
       "type": "string",
       "x-ms-enum": {
