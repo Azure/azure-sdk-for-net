@@ -158,9 +158,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private TimeSpan _maxWaitTime;
 
         /// <summary>
-        /// Gets or sets the maximum time in seconds. This only applies when <see cref="MinEventBatchSize"/> is set. It denotes the
-        /// maximum number of seconds the processor will wait after receiving a batch of events less than <see cref="MinEventBatchSize"/>
-        /// before invoking the function. Default is 60 seconds when <see cref="MinEventBatchSize"/> has been set, otherwise, this is not used.
+        /// Gets or sets the maximum time that the trigger should wait to fill a batch before invoking the function.  This is only considered when <see cref="MinEventBatchSize"/> is set to larger than 1 and is otherwise unused.  If less than <see cref=MinEventBatchSize" /> events were available before the wait time elapses, the function will be invoked with a partial batch.  Default is 60 seconds.  The maximum wait time is 10 minutes.
         /// </summary>
         public TimeSpan MaxWaitTime
         {
