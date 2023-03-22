@@ -22,13 +22,22 @@ namespace Azure.DigitalTwins.Samples
             PrintHeader("JOB LIFECYCLE SAMPLE");
 
             // For the purpose of this example we will create an import job to import models, twins, and relationships.
-            // We have to make sure the job Id is unique within the DT instance.
+            // We have to make sure the job Id is unique within the DT instance, and we have to upload a sample input blob to the customer's storage container.
 
             string sampleImportJobId = await GetUniqueJobIdAsync(SamplesConstants.TemporaryJobPrefix, client);
+            string inputBlobUri = options.StorageAccountEndpoint + "/" + options.StorageAccountContainerName + "/sampleInputBlob.ndjson";
+            string outputBlobUri = options.StorageAccountEndpoint + "/" + options.StorageAccountContainerName + "/sampleOutputBlob.ndjson";
 
-            // upload a sample file to their storage blob? or should we require that they already have one uploaded and provide the name of the file as input?
+            ImportJob sampleImportJob = new ImportJob(inputBlobUri, outputBlobUri);
 
-            ImportJob sampleImportJob = new ImportJob(options.StorageAccountEndpoint + "/sampleInputBlob.ndjson", options.StorageAccountEndpoint + "/sampleOutputBlob.ndjson");
+            try
+            {
+                await ImportJobHelper.UploadInputBlobToStorageContainerAsync(options).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                FatalError($"Failed to upload input blob to storage container due to:\n{ex}");
+            }
 
             // Then we create the import job
             try
@@ -61,7 +70,7 @@ namespace Azure.DigitalTwins.Samples
             }
             catch (Exception ex)
             {
-                FatalError($"Failed to get a model due to:\n{ex}");
+                FatalError($"Failed to get an import job due to:\n{ex}");
             }
 
             // Now we cancel the job
@@ -75,7 +84,7 @@ namespace Azure.DigitalTwins.Samples
             }
             catch (RequestFailedException ex)
             {
-                FatalError($"Failed to cancel job '{sampleImportJobId}' due to:\n{ex}");
+                FatalError($"Failed to cancel import job '{sampleImportJobId}' due to:\n{ex}");
             }
 
             #endregion Snippet:DigitalTwinsSampleCancelImportJob
@@ -91,7 +100,7 @@ namespace Azure.DigitalTwins.Samples
             }
             catch (RequestFailedException ex)
             {
-                FatalError($"Failed to delete job '{sampleImportJobId}' due to:\n{ex}");
+                FatalError($"Failed to delete import job '{sampleImportJobId}' due to:\n{ex}");
             }
 
             #endregion Snippet:DigitalTwinsSampleDeleteImportJob

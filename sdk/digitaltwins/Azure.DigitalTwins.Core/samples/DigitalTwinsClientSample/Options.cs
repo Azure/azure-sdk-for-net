@@ -23,7 +23,10 @@ namespace Azure.DigitalTwins.Core.Samples
         [Option('e', "eventHubEndpointName", Required = true, HelpText = "Event Hub endpoint linked to digital twins instance")]
         public string EventHubEndpointName { get; set; }
 
-        [Option('o', "storageAccountEndpoint", Required = true, HelpText = "Storage Account with permissions for adt instance")]
+        [Option('o', "storageAccountEndpoint", Required = true, HelpText = "Storage account Uri")]
         public string StorageAccountEndpoint { get; set; }
+
+        [Option('c', "storageAccountContainerName", Required = true, HelpText = "Storage account container name with permissions for adt instance")]
+        public string StorageAccountContainerName { get; set; }
     }
 }
