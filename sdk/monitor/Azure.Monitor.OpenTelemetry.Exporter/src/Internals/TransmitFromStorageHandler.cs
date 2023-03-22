@@ -31,37 +31,49 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal void TransmitFromStorage(object? sender, ElapsedEventArgs? e)
         {
-            while (_transmissionStateManager.State == TransmissionState.Closed && _blobProvider.TryGetBlob(out var blob) && blob.TryLease(120000))
+            // Only proces 10 files at a time so that we don't end up taking lot of cpu
+            // if the number of files are large.
+            int fileCount = 10;
+            while (fileCount > 0)
             {
-                try
+                if (_transmissionStateManager.State == TransmissionState.Closed && _blobProvider.TryGetBlob(out var blob) && blob.TryLease(120000))
                 {
-                    blob.TryRead(out var data);
-
-                    using var httpMessage = _applicationInsightsRestClient.InternalTrackAsync(data, CancellationToken.None).Result;
-                    var result = HttpPipelineHelper.IsSuccess(httpMessage);
-
-                    if (result == ExportResult.Success)
+                    try
                     {
-                        _transmissionStateManager.ResetConsecutiveErrors();
-                        _transmissionStateManager.CloseTransmission();
+                        blob.TryRead(out var data);
 
-                        AzureMonitorExporterEventSource.Log.WriteInformational("TransmitFromStorageSuccess", "Successfully transmitted a blob from storage.");
+                        using var httpMessage = _applicationInsightsRestClient.InternalTrackAsync(data, CancellationToken.None).Result;
+                        var result = HttpPipelineHelper.IsSuccess(httpMessage);
 
-                        // In case if the delete fails, there is a possibility
-                        // that the current batch will be transmitted more than once resulting in duplicates.
-                        blob.TryDelete();
+                        if (result == ExportResult.Success)
+                        {
+                            _transmissionStateManager.ResetConsecutiveErrors();
+                            _transmissionStateManager.CloseTransmission();
+
+                            AzureMonitorExporterEventSource.Log.WriteInformational("TransmitFromStorageSuccess", "Successfully transmitted a blob from storage.");
+
+                            // In case if the delete fails, there is a possibility
+                            // that the current batch will be transmitted more than once resulting in duplicates.
+                            blob.TryDelete();
+                        }
+                        else
+                        {
+                            _transmissionStateManager.EnableBackOff(httpMessage.Response);
+                            HttpPipelineHelper.HandleFailures(httpMessage, blob, _blobProvider);
+                            break;
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                        HttpPipelineHelper.HandleFailures(httpMessage, blob, _blobProvider);
-                        break;
+                        AzureMonitorExporterEventSource.Log.WriteError("FailedToTransmitFromStorage", ex);
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToTransmitFromStorage", ex);
+                    break;
                 }
+
+                fileCount--;
             }
         }
 
