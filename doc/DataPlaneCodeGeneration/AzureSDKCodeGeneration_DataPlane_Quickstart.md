@@ -12,7 +12,7 @@ For first time to setup of a new sdk package, please verify you have met the pre
 
 ## Generate SDK
 
-We will generate SDK under the SDK project folder of `azure-sdk-for-net`.
+We will generate an SDK under the SDK project folder of `azure-sdk-for-net`.
 
 ### Configuration (optional)
 
