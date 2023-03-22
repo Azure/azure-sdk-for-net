@@ -227,7 +227,6 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             {
                 Console.WriteLine("Manifest is an OCI index.");
             }
-
 #endregion
         }
     }
