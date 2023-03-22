@@ -31,11 +31,23 @@ namespace Azure.Communication.Chat
         ///// </summary>
 #pragma warning disable CS0067
 
+        private SyncAsyncEventHandler<ChatMessageReceivedEvent> _chatMessageReceived;
         /// <summary>
         /// EventHandler
         /// </summary>
-        public event SyncAsyncEventHandler<ChatMessageReceivedEvent> ChatMessageReceived;
-
+        public event SyncAsyncEventHandler<ChatMessageReceivedEvent> ChatMessageReceived
+        {
+            add
+            {
+                _chatMessageReceived += value;
+                _communicationSignalingClient.on(ChatEventType.ChatMessageReceived, value);
+            }
+            remove
+            {
+                _chatMessageReceived -= value;
+                _communicationSignalingClient.on(ChatEventType.ChatMessageReceived, value);
+            }
+        }
         /// <summary>
         /// EventHandler
         /// </summary>
@@ -61,10 +73,23 @@ namespace Azure.Communication.Chat
         /// </summary>
         public event SyncAsyncEventHandler<ChatThreadCreatedEvent> ChatThreadCreated;
 
+        private SyncAsyncEventHandler<ChatThreadDeletedEvent> _chatThreadDeleted;
         /// <summary>
         /// EventHandler
         /// </summary>
-        public event SyncAsyncEventHandler<ChatThreadDeletedEvent> ChatThreadDeleted;
+        public event SyncAsyncEventHandler<ChatThreadDeletedEvent> ChatThreadDeleted
+        {
+            add
+            {
+                _chatThreadDeleted += value;
+                //_communicationSignalingClient.on(ChatEventType.ChatThreadDeleted, value);
+            }
+            remove
+            {
+                _chatThreadDeleted -= value;
+                //_communicationSignalingClient.on(ChatEventType.ChatThreadDeleted, value);
+            }
+        }
 
         /// <summary>
         /// EventHandler
@@ -318,24 +343,6 @@ namespace Azure.Communication.Chat
         public async Task StopRealTimeNotifications()
         {
             await _communicationSignalingClient.Stop().ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Set the custom Handler
-        /// </summary>
-        /// <param name="chatEventType"></param>
-        public void On(ChatEventType chatEventType)
-        {
-            _communicationSignalingClient.on(chatEventType, ChatMessageReceived);
-        }
-
-        /// <summary>
-        /// Set the custom Handler
-        /// </summary>
-        /// <param name="chatEventType"></param>
-        public void Off(ChatEventType chatEventType)
-        {
-            _communicationSignalingClient.on(chatEventType, ChatMessageReceived);
         }
     }
 }

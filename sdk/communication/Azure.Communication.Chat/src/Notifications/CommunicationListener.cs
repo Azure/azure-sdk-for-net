@@ -37,7 +37,7 @@ namespace Azure.Communication.Chat.Notifications
             Console.WriteLine("*******");
 #pragma warning restore CA1303 // Do not pass literals as localized parameters
                               // Avoid this trouter response return and may be have a void method
-            return Task.FromResult(new TrouterResponse ());
+            return Task.FromResult(new TrouterResponse { Body = new BinaryData("")});
         }
 
         //public override async Task<TrouterResponse> ProcessRequestAsync(TrouterRequest request, CancellationToken cancellationToken = default)

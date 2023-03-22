@@ -60,8 +60,8 @@ namespace Azure.Communication.Chat.Notifications
             var options = new TrouterClientOptions
             {
                 ApplicationName = "Microsoft.Trouter.Tests",
-                TrouterHostName = "go.trouter-int.skype.net",
-                RegistrarHostName = "edge.skype.net/registrar/testenv/v3/registrations",
+                TrouterHostName = "go.trouter.skype.com",
+                RegistrarHostName = "edge.skype.com/registrar/prod/v2/registrations",
                 RegistrationOptions = new RegistrationOptions
                 {
                     EndpointId = "trouter_test",
