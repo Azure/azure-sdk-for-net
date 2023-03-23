@@ -333,7 +333,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStopDialogRequest(string callConnectionId, StopDialogRequestInternal stopDialogRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateStopDialogRequest(string callConnectionId, object stopDialogRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -363,12 +363,12 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Stop a dialog. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="stopDialogRequest"> The StopDialogRequest to use. </param>
+        /// <param name="stopDialogRequest"> The stop dialog request. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopDialogRequest"/> is null. </exception>
-        public async Task<Response> StopDialogAsync(string callConnectionId, StopDialogRequestInternal stopDialogRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response> StopDialogAsync(string callConnectionId, object stopDialogRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -392,12 +392,12 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Stop a dialog. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="stopDialogRequest"> The StopDialogRequest to use. </param>
+        /// <param name="stopDialogRequest"> The stop dialog request. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopDialogRequest"/> is null. </exception>
-        public Response StopDialog(string callConnectionId, StopDialogRequestInternal stopDialogRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response StopDialog(string callConnectionId, object stopDialogRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {

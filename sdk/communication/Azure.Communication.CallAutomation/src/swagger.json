@@ -51,16 +51,16 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Returns the create call response.",
-            "schema": {
-              "$ref": "#/definitions/CallConnectionProperties"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "201": {
+            "description": "Returns the create call response.",
+            "schema": {
+              "$ref": "#/definitions/CallConnectionProperties"
             }
           }
         },
@@ -107,16 +107,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Returns the answer call response.",
-            "schema": {
-              "$ref": "#/definitions/CallConnectionProperties"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Returns the answer call response.",
+            "schema": {
+              "$ref": "#/definitions/CallConnectionProperties"
             }
           }
         },
@@ -163,14 +163,14 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Returns the redirect call response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "204": {
+            "description": "Returns the redirect call response."
           }
         },
         "x-ms-examples": {
@@ -216,14 +216,14 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Returns the reject call response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "204": {
+            "description": "Returns the reject call response."
           }
         },
         "x-ms-examples": {
@@ -253,16 +253,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Returns the get call response.",
-            "schema": {
-              "$ref": "#/definitions/CallConnectionProperties"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Returns the get call response.",
+            "schema": {
+              "$ref": "#/definitions/CallConnectionProperties"
             }
           }
         },
@@ -292,14 +292,14 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Returns the hangup call response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "204": {
+            "description": "Returns the hangup call response."
           }
         },
         "x-ms-examples": {
@@ -343,14 +343,14 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Returns the terminate call response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "204": {
+            "description": "Returns the terminate call response."
           }
         },
         "x-ms-examples": {
@@ -403,16 +403,16 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the transfer call response.",
-            "schema": {
-              "$ref": "#/definitions/TransferCallResponse"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "202": {
+            "description": "Returns the transfer call response.",
+            "schema": {
+              "$ref": "#/definitions/TransferCallResponse"
             }
           }
         },
@@ -453,14 +453,14 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the play audio response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "202": {
+            "description": "Returns the play audio response."
           }
         },
         "x-ms-examples": {
@@ -491,14 +491,14 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the cancel all media operations response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "202": {
+            "description": "Returns the cancel all media operations response."
           }
         },
         "x-ms-examples": {
@@ -538,14 +538,14 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the recognize response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "202": {
+            "description": "Returns the recognize response."
           }
         },
         "x-ms-examples": {
@@ -564,48 +564,48 @@
         "description": "Start a dialog.",
         "operationId": "CallMedia_StartDialog",
         "parameters": [
-            {
-                "name": "callConnectionId",
-                "in": "path",
-                "description": "The call connection id",
-                "required": true,
-                "type": "string"
-            },
-            {
-                "name": "startDialogRequest",
-                "in": "body",
-                "description": "The start dialog request",
-                "required": true,
-                "schema": {
-                    "$ref": "#/definitions/StartDialogRequest"
-                }
-            },
-            {
-                "$ref": "#/parameters/ApiVersionParameter"
-            },
-            {
-                "name": "Repeatability-Request-ID",
-                "in": "header",
-                "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
-                "type": "string",
-                "format": "uuid"
-            },
-            {
-                "name": "Repeatability-First-Sent",
-                "in": "header",
-                "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
-                "type": "string"
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "startDialogRequest",
+            "in": "body",
+            "description": "The start dialog request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/StartDialogRequest"
             }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
+          }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the start dialog response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "202": {
+            "description": "Returns the start dialog response."
           }
         },
         "x-ms-examples": {
@@ -624,47 +624,48 @@
         "description": "Stop a dialog.",
         "operationId": "CallMedia_StopDialog",
         "parameters": [
-            {
-                "name": "callConnectionId",
-                "in": "path",
-                "description": "The call connection id",
-                "required": true,
-                "type": "string"
-            },
-            {
-                "name": "stopDialogRequest",
-                "in": "body",
-                "required": true,
-                "schema": {
-                    "$ref": "#/definitions/StopDialogRequest"
-                }
-            },
-            {
-                "$ref": "#/parameters/ApiVersionParameter"
-            },
-            {
-                "name": "Repeatability-Request-ID",
-                "in": "header",
-                "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
-                "type": "string",
-                "format": "uuid"
-            },
-            {
-                "name": "Repeatability-First-Sent",
-                "in": "header",
-                "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
-                "type": "string"
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "stopDialogRequest",
+            "in": "body",
+            "description": "The stop dialog request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/StopDialogRequest"
             }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
+          }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the stop dialog response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "202": {
+            "description": "Returns the stop dialog response."
           }
         },
         "x-ms-examples": {
@@ -695,16 +696,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Returns the get participants response.",
-            "schema": {
-              "$ref": "#/definitions/GetParticipantsResponse"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Returns the get participants response.",
+            "schema": {
+              "$ref": "#/definitions/GetParticipantsResponse"
             }
           }
         },
@@ -757,16 +758,16 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the add participant response.",
-            "schema": {
-              "$ref": "#/definitions/AddParticipantResponse"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "202": {
+            "description": "Returns the add participant response.",
+            "schema": {
+              "$ref": "#/definitions/AddParticipantResponse"
             }
           }
         },
@@ -820,16 +821,16 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the remove participant response.",
-            "schema": {
-              "$ref": "#/definitions/RemoveParticipantResponse"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "202": {
+            "description": "Returns the remove participant response.",
+            "schema": {
+              "$ref": "#/definitions/RemoveParticipantResponse"
             }
           }
         },
@@ -883,16 +884,16 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the mute participants response",
-            "schema": {
-              "$ref": "#/definitions/MuteParticipantsResponse"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "202": {
+            "description": "Returns the mute participants response",
+            "schema": {
+              "$ref": "#/definitions/MuteParticipantsResponse"
             }
           }
         },
@@ -946,16 +947,16 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the unmute participants response",
-            "schema": {
-              "$ref": "#/definitions/UnmuteParticipantsResponse"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "202": {
+            "description": "Returns the unmute participants response",
+            "schema": {
+              "$ref": "#/definitions/UnmuteParticipantsResponse"
             }
           }
         },
@@ -994,16 +995,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Returns the get participant response.",
-            "schema": {
-              "$ref": "#/definitions/CallParticipant"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Returns the get participant response.",
+            "schema": {
+              "$ref": "#/definitions/CallParticipant"
             }
           }
         },
@@ -1049,16 +1050,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Returns the start call recording response.",
-            "schema": {
-              "$ref": "#/definitions/RecordingStateResponse"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Returns the start call recording response.",
+            "schema": {
+              "$ref": "#/definitions/RecordingStateResponse"
             }
           }
         },
@@ -1089,16 +1090,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Returns the recording properties.",
-            "schema": {
-              "$ref": "#/definitions/RecordingStateResponse"
-            }
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Returns the recording properties.",
+            "schema": {
+              "$ref": "#/definitions/RecordingStateResponse"
             }
           }
         },
@@ -1127,14 +1128,14 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Returns the stop call recording response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "204": {
+            "description": "Returns the stop call recording response."
           }
         },
         "x-ms-examples": {
@@ -1164,14 +1165,14 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the pause call recording response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "202": {
+            "description": "Returns the pause call recording response."
           }
         },
         "x-ms-examples": {
@@ -1201,14 +1202,14 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Returns the resume call recording response."
-          },
           "default": {
             "description": "Error",
             "schema": {
               "$ref": "#/definitions/CommunicationErrorResponse"
             }
+          },
+          "202": {
+            "description": "Returns the resume call recording response."
           }
         },
         "x-ms-examples": {
@@ -1982,16 +1983,8 @@
       }
     },
     "StopDialogRequest": {
-      "required": [
-        "dialogSessionId"
-      ],
       "type": "object",
-      "properties": {
-        "dialogSessionId": {
-          "description": "The value to the dialog session Id.",
-          "type": "string"
-        }
-      }
+      "properties": {}
     },
     "GetParticipantsResponse": {
       "description": "The response payload for getting participants of the call.",
@@ -2735,11 +2728,6 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
-        "dialogSessionId": {
-          "description": "The dialog session id",
-          "type": "string",
-          "readOnly": true
-        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2767,11 +2755,6 @@
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
-        },
-        "dialogSessionId": {
-          "description": "The dialog session id",
-          "type": "string",
-          "readOnly": true
         },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
@@ -2801,11 +2784,6 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
-        "dialogSessionId": {
-          "description": "The dialog session id",
-          "type": "string",
-          "readOnly": true
-        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2833,11 +2811,6 @@
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
-        },
-        "dialogSessionId": {
-          "description": "The dialog session id",
-          "type": "string",
-          "readOnly": true
         },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
@@ -2867,11 +2840,6 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
-        "dialogSessionId": {
-          "description": "The dialog session id",
-          "type": "string",
-          "readOnly": true
-        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2899,11 +2867,6 @@
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
-        },
-        "dialogSessionId": {
-          "description": "The dialog session id",
-          "type": "string",
-          "readOnly": true
         },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",

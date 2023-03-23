@@ -1,5 +1,10 @@
 # Release History
 
+## 1.0.1-alpha.2 (Unreleased)
+- Replaced pVA with DLGaaS
+- Removed DialogSessionId
+- StopDialog no longer needs any parameters to run
+
 ## 1.0.1-alpha.1 (Unreleased)
 
 ### Features Added

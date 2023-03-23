@@ -444,20 +444,18 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Stop Dialog.
         /// </summary>
-        /// <param name="dialogSessionId">Session ID</param>
         /// <param name="cancellationToken"></param>
-        public virtual async Task<Response<DialogResult>> StopDialogAsync(string dialogSessionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DialogResult>> StopDialogAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopDialog)}");
             scope.Start();
             try
             {
-                StopDialogRequestInternal request = new StopDialogRequestInternal(dialogSessionId);
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 var response = await CallMediaRestClient.StopDialogAsync
                     (CallConnectionId,
-                    request,
+                    null,
                     repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken).ConfigureAwait(false);
@@ -477,20 +475,18 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Stop Dialog.
         /// </summary>
-        /// <param name="dialogSessionId">Session ID</param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<DialogResult> StopDialog(string dialogSessionId, CancellationToken cancellationToken = default)
+        public virtual Response<DialogResult> StopDialog(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopDialog)}");
             scope.Start();
             try
             {
-                StopDialogRequestInternal request = new StopDialogRequestInternal(dialogSessionId);
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 var response = CallMediaRestClient.StopDialog
                     (CallConnectionId,
-                    request,
+                    null,
                     repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken);

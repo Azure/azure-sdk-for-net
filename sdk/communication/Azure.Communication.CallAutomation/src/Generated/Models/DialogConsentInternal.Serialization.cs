@@ -22,7 +22,6 @@ namespace Azure.Communication.CallAutomation.Models.Events
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
-            Optional<string> dialogSessionId = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             foreach (var property in element.EnumerateObject())
@@ -42,11 +41,6 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dialogSessionId"u8))
-                {
-                    dialogSessionId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
@@ -63,7 +57,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     continue;
                 }
             }
-            return new DialogConsentInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, dialogSessionId.Value, operationContext.Value, resultInformation.Value);
+            return new DialogConsentInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value);
         }
     }
 }

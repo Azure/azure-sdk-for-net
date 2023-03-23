@@ -23,13 +23,9 @@ namespace Azure.Communication.CallAutomation
             CallConnectionId = internalEvent.CallConnectionId;
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;
-            DialogSessionId = internalEvent.DialogSessionId;
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
         }
-
-        /// <summary> DialogSessionId failed to be added. </summary>
-        public string DialogSessionId { get; }
 
         /// <summary>
         /// Deserialize <see cref="DialogHangup"/> event.
