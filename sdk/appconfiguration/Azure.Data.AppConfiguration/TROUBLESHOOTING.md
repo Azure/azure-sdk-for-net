@@ -9,7 +9,7 @@ This troubleshooting guide contains instructions to diagnose issues encountered 
 * [Troubleshooting authentication issues](#troubleshooting-authentication-issues)
   * [AuthenticationFailedException](#authenticationfailedexception)
   * [CredentialUnavailableException](#credentialunavailableexception)
-  * [Permission Issues](#permission-issues)
+  * [Permission issues](#permission-issues)
 * [Get additional help](#get-additional-help)
 
 ## General troubleshooting
