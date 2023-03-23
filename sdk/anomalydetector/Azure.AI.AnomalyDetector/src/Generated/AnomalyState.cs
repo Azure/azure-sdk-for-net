@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -31,7 +30,7 @@ namespace Azure.AI.AnomalyDetector
         {
             Timestamp = timestamp;
             Value = value;
-            Errors = errors.ToList();
+            Errors = errors;
         }
 
         /// <summary> The timestamp for this anomaly. </summary>

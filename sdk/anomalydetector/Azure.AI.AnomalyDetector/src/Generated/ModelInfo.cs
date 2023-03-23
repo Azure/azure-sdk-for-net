@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -83,7 +82,7 @@ namespace Azure.AI.AnomalyDetector
             SlidingWindow = slidingWindow;
             AlignPolicy = alignPolicy;
             Status = status;
-            Errors = errors.ToList();
+            Errors = errors;
             DiagnosticsInfo = diagnosticsInfo;
         }
 
