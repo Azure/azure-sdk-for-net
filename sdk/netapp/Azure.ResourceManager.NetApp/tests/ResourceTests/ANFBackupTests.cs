@@ -13,6 +13,7 @@ using FluentAssertions;
 using Polly.Contrib.WaitAndRetry;
 using Polly;
 using Azure.Core;
+using Microsoft.Extensions.Options;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
@@ -64,26 +65,9 @@ namespace Azure.ResourceManager.NetApp.Tests
                     List<NetAppVolumeResource> volumeList = await volumeCollection.GetAllAsync().ToEnumerableAsync();
                     foreach (NetAppVolumeResource volume in volumeList)
                     {
-                        //NetAppVolumeBackupCollection volumeBackupCollection = volume.GetNetAppVolumeBackups();
-                        //List<NetAppVolumeBackupResource> volumeBackupList = await volumeBackupCollection.GetAllAsync().ToEnumerableAsync();
-                        //int count = volumeBackupList.Count;
-                        //foreach (NetAppVolumeBackupResource backup in volumeBackupList)
-                        //{
-                        //    //we cannot delete the last backup for a volume, the volume has to be deleted first and backup deleted on the accountlevel
-                        //    if (count > 1)
-                        //    {
-                        //        await backup.DeleteAsync(WaitUntil.Completed);
-                        //        count--;
-                        //    }
-                        //    else
-                        //    {
-                        //        lastBackupName = backup.Id.Name;
-                        //    }
-                        //}
-                        //disable backups if enabled
                         if (volume.Data.DataProtection?.Backup?.IsBackupEnabled == true)
                         {
-                            NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, false);
+                            NetAppVolumeBackupConfiguration backupPolicyProperties = new() { IsBackupEnabled = false };
                             NetAppVolumePatchDataProtection dataProtectionProperties = new()
                             {
                                 Backup = backupPolicyProperties
@@ -92,7 +76,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                             {
                                 DataProtection = dataProtectionProperties
                             };
-                            await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch);
+                            await volume.UpdateAsync(WaitUntil.Completed, volumePatch);
                         }
                         if (Mode != RecordedTestMode.Playback)
                         {
@@ -146,7 +130,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         {
             Console.WriteLine($"{DateTime.Now} Test CreateDeleteBackup");
             //Update volume to enable backups, this one tests vaultid for backwards compat (null, false, true
-            NetAppVolumeBackupConfiguration backupConfiguration = new() { IsPolicyEnforced = true };
+            NetAppVolumeBackupConfiguration backupConfiguration = new() { IsBackupEnabled = true };
             NetAppVolumePatchDataProtection dataProtectionProperties = new()
             {
                 Backup = backupConfiguration
@@ -265,8 +249,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             _vault = _vaults.FirstOrDefault();
             _vaults.Should().HaveCount(1);
             Assert.IsNotNull(_vault);
+            ArmClientOptions armClientOptions = new() { };
+            armClientOptions.SetApiVersion(NetAppVolumeResource.ResourceType, "2022-05-01");
+            ArmClient armClient2022_05 = this.GetArmClient(armClientOptions);
 
-            NetAppVolumeBackupConfiguration backupConfiguration = new() { IsPolicyEnforced = true, VaultId = _vault.Id };
+            NetAppVolumeCollection netAppVolumesCollection2022_05 = new(armClient2022_05, _capacityPool.Id);
+
+            NetAppVolumeResource updateVolumeResource2022_05 = netAppVolumesCollection2022_05.Get(_volumeResource.Id.Name);
+            NetAppVolumeBackupConfiguration backupConfiguration = new() { IsBackupEnabled = true, VaultId = _vault.Id };
             NetAppVolumePatchDataProtection dataProtectionProperties = new()
             {
                 Backup = backupConfiguration
@@ -275,18 +265,40 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 DataProtection = dataProtectionProperties
             };
-            NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
+            NetAppVolumeResource volumeResource1 = (await updateVolumeResource2022_05.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
             if (Mode != RecordedTestMode.Playback)
             {
                 await Task.Delay(5000);
             }
-            //Validate volume is backup enabled
+
+            //Validate 2022-05-01 volume after update
+            NetAppVolumeResource getVolumeResource2022_05 = await netAppVolumesCollection2022_05.GetAsync(volumeResource1.Id.Name);
+            Assert.IsNotNull(getVolumeResource2022_05.Data.DataProtection);
+            Assert.IsNull(getVolumeResource2022_05.Data.DataProtection.Snapshot);
+            Assert.IsNull(getVolumeResource2022_05.Data.DataProtection.Replication);
+            //Assert.AreEqual(backupConfiguration.VaultId, getVolumeResource2022_05.Data.DataProtection.Backup.VaultId);
+            Assert.AreEqual(backupConfiguration.IsBackupEnabled, getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled);
+
+            //Validate volume is backup enabled, api-version 2022-09-01
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
-            //Assert.AreEqual(backupConfiguration.VaultId, backupVolumeResource.Data.DataProtection.Backup.VaultId);
+            Assert.IsNull(backupVolumeResource.Data.DataProtection.Backup.VaultId);
             Assert.AreEqual(backupConfiguration.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
+
+            //Disable the backup using 2022-05-01
+            backupConfiguration.IsBackupEnabled = false;
+            backupConfiguration.VaultId = _vault.Id;
+            dataProtectionProperties.Backup = backupConfiguration;
+            NetAppVolumePatch disableBackupVolumePatch = new(_defaultLocation)
+            {
+                DataProtection = dataProtectionProperties
+            };
+            NetAppVolumeResource disabledBackupVolumeResource = (await updateVolumeResource2022_05.UpdateAsync(WaitUntil.Completed, disableBackupVolumePatch)).Value;
+           // Assert.IsFalse(backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
+            getVolumeResource2022_05 = await netAppVolumesCollection2022_05.GetAsync(volumeResource1.Id.Name);
+            Assert.IsFalse(getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled);
         }
 
         [Test]

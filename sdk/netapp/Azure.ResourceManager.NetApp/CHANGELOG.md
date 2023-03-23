@@ -3,6 +3,7 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+- Updated to support ANF api-version 2022-09-01
 - Added BackupRestoreFiles to NetAppVolumeResource NetAppVolumeBackupResource to restore the specified files from the specified backup to the active file system
 - Added BreakFileLocks to NetAppVolumeResource to allow clients to break file locks on a volume
 - Added FileAccessLog to NetAppVolumeData, a lag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume.
@@ -12,10 +13,9 @@
 - Added Tags to NetAppVolumeQuotaRulePatch and AddTag to NetAppVolumeQuotaResource
 - Added RestoreFiles for NetAppVolumeBackupResource
 
-
 ### Breaking Changes
 - NetAppVault is no longer needed scheduled for deprecation
-- Plan to deprecate vaultId from NetAppVolumeBackupConfiguration
+- VaultId is not longer needed has been deprecation from NetAppVolumeBackupConfiguration in api-version 2022-09-01, it is accesible in pervious api-verisons 2022-05-01 and older api-version
 ### Bugs Fixed
 
 ### Other Changes
