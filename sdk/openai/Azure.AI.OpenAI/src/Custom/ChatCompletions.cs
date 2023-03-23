@@ -16,7 +16,6 @@ namespace Azure.AI.OpenAI
     {
         internal int InternalCreatedSecondsAfterUnixEpoch { get; set; }
 
-        public DateTimeOffset Created
-            => TimeConverters.DateTimeOffsetFromUnixEpoch(InternalCreatedSecondsAfterUnixEpoch);
+        public DateTimeOffset Created => DateTimeOffset.FromUnixTimeSeconds(InternalCreatedSecondsAfterUnixEpoch);
     }
 }
