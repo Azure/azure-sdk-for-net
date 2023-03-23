@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         }
 
         [TestCase]
+        [RecordedTest]
         public async Task List()
         {
             _ = await CreateMoverResource(_moverResourceSet, _virtualNetworkId, _moverResourceName, _targetVnetName);
