@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.GraphServices.Tests
         {
         }
 
+        [SetUp]
+        public void SetupClient()
+        {
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                CreateCommonClient();
+            }
+        }
+
         public void CreateCommonClient()
         {
             ArmClientOptions options = new ArmClientOptions();

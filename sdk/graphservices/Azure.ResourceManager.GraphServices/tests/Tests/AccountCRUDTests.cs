@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using System;
-using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.GraphServices.Tests.Helpers;
-using Azure.ResourceManager.GraphServices;
 using Azure.ResourceManager.GraphServices.Models;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.GraphServices.Tests.Tests
 {
@@ -19,16 +17,7 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
         {
         }
 
-        [SetUp]
-        public void ClearAndInitialize()
-        {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                CreateCommonClient();
-            }
-        }
-
-        [TestCase]
+        [RecordedTest]
         public async Task TestAccountCRUDOperations()
         {
             // Get Default Subscription
@@ -37,10 +26,7 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
 
             // Create Resource Group
             string resourceGroupName = "myRgName";
-            ResourceGroupData resourceGroupData = new ResourceGroupData("westus");
-            ArmOperation<ResourceGroupResource> operation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
-            ResourceGroupResource resourceGroup = operation.Value;
-
+            ResourceGroupResource resourceGroup = await this.CreateResourceGroup(subscription, resourceGroupName, Core.AzureLocation.WestUS);
             AccountResourceCollection collection = resourceGroup.GetAccountResources();
 
             // Set Account Resource Values
@@ -54,6 +40,8 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
 
             Assert.IsTrue(createAccountOperation.HasCompleted);
             Assert.IsTrue(createAccountOperation.HasValue);
+            Assert.AreEqual(resourceName, createAccountOperation.Value.Data.Name);
+            Assert.AreEqual(appId, createAccountOperation.Value.Data.Properties.AppId);
 
             // Get
             Response<AccountResource> getAccountResponse = await collection.GetAsync(resourceName);
@@ -61,17 +49,14 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
             Assert.IsNotNull(accountResource);
 
             // Update
-            var updateResource = await accountResource.AddTagAsync("Test","Value");
-            var getAccountResponse_Update = await collection.GetAsync(resourceName);
-            AccountResource accountResource_Get_Update = getAccountResponse_Update.Value;
-            Assert.IsNotNull(accountResource_Get_Update);
+            var updatedAccountResponse = await accountResource.AddTagAsync("Test", "Value");
+            Assert.IsNotNull(updatedAccountResponse);
+            Assert.AreEqual(updatedAccountResponse.Value.Data.Tags["Test"], "Value");
 
             // Delete
             var accountOperation = await accountResource.DeleteAsync(WaitUntil.Completed);
             await accountOperation.WaitForCompletionResponseAsync();
             Assert.IsTrue(accountOperation.HasCompleted);
-
-            await resourceGroup.DeleteAsync(WaitUntil.Completed);
         }
     }
 }
