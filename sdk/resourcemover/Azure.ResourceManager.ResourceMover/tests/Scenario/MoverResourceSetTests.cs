@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         protected internal const string ExpectedValue = "tagValue";
 
         public MoverResourceSetTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
