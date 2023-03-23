@@ -32,7 +32,7 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 }
 ```
 
-You will notice that additional information is logged, like the Client Request ID of the operation.
+Calling `ToString` on the exception will provide additional information, such as the Client Request Identifier of the operation, which is useful when requesting support.
 
 ```shell
 Azure.RequestFailedException: Service request failed.
