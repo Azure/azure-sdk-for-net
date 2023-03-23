@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Communication.CallAutomation.Models.Events;
 using Azure.Messaging;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;

@@ -6,7 +6,7 @@ using Azure.Core;
 using System.Text.Json.Serialization;
 using System;
 
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// The Recognize Dtmf Completed event.
@@ -20,9 +20,9 @@ namespace Azure.Communication.CallAutomation.Models.Events
         /// </summary>
         [CodeGenMember("RecognitionType")]
         [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
-        public CallMediaRecognitionType RecognitionType { get; set; }
+        public CallMediaRecognitionType RecognitionType { get; internal set; }
 
-        /// <summary> Initializes a new instance of RecognizeChoiceCompleted. </summary>
+        /// <summary> Initializes a new instance of RecognizeDtmfCompleted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

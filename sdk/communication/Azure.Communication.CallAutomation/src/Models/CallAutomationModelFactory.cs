@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Azure.Communication.CallAutomation.Models.Events;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation

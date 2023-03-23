@@ -159,9 +159,9 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.PlayCompleted PlayCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.PlayFailed PlayFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeCanceled RecognizeCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null) { throw null; }
-        public static Azure.Communication.CallAutomation.Models.Events.RecognizeChoiceCompleted RecognizeChoiceCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType = default(Azure.Communication.CallAutomation.CallMediaRecognitionType), Azure.Communication.CallAutomation.ChoiceResult choiceResult = null) { throw null; }
+        public static Azure.Communication.CallAutomation.RecognizeChoiceCompleted RecognizeChoiceCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType = default(Azure.Communication.CallAutomation.CallMediaRecognitionType), Azure.Communication.CallAutomation.ChoiceResult choiceResult = null) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType = default(Azure.Communication.CallAutomation.CallMediaRecognitionType), Azure.Communication.CallAutomation.CollectTonesResult collectTonesResult = null, Azure.Communication.CallAutomation.ChoiceResult choiceResult = null) { throw null; }
-        public static Azure.Communication.CallAutomation.Models.Events.RecognizeDtmfCompleted RecognizeDtmfCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType = default(Azure.Communication.CallAutomation.CallMediaRecognitionType), Azure.Communication.CallAutomation.CollectTonesResult collectTonesResult = null) { throw null; }
+        public static Azure.Communication.CallAutomation.RecognizeDtmfCompleted RecognizeDtmfCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType = default(Azure.Communication.CallAutomation.CallMediaRecognitionType), Azure.Communication.CallAutomation.CollectTonesResult collectTonesResult = null) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.RecordingStateChanged RecordingStateChanged(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, Azure.Communication.CallAutomation.RecordingState state = default(Azure.Communication.CallAutomation.RecordingState), System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Communication.CallAutomation.RecordingStateResult RecordingStateResult(string recordingId = null, Azure.Communication.CallAutomation.RecordingState? recordingState = default(Azure.Communication.CallAutomation.RecordingState?)) { throw null; }
@@ -738,11 +738,23 @@ namespace Azure.Communication.CallAutomation
         public System.Collections.Generic.IList<string> Phrases { get { throw null; } }
         public Azure.Communication.CallAutomation.DtmfTone? Tone { get { throw null; } set { } }
     }
+    public partial class RecognizeChoiceCompleted : Azure.Communication.CallAutomation.RecognizeCompleted
+    {
+        public RecognizeChoiceCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, Azure.Communication.CallAutomation.ResultInformation resultInformation, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType, Azure.Communication.CallAutomation.ChoiceResult choiceResult) { }
+        public Azure.Communication.CallAutomation.ChoiceResult ChoiceResult { get { throw null; } }
+        public Azure.Communication.CallAutomation.CallMediaRecognitionType RecognitionType { get { throw null; } }
+    }
     public partial class RecognizeCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal RecognizeCompleted() { }
         public Azure.Communication.CallAutomation.RecognizeResult RecognizeResult { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeCompleted Deserialize(string content) { throw null; }
+    }
+    public partial class RecognizeDtmfCompleted : Azure.Communication.CallAutomation.RecognizeCompleted
+    {
+        public RecognizeDtmfCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, Azure.Communication.CallAutomation.ResultInformation resultInformation, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType, Azure.Communication.CallAutomation.CollectTonesResult collectTonesResult) { }
+        public Azure.Communication.CallAutomation.CollectTonesResult CollectTonesResult { get { throw null; } }
+        public Azure.Communication.CallAutomation.CallMediaRecognitionType RecognitionType { get { throw null; } }
     }
     public partial class RecognizeFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -1016,20 +1028,5 @@ namespace Azure.Communication.CallAutomation.Models
         public static implicit operator Azure.Communication.CallAutomation.Models.RecognizeResultType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.Models.RecognizeResultType left, Azure.Communication.CallAutomation.Models.RecognizeResultType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-}
-namespace Azure.Communication.CallAutomation.Models.Events
-{
-    public partial class RecognizeChoiceCompleted : Azure.Communication.CallAutomation.RecognizeCompleted
-    {
-        public RecognizeChoiceCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, Azure.Communication.CallAutomation.ResultInformation resultInformation, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType, Azure.Communication.CallAutomation.ChoiceResult choiceResult) { }
-        public Azure.Communication.CallAutomation.ChoiceResult ChoiceResult { get { throw null; } }
-        public Azure.Communication.CallAutomation.CallMediaRecognitionType RecognitionType { get { throw null; } set { } }
-    }
-    public partial class RecognizeDtmfCompleted : Azure.Communication.CallAutomation.RecognizeCompleted
-    {
-        public RecognizeDtmfCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, Azure.Communication.CallAutomation.ResultInformation resultInformation, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType, Azure.Communication.CallAutomation.CollectTonesResult collectTonesResult) { }
-        public Azure.Communication.CallAutomation.CollectTonesResult CollectTonesResult { get { throw null; } }
-        public Azure.Communication.CallAutomation.CallMediaRecognitionType RecognitionType { get { throw null; } set { } }
     }
 }

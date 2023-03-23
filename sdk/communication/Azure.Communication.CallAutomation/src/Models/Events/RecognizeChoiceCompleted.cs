@@ -6,7 +6,7 @@ using Azure.Core;
 using System.Text.Json.Serialization;
 using System;
 
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// The Recognize Choice completed event.
@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
         /// </summary>
         [CodeGenMember("RecognitionType")]
         [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
-        public CallMediaRecognitionType RecognitionType { get; set; }
+        public CallMediaRecognitionType RecognitionType { get; internal set; }
 
         /// <summary> Initializes a new instance of RecognizeChoiceCompleted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
