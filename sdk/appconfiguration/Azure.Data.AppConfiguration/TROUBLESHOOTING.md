@@ -110,7 +110,7 @@ ConfigurationClientOptions options = new ConfigurationClientOptions()
 
 ## Troubleshooting authentication issues
 
-Azure App Configuration supports Azure Active Directory authentication. To provide a valid credential, you can use the `Azure.Identity` package. For more information on getting started, see the [Azure App Configuration library's README](https://learn.microsoft.com/dotnet/api/overview/azure/data.appconfiguration-readme?view=azure-dotnet#authenticate-the-client). For details on the credential types supported in `Azure.Identity`, see the [Azure Identity library's documentation](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme).
+In addition to connection strings, Azure App Configuration supports [role-based access control](https://learn.microsoft.com/azure/role-based-access-control/overview) (RBAC) using Azure Active Directory authentication. The `Azure.Identity` package is used to obtain credentials for RBAC. For more information on getting started, see the [Azure App Configuration library's README](https://learn.microsoft.com/dotnet/api/overview/azure/data.appconfiguration-readme?view=azure-dotnet#authenticate-the-client). For details on the credential types supported in `Azure.Identity`, see the [Azure Identity documentation](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme).
 
 Here are the authentication exceptions and ways to handle it:
 
