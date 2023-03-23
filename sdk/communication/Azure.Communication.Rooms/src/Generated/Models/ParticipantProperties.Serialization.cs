@@ -10,18 +10,16 @@ using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
-    internal partial class AddParticipantsRequest : IUtf8JsonSerializable
+    internal partial class ParticipantProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("participants"u8);
-            writer.WriteStartArray();
-            foreach (var item in Participants)
+            if (Optional.IsDefined(Role))
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("role"u8);
+                writer.WriteStringValue(Role.Value.ToString());
             }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
     }

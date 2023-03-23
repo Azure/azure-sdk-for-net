@@ -1,23 +1,21 @@
 # Azure Communication Rooms client library for .NET
 
 This package contains a C# SDK for the Rooms Service of Azure Communication Services.
-
-Rooms overview
-    Azure Communication Services (ACS) Rooms is a set of APIs, used by Contoso server applications to create a server-managed conversation space with fixed set of lifetime and participants, pre-defining rules from server-tier both who and when can communicate (like scheduled meeting creation).
+Azure Communication Services (ACS) Rooms is a set of APIs, used by Contoso server applications to create a server-managed conversation space with fixed set of lifetime and participants, pre-defining rules from server-tier both who and when can communicate (like scheduled meeting creation).
 
 With the Public Preview release of ACS Rooms, Contoso will be able to:
-    create a meeting space with known time coordinates (start/end time),
-    join voice/video calls within that meeting space using the ACS web calling SDK or native mobile calling SDKs,
-    add participants to a room,
-    assign pre-defined roles to room participants,
-    set rooms call join policies (e.g., open or closed room), and
-    consume Event Grid notifications for calling events.
-    The server-side functionalities can be accessed via a refreshed API and a full set of SDKs (.NET, Java, Python, JavaScript/TypeScript).
+
+    - Create a meeting space with known time coordinates (start/end time)
+    - Join voice/video calls within that meeting space using the ACS web calling SDK or native mobile calling SDKs
+    - Add participants to a room
+    - Assign pre-defined roles to room participants
+    - Consume Event Grid notifications for calling events
 
 The main scenarios where Rooms can best be used:
-    Virtual Visits (e.g., telemedicine, remote financial advisor, virtual classroom, etc...)
-    Virtual Events (e.g., live event, company all-hands, live concert, etc...)
-    Champion scenarios
+
+    - Virtual Visits (e.g., telemedicine, remote financial advisor, virtual classroom, etc...)
+    - Virtual Events (e.g., live event, company all-hands, live concert, etc...)
+    - Champion scenarios
 
 
 [Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
@@ -36,7 +34,7 @@ You need an [Azure subscription][azure_sub] and a [Communication Service Resourc
 To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 ### Key concepts
-`RoomsClient` provides the functionality to create room, update room, get room, delete room, add participants, remove participant, update participant and get participants.
+`RoomsClient` provides the functionality to create room, update room, get room, list rooms, delete room, upsert participants, remove participant, and list participants.
 
 ### Using statements
 ```C# Snippet:Azure_Communication_Rooms_Tests_UsingStatements
@@ -52,8 +50,104 @@ RoomsClient client = new RoomsClient(connectionString);
 ```
 
 ## Examples
+### Create a room
+To create a room, call the `CreateRoom` or `CreateRoomAsync` function from `RoomsClient`.
+The `validFrom`, `validUntil`, and `participants` arguments are all optional. If `validFrom` and `validUntil` are not provided, then the default for `validFrom` is current date time and the default for `validUntil` is `validFrom + 180 days`.
+When defining `RoomParticipants`, if role is not specified, then it will be `Attendee` by default.
+The returned value is `Response<CommunicationRoom>` which contains created room details as well as the status and associated error codes in case of a failure.
 
-The following sections provide several code snippets covering some of the most common tasks, which is available at Sample1_RoomsRequests.md
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
+// Create communication users using the CommunicationIdentityClient
+var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
+var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
+
+var validFrom = DateTime.UtcNow;
+var validUntil = validFrom.AddDays(1);
+RoomParticipant participant1 = new RoomParticipant(communicationUser1); // If role is not provided, then it is set as Attendee by default
+RoomParticipant participant2 = new RoomParticipant(communicationUser2, ParticipantRole.Presenter);
+List<RoomParticipant> invitedParticipants = new List<RoomParticipant>
+{
+    participant1,
+    participant2
+};
+
+Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, invitedParticipants);
+CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
+```
+
+### Update a room
+The `validFrom` and `validUntil` properties of a created room can be updated by calling the `CreateRoom` or `CreateRoomAsync` function from `RoomsClient`.
+
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
+validUntil = validFrom.AddDays(30);
+Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
+CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
+```
+
+### Get a created room
+A created room can be retrieved by calling the `GetRoom` or `GetRoomAsync` function from `RoomsClient` and passing in the associated `roomId`.
+
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomAsync
+Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(createdRoomId);
+CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
+```
+
+### List all created rooms
+You can retrieve all created rooms by calling the `ListRoom` or `ListRoomAsync` function from `RoomsClient`.
+The returned value is `Response<RoomsCollection>` which contains the paginated list of rooms as well as the status and associated error codes in case of a failure.
+
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_ListRoomAsync
+Response<RoomsCollection> listRoomsResponse = await roomsClient.ListRoomsAsync();
+RoomsCollection roomsCollection = listRoomsResponse.Value;
+```
+
+### Upsert participants in a room
+In order to insert new participants or update existing participants, call the `UpsertParticipants` or `UpsertParticipantsAsync` function from RoomsClient.
+When defining `RoomParticipants`, if role is not specified, then it will be `Attendee` by default.
+
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_UpsertParticipants
+CommunicationIdentifier communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
+RoomParticipant newParticipant = new RoomParticipant(communicationUser3, ParticipantRole.Consumer);
+
+// Previous snippet for create room added participant2 as Presenter
+participant2 = new RoomParticipant(communicationUser2, ParticipantRole.Attendee);
+
+List<RoomParticipant> participantsToUpsert = new List<RoomParticipant>
+{
+    participant2,   // participant2 updated from Presenter to Consumer
+    newParticipant, // newParticipant added to the room
+};
+
+Response<object> upsertParticipantResponse = await roomsClient.UpsertParticipantsAsync(createdRoomId, participantsToUpsert);
+```
+
+### Remove participants in a room
+To remove participants from a room, call the `RemoveParticipants` or `RemoveParticipantsAsync` function from RoomsClient.
+
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_RemoveParticipants
+List<CommunicationIdentifier> participantsToRemove = new List<CommunicationIdentifier>
+{
+   communicationUser1,
+   communicationUser2
+};
+Response<object> removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, participantsToRemove);
+```
+
+
+### Get participants in a room
+To get all the participants from a room, call the `GetParticipants` or `GetParticipantsAsync` function from RoomsClient.
+The returned value is `Response<ParticipantsCollection>` which contains the paginated list of participants as well as the status and associated error codes in case of a failure.
+
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_GetParticipants
+Response<ParticipantsCollection> getParticipantResponse = await roomsClient.GetParticipantsAsync(createdRoomId);
+ParticipantsCollection participantCollection = getParticipantResponse.Value;
+```
+
+### Delete room
+To delete a room, call the `DeleteRoom` or `DeleteRoomAsync` function from RoomsClient.
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_DeleteRoomAsync
+Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
+```
 
 ## Troubleshooting
 ### Service Responses
@@ -67,9 +161,9 @@ try
     var validFrom = DateTime.UtcNow;
     var validUntil = validFrom.AddDays(1);
     List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>();
-    RoomParticipant participant1 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser1), RoleType.Presenter);
-    RoomParticipant participant2 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser2), RoleType.Attendee);
-    Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, RoomJoinPolicy.InviteOnly, createRoomParticipants);
+    RoomParticipant participant1 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser1), ParticipantRole.Presenter);
+    RoomParticipant participant2 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser2), ParticipantRole.Attendee);
+    Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, createRoomParticipants);
     CommunicationRoom createRoomResult = createRoomResponse.Value;
 }
 catch (RequestFailedException ex)

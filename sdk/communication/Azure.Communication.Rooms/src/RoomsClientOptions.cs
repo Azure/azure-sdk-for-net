@@ -11,8 +11,8 @@ namespace Azure.Communication.Rooms
     /// </summary>
     public class RoomsClientOptions : ClientOptions
     {
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2022_02_01_Preview;
-        internal const ServiceVersion LastVersion = ServiceVersion.V2021_04_07_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_03_31_Preview;
+        internal const ServiceVersion LastVersion = ServiceVersion.V2022_02_01_Preview;
 
         internal string ApiVersion { get; }
 
@@ -26,6 +26,8 @@ namespace Azure.Communication.Rooms
             {
                 ServiceVersion.V2021_04_07_Preview => "2021-04-07",
                 ServiceVersion.V2022_02_01_Preview => "2022-02-01",
+                ServiceVersion.V2023_03_31_Preview => "2023-03-31-preview",
+
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -43,6 +45,10 @@ namespace Azure.Communication.Rooms
             /// The Second Room Service Version with Prebuilt RBAC support.
             /// </summary>
             V2022_02_01_Preview = 2,
+            /// <summary>
+            /// The Second Room Service Version with Prebuilt RBAC support.
+            /// </summary>
+            V2023_03_31_Preview = 3,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }
