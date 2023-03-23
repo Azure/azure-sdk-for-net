@@ -118,6 +118,64 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        public void CanSetProperty_JsonWithDotProperty()
+        {
+            string json = """
+                {
+                  "Baz.NotChild" : {
+                     "A" : 3
+                  },
+                  "Foo" : 1,
+                  "Bar" : "Hi!"
+                }
+                """;
+
+            var jd = MutableJsonDocument.Parse(json);
+
+            jd.RootElement.GetProperty("Foo").Set(3);
+
+            Assert.AreEqual(3, jd.RootElement.GetProperty("Foo").GetInt32());
+
+            MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
+
+            Assert.AreEqual(
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+                {
+                  "Baz.NotChild" : {
+                     "A" : 3
+                  },
+                  "Foo" : 3,
+                  "Bar" : "Hi!"
+                }
+                """),
+                jsonString);
+        }
+
+        [Test]
+        public void JsonWithDelimiterIsInvalidJson()
+        {
+            char delimiter = MutableJsonDocument.ChangeTracker.Delimiter;
+            string propertyName = "\"Baz" + delimiter + "NotChild\"";
+            string json = "{" + propertyName + ": {\"A\": 3}, \"Foo\":1}";
+
+            bool parsed = false;
+            bool threwJsonException = false;
+
+            try
+            {
+                MutableJsonDocument.Parse(json);
+                parsed = true;
+            }
+            catch (JsonException)
+            {
+                threwJsonException = true;
+            }
+
+            Assert.IsFalse(parsed);
+            Assert.IsTrue(threwJsonException);
+        }
+
+        [Test]
         public void CanSetPropertyToMutableJsonDocument()
         {
             string json = """

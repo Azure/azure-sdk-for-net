@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests
 {
     public class OpenAITestEnvironment : TestEnvironment
     {
+        public string PublicOpenAiApiKey => GetOptionalVariable("PUBLIC_OPENAI_API_KEY");
+
         public void ThrowIfCannotDeploy()
         {
             string[] requiredVariableNames = new string[]

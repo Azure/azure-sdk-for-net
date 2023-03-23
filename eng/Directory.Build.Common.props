@@ -38,7 +38,7 @@
     -->
     <NoWarn>$(NoWarn);CA1812</NoWarn>
     <!--
-      Disable some FxCop rules
+      Disable some NetAnalyzers rules
      -->
     <NoWarn>
       $(NoWarn);
@@ -78,7 +78,7 @@
 
   <PropertyGroup>
     <EnableClientSdkAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableClientSdkAnalyzers>
-    <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
+    <EnableNetAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableNetAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <EnableBannedApiAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableBannedApiAnalyzers>
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>

@@ -16,11 +16,10 @@ namespace Azure.Communication.Email
         /// </summary>
         /// <param name="id">OperationId of an email send operation.</param>
         /// <param name="status">Status of the email send operation.</param>
-        /// <param name="error">Error details when status is a non-success terminal state.</param>
         /// <returns></returns>
-        public static EmailSendResult EmailSendResult(string id = default, EmailSendStatus status = default, ErrorDetail error = default )
+        public static EmailSendResult EmailSendResult(string id = default, EmailSendStatus status = default)
         {
-            return new EmailSendResult(id, status, error);
+            return new EmailSendResult(id, status);
         }
     }
 }

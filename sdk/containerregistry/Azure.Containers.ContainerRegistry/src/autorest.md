@@ -125,8 +125,7 @@ directive:
     delete $["allOf"];
     $.properties["schemaVersion"] = {
           "type": "integer",
-          "description": "Schema version",
-          "x-ms-client-default": 2
+          "description": "Schema version"
         };
     $.properties.config["x-ms-client-name"] = "configuration";
 ```
@@ -161,4 +160,12 @@ directive:
   where: $.definitions.Annotations
   transform: >
     delete $["x-accessibility"]
+```
+
+# Don't buffer downloads
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='ContainerRegistryBlob_GetBlob' || @.operationId=='ContainerRegistryBlob_GetChunk')]
+  transform: $["x-csharp-buffer-response"] = false;
 ```
