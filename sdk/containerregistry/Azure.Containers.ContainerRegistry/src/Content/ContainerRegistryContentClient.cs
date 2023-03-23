@@ -536,25 +536,9 @@ namespace Azure.Containers.ContainerRegistry
         /// Gets a manifest.
         /// </summary>
         /// <param name="tagOrDigest">The tag or digest of the manifest to get.</param>
-        /// <param name="mediaTypes">The set of media types to accept for the manifest.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>The download manifest result.</returns>
-        public virtual Response<GetManifestResult> GetManifest(string tagOrDigest, IEnumerable<ManifestMediaType> mediaTypes, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
-            Argument.AssertNotNull(mediaTypes, nameof(mediaTypes));
-
-            return GetManifest(tagOrDigest, string.Join(", ", mediaTypes), cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a manifest.
-        /// </summary>
-        /// <param name="tagOrDigest">The tag or digest of the manifest to get.</param>
-        /// <param name="mediaType">The media type of the manifest to get.  If not specified, all media types will be requested.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>The GET manifest result.</returns>
-        public virtual Response<GetManifestResult> GetManifest(string tagOrDigest, ManifestMediaType? mediaType = null, CancellationToken cancellationToken = default)
+        public virtual Response<GetManifestResult> GetManifest(string tagOrDigest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
 
@@ -562,7 +546,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                string accept = GetAcceptHeader(mediaType);
+                string accept = GetAcceptHeader();
 
                 Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, tagOrDigest, accept, cancellationToken);
                 Response rawResponse = response.GetRawResponse();
@@ -591,28 +575,12 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Gets a manifest.
-        /// </summary>
-        /// <param name="tagOrDigest">The tag or digest of the manifest to get.</param>
-        /// <param name="mediaTypes">The set of media types to accept for the manifest.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>The manifest result.</returns>
-        public virtual async Task<Response<GetManifestResult>> GetManifestAsync(string tagOrDigest, IEnumerable<ManifestMediaType> mediaTypes, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
-            Argument.AssertNotNull(mediaTypes, nameof(mediaTypes));
-
-            return await GetManifestAsync(tagOrDigest, string.Join(", ", mediaTypes), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// Get a manifest.
         /// </summary>
         /// <param name="tagOrDigest">The tag or digest of the manifest to get.</param>
-        /// <param name="mediaType">The media type of the manifest to get.  If not specified, all media types will be requested.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>The manifest result.</returns>
-        public virtual async Task<Response<GetManifestResult>> GetManifestAsync(string tagOrDigest, ManifestMediaType? mediaType = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GetManifestResult>> GetManifestAsync(string tagOrDigest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
 
@@ -620,7 +588,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                string accept = GetAcceptHeader(mediaType);
+                string accept = GetAcceptHeader();
 
                 Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, tagOrDigest, accept, cancellationToken).ConfigureAwait(false);
                 Response rawResponse = response.GetRawResponse();
@@ -648,15 +616,12 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private static string GetAcceptHeader(ManifestMediaType? mediaType)
+        private static string GetAcceptHeader()
         {
-            if (mediaType.HasValue)
-            {
-                return (string)mediaType.Value;
-            }
-
             StringBuilder sb = new StringBuilder();
 
+            sb.Append("*/*");
+            sb.Append(", ");
             sb.Append(ManifestMediaType.DockerManifest);
             sb.Append(", ");
             sb.Append(ManifestMediaType.DockerManifestList);
@@ -666,6 +631,8 @@ namespace Azure.Containers.ContainerRegistry
             sb.Append(ManifestMediaType.OciImageManifest);
             sb.Append(", ");
             sb.Append(ManifestMediaType.OciIndex);
+            sb.Append(", ");
+            sb.Append(ManifestMediaType.OrasArtifactV1);
 
             return sb.ToString();
         }

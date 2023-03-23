@@ -217,13 +217,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryContentClient client = new(endpoint, repository, new DefaultAzureCredential());
 
 #region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
-
-            // Pass multiple media types if the media type of the manifest to download is unknown
-            List<ManifestMediaType> mediaTypes = new() {
-                "application/vnd.docker.distribution.manifest.list.v2+json",
-                "application/vnd.oci.image.index.v1+json" };
-
-            GetManifestResult result = await client.GetManifestAsync("sample", mediaTypes);
+            GetManifestResult result = await client.GetManifestAsync("sample");
 
             if (result.MediaType == "application/vnd.docker.distribution.manifest.list.v2+json")
             {
@@ -233,7 +227,6 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             {
                 Console.WriteLine("Manifest is an OCI index.");
             }
-
 #endregion
         }
     }
