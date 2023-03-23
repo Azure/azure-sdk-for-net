@@ -406,8 +406,11 @@ namespace Azure.Core
         public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
         public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
         public System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint, System.Collections.Generic.IDictionary<string, object?> context) { throw null; }
+        public System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayAsync(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint, System.Collections.Generic.IDictionary<string, object?> context) { throw null; }
         protected abstract System.TimeSpan GetNextDelayCore(Azure.Response? response, int retryNumber, System.Collections.Generic.IDictionary<string, object?> context);
+        protected abstract System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayCoreAsync(Azure.Response? response, int retryNumber, System.Collections.Generic.IDictionary<string, object?> context);
         protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
+        protected static System.TimeSpan Min(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
     }
     public static partial class DelegatedTokenCredential
     {
@@ -1038,8 +1041,10 @@ namespace Azure.Core.Pipeline
     public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         public RetryPolicy(int? maxRetries = default(int?), Azure.Core.DelayStrategy? delayStrategy = null) { }
-        protected virtual System.TimeSpan GetNextDelay(Azure.Core.HttpMessage message, Azure.Core.DelayStrategy strategy, System.Collections.Generic.IDictionary<string, object?> delayContext) { throw null; }
-        protected virtual System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayAsync(Azure.Core.HttpMessage message, Azure.Core.DelayStrategy strategy, System.Collections.Generic.IDictionary<string, object?> delayContext) { throw null; }
+        protected Azure.Core.DelayStrategy DelayStrategy { get { throw null; } }
+        protected static System.Collections.Generic.IDictionary<string, object?>? GetDelayContext(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual System.TimeSpan GetNextDelay(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayAsync(Azure.Core.HttpMessage message) { throw null; }
         protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
         protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
         protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }

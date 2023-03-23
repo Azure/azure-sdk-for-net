@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Azure.Core.Tests.TestClients
 {
@@ -9,10 +11,16 @@ namespace Azure.Core.Tests.TestClients
     {
         public int CallCount { get; private set; }
 
-        public override TimeSpan GetNextDelay(Response response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
+        protected override TimeSpan GetNextDelayCore(Response response, int retryNumber, IDictionary<string, object> context)
         {
             CallCount++;
             return TimeSpan.Zero;
+        }
+
+        protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response response, int retryNumber, IDictionary<string, object> context)
+        {
+            CallCount++;
+            return new(TimeSpan.Zero);
         }
     }
 }

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 #nullable enable
 
@@ -13,6 +15,9 @@ namespace Azure.Core
     /// </summary>
     internal class ZeroPollingStrategy : DelayStrategy
     {
-        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) => TimeSpan.Zero;
+        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber, IDictionary<string, object?> context) => TimeSpan.Zero;
+
+        protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber,
+            IDictionary<string, object?> context) => new(TimeSpan.Zero);
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 #nullable enable
 
@@ -33,7 +34,13 @@ namespace Azure.Core
         {
         }
 
-        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber, IDictionary<string, object?> context)
+        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber, IDictionary<string, object?> context) =>
+            GetNextDelayCoreInternal(retryNumber);
+
+        protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber, IDictionary<string, object?> context) =>
+            new(GetNextDelayCoreInternal(retryNumber));
+
+        private static TimeSpan GetNextDelayCoreInternal(int retryNumber)
         {
             return retryNumber >= s_pollingSequence.Length ? _maxDelay : s_pollingSequence[retryNumber];
         }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -70,10 +71,16 @@ namespace Azure.Core.Tests.DelayStrategies
                 _cts = cts;
             }
 
-            public override TimeSpan GetNextDelay(Response response, int retryNumber, TimeSpan? clientDelayHint, TimeSpan? serverDelayHint)
+            protected override TimeSpan GetNextDelayCore(Response response, int retryNumber, IDictionary<string, object> context)
             {
                 _cts.CancelAfter(_cancelAfter);
                 return _delay;
+            }
+
+            protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response response, int retryNumber, IDictionary<string, object> context)
+            {
+                _cts.CancelAfter(_cancelAfter);
+                return new(_delay);
             }
         }
     }
