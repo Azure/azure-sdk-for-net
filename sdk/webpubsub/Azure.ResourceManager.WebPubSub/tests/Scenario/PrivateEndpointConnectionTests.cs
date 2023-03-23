@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             }
             else
             {
-                _vnetId = new ResourceIdentifier($"{_resourceGroupIdentifier}/providers/Microsoft.Network/virtualNetworks/{_vnetName}");
+                _vnetId = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Data.Name, _vnetName);
             }
 
             await StopSessionRecordingAsync();

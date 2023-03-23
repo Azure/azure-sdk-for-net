@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         protected internal const string ExpectedValue = "tagValue";
 
         public MoverResourceSetTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
@@ -114,10 +114,24 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
             string vnetName = Recording.GenerateAssetName("Vnet-");
-            VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
             string moverResourceName = Recording.GenerateAssetName("MoverResource-");
             string targetVnetName = Recording.GenerateAssetName("targetVnet-");
-            MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName, targetVnetName);
+            string targetRgName = Recording.GenerateAssetName("testRg-ResourceMover-Target-");
+            string moverDependentResourceName = Recording.GenerateAssetName("MoverResource-");
+            ResourceIdentifier virtualNetworkId;
+            if (Mode == RecordedTestMode.Record)
+            {
+                using (Recording.DisableRecording())
+                {
+                    VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
+                    virtualNetworkId = virtualNetwork.Id;
+                }
+            }
+            else
+            {
+                virtualNetworkId = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Data.Name, vnetName);
+            }
+            MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetworkId, moverResourceName, targetVnetName);
 
             // Validate that the Vnet has an dependency.
             ArmOperation<MoverOperationStatus> lro = await moverResourceSet.ResolveDependenciesAsync(WaitUntil.Completed);
@@ -136,9 +150,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             Assert.AreEqual(unresolvedDependencyId, rg.Id);
 
             // Add the source resource group to the moverResourceSet and verify there are no missed dependencies.
-            string targetRgName = Recording.GenerateAssetName("testRg-ResourceMover-Target-");
             ResourceGroupResource targetRg = await CreateResourceGroup(subscription, targetRgName, AzureLocation.EastUS2);
-            string moverDependentResourceName = Recording.GenerateAssetName("MoverResource-");
             MoverResourceData input = new MoverResourceData
             {
                 Properties = new MoverResourceProperties(unresolvedDependencyId)
@@ -175,7 +187,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
 
             // Prepare, initiate and discare the move for the Vnet.
-            IEnumerable<ResourceIdentifier> moverVnet = new List<ResourceIdentifier> { virtualNetwork.Id };
+            IEnumerable<ResourceIdentifier> moverVnet = new List<ResourceIdentifier> { virtualNetworkId };
             prepareContent = new MoverPrepareContent(moverVnet)
             {
                 MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
@@ -200,7 +212,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             // Bulk remove
             MoverBulkRemoveContent bulkRemoveContent = new MoverBulkRemoveContent()
             {
-                MoverResources = { virtualNetwork.Id },
+                MoverResources = { virtualNetworkId },
                 MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
             };
             lro = await moverResourceSet.BulkRemoveAsync(WaitUntil.Completed, bulkRemoveContent);

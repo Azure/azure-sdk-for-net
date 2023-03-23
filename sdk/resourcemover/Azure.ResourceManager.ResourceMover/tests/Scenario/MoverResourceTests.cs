@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             }
             else
             {
-                _virtualNetworkId = new ResourceIdentifier($"{rg.Id}/providers/Microsoft.Network/virtualNetworks/{vnetName}");
+                _virtualNetworkId = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Data.Name, vnetName);
             }
         }
 
