@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0 (2023-03-31)
+
+### Breaking Changes
+- Changed: Renamed parameter names in EmailMessage constructor
+- Removed: Removed public methods for GetSendResult and GetSendResultAsync since the same functionality is available through EmailSendOperation.UpdateStatus method
+
 ## 1.0.0-beta.4 (2023-03-15)
 
 ### Bugs Fixed

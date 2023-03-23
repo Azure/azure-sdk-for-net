@@ -1,6 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Microsoft Azure Cognitive Services OpenAI client library</Description>
+    <Description>
+      Azure's official .NET library for OpenAI inference that supports Completions, Chat, and Embeddings.
+      Works with Azure OpenAI resources as well as the non-Azure OpenAI endpoint.
+    </Description>
     <AssemblyTitle>Microsoft Azure.AI.OpenAI client library</AssemblyTitle>
     <Version>1.0.0-beta.5</Version>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>

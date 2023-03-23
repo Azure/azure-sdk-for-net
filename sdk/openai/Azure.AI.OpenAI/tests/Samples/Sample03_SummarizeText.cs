@@ -16,7 +16,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
         {
             #region Snippet:SummarizeText
             string endpoint = "https://myaccount.openai.azure.com/";
-            OpenAIClient client = new OpenAIClient(new Uri(endpoint), "myDeploymentId", new DefaultAzureCredential());
+            var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
             string textToSummarize = @"
                 Two independent experiments reported their results this morning at CERN, Europe's high-energy physics laboratory near Geneva in Switzerland. Both show convincing evidence of a new boson particle weighing around 125 gigaelectronvolts, which so far fits predictions of the Higgs previously made by theoretical physicists.
@@ -36,10 +36,14 @@ namespace Azure.AI.OpenAI.Tests.Samples
             ";
 
             Console.Write($"Input: {summarizationPrompt}");
-            CompletionsOptions completionsOptions = new CompletionsOptions();
-            completionsOptions.Prompt.Add(summarizationPrompt);
+            var completionsOptions = new CompletionsOptions()
+            {
+                Prompts = { summarizationPrompt },
+            };
 
-            Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
+            string deploymentName = "text-davinci-003";
+
+            Response<Completions> completionsResponse = client.GetCompletions(deploymentName, completionsOptions);
             string completion = completionsResponse.Value.Choices[0].Text;
             Console.WriteLine($"Summarization: {completion}");
             #endregion

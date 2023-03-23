@@ -9,7 +9,7 @@ generate-model-factory: false
 title: communication
 namespace: Azure.ResourceManager.Communication
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/7168ecde052e9797d31d74c40ad00ac68c74ec6a/specification/communication/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/314d792ae3b61131b33f22e644d059b227af85e8/specification/communication/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -71,5 +71,12 @@ rename-mapping:
   DnsRecord.ttl: TimeToLiveInSeconds
   DnsRecord: VerificationDnsRecord
   DomainsProvisioningState: DomainProvisioningState
+  ProvisioningState: CommunicationServiceProvisioningState
+
+directive:
+ - from: types.json
+   where: $.parameters.SubscriptionIdParameter
+   transform: >
+     delete $["format"];
 
 ```

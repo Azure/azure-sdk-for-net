@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly ConnectionVars _connectionVars;
         private bool _disposed;
 
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, TokenCredential? credential = null)
+        public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
         {
             if (options == null)
             {
@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _connectionVars = InitializeConnectionVars(options);
 
-            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, credential);
+            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
 
             _fileBlobProvider = InitializeOfflineStorage(options);
 
@@ -67,21 +67,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             throw new InvalidOperationException("A connection string was not found. Please set your connection string.");
         }
 
-        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, TokenCredential? credential)
+        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
         {
             HttpPipeline pipeline;
 
-            if (credential != null)
+            if (options.Credential != null)
             {
                 var scope = AadHelper.GetScope(connectionVars.AadAudience);
                 var httpPipelinePolicy = new HttpPipelinePolicy[]
                 {
-                    new BearerTokenAuthenticationPolicy(credential, scope),
+                    new BearerTokenAuthenticationPolicy(options.Credential, scope),
                     new IngestionRedirectPolicy()
                 };
 
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
+                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {options.Credential.GetType().Name} Scope: {scope}");
             }
             else
             {
