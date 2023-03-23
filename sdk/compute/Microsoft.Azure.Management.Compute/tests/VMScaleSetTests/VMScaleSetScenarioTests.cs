@@ -797,6 +797,79 @@ namespace Compute.Tests
             }
         }
 
+        /// <summary>
+        /// This test creates a VMSS with PIR image and securityPostureReference defined.
+        /// Once the VMSS is created, it verifies whether the response contains securityPostureReference or not
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperation_SecurityPostureReferenceId")]
+        public void TestVMScaleSetScenarioOperation_SecurityPostureReferenceId()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                // Create resource group
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+                var securityPostureId = "/CommunityGalleries/Microsoft.Compute/SecurityPostures/WindowsVMSS/versions/1.0.0";
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                    EnsureClientsInitialized(context);
+                    ImageReference imageRef = new ImageReference()
+                    {
+                        Publisher = "MicrosoftWindowsServer",
+                        Offer = "WindowsServer",
+                        Sku = "2022-datacenter",
+                        Version = "latest"
+                    };
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+
+                    var getResponse = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        storageAccountOutput,
+                        imageRef,
+                        out inputVMScaleSet,
+                        null,
+                        (vmScaleSet) =>
+                        {
+                            vmScaleSet.VirtualMachineProfile.SecurityPostureReference = new SecurityPostureReference()
+                            {
+                                Id = securityPostureId
+                            };
+                            vmScaleSet.Overprovision = false;
+                            vmScaleSet.UpgradePolicy.Mode = UpgradeMode.Automatic;
+                            vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                            {
+                                EnableAutomaticOSUpgrade = true
+                            };
+                        },
+                        createWithManagedDisks: true,
+                        createWithPublicIpAddress: false,
+                        createWithHealthProbe: true);
+
+                    ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+                    Assert.True(string.Equals(securityPostureId, getResponse.VirtualMachineProfile.SecurityPostureReference?.Id, StringComparison.OrdinalIgnoreCase),
+                        "SecurityPostureReference.Id are not matching");
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    //of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
         private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true, 
             bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false, 
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
