@@ -1,16 +1,21 @@
 # Release History
 
-## 1.1.0-beta.7 (Unreleased)
+## 1.1.0 (2023-03-31)
 
 ### Features Added
+- Public release of the Azure Communication Services Email [Azure Communication Services Email](https://learn.microsoft.com/en-us/azure/communication-services/concepts/email/email-overview).
+- Added SenderUsernameResource, SenderUsernameResourceCollection and SenderUsernameResourceData to support the new resource type.
 
 ### Breaking Changes
+- Removed ValidSenderUsernames property from CommunicationServiceResoruceData.
+- CommunicationResource RegenerateKey and RegenerateKeyAsync are no longer marked as long running operations.
+- CommunicationResource Update and UpdateAsync are no longer marked as long running operations.
 
 ### Bugs Fixed
 
 ### Other Changes
 
-## 1.1.0-beta.6 (2023-02-14)
+## 1.1.0-beta.6 (2023-02-14)S
 
 ### Other Changes
 
