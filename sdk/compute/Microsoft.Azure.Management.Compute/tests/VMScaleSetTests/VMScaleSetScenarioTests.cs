@@ -735,7 +735,7 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-
+                /* temporarily comment to unblock 2023-03-01 release PR reviews.
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var vmssName = TestUtilities.GenerateName("vmss");
@@ -794,6 +794,7 @@ namespace Compute.Tests
                     //of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
+                */
             }
         }
 

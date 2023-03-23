@@ -9,20 +9,13 @@
       Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.
       Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Compute" (https://www.nuget.org/packages/Azure.ResourceManager.Compute/). Please see the package changelog for more information.
     </Description>
-    <Version>60.0.0</Version>
+    <Version>61.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release is:
-        1. CloudServiceRP API calls will use 2022-09-04 API version.
-        2. ComputeRP API calls will use 2022-11-01 API version.
-        3. Zone property support for CloudService resource.
-        4. Reimage support for standalone VMs.
-        5. Addition of userData property in RestorePointSourceMetadata class for restore points.
-        6. Support for requireGuestProvisionSignal, constrainedMaximumCapacity, serviceArtifactReference, and maxSurge properties in VMSS.
-        7. Addition of imageDeprecationStatus property to VirtualMachineImage response.
-        8. Support for rollbackFailedInstancesOnPolicyBreach in VMSS RollingUpgradePolicy.
+        1. ComputeRP API calls will use 2023-03-01 API version.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
