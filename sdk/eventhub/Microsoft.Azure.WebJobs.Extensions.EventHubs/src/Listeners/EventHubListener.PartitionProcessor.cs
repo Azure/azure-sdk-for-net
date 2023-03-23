@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 				CachedEventsManager = new PartitionProcessorEventsManager(maxBatchSize: options.MaxEventBatchSize, minBatchSize: options.MinEventBatchSize);
 				_maxWaitTime = options.MaxWaitTime;
 				_cachedEventsGuard = new SemaphoreSlim(1, 1);
-            }
+			}
 
 			public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
 			{
