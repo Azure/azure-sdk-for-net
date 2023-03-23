@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.IsTrue(purchaseResponse.HasValue);
             Assert.AreEqual(purchaseRequest.BillingPlan.ToString(), purchaseResponse.Value.Data.BillingPlan.ToString());
             Assert.AreEqual(string.Format("/providers/microsoft.capacity/reservationOrders/{0}", reservationOrderId), purchaseResponse.Value.Data.Id.ToString());
-            Assert.AreEqual("Microsoft.Capacity", purchaseResponse.Value.Data.ResourceType.Namespace);
+            Assert.AreEqual("microsoft.capacity", purchaseResponse.Value.Data.ResourceType.Namespace);
             Assert.AreEqual("reservationOrders", purchaseResponse.Value.Data.ResourceType.Type);
             Assert.AreEqual(purchaseRequest.DisplayName, purchaseResponse.Value.Data.DisplayName);
             Assert.AreEqual(reservationOrderId, purchaseResponse.Value.Data.Name);

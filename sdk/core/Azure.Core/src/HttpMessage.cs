@@ -24,6 +24,7 @@ namespace Azure.Core
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
         {
+            Argument.AssertNotNull(request, nameof(Request));
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
@@ -198,9 +199,15 @@ namespace Azure.Core
         /// </summary>
         public void Dispose()
         {
-            Request?.Dispose();
-            _response?.Dispose();
+            Request.Dispose();
             _propertyBag.Dispose();
+
+            var response = _response;
+            if (response != null)
+            {
+                _response = null;
+                response.Dispose();
+            }
         }
 
         private class ResponseShouldNotBeUsedStream : Stream

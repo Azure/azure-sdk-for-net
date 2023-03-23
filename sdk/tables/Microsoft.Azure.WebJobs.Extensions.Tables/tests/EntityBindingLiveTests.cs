@@ -284,6 +284,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     ["RowKey"] = RowKey
                 };
             }
+
+            [return: Table(TableNameExpression)]
+            public static byte[] ByteArray(object original)
+            {
+                // This test case is meant to simulate the isolated worker scenario
+                // where the table output attribute data comes in as a byte array
+                var dict = new Dictionary<string, object>
+                {
+                    ["Value"] = original,
+                    ["PartitionKey"] = PartitionKey,
+                    ["RowKey"] = RowKey
+                };
+                // We enrich with OData annotations as this is what the isolated workers would ideally do
+                // and our test cases expect it.
+                return new BinaryData(dict.ToOdataAnnotatedDictionary()).ToArray();
+            }
         }
 
         [RecordedTest]
@@ -396,6 +412,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     ["ETag"] = "*"
                 };
             }
+
+            [return: Table(TableNameExpression)]
+            public static byte[] ByteArray(object original)
+            {
+                var dict = new Dictionary<string, object>
+                {
+                    ["Value"] = original,
+                    ["PartitionKey"] = PartitionKey,
+                    ["RowKey"] = RowKey,
+                    ["ETag"] = "*"
+                };
+                return new BinaryData(dict.ToOdataAnnotatedDictionary()).ToArray();
+            }
         }
 
         [RecordedTest]
@@ -464,6 +493,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 {
                     ["Value"] = JToken.FromObject(original)
                 };
+            }
+
+            [return: Table(TableNameExpression, PartitionKey, RowKey)]
+            public static byte[] ByteArray(object original)
+            {
+                var dict = new Dictionary<string, object>
+                {
+                    ["Value"] = original
+                };
+                return new BinaryData(dict.ToOdataAnnotatedDictionary()).ToArray();
             }
         }
 

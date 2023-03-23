@@ -84,13 +84,21 @@ namespace Azure.Core.Pipeline
 
             scope.Start();
 
-            if (async)
+            try
             {
-                await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
+                if (async)
+                {
+                    await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNextAsync(message, pipeline, false).EnsureCompleted();
+                }
             }
-            else
+            catch (Exception e)
             {
-                ProcessNextAsync(message, pipeline, false).EnsureCompleted();
+                scope.Failed(e);
+                throw;
             }
 
             if (isActivitySourceEnabled)
@@ -108,8 +116,16 @@ namespace Azure.Core.Pipeline
                 scope.AddAttribute(requestIdKey, serviceRequestId);
             }
 
-            // Set the status to UNSET so the AppInsights doesn't try to infer it from the status code
-            scope.AddAttribute("otel.status_code", message.Response.IsError ? "ERROR" : "UNSET");
+            if (message.Response.IsError)
+            {
+                scope.AddAttribute("otel.status_code", "ERROR");
+                scope.Failed();
+            }
+            else
+            {
+                // Set the status to UNSET so the AppInsights doesn't try to infer it from the status code
+                scope.AddAttribute("otel.status_code",  "UNSET");
+            }
         }
 
         private static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)

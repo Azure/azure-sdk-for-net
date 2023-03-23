@@ -39,6 +39,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            message.BufferResponse = false;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
@@ -697,6 +698,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            message.BufferResponse = false;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);

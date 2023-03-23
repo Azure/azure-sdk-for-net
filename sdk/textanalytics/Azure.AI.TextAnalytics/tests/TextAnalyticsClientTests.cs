@@ -148,6 +148,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore("Disabled per request of the service team")]
         public void DynamicClassifyArgumentValidation()
         {
             string document1 = "The WHO is issuing a warning about Monkey Pox.";

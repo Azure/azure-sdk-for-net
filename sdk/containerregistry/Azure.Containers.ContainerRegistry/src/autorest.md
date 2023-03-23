@@ -119,12 +119,15 @@ directive:
   transform: >
     $["x-csharp-usage"] = "model,input,output,converter";
     $["x-csharp-formats"] = "json";
+    $["x-ms-client-name"] = "OciImageManifest";
+    $["required"] = ["schemaVersion"];
     delete $["x-accessibility"];
     delete $["allOf"];
     $.properties["schemaVersion"] = {
           "type": "integer",
           "description": "Schema version"
         };
+    $.properties.config["x-ms-client-name"] = "configuration";
 ```
 
 # Take stream as manifest body
@@ -139,12 +142,14 @@ directive:
       }
 ```
 
-# Make ArtifactBlobDescriptor a public type
+# Descriptor Updates
 ``` yaml
 directive:
   from: swagger-document
   where: $.definitions.Descriptor
   transform: >
+    $["x-ms-client-name"] = "OciDescriptor";
+    $.properties.size["x-ms-client-name"] = "sizeInBytes";
     delete $["x-accessibility"]
 ```
 
@@ -155,4 +160,12 @@ directive:
   where: $.definitions.Annotations
   transform: >
     delete $["x-accessibility"]
+```
+
+# Don't buffer downloads
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='ContainerRegistryBlob_GetBlob' || @.operationId=='ContainerRegistryBlob_GetChunk')]
+  transform: $["x-csharp-buffer-response"] = false;
 ```
