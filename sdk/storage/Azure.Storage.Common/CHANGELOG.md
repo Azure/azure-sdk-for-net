@@ -1,5 +1,8 @@
 # Release History
 
+## 12.14.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
 ## 12.14.0 (2023-02-21)
 - Includes all features from 12.14.0-beta.1.
 
