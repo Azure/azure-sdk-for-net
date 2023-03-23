@@ -3,15 +3,15 @@ namespace Azure.AI.OpenAI
     public partial class ChatChoice
     {
         internal ChatChoice() { }
-        public string FinishReason { get { throw null; } }
-        public int? Index { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsFinishReason FinishReason { get { throw null; } }
+        public int Index { get { throw null; } }
         public Azure.AI.OpenAI.ChatMessage Message { get { throw null; } }
     }
     public partial class ChatCompletions
     {
         internal ChatCompletions() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ChatChoice> Choices { get { throw null; } }
-        public System.DateTime Created { get { throw null; } }
+        public System.DateTimeOffset Created { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsUsage Usage { get { throw null; } }
     }
@@ -32,53 +32,71 @@ namespace Azure.AI.OpenAI
     public partial class ChatMessage
     {
         public ChatMessage(Azure.AI.OpenAI.ChatRole role, string content) { }
-        public string Content { get { throw null; } }
-        public Azure.AI.OpenAI.ChatRole Role { get { throw null; } }
+        public string Content { get { throw null; } set { } }
+        public Azure.AI.OpenAI.ChatRole Role { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ChatRole : System.IEquatable<Azure.AI.OpenAI.ChatRole>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public static readonly Azure.AI.OpenAI.ChatRole Assistant;
-        public static readonly Azure.AI.OpenAI.ChatRole System;
-        public static readonly Azure.AI.OpenAI.ChatRole User;
-        public ChatRole(string label) { throw null; }
-        public string Label { get { throw null; } }
+        public ChatRole(string value) { throw null; }
+        public static Azure.AI.OpenAI.ChatRole Assistant { get { throw null; } }
+        public static Azure.AI.OpenAI.ChatRole System { get { throw null; } }
+        public static Azure.AI.OpenAI.ChatRole User { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.ChatRole other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.ChatRole left, Azure.AI.OpenAI.ChatRole right) { throw null; }
-        public static implicit operator Azure.AI.OpenAI.ChatRole (string label) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.ChatRole (string value) { throw null; }
         public static bool operator !=(Azure.AI.OpenAI.ChatRole left, Azure.AI.OpenAI.ChatRole right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class Choice
     {
         internal Choice() { }
-        public string FinishReason { get { throw null; } }
-        public int? Index { get { throw null; } }
-        public Azure.AI.OpenAI.CompletionsLogProbability Logprobs { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsFinishReason FinishReason { get { throw null; } }
+        public int Index { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsLogProbabilityModel LogProbabilityModel { get { throw null; } }
         public string Text { get { throw null; } }
     }
     public partial class Completions
     {
         internal Completions() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Choice> Choices { get { throw null; } }
-        public int? Created { get { throw null; } }
+        public System.DateTimeOffset Created { get { throw null; } }
         public string Id { get { throw null; } }
-        public string Model { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsUsage Usage { get { throw null; } }
     }
-    public partial class CompletionsLogProbability
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CompletionsFinishReason : System.IEquatable<Azure.AI.OpenAI.CompletionsFinishReason>
     {
-        internal CompletionsLogProbability() { }
-        public System.Collections.Generic.IReadOnlyList<int> TextOffset { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<float?> TokenLogProbability { get { throw null; } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CompletionsFinishReason(string value) { throw null; }
+        public static Azure.AI.OpenAI.CompletionsFinishReason ContentFiltered { get { throw null; } }
+        public static Azure.AI.OpenAI.CompletionsFinishReason None { get { throw null; } }
+        public static Azure.AI.OpenAI.CompletionsFinishReason Stopped { get { throw null; } }
+        public static Azure.AI.OpenAI.CompletionsFinishReason TokenLimitReached { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.CompletionsFinishReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.CompletionsFinishReason left, Azure.AI.OpenAI.CompletionsFinishReason right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.CompletionsFinishReason (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.CompletionsFinishReason left, Azure.AI.OpenAI.CompletionsFinishReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CompletionsLogProbabilityModel
+    {
+        internal CompletionsLogProbabilityModel() { }
+        public System.Collections.Generic.IReadOnlyList<int> TextOffsets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<float> TokenLogProbabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tokens { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, float>> TopLogProbability { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, float>> TopLogProbabilities { get { throw null; } }
     }
     public partial class CompletionsOptions
     {
@@ -114,7 +132,6 @@ namespace Azure.AI.OpenAI
     {
         internal Embeddings() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.EmbeddingItem> Data { get { throw null; } }
-        public string Model { get { throw null; } }
         public Azure.AI.OpenAI.EmbeddingsUsage Usage { get { throw null; } }
     }
     public partial class EmbeddingsOptions
@@ -165,14 +182,14 @@ namespace Azure.AI.OpenAI
     public partial class StreamingChatChoice
     {
         internal StreamingChatChoice() { }
-        public string FinishReason { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsFinishReason FinishReason { get { throw null; } }
         public int? Index { get { throw null; } }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.ChatMessage> GetMessageStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StreamingChatCompletions : System.IDisposable
     {
         internal StreamingChatCompletions() { }
-        public System.DateTime Created { get { throw null; } }
+        public System.DateTimeOffset Created { get { throw null; } }
         public string Id { get { throw null; } }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
@@ -181,15 +198,15 @@ namespace Azure.AI.OpenAI
     public partial class StreamingChoice
     {
         internal StreamingChoice() { }
-        public string FinishReason { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsFinishReason FinishReason { get { throw null; } }
         public int? Index { get { throw null; } }
-        public Azure.AI.OpenAI.CompletionsLogProbability Logprobs { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsLogProbabilityModel LogProbabilityModel { get { throw null; } }
         public System.Collections.Generic.IAsyncEnumerable<string> GetTextStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StreamingCompletions : System.IDisposable
     {
         internal StreamingCompletions() { }
-        public System.DateTime Created { get { throw null; } }
+        public System.DateTimeOffset Created { get { throw null; } }
         public string Id { get { throw null; } }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }

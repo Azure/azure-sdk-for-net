@@ -55,5 +55,9 @@ namespace Azure.AI.OpenAI
         public string User { get; set; }
 
         internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
+
+        internal string InternalNonAzureModelName { get; set; }
+
+        internal bool? InternalShouldStreamResponse { get; set; }
     }
 }

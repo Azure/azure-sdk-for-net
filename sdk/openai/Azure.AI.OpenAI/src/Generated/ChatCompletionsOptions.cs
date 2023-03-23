@@ -105,13 +105,5 @@ namespace Azure.AI.OpenAI
         /// Assistant roles.
         /// </summary>
         public IList<ChatMessage> Messages { get; }
-        /// <summary> A value indicating whether chat completions should be streamed for this request. </summary>
-        public bool? InternalShouldStreamResponse { get; set; }
-        /// <summary>
-        /// The model name to provide as part of this completions request.
-        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
-        /// resource URI that's connected to.
-        /// </summary>
-        public string InternalNonAzureModelName { get; set; }
     }
 }
