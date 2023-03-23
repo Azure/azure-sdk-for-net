@@ -33,7 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public TransferCopyMethod CopyMethod { get; set; }
 
         /// <summary>
-        /// The <see cref="BlobType"/> that will be used when uploading blobs to the destiantion.
+        /// The <see cref="BlobType"/> that will be used when uploading blobs to the destination.
         ///
         /// Defaults to <see cref="BlobType.Block"/>.
         /// </summary>
