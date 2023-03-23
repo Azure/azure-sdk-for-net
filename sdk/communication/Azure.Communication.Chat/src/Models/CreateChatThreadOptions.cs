@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace Azure.Communication.Chat.Models
+namespace Azure.Communication.Chat
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class CreateChatThreadOptions
