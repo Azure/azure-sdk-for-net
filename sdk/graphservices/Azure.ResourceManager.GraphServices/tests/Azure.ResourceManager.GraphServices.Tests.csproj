@@ -2,4 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.GraphServices.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\AccountCRUDTests\" />
+  </ItemGroup>
 </Project>
