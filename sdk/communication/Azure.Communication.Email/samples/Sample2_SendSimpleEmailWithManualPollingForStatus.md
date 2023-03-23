@@ -15,9 +15,9 @@ EmailClient emailClient = new EmailClient(connectionString);
 
 ### Send a simple email message with manual polling for status
 To send an email message, call the simple overload of `Send` or `SendAsync` function from the `EmailClient`.
-```C# Snippet:Azure_Communication_Email_Send_Simple_ManualPolling_Async
+```C# Snippet:Azure_Communication_Email_Send_Simple_ManualPolling
 /// Send the email message with WaitUntil.Started
-var emailSendOperation = await emailClient.SendAsync(
+var emailSendOperation = emailClient.Send(
     wait: WaitUntil.Started,
     senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
     recipientAddress: "<recipient email address>"
@@ -30,17 +30,17 @@ try
 {
     while (true)
     {
-        await emailSendOperation.UpdateStatusAsync();
+        emailSendOperation.UpdateStatus();
         if (emailSendOperation.HasCompleted)
         {
             break;
         }
-        await Task.Delay(100);
+        Thread.Sleep(100);
     }
 
     if (emailSendOperation.HasValue)
     {
-        Console.WriteLine($"Email queued for delivery. Status = {emailSendOperation.Value.Status}");
+        Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
     }
 }
 catch (RequestFailedException ex)
