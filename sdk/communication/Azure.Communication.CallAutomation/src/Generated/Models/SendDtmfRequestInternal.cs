@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The SendDtmfRequest. </summary>
-    public partial class SendDtmfRequest
+    /// <summary> The SendDtmfRequest. <summary>
+    internal partial class SendDtmfRequestInternal
     {
         /// <summary> Initializes a new instance of SendDtmfRequest. </summary>
         /// <param name="sendDtmfOptions"> Defines options for continuous dtmf recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sendDtmfOptions"/> is null. </exception>
-        public SendDtmfRequest(SendDtmfOptions sendDtmfOptions)
+        public SendDtmfRequestInternal(SendDtmfOptionsInternal sendDtmfOptions)
         {
             Argument.AssertNotNull(sendDtmfOptions, nameof(sendDtmfOptions));
 
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Defines options for continuous dtmf recognition. </summary>
-        public SendDtmfOptions SendDtmfOptions { get; }
+        public SendDtmfOptionsInternal SendDtmfOptions { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }

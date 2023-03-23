@@ -245,7 +245,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStartContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest)
+        internal HttpMessage CreateStartContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +270,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
-        public async Task<Response> StartContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> StartContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -297,7 +297,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
-        public Response StartContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
+        public Response StartContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -319,7 +319,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStopContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest)
+        internal HttpMessage CreateStopContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -344,7 +344,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
-        public async Task<Response> StopContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> StopContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -371,7 +371,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
-        public Response StopContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
+        public Response StopContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {

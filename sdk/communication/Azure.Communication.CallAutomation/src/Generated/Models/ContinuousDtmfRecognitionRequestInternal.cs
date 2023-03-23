@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ContinuousDtmfRecognitionRequest. </summary>
-    public partial class ContinuousDtmfRecognitionRequest
+    internal partial class ContinuousDtmfRecognitionRequestInternal
     {
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionRequest. </summary>
         /// <param name="continuousDtmfRecognitionOptions"> Defines options for recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="continuousDtmfRecognitionOptions"/> is null. </exception>
-        public ContinuousDtmfRecognitionRequest(ContinuousDtmfRecognitionOptions continuousDtmfRecognitionOptions)
+        public ContinuousDtmfRecognitionRequestInternal(ContinuousDtmfRecognitionOptionsInternal continuousDtmfRecognitionOptions)
         {
             Argument.AssertNotNull(continuousDtmfRecognitionOptions, nameof(continuousDtmfRecognitionOptions));
 
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Defines options for recognition. </summary>
-        public ContinuousDtmfRecognitionOptions ContinuousDtmfRecognitionOptions { get; }
+        public ContinuousDtmfRecognitionOptionsInternal ContinuousDtmfRecognitionOptions { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }

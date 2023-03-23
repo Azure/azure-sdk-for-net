@@ -14,13 +14,13 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The SendDtmfOptions. </summary>
-    public partial class SendDtmfOptions
+    internal partial class SendDtmfOptionsInternal
     {
         /// <summary> Initializes a new instance of SendDtmfOptions. </summary>
         /// <param name="targetParticipant"> Target participant of Send DTMF tone. </param>
         /// <param name="tones"> The captured tones. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> or <paramref name="tones"/> is null. </exception>
-        public SendDtmfOptions(CommunicationIdentifierModel targetParticipant, IEnumerable<DtmfTone> tones)
+        public SendDtmfOptionsInternal(CommunicationIdentifierModel targetParticipant, IEnumerable<DtmfTone> tones)
         {
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
             Argument.AssertNotNull(tones, nameof(tones));
@@ -33,7 +33,5 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> The captured tones. </summary>
         public IList<DtmfTone> Tones { get; }
-        /// <summary> the delay between tones in milliseconds. </summary>
-        public int? InterToneDelayInMS { get; set; }
     }
 }

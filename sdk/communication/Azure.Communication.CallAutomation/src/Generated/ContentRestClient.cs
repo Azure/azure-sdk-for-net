@@ -37,7 +37,7 @@ namespace Azure.Communication.CallAutomation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateSendDtmfRequest(string callConnectionId, SendDtmfRequest sendDtmfRequest)
+        internal HttpMessage CreateSendDtmfRequest(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,7 +62,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sendDtmfRequest"> The sendDTMF request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
-        public async Task<Response> SendDtmfAsync(string callConnectionId, SendDtmfRequest sendDtmfRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> SendDtmfAsync(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -89,7 +89,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sendDtmfRequest"> The sendDTMF request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
-        public Response SendDtmf(string callConnectionId, SendDtmfRequest sendDtmfRequest, CancellationToken cancellationToken = default)
+        public Response SendDtmf(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
