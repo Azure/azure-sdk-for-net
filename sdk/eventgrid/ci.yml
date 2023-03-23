@@ -35,6 +35,8 @@ extends:
     ServiceDirectory: eventgrid
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Messaging.EventGridV2
+      safeName: AzureMessagingEventGridV2
     - name: Azure.Messaging.EventGrid
       safeName: AzureMessagingEventGrid
     - name: Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents

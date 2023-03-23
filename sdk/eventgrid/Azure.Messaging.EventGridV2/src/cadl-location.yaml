@@ -1,0 +1,4 @@
+repo: Azure/azure-rest-api-specs
+directory: "specification/eventgrid"
+commit: eb98a20f97ae6e170a4c71a88d6c6e8f1a9e1f6c
+
