@@ -74,6 +74,14 @@ namespace Azure.Communication.CallAutomation
             return new CreateCallResult(callConnection, callConnectionProperties);
         }
 
+        /// <summary> Initializes a new instance of RemoveParticipantResult. </summary>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <returns> A new <see cref="CallAutomation.RemoveParticipantResult"/> instance for mocking. </returns>
+        public static RemoveParticipantResult RemoveParticipantResult(string operationContext = default)
+        {
+            return new RemoveParticipantResult(operationContext);
+        }
+
         /// <summary> Create an EventSource. </summary>
         /// <param name="callConnectionId"> Call connection id for the event. </param>
         /// <param name="eventName"> Optional event name; used for events related to content. </param>
@@ -140,6 +148,40 @@ namespace Azure.Communication.CallAutomation
                 );
 
             return new ParticipantsUpdated(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of remove participant failed event.
+        /// </summary>
+        public static RemoveParticipantFailed RemoveParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        {
+            var internalObject = new RemoveParticipantFailedInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation,
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                );
+
+            return new RemoveParticipantFailed(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of remove participant success event.
+        /// </summary>
+        public static RemoveParticipantSucceeded RemoveParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        {
+            var internalObject = new RemoveParticipantSucceededInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation,
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                );
+
+            return new RemoveParticipantSucceeded(internalObject);
         }
 
         /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>

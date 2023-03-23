@@ -19,26 +19,33 @@ To send an email message, call the simple overload of `Send` or `SendAsync` func
 /// Send the email message with WaitUntil.Started
 var emailSendOperation = await emailClient.SendAsync(
     wait: WaitUntil.Started,
-    from: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    to: "<recipient email address>"
+    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>"
     subject: "This is the subject",
     htmlContent: "<html><body>This is the html body</body></html>");
 
 /// Call UpdateStatus on the email send operation to poll for the status
 /// manually.
-while (true)
+try
 {
-    await emailSendOperation.UpdateStatusAsync();
-    if (emailSendOperation.HasCompleted)
+    while (true)
     {
-        break;
+        await emailSendOperation.UpdateStatusAsync();
+        if (emailSendOperation.HasCompleted)
+        {
+            break;
+        }
+        await Task.Delay(100);
     }
-    await Task.Delay(100);
-}
 
-if (emailSendOperation.HasValue)
+    if (emailSendOperation.HasValue)
+    {
+        Console.WriteLine($"Email queued for delivery. Status = {emailSendOperation.Value.Status}");
+    }
+}
+catch (RequestFailedException ex)
 {
-    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+    Console.WriteLine($"Email send failed with Code = {ex.ErrorCode} and Message = {ex.Message}");
 }
 
 /// Get the OperationId so that it can be used for tracking the message for troubleshooting

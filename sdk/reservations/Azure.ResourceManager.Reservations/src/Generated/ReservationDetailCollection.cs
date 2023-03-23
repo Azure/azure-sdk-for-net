@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ReservationDetailResource>> GetAsync(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ReservationDetailResource> Get(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReservationDetailResource> GetRevisionsAsync(Guid reservationId, CancellationToken cancellationToken = default)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReservationDetailResource> GetRevisions(Guid reservationId, CancellationToken cancellationToken = default)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="reservationId"> Id of the reservation item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)

@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <summary>
         /// Creates a new instance of ExceptionDetails from a System.Exception and a parent ExceptionDetails.
         /// </summary>
-        internal TelemetryExceptionDetails(Exception exception, string message, TelemetryExceptionDetails? parentExceptionDetails)
+        internal TelemetryExceptionDetails(Exception exception, string? message, TelemetryExceptionDetails? parentExceptionDetails)
         {
             if (exception == null)
             {

@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 title: Container Registry
 input-file:
  - https://github.com/Azure/azure-rest-api-specs/blob/c8d9a26a2857828e095903efa72512cf3a76c15d/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json
- 
+
 model-namespace: false
 generation1-convenience-client: true
 ```
@@ -125,9 +125,9 @@ directive:
     delete $["allOf"];
     $.properties["schemaVersion"] = {
           "type": "integer",
-          "description": "Schema version",
-          "x-ms-client-default": 2
+          "description": "Schema version"
         };
+    $.properties.config["x-ms-client-name"] = "configuration";
 ```
 
 # Take stream as manifest body
@@ -160,4 +160,22 @@ directive:
   where: $.definitions.Annotations
   transform: >
     delete $["x-accessibility"]
+```
+
+# Don't buffer downloads
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='ContainerRegistryBlob_GetBlob' || @.operationId=='ContainerRegistryBlob_GetChunk')]
+  transform: $["x-csharp-buffer-response"] = false;
+```
+
+# Remove security definitions
+``` yaml
+directive:
+- from: swagger-document
+  where: $.
+  transform: >
+    delete $["securityDefinitions"];
+    delete $["security"];
 ```

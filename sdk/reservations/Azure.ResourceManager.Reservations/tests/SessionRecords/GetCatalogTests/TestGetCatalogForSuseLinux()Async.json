@@ -1,39 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-94a144cec6a83e9111714c51f330c3e3-2d24c4ff0e4c5b9a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "cfa41fe25a60b0638e43e90588c571b8",
+        "traceparent": "00-c5aeff39e607bdf5c638813c2b438a52-646bee96e4c275aa-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "30f8a430196723706348bc658b8195b9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:10:16 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c5f9edca-2807-4c2c-a095-282f31694ace",
-        "x-ms-ratelimit-remaining-subscription-reads": "11925",
-        "x-ms-request-id": "c5f9edca-2807-4c2c-a095-282f31694ace",
-        "x-ms-routing-request-id": "WESTUS:20220516T231017Z:c5f9edca-2807-4c2c-a095-282f31694ace"
+        "x-ms-correlation-request-id": "2f1f85fd-1c8e-4e1e-8235-ea904b2c1816",
+        "x-ms-ratelimit-remaining-subscription-reads": "11885",
+        "x-ms-request-id": "2f1f85fd-1c8e-4e1e-8235-ea904b2c1816",
+        "x-ms-routing-request-id": "WESTUS:20230310T063230Z:2f1f85fd-1c8e-4e1e-8235-ea904b2c1816"
       },
       "ResponseBody": {
-        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
-        "displayName": "Azure subscription 1",
+        "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -43,40 +43,1164 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=SuseLinux",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=SuseLinux",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-98e3e2cbf7384f9b89221f11c90868db-88038fc8b72825c3-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "738ff5774e1e9d96909b5d229756fef9",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "bd69b63c22a1f0883f6540dcef9e60b1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "13270",
+        "Content-Length": "12623",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:10:17 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:31 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fa2fb18f-b451-445c-8c35-b1fcf1989aa6",
-        "x-ms-ratelimit-remaining-subscription-reads": "11924",
-        "x-ms-request-id": "738ff5774e1e9d96909b5d229756fef9",
-        "x-ms-routing-request-id": "WESTUS:20220516T231018Z:fa2fb18f-b451-445c-8c35-b1fcf1989aa6",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-correlation-request-id": "e2430eb5-5d74-478c-b336-811cb355c71c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11884",
+        "x-ms-request-id": "bd69b63c22a1f0883f6540dcef9e60b1",
+        "x-ms-routing-request-id": "WESTUS:20230310T063231Z:e2430eb5-5d74-478c-b336-811cb355c71c",
+        "x-ms-version": "1.0.2251.115"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_hpc_standard_3-4_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:88.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:237.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server for HPC Std\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server for HPC Standard\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00223-4 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00224ed70d2d-e2bb-4dcd-b6fa-42da71861a1c\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00223-4 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_hpc_standard_1-2_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:46.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:123.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server for HPC Std\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server for HPC Standard\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00221-2 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00228c94ad45-b93b-4772-aab1-ff92fcec6610\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00221-2 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_hpc_standard_5plus_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:133.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:360.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server for HPC Std\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server for HPC Standard\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022907a85de-024f-4dd6-969c-347d47a1bdff\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_hpc_priority_1-2_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:88.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:237.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server for HPC Priority\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server for HPC Priority\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00221-2 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022e275a668-ce79-44e2-a659-f43443265e98\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00221-2 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_hpc_priority_5plus_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:228.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:615.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server for HPC Priority\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server for HPC Priority\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00224edcd5a5-8510-49a8-a9fc-c9721f501913\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_hpc_priority_3-4_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:175.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:473.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server for HPC Priority\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server for HPC Priority\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00223-4 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022e531e1c0-09c9-4d83-b7d0-a2c6741faa22\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00223-4 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_standard_5plus_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:526.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1419.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server Std\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server Standard\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00227b349b65-d906-42e5-833f-b2af38513468\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_standard_3-4_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:438.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1183.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server Std\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server Standard\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00223-4 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00220c3ebb4c-db7d-4125-b45a-0534764d4bda\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00223-4 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_standard_1-2_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:228.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:615.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server Std\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server Standard\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00221-2 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00224b2fecfc-b110-4312-8f9d-807db1cb79ae\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00221-2 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_priority_6_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1051.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:2838.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server Priority\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server Priority\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00226 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022e8862232-6131-4dbe-bde4-e2ae383afc6f\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 6-vCPU VM Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00226 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Sku\u0022,\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_priority_2-4_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:701.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1892.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server Priority\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server Priority\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00222-4 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022924bee71-5eb8-424f-83ed-a58823c33908\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 2-vCPU VM Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00222-4 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Sku\u0022,\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_priority_1_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:350.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:946.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server Priority\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server Priority\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00221 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022462cd632-ec6b-4663-b79f-39715f4e8b38\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 XS vCPU VM Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00221 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Sku\u0022,\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_priority_8plus_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1121.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:3027.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server Priority\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server Priority\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00228\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002293329a72-24d7-4faa-93d9-203f367ed334\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 72-vCPU VM Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00228\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Sku\u0022,\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_sap_priority_5plus_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1437.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:3879.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server for SAP Standard\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server for SAP Standard\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002218ae79cd-dfce-48c9-897b-ebd3053c6058\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_sap_priority_1-2_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:596.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1608.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server for SAP Standard\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server for SAP Standard\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00221-2 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022497fe0b6-fa3c-4e3d-a66b-836097244142\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00221-2 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022SuseLinux\u0022,\u0022name\u0022:\u0022sles_sap_priority_3-4_vcpu_vm\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1191.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:3217.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022SUSE Linux Ent Server for SAP Standard\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022SUSE Linux Enterprise Server for SAP Standard\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00223-4 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022847887de-68ce-4adc-8a33-7a3f4133312f\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Support Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00223-4 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_hpc_standard_3-4_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 88.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 237.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server for HPC Std"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server for HPC Standard"
+              },
+              {
+                "name": "SkuName",
+                "value": "3-4 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "4ed70d2d-e2bb-4dcd-b6fa-42da71861a1c"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "3-4 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_hpc_standard_1-2_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 46.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 123.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server for HPC Std"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server for HPC Standard"
+              },
+              {
+                "name": "SkuName",
+                "value": "1-2 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "8c94ad45-b93b-4772-aab1-ff92fcec6610"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "1-2 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_hpc_standard_5plus_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 133.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 360.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server for HPC Std"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server for HPC Standard"
+              },
+              {
+                "name": "SkuName",
+                "value": "5\u002B vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "907a85de-024f-4dd6-969c-347d47a1bdff"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "5\u002B vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_hpc_priority_1-2_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 88.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 237.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server for HPC Priority"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server for HPC Priority"
+              },
+              {
+                "name": "SkuName",
+                "value": "1-2 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "e275a668-ce79-44e2-a659-f43443265e98"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "1-2 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_hpc_priority_5plus_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 228.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 615.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server for HPC Priority"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server for HPC Priority"
+              },
+              {
+                "name": "SkuName",
+                "value": "5\u002B vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "4edcd5a5-8510-49a8-a9fc-c9721f501913"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "5\u002B vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_hpc_priority_3-4_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 175.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 473.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server for HPC Priority"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server for HPC Priority"
+              },
+              {
+                "name": "SkuName",
+                "value": "3-4 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "e531e1c0-09c9-4d83-b7d0-a2c6741faa22"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "3-4 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_standard_5plus_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 526.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1419.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server Std"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server Standard"
+              },
+              {
+                "name": "SkuName",
+                "value": "5\u002B vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "7b349b65-d906-42e5-833f-b2af38513468"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "5\u002B vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_standard_3-4_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 438.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1183.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server Std"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server Standard"
+              },
+              {
+                "name": "SkuName",
+                "value": "3-4 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "0c3ebb4c-db7d-4125-b45a-0534764d4bda"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "3-4 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_standard_1-2_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 228.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 615.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server Std"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server Standard"
+              },
+              {
+                "name": "SkuName",
+                "value": "1-2 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "4b2fecfc-b110-4312-8f9d-807db1cb79ae"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "1-2 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_priority_6_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1051.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2838.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server Priority"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server Priority"
+              },
+              {
+                "name": "SkuName",
+                "value": "6 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "e8862232-6131-4dbe-bde4-e2ae383afc6f"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 6-vCPU VM Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "6 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Sku",
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_priority_2-4_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 701.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1892.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server Priority"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server Priority"
+              },
+              {
+                "name": "SkuName",
+                "value": "2-4 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "60b3ae9d-e77a-46b2-9cdf-92fa87407969"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 4-vCPU VM Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "2-4 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Sku",
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_priority_1_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 350.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 946.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server Priority"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server Priority"
+              },
+              {
+                "name": "SkuName",
+                "value": "1 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "dd75c4ed-be82-4c52-9e65-f63f0b544941"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 1-vCPU VM Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "1 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Sku",
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_priority_8plus_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1121.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 3027.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server Priority"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server Priority"
+              },
+              {
+                "name": "SkuName",
+                "value": "8\u002B vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "a5afd00d-d3ef-4bcd-8b42-f158b2799782"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 12-vCPU VM Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "8\u002B vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Sku",
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_sap_priority_5plus_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1437.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 3879.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server for SAP Standard"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server for SAP Standard"
+              },
+              {
+                "name": "SkuName",
+                "value": "5\u002B vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "18ae79cd-dfce-48c9-897b-ebd3053c6058"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "5\u002B vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_sap_priority_1-2_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 596.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1608.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server for SAP Standard"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server for SAP Standard"
+              },
+              {
+                "name": "SkuName",
+                "value": "1-2 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "497fe0b6-fa3c-4e3d-a66b-836097244142"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "1-2 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "SuseLinux",
+            "name": "sles_sap_priority_3-4_vcpu_vm",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1191.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 3217.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "SUSE Linux Ent Server for SAP Standard"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "SUSE Linux Enterprise Server for SAP Standard"
+              },
+              {
+                "name": "SkuName",
+                "value": "3-4 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "847887de-68ce-4adc-8a33-7a3f4133312f"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Support Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "3-4 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          }
+        ],
+        "totalItems": 16
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "302867285",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1907038059",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }

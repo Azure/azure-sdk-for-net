@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AppliedScopeProperties))
+            {
+                writer.WritePropertyName("appliedScopeProperties"u8);
+                writer.WriteObjectValue(AppliedScopeProperties);
+            }
             if (Optional.IsDefined(InstanceFlexibility))
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
@@ -51,6 +56,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 writer.WritePropertyName("renewProperties"u8);
                 writer.WriteObjectValue(RenewProperties);
+            }
+            if (Optional.IsDefined(ReviewOn))
+            {
+                writer.WritePropertyName("reviewDateTime"u8);
+                writer.WriteStringValue(ReviewOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

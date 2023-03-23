@@ -73,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.IsAutoCollectedKey, "True"));
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource?.RoleInstance));
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource?.RoleName));
-            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.RequestSuccessKey, RequestData.isSuccess(activity, statusCodeAttributeValue, OperationType.Http)));
+            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.RequestSuccessKey, RequestData.IsSuccess(activity, statusCodeAttributeValue, OperationType.Http)));
 
             // Report metric
             _requestDuration.Record(activity.Duration.TotalMilliseconds, tags);
