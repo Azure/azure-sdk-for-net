@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private SemaphoreSlim _cachedEventsGuard;
 
             /// <summary>
-            /// When we have a minimum batch size greater than 1, this class manages the eventss
+            /// When we have a minimum batch size greater than 1, this class manages caching events.
             /// </summary>
             internal PartitionProcessorEventsManager CachedEventsManager { get; }
 
@@ -84,6 +84,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 return Task.CompletedTask;
             }
 
+            /// <summary>
+            /// This method is called by the <see cref="EventProcessorHost"/>.
+            /// </summary>
+            /// <param name="context">The partition information for this partition.</param>
+            /// <param name="messages">The events to process.</param>
+            /// <param name="processingCancellationToken">The cancellation token to respect if processing is canceled.</param>
+            /// <returns></returns>
             public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages, CancellationToken processingCancellationToken)
             {
                 using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken);
@@ -131,22 +138,26 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     {
                         try
                         {
+                            // Try to acquire the semaphore. This protects the cached events.
                             if (!_cachedEventsGuard.Wait(0, linkedCts.Token))
                             {
                                 await _cachedEventsGuard.WaitAsync(linkedCts.Token).ConfigureAwait(false);
                             }
                             acquiredSemaphore = true;
 
-                            // Try to batch of events from the cache.
+                            // Try to get a batch of events from the cache.
                             var triggerEvents = CachedEventsManager.TryGetBatchofEventsWithCached(events, false);
 
+                            // If events were returned that means we hit the threshold for the minimum batch size, so
+                            // invoke the function.
                             if (triggerEvents.Length > 0)
                             {
                                 UpdateCheckpointContext(triggerEvents, context);
                                 await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
                                 eventToCheckpoint = triggerEvents.Last();
 
-                                // If there is a background timer task, cancel it and dispose of the cancellation token.
+                                // If there is a background timer task, cancel it and dispose of the cancellation token. If there
+                                // are still events in the cache, the timer will be restarted.
                                 _cachedEventsBackgroundTaskCts?.Cancel();
                                 _cachedEventsBackgroundTaskCts?.Dispose();
                                 _cachedEventsBackgroundTaskCts = null;
@@ -154,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                             if (_cachedEventsBackgroundTaskCts == null && CachedEventsManager.HasCachedEvents)
                             {
-                                // If there are events waiting to be processed, and no background task running, start a monitoring cycle
+                                // If there are events waiting to be processed, and no background task running, start a monitoring cycle.
                                 _cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
                                 _cachedEventsBackgroundTask = MonitorCachedEvents(_cachedEventsBackgroundTaskCts);
                             }
@@ -216,7 +227,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 {
                     _currentCycle = ValueStopwatch.StartNew();
 
-                    // Wait max wait time after starting this task before checking the number of events
+                    // Wait max wait time after starting this task before checking the number of events.
                     while (_currentCycle.GetElapsedTime() < _maxWaitTime && !backgroundCancellationTokenSource.Token.IsCancellationRequested)
                     {
                         var remainingTime = GetRemainingTime(_currentCycle.GetElapsedTime());
@@ -229,6 +240,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     }
                     acquiredSemaphore = true;
 
+                    // Since max wait time has passed, pull all events out of the cache and invoke the function on it.
                     var triggerEvents = CachedEventsManager.TryGetBatchofEventsWithCached(allowPartialBatch: true);
 
                     if (triggerEvents.Length > 0)
