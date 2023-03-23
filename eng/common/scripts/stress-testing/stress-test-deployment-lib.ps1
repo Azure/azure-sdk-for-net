@@ -221,68 +221,7 @@ function DeployStressPackage(
     $genVal = Get-Content $genValFile -Raw | ConvertFrom-Yaml -Ordered
     $releaseName = $pkg.ReleaseName
     if ($RetryFailedTests) {
-        $pods = kubectl get pods -n $pkg.namespace -o json | ConvertFrom-Json
-
-        # Get all jobs within this helm release
-        $helmResources = helm status -n $pkg.Namespace $pkg.ReleaseName --show-resources
-        # -----Example output-----
-        # NAME: <Release Name>
-        # LAST DEPLOYED: Mon Jan 01 12:12:12 2020
-        # NAMESPACE: <namespace>
-        # STATUS: deployed
-        # REVISION: 10
-        # RESOURCES:
-        # ==> v1alpha1/Schedule
-        # NAME                          AGE
-        # <schedule resource name 1>    5h5m
-        # <schedule resource name 2>    5h5m
-
-        # ==> v1/SecretProviderClass
-        # <secret provider name 1>   7d4h
-
-        # ==> v1/Job
-        # NAME          COMPLETIONS   DURATION   AGE
-        # <job name 1>   0/1          5h5m       5h5m
-        # <job name 2>   0/1          5h5m       5h5m
-        $discoveredJob = $False
-        $jobs = @()
-        foreach ($helmResource in $helmResources) {
-            if ($discoveredJob -and $helmResource -match "==>") {break}
-            if ($discoveredJob) {
-                $jobs += ($helmResource -split '\s+')[0] | where{($_ -ne "NAME") -and ($_)}
-            }
-            if ($helmResource -match "==> v1/Job") {
-                $discoveredJob = $True
-            }
-        }
-
-        $failedJobsScenario = @()
-        $revision = 0
-        foreach ($job in $jobs) {
-            $jobRevision = [int]$job.split('-')[-1]
-            if ($jobRevision -gt $revision) {
-                $revision = $jobRevision
-            }
-
-            $podPhase = kubectl describe jobs -n $pkg.Namespace $job | Select-String "0 Failed"
-            if ([System.String]::IsNullOrEmpty($podPhase)) {
-                $failedJobsScenario += $job.split("-$($pkg.ReleaseName)")[0]
-            }
-        }
-        
-        $releaseName = "$($pkg.ReleaseName)-$revision-retry"
-
-        $genValRetry = @{"scenarios"=@()}
-        foreach ($failedScenario in $failedJobsScenario) {
-            $failedScenarioObject = $genVal.scenarios | Where {$_.Scenario -eq $failedScenario}
-            $genValRetry.scenarios += $failedScenarioObject
-        }
-
-        if (!$genValRetry.scenarios.length) {
-            Write-Host "There are no failed pods to retry."
-            return
-        }
-        $genVal = $genValRetry
+        runRetryTests $pkg ([ref]$releaseName) ([ref]$genVal)
     }
 
     if (Test-Path $genValFile) {
@@ -441,4 +380,69 @@ function CheckDependencies()
         exit 1
     }
 
+}
+
+function runRetryTests ($pkg, [ref]$releaseName, [ref]$genVal) {
+    $pods = kubectl get pods -n $pkg.namespace -o json | ConvertFrom-Json
+
+    # Get all jobs within this helm release
+    $helmResources = helm status -n $pkg.Namespace $pkg.ReleaseName --show-resources
+    # -----Example output-----
+    # NAME: <Release Name>
+    # LAST DEPLOYED: Mon Jan 01 12:12:12 2020
+    # NAMESPACE: <namespace>
+    # STATUS: deployed
+    # REVISION: 10
+    # RESOURCES:
+    # ==> v1alpha1/Schedule
+    # NAME                          AGE
+    # <schedule resource name 1>    5h5m
+    # <schedule resource name 2>    5h5m
+
+    # ==> v1/SecretProviderClass
+    # <secret provider name 1>   7d4h
+
+    # ==> v1/Job
+    # NAME          COMPLETIONS   DURATION   AGE
+    # <job name 1>   0/1          5h5m       5h5m
+    # <job name 2>   0/1          5h5m       5h5m
+    $discoveredJob = $False
+    $jobs = @()
+    foreach ($helmResource in $helmResources) {
+        if ($discoveredJob -and $helmResource -match "==>") {break}
+        if ($discoveredJob) {
+            $jobs += ($helmResource -split '\s+')[0] | Where-Object {($_ -ne "NAME") -and ($_)}
+        }
+        if ($helmResource -match "==> v1/Job") {
+            $discoveredJob = $True
+        }
+    }
+
+    $failedJobsScenario = @()
+    $revision = 0
+    foreach ($job in $jobs) {
+        $jobRevision = [int]$job.split('-')[-1]
+        if ($jobRevision -gt $revision) {
+            $revision = $jobRevision
+        }
+
+        $podPhase = kubectl describe jobs -n $pkg.Namespace $job | Select-String "0 Failed"
+        if ([System.String]::IsNullOrEmpty($podPhase)) {
+            $failedJobsScenario += $job.split("-$($pkg.ReleaseName)")[0]
+        }
+    }
+    
+    $releaseName = "$($pkg.ReleaseName)-$revision-retry"
+
+    $genValRetry = @{"scenarios"=@()}
+    foreach ($failedScenario in $failedJobsScenario) {
+        $failedScenarioObject = $genVal.value.scenarios | Where {$_.Scenario -eq $failedScenario}
+        $genValRetry.scenarios += $failedScenarioObject
+    }
+
+    if (!$genValRetry.scenarios.length) {
+        Write-Host "There are no failed pods to retry."
+        return
+    }
+    $genVal.value = $genValRetry 
 }
