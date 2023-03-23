@@ -217,15 +217,15 @@ function DeployStressPackage(
 
     $dockerBuildConfigs = @()
 
-    $genValFile = Join-Path $pkg.Directory "generatedValues.yaml"
-    $genVal = Get-Content $genValFile -Raw | ConvertFrom-Yaml -Ordered
+    $generatedHelmValuesFilePath = Join-Path $pkg.Directory "generatedValues.yaml"
+    $generatedHelmValues = Get-Content $generatedHelmValuesFilePath -Raw | ConvertFrom-Yaml -Ordered
     $releaseName = $pkg.ReleaseName
     if ($RetryFailedTests) {
-        runRetryTests $pkg ([ref]$releaseName) ([ref]$genVal)
+        $releaseName, $generatedHelmValues = generateRetryTestsHelmValues $pkg $releaseName $generatedHelmValues
     }
 
-    if (Test-Path $genValFile) {
-        $scenarios = $genVal.Scenarios
+    if (Test-Path $generatedHelmValuesFilePath) {
+        $scenarios = $generatedHelmValues.Scenarios
         foreach ($scenario in $scenarios) {
             if ("image" -in $scenario.keys) {
                 $dockerFilePath = Join-Path $pkg.Directory $scenario.image
@@ -292,7 +292,7 @@ function DeployStressPackage(
                 }
             }
         }
-        $genVal.scenarios = @( foreach ($scenario in $genVal.scenarios) {
+        $generatedHelmValues.scenarios = @( foreach ($scenario in $generatedHelmValues.scenarios) {
             $dockerPath = if ("image" -notin $scenario) {
                 $dockerFilePath
             } else {
@@ -304,7 +304,7 @@ function DeployStressPackage(
             $scenario
         } )
 
-        $genVal | ConvertTo-Yaml | Out-File -FilePath $genValFile
+        $generatedHelmValues | ConvertTo-Yaml | Out-File -FilePath $generatedHelmValuesFilePath
     }
 
     Write-Host "Installing or upgrading stress test $releaseName from $($pkg.Directory)"
@@ -382,7 +382,7 @@ function CheckDependencies()
 
 }
 
-function runRetryTests ($pkg, [ref]$releaseName, [ref]$genVal) {
+function generateRetryTestsHelmValues ($pkg, $releaseName, $generatedHelmValues) {
     $pods = kubectl get pods -n $pkg.namespace -o json | ConvertFrom-Json
 
     # Get all jobs within this helm release
@@ -434,15 +434,16 @@ function runRetryTests ($pkg, [ref]$releaseName, [ref]$genVal) {
     
     $releaseName = "$($pkg.ReleaseName)-$revision-retry"
 
-    $genValRetry = @{"scenarios"=@()}
+    $retryTestsHelmVal = @{"scenarios"=@()}
     foreach ($failedScenario in $failedJobsScenario) {
-        $failedScenarioObject = $genVal.value.scenarios | Where {$_.Scenario -eq $failedScenario}
-        $genValRetry.scenarios += $failedScenarioObject
+        $failedScenarioObject = $generatedHelmValues.scenarios | Where {$_.Scenario -eq $failedScenario}
+        $retryTestsHelmVal.scenarios += $failedScenarioObject
     }
 
-    if (!$genValRetry.scenarios.length) {
+    if (!$retryTestsHelmVal.scenarios.length) {
         Write-Host "There are no failed pods to retry."
         return
     }
-    $genVal.value = $genValRetry 
+    $generatedHelmValues = $retryTestsHelmVal
+    return $releaseName, $generatedHelmValues
 }
