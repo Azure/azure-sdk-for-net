@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Changed the approach that the trigger uses to validate permissions on startup to ensure that it uses a non-exclusive consumer as to not interfere with another instance that is already running.  Additionally, an error denying the non-exclusive read is now expected and accepted as proof of a valid connection.
+
 ### Other Changes
 
 ## 5.2.0 (2023-02-23)
