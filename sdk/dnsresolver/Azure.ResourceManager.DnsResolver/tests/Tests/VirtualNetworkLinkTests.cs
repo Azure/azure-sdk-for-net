@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var vnetName = Recording.GenerateAssetName("dnsResolver-");
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
             _dnsForwardingRulesetName = Recording.GenerateAssetName("dnsForwardingRuleset-");
+            var resourceGroup = await CreateResourceGroupAsync();
 
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
@@ -42,9 +43,6 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             {
                 Id = new ResourceIdentifier(DefaultVnetID)
             });
-
-            var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
-            var resourceGroup = await CreateResourceGroupAsync();
 
             _dnsResolver = (await resourceGroup.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
             _dnsForwardingRulesetCollection = resourceGroup.GetDnsForwardingRulesets();

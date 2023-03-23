@@ -83,6 +83,8 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         {
             // ARRANGE
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
+            var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
+            var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
             await CreateDnsResolverCollectionAsync();
             var vnetId = DefaultVnetID.ToString();
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
@@ -91,9 +93,6 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             });
 
             var createdDnsResolver = await _dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
-
-            var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
-            var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
             // ACT
             var patchedDnsResolver = await createdDnsResolver.Value.AddTagAsync(newTagKey, newTagValue);
