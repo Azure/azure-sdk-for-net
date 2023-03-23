@@ -917,10 +917,11 @@ namespace Azure.Data.AppConfiguration
             {
                 // TODO:
                 // needs to be tested and cleaned up once the service is no longer in dogfood
+                // will need to be regenerated once the swagger is updated able to generate CreateSnapshotOperation
 
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
                 using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
-                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
                 Operation<BinaryData> operation = await CreateSnapshotAsync(wait, name, content, contentType, context).ConfigureAwait(false);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(operation.GetRawResponse());
@@ -951,10 +952,11 @@ namespace Azure.Data.AppConfiguration
             {
                 // TODO:
                 // needs to be tested and cleaned up once the service is no longer in dogfood
+                // will need to be regenerated once the swagger is updated able to generate CreateSnapshotOperation
 
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
                 using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
-                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
                 Operation<BinaryData> operation = CreateSnapshot(wait, name, content, contentType, context);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(operation.GetRawResponse());

@@ -25,6 +25,8 @@ namespace Azure.Data.AppConfiguration
 
         internal CreateSnapshotOperation(HttpPipeline httpPipeline, ClientDiagnostics diagnostics, Operation<BinaryData> operation, Response<ConfigurationSettingsSnapshot> response)
         {
+            // TODO:
+            // need to update and test once the Snapshot feature is out of dogfood
             _httpPipeline = httpPipeline;
             _snapshot = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
             _operation = operation;
@@ -68,6 +70,8 @@ namespace Azure.Data.AppConfiguration
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
+            // TODO:
+            // need to test and adjust once the Snapshot feature is out of dogfood
             if (!HasCompleted)
             {
                 return _operationInternal.UpdateStatus(cancellationToken);
@@ -78,6 +82,8 @@ namespace Azure.Data.AppConfiguration
         /// <inheritdoc/>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
+            // TODO:
+            // need to test and adjust once the Snapshot feature is out of dogfood
             if (!HasCompleted)
             {
                 return await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
@@ -87,6 +93,8 @@ namespace Azure.Data.AppConfiguration
 
         ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
+            // TODO:
+            // need to implement and test once the Snapshot feature is out of dogfood
             throw new NotImplementedException();
         }
     }
