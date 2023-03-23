@@ -293,6 +293,12 @@ namespace Azure.ResourceManager.IotHub.Models
         public Azure.ResourceManager.IotHub.Models.CloudToDeviceFeedbackQueueProperties Feedback { get { throw null; } set { } }
         public int? MaxDeliveryCount { get { throw null; } set { } }
     }
+    public partial class EncryptionPropertiesDescription
+    {
+        public EncryptionPropertiesDescription() { }
+        public string KeySource { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.KeyVaultKeyProperties> KeyVaultProperties { get { throw null; } }
+    }
     public partial class EventHubCompatibleEndpointProperties
     {
         public EventHubCompatibleEndpointProperties() { }
@@ -654,15 +660,18 @@ namespace Azure.ResourceManager.IotHub.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule> AuthorizationPolicies { get { throw null; } }
         public Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties CloudToDevice { get { throw null; } set { } }
         public string Comments { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> DeviceStreamsStreamingEndpoints { get { throw null; } }
         public bool? DisableDeviceSas { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public bool? DisableModuleSas { get { throw null; } set { } }
         public bool? EnableDataResidency { get { throw null; } set { } }
         public bool? EnableFileUploadNotifications { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.EncryptionPropertiesDescription Encryption { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.EventHubCompatibleEndpointProperties> EventHubEndpoints { get { throw null; } }
         public Azure.ResourceManager.IotHub.Models.IotHubCapability? Features { get { throw null; } set { } }
         public string HostName { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.IotHubIPFilterRule> IPFilterRules { get { throw null; } }
+        public Azure.ResourceManager.IotHub.Models.IPVersion? IPVersion { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotHub.Models.IotHubLocationDescription> Locations { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.MessagingEndpointProperties> MessagingEndpoints { get { throw null; } }
         public string MinTlsVersion { get { throw null; } set { } }
@@ -671,6 +680,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public bool? RestrictOutboundNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.RootCertificateProperties RootCertificate { get { throw null; } set { } }
         public Azure.ResourceManager.IotHub.Models.IotHubRoutingProperties Routing { get { throw null; } set { } }
         public string State { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.IotHubStorageEndpointProperties> StorageEndpoints { get { throw null; } }
@@ -743,7 +753,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubRoutingSource DeviceJobLifecycleEvents { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubRoutingSource DeviceLifecycleEvents { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubRoutingSource DeviceMessages { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.IotHubRoutingSource DigitalTwinChangeEvents { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubRoutingSource Invalid { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.IotHubRoutingSource MqttBrokerMessages { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubRoutingSource TwinChangeEvents { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubRoutingSource other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -891,12 +903,43 @@ namespace Azure.ResourceManager.IotHub.Models
         public string Unit { get { throw null; } }
         public string UserSubscriptionQuotaType { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IPVersion : System.IEquatable<Azure.ResourceManager.IotHub.Models.IPVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IPVersion(string value) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.IPVersion IPv4 { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.IPVersion IPv4IPv6 { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.IPVersion IPv6 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotHub.Models.IPVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotHub.Models.IPVersion left, Azure.ResourceManager.IotHub.Models.IPVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotHub.Models.IPVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotHub.Models.IPVersion left, Azure.ResourceManager.IotHub.Models.IPVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class KeyVaultKeyProperties
+    {
+        public KeyVaultKeyProperties() { }
+        public string KeyIdentifier { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
+    }
     public partial class MessagingEndpointProperties
     {
         public MessagingEndpointProperties() { }
         public System.TimeSpan? LockDurationAsIso8601 { get { throw null; } set { } }
         public int? MaxDeliveryCount { get { throw null; } set { } }
         public System.TimeSpan? TtlAsIso8601 { get { throw null; } set { } }
+    }
+    public partial class RootCertificateProperties
+    {
+        public RootCertificateProperties() { }
+        public bool? EnableRootCertificateV2 { get { throw null; } set { } }
+        public System.DateTimeOffset? LastUpdatedTimeUtc { get { throw null; } }
     }
     public partial class RouteCompilationError
     {
