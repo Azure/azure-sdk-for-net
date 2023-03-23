@@ -34,7 +34,7 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 
 Calling `ToString` on the exception will provide additional information, such as the Client Request Identifier of the operation, which is useful when requesting support.
 
-```shell
+```text
 Azure.RequestFailedException: Service request failed.
 Status: 404 (Not Found)
 
