@@ -47,7 +47,10 @@ rename-rules:
 prepend-rp-prefix:
     - ProvisioningState
     - AccountResource
-
+    - AccountResourceList
+    - AccountPatchResource
+    - AccountResourceProperties
+    
 directive:
     - remove-operation: 'Operation_List'
 

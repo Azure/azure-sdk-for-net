@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Property bag from billing account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public GraphServicesAccountResourceData(AzureLocation location, AccountResourceProperties properties) : base(location)
+        public GraphServicesAccountResourceData(AzureLocation location, GraphServicesAccountResourceProperties properties) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Property bag from billing account. </param>
-        internal GraphServicesAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccountResourceProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal GraphServicesAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GraphServicesAccountResourceProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
 
         /// <summary> Property bag from billing account. </summary>
-        public AccountResourceProperties Properties { get; set; }
+        public GraphServicesAccountResourceProperties Properties { get; set; }
     }
 }

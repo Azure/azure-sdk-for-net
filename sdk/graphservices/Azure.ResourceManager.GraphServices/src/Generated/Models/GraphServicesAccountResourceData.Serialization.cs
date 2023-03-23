@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.GraphServices
 
         internal static GraphServicesAccountResourceData DeserializeGraphServicesAccountResourceData(JsonElement element)
         {
-            AccountResourceProperties properties = default;
+            GraphServicesAccountResourceProperties properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.GraphServices
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = AccountResourceProperties.DeserializeAccountResourceProperties(property.Value);
+                    properties = GraphServicesAccountResourceProperties.DeserializeGraphServicesAccountResourceProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

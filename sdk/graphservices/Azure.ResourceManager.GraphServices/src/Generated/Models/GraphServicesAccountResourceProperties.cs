@@ -11,23 +11,23 @@ using Azure.Core;
 namespace Azure.ResourceManager.GraphServices.Models
 {
     /// <summary> Property bag from billing account. </summary>
-    public partial class AccountResourceProperties
+    public partial class GraphServicesAccountResourceProperties
     {
-        /// <summary> Initializes a new instance of AccountResourceProperties. </summary>
+        /// <summary> Initializes a new instance of GraphServicesAccountResourceProperties. </summary>
         /// <param name="appId"> Customer owned application ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
-        public AccountResourceProperties(string appId)
+        public GraphServicesAccountResourceProperties(string appId)
         {
             Argument.AssertNotNull(appId, nameof(appId));
 
             AppId = appId;
         }
 
-        /// <summary> Initializes a new instance of AccountResourceProperties. </summary>
+        /// <summary> Initializes a new instance of GraphServicesAccountResourceProperties. </summary>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="appId"> Customer owned application ID. </param>
         /// <param name="billingPlanId"> Billing Plan Id. </param>
-        internal AccountResourceProperties(GraphServicesProvisioningState? provisioningState, string appId, string billingPlanId)
+        internal GraphServicesAccountResourceProperties(GraphServicesProvisioningState? provisioningState, string appId, string billingPlanId)
         {
             ProvisioningState = provisioningState;
             AppId = appId;

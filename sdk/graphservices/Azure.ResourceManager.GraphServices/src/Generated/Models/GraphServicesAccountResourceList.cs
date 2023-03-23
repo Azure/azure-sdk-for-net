@@ -13,18 +13,18 @@ using Azure.ResourceManager.GraphServices;
 namespace Azure.ResourceManager.GraphServices.Models
 {
     /// <summary> The list of accounts. </summary>
-    internal partial class AccountResourceList
+    internal partial class GraphServicesAccountResourceList
     {
-        /// <summary> Initializes a new instance of AccountResourceList. </summary>
-        internal AccountResourceList()
+        /// <summary> Initializes a new instance of GraphServicesAccountResourceList. </summary>
+        internal GraphServicesAccountResourceList()
         {
             Value = new ChangeTrackingList<GraphServicesAccountResourceData>();
         }
 
-        /// <summary> Initializes a new instance of AccountResourceList. </summary>
+        /// <summary> Initializes a new instance of GraphServicesAccountResourceList. </summary>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="value"> The list of recommendations. </param>
-        internal AccountResourceList(Uri nextLink, IReadOnlyList<GraphServicesAccountResourceData> value)
+        internal GraphServicesAccountResourceList(Uri nextLink, IReadOnlyList<GraphServicesAccountResourceData> value)
         {
             NextLink = nextLink;
             Value = value;

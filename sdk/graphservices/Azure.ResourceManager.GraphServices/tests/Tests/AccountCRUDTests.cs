@@ -10,10 +10,9 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.GraphServices.Tests.Tests
 {
-    [TestFixture]
     public class AccountCRUDTests : GraphServicesManagementTestBase
     {
-        public AccountCRUDTests() : base(true)
+        public AccountCRUDTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
             // Set Account Resource Values
             var resourceName = Recording.GenerateAssetName("SDKAccounts");
             string appId = new AccountTestEnvironment().ApplicationIDClient;
-            AccountResourceProperties accountResourceProperties = new AccountResourceProperties(appId);
+            GraphServicesAccountResourceProperties accountResourceProperties = new GraphServicesAccountResourceProperties(appId);
             GraphServicesAccountResourceData accountResourceData = new GraphServicesAccountResourceData("global", accountResourceProperties);
 
             // Create Account Resource

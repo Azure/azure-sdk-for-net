@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GraphServices.Models
 {
-    public partial class AccountResourceProperties : IUtf8JsonSerializable
+    public partial class GraphServicesAccountResourceProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.GraphServices.Models
             writer.WriteEndObject();
         }
 
-        internal static AccountResourceProperties DeserializeAccountResourceProperties(JsonElement element)
+        internal static GraphServicesAccountResourceProperties DeserializeGraphServicesAccountResourceProperties(JsonElement element)
         {
             Optional<GraphServicesProvisioningState> provisioningState = default;
             string appId = default;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                     continue;
                 }
             }
-            return new AccountResourceProperties(Optional.ToNullable(provisioningState), appId, billingPlanId.Value);
+            return new GraphServicesAccountResourceProperties(Optional.ToNullable(provisioningState), appId, billingPlanId.Value);
         }
     }
 }

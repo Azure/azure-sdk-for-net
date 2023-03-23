@@ -13,9 +13,9 @@ using Azure.ResourceManager.GraphServices;
 
 namespace Azure.ResourceManager.GraphServices.Models
 {
-    internal partial class AccountResourceList
+    internal partial class GraphServicesAccountResourceList
     {
-        internal static AccountResourceList DeserializeAccountResourceList(JsonElement element)
+        internal static GraphServicesAccountResourceList DeserializeGraphServicesAccountResourceList(JsonElement element)
         {
             Optional<Uri> nextLink = default;
             Optional<IReadOnlyList<GraphServicesAccountResourceData>> value = default;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                     continue;
                 }
             }
-            return new AccountResourceList(nextLink.Value, Optional.ToList(value));
+            return new GraphServicesAccountResourceList(nextLink.Value, Optional.ToList(value));
         }
     }
 }
