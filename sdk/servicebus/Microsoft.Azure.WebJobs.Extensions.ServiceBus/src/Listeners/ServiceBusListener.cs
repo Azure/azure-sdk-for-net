@@ -41,6 +41,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly Lazy<ServiceBusAdministrationClient> _administrationClient;
         private readonly ConcurrencyUpdateManager _concurrencyUpdateManager;
 
+        // Caching support
+        private Task _backgroundCacheMonitoringTask;
+        private readonly SemaphoreSlim _cachedEventsGuard = new SemaphoreSlim(1, 1);
+        private CancellationTokenSource _backgroundCacheMonitoringCts;
+
         // internal for testing
         internal volatile bool Disposed;
         internal volatile bool Started;
@@ -174,7 +179,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 }
                 else
                 {
-                    _batchLoop = RunBatchReceiveLoopAsync(_cancellationTokenSource.Token);
+                    _batchLoop = RunBatchReceiveLoopAsync(_cancellationTokenSource);
                 }
             }
             catch
@@ -374,8 +379,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             }
         }
 
-        private async Task RunBatchReceiveLoopAsync(CancellationToken cancellationToken)
+        private async Task RunBatchReceiveLoopAsync(CancellationTokenSource cancellationTokenSource)
         {
+            var cancellationToken = cancellationTokenSource.Token;
             ServiceBusClient sessionClient = null;
             ServiceBusReceiver receiver = null;
             if (_isSessionsEnabled)
@@ -423,10 +429,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     // For non-session receiver, we just fall back to the operation timeout.
                     TimeSpan? maxWaitTime = _isSessionsEnabled ? _serviceBusOptions.SessionIdleTimeout : null;
 
-                    IReadOnlyList<ServiceBusReceivedMessage> messages = await receiver.ReceiveMessagesAsync(
-                        _serviceBusOptions.MaxMessageBatchSize,
-                        maxWaitTime,
-                        cancellationToken).ConfigureAwait(false);
+                    var messages = await ReceiveMessages(receiver, maxWaitTime, cancellationTokenSource).ConfigureAwait(false);
 
                     if (messages.Count > 0)
                     {
@@ -548,6 +551,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     }
                 }
             }
+        }
+
+        private async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessages(ServiceBusReceiver receiver, TimeSpan? maxWaitTime, CancellationTokenSource cancellationTokenSource)
+        {
+            IReadOnlyList<ServiceBusReceivedMessage> messages = await receiver.ReceiveMessagesAsync(
+                        _serviceBusOptions.MaxMessageBatchSize,
+                        maxWaitTime,
+                        cancellationTokenSource.Token).ConfigureAwait(false);
+
+            return messages;
+        }
+
+        private void MonitorCache()
+        {
+
         }
 
         private void ThrowIfDisposed()

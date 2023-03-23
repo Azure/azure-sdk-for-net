@@ -147,6 +147,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public int MaxMessageBatchSize { get; set; } = 1000;
 
         /// <summary>
+        /// Gets or sets the minimum number of events desired for a batch. This setting applies only to functions that
+        /// receive multiple events. This value must be less than <see cref="MaxMessageBatchSize"/> and is used in
+        /// conjunction with <see cref="MaxWaitTime"/>. Default 1.
+        /// </summary>
+        public int MinMessageBatchSize { get; set; } = 1;
+
+        /// <summary>
+        /// Gets or sets the maximum time that the trigger should wait to fill a batch before invoking the function.
+        /// This is only considered when <see cref="MinMessageBatchSize"/> is set to larger than 1 and is otherwise unused.
+        /// If less than <see cref="MinMessageBatchSize" /> events were available before the wait time elapses, the function
+        /// will be invoked with a partial batch.  Default is 60 seconds.  The longest allowed wait time is 10 minutes.
+        /// </summary>
+        public TimeSpan MaxWaitTime { get; set; } = TimeSpan.FromSeconds(60);
+
+        /// <summary>
         /// Gets or sets the maximum amount of time to wait for a message to be received for the
         /// currently active session. After this time has elapsed, the processor will close the session
         /// and attempt to process another session.
@@ -201,6 +216,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
                 { nameof(MaxMessageBatchSize), MaxMessageBatchSize },
+                { nameof(MinMessageBatchSize), MinMessageBatchSize },
+                { nameof(MaxWaitTime), MaxWaitTime },
                 { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty },
                 { nameof(EnableCrossEntityTransactions), EnableCrossEntityTransactions }
             };
