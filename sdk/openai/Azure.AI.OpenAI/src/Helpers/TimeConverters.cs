@@ -11,5 +11,8 @@ namespace Azure.AI.OpenAI
 
         internal static DateTime DateTimeFromUnixEpoch(long secondsAfterUnixEpoch)
             => s_epochStartUtc.AddSeconds(secondsAfterUnixEpoch);
+
+        internal static DateTimeOffset DateTimeOffsetFromUnixEpoch(long secondsAfterUnixEpoch)
+            => s_epochStartUtc.AddSeconds(secondsAfterUnixEpoch);
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
         private const string PublicOpenAIApiVersion = "1";
         private const string PublicOpenAIEndpoint = $"https://api.openai.com/v{PublicOpenAIApiVersion}";
 
-        private readonly string _nonAzureOpenAIApiKey;
+        private bool _isConfiguredForAzureOpenAI = true;
 
         /// <summary>
         ///     Initializes a instance of OpenAIClient for use with an Azure OpenAI resource.
@@ -120,14 +120,14 @@ namespace Azure.AI.OpenAI
         public OpenAIClient(string openAIApiKey, OpenAIClientOptions options)
             : this(new Uri(PublicOpenAIEndpoint), CreateDelegatedToken(openAIApiKey), options)
         {
-            _nonAzureOpenAIApiKey = openAIApiKey;
+            _isConfiguredForAzureOpenAI = false;
         }
 
         /// <inheritdoc cref="OpenAIClient(string, OpenAIClientOptions)"/>
         public OpenAIClient(string openAIApiKey)
             : this(new Uri(PublicOpenAIEndpoint), CreateDelegatedToken(openAIApiKey), new OpenAIClientOptions())
         {
-            _nonAzureOpenAIApiKey = openAIApiKey;
+            _isConfiguredForAzureOpenAI = false;
         }
 
         /// <summary> Return textual completions as configured for a given prompt. </summary>
@@ -150,13 +150,11 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
-            {
-                completionsOptions.NonAzureModel = deploymentOrModelName;
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletions");
             scope.Start();
+
+            completionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+            completionsOptions.InternalShouldStreamResponse = null;
 
             RequestContent content = completionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -194,13 +192,11 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
-            {
-                completionsOptions.NonAzureModel = deploymentOrModelName;
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletions");
             scope.Start();
+
+            completionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+            completionsOptions.InternalShouldStreamResponse = null;
 
             RequestContent content = completionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -257,16 +253,13 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
-            {
-                completionsOptions.NonAzureModel = deploymentOrModelName;
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletionsStreaming");
             scope.Start();
 
-            RequestContent nonStreamingContent = completionsOptions.ToRequestContent();
-            RequestContent streamingContent = GetStreamingEnabledRequestContent(nonStreamingContent);
+            completionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+            completionsOptions.InternalShouldStreamResponse = true;
+
+            RequestContent content = completionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
             try
@@ -275,7 +268,7 @@ namespace Azure.AI.OpenAI
                 HttpMessage message = CreatePostRequestMessage(
                     deploymentOrModelName,
                     "completions",
-                    streamingContent,
+                    content,
                     context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
@@ -297,18 +290,14 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
-            {
-                completionsOptions.NonAzureModel = deploymentOrModelName;
-            }
+            completionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+            completionsOptions.InternalShouldStreamResponse = true;
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletionsStreaming");
             scope.Start();
 
+            RequestContent content = completionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-
-            RequestContent nonStreamingContent = completionsOptions.ToRequestContent();
-            RequestContent streamingContent = GetStreamingEnabledRequestContent(nonStreamingContent);
 
             try
             {
@@ -316,7 +305,7 @@ namespace Azure.AI.OpenAI
                 HttpMessage message = CreatePostRequestMessage(
                     deploymentOrModelName,
                     "completions",
-                    streamingContent,
+                    content,
                     context);
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
@@ -349,13 +338,11 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
-            {
-                chatCompletionsOptions.NonAzureModel = deploymentOrModelName;
-            }
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletions");
             scope.Start();
+
+            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+            chatCompletionsOptions.InternalShouldStreamResponse = null;
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -386,13 +373,11 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
-            {
-                chatCompletionsOptions.NonAzureModel = deploymentOrModelName;
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletions");
             scope.Start();
+
+            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+            chatCompletionsOptions.InternalShouldStreamResponse = null;
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -443,16 +428,13 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
-            {
-                chatCompletionsOptions.NonAzureModel = deploymentOrModelName;
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
             scope.Start();
 
-            RequestContent nonStreamingContent = chatCompletionsOptions.ToRequestContent();
-            RequestContent streamingContent = GetStreamingEnabledRequestContent(nonStreamingContent);
+            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+            chatCompletionsOptions.InternalShouldStreamResponse = true;
+
+            RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
             try
@@ -461,7 +443,7 @@ namespace Azure.AI.OpenAI
                 HttpMessage message = CreatePostRequestMessage(
                     deploymentOrModelName,
                     "chat/completions",
-                    streamingContent,
+                    content,
                     context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
@@ -483,18 +465,14 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
-            {
-                chatCompletionsOptions.NonAzureModel = deploymentOrModelName;
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
             scope.Start();
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+            chatCompletionsOptions.InternalShouldStreamResponse = true;
 
-            RequestContent nonStreamingContent = chatCompletionsOptions.ToRequestContent();
-            RequestContent streamingContent = GetStreamingEnabledRequestContent(nonStreamingContent);
+            RequestContent content = chatCompletionsOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
 
             try
             {
@@ -502,7 +480,7 @@ namespace Azure.AI.OpenAI
                 HttpMessage message = CreatePostRequestMessage(
                     deploymentOrModelName,
                     "chat/completions",
-                    streamingContent,
+                    content,
                     context);
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(
@@ -543,10 +521,7 @@ namespace Azure.AI.OpenAI
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
             scope.Start();
 
-            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
-            {
-                embeddingsOptions.NonAzureModel = deploymentOrModelName;
-            }
+            embeddingsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
 
             RequestContent content = embeddingsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -576,10 +551,7 @@ namespace Azure.AI.OpenAI
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
             scope.Start();
 
-            if (!string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
-            {
-                embeddingsOptions.NonAzureModel = deploymentOrModelName;
-            }
+            embeddingsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
 
             RequestContent content = embeddingsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -598,40 +570,11 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        private static RequestContent GetStreamingEnabledRequestContent(RequestContent originalRequestContent)
-        {
-            // Dump the original request content to a temporary stream and seek to start
-            using Stream originalRequestContentStream = new MemoryStream();
-            originalRequestContent.WriteTo(originalRequestContentStream, new CancellationToken());
-            originalRequestContentStream.Position = 0;
-
-            JsonDocument originalJson = JsonDocument.Parse(originalRequestContentStream);
-            JsonElement originalJsonRoot = originalJson.RootElement;
-
-            var augmentedContent = new Utf8JsonRequestContent();
-            augmentedContent.JsonWriter.WriteStartObject();
-
-            // Copy the original JSON content back into the new copy
-            foreach (JsonProperty jsonThing in originalJsonRoot.EnumerateObject())
-            {
-                augmentedContent.JsonWriter.WritePropertyName(jsonThing.Name);
-                jsonThing.Value.WriteTo(augmentedContent.JsonWriter);
-            }
-
-            // ...Add the *one thing* we wanted to add
-            augmentedContent.JsonWriter.WritePropertyName("stream");
-            augmentedContent.JsonWriter.WriteBooleanValue(true);
-
-            augmentedContent.JsonWriter.WriteEndObject();
-
-            return augmentedContent;
-        }
-
         internal RequestUriBuilder GetUri(string deploymentOrModelName, string operationPath)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            if (string.IsNullOrEmpty(_nonAzureOpenAIApiKey))
+            if (_isConfiguredForAzureOpenAI)
             {
                 uri.AppendRaw("/openai", false);
                 uri.AppendPath("/deployments/", false);
@@ -664,7 +607,7 @@ namespace Azure.AI.OpenAI
 
         private static TokenCredential CreateDelegatedToken(string token)
         {
-            AccessToken accessToken = new AccessToken(token, DateTimeOffset.Now.AddDays(180));
+            var accessToken = new AccessToken(token, DateTimeOffset.Now.AddDays(180));
             return DelegatedTokenCredential.Create((_, _) => accessToken);
         }
 

@@ -36,9 +36,6 @@ namespace Azure.AI.OpenAI
             Index = index;
         }
 
-        /// <summary> Name of the field in which the embedding is contained. </summary>
-        internal string Object { get; } = "embedding";
-
         /// <summary> List of embeddings value for the input prompt. These represents a measurement of releated of text strings. </summary>
         public IReadOnlyList<float> Embedding { get; }
         /// <summary> Index of the prompt to which the EmbeddingItem corresponds. </summary>

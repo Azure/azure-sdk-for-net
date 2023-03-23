@@ -7,36 +7,10 @@
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary>
-    /// The representation of a single completions result for a chat completions request.
-    /// </summary>
     public partial class ChatChoice
     {
-        /// <summary>
-        /// Gets the chat message associated with this chat choice.
-        /// </summary>
-        public ChatMessage Message { get; }
-        /// <summary> Gets the ordered index associated with this chat choice. </summary>
-        public int? Index { get; }
-        /// <summary> Gets a description of how evaluation of this chat choice ended. </summary>
-        public string FinishReason { get; }
-
-        internal ChatMessage StreamingDeltaMessage { get; set; }
-
-        internal ChatChoice()
-        {
-        }
-
-        internal ChatChoice(
-            ChatMessage message,
-            ChatMessage streamingDeltaMessage,
-            int? index,
-            string finishReason)
-        {
-            Message = message;
-            StreamingDeltaMessage = streamingDeltaMessage;
-            Index = index;
-            FinishReason = finishReason;
-        }
+        // Chat responses include "delta" objects as part of their SSE payloads when streaming is enabled.
+        // This internal property facilitates proper deserialization of streamed chat messages.
+        internal ChatMessage InternalStreamingDeltaMessage { get; set; }
     }
 }

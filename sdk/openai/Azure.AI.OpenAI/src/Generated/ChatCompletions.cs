@@ -13,33 +13,33 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary>
-    /// Representation of the response data from a completions request.
+    /// Representation of the response data from a chat completions request.
     /// Completions support a wide variety of tasks and generate text that continues from or "completes"
     /// provided prompt data.
     /// </summary>
-    public partial class Completions
+    public partial class ChatCompletions
     {
-        /// <summary> Initializes a new instance of Completions. </summary>
-        /// <param name="id"> A unique identifier associated with this completions response. </param>
+        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="internalCreatedSecondsAfterUnixEpoch">
         /// The first timestamp associated with generation activity for this completions response,
         /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="usage"/> is null. </exception>
-        internal Completions(string id, int internalCreatedSecondsAfterUnixEpoch, CompletionsUsage usage)
+        internal ChatCompletions(string id, int internalCreatedSecondsAfterUnixEpoch, CompletionsUsage usage)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(usage, nameof(usage));
 
             Id = id;
             InternalCreatedSecondsAfterUnixEpoch = internalCreatedSecondsAfterUnixEpoch;
-            Choices = new ChangeTrackingList<Choice>();
+            Choices = new ChangeTrackingList<ChatChoice>();
             Usage = usage;
         }
 
-        /// <summary> Initializes a new instance of Completions. </summary>
-        /// <param name="id"> A unique identifier associated with this completions response. </param>
+        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="internalCreatedSecondsAfterUnixEpoch">
         /// The first timestamp associated with generation activity for this completions response,
         /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
@@ -50,7 +50,7 @@ namespace Azure.AI.OpenAI
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        internal Completions(string id, int internalCreatedSecondsAfterUnixEpoch, IReadOnlyList<Choice> choices, CompletionsUsage usage)
+        internal ChatCompletions(string id, int internalCreatedSecondsAfterUnixEpoch, IReadOnlyList<ChatChoice> choices, CompletionsUsage usage)
         {
             Id = id;
             InternalCreatedSecondsAfterUnixEpoch = internalCreatedSecondsAfterUnixEpoch;
@@ -58,14 +58,14 @@ namespace Azure.AI.OpenAI
             Usage = usage;
         }
 
-        /// <summary> A unique identifier associated with this completions response. </summary>
+        /// <summary> A unique identifier associated with this chat completions response. </summary>
         public string Id { get; }
         /// <summary>
         /// The collection of completions choices associated with this completions response.
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.
         /// Token limits and other settings may limit the number of choices generated.
         /// </summary>
-        public IReadOnlyList<Choice> Choices { get; }
+        public IReadOnlyList<ChatChoice> Choices { get; }
         /// <summary> Usage information for tokens processed and generated as part of this completions operation. </summary>
         public CompletionsUsage Usage { get; }
     }

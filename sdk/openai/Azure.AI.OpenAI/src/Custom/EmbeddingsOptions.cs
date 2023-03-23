@@ -13,6 +13,8 @@ namespace Azure.AI.OpenAI
     /// <summary> Schema to create a prompt completion from a deployment. </summary>
     public partial class EmbeddingsOptions
     {
+        internal string InternalNonAzureModelName { get; set; }
+
         /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
         /// <param name="input">
         /// Input text to get embeddings for, encoded as a string.
@@ -29,42 +31,5 @@ namespace Azure.AI.OpenAI
 
             Input = input;
         }
-
-        /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
-        /// <param name="user"> The ID of the end-user, for use in tracking and rate-limiting. </param>
-        /// <param name="inputType"> input type of embedding search to use. </param>
-        /// <param name="nonAzureModel"> ID of the model to use. </param>
-        /// <param name="input">
-        /// Input text to get embeddings for, encoded as a string.
-        /// To get embeddings for multiple inputs in a single request, pass an array of strings.
-        /// Each input must not exceed 2048 tokens in length.
-        /// 
-        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
-        /// as we have observed inferior results when newlines are present.
-        /// </param>
-        internal EmbeddingsOptions(string user, string inputType, string nonAzureModel, string input)
-        {
-            User = user;
-            InputType = inputType;
-            NonAzureModel = nonAzureModel;
-            Input = input;
-        }
-
-        /// <summary> The ID of the end-user, for use in tracking and rate-limiting. </summary>
-        public string User { get; set; }
-        /// <summary> input type of embedding search to use. </summary>
-        public string InputType { get; set; }
-        /// <summary>
-        /// Input text to get embeddings for, encoded as a string.
-        /// To get embeddings for multiple inputs in a single request, pass an array of strings.
-        /// Each input must not exceed 2048 tokens in length.
-        /// 
-        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
-        /// as we have observed inferior results when newlines are present.
-        /// </summary>
-        public string Input { get; set; }
-
-        [CodeGenMember("Model")]
-        internal string NonAzureModel { get; set; }
     }
 }

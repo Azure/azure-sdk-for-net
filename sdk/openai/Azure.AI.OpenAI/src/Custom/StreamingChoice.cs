@@ -33,7 +33,8 @@ namespace Azure.AI.OpenAI
         /// Normal termination typically provides "stop" and encountering token limits in a request typically
         /// provides "length." If no value is present, this StreamingChoice is still in progress.
         /// </remarks>
-        public string FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
+        public CompletionsFinishReason FinishReason
+            => GetLocked(() => _baseChoices.Last().FinishReason);
 
         internal bool StreamingDoneSignalReceived
         {
@@ -49,7 +50,8 @@ namespace Azure.AI.OpenAI
         /// <summary>
         /// Gets the log probabilities associated with tokens in this Choice.
         /// </summary>
-        public CompletionsLogProbability Logprobs => GetLocked(() => _baseChoices.Last().Logprobs);
+        public CompletionsLogProbabilityModel LogProbabilityModel
+            => GetLocked(() => _baseChoices.Last().LogProbabilityModel);
 
         internal StreamingChoice(Choice originalBaseChoice)
         {
@@ -86,8 +88,8 @@ namespace Azure.AI.OpenAI
                     lock (_baseChoicesLock)
                     {
                         Choice mostRecentChoice = _baseChoices.Last();
-                        string mostRecentFinishReason = mostRecentChoice.FinishReason;
-                        bool choiceIsComplete = !string.IsNullOrEmpty(mostRecentFinishReason) || StreamingDoneSignalReceived;
+                        bool choiceIsComplete = mostRecentChoice.FinishReason != CompletionsFinishReason.None
+                            || StreamingDoneSignalReceived;
 
                         doneWaiting = choiceIsComplete || i < _baseChoices.Count;
                         isFinalIndex = choiceIsComplete && i >= _baseChoices.Count - 1;

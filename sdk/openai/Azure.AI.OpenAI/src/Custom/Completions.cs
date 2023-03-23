@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ChatCompletions
+    public partial class Completions
     {
         internal int InternalCreatedSecondsAfterUnixEpoch { get; set; }
 

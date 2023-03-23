@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI
         /// <summary>
         /// Gets the earliest Completion creation timestamp associated with this streamed response.
         /// </summary>
-        public DateTime Created => GetLocked(() => _baseChatCompletions.First().Created);
+        public DateTimeOffset Created => GetLocked(() => _baseChatCompletions.First().Created);
 
         /// <summary>
         /// Gets the unique identifier associated with this streaming Completions response.

@@ -13,5 +13,43 @@ namespace Azure.AI.OpenAI
     /// <summary> Schema to create a prompt completion from a deployment. </summary>
     public partial class EmbeddingsOptions
     {
+
+        /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
+        /// <param name="user"> The ID of the end-user, for use in tracking and rate-limiting. </param>
+        /// <param name="inputType"> input type of embedding search to use. </param>
+        /// <param name="internalNonAzureModelName">
+        /// The model name to provide as part of this completions request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </param>
+        /// <param name="input">
+        /// Input text to get embeddings for, encoded as a string.
+        /// To get embeddings for multiple inputs in a single request, pass an array of strings.
+        /// Each input must not exceed 2048 tokens in length.
+        /// 
+        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
+        /// as we have observed inferior results when newlines are present.
+        /// </param>
+        internal EmbeddingsOptions(string user, string inputType, string internalNonAzureModelName, string input)
+        {
+            User = user;
+            InputType = inputType;
+            InternalNonAzureModelName = internalNonAzureModelName;
+            Input = input;
+        }
+
+        /// <summary> The ID of the end-user, for use in tracking and rate-limiting. </summary>
+        public string User { get; set; }
+        /// <summary> input type of embedding search to use. </summary>
+        public string InputType { get; set; }
+        /// <summary>
+        /// Input text to get embeddings for, encoded as a string.
+        /// To get embeddings for multiple inputs in a single request, pass an array of strings.
+        /// Each input must not exceed 2048 tokens in length.
+        /// 
+        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
+        /// as we have observed inferior results when newlines are present.
+        /// </summary>
+        public string Input { get; set; }
     }
 }

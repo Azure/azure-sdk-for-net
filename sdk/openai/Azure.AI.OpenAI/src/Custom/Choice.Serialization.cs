@@ -16,10 +16,10 @@ namespace Azure.AI.OpenAI
     {
         internal static Choice DeserializeChoice(JsonElement element)
         {
-            Optional<string> text = default;
-            Optional<int?> index = default;
-            Optional<CompletionsLogProbability> logprobs = default;
-            Optional<string> finishReason = default;
+            string text = default;
+            int index = default;
+            CompletionsLogProbabilityModel logprobs = default;
+            CompletionsFinishReason finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
@@ -29,11 +29,6 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("index"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        index = null;
-                        continue;
-                    }
                     index = property.Value.GetInt32();
                     continue;
                 }
@@ -46,7 +41,7 @@ namespace Azure.AI.OpenAI
                     }
                     else
                     {
-                        logprobs = CompletionsLogProbability.DeserializeCompletionsLogProbability(property.Value);
+                        logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value);
                         continue;
                     }
                 }
@@ -56,7 +51,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new Choice(text, Optional.ToNullable(index), logprobs, finishReason);
+            return new Choice(text, index, logprobs, finishReason);
         }
     }
 }

@@ -9,14 +9,15 @@ namespace Azure.AI.OpenAI
 {
     /// <summary>
     /// Representation of the token counts processed for a completions request.
-    /// Counts consider all tokens across prompts, choices, choice alternates, best_of generations, and other consumers.
+    /// Counts consider all tokens across prompts, choices, choice alternates, best_of generations, and
+    /// other consumers.
     /// </summary>
     public partial class CompletionsUsage
     {
         /// <summary> Initializes a new instance of CompletionsUsage. </summary>
-        /// <param name="completionTokens"> Number of tokens received in the completion. </param>
-        /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
-        /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
+        /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
+        /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
+        /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
         internal CompletionsUsage(int completionTokens, int promptTokens, int totalTokens)
         {
             CompletionTokens = completionTokens;
@@ -24,11 +25,11 @@ namespace Azure.AI.OpenAI
             TotalTokens = totalTokens;
         }
 
-        /// <summary> Number of tokens received in the completion. </summary>
+        /// <summary> The number of tokens generated across all completions emissions. </summary>
         public int CompletionTokens { get; }
-        /// <summary> Number of tokens sent in the original request. </summary>
+        /// <summary> The number of tokens in the provided prompts for the completions request. </summary>
         public int PromptTokens { get; }
-        /// <summary> Total number of tokens transacted in this request/response. </summary>
+        /// <summary> The total number of tokens processed for the completions request and response. </summary>
         public int TotalTokens { get; }
     }
 }

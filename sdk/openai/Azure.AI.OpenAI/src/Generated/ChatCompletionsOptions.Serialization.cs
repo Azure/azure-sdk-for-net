@@ -5,27 +5,25 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
-    public partial class CompletionsOptions : IUtf8JsonSerializable
+    public partial class ChatCompletionsOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Prompts))
+            if (Optional.IsCollectionDefined(Messages))
             {
-                writer.WritePropertyName("prompt"u8);
+                writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
-                foreach (var item in Prompts)
+                foreach (var item in Messages)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -65,13 +63,13 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("top_p");
                 }
             }
-            if (Optional.IsCollectionDefined(TokenSelectionBiases))
+            if (Optional.IsCollectionDefined(InternalStringKeyedTokenSelectionBiases))
             {
                 writer.WritePropertyName("logit_bias"u8);
                 writer.WriteStartObject();
-                foreach (var item in TokenSelectionBiases)
+                foreach (var item in InternalStringKeyedTokenSelectionBiases)
                 {
-                    writer.WritePropertyName($"{item.Key}");
+                    writer.WritePropertyName(item.Key);
                     writer.WriteNumberValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -91,30 +89,6 @@ namespace Azure.AI.OpenAI
                 else
                 {
                     writer.WriteNull("n");
-                }
-            }
-            if (Optional.IsDefined(LogProbabilityCount))
-            {
-                if (LogProbabilityCount != null)
-                {
-                    writer.WritePropertyName("logprobs"u8);
-                    writer.WriteNumberValue(LogProbabilityCount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("logprobs");
-                }
-            }
-            if (Optional.IsDefined(Echo))
-            {
-                if (Echo != null)
-                {
-                    writer.WritePropertyName("echo"u8);
-                    writer.WriteBooleanValue(Echo.Value);
-                }
-                else
-                {
-                    writer.WriteNull("echo");
                 }
             }
             if (Optional.IsCollectionDefined(StopSequences))
@@ -151,60 +125,59 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("frequency_penalty");
                 }
             }
-            if (Optional.IsDefined(GenerationSampleCount))
+            if (Optional.IsDefined(InternalShouldStreamResponse))
             {
-                if (GenerationSampleCount != null)
+                if (InternalShouldStreamResponse != null)
                 {
-                    writer.WritePropertyName("best_of"u8);
-                    writer.WriteNumberValue(GenerationSampleCount.Value);
+                    writer.WritePropertyName("stream"u8);
+                    writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
                 }
                 else
                 {
-                    writer.WriteNull("best_of");
+                    writer.WriteNull("stream");
                 }
             }
-            if (!string.IsNullOrEmpty(NonAzureModel))
+            if (Optional.IsDefined(InternalNonAzureModelName))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(NonAzureModel);
+                writer.WriteStringValue(InternalNonAzureModelName);
             }
             writer.WriteEndObject();
         }
 
-        internal static CompletionsOptions DeserializeCompletionsOptions(JsonElement element)
+        internal static ChatCompletionsOptions DeserializeChatCompletionsOptions(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> prompt = default;
+            Optional<IList<ChatMessage>> messages = default;
             Optional<int?> maxTokens = default;
             Optional<float?> temperature = default;
             Optional<float?> topP = default;
-            Optional<IDictionary<int, int>> logitBias = default;
+            Optional<IDictionary<string, int>> logitBias = default;
             Optional<string> user = default;
             Optional<int?> n = default;
-            Optional<int?> logprobs = default;
-            Optional<bool?> echo = default;
             Optional<IList<string>> stop = default;
             Optional<float?> presencePenalty = default;
             Optional<float?> frequencyPenalty = default;
-            Optional<int?> bestOf = default;
+            Optional<bool?> stream = default;
+            Optional<string> model = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prompt"u8))
+                if (property.NameEquals("messages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ChatMessage> array = new List<ChatMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(ChatMessage.DeserializeChatMessage(item));
                     }
-                    prompt = array;
+                    messages = array;
                     continue;
                 }
                 if (property.NameEquals("max_tokens"u8))
@@ -244,11 +217,10 @@ namespace Azure.AI.OpenAI
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<int, int> dictionary = new Dictionary<int, int>();
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        int key = int.Parse(property0.Name, CultureInfo.InvariantCulture.NumberFormat);
-                        dictionary.Add(key, property0.Value.GetInt32());
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
                     }
                     logitBias = dictionary;
                     continue;
@@ -266,26 +238,6 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     n = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("logprobs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        logprobs = null;
-                        continue;
-                    }
-                    logprobs = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("echo"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        echo = null;
-                        continue;
-                    }
-                    echo = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("stop"u8))
@@ -323,18 +275,39 @@ namespace Azure.AI.OpenAI
                     frequencyPenalty = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("best_of"u8))
+                if (property.NameEquals("stream"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        bestOf = null;
+                        stream = null;
                         continue;
                     }
-                    bestOf = property.Value.GetInt32();
+                    stream = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("model"u8))
+                {
+                    model = property.Value.GetString();
                     continue;
                 }
             }
-            return new CompletionsOptions(Optional.ToList(prompt), Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user, Optional.ToNullable(n), Optional.ToNullable(logprobs), string.Empty, Optional.ToNullable(echo), Optional.ToList(stop), string.Empty, 0, Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf));
+            return new ChatCompletionsOptions(Optional.ToList(messages), Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user, Optional.ToNullable(n), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatCompletionsOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChatCompletionsOptions(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

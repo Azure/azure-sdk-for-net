@@ -7,18 +7,21 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Xml.Linq;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class CompletionsLogProbability
+    public partial class CompletionsLogProbabilityModel
     {
-        internal static CompletionsLogProbability DeserializeCompletionsLogProbability(JsonElement element)
+        internal static CompletionsLogProbabilityModel DeserializeCompletionsLogProbabilityModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> tokens = default;
-            Optional<IReadOnlyList<float?>> tokenLogprobs = default;
+            Optional<IReadOnlyList<float>> tokenLogprobs = default;
             Optional<IReadOnlyList<IDictionary<string, float>>> topLogprobs = default;
             Optional<IReadOnlyList<int>> textOffset = default;
             foreach (var property in element.EnumerateObject())
@@ -45,17 +48,10 @@ namespace Azure.AI.OpenAI
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<float?> array = new List<float?>();
+                    List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetSingle());
-                        }
+                        array.Add(item.GetSingle());
                     }
                     tokenLogprobs = array;
                     continue;
@@ -103,7 +99,15 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new CompletionsLogProbability(Optional.ToList(tokens), Optional.ToList(tokenLogprobs), Optional.ToList(topLogprobs), Optional.ToList(textOffset));
+            return new CompletionsLogProbabilityModel(Optional.ToList(tokens), Optional.ToList(tokenLogprobs), Optional.ToList(topLogprobs), Optional.ToList(textOffset));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CompletionsLogProbabilityModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCompletionsLogProbabilityModel(document.RootElement);
         }
     }
 }

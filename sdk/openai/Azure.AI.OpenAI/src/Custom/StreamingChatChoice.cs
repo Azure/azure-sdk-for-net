@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI
         /// Normal termination typically provides "stop" and encountering token limits in a request typically
         /// provides "length." If no value is present, this StreamingChoice is still in progress.
         /// </remarks>
-        public string FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
+        public CompletionsFinishReason FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
 
         internal ChatMessage StreamingDeltaMessage { get; set; }
 
@@ -83,8 +83,8 @@ namespace Azure.AI.OpenAI
                     lock (_baseChoicesLock)
                     {
                         ChatChoice mostRecentChoice = _baseChoices.Last();
-                        string mostRecentFinishReason = mostRecentChoice.FinishReason;
-                        bool choiceIsComplete = !string.IsNullOrEmpty(mostRecentFinishReason) || StreamingDoneSignalReceived;
+                        bool choiceIsComplete = mostRecentChoice.FinishReason != CompletionsFinishReason.None
+                            || StreamingDoneSignalReceived;
 
                         doneWaiting = choiceIsComplete || i < _baseChoices.Count;
                         isFinalIndex = choiceIsComplete && i >= _baseChoices.Count - 1;
@@ -102,8 +102,8 @@ namespace Azure.AI.OpenAI
                 {
                     if (i < _baseChoices.Count)
                     {
-                        message = _baseChoices[i].StreamingDeltaMessage;
-                        message.Role = _baseChoices.First().StreamingDeltaMessage.Role;
+                        message = _baseChoices[i].InternalStreamingDeltaMessage;
+                        message.Role = _baseChoices.First().InternalStreamingDeltaMessage.Role;
                     }
                 }
 

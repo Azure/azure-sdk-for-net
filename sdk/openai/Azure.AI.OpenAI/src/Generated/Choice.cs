@@ -5,36 +5,52 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Choice model within completion response. </summary>
+    /// <summary>
+    /// The representation of a single prompt completion as part of an overall completions request.
+    /// Generally, `n` choices are generated per provided prompt with a default value of 1.
+    /// Token limits and other settings may limit the number of choices generated.
+    /// </summary>
     public partial class Choice
     {
         /// <summary> Initializes a new instance of Choice. </summary>
-        internal Choice()
-        {
-        }
-
-        /// <summary> Initializes a new instance of Choice. </summary>
-        /// <param name="text"> Generated text for given completion prompt. </param>
-        /// <param name="index"> Index. </param>
-        /// <param name="logprobs"> Log Prob Model. </param>
+        /// <param name="text"> The generated text for a given completions prompt. </param>
+        /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="finishReason"> Reason for finishing. </param>
-        internal Choice(string text, int? index, CompletionsLogProbability logprobs, string finishReason)
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        internal Choice(string text, int index, CompletionsFinishReason finishReason)
         {
+            Argument.AssertNotNull(text, nameof(text));
+
             Text = text;
             Index = index;
-            Logprobs = logprobs;
             FinishReason = finishReason;
         }
 
-        /// <summary> Generated text for given completion prompt. </summary>
+        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <param name="text"> The generated text for a given completions prompt. </param>
+        /// <param name="index"> The ordered index associated with this completions choice. </param>
+        /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
+        /// <param name="finishReason"> Reason for finishing. </param>
+        internal Choice(string text, int index, CompletionsLogProbabilityModel logProbabilityModel, CompletionsFinishReason finishReason)
+        {
+            Text = text;
+            Index = index;
+            LogProbabilityModel = logProbabilityModel;
+            FinishReason = finishReason;
+        }
+
+        /// <summary> The generated text for a given completions prompt. </summary>
         public string Text { get; }
-        /// <summary> Index. </summary>
-        public int? Index { get; }
-        /// <summary> Log Prob Model. </summary>
-        public CompletionsLogProbability Logprobs { get; }
+        /// <summary> The ordered index associated with this completions choice. </summary>
+        public int Index { get; }
+        /// <summary> The log probabilities model for tokens associated with this completions choice. </summary>
+        public CompletionsLogProbabilityModel LogProbabilityModel { get; }
         /// <summary> Reason for finishing. </summary>
-        public string FinishReason { get; }
+        public CompletionsFinishReason FinishReason { get; }
     }
 }

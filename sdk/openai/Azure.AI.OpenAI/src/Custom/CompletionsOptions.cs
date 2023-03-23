@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Azure.Core;
 
@@ -136,6 +137,8 @@ namespace Azure.AI.OpenAI
         /// </remarks>
         public float? Temperature { get; set; }
 
+        internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
+
         /// <summary>
         ///     Gets a dictionary of modifications to the likelihood of specified GPT tokens appearing in a completions
         ///     result. Maps token IDs to associated bias scores from -100 to 100, with minimum and maximum values
@@ -147,70 +150,20 @@ namespace Azure.AI.OpenAI
         ///
         ///     <see cref="TokenSelectionBiases"/> is equivalent to 'logit_bias' in the REST request schema.
         /// </remarks>
-        [CodeGenMember("LogitBias")]
-        public IDictionary<int, int> TokenSelectionBiases { get; }
-
-        /// <summary> Gets or sets an identifier for a request for use in tracking and rate-limiting. </summary>
-        public string User { get; set; }
-
-        [CodeGenMember("Model")]
-        internal string NonAzureModel { get; set; }
-
-        [CodeGenMember("CacheLevel")]
-        private int? _cacheLevel;
-
-        [CodeGenMember("CompletionConfig")]
-        private string _completionConfig;
-
-        /// <summary> Initializes a new instance of CompletionsOptions. </summary>
-        public CompletionsOptions()
+        public IDictionary<int, int> TokenSelectionBiases
         {
-            Prompts = new ChangeTrackingList<string>();
-            TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
-            StopSequences = new ChangeTrackingList<string>();
-            // Pending CodeGen update
-            _cacheLevel ??= default;
-            if (_cacheLevel != default)
-            { }
-            _completionConfig ??= default;
-            if (_completionConfig != default)
-            { }
+            get
+            {
+                var convertedDictionary = new Dictionary<int, int>();
+                foreach (KeyValuePair<string, int> pair in InternalStringKeyedTokenSelectionBiases)
+                {
+                    convertedDictionary.Add(int.Parse(pair.Key, CultureInfo.InvariantCulture.NumberFormat), pair.Value);
+                }
+                return convertedDictionary;
+            }
         }
 
-        internal CompletionsOptions(
-            IList<string> prompts,
-            int? maxTokens,
-            float? temperature,
-            float? nucleusSamplingFactor,
-            IDictionary<int, int> tokenSelectionBiases,
-            string user,
-            int? choicesPerPrompt,
-            int? logProbabilityCount,
-            string nonAzureModel,
-            bool? echo,
-            IList<string> stopSequences,
-            string completionConfig,
-            int? cacheLevel,
-            float? presencePenalty,
-            float? frequencyPenalty,
-            int? generationSampleCount)
-        {
-            Prompts = prompts.ToList();
-            MaxTokens = maxTokens;
-            Temperature = temperature;
-            NucleusSamplingFactor = nucleusSamplingFactor;
-            TokenSelectionBiases = tokenSelectionBiases;
-            User = user;
-            ChoicesPerPrompt = choicesPerPrompt;
-            LogProbabilityCount = logProbabilityCount;
-            NonAzureModel = nonAzureModel;
-            Echo = echo;
-            StopSequences = stopSequences.ToList();
-            PresencePenalty = presencePenalty;
-            FrequencyPenalty = frequencyPenalty;
-            GenerationSampleCount = generationSampleCount;
-            _completionConfig = completionConfig;
-            _cacheLevel = cacheLevel;
-        }
-}
+        internal bool? InternalShouldStreamResponse { get; set; }
+        internal string InternalNonAzureModelName { get; set; }
+    }
 }
