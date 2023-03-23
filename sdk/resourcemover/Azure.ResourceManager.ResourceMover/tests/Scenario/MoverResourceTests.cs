@@ -34,18 +34,8 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             _moverResourceName = Recording.GenerateAssetName("MoverResource-");
             _targetVnetName = Recording.GenerateAssetName("targetVnet-");
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
-            if (Mode == RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
-                    _virtualNetworkId = virtualNetwork.Id;
-                }
-            }
-            else
-            {
-                _virtualNetworkId = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Data.Name, vnetName);
-            }
+            VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
+            _virtualNetworkId = virtualNetwork.Id;
         }
 
         [TestCase]

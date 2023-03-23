@@ -118,19 +118,8 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             string targetVnetName = Recording.GenerateAssetName("targetVnet-");
             string targetRgName = Recording.GenerateAssetName("testRg-ResourceMover-Target-");
             string moverDependentResourceName = Recording.GenerateAssetName("MoverResource-");
-            ResourceIdentifier virtualNetworkId;
-            if (Mode == RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
-                    virtualNetworkId = virtualNetwork.Id;
-                }
-            }
-            else
-            {
-                virtualNetworkId = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Data.Name, vnetName);
-            }
+            VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
+            ResourceIdentifier virtualNetworkId = virtualNetwork.Id;
             MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetworkId, moverResourceName, targetVnetName);
 
             // Validate that the Vnet has an dependency.

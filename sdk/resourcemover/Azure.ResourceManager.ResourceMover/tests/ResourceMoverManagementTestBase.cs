@@ -54,10 +54,19 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
         protected async Task<VirtualNetworkResource> CreareVirtualNetwork(ResourceGroupResource rg, string vnetName)
         {
-            VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
+            if (Mode == RecordedTestMode.Playback)
             {
-                Location = AzureLocation.EastUS,
-                Subnets =
+                var vnetId = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.Name, vnetName);
+                return Client.GetVirtualNetworkResource(vnetId);
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
+                    {
+                        Location = AzureLocation.EastUS,
+                        Subnets =
                 {
                     new SubnetData()
                     {
@@ -65,10 +74,12 @@ namespace Azure.ResourceManager.ResourceMover.Tests
                         AddressPrefix = "10.0.0.0/24"
                     }
                 },
-                AddressPrefixes = { "10.0.0.0/16" }
-            };
-            var lro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, virtualNetworkData);
-            return lro.Value;
+                        AddressPrefixes = { "10.0.0.0/16" }
+                    };
+                    var lro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, virtualNetworkData);
+                    return lro.Value;
+                }
+            }
         }
 
         protected async Task<MoverResource> CreateMoverResource(MoverResourceSetResource moverResourceSet, ResourceIdentifier vnetId, string moverResourceName, string targetVnetName)
