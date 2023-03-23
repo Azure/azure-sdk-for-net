@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.GraphServices.Models
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="appId"> Customer owned application ID. </param>
         /// <param name="billingPlanId"> Billing Plan Id. </param>
-        internal AccountResourceProperties(ProvisioningState? provisioningState, string appId, string billingPlanId)
+        internal AccountResourceProperties(GraphServicesProvisioningState? provisioningState, string appId, string billingPlanId)
         {
             ProvisioningState = provisioningState;
             AppId = appId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.GraphServices.Models
         }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public GraphServicesProvisioningState? ProvisioningState { get; }
         /// <summary> Customer owned application ID. </summary>
         public string AppId { get; set; }
         /// <summary> Billing Plan Id. </summary>

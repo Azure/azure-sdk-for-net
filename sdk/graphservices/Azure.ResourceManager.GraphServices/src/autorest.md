@@ -44,6 +44,10 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+    - ProvisioningState
+    - AccountResource
+
 directive:
     - remove-operation: 'Operation_List'
 

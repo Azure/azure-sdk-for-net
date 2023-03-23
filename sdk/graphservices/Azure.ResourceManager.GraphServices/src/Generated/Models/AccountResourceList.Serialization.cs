@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.GraphServices.Models
         internal static AccountResourceList DeserializeAccountResourceList(JsonElement element)
         {
             Optional<Uri> nextLink = default;
-            Optional<IReadOnlyList<AccountResourceData>> value = default;
+            Optional<IReadOnlyList<GraphServicesAccountResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.GraphServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AccountResourceData> array = new List<AccountResourceData>();
+                    List<GraphServicesAccountResourceData> array = new List<GraphServicesAccountResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccountResourceData.DeserializeAccountResourceData(item));
+                        array.Add(GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(item));
                     }
                     value = array;
                     continue;

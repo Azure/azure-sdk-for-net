@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.GraphServices
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _accountResourceAccountsClientDiagnostics;
-        private AccountsRestOperations _accountResourceAccountsRestClient;
+        private ClientDiagnostics _graphServicesAccountResourceAccountsClientDiagnostics;
+        private AccountsRestOperations _graphServicesAccountResourceAccountsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.GraphServices
         {
         }
 
-        private ClientDiagnostics AccountResourceAccountsClientDiagnostics => _accountResourceAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.GraphServices", AccountResource.ResourceType.Namespace, Diagnostics);
-        private AccountsRestOperations AccountResourceAccountsRestClient => _accountResourceAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AccountResource.ResourceType));
+        private ClientDiagnostics GraphServicesAccountResourceAccountsClientDiagnostics => _graphServicesAccountResourceAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.GraphServices", GraphServicesAccountResource.ResourceType.Namespace, Diagnostics);
+        private AccountsRestOperations GraphServicesAccountResourceAccountsRestClient => _graphServicesAccountResourceAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(GraphServicesAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.GraphServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccountResource> GetAccountResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="GraphServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GraphServicesAccountResource> GetGraphServicesAccountResourcesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AccountResourceAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountResourceAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AccountResource(Client, AccountResourceData.DeserializeAccountResourceData(e)), AccountResourceAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccountResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GraphServicesAccountResourceAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GraphServicesAccountResourceAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), GraphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGraphServicesAccountResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.GraphServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccountResource> GetAccountResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GraphServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GraphServicesAccountResource> GetGraphServicesAccountResources(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AccountResourceAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountResourceAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AccountResource(Client, AccountResourceData.DeserializeAccountResourceData(e)), AccountResourceAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccountResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GraphServicesAccountResourceAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GraphServicesAccountResourceAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), GraphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGraphServicesAccountResources", "value", "nextLink", cancellationToken);
         }
     }
 }

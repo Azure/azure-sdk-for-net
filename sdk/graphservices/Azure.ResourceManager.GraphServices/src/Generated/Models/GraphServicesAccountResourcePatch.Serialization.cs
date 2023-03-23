@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GraphServices.Models
 {
-    public partial class AccountResourcePatch : IUtf8JsonSerializable
+    public partial class GraphServicesAccountResourcePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

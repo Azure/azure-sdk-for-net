@@ -13,21 +13,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GraphServices
 {
-    /// <summary> A class representing the AccountResource data model. </summary>
-    public partial class AccountResourceData : TrackedResourceData
+    /// <summary> A class representing the GraphServicesAccountResource data model. </summary>
+    public partial class GraphServicesAccountResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AccountResourceData. </summary>
+        /// <summary> Initializes a new instance of GraphServicesAccountResourceData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Property bag from billing account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public AccountResourceData(AzureLocation location, AccountResourceProperties properties) : base(location)
+        public GraphServicesAccountResourceData(AzureLocation location, AccountResourceProperties properties) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of AccountResourceData. </summary>
+        /// <summary> Initializes a new instance of GraphServicesAccountResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Property bag from billing account. </param>
-        internal AccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccountResourceProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal GraphServicesAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccountResourceProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }

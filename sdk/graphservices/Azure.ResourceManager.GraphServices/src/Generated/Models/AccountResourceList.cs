@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.GraphServices.Models
         /// <summary> Initializes a new instance of AccountResourceList. </summary>
         internal AccountResourceList()
         {
-            Value = new ChangeTrackingList<AccountResourceData>();
+            Value = new ChangeTrackingList<GraphServicesAccountResourceData>();
         }
 
         /// <summary> Initializes a new instance of AccountResourceList. </summary>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="value"> The list of recommendations. </param>
-        internal AccountResourceList(Uri nextLink, IReadOnlyList<AccountResourceData> value)
+        internal AccountResourceList(Uri nextLink, IReadOnlyList<GraphServicesAccountResourceData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.GraphServices.Models
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
         /// <summary> The list of recommendations. </summary>
-        public IReadOnlyList<AccountResourceData> Value { get; }
+        public IReadOnlyList<GraphServicesAccountResourceData> Value { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GraphServices
 {
-    public partial class AccountResourceData : IUtf8JsonSerializable
+    public partial class GraphServicesAccountResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.GraphServices
             writer.WriteEndObject();
         }
 
-        internal static AccountResourceData DeserializeAccountResourceData(JsonElement element)
+        internal static GraphServicesAccountResourceData DeserializeGraphServicesAccountResourceData(JsonElement element)
         {
             AccountResourceProperties properties = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.GraphServices
                     continue;
                 }
             }
-            return new AccountResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties);
+            return new GraphServicesAccountResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties);
         }
     }
 }

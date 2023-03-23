@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
             // Create Resource Group
             string resourceGroupName = "myRgName";
             ResourceGroupResource resourceGroup = await this.CreateResourceGroup(subscription, resourceGroupName, Core.AzureLocation.WestUS);
-            AccountResourceCollection collection = resourceGroup.GetAccountResources();
+            GraphServicesAccountResourceCollection collection = resourceGroup.GetGraphServicesAccountResources();
 
             // Set Account Resource Values
             var resourceName = Recording.GenerateAssetName("SDKAccounts");
             string appId = new AccountTestEnvironment().ApplicationIDClient;
             AccountResourceProperties accountResourceProperties = new AccountResourceProperties(appId);
-            AccountResourceData accountResourceData = new AccountResourceData("global", accountResourceProperties);
+            GraphServicesAccountResourceData accountResourceData = new GraphServicesAccountResourceData("global", accountResourceProperties);
 
             // Create Account Resource
             var createAccountOperation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, accountResourceData);
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
             Assert.AreEqual(appId, createAccountOperation.Value.Data.Properties.AppId);
 
             // Get
-            Response<AccountResource> getAccountResponse = await collection.GetAsync(resourceName);
-            AccountResource accountResource = getAccountResponse.Value;
+            Response<GraphServicesAccountResource> getAccountResponse = await collection.GetAsync(resourceName);
+            GraphServicesAccountResource accountResource = getAccountResponse.Value;
             Assert.IsNotNull(accountResource);
 
             // Update

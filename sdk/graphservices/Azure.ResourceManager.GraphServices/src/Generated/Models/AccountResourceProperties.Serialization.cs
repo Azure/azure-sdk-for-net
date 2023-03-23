@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.GraphServices.Models
 
         internal static AccountResourceProperties DeserializeAccountResourceProperties(JsonElement element)
         {
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<GraphServicesProvisioningState> provisioningState = default;
             string appId = default;
             Optional<string> billingPlanId = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new GraphServicesProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("appId"))

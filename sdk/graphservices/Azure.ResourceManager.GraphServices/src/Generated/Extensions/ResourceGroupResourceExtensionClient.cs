@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.GraphServices
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AccountResources and their operations over a AccountResource. </returns>
-        public virtual AccountResourceCollection GetAccountResources()
+        /// <summary> Gets a collection of GraphServicesAccountResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of GraphServicesAccountResources and their operations over a GraphServicesAccountResource. </returns>
+        public virtual GraphServicesAccountResourceCollection GetGraphServicesAccountResources()
         {
-            return GetCachedClient(Client => new AccountResourceCollection(Client, Id));
+            return GetCachedClient(Client => new GraphServicesAccountResourceCollection(Client, Id));
         }
     }
 }

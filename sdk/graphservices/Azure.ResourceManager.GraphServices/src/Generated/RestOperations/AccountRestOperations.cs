@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<GraphServicesAccountResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.GraphServices
             {
                 case 200:
                     {
-                        AccountResourceData value = default;
+                        GraphServicesAccountResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountResourceData.DeserializeAccountResourceData(document.RootElement);
+                        value = GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AccountResourceData)null, message.Response);
+                    return Response.FromValue((GraphServicesAccountResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountResourceData> Get(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<GraphServicesAccountResourceData> Get(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,19 +107,19 @@ namespace Azure.ResourceManager.GraphServices
             {
                 case 200:
                     {
-                        AccountResourceData value = default;
+                        GraphServicesAccountResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountResourceData.DeserializeAccountResourceData(document.RootElement);
+                        value = GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AccountResourceData)null, message.Response);
+                    return Response.FromValue((GraphServicesAccountResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateAndUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, AccountResourceData data)
+        internal HttpMessage CreateCreateAndUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, GraphServicesAccountResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAndUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, AccountResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAndUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, GraphServicesAccountResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateAndUpdate(string subscriptionId, string resourceGroupName, string resourceName, AccountResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateAndUpdate(string subscriptionId, string resourceGroupName, string resourceName, GraphServicesAccountResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.GraphServices
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, AccountResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, GraphServicesAccountResourcePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, AccountResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<GraphServicesAccountResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, GraphServicesAccountResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -242,9 +242,9 @@ namespace Azure.ResourceManager.GraphServices
             {
                 case 200:
                     {
-                        AccountResourceData value = default;
+                        GraphServicesAccountResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountResourceData.DeserializeAccountResourceData(document.RootElement);
+                        value = GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountResourceData> Update(string subscriptionId, string resourceGroupName, string resourceName, AccountResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response<GraphServicesAccountResourceData> Update(string subscriptionId, string resourceGroupName, string resourceName, GraphServicesAccountResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -273,9 +273,9 @@ namespace Azure.ResourceManager.GraphServices
             {
                 case 200:
                     {
-                        AccountResourceData value = default;
+                        GraphServicesAccountResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountResourceData.DeserializeAccountResourceData(document.RootElement);
+                        value = GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.GraphServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AccountResource> GetAccountResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="GraphServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GraphServicesAccountResource> GetGraphServicesAccountResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAccountResourcesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetGraphServicesAccountResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.GraphServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AccountResource> GetAccountResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GraphServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GraphServicesAccountResource> GetGraphServicesAccountResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAccountResources(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetGraphServicesAccountResources(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.GraphServices
             );
         }
 
-        /// <summary> Gets a collection of AccountResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of GraphServicesAccountResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AccountResources and their operations over a AccountResource. </returns>
-        public static AccountResourceCollection GetAccountResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of GraphServicesAccountResources and their operations over a GraphServicesAccountResource. </returns>
+        public static GraphServicesAccountResourceCollection GetGraphServicesAccountResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetAccountResources();
+            return GetExtensionClient(resourceGroupResource).GetGraphServicesAccountResources();
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.GraphServices
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AccountResource>> GetAccountResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<GraphServicesAccountResource>> GetGraphServicesAccountResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAccountResources().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetGraphServicesAccountResources().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -129,25 +129,25 @@ namespace Azure.ResourceManager.GraphServices
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AccountResource> GetAccountResource(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<GraphServicesAccountResource> GetGraphServicesAccountResource(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAccountResources().Get(resourceName, cancellationToken);
+            return resourceGroupResource.GetGraphServicesAccountResources().Get(resourceName, cancellationToken);
         }
 
-        #region AccountResource
+        #region GraphServicesAccountResource
         /// <summary>
-        /// Gets an object representing an <see cref="AccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountResource.CreateResourceIdentifier" /> to create an <see cref="AccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GraphServicesAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GraphServicesAccountResource.CreateResourceIdentifier" /> to create a <see cref="GraphServicesAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountResource" /> object. </returns>
-        public static AccountResource GetAccountResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GraphServicesAccountResource" /> object. </returns>
+        public static GraphServicesAccountResource GetGraphServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AccountResource.ValidateResourceId(id);
-                return new AccountResource(client, id);
+                GraphServicesAccountResource.ValidateResourceId(id);
+                return new GraphServicesAccountResource(client, id);
             }
             );
         }
