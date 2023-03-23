@@ -67,13 +67,13 @@ namespace Azure.ResourceManager.ResourceMover.Tests
                     {
                         Location = AzureLocation.EastUS,
                         Subnets =
-                {
-                    new SubnetData()
-                    {
-                        Name = Recording.GenerateAssetName("Subnet-"),
-                        AddressPrefix = "10.0.0.0/24"
-                    }
-                },
+                        {
+                            new SubnetData()
+                            {
+                                Name = Recording.GenerateAssetName("Subnet-"),
+                                AddressPrefix = "10.0.0.0/24"
+                            }
+                        },
                         AddressPrefixes = { "10.0.0.0/16" }
                     };
                     var lro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, virtualNetworkData);

@@ -119,8 +119,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             string targetRgName = Recording.GenerateAssetName("testRg-ResourceMover-Target-");
             string moverDependentResourceName = Recording.GenerateAssetName("MoverResource-");
             VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
-            ResourceIdentifier virtualNetworkId = virtualNetwork.Id;
-            MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetworkId, moverResourceName, targetVnetName);
+            MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName, targetVnetName);
 
             // Validate that the Vnet has an dependency.
             ArmOperation<MoverOperationStatus> lro = await moverResourceSet.ResolveDependenciesAsync(WaitUntil.Completed);
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
 
             // Prepare, initiate and discare the move for the Vnet.
-            IEnumerable<ResourceIdentifier> moverVnet = new List<ResourceIdentifier> { virtualNetworkId };
+            IEnumerable<ResourceIdentifier> moverVnet = new List<ResourceIdentifier> { virtualNetwork.Id };
             prepareContent = new MoverPrepareContent(moverVnet)
             {
                 MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
@@ -201,7 +200,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             // Bulk remove
             MoverBulkRemoveContent bulkRemoveContent = new MoverBulkRemoveContent()
             {
-                MoverResources = { virtualNetworkId },
+                MoverResources = { virtualNetwork.Id },
                 MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
             };
             lro = await moverResourceSet.BulkRemoveAsync(WaitUntil.Completed, bulkRemoveContent);
