@@ -41,11 +41,11 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// This is blocking call. Wait for <see cref="AddParticipantsEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
+        /// This is blocking call. Wait for <see cref="AddParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="AddParticipantsEventResult"/> which contains either <see cref="AddParticipantSucceeded"/> event or <see cref="AddParticipantFailed"/> event.</returns>
-        public AddParticipantsEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="AddParticipantEventResult"/> which contains either <see cref="AddParticipantSucceeded"/> event or <see cref="AddParticipantFailed"/> event.</returns>
+        public AddParticipantEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
             {
@@ -63,11 +63,11 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for <see cref="AddParticipantsEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
+        /// Wait for <see cref="AddParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="AddParticipantsEventResult"/> which contains either <see cref="AddParticipantSucceeded"/> event or <see cref="AddParticipantFailed"/> event.</returns>
-        public async Task<AddParticipantsEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="AddParticipantEventResult"/> which contains either <see cref="AddParticipantSucceeded"/> event or <see cref="AddParticipantFailed"/> event.</returns>
+        public async Task<AddParticipantEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
             {
@@ -84,16 +84,16 @@ namespace Azure.Communication.CallAutomation
             return SetReturnedEvent(returnedEvent);
         }
 
-        private static AddParticipantsEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
+        private static AddParticipantEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
         {
-            AddParticipantsEventResult result = default;
+            AddParticipantEventResult result = default;
             switch (returnedEvent)
             {
                 case AddParticipantSucceeded:
-                    result = new AddParticipantsEventResult(true, (AddParticipantSucceeded)returnedEvent, null, ((AddParticipantSucceeded)returnedEvent).Participant);
+                    result = new AddParticipantEventResult(true, (AddParticipantSucceeded)returnedEvent, null, ((AddParticipantSucceeded)returnedEvent).Participant);
                     break;
                 case AddParticipantFailed:
-                    result = new AddParticipantsEventResult(false, null, (AddParticipantFailed)returnedEvent,((AddParticipantFailed)returnedEvent).Participant);
+                    result = new AddParticipantEventResult(false, null, (AddParticipantFailed)returnedEvent,((AddParticipantFailed)returnedEvent).Participant);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);
