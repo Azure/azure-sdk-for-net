@@ -883,7 +883,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             foreach (var eventData in events)
             {
-                ClientDiagnostics.InstrumentMessage(eventData.Properties, DiagnosticProperty.EventActivityName, out _, out var traceparent, out var tracestate);
+                ClientDiagnostics.InstrumentMessage(eventData.Properties, DiagnosticProperty.EventActivityName, out var traceparent, out var tracestate);
 
                 if (traceparent != null)
                 {
