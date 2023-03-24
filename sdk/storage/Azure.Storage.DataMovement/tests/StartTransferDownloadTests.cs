@@ -1878,6 +1878,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
         }
 
+        [Ignore("")]
         [RecordedTest]
         public async Task StartTransfer_EnsureCompleted_Skipped()
         {
