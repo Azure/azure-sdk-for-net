@@ -20,8 +20,12 @@ function AddSparseCheckoutPath([string]$subDirectory) {
 
 function CopySpecToProjectIfNeeded([string]$specCloneRoot, [string]$mainSpecDir, [string]$dest, [string[]]$specAdditionalSubDirectories) {
     $source = "$specCloneRoot/$mainSpecDir"
-    Copy-Item -Path $source -Destination $dest -Recurse -Force
     Write-Host "Copying spec from $source to $dest"
+    # $mainSpecDir is the PR folder, we just need to copy its subfolders which include the typespec project folder
+    Get-ChildItem –Path "$source" -Exclude @("data-plane", "resource-manager")|
+        Foreach-Object {
+            Copy-Item -Path $_.FullName -Destination $dest -Recurse -Force
+        }
 
     foreach ($additionalDir in $specAdditionalSubDirectories) {
         $source = "$specCloneRoot/$additionalDir"
@@ -93,7 +97,15 @@ $configuration = Get-Content -Path $typespecConfigurationFile -Raw | ConvertFrom
 $pieces = $typespecConfigurationFile.Path.Replace("\","/").Split("/")
 $projectName = $pieces[$pieces.Count - 2]
 
-$specSubDirectory = $configuration["directory"]
+# clone the whole RP directory which is the parent of $configuration["directory"]
+if ($configuration["directory"] -match "^[^/\\]+[\\/]+[^/\\]+")
+{
+    $specSubDirectory = $Matches[0]
+}
+else
+{
+    throw "The directory in $typespecConfigurationFile is not expected"
+}
 
 if ( $configuration["repo"] -and $configuration["commit"]) {
     $specCloneDir = GetSpecCloneDir $projectName
