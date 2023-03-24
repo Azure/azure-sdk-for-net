@@ -4,6 +4,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <Version>5.1.1</Version>
+    <RunApiCompat>false</RunApiCompat>
     <Description>This extension adds bindings for Storage</Description>
     <!-- This package is a metapackage. The flag below makes sure it doesn't include any DLL-->
     <IncludeBuildOutput>false</IncludeBuildOutput>
