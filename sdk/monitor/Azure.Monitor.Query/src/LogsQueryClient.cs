@@ -319,6 +319,52 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
+        /// </summary>
+        /// <param name="resourceId"> The resourceId where the query should be executed. </param>
+        /// <param name="query"> The Kusto query to fetch the logs. </param>
+        /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>The logs matching the query.</returns>
+        public virtual Response<LogsQueryResult> QueryResource(string resourceId, string query, QueryTimeRange timeRange, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
+            scope.Start();
+            try
+            {
+                return QueryResource(resourceId, query, timeRange, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="resourceId"></param>
+        /// <param name="query"></param>
+        /// <param name="timeRange"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(string resourceId, string query, QueryTimeRange timeRange, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
+            scope.Start();
+            try
+            {
+                return await QueryResourceAsync(resourceId, query, timeRange, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Create a Kusto query from an interpolated string. The interpolated values will be quoted and escaped as necessary.
         /// </summary>
         /// <param name="query">An interpolated query string.</param>
