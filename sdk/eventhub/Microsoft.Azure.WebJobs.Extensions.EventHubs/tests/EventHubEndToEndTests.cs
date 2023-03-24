@@ -332,6 +332,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_MultipleDispatch_MinBatchSize()
         {
+            const int minEventBatchSize = 5;
+            TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
+
             var (jobHost, host) = BuildHost<EventHubTestMultipleDispatchMinBatchSizeJobs>(
                 builder =>
                 {
@@ -339,8 +342,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         services.Configure<EventHubOptions>(options =>
                         {
-                            options.MinEventBatchSize = 5; // Increase from 1 to 5
-                            options.MaxWaitTime = TimeSpan.FromSeconds(10); // Decrease from 60 seconds to 10 seconds
+                            options.MinEventBatchSize = minEventBatchSize; // Increase from 1 to 5
+                            options.MaxWaitTime = maxWaitTime; // Decrease from 60 seconds to 10 seconds
                         });
                     });
                     ConfigureTestEventHub(builder);

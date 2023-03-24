@@ -145,13 +145,17 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             }
                             acquiredSemaphore = true;
 
-                            // Try to get a batch of events from the cache.
+                            // Try to get a batch
+                            // of events from the cache.
                             var triggerEvents = CachedEventsManager.TryGetBatchofEventsWithCached(events, false);
 
                             // If events were returned that means we hit the threshold for the minimum batch size, so
                             // invoke the function.
                             if (triggerEvents.Length > 0)
                             {
+                                var details = GetOperationDetails(context, "EventsDispatched");
+                                _logger.LogDebug($"Partition Processor received events and is attempting to invoke function ({details})");
+
                                 UpdateCheckpointContext(triggerEvents, context);
                                 await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
                                 eventToCheckpoint = triggerEvents.Last();
@@ -161,6 +165,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                                 _cachedEventsBackgroundTaskCts?.Cancel();
                                 _cachedEventsBackgroundTaskCts?.Dispose();
                                 _cachedEventsBackgroundTaskCts = null;
+                            }
+                            else
+                            {
+                                var details = GetOperationDetails(context, "EventsDispatched");
+                                _logger.LogDebug($"Partition Processor received events but has less than MinBatchSize total events. Waiting for more events ({details})");
                             }
 
                             if (_cachedEventsBackgroundTaskCts == null && CachedEventsManager.HasCachedEvents)
@@ -245,8 +254,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                     if (triggerEvents.Length > 0)
                     {
+                        var details = GetOperationDetails(_mostRecentPartitionContext, "MaxWaitTimeElapsed");
+                        _logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation and is attempting to invoke function on all held events ({details})");
+
                         await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
                         await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        var details = GetOperationDetails(_mostRecentPartitionContext, "MaxWaitTimeElapsed");
+                        _logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation but there are no events still being held ({details})");
                     }
 
                     // After one wait cycle, cancel and null the background task cancellation token source. It can be assumed that there will never be more than the
@@ -328,7 +345,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     if (disposing)
                     {
                         _cts.Dispose();
-                        CachedEventsManager.Dispose();
                         _cachedEventsBackgroundTaskCts.Dispose();
                         _cachedEventsGuard.Dispose();
                     }

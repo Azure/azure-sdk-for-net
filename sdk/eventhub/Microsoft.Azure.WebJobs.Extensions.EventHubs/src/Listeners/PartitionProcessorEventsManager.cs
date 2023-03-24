@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
     /// This class manages a queue of event data using a minimum and maximum batch size. This class is NOT thread safe.
     /// Concurrency must be managed by the class using this events manager.
     /// </summary>
-    internal class PartitionProcessorEventsManager : IDisposable
+    internal class PartitionProcessorEventsManager
     {
         private int _maxBatchSize;
         private int _minBatchSize;
@@ -80,11 +80,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
             }
             return eventsToReturn;
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
     }
 }
