@@ -14,7 +14,7 @@ namespace Azure.DigitalTwins.Core
     internal partial class Error
     {
         /// <summary> Initializes a new instance of Error. </summary>
-        internal Error()
+        public Error()
         {
             Details = new ChangeTrackingList<Error>();
         }
@@ -39,6 +39,6 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Internal error details. </summary>
         public IReadOnlyList<Error> Details { get; }
         /// <summary> An object containing more specific information than the current object about the error. </summary>
-        public InnerError Innererror { get; }
+        public InnerError Innererror { get; set; }
     }
 }

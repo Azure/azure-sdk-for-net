@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,7 +31,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DigitalTwinsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2022-05-31")
+        public DigitalTwinsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2023-02-27-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -68,7 +67,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsGetByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<Stream>> GetByIdAsync(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyDictionary<string, object>>> GetByIdAsync(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -81,7 +80,14 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        var value = message.ExtractResponseContent();
+                        IReadOnlyDictionary<string, object> value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetObject());
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -102,7 +108,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsGetByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<Stream> GetById(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyDictionary<string, object>> GetById(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -115,7 +121,14 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        var value = message.ExtractResponseContent();
+                        IReadOnlyDictionary<string, object> value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetObject());
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -275,7 +288,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsGetRelationshipByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
-        public async Task<Response<Stream>> GetRelationshipByIdAsync(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyDictionary<string, object>>> GetRelationshipByIdAsync(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -292,7 +305,14 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        var value = message.ExtractResponseContent();
+                        IReadOnlyDictionary<string, object> value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetObject());
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -315,7 +335,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsGetRelationshipByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
-        public Response<Stream> GetRelationshipById(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyDictionary<string, object>> GetRelationshipById(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -332,7 +352,14 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        var value = message.ExtractResponseContent();
+                        IReadOnlyDictionary<string, object> value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetObject());
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -691,7 +718,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsGetComponentOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="componentPath"/> is null. </exception>
-        public async Task<Response<Stream>> GetComponentAsync(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyDictionary<string, object>>> GetComponentAsync(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -708,7 +735,14 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        var value = message.ExtractResponseContent();
+                        IReadOnlyDictionary<string, object> value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetObject());
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -731,7 +765,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinsGetComponentOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="componentPath"/> is null. </exception>
-        public Response<Stream> GetComponent(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyDictionary<string, object>> GetComponent(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -748,7 +782,14 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        var value = message.ExtractResponseContent();
+                        IReadOnlyDictionary<string, object> value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetObject());
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
