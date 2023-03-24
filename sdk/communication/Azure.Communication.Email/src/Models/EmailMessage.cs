@@ -13,22 +13,22 @@ namespace Azure.Communication.Email
     public partial class EmailMessage
     {
         /// <summary> Initializes a new instance of EmailMessage. </summary>
-        /// <param name="fromAddress"> Sender email address from a verified domain. </param>
+        /// <param name="senderAddress"> Sender email address from a verified domain. </param>
         /// <param name="content"> Email content to be sent. </param>
-        /// <param name="toAddress"> Recipients for the email. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fromAddress"/>, <paramref name="toAddress"/> or <paramref name="content"/> is null. </exception>
-        public EmailMessage(string fromAddress, string toAddress, EmailContent content)
+        /// <param name="recipientAddress"> Recipients for the email. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="senderAddress"/>, <paramref name="recipientAddress"/> or <paramref name="content"/> is null. </exception>
+        public EmailMessage(string senderAddress, string recipientAddress, EmailContent content)
         {
-            Argument.AssertNotNull(fromAddress, nameof(fromAddress));
+            Argument.AssertNotNull(senderAddress, nameof(senderAddress));
             Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(toAddress, nameof(toAddress));
+            Argument.AssertNotNull(recipientAddress, nameof(recipientAddress));
 
             Headers = new ChangeTrackingDictionary<string, string>();
-            SenderAddress = fromAddress;
+            SenderAddress = senderAddress;
             Content = content;
             Recipients = new EmailRecipients(new ChangeTrackingList<EmailAddress>
             {
-                new EmailAddress(toAddress)
+                new EmailAddress(recipientAddress)
             });
             Attachments = new ChangeTrackingList<EmailAttachment>();
             ReplyTo = new ChangeTrackingList<EmailAddress>();

@@ -8,7 +8,7 @@ generate-model-factory: false
 csharp: true
 library-name: Reservations
 namespace: Azure.ResourceManager.Reservations
-require: https://github.com/Azure/azure-rest-api-specs/blob/04efa7dde730c9eaa35bdab1681117d639522edb/specification/reservations/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/49b2b960e028825de1e3b95568c93ed235354e06/specification/reservations/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -68,11 +68,13 @@ rename-mapping:
   ReservationsProperties: ReservationProperties
   AvailableScopeProperties: AvailableScopesProperties
   AvailableScopeRequest: AvailableScopesContent
+  BillingPlan: SavingsPlanBillingPlan
   PurchaseRequest: ReservationPurchaseContent
   PurchaseRequest.properties.renew: IsRenewEnabled
   CalculatePriceResponse: CalculatePriceResult
   CalculatePriceResponseProperties: CalculatePriceResultProperties
   CalculateExchangeOperationResultResponse: CalculateExchangeResult
+  CatalogMsrp: ReservationCatalogMsrp
   ExchangeOperationResultResponse: ExchangeResult
   AppliedReservations: AppliedReservationData
   CalculateExchangeRequestProperties: CalculateExchangeContentProperties
@@ -105,40 +107,49 @@ rename-mapping:
   RefundRequestProperties: ReservationRefundRequestProperties
   RefundResponseProperties: ReservationRefundResponseProperties
   ErrorResponseCode: ReservationErrorResponseCode
+  CurrentQuotaLimitBase: ReservationQuotas
+  ResourceType: ResourceTypeName
+  QuotaProperties.name: ResourceName
+  QuotaProperties.resourceType: ResourceTypeName
+  QuotaRequestDetails.properties.value: QuotaRequestValue
+  ChangeDirectoryResult.id: -|uuid
+  ReservationsProperties.renew: IsRenewEnabled
+  ReservationToExchange.reservationId: -|arm-id
+  ReservationToPurchaseExchange.reservationOrderId: -|arm-id
+  ReservationToPurchaseExchange.reservationId: -|arm-id
+  ReservationToReturn.reservationId: -|arm-id
+  ReservationToReturnForExchange.reservationId: -|arm-id
+  SavingsPlanPurchaseRequest: SavingsPlanPurchase
+  SplitRequest.properties.reservationId: -|arm-id
+  CalculateExchangeOperationResultResponse.id: -|arm-id
+  CalculatePriceResponseProperties.reservationOrderId: -|uuid
+  AppliedScopeProperties.subscriptionId: -|arm-id
+  AppliedScopeProperties.resourceGroupId: -|arm-id
+  AppliedScopeProperties.managementGroupId: -|arm-id
+  ExchangeOperationResultResponse.id: -|arm-id
+  Price: PurchasePrice
+  Catalog: ReservationCatalog
+  Catalog.resourceType: AppliedResourceType
+  Catalog.name: SkuName
+  ReservationResponse.etag: Version
+  Kind: ReservationKind
+  ReservationOrderResponse.etag: Version
+  Commitment: BenefitsCommitment
+  CommitmentGrain: BenefitsCommitmentGrain
 
 directive:
-  - from: quota.json
-    where: $.definitions
-    transform: >
-      $.QuotaRequestProperties.properties.value['x-ms-client-name'] = 'QuotaRequestValue';
-      $.ResourceTypesName['x-ms-enum']['name'] = 'ResourceTypeName';
-      $.QuotaProperties.properties.name['x-ms-client-name'] = 'ResourceName';
-      $.QuotaProperties.properties.resourceType['x-ms-client-name'] = 'ResourceTypeName';
-      $.CurrentQuotaLimitBase['x-ms-client-name'] = 'ReservationQuotas';
   - from: reservations.json
     where: $.definitions
     transform: >
-      delete $.Location;
-      $.ReservationResponse.properties.etag['x-ms-client-name'] = 'version';
-      $.ReservationResponse.properties.kind['x-ms-enum'].name = 'ReservationKind';
-      $.ReservationOrderResponse.properties.etag['x-ms-client-name'] = 'version';
-      $.Price['x-ms-client-name'] = 'PurchasePrice';
-      $.Catalog.properties.resourceType['x-ms-client-name'] = 'AppliedResourceType';
-      $.Catalog.properties.name['x-ms-client-name'] = 'SkuName';
-      $.Catalog['x-ms-client-name'] = 'ReservationCatalog';
-      $.CalculateExchangeOperationResultResponse.properties.id['x-ms-format'] = 'arm-id';
-      $.ExchangeOperationResultResponse.properties.id['x-ms-format'] = 'arm-id';
-      $.CalculatePriceResponseProperties.properties.reservationOrderId['format'] = 'uuid';
-      $.ChangeDirectoryResult.properties.id['format'] = 'uuid';
-      $.ReservationToExchange.properties.reservationId['x-ms-format'] = 'arm-id';
-      $.ReservationToPurchaseExchange.properties.reservationId['x-ms-format'] = 'arm-id';
-      $.ReservationToPurchaseExchange.properties.reservationOrderId['x-ms-format'] = 'arm-id';
-      $.ReservationToReturnForExchange.properties.reservationId['x-ms-format'] = 'arm-id';
-      $.SplitProperties.properties.reservationId['x-ms-format'] = 'arm-id';
-      $.ReservationsProperties.properties.renew['x-ms-client-name'] = 'IsRenewEnabled';
-      $.ReservationToReturn.properties.reservationId['x-ms-format'] = 'arm-id';
       $.ExchangePolicyErrors.properties.policyErrors["x-nullable"] = true;
       $.PurchaseRequestProperties.properties.appliedScopes["x-nullable"] = true;
+      delete $.Location;
+      $.ReservationOrderProperties.properties.expiryDate['x-ms-client-name'] = 'ExpireOn';
+      $.ReservationOrderProperties.properties.expiryDateTime['x-ms-client-name'] = 'ReservationExpireOn';
+      $.ReservationsProperties.properties.expiryDate['x-ms-client-name'] = 'ExpireOn';
+      $.ReservationsProperties.properties.expiryDateTime['x-ms-client-name'] = 'ReservationExpireOn';
+      $.ReservationsProperties.properties.purchaseDate['x-ms-client-name'] = 'PurchaseOn';
+      $.ReservationsProperties.properties.purchaseDateTime['x-ms-client-name'] = 'ReservationPurchaseOn';
   - from: reservations.json
     where: $.parameters
     transform: >

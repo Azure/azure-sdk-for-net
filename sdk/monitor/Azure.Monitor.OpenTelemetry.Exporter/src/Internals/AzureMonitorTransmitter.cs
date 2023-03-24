@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly ConnectionVars _connectionVars;
         private bool _disposed;
 
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, TokenCredential? credential = null)
+        public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
         {
             if (options == null)
             {
@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _connectionVars = InitializeConnectionVars(options);
 
-            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, credential);
+            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
 
             _fileBlobProvider = InitializeOfflineStorage(options);
 
@@ -67,21 +67,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             throw new InvalidOperationException("A connection string was not found. Please set your connection string.");
         }
 
-        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, TokenCredential? credential)
+        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
         {
             HttpPipeline pipeline;
 
-            if (credential != null)
+            if (options.Credential != null)
             {
                 var scope = AadHelper.GetScope(connectionVars.AadAudience);
                 var httpPipelinePolicy = new HttpPipelinePolicy[]
                 {
-                    new BearerTokenAuthenticationPolicy(credential, scope),
+                    new BearerTokenAuthenticationPolicy(options.Credential, scope),
                     new IngestionRedirectPolicy()
                 };
 
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
+                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {options.Credential.GetType().Name} Scope: {scope}");
             }
             else
             {
@@ -256,14 +256,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             ExportResult result = ExportResult.Failure;
             int statusCode = 0;
-            byte[] content;
+            byte[]? content;
             int retryInterval;
 
             if (!httpMessage.HasResponse)
             {
                 // HttpRequestException
                 content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                if (content != null)
+                {
+                    result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                }
             }
             else
             {
@@ -287,8 +290,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         // Parse retry-after header
                         // Send Messages To Storage
                         content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
+                        if (content != null)
+                        {
+                            retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
+                            result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
+                        }
                         break;
                     case ResponseStatusCodes.Unauthorized:
                     case ResponseStatusCodes.Forbidden:
@@ -298,7 +304,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case ResponseStatusCodes.GatewayTimeout:
                         // Send Messages To Storage
                         content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                        if (content != null)
+                        {
+                            result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                        }
                         break;
                     default:
                         // Log Non-Retriable Status and don't retry or store;

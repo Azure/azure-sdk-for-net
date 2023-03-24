@@ -1,5 +1,18 @@
 # Release History
 
+## 1.31.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Set the Activity status to `Error` on failed activity source activities.
+- Mark the `Azure.Core.Http.Request` span as failed if the request fails with an exception thrown in the pipeline.
+
+### Other Changes
+
 ## 1.30.0 (2023-03-09)
 
 ### Bugs Fixed

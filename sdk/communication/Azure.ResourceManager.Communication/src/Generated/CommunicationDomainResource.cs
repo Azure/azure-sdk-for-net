@@ -88,6 +88,59 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SenderUsernameResources in the CommunicationDomainResource. </summary>
+        /// <returns> An object representing collection of SenderUsernameResources and their operations over a SenderUsernameResource. </returns>
+        public virtual SenderUsernameResourceCollection GetSenderUsernameResources()
+        {
+            return GetCachedClient(Client => new SenderUsernameResourceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a valid sender username for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SenderUsernameResource>> GetSenderUsernameResourceAsync(string senderUsername, CancellationToken cancellationToken = default)
+        {
+            return await GetSenderUsernameResources().GetAsync(senderUsername, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a valid sender username for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SenderUsernameResource> GetSenderUsernameResource(string senderUsername, CancellationToken cancellationToken = default)
+        {
+            return GetSenderUsernameResources().Get(senderUsername, cancellationToken);
+        }
+
         /// <summary>
         /// Get the Domains resource and its properties.
         /// <list type="bullet">
