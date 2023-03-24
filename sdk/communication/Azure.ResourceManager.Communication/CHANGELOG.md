@@ -10,10 +10,6 @@
 - CommunicationResource RegenerateKey and RegenerateKeyAsync are no longer marked as long running operations.
 - CommunicationResource Update and UpdateAsync are no longer marked as long running operations.
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.1.0-beta.6 (2023-02-14)
 
 ### Other Changes
