@@ -573,6 +573,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventPosition">The position in the event stream where the consumer should begin reading.</param>
         /// <param name="connection">The connection to use for the consumer.</param>
         /// <param name="options">The options to use for configuring the consumer.</param>
+        /// <param name="exclusive"><c>true</c> if this should be an exclusive consumer; otherwise, <c>false</c>.</param>
         ///
         /// <returns>An <see cref="TransportConsumer" /> with the requested configuration.</returns>
         ///
@@ -581,8 +582,19 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                           string consumerIdentifier,
                                                           EventPosition eventPosition,
                                                           EventHubConnection connection,
-                                                          EventProcessorOptions options) =>
-            connection.CreateTransportConsumer(consumerGroup, partitionId, consumerIdentifier, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, prefetchCount: (uint?)options.PrefetchCount, prefetchSizeInBytes: options.PrefetchSizeInBytes, ownerLevel: 0);
+                                                          EventProcessorOptions options,
+                                                          bool exclusive) =>
+            connection.CreateTransportConsumer(
+                consumerGroup,
+                partitionId,
+                consumerIdentifier,
+                eventPosition,
+                options.RetryOptions.ToRetryPolicy(),
+                options.TrackLastEnqueuedEventProperties,
+                InvalidateConsumerWhenPartitionIsStolen,
+                prefetchCount: (uint?)options.PrefetchCount,
+                prefetchSizeInBytes: options.PrefetchSizeInBytes,
+                ownerLevel: exclusive ? 0 : null);
 
         /// <summary>
         ///   Performs the tasks needed to process a batch of events.
@@ -767,7 +779,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     try
                     {
-                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, $"P{ partition.PartitionId }-{ Identifier }", startingPosition, connection, Options);
+                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, $"P{ partition.PartitionId }-{ Identifier }", startingPosition, connection, Options, true);
 
                         // Register for notification when the cancellation token is triggered.  Attempt to close the consumer
                         // in response to force-close the link and short-circuit any receive operation that is blocked and
@@ -2029,11 +2041,16 @@ namespace Azure.Messaging.EventHubs.Primitives
             // To ensure validity of the requested consumer group and that at least one partition exists,
             // attempt to read from a partition.
 
-            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[0], "validate", EventPosition.Earliest, connection, Options);
+            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[0], $"SV-{ Identifier }", EventPosition.Earliest, connection, Options, false);
 
             try
             {
                 await consumer.ReceiveAsync(1, TimeSpan.FromMilliseconds(5), cancellationToken).ConfigureAwait(false);
+            }
+            catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
+            {
+                // This is expected when another processor is already running; no action is needed, as it
+                // validates that the reader was able to connect.
             }
             finally
             {
