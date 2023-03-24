@@ -41,23 +41,8 @@ namespace Azure.ResourceManager.StorageCache
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<StorageCacheResource>> UpdateAsync(StorageCacheData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _storageCacheCachesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                StorageCacheData value = default;
-                using var document = JsonDocument.Parse(response.ContentStream);
-                value = StorageCacheData.DeserializeStorageCacheData(document.RootElement);
-                return Response.FromValue(new StorageCacheResource(Client, value), response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            ArmOperation<StorageCacheResource> operation = await this.UpdateAsync(WaitUntil.Completed, data, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(operation.Value, operation.GetRawResponse());
         }
 
         /// <summary>
@@ -80,23 +65,8 @@ namespace Azure.ResourceManager.StorageCache
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<StorageCacheResource> Update(StorageCacheData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _storageCacheCachesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                StorageCacheData value = default;
-                using var document = JsonDocument.Parse(response.ContentStream);
-                value = StorageCacheData.DeserializeStorageCacheData(document.RootElement);
-                return Response.FromValue(new StorageCacheResource(Client, value), response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            ArmOperation<StorageCacheResource> operation = this.Update(WaitUntil.Completed, data, cancellationToken);
+            return Response.FromValue(operation.Value, operation.GetRawResponse());
         }
     }
 }
