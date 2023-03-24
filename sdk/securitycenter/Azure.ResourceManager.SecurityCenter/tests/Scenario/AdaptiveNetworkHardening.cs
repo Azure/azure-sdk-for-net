@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
 using NUnit.Framework;
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task TestSetUp()
         {
             _resourceGroup = await CreateResourceGroup();
-            var nsg = await CreateNetworkSecurityGroup(_resourceGroup, Recording.GenerateAssetName("nsg"));
-            var network = await CreateNetwork(_resourceGroup, nsg, Recording.GenerateAssetName("vnet"));
-            var networkInterface = await CreateNetworkInterface(_resourceGroup, network, Recording.GenerateAssetName("networkInterface"));
+            string nsgName = Recording.GenerateAssetName("nsg");
+            string interfaceName = Recording.GenerateAssetName("networkInterface");
             string vmName = Recording.GenerateAssetName("vm");
-            var vm = await CreateVirtualMachine(_resourceGroup, networkInterface.Data.Id, vmName);
-            _nsgId = nsg.Id;
+            var networkInterface = await CreateNetworkInterface(_resourceGroup, interfaceName, nsgName: nsgName);
+            var vm = await CreateVirtualMachine(_resourceGroup, networkInterface.Id, vmName);
+            _nsgId = NetworkSecurityGroupResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, nsgName);
             _adaptiveNetworkHardeningCollection = _resourceGroup.GetAdaptiveNetworkHardenings("Microsoft.Compute", "virtualMachines", vmName);
         }
 

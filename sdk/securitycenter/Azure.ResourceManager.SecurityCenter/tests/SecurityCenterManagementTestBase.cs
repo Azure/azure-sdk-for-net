@@ -55,63 +55,71 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             return lro.Value;
         }
 
-        protected async Task<NetworkSecurityGroupResource> CreateNetworkSecurityGroup(ResourceGroupResource resourceGroup, string nsgName)
+        protected async Task<NetworkInterfaceResource> CreateNetworkInterface(ResourceGroupResource resourceGroup, string interfaceName, string nsgName = null)
         {
-            var nsgData = new NetworkSecurityGroupData() { Location = resourceGroup.Data.Location, };
-            var nsg = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, nsgName, nsgData);
-            return nsg.Value;
-        }
-
-        protected async Task<VirtualNetworkResource> CreateNetwork(ResourceGroupResource resourceGroup, NetworkSecurityGroupResource nsg, string vnetName)
-        {
-            VirtualNetworkData data = new VirtualNetworkData()
+            if (Mode == RecordedTestMode.Playback)
             {
-                Location = resourceGroup.Data.Location,
-            };
-            data.AddressPrefixes.Add("10.10.0.0/16");
-            data.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24", PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Disabled, NetworkSecurityGroup = nsg.Data });
-            data.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
-            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, data);
-            return vnet.Value;
-        }
+                var nicId = NetworkInterfaceResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, interfaceName);
 
-        protected async Task<NetworkInterfaceResource> CreateNetworkInterface(ResourceGroupResource resourceGroup, VirtualNetworkResource network, string nicName)
-        {
-            // Create Public IP
-            string publicIPName = Recording.GenerateAssetName("publicIP");
-            var publicIPData = new PublicIPAddressData()
+                return Client.GetNetworkInterfaceResource(nicId);
+            }
+            else
             {
-                Location = resourceGroup.Data.Location,
-                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-            };
-            var publicIP = await resourceGroup.GetPublicIPAddresses().CreateOrUpdateAsync(WaitUntil.Completed, publicIPName, publicIPData);
-
-            // Get subnet id AsyncPageable<SubnetResource>
-            var list = await network.GetSubnets().GetAllAsync().ToEnumerableAsync();
-            var subnetId = list.FirstOrDefault().Id;
-
-            var data = new NetworkInterfaceData()
-            {
-                Location = resourceGroup.Data.Location,
-                IPConfigurations =
+                using (Recording.DisableRecording())
                 {
-                    new NetworkInterfaceIPConfigurationData()
+                    // Create NSG
+                    nsgName = nsgName == null ? Recording.GenerateAssetName("nsg") : nsgName;
+                    var nsgData = new NetworkSecurityGroupData() { Location = resourceGroup.Data.Location, };
+                    var nsg = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, nsgName, nsgData);
+
+                    // Create virtual network
+                    string vnetName = Recording.GenerateAssetName("vnet");
+                    VirtualNetworkData vnetData = new VirtualNetworkData()
                     {
-                        Name = Recording.GenerateAssetName("ipconfig"),
-                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        PublicIPAddress = new PublicIPAddressData()
+                        Location = resourceGroup.Data.Location,
+                    };
+                    vnetData.AddressPrefixes.Add("10.10.0.0/16");
+                    vnetData.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24", PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Disabled, NetworkSecurityGroup = nsg.Value.Data });
+                    vnetData.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
+                    var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
+
+                    // Create Public IP
+                    string publicIPName = Recording.GenerateAssetName("publicIP");
+                    var publicIPData = new PublicIPAddressData()
+                    {
+                        Location = resourceGroup.Data.Location,
+                        PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    };
+                    var publicIP = await resourceGroup.GetPublicIPAddresses().CreateOrUpdateAsync(WaitUntil.Completed, publicIPName, publicIPData);
+
+                    // Get subnet id AsyncPageable<SubnetResource>
+                    var list = await vnet.Value.GetSubnets().GetAllAsync().ToEnumerableAsync();
+                    var subnetId = list.FirstOrDefault().Id;
+
+                    var data = new NetworkInterfaceData()
+                    {
+                        Location = resourceGroup.Data.Location,
+                        IPConfigurations =
                         {
-                            Id = publicIP.Value.Id
-                        },
-                        Subnet = new SubnetData()
-                        {
-                            Id = subnetId
+                            new NetworkInterfaceIPConfigurationData()
+                            {
+                                Name = Recording.GenerateAssetName("ipconfig"),
+                                PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                                PublicIPAddress = new PublicIPAddressData()
+                                {
+                                    Id = publicIP.Value.Id
+                                },
+                                Subnet = new SubnetData()
+                                {
+                                    Id = subnetId
+                                }
+                            }
                         }
-                    }
+                    };
+                    var networkInterface = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, interfaceName, data);
+                    return networkInterface.Value;
                 }
-            };
-            var networkInterface = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, nicName, data);
-            return networkInterface.Value;
+            }
         }
 
         protected async Task<VirtualMachineResource> CreateVirtualMachine(ResourceGroupResource resourceGroup, ResourceIdentifier networkInterfaceIP, string vmName)
@@ -142,24 +150,24 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                             {
                                 DisablePasswordAuthentication = true,
                                 SshPublicKeys = {
-                            new SshPublicKeyConfiguration()
-                            {
-                                Path = $"/home/{adminUsername}/.ssh/authorized_keys",
-                                KeyData = dummySSHKey,
-                            }
-                        }
+                                    new SshPublicKeyConfiguration()
+                                    {
+                                        Path = $"/home/{adminUsername}/.ssh/authorized_keys",
+                                        KeyData = dummySSHKey,
+                                    }
+                                }
                             }
                         },
                         NetworkProfile = new VirtualMachineNetworkProfile()
                         {
                             NetworkInterfaces =
-                    {
-                        new VirtualMachineNetworkInterfaceReference()
-                        {
-                            Id = networkInterfaceIP,
-                            Primary = true,
-                        }
-                    }
+                            {
+                                new VirtualMachineNetworkInterfaceReference()
+                                {
+                                    Id = networkInterfaceIP,
+                                    Primary = true,
+                                }
+                            }
                         },
                         StorageProfile = new VirtualMachineStorageProfile()
                         {

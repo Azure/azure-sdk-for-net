@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task TestSetUp()
         {
             _resourceGroup = await CreateResourceGroup();
-            var nsg = await CreateNetworkSecurityGroup(_resourceGroup, Recording.GenerateAssetName("nsg"));
-            var network = await CreateNetwork(_resourceGroup, nsg, Recording.GenerateAssetName("vnet"));
-            var networkInterface = await CreateNetworkInterface(_resourceGroup, network, Recording.GenerateAssetName("networkInterface"));
-            await CreateVirtualMachine(_resourceGroup, networkInterface.Data.Id, Recording.GenerateAssetName("vm"));
+            string interfaceName = Recording.GenerateAssetName("networkInterface");
+            string vmName = Recording.GenerateAssetName("vm");
+            var networkInterface = await CreateNetworkInterface(_resourceGroup, interfaceName);
+            await CreateVirtualMachine(_resourceGroup, networkInterface.Id, vmName);
             if (TestEnvironment.Mode == RecordedTestMode.Record)
             {
-                Thread.Sleep(20 * 60 * 1000); // wait for VM auto connect, costs 20mins or more
+                //Thread.Sleep(20 * 60 * 1000); // wait for VM auto connect, costs 20mins or more
             }
         }
 
