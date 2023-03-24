@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Test.Perf;
 using Microsoft.Azure.Management.ContainerRegistry;
 using Microsoft.Azure.Management.ContainerRegistry.Models;
@@ -63,6 +61,14 @@ namespace Azure.Containers.ContainerRegistry.Perf
                         Source = importSource,
                         TargetTags = targetTags.ToList()
                     });
+        }
+
+        internal static byte[] GetRandomBuffer(long size, Random random = null)
+        {
+            random ??= new Random(Environment.TickCount);
+            var buffer = new byte[size];
+            random.NextBytes(buffer);
+            return buffer;
         }
     }
 }
