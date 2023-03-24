@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -60,6 +61,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -79,6 +81,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -142,6 +145,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeHealthcareEntitiesWithConfidenceScoreTest()
         {
@@ -168,6 +172,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesTestWithAssertions()
         {
             TextAnalyticsClient client = GetClient();
@@ -233,6 +238,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -249,6 +255,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -279,6 +286,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -295,6 +303,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -319,6 +328,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -342,6 +352,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -373,6 +384,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeHealthcareEntitiesBatchWithNameTest()
         {
@@ -401,6 +413,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeHealthcareEntitiesBatchWithNameThrows()
         {
@@ -417,6 +430,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeHealthcareEntitiesPagination()
         {
             TextAnalyticsClient client = GetClient();
@@ -454,6 +468,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeHealthcareEntitiesBatchWithFhirVersionTest()
         {
@@ -481,6 +496,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public void AnalyzeHealthcareEntitiesBatchWithFhirVersionThrows()
         {
@@ -497,6 +513,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public void AnalyzeHealthcareEntitiesBatchWithDocumentTypeThrows()
         {
@@ -513,6 +530,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeHealthcareEntitiesBatchConvenienceWithAutoDetectedLanguageTest()
         {
@@ -529,6 +547,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeOperationAnalyzeHealthcareEntitiesWithAutoDetectedLanguageTest()
         {
