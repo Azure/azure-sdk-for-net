@@ -42,6 +42,45 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        public void CanWriteDateTime_Utf8Bytes()
+        {
+            ReadOnlySpan<byte> json = """
+                {
+                    "foo": "hi",
+                    "last_modified":"2023-03-23T16:34:34+00:00"
+                }
+                """u8;
+            BinaryData data = new(json.ToArray());
+
+            MutableJsonDocument jd = MutableJsonDocument.Parse(data);
+            jd.RootElement.GetProperty("foo").Set("hi");
+
+            WriteToAndParse(jd, out string jsonString);
+
+            Assert.AreEqual(RemoveWhiteSpace(data.ToString()), RemoveWhiteSpace(jsonString));
+        }
+
+        [Test]
+        public void CanWriteDateTime_String()
+        {
+            string json = """
+                {
+                    "foo": "hi",
+                    "last_modified":"2023-03-23T16:34:34+00:00"
+                }
+                """;
+
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
+
+            // Make a change to force it to go through our custom WriteTo() op.
+            jd.RootElement.GetProperty("foo").Set("hi");
+
+            WriteToAndParse(jd, out string jsonString);
+
+            Assert.AreEqual(RemoveWhiteSpace(json), RemoveWhiteSpace(jsonString));
+        }
+
+        [Test]
         public void CanWriteBooleanObjectProperty()
         {
             string json = """
