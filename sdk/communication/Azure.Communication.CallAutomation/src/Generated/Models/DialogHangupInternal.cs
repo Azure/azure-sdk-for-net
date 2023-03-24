@@ -21,13 +21,15 @@ namespace Azure.Communication.CallAutomation.Models.Events
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        internal DialogHangupInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        internal DialogHangupInternal(string callConnectionId, string serverCallId, string correlationId, DialogInputType? dialogInputType, string operationContext, ResultInformation resultInformation)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            DialogInputType = dialogInputType;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
         }
@@ -38,6 +40,8 @@ namespace Azure.Communication.CallAutomation.Models.Events
         public string ServerCallId { get; }
         /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
         public string CorrelationId { get; }
+        /// <summary> Determines the type of the dialog. </summary>
+        public DialogInputType? DialogInputType { get; }
         /// <summary> Used by customers when calling answerCall action to correlate the request to the response event. </summary>
         public string OperationContext { get; }
         /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>

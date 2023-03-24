@@ -22,10 +22,14 @@ namespace Azure.Communication.CallAutomation
         {
             CallConnectionId = internalEvent.CallConnectionId;
             ServerCallId = internalEvent.ServerCallId;
+            DialogInputType = internalEvent.DialogInputType;
             CorrelationId = internalEvent.CorrelationId;
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
         }
+
+        /// <summary> Determines the type of the dialog. </summary>
+        public DialogInputType? DialogInputType { get; }
 
         /// <summary>
         /// Deserialize <see cref="DialogCompleted"/> event.

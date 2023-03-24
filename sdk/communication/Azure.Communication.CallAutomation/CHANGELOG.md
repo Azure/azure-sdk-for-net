@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.1-alpha.3 (Unreleased)
+- Added DialogInputType to all events
+
 ## 1.0.1-alpha.2 (Unreleased)
 - Replaced pVA with DLGaaS
 - Removed DialogSessionId

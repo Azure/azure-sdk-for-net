@@ -22,9 +22,9 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DLGaaSValue = "DLGaaS";
+        private const string DLGaaSValue = "dLGaaS";
 
-        /// <summary> DLGaaS. </summary>
+        /// <summary> dLGaaS. </summary>
         public static DialogInputType DLGaaS { get; } = new DialogInputType(DLGaaSValue);
         /// <summary> Determines if two <see cref="DialogInputType"/> values are the same. </summary>
         public static bool operator ==(DialogInputType left, DialogInputType right) => left.Equals(right);

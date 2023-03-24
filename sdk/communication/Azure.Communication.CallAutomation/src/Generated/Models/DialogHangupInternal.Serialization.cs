@@ -22,6 +22,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
+            Optional<DialogInputType> dialogInputType = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             foreach (var property in element.EnumerateObject())
@@ -41,6 +42,16 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("dialogInputType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dialogInputType = new DialogInputType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
@@ -57,7 +68,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     continue;
                 }
             }
-            return new DialogHangupInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value);
+            return new DialogHangupInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, Optional.ToNullable(dialogInputType), operationContext.Value, resultInformation.Value);
         }
     }
 }

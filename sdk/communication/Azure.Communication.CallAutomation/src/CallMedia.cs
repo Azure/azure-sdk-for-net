@@ -455,7 +455,7 @@ namespace Azure.Communication.CallAutomation
 
                 var response = await CallMediaRestClient.StopDialogAsync
                     (CallConnectionId,
-                    null,
+                    new StopDialogRequestInternal(),
                     repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken).ConfigureAwait(false);
@@ -486,7 +486,7 @@ namespace Azure.Communication.CallAutomation
 
                 var response = CallMediaRestClient.StopDialog
                     (CallConnectionId,
-                    null,
+                    new StopDialogRequestInternal(),
                     repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken);

@@ -1927,7 +1927,7 @@
     "DialogInputType": {
       "description": "Determines the type of the dialog.",
       "enum": [
-        "DLGaaS"
+        "dLGaaS"
       ],
       "type": "string",
       "x-ms-enum": {
@@ -2728,6 +2728,9 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
+        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2755,6 +2758,9 @@
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
+        },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
         },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
@@ -2784,6 +2790,9 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
+        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2811,6 +2820,9 @@
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
+        },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
         },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
@@ -2840,6 +2852,9 @@
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
         },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
+        },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
           "type": "string",
@@ -2867,6 +2882,9 @@
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
           "type": "string"
+        },
+        "dialogInputType": {
+          "$ref": "#/definitions/DialogInputType"
         },
         "operationContext": {
           "description": "Used by customers when calling answerCall action to correlate the request to the response event.",
