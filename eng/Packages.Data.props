@@ -97,8 +97,8 @@
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.13.1" />
-    <PackageReference Update="Azure.Storage.Queues" Version="12.11.1" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.15.1" />
+    <PackageReference Update="Azure.Storage.Queues" Version="12.13.1" />
     <PackageReference Update="Azure.ResourceManager" Version="1.4.0" />
 
     <!-- Other approved packages -->
