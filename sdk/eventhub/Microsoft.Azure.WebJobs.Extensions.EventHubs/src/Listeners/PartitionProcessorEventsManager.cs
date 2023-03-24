@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         /// <param name="events">An array of events to either add to a batch or cache.</param>
         /// <param name="allowPartialBatch">True if batches smaller than the minimum batch size can be returned.</param>
         /// <returns></returns>
-        public EventData[] TryGetBatchofEventsWithCached(EventData[] events = null, bool allowPartialBatch= false)
+        public EventData[] TryGetBatchofEventsWithCached(EventData[] events = null, bool allowPartialBatch = false)
         {
             EventData[] eventsToReturn;
             var inputEvents = events?.Length ?? 0;
