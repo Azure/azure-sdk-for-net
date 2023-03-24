@@ -141,7 +141,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task UpdateVolume()
         {
             //create volume
@@ -280,7 +279,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task GetVolumeByNameNotFound()
         {
             string volumeName = Recording.GenerateAssetName("volumeName-");
@@ -292,7 +290,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task GetVolumeByNamePoolNotFound()
         {
             string volumeName = Recording.GenerateAssetName("volumeName-");
@@ -319,7 +316,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task ListVolumes()
         {
             DefaultVirtualNetwork = await CreateVirtualNetwork();
