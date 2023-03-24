@@ -507,7 +507,6 @@ namespace Azure.Communication.Identity.Tests
             catch (ArgumentOutOfRangeException ex)
             {
                 Assert.NotNull(ex.Message);
-                Console.WriteLine(ex.Message);
                 return;
             }
             Assert.Fail("An exception should have been thrown.");
