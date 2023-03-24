@@ -146,7 +146,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.6.3" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.6.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
