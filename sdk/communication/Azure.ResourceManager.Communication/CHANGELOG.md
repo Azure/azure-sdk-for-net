@@ -14,7 +14,7 @@
 
 ### Other Changes
 
-## 1.1.0-beta.6 (2023-02-14)S
+## 1.1.0-beta.6 (2023-02-14)
 
 ### Other Changes
 
