@@ -269,25 +269,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(ManifestMediaType.DockerManifest, result.MediaType);
         }
 
-        [RecordedTest]
-        [Ignore("Test recordings serialize and compress message bodies: https://github.com/Azure/azure-sdk-tools/issues/3015")]
-        public async Task CanGetDockerManifest_AcceptMultipleMediaTypes()
-        {
-            // Arrange
-            var client = CreateBlobClient("library/hello-world");
-
-            // Act
-
-            // The following is the digest of the linux/amd64 manifest for library/hello-world.
-            string digest = "sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4";
-
-            GetManifestResult result = await client.GetManifestAsync(digest, mediaTypes: new ManifestMediaType[] { ManifestMediaType.DockerManifest, ManifestMediaType.OciImageManifest });
-
-            // Assert
-            Assert.AreEqual(digest, result.Digest);
-            Assert.AreEqual(ManifestMediaType.DockerManifest, result.MediaType);
-        }
-
         private async Task SetManifestPrerequisites(ContainerRegistryContentClient client)
         {
             var layer = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";

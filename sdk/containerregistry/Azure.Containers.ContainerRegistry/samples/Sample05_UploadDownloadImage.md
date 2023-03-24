@@ -139,12 +139,7 @@ await client.SetManifestAsync(content, tag: "sample", ManifestMediaType.DockerMa
 To download a manifest of an unknown type, pass possible values to the list of acceptable media types.  The media type of the manifest is returned on the `DownloadManifestResult`.
 
 ```C# Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
-// Pass multiple media types if the media type of the manifest to download is unknown
-List<ManifestMediaType> mediaTypes = new() {
-    "application/vnd.docker.distribution.manifest.list.v2+json",
-    "application/vnd.oci.image.index.v1+json" };
-
-GetManifestResult result = await client.GetManifestAsync("sample", mediaTypes);
+GetManifestResult result = await client.GetManifestAsync("sample");
 
 if (result.MediaType == "application/vnd.docker.distribution.manifest.list.v2+json")
 {
