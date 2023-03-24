@@ -1,39 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-eb7b903513c01519d189d0387280c7e9-5fa0e0b0033276b8-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "16c70241e1829e62da34711218f46644",
+        "traceparent": "00-a68f7a70af599e04ca3eaddc524aba51-ebda00de067c92a0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "0ed2a1a5a8b401c5462ffcdd1587e31d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:13:23 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "25088d04-76c5-4531-a26c-38632cc4ec0d",
-        "x-ms-ratelimit-remaining-subscription-reads": "11985",
-        "x-ms-request-id": "25088d04-76c5-4531-a26c-38632cc4ec0d",
-        "x-ms-routing-request-id": "WESTUS:20220516T231323Z:25088d04-76c5-4531-a26c-38632cc4ec0d"
+        "x-ms-correlation-request-id": "2e20e976-ff0a-4ad6-97a9-9192fa68532d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11887",
+        "x-ms-request-id": "2e20e976-ff0a-4ad6-97a9-9192fa68532d",
+        "x-ms-routing-request-id": "WESTUS:20230310T063230Z:2e20e976-ff0a-4ad6-97a9-9192fa68532d"
       },
       "ResponseBody": {
-        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
-        "displayName": "Azure subscription 1",
+        "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -43,40 +43,116 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=SqlEdge",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=SqlEdge",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-54a0429ff81179c27669cce657d51a21-46d506c24d49d403-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "65f65531793d73d0701d72b495e49415",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "4223906491b57606df5443360edf98a2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "748",
+        "Content-Length": "773",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:13:24 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "eff6f5ec-913c-48b7-b734-b3707cadadf6",
-        "x-ms-ratelimit-remaining-subscription-reads": "11984",
-        "x-ms-request-id": "65f65531793d73d0701d72b495e49415",
-        "x-ms-routing-request-id": "WESTUS:20220516T231324Z:eff6f5ec-913c-48b7-b734-b3707cadadf6",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-correlation-request-id": "e9479a84-13ff-41bd-9d51-28e0af789b0a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11886",
+        "x-ms-request-id": "4223906491b57606df5443360edf98a2",
+        "x-ms-routing-request-id": "WESTUS:20230310T063230Z:e9479a84-13ff-41bd-9d51-28e0af789b0a",
+        "x-ms-version": "1.0.2251.115"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022SqlEdge\u0022,\u0022name\u0022:\u0022sql_edge_standard\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:100.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:180.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure SQL Edge\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure SQL Edge\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Standard\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022abc8c2a2-c4f5-5ef2-87a7-b6ab0adfac2d\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Device Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Standard\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "SqlEdge",
+            "name": "sql_edge_standard",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 100.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 180.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure SQL Edge"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure SQL Edge"
+              },
+              {
+                "name": "SkuName",
+                "value": "Standard"
+              },
+              {
+                "name": "MeterId",
+                "value": "abc8c2a2-c4f5-5ef2-87a7-b6ab0adfac2d"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Device Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Standard"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          }
+        ],
+        "totalItems": 1
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "1071780119",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "391850160",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }

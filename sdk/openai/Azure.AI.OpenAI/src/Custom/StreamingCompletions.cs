@@ -15,7 +15,6 @@ namespace Azure.AI.OpenAI
 {
     public class StreamingCompletions : IDisposable
     {
-        private static readonly DateTime s_epochStartUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         private readonly Response _baseResponse;
         private readonly SseReader _baseResponseReader;
         private readonly IList<Completions> _baseCompletions;
@@ -34,7 +33,7 @@ namespace Azure.AI.OpenAI
             get
             {
                 int baseSecondsAfterEpoch = GetLocked(() => _baseCompletions.First().Created.Value);
-                return s_epochStartUtc.AddSeconds(baseSecondsAfterEpoch);
+                return TimeConverters.DateTimeFromUnixEpoch(baseSecondsAfterEpoch);
             }
         }
 
@@ -58,7 +57,7 @@ namespace Azure.AI.OpenAI
                     SseLine? sseEvent = await _baseResponseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
                     if (sseEvent == null)
                     {
-                        _baseResponse.ContentStream.Dispose();
+                        _baseResponse.ContentStream?.Dispose();
                         break;
                     }
 
@@ -69,7 +68,7 @@ namespace Azure.AI.OpenAI
                     ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
                     if (value.Span.SequenceEqual("[DONE]".AsSpan()))
                     {
-                        _baseResponse.ContentStream.Dispose();
+                        _baseResponse.ContentStream?.Dispose();
                         break;
                     }
 
@@ -101,6 +100,15 @@ namespace Azure.AI.OpenAI
                     }
                 }
 
+                // Non-Azure OpenAI doesn't always set the FinishReason on streaming choices when multiple prompts are
+                // provided.
+                lock (_streamingChoicesLock)
+                {
+                    foreach (StreamingChoice streamingChoice in _streamingChoices)
+                    {
+                        streamingChoice.StreamingDoneSignalReceived = true;
+                    }
+                }
                 _streamingTaskComplete = true;
                 _updateAvailableEvent.Set();
             });

@@ -18,8 +18,8 @@ Azure Communication Services support sending emails with attachments. See [Email
 ```C# Snippet:Azure_Communication_Email_Send_With_Attachments_Async
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    fromAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    toAddress: "<recipient email address>"
+    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>"
     content: emailContent);
 
 var filePath = "<path to your file>";
@@ -31,12 +31,20 @@ var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
 
 emailMessage.Attachments.Add(emailAttachment);
 
-EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
-Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+try
+{
+    EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
+    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-/// Get the OperationId so that it can be used for tracking the message for troubleshooting
-string operationId = emailSendOperation.Id;
-Console.WriteLine($"Email operation id = {operationId}");
+    /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+    string operationId = emailSendOperation.Id;
+    Console.WriteLine($"Email operation id = {operationId}");
+}
+catch ( RequestFailedException ex )
+{
+    /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+    Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+}
 ```
 
 [README]: https://learn.microsoft.com/azure/communication-services/quickstarts/email/send-email?tabs=windows&pivots=platform-azcli#prerequisites
