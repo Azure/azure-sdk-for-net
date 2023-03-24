@@ -41,7 +41,7 @@ $commitid = $inputJson.headSha
 $repoHttpsUrl = $inputJson.repoHttpsUrl
 $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
-$relatedCadlProjectFolder = $inputJson.relatedCadlProjectFolder
+$relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
 
 $autorestConfigYaml = ""
 if ($autorestConfig) {
@@ -109,10 +109,10 @@ if ($inputFileToGen) {
     UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 }
 
-# generate sdk from cadl file
-if ($relatedCadlProjectFolder) {
-    foreach ($cadlRelativeFolder in $relatedCadlProjectFolder) {
-        $typespecFolder = Resolve-Path (Join-Path $swaggerDir $cadlRelativeFolder)
+# generate sdk from typespec file
+if ($relatedTypeSpecProjectFolder) {
+    foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
+        $typespecFolder = Resolve-Path (Join-Path $swaggerDir $typespecRelativeFolder)
         $newPackageOutput = "newPackageOutput.json"
 
         $tspConfigYaml = Get-Content -Path (Join-Path "$typespecFolder" "tspconfig.yaml") -Raw
@@ -137,7 +137,7 @@ if ($relatedCadlProjectFolder) {
             -service $service `
             -namespace $namespace `
             -sdkPath $sdkPath `
-            -relatedTypeSpecProjectFolder $cadlRelativeFolder `
+            -relatedTypeSpecProjectFolder $typespecRelativeFolder `
             -specRoot $swaggerDir `
             -outputJsonFile $newpackageoutput
         $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json
