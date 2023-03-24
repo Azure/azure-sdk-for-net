@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.NetApp.Tests
         private readonly string _pool1Name = "pool1";
         internal NetAppVolumeSnapshotCollection _snapshotCollection;
         internal NetAppVolumeResource _volumeResource;
-        public SnapshotTests(bool isAsync) : base(isAsync)
+        public SnapshotTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        [SetUp]
         public async Task SetUp()
         {
             _resourceGroup = await CreateResourceGroupAsync();
+            string volumeName = Recording.GenerateAssetName("volumeName-");
             string accountName = await CreateValidAccountNameAsync(_accountNamePrefix, _resourceGroup, DefaultLocation);
             _netAppAccount = (await _netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters())).Value;
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _volumeCollection = _capacityPool.GetNetAppVolumes();
 
             DefaultVirtualNetwork = await CreateVirtualNetwork();
-            _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId);
+            _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId, volumeName: volumeName);
             _snapshotCollection = _volumeResource.GetNetAppVolumeSnapshots();
         }
 
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task CreateDeleteSnapshot()
         {
             //create snapshot
             var snapshotName = Recording.GenerateAssetName("snapshot-");
+            await SetUp();
             NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
             Assert.IsNotNull(snapshotResource1);
@@ -119,18 +119,18 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task ListSnapshots()
         {
             //create snapshot
             var snapshotName = Recording.GenerateAssetName("snapshot-");
+            var snapshotName2 = Recording.GenerateAssetName("snapshot-");
+            await SetUp();
             NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
             Assert.IsNotNull(snapshotResource1);
             Assert.AreEqual(snapshotName, snapshotResource1.Id.Name);
 
             //Create another
-            var snapshotName2 = Recording.GenerateAssetName("snapshot-");
             NetAppVolumeSnapshotData snapshotData2 = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource2 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName2, snapshotData2)).Value;
 
@@ -164,11 +164,12 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task CreateVolumeFromSnapshot()
         {
             //create snapshot
             string snapshotName = Recording.GenerateAssetName("snapshot-");
+            string newVolumeName = Recording.GenerateAssetName("volume-");
+            await SetUp();
             NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
             Assert.IsNotNull(snapshotResource1);
@@ -180,7 +181,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(snapshotName, snapshotResource1.Id.Name);
 
             //create new volume from snapshot, we do this by calling create volume with a snapshotId
-            string newVolumeName = Recording.GenerateAssetName("volume-");
             NetAppVolumeResource newVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, snapshotId: snapshotResource2.Id);
             if (Mode != RecordedTestMode.Playback)
             {
@@ -198,11 +198,11 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task RevertVolumeToSnapshot()
         {
             //create snapshot
             string snapshotName = Recording.GenerateAssetName("snapshot-");
+            await SetUp();
             NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
             Assert.IsNotNull(snapshotResource1);
@@ -225,11 +225,11 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task RestoreFilesFromSnapshotFileDoesNotExist()
         {
             //create snapshot
             string snapshotName = Recording.GenerateAssetName("snapshot-");
+            await SetUp();
             NetAppVolumeSnapshotData snapshotData = new(DefaultLocation);
             NetAppVolumeSnapshotResource snapshotResource1 = (await _snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
             Assert.IsNotNull(snapshotResource1);
