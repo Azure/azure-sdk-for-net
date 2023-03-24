@@ -8,11 +8,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal static class PersistentStorageExtensions
     {
-        internal static ExportResult SaveTelemetry(this PersistentBlobProvider storage, byte[] content, int leaseTime)
-        {
-            return storage.TryCreateBlob(content, leaseTime, out _) ? ExportResult.Success : ExportResult.Failure;
-        }
-
         internal static ExportResult SaveTelemetry(this PersistentBlobProvider storage, byte[] content)
         {
             return storage.TryCreateBlob(content, out _) ? ExportResult.Success : ExportResult.Failure;

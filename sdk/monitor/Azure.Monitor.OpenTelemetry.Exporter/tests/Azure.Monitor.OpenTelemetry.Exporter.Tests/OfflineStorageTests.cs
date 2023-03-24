@@ -136,40 +136,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, items.Count());
         }
 
-        // TODO: REWRITE THIS TEST FOR IDISPOSABLE
-        [Fact]
-        public void TransmitFromStorage()
-        {
-            using var activity = CreateActivity("TestActivity");
-            var telemetryItem = CreateTelemetryItem(activity);
-            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
-            telemetryItems.Add(telemetryItem);
-
-            //Even though we are using different transmitter instances
-            // we need to use the same instance of fileProvider for this test.
-            var mockFileProvider = new MockFileProvider();
-            // Transmit
-            var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
-            var transmitter = GetTransmitter(mockResponse);
-            transmitter._fileBlobProvider = mockFileProvider;
-            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-
-            //Assert
-            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
-
-            // reset server logic to return 200
-            mockResponse = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
-            transmitter = GetTransmitter(new[] { mockResponse });
-            transmitter._fileBlobProvider = mockFileProvider;
-
-            transmitter.TransmitFromStorage(1, false, CancellationToken.None).EnsureCompleted();
-
-            // Assert
-            // Blob will be deleted on successful transmission
-            Assert.Empty(transmitter._fileBlobProvider.GetBlobs());
-        }
-
-        // TODO: Remove TransmitFromStorage() test after moving to new implementation
         [Fact]
         public void TelemetryIsTransmittedSuccessfullyFromStorage()
         {
