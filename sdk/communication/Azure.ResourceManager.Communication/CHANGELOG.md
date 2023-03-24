@@ -4,7 +4,7 @@
 
 ### Features Added
 - Added SenderUsernameResource, SenderUsernameResourceCollection and SenderUsernameResourceData to support the new resource type.
-- This refresh also updates `Azure.ResourceManager.Communication` library to the Azure resource management SDK standards and matches the patterns in the rest of the new Azure management libraries. [Resource management using the Azure SDK for .NET](https://learn.microsoft.com/en-us/dotnet/azure/sdk/resource-management?tabs=PowerShell)
+- This refresh also updates `Azure.ResourceManager.Communication` library to the Azure resource management SDK standards and matches the patterns in the rest of the new Azure management libraries. [Resource management using the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/resource-management?tabs=PowerShell)
   
 ### Breaking Changes
 - Removed ValidSenderUsernames property from CommunicationServiceResourceData.
