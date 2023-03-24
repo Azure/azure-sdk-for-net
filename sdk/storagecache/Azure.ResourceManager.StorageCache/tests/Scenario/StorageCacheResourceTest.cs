@@ -21,19 +21,10 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
-            StorageCacheResource scr = await this.CreateOrUpdateStorageCache();
-            var operation = await scr.DeleteAsync(WaitUntil.Completed);
-            Assert.IsFalse(operation.WaitForCompletionResponse().IsError);
-
-            Assert.ThrowsAsync<RequestFailedException>(async () => await scr.GetAsync());
-            try
-            {
-                StorageCacheResource scrAfterDelete = await scr.GetAsync();
-            }
-            catch (RequestFailedException e)
-            {
-                Assert.AreEqual(e.Status, 404);
-            }
+            await AzureResourceTestHelper.TestDelete<StorageCacheResource>(
+                async () => await this.CreateOrUpdateStorageCache(),
+                async (cache) => await cache.DeleteAsync(WaitUntil.Completed),
+                async (cache) => await cache.GetAsync());
         }
 
         [TestCase]
@@ -42,7 +33,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         {
             StorageCacheResource scr = await this.CreateOrUpdateStorageCache();
 
-            string policyName = "default";
+            string policyName = "newone";
             scr.Data.SecurityAccessPolicies.Add(
                 new NfsAccessPolicy(
                     name: policyName,
@@ -60,8 +51,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
                 waitUntil: WaitUntil.Completed,
                 data: scr.Data);
 
-            Assert.AreEqual(scr.Data.SecurityAccessPolicies.Count, 1);
-            Assert.AreEqual(scr.Data.SecurityAccessPolicies[0].Name, policyName);
+            this.VerifyStorageCache(lro.Value, scr.Data);
         }
 
         [TestCase]
@@ -69,23 +59,14 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         public async Task UpdateSpaceAllocation()
         {
             StorageCacheResource scr = await this.CreateOrUpdateStorageCache();
+            StorageTargetResource str = await this.CreateOrUpdateStorageTarget(scr);
 
             IEnumerable<StorageTargetSpaceAllocation> spaceAllocationVar = new StorageTargetSpaceAllocation[]
             {
                 new StorageTargetSpaceAllocation()
                 {
-                    AllocationPercentage = 25,
-                    Name = @"st1"
-                },
-                new StorageTargetSpaceAllocation()
-                {
-                    AllocationPercentage = 50,
-                    Name = @"st2"
-                },
-                new StorageTargetSpaceAllocation()
-                {
-                    AllocationPercentage = 25,
-                    Name = @"st3"
+                    AllocationPercentage = 100,
+                    Name = str.Data.Name,
                 },
             };
             ArmOperation lro = await scr.UpdateSpaceAllocationAsync(

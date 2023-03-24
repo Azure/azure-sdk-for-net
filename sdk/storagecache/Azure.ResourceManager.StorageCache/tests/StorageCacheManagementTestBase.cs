@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
-using NUnit.Compatibility;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageCache.Models;
+using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageCache.Tests
 {
@@ -44,14 +43,72 @@ namespace Azure.ResourceManager.StorageCache.Tests
         [TearDown]
         public void TearDown()
         {
+            // this clean up is needed when running in live mode because at most 4 storagecache can be created in one subscription
             while (this.CleanupActions.Count > 0)
             {
                 var action = this.CleanupActions.Pop();
-                action();
+                try
+                {
+                    action();
+                }
+                catch (Exception e)
+                {
+                    // just log and ignore the exception when cleanup
+                    Console.WriteLine("Exception thrown when cleanup: " + e.ToString());
+                }
             }
         }
 
-        protected async Task<StorageCacheResource> CreateOrUpdateStorageCache(string name = null, string zone = "1")
+        protected async Task<StorageTargetResource> CreateOrUpdateStorageTarget(
+            StorageCacheResource cache, string name = null, int verificationDelayInSeconds = 30, string targetIpAddress = "10.0.2.4", bool verifyResult = false)
+        {
+            StorageTargetCollection storageTargetCollectionVar = cache.GetStorageTargets();
+            string storageTargetNameVar = name ?? Recording.GenerateAssetName("storagetarget");
+            StorageTargetData dataVar = new StorageTargetData()
+            {
+                Nfs3 = new Nfs3Target()
+                {
+                    Target = targetIpAddress,
+                    UsageModel = @"READ_ONLY",
+                    VerificationDelayInSeconds = verificationDelayInSeconds
+                },
+                TargetType = StorageTargetType.Nfs3
+            };
+            ArmOperation<StorageTargetResource> lro = await storageTargetCollectionVar.CreateOrUpdateAsync(
+                waitUntil: WaitUntil.Completed,
+                storageTargetName: storageTargetNameVar,
+                data: dataVar);
+            if (verifyResult)
+            {
+                this.VerifyStorageTarget(lro.Value, dataVar);
+            }
+            return lro.Value;
+        }
+
+        protected async Task<StorageCacheResource> RetrieveExistingStorageCache(string resourceGroupName, string cacheName)
+        {
+            ResourceIdentifier storageCacheResourceId = StorageCacheResource.CreateResourceIdentifier(
+                this.DefaultSubscription.Id.SubscriptionId,
+                resourceGroupName: resourceGroupName,
+                cacheName: cacheName);
+            var cache = this.Client.GetStorageCacheResource(storageCacheResourceId);
+            var targets = cache.GetStorageTargets().GetAllAsync();
+            await foreach (var target in targets)
+            {
+                await target.DeleteAsync(WaitUntil.Completed);
+            }
+            return cache;
+        }
+
+        public void VerifyStorageTarget(StorageTargetResource actual, StorageTargetData expected)
+        {
+            Assert.AreEqual(actual.Data.TargetType, expected.TargetType);
+            Assert.AreEqual(actual.Data.Nfs3.Target, expected.Nfs3.Target);
+            Assert.AreEqual(actual.Data.Nfs3.UsageModel, expected.Nfs3.UsageModel);
+            Assert.AreEqual(actual.Data.Nfs3.VerificationDelayInSeconds, expected.Nfs3.VerificationDelayInSeconds);
+        }
+
+        protected async Task<StorageCacheResource> CreateOrUpdateStorageCache(string name = null, string zone = "1", bool verifyResult = false)
         {
             StorageCacheCollection storageCacheCollectionVar = this.DefaultResourceGroup.GetStorageCaches();
             string cacheNameVar = name ?? Recording.GenerateAssetName("testsc");
@@ -71,7 +128,21 @@ namespace Azure.ResourceManager.StorageCache.Tests
                 cacheName: cacheNameVar,
                 data: dataVar);
             this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
+            if (verifyResult)
+            {
+                this.VerifyStorageCache(lro.Value, dataVar);
+            }
             return lro.Value;
+        }
+
+        protected void VerifyStorageCache(StorageCacheResource actual, StorageCacheData expected)
+        {
+            Assert.AreEqual(actual.Data.CacheSizeGB, expected.CacheSizeGB);
+            Assert.AreEqual(actual.Data.SkuName, expected.SkuName);
+            Assert.AreEqual(actual.Data.Subnet, expected.Subnet);
+            Assert.AreEqual(actual.Data.Zones.Count, expected.Zones.Count);
+            for (int i = 0; i < actual.Data.Zones.Count; i++)
+                Assert.AreEqual(actual.Data.Zones[i], expected.Zones[i]);
         }
 
         protected async Task<GenericResource> CreateVirtualNetwork()
@@ -88,7 +159,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
                 { "name", subnetName },
                 { "properties", new Dictionary<string, object>()
                     {
-                        { "addressPrefix", "10.0.2.0/24" }
+                        { "addressPrefix", "10.0.0.0/16" }
                     }
                 }
             };
@@ -102,7 +173,8 @@ namespace Azure.ResourceManager.StorageCache.Tests
                 })
             };
             var lro = await this.Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, vnetId, input);
-            this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
+            // not add cleanup for the network which may trigger exception because the VM is not deleted yet because of timing issue
+            // it should be fine to just leave it there which will be cleanup by TTL anyway later
             return lro.Value;
         }
 
@@ -122,7 +194,8 @@ namespace Azure.ResourceManager.StorageCache.Tests
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
+            // seems the TestBase will do something more against the ResourceGroup later. Adding cleanup would trigger exception randomly
+            // when running multiple test cases at one time. It should be fine just leave it there which will be handled by TTL later
             return lro.Value;
         }
     }
