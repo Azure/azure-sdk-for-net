@@ -15,7 +15,7 @@ namespace Azure.Core.TestFramework
     /// marked as inconclusive.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public class RetryOnErrorAttribute : NUnitAttribute, IRepeatTest
+    public abstract class RetryOnErrorAttribute : NUnitAttribute, IRepeatTest
     {
         private readonly int _tryCount;
 
@@ -26,7 +26,7 @@ namespace Azure.Core.TestFramework
         /// </summary>
         /// <param name="tryCount">The number of times that the test can be executed.</param>
         /// <param name="shouldRetry">The function that determines whether the test should be retried.</param>
-        public RetryOnErrorAttribute(int tryCount, Func<TestExecutionContext, bool> shouldRetry)
+        protected RetryOnErrorAttribute(int tryCount, Func<TestExecutionContext, bool> shouldRetry)
         {
             _tryCount = tryCount;
             _shouldRetry = shouldRetry;
