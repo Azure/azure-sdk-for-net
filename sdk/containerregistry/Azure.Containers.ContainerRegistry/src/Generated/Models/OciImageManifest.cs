@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         /// <summary> Initializes a new instance of OciImageManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        public OciImageManifest(int schemaVersion = 2)
+        public OciImageManifest(int schemaVersion)
         {
             Layers = new ChangeTrackingList<OciDescriptor>();
             SchemaVersion = schemaVersion;
