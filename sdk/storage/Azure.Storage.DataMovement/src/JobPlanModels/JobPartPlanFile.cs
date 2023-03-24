@@ -3,11 +3,9 @@
 
 using System;
 using System.IO;
-using System.IO.MemoryMappedFiles;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.JobPlanModels;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
@@ -46,6 +44,11 @@ namespace Azure.Storage.DataMovement
             int jobPart,
             Stream headerStream)
         {
+            Argument.AssertNotNullOrEmpty(checkpointerPath, nameof(checkpointerPath));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(jobPart, nameof(jobPart));
+            Argument.AssertNotNull(headerStream, nameof(headerStream));
+
             string mapName = string.Concat(id, jobPart);
             JobPartPlanFileName fileName = new JobPartPlanFileName(checkpointerPath: checkpointerPath, id: id, jobPartNumber: jobPart);
             JobPartPlanFile result = new JobPartPlanFile()

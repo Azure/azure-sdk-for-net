@@ -73,7 +73,9 @@ namespace Azure.Storage.DataMovement
                 if (_isSingleResource)
                 {
                     // Single resource transfer, we can skip to chunking the job.
-                    ServiceToServiceJobPart part = new ServiceToServiceJobPart(this, partNum);
+                    ServiceToServiceJobPart part = await ServiceToServiceJobPart.CreateJobPartAsync(
+                        job: this,
+                        partNumber: partNum).ConfigureAwait(false);
                     _jobParts.Add(part);
                     yield return part;
                 }
@@ -86,12 +88,12 @@ namespace Azure.Storage.DataMovement
                     {
                         // Pass each storage resource found in each list call
                         string sourceName = resource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
-                        ServiceToServiceJobPart part = new ServiceToServiceJobPart(
+                        ServiceToServiceJobPart part = await ServiceToServiceJobPart.CreateJobPartAsync(
                             job: this,
                             partNumber: partNum,
                             sourceResource: resource,
                             destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName),
-                            length: resource.Length);
+                            length: resource.Length).ConfigureAwait(false);
                         _jobParts.Add(part);
                         yield return part;
                         partNum++;

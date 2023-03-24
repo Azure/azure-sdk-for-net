@@ -2,13 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Storage.DataMovement
@@ -73,6 +68,9 @@ namespace Azure.Storage.DataMovement
             int jobPartNumber,
             string schemaVersion = DataMovementConstants.PlanFile.SchemaVersion)
         {
+            Argument.AssertNotNullOrEmpty(checkpointerPath, nameof(checkpointerPath));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(jobPartNumber, nameof(jobPartNumber));
             PrefixPath = checkpointerPath;
             Id = id;
             JobPartNumber = jobPartNumber;

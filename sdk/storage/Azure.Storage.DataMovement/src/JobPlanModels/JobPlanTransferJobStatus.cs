@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-namespace Azure.Storage.DataMovement
+
+namespace Azure.Storage.DataMovement.JobPlanModels
 {
     /// <summary>
     /// Used to define the status of the job when storing the state to the job plan file.

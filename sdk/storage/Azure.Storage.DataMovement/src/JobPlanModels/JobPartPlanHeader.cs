@@ -2,17 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.JobPlanModels
 {
@@ -284,6 +275,8 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             Argument.AssertNotNullOrEmpty(sourcePath, nameof(sourcePath));
             Argument.AssertNotNullOrWhiteSpace(destinationPath, nameof(destinationPath));
             Argument.AssertNotNull(ttlAfterCompletion, nameof(ttlAfterCompletion));
+            Argument.AssertNotNull(dstBlobData, nameof(dstBlobData));
+            Argument.AssertNotNull(dstLocalData, nameof(dstLocalData));
             if (version.Length == DataMovementConstants.PlanFile.VersionStrMaxSize)
             {
                 Version = version;

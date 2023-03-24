@@ -1,17 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Mime;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.JobPlanModels;
-using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests

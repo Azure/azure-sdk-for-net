@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -33,7 +30,7 @@ namespace Azure.Storage.DataMovement
         /// Initializes a new instance of <see cref="LocalTransferCheckpointer"/> class.
         /// </summary>
         /// <param name="folderPath">Path to the folder containing the checkpointing information to resume from.</param>
-        public LocalTransferCheckpointer(string folderPath = default)
+        public LocalTransferCheckpointer(string folderPath)
         {
             if (string.IsNullOrEmpty(folderPath))
             {
@@ -43,13 +40,15 @@ namespace Azure.Storage.DataMovement
                     // If it does not already exist, create the default folder.
                     Directory.CreateDirectory(_pathToCheckpointer);
                 }
-                return;
             }
-            if (!Directory.Exists(folderPath))
+            else if (!Directory.Exists(folderPath))
             {
                 throw Errors.MissingCheckpointerPath(folderPath);
             }
-            _pathToCheckpointer = folderPath;
+            else
+            {
+                _pathToCheckpointer = folderPath;
+            }
             _transferStates = new Dictionary<string, Dictionary<int, JobPartPlanFile>>();
         }
 
@@ -100,6 +99,11 @@ namespace Azure.Storage.DataMovement
             Stream headerStream,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
+            Argument.AssertNotNull(partNumber, nameof(partNumber));
+            Argument.AssertNotNull(chunksTotal, nameof(chunksTotal));
+            Argument.AssertNotNull(headerStream, nameof(headerStream));
+
             JobPartPlanFile mappedFile = await JobPartPlanFile.CreateJobPartPlanFileAsync(
                 _pathToCheckpointer,
                 transferId,
@@ -243,8 +247,7 @@ namespace Azure.Storage.DataMovement
                     path: jobPartFiles[partNumber].FilePath,
                     mode: FileMode.Open,
                     mapName: jobPartFiles[partNumber].MapName,
-                    capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes,
-                    access: MemoryMappedFileAccess.Read))
+                    capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
                 {
                     using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, readSize, MemoryMappedFileAccess.Read))
                     {
@@ -310,8 +313,7 @@ namespace Azure.Storage.DataMovement
                         path: jobPartFiles[partNumber].FilePath,
                         mode: FileMode.Open,
                         mapName: jobPartFiles[partNumber].MapName,
-                        capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes,
-                        access: MemoryMappedFileAccess.Read))
+                        capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
                     {
                         using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(chunkIndex, buffer.Length, MemoryMappedFileAccess.Write))
                         {
@@ -412,12 +414,13 @@ namespace Azure.Storage.DataMovement
                             path: jobPartPair.Value.FilePath,
                             mode: FileMode.Open,
                             mapName: jobPartPair.Value.MapName,
-                            capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes,
-                            access: MemoryMappedFileAccess.Read))
+                            capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
                     {
-                        using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length, MemoryMappedFileAccess.Write))
+                        using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
                         {
-                            accessor.Write(0, (int)status);
+                            accessor.Write(
+                                position: 0,
+                                value: (byte)status);
                             // to flush to the underlying file that supports the mmf
                             accessor.Flush();
                         }
@@ -461,12 +464,13 @@ namespace Azure.Storage.DataMovement
                                 path: file.FilePath,
                                 mode: FileMode.Open,
                                 mapName: file.MapName,
-                                capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes,
-                                access: MemoryMappedFileAccess.Read))
+                                capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
                     {
-                        using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length, MemoryMappedFileAccess.Write))
+                        using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
                         {
-                            accessor.Write(0, (int)status);
+                            accessor.Write(
+                                position: 0,
+                                value: (byte)status);
                             // to flush to the underlying file that supports the mmf
                             accessor.Flush();
                         }

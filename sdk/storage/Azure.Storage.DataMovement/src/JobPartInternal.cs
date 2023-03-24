@@ -129,7 +129,6 @@ namespace Azure.Storage.DataMovement
         internal JobPartInternal(
             DataTransfer dataTransfer,
             int partNumber,
-            StorageTransferStatus jobPartStatus,
             StorageResource sourceResource,
             StorageResource destinationResource,
             long? maximumTransferChunkSize,
@@ -144,6 +143,7 @@ namespace Azure.Storage.DataMovement
             SyncAsyncEventHandler<TransferSkippedEventArgs> skippedEventHandler,
             SyncAsyncEventHandler<SingleTransferCompletedEventArgs> singleTransferEventHandler,
             CancellationTokenSource cancellationTokenSource,
+            StorageTransferStatus jobPartStatus = StorageTransferStatus.Queued,
             long? length = default)
         {
             JobPartStatus = jobPartStatus;
@@ -178,84 +178,6 @@ namespace Azure.Storage.DataMovement
             }
 
             Length = length;
-        }
-
-        internal JobPartInternal(
-            DataTransfer dataTransfer,
-            int partNumber,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
-            long? maximumTransferChunkSize,
-            long? initialTransferSize,
-            ErrorHandlingOptions errorHandling,
-            StorageResourceCreateMode createMode,
-            TransferCheckpointer checkpointer,
-            ArrayPool<byte> arrayPool,
-            SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
-            SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
-            SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
-            SyncAsyncEventHandler<TransferSkippedEventArgs> skippedEventHandler,
-            SyncAsyncEventHandler<SingleTransferCompletedEventArgs> singleTransferEventHandler,
-            CancellationTokenSource cancellationTokenSource,
-            long? length = default)
-        {
-            JobPartStatus = StorageTransferStatus.Queued;
-            PartNumber = partNumber;
-            _dataTransfer = dataTransfer;
-            _sourceResource = sourceResource;
-            _destinationResource = destinationResource;
-            _errorHandling = errorHandling;
-            _createMode = createMode;
-            _checkpointer = checkpointer;
-            _cancellationTokenSource = cancellationTokenSource;
-            _arrayPool = arrayPool;
-            PartTransferStatusEventHandler = jobPartEventHandler;
-            TransferStatusEventHandler = statusEventHandler;
-            TransferFailedEventHandler = failedEventHandler;
-            TransferSkippedEventHandler = skippedEventHandler;
-            SingleTransferCompletedEventHandler = singleTransferEventHandler;
-
-            _initialTransferSize = _destinationResource.MaxChunkSize;
-            if (initialTransferSize.HasValue)
-            {
-                _initialTransferSize = Math.Min(initialTransferSize.Value, _destinationResource.MaxChunkSize);
-            }
-            // If the maximum chunk size is not set, we will determine the chunk size
-            // based on the file length later
-            _maximumTransferChunkSize = _destinationResource.MaxChunkSize;
-            if (maximumTransferChunkSize.HasValue)
-            {
-                _maximumTransferChunkSize = Math.Min(
-                    maximumTransferChunkSize.Value,
-                    _destinationResource.MaxChunkSize);
-            }
-
-            Length = length;
-        }
-
-        /// <summary>
-        /// Creating job part based on a single transfer job
-        /// </summary>
-        /// <param name="job"></param>
-        /// <param name="partNumber"></param>
-        public JobPartInternal(TransferJobInternal job, int partNumber)
-            : this (dataTransfer: job._dataTransfer,
-                  partNumber: partNumber,
-                  sourceResource: job._sourceResource,
-                  destinationResource: job._destinationResource,
-                  maximumTransferChunkSize: job._maximumTransferChunkSize,
-                  initialTransferSize: job._initialTransferSize,
-                  errorHandling: job._errorHandling,
-                  createMode: job._createMode,
-                  checkpointer: job._checkpointer,
-                  arrayPool: job.UploadArrayPool,
-                  jobPartEventHandler: job.GetJobPartStatus(),
-                  statusEventHandler: job.TransferStatusEventHandler,
-                  failedEventHandler: job.TransferFailedEventHandler,
-                  skippedEventHandler: job.TransferSkippedEventHandler,
-                  singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
-                  cancellationTokenSource: job._cancellationTokenSource)
-        {
         }
 
         public void SetQueueChunkDelegate(QueueChunkDelegate chunkDelegate)

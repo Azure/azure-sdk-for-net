@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Channels;
 using System.Buffers;
@@ -337,10 +336,11 @@ namespace Azure.Storage.DataMovement
                             readSize: 0,
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
-                            streamToUriJob.AppendJobPart(streamToUriJob.ToJobPart(
-                                stream,
-                                sourceResource,
-                                destinationResource));
+                            streamToUriJob.AppendJobPart(
+                                await streamToUriJob.ToJobPartAsync(
+                                    stream,
+                                    sourceResource,
+                                    destinationResource).ConfigureAwait(false));
                         }
                     }
                     transferJobInternal = streamToUriJob;
@@ -375,10 +375,11 @@ namespace Azure.Storage.DataMovement
                             readSize: 0,
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
-                            serviceToServiceJob.AppendJobPart(serviceToServiceJob.ToJobPart(
-                                stream,
-                                sourceResource,
-                                destinationResource));
+                            serviceToServiceJob.AppendJobPart(
+                                await serviceToServiceJob.ToJobPartAsync(
+                                    stream,
+                                    sourceResource,
+                                    destinationResource).ConfigureAwait(false));
                         }
                     }
                     transferJobInternal = serviceToServiceJob;
@@ -406,10 +407,11 @@ namespace Azure.Storage.DataMovement
                             readSize: 0,
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
-                            uriToStreamJob.AppendJobPart(uriToStreamJob.ToJobPart(
-                                stream,
-                                sourceResource,
-                                destinationResource));
+                            uriToStreamJob.AppendJobPart(
+                                await uriToStreamJob.ToJobPartAsync(
+                                    stream,
+                                    sourceResource,
+                                    destinationResource).ConfigureAwait(false));
                         }
                     }
                     transferJobInternal = uriToStreamJob;
@@ -510,10 +512,11 @@ namespace Azure.Storage.DataMovement
                                 readSize: 0,
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
-                                streamToUriJob.AppendJobPart(streamToUriJob.ToJobPart(
-                                    stream,
-                                    sourceResource,
-                                    destinationResource));
+                                streamToUriJob.AppendJobPart(
+                                    await streamToUriJob.ToJobPartAsync(
+                                        stream,
+                                        sourceResource,
+                                        destinationResource).ConfigureAwait(false));
                             }
                         }
                     }
@@ -555,10 +558,11 @@ namespace Azure.Storage.DataMovement
                                 readSize: 0,
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
-                                serviceToServiceJob.AppendJobPart(serviceToServiceJob.ToJobPart(
+                                serviceToServiceJob.AppendJobPart(
+                                    await serviceToServiceJob.ToJobPartAsync(
                                     stream,
                                     sourceResource,
-                                    destinationResource));
+                                    destinationResource).ConfigureAwait(false));
                             }
                         }
                     }
@@ -593,10 +597,11 @@ namespace Azure.Storage.DataMovement
                                 readSize: 0,
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
-                                uriToStreamJob.AppendJobPart(uriToStreamJob.ToJobPart(
+                                uriToStreamJob.AppendJobPart(
+                                    await uriToStreamJob.ToJobPartAsync(
                                     stream,
                                     sourceResource,
-                                    destinationResource));
+                                    destinationResource).ConfigureAwait(false));
                             }
                         }
                     }
@@ -625,7 +630,7 @@ namespace Azure.Storage.DataMovement
         private static LocalTransferCheckpointer CreateDefaultCheckpointer()
         {
             // Return checkpointer
-            return new LocalTransferCheckpointer();
+            return new LocalTransferCheckpointer(default);
         }
 
         /// <summary>

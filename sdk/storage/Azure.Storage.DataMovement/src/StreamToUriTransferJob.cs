@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Models;
 using System.Buffers;
-using System.Linq;
 
 namespace Azure.Storage.DataMovement
 {
@@ -72,7 +70,7 @@ namespace Azure.Storage.DataMovement
                 if (_isSingleResource)
                 {
                     // Single resource transfer, we can skip to chunking the job.
-                    StreamToUriJobPart part = new StreamToUriJobPart(this, partNumber);
+                    StreamToUriJobPart part = await StreamToUriJobPart.CreateJobPartAsync(this, partNumber).ConfigureAwait(false);
                     _jobParts.Add(part);
                     yield return part;
                 }
@@ -87,11 +85,11 @@ namespace Azure.Storage.DataMovement
                         if (!resource.IsContainer)
                         {
                             string sourceName = resource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
-                            StreamToUriJobPart part = new StreamToUriJobPart(
+                            StreamToUriJobPart part = await StreamToUriJobPart.CreateJobPartAsync(
                                 job: this,
                                 partNumber: partNumber,
                                 sourceResource: resource,
-                                destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName));
+                                destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName)).ConfigureAwait(false);
                             _jobParts.Add(part);
                             yield return part;
                             partNumber++;

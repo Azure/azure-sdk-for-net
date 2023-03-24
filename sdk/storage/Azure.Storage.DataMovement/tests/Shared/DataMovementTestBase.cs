@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System;
 using Azure.Storage.DataMovement.JobPlanModels;
 using Azure.Storage.Test;
-using System.Drawing;
 using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement.Tests
