@@ -11,8 +11,19 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class Error
+    internal partial class Error : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Innererror))
+            {
+                writer.WritePropertyName("innererror");
+                writer.WriteObjectValue(Innererror);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static Error DeserializeError(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
