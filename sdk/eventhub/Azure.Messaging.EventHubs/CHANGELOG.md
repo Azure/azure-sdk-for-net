@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Changed the approach that the event processor uses to validate permissions on startup to ensure that it uses a non-exclusive consumer as to not interfere with another processor that is already running.  Additionally, an error denying the non-exclusive read is now expected and accepted as proof of a valid connection.
+- Changed the approach that the event processor uses to validate permissions on startup to ensure that it does not interrupt other processors already running by temporarily asserting ownership of a partition.
 
 ### Other Changes
 
