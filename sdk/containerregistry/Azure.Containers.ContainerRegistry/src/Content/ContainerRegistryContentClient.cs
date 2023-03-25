@@ -3,7 +3,6 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
@@ -945,7 +944,7 @@ namespace Azure.Containers.ContainerRegistry
                     int chunkSize = blobSize.HasValue ?
                         (int)Math.Min(blobSize.Value - bytesDownloaded, options.MaxChunkSize) :
                         options.MaxChunkSize;
-                    HttpRange range = new HttpRange(bytesDownloaded, chunkSize);
+                    HttpRange range = new(bytesDownloaded, chunkSize);
 
                     var chunkResult = async ?
                         await _blobRestClient.GetChunkAsync(_repositoryName, digest, range.ToString(), cancellationToken).ConfigureAwait(false) :
@@ -954,16 +953,27 @@ namespace Azure.Containers.ContainerRegistry
                     blobSize ??= GetBlobSizeFromContentRange(chunkResult.Headers.ContentRange);
                     chunkSize = (int)chunkResult.Headers.ContentLength.Value;
 
+                    int offset = 0;
+                    int length = async ?
+                        await chunkResult.Value.ReadAsync(buffer, offset, chunkSize, cancellationToken).ConfigureAwait(false) :
+                        chunkResult.Value.Read(buffer, offset, chunkSize);
+
+                    while (offset < chunkSize)
+                    {
+                        offset += length;
+                        length = async ?
+                            await chunkResult.Value.ReadAsync(buffer, offset, chunkSize, cancellationToken).ConfigureAwait(false) :
+                            chunkResult.Value.Read(buffer, offset, chunkSize);
+                    }
+
+                    sha256.TransformBlock(buffer, 0, chunkSize, buffer, 0);
+
                     if (async)
                     {
-                        await chunkResult.Value.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false);
-                        sha256.TransformBlock(buffer, 0, chunkSize, buffer, 0);
                         await destination.WriteAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        chunkResult.Value.Read(buffer, 0, chunkSize);
-                        sha256.TransformBlock(buffer, 0, chunkSize, buffer, 0);
                         destination.Write(buffer, 0, chunkSize);
                     }
 

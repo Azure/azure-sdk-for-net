@@ -62,13 +62,5 @@ namespace Azure.Containers.ContainerRegistry.Perf
                         TargetTags = targetTags.ToList()
                     });
         }
-
-        internal static byte[] GetRandomBuffer(long size, Random random = null)
-        {
-            random ??= new Random(Environment.TickCount);
-            var buffer = new byte[size];
-            random.NextBytes(buffer);
-            return buffer;
-        }
     }
 }

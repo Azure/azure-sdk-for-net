@@ -24,23 +24,20 @@ namespace Azure.Containers.ContainerRegistry.Perf
         {
             await base.SetupAsync();
 
-            using Stream stream = new MemoryStream(GetRandomBuffer(BlobSize));
+            using Stream stream = RandomStream.Create(BlobSize);
             UploadRegistryBlobResult result = await _client.UploadBlobAsync(stream);
+
             _digest = result.Digest;
         }
 
         public override void Run(CancellationToken cancellationToken)
         {
-            using Stream stream = new MemoryStream();
-
-            _client.DownloadBlobTo(_digest, stream, cancellationToken);
+            _client.DownloadBlobTo(_digest, Stream.Null, cancellationToken);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            using Stream stream = new MemoryStream();
-
-            await _client.DownloadBlobToAsync(_digest, stream, cancellationToken);
+            await _client.DownloadBlobToAsync(_digest, Stream.Null, cancellationToken);
         }
     }
 }

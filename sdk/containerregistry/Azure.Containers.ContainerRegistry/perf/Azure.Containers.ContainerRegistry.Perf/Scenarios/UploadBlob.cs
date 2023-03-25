@@ -20,15 +20,13 @@ namespace Azure.Containers.ContainerRegistry.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-            using Stream stream = new MemoryStream(GetRandomBuffer(BlobSize));
-
+            using Stream stream = RandomStream.Create(BlobSize);
             _client.UploadBlob(stream, cancellationToken);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            using Stream stream = new MemoryStream(GetRandomBuffer(BlobSize));
-
+            using Stream stream = RandomStream.Create(BlobSize);
             await _client.UploadBlobAsync(stream, cancellationToken);
         }
     }
