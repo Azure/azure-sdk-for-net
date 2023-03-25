@@ -475,7 +475,7 @@ namespace Azure.Communication.Rooms
         }
 
 #nullable enable
-        private static Dictionary<string, ParticipantProperties?> ConvertRoomParticipantsToDictionaryForRemove(IEnumerable<CommunicationIdentifier> identifiers)
+        private static Dictionary<string, ParticipantProperties?> ConvertCommunicationIdentifiersToDictionaryForRemove(IEnumerable<CommunicationIdentifier> identifiers)
         {
             var participantDictionary = new Dictionary<string, ParticipantProperties?>() { };
 #nullable disable
