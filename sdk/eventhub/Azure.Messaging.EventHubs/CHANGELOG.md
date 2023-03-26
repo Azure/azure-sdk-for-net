@@ -6,7 +6,7 @@
 
 ### Breaking Changes
 
-- If diagnostic tracing is enabled, diagnostic tracing information is retained on `EventData` instances when they are added to a batch. This matches the existing behavior when sending events using the `SendEventsAsync` method that takes an `IEnumerable<EventData>`.
+- If diagnostic tracing is enabled, diagnostic tracing information is retained on `EventData` instances when they are added to an `EventDataBatch`. This matches the existing behavior when sending events using the `SendEventsAsync` method that takes an `IEnumerable<EventData>`.
 
 ### Bugs Fixed
 
