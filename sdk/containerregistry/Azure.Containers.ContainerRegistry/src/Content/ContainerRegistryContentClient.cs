@@ -446,8 +446,6 @@ namespace Azure.Containers.ContainerRegistry
 
             // Otherwise, upload in multiple chunks.
             byte[] buffer = ArrayPool<byte>.Shared.Rent(chunkSize);
-            long chunkCount = 0;
-            long blobLength = 0;
             using SHA256 sha256 = SHA256.Create();
 
             try
@@ -456,10 +454,11 @@ namespace Azure.Containers.ContainerRegistry
                 int bytesRead = async ?
                     await content.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
                     content.Read(buffer, 0, chunkSize);
+                int bytesSent = 0;
 
                 while (bytesRead > 0)
                 {
-                    var contentRange = GetContentRange(chunkCount * chunkSize, bytesRead);
+                    string contentRange = GetContentRange(bytesSent, bytesRead);
                     location = uploadChunkResult?.Headers.Location ?? location;
 
                     // Incrementally compute hash for digest.
@@ -472,8 +471,7 @@ namespace Azure.Containers.ContainerRegistry
                             _blobRestClient.UploadChunk(location, chunk, contentRange, bytesRead.ToString(CultureInfo.InvariantCulture), cancellationToken);
                     }
 
-                    blobLength += bytesRead;
-                    chunkCount++;
+                    bytesSent += bytesRead;
 
                     // Read next chunk into buffer
                     bytesRead = async ?
@@ -484,7 +482,7 @@ namespace Azure.Containers.ContainerRegistry
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
 
-                return new ChunkedUploadResult(BlobHelper.FormatDigest(sha256.Hash), uploadChunkResult.Headers.Location, blobLength);
+                return new ChunkedUploadResult(BlobHelper.FormatDigest(sha256.Hash), uploadChunkResult.Headers.Location, bytesSent);
             }
             finally
             {
