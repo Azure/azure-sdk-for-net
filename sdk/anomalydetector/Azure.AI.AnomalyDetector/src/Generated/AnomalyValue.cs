@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -48,7 +47,7 @@ namespace Azure.AI.AnomalyDetector
             IsAnomaly = isAnomaly;
             Severity = severity;
             Score = score;
-            Interpretation = interpretation.ToList();
+            Interpretation = interpretation;
         }
 
         /// <summary> True if an anomaly is detected at the current timestamp. </summary>

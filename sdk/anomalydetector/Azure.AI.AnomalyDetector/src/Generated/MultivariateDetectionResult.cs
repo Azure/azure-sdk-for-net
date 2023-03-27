@@ -36,7 +36,7 @@ namespace Azure.AI.AnomalyDetector
         {
             ResultId = resultId;
             Summary = summary;
-            Results = results.ToList();
+            Results = results;
         }
 
         /// <summary> Result identifier, which is used to fetch the results of an inference call. </summary>
