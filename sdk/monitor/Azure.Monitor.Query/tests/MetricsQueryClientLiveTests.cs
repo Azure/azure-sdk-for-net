@@ -38,6 +38,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanListMetrics()
         {
+            TestContext.Progress.WriteLine("CanListMetrics");
             var client = CreateClient();
 
             var results = await client.GetMetricDefinitionsAsync(TestEnvironment.MetricsResource, TestEnvironment.MetricsNamespace).ToEnumerableAsync();
@@ -48,6 +49,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryMetrics()
         {
+            TestContext.Progress.WriteLine("CanQueryMetrics");
             var client = CreateClient();
 
             var duration = TimeSpan.FromMinutes(3);
@@ -72,6 +74,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryMetricsAllAggregations()
         {
+            TestContext.Progress.WriteLine("CanQueryMetricsAllAggregations");
             var client = CreateClient();
 
             var results = await client.QueryResourceAsync(
@@ -105,6 +108,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryMetricsStartEnd()
         {
+            TestContext.Progress.WriteLine("CanQueryMetricsStartEnd");
             var client = CreateClient();
 
             var results = await client.QueryResourceAsync(
@@ -125,6 +129,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryMetricsStartDuration()
         {
+            TestContext.Progress.WriteLine("CanQueryMetricsStartDuration");
             var client = CreateClient();
 
             var results = await client.QueryResourceAsync(
@@ -145,6 +150,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryMetricsDurationEnd()
         {
+            TestContext.Progress.WriteLine("CanQueryMetricsDurationEnd");
             var client = CreateClient();
 
             var results = await client.QueryResourceAsync(
@@ -165,6 +171,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryMetricsNoTimespan()
         {
+            TestContext.Progress.WriteLine("CanQueryMetricsNoTimespan");
             var client = CreateClient();
 
             var results = await client.QueryResourceAsync(
@@ -182,6 +189,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryMetricsStartEndInterval()
         {
+            TestContext.Progress.WriteLine("CanQueryMetricsStartEndInterval");
             var client = CreateClient();
 
             var results = await client.QueryResourceAsync(
@@ -203,6 +211,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryMetricsFilter()
         {
+            TestContext.Progress.WriteLine("CanQueryMetricsFilter");
             var client = CreateClient();
 
             var results = await client.QueryResourceAsync(
@@ -226,6 +235,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryMetricsFilterTop()
         {
+            TestContext.Progress.WriteLine("CanQueryMetricsFilterTop");
             var client = CreateClient();
 
             var results = await client.QueryResourceAsync(
@@ -249,6 +259,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanListNamespacesMetrics()
         {
+            TestContext.Progress.WriteLine("CanListNamspacesMetrics");
             var client = CreateClient();
 
             var results = await client.GetMetricNamespacesAsync(
@@ -268,6 +279,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanGetMetricByNameNull()
         {
+            TestContext.Progress.WriteLine("CanGetMetricByNameNull");
             MetricsQueryClient client = CreateClient();
             Response<MetricsQueryResult> results = await client.QueryResourceAsync(
               TestEnvironment.MetricsResource,
@@ -288,6 +300,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanGetMetricByName()
         {
+            TestContext.Progress.WriteLine("CanGetMetricByName");
             MetricsQueryClient client = CreateClient();
             Response<MetricsQueryResult> results = await client.QueryResourceAsync(
               TestEnvironment.MetricsResource,
@@ -309,6 +322,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanGetMetricByNameInvalid()
         {
+            TestContext.Progress.WriteLine("CanGetMetricByNameInvalid");
             MetricsQueryClient client = CreateClient();
             Response<MetricsQueryResult> results = await client.QueryResourceAsync(
               TestEnvironment.MetricsResource,
