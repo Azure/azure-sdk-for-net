@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.Qumulo.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("host");
+            writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
             if (Optional.IsDefined(NfsVersion))
             {
-                writer.WritePropertyName("nfsVersion");
+                writer.WritePropertyName("nfsVersion"u8);
                 writer.WriteStringValue(NfsVersion.Value.ToString());
             }
-            writer.WritePropertyName("export");
+            writer.WritePropertyName("export"u8);
             writer.WriteStringValue(Export);
-            writer.WritePropertyName("endpointType");
+            writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -36,20 +36,24 @@ namespace Azure.ResourceManager.Qumulo.Models
 
         internal static NfsMountEndpointProperties DeserializeNfsMountEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string host = default;
             Optional<NfsVersion> nfsVersion = default;
             string export = default;
             EndpointType endpointType = default;
             Optional<string> description = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<QumuloProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("host"))
+                if (property.NameEquals("host"u8))
                 {
                     host = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nfsVersion"))
+                if (property.NameEquals("nfsVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,29 +63,29 @@ namespace Azure.ResourceManager.Qumulo.Models
                     nfsVersion = new NfsVersion(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("export"))
+                if (property.NameEquals("export"u8))
                 {
                     export = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointType"))
+                if (property.NameEquals("endpointType"u8))
                 {
                     endpointType = new EndpointType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new QumuloProvisioningState(property.Value.GetString());
                     continue;
                 }
             }

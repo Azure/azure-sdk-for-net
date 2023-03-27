@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal UnknownEndpointBaseProperties(EndpointType endpointType, string description, ProvisioningState? provisioningState) : base(endpointType, description, provisioningState)
+        internal UnknownEndpointBaseProperties(EndpointType endpointType, string description, QumuloProvisioningState? provisioningState) : base(endpointType, description, provisioningState)
         {
             EndpointType = endpointType;
         }

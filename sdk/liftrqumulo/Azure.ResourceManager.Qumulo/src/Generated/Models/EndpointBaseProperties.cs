@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal EndpointBaseProperties(EndpointType endpointType, string description, ProvisioningState? provisioningState)
+        internal EndpointBaseProperties(EndpointType endpointType, string description, QumuloProvisioningState? provisioningState)
         {
             EndpointType = endpointType;
             Description = description;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <summary> A description for the Endpoint. </summary>
         public string Description { get; set; }
         /// <summary> The provisioning state of this resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public QumuloProvisioningState? ProvisioningState { get; }
     }
 }

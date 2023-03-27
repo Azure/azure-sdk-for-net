@@ -29,8 +29,16 @@ namespace Azure.ResourceManager.Qumulo
 
         /// <summary>
         /// Lists all Storage Movers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageMover/storageMovers
-        /// Operation Id: StorageMovers_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageMover/storageMovers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageMovers_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -42,8 +50,16 @@ namespace Azure.ResourceManager.Qumulo
 
         /// <summary>
         /// Lists all Storage Movers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageMover/storageMovers
-        /// Operation Id: StorageMovers_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageMover/storageMovers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageMovers_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -72,8 +88,16 @@ namespace Azure.ResourceManager.Qumulo
 
         /// <summary>
         /// Gets a Storage Mover resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}
-        /// Operation Id: StorageMovers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageMovers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
@@ -88,8 +112,16 @@ namespace Azure.ResourceManager.Qumulo
 
         /// <summary>
         /// Gets a Storage Mover resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}
-        /// Operation Id: StorageMovers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageMovers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
@@ -121,58 +153,58 @@ namespace Azure.ResourceManager.Qumulo
         }
         #endregion
 
-        #region AgentResource
+        #region QumuloAgentResource
         /// <summary>
-        /// Gets an object representing an <see cref="AgentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgentResource.CreateResourceIdentifier" /> to create an <see cref="AgentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QumuloAgentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QumuloAgentResource.CreateResourceIdentifier" /> to create a <see cref="QumuloAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgentResource" /> object. </returns>
-        public static AgentResource GetAgentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QumuloAgentResource" /> object. </returns>
+        public static QumuloAgentResource GetQumuloAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AgentResource.ValidateResourceId(id);
-                return new AgentResource(client, id);
+                QumuloAgentResource.ValidateResourceId(id);
+                return new QumuloAgentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EndpointResource
+        #region QumuloEndpointResource
         /// <summary>
-        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QumuloEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QumuloEndpointResource.CreateResourceIdentifier" /> to create a <see cref="QumuloEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
-        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QumuloEndpointResource" /> object. </returns>
+        public static QumuloEndpointResource GetQumuloEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EndpointResource.ValidateResourceId(id);
-                return new EndpointResource(client, id);
+                QumuloEndpointResource.ValidateResourceId(id);
+                return new QumuloEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProjectResource
+        #region QumuloProjectResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QumuloProjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QumuloProjectResource.CreateResourceIdentifier" /> to create a <see cref="QumuloProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectResource" /> object. </returns>
-        public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QumuloProjectResource" /> object. </returns>
+        public static QumuloProjectResource GetQumuloProjectResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProjectResource.ValidateResourceId(id);
-                return new ProjectResource(client, id);
+                QumuloProjectResource.ValidateResourceId(id);
+                return new QumuloProjectResource(client, id);
             }
             );
         }

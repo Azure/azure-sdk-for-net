@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <summary> Initializes a new instance of AgentList. </summary>
         internal AgentList()
         {
-            Value = new ChangeTrackingList<AgentData>();
+            Value = new ChangeTrackingList<QumuloAgentData>();
         }
 
         /// <summary> Initializes a new instance of AgentList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
-        internal AgentList(IReadOnlyList<AgentData> value, string nextLink)
+        internal AgentList(IReadOnlyList<QumuloAgentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<AgentData> Value { get; }
+        public IReadOnlyList<QumuloAgentData> Value { get; }
         /// <summary> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </summary>
         public string NextLink { get; }
     }

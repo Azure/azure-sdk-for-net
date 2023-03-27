@@ -16,26 +16,30 @@ namespace Azure.ResourceManager.Qumulo.Models
     {
         internal static AgentList DeserializeAgentList(JsonElement element)
         {
-            Optional<IReadOnlyList<AgentData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<QumuloAgentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AgentData> array = new List<AgentData>();
+                    List<QumuloAgentData> array = new List<QumuloAgentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentData.DeserializeAgentData(item));
+                        array.Add(QumuloAgentData.DeserializeQumuloAgentData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

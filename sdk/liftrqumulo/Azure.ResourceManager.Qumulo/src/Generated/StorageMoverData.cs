@@ -12,7 +12,10 @@ using Azure.ResourceManager.Qumulo.Models;
 
 namespace Azure.ResourceManager.Qumulo
 {
-    /// <summary> A class representing the StorageMover data model. </summary>
+    /// <summary>
+    /// A class representing the StorageMover data model.
+    /// The Storage Mover resource, which is a container for a group of Agents, Projects, and Endpoints.
+    /// </summary>
     public partial class StorageMoverData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StorageMoverData. </summary>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="location"> The location. </param>
         /// <param name="description"> A description for the Storage Mover. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal StorageMoverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageMoverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, QumuloProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             ProvisioningState = provisioningState;
@@ -39,6 +42,6 @@ namespace Azure.ResourceManager.Qumulo
         /// <summary> A description for the Storage Mover. </summary>
         public string Description { get; set; }
         /// <summary> The provisioning state of this resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public QumuloProvisioningState? ProvisioningState { get; }
     }
 }

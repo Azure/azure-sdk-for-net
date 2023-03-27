@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Qumulo
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Qumulo
 
         internal static JobRunData DeserializeJobRunData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -57,25 +61,25 @@ namespace Azure.ResourceManager.Qumulo
             Optional<BinaryData> targetProperties = default;
             Optional<BinaryData> jobDefinitionProperties = default;
             Optional<JobRunError> error = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<QumuloProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.Qumulo
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.Qumulo
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Qumulo
                             status = new JobRunStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("scanStatus"))
+                        if (property0.NameEquals("scanStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -114,17 +118,17 @@ namespace Azure.ResourceManager.Qumulo
                             scanStatus = new JobRunScanStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("agentName"))
+                        if (property0.NameEquals("agentName"u8))
                         {
                             agentName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("agentResourceId"))
+                        if (property0.NameEquals("agentResourceId"u8))
                         {
                             agentResourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("executionStartTime"))
+                        if (property0.NameEquals("executionStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -134,7 +138,7 @@ namespace Azure.ResourceManager.Qumulo
                             executionStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("executionEndTime"))
+                        if (property0.NameEquals("executionEndTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.Qumulo
                             executionEndTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastStatusUpdate"))
+                        if (property0.NameEquals("lastStatusUpdate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.Qumulo
                             lastStatusUpdate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("itemsScanned"))
+                        if (property0.NameEquals("itemsScanned"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,7 +168,7 @@ namespace Azure.ResourceManager.Qumulo
                             itemsScanned = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("itemsExcluded"))
+                        if (property0.NameEquals("itemsExcluded"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.Qumulo
                             itemsExcluded = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("itemsUnsupported"))
+                        if (property0.NameEquals("itemsUnsupported"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,7 +188,7 @@ namespace Azure.ResourceManager.Qumulo
                             itemsUnsupported = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("itemsNoTransferNeeded"))
+                        if (property0.NameEquals("itemsNoTransferNeeded"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -194,7 +198,7 @@ namespace Azure.ResourceManager.Qumulo
                             itemsNoTransferNeeded = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("itemsFailed"))
+                        if (property0.NameEquals("itemsFailed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -204,7 +208,7 @@ namespace Azure.ResourceManager.Qumulo
                             itemsFailed = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("itemsTransferred"))
+                        if (property0.NameEquals("itemsTransferred"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -214,7 +218,7 @@ namespace Azure.ResourceManager.Qumulo
                             itemsTransferred = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesScanned"))
+                        if (property0.NameEquals("bytesScanned"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -224,7 +228,7 @@ namespace Azure.ResourceManager.Qumulo
                             bytesScanned = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesExcluded"))
+                        if (property0.NameEquals("bytesExcluded"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -234,7 +238,7 @@ namespace Azure.ResourceManager.Qumulo
                             bytesExcluded = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesUnsupported"))
+                        if (property0.NameEquals("bytesUnsupported"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -244,7 +248,7 @@ namespace Azure.ResourceManager.Qumulo
                             bytesUnsupported = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesNoTransferNeeded"))
+                        if (property0.NameEquals("bytesNoTransferNeeded"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -254,7 +258,7 @@ namespace Azure.ResourceManager.Qumulo
                             bytesNoTransferNeeded = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesFailed"))
+                        if (property0.NameEquals("bytesFailed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -264,7 +268,7 @@ namespace Azure.ResourceManager.Qumulo
                             bytesFailed = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("bytesTransferred"))
+                        if (property0.NameEquals("bytesTransferred"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -274,17 +278,17 @@ namespace Azure.ResourceManager.Qumulo
                             bytesTransferred = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("sourceName"))
+                        if (property0.NameEquals("sourceName"u8))
                         {
                             sourceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sourceResourceId"))
+                        if (property0.NameEquals("sourceResourceId"u8))
                         {
                             sourceResourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sourceProperties"))
+                        if (property0.NameEquals("sourceProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -294,17 +298,17 @@ namespace Azure.ResourceManager.Qumulo
                             sourceProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("targetName"))
+                        if (property0.NameEquals("targetName"u8))
                         {
                             targetName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetResourceId"))
+                        if (property0.NameEquals("targetResourceId"u8))
                         {
                             targetResourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetProperties"))
+                        if (property0.NameEquals("targetProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -314,7 +318,7 @@ namespace Azure.ResourceManager.Qumulo
                             targetProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("jobDefinitionProperties"))
+                        if (property0.NameEquals("jobDefinitionProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -324,7 +328,7 @@ namespace Azure.ResourceManager.Qumulo
                             jobDefinitionProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("error"))
+                        if (property0.NameEquals("error"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -334,14 +338,14 @@ namespace Azure.ResourceManager.Qumulo
                             error = JobRunError.DeserializeJobRunError(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new QumuloProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

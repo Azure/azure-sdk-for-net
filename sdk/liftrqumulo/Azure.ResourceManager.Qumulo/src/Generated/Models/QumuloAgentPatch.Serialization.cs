@@ -10,16 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    public partial class EndpointPatch : IUtf8JsonSerializable
+    public partial class QumuloAgentPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

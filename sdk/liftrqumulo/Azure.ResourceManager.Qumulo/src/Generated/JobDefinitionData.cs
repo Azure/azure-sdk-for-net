@@ -12,7 +12,10 @@ using Azure.ResourceManager.Qumulo.Models;
 
 namespace Azure.ResourceManager.Qumulo
 {
-    /// <summary> A class representing the JobDefinition data model. </summary>
+    /// <summary>
+    /// A class representing the JobDefinition data model.
+    /// The Job Definition resource.
+    /// </summary>
     public partial class JobDefinitionData : ResourceData
     {
         /// <summary> Initializes a new instance of JobDefinitionData. </summary>
@@ -20,7 +23,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="sourceName"> The name of the source Endpoint. </param>
         /// <param name="targetName"> The name of the target Endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="targetName"/> is null. </exception>
-        public JobDefinitionData(CopyMode copyMode, string sourceName, string targetName)
+        public JobDefinitionData(QumuloCopyMode copyMode, string sourceName, string targetName)
         {
             Argument.AssertNotNull(sourceName, nameof(sourceName));
             Argument.AssertNotNull(targetName, nameof(targetName));
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
         /// <param name="agentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, CopyMode copyMode, string sourceName, string sourceResourceId, string sourceSubpath, string targetName, string targetResourceId, string targetSubpath, string latestJobRunName, string latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, string agentResourceId, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, QumuloCopyMode copyMode, string sourceName, string sourceResourceId, string sourceSubpath, string targetName, string targetResourceId, string targetSubpath, string latestJobRunName, string latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, string agentResourceId, QumuloProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             CopyMode = copyMode;
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <summary> A description for the Job Definition. </summary>
         public string Description { get; set; }
         /// <summary> Strategy to use for copy. </summary>
-        public CopyMode CopyMode { get; set; }
+        public QumuloCopyMode CopyMode { get; set; }
         /// <summary> The name of the source Endpoint. </summary>
         public string SourceName { get; set; }
         /// <summary> Fully qualified resource ID of the source Endpoint. </summary>
@@ -94,6 +97,6 @@ namespace Azure.ResourceManager.Qumulo
         /// <summary> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </summary>
         public string AgentResourceId { get; }
         /// <summary> The provisioning state of this resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public QumuloProvisioningState? ProvisioningState { get; }
     }
 }

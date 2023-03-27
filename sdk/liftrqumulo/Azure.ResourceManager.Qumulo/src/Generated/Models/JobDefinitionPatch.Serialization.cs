@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.Qumulo.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(CopyMode))
             {
-                writer.WritePropertyName("copyMode");
+                writer.WritePropertyName("copyMode"u8);
                 writer.WriteStringValue(CopyMode.Value.ToString());
             }
             if (Optional.IsDefined(AgentName))
             {
-                writer.WritePropertyName("agentName");
+                writer.WritePropertyName("agentName"u8);
                 writer.WriteStringValue(AgentName);
             }
             writer.WriteEndObject();

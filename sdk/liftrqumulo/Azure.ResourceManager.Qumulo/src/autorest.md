@@ -45,6 +45,13 @@ rename-rules:
     Etag: ETag|etag
 
 rename-mapping:
+    Agent: QumuloAgent
+    Endpoint: QumuloEndpoint
+    Project: QumuloProject
+    AgentPropertiesErrorDetails: QumuloAgentPropertiesErrorDetails
+    AgentStatus: QumuloAgentStatus
+    CopyMode: QumuloCopyMode
+    ProvisioningState: QumuloProvisioningState
     AgentData.ArcResourceId: -|arm-id
     AgentData.ArcVmUuid: -|uuid
     JobDefinitionData.AgentResourceId: -|arm-id

@@ -7,15 +7,15 @@
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    /// <summary> The Project resource. </summary>
-    public partial class ProjectPatch
+    /// <summary> The Agent resource. </summary>
+    public partial class QumuloAgentPatch
     {
-        /// <summary> Initializes a new instance of ProjectPatch. </summary>
-        public ProjectPatch()
+        /// <summary> Initializes a new instance of QumuloAgentPatch. </summary>
+        public QumuloAgentPatch()
         {
         }
 
-        /// <summary> A description for the Project. </summary>
+        /// <summary> A description for the Agent. </summary>
         public string Description { get; set; }
     }
 }

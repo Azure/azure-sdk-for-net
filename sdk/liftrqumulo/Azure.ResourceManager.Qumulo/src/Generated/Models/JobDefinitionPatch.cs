@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <summary> A description for the Job Definition. </summary>
         public string Description { get; set; }
         /// <summary> Strategy to use for copy. </summary>
-        public CopyMode? CopyMode { get; set; }
+        public QumuloCopyMode? CopyMode { get; set; }
         /// <summary> Name of the Agent to assign for new Job Runs of this Job Definition. </summary>
         public string AgentName { get; set; }
     }

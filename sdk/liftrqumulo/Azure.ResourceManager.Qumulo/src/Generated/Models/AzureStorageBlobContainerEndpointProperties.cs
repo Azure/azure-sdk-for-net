@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account that is the target destination. </param>
         /// <param name="blobContainerName"> The name of the Storage blob container that is the target destination. </param>
-        internal AzureStorageBlobContainerEndpointProperties(EndpointType endpointType, string description, ProvisioningState? provisioningState, string storageAccountResourceId, string blobContainerName) : base(endpointType, description, provisioningState)
+        internal AzureStorageBlobContainerEndpointProperties(EndpointType endpointType, string description, QumuloProvisioningState? provisioningState, string storageAccountResourceId, string blobContainerName) : base(endpointType, description, provisioningState)
         {
             StorageAccountResourceId = storageAccountResourceId;
             BlobContainerName = blobContainerName;

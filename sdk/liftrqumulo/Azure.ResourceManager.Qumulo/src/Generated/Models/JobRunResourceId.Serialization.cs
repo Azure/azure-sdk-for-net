@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Qumulo.Models
     {
         internal static JobRunResourceId DeserializeJobRunResourceId(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobRunResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobRunResourceId"))
+                if (property.NameEquals("jobRunResourceId"u8))
                 {
                     jobRunResourceId = property.Value.GetString();
                     continue;

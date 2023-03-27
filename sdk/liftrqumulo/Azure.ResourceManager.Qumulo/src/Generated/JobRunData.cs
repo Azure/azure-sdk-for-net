@@ -12,7 +12,10 @@ using Azure.ResourceManager.Qumulo.Models;
 
 namespace Azure.ResourceManager.Qumulo
 {
-    /// <summary> A class representing the JobRun data model. </summary>
+    /// <summary>
+    /// A class representing the JobRun data model.
+    /// The Job Run resource.
+    /// </summary>
     public partial class JobRunData : ResourceData
     {
         /// <summary> Initializes a new instance of JobRunData. </summary>
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="jobDefinitionProperties"> Copy of parent Job Definition&apos;s properties at time of Job Run creation. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, string agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, string sourceResourceId, BinaryData sourceProperties, string targetName, string targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, string agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, string sourceResourceId, BinaryData sourceProperties, string targetName, string targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, QumuloProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Status = status;
             ScanStatus = scanStatus;
@@ -227,6 +230,6 @@ namespace Azure.ResourceManager.Qumulo
         /// <summary> Error details. </summary>
         public JobRunError Error { get; }
         /// <summary> The provisioning state of this resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public QumuloProvisioningState? ProvisioningState { get; }
     }
 }

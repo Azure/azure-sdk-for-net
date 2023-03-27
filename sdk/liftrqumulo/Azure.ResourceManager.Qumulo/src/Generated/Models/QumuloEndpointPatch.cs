@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> The Endpoint resource. </summary>
-    public partial class EndpointPatch
+    public partial class QumuloEndpointPatch
     {
-        /// <summary> Initializes a new instance of EndpointPatch. </summary>
-        public EndpointPatch()
+        /// <summary> Initializes a new instance of QumuloEndpointPatch. </summary>
+        public QumuloEndpointPatch()
         {
         }
 

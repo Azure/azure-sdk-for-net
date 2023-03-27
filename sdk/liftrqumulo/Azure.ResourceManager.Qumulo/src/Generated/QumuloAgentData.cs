@@ -12,14 +12,17 @@ using Azure.ResourceManager.Qumulo.Models;
 
 namespace Azure.ResourceManager.Qumulo
 {
-    /// <summary> A class representing the Agent data model. </summary>
-    public partial class AgentData : ResourceData
+    /// <summary>
+    /// A class representing the QumuloAgent data model.
+    /// The Agent resource.
+    /// </summary>
+    public partial class QumuloAgentData : ResourceData
     {
-        /// <summary> Initializes a new instance of AgentData. </summary>
+        /// <summary> Initializes a new instance of QumuloAgentData. </summary>
         /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
         /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="arcResourceId"/> or <paramref name="arcVmUuid"/> is null. </exception>
-        public AgentData(string arcResourceId, string arcVmUuid)
+        public QumuloAgentData(string arcResourceId, string arcVmUuid)
         {
             Argument.AssertNotNull(arcResourceId, nameof(arcResourceId));
             Argument.AssertNotNull(arcVmUuid, nameof(arcVmUuid));
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Qumulo
             ArcVmUuid = arcVmUuid;
         }
 
-        /// <summary> Initializes a new instance of AgentData. </summary>
+        /// <summary> Initializes a new instance of QumuloAgentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
         /// <param name="errorDetails"></param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal AgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, AgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, AgentPropertiesErrorDetails errorDetails, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal QumuloAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, QumuloAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, QumuloAgentPropertiesErrorDetails errorDetails, QumuloProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AgentVersion = agentVersion;
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <summary> The VM UUID of the Hybrid Compute resource for the Agent. </summary>
         public string ArcVmUuid { get; set; }
         /// <summary> The Agent status. </summary>
-        public AgentStatus? AgentStatus { get; }
+        public QumuloAgentStatus? AgentStatus { get; }
         /// <summary> The last updated time of the Agent status. </summary>
         public DateTimeOffset? LastStatusUpdate { get; }
         /// <summary> Local IP address reported by the Agent. </summary>
@@ -82,8 +85,8 @@ namespace Azure.ResourceManager.Qumulo
         /// <summary> Uptime of the Agent in seconds. </summary>
         public long? UptimeInSeconds { get; }
         /// <summary> Gets the error details. </summary>
-        public AgentPropertiesErrorDetails ErrorDetails { get; }
+        public QumuloAgentPropertiesErrorDetails ErrorDetails { get; }
         /// <summary> The provisioning state of this resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public QumuloProvisioningState? ProvisioningState { get; }
     }
 }

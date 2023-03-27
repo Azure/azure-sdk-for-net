@@ -10,26 +10,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    public partial class AgentPropertiesErrorDetails
+    public partial class QumuloAgentPropertiesErrorDetails
     {
-        internal static AgentPropertiesErrorDetails DeserializeAgentPropertiesErrorDetails(JsonElement element)
+        internal static QumuloAgentPropertiesErrorDetails DeserializeQumuloAgentPropertiesErrorDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
             }
-            return new AgentPropertiesErrorDetails(code.Value, message.Value);
+            return new QumuloAgentPropertiesErrorDetails(code.Value, message.Value);
         }
     }
 }
