@@ -27,7 +27,7 @@ steps:
       performMultiLevelLookup: true
       version: "6.0.x"
   - task: UseDotNet@2
-    condition: and(succeeded(), ne(variables['Agent.OS'], 'Windows_NT')) # Windows supports MultiLevelLookup and doesn't need explicit framework installation
+    condition: and(succeeded()) # .NET Core 3.1 does not exist on windows hosted machine anymore
     displayName: 'Use .NET Core 3.1 SDK'
     retryCountOnTaskFailure: 3
     inputs:
