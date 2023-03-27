@@ -8,8 +8,6 @@
 
 ### Bugs Fixed
 
-- Changed the approach that the trigger uses to validate permissions on startup to ensure that it does not interrupt other triggers already running by temporarily asserting ownership of a partition.
-
 ### Other Changes
 
 ## 5.2.0 (2023-02-23)

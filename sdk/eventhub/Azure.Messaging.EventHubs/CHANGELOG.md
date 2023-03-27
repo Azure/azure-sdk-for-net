@@ -8,8 +8,6 @@
 
 ### Bugs Fixed
 
-- Changed the approach that the event processor uses to validate permissions on startup to ensure that it does not interrupt other processors already running by temporarily asserting ownership of a partition.
-
 ### Other Changes
 
 ## 5.8.1 (2023-03-09)
