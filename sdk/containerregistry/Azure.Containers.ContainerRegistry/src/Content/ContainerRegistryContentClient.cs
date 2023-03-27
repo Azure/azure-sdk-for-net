@@ -932,7 +932,7 @@ namespace Azure.Containers.ContainerRegistry
             byte[] buffer = ArrayPool<byte>.Shared.Rent(options.MaxChunkSize);
             using SHA256 sha256 = SHA256.Create();
 
-            long bytesReceived = 0;
+            long blobBytes = 0;
             long? blobLength = default;
 
             try
@@ -943,9 +943,9 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     // Request a chunk
                     long requestLength = blobLength.HasValue ?
-                        (int)Math.Min(blobLength.Value - bytesReceived, options.MaxChunkSize) :
+                        (int)Math.Min(blobLength.Value - blobBytes, options.MaxChunkSize) :
                         options.MaxChunkSize;
-                    string requestRange = new HttpRange(bytesReceived, requestLength).ToString();
+                    string requestRange = new HttpRange(blobBytes, requestLength).ToString();
 
                     var getChunkResponse = async ?
                         await _blobRestClient.GetChunkAsync(_repositoryName, digest, requestRange, cancellationToken).ConfigureAwait(false) :
@@ -953,41 +953,36 @@ namespace Azure.Containers.ContainerRegistry
 
                     blobLength ??= GetBlobLengthFromContentRange(getChunkResponse.Headers.ContentRange);
 
-                    int contentLength = (int)getChunkResponse.Headers.ContentLength.Value;
+                    int chunkLength = (int)getChunkResponse.Headers.ContentLength.Value;
                     Stream responseStream = getChunkResponse.Value;
 
-                    // Read the response stream until all the content is received.
-                    int offset = 0;
-                    int remaining = contentLength;
-                    int bytesRead = 0;
+                    // Read the response stream until all content is received.
+                    int chunkBytes = 0;
                     do
                     {
-                        bytesRead = async ?
-                            await responseStream.ReadAsync(buffer, offset, remaining, cancellationToken).ConfigureAwait(false) :
-                            responseStream.Read(buffer, offset, remaining);
-
-                        offset += bytesRead;
-                        remaining -= bytesRead;
+                        chunkBytes += async ?
+                            await responseStream.ReadAsync(buffer, chunkBytes, chunkLength - chunkBytes, cancellationToken).ConfigureAwait(false) :
+                            responseStream.Read(buffer, chunkBytes, chunkLength - chunkBytes);
                     }
-                    while (remaining > 0);
+                    while (chunkBytes < chunkLength);
 
                     // Incrementally compute hash for digest.
-                    sha256.TransformBlock(buffer, 0, contentLength, buffer, 0);
+                    sha256.TransformBlock(buffer, 0, chunkBytes, buffer, 0);
 
                     // Write the data to the destination stream.
                     if (async)
                     {
-                        await destination.WriteAsync(buffer, 0, contentLength, cancellationToken).ConfigureAwait(false);
+                        await destination.WriteAsync(buffer, 0, chunkBytes, cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        destination.Write(buffer, 0, contentLength);
+                        destination.Write(buffer, 0, chunkBytes);
                     }
 
-                    bytesReceived += contentLength;
+                    blobBytes += chunkBytes;
                     result = getChunkResponse.GetRawResponse();
                 }
-                while (bytesReceived < blobLength.Value);
+                while (blobBytes < blobLength.Value);
 
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
