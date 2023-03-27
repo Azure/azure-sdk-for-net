@@ -702,6 +702,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string downloadFileName = "blob_downloaded.bin";
             string filePath = Path.Combine(path, downloadFileName);
 
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
