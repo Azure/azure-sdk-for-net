@@ -53,6 +53,11 @@ There are a number of special flags which have meaning in the specification file
 
 Once you have added and updated the required files in `Tools\ObjectModelCodeGenerator\Spec` mark the `ObjectModelCodeGenerator` as your startup project in Visual Studio and run it -- it will regenerate the contents of the `src\Generated` folder.
 
+There is a known issue with this generator that produces an error in the src/Generated/CloudPool.cs Models.PoolAddParameter ITransportObjectProvider<Models.PoolAddParameter>.GetTransportObject() method. As a temporary workaround, after generation remove the following line, which is attempting to make an assignment to an Identity property that doesn't exist:
+
+![image](https://user-images.githubusercontent.com/35780775/227981106-f68ce0b3-40b2-4d3d-99c4-0e9f8454f98b.png)
+
+
 ## Running the end to end tests
 
 A full end to end test pass takes 20-40 minutes.
