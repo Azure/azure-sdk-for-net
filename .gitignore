@@ -174,5 +174,5 @@ BenchmarkDotNet.Artifacts
 artifacts
 .assets
 
-# Temporary typespec folders for typespec generation
-TempTypeSpecFiles/
+# Temporary cadl folders for cadl generation
+TempCadlFiles/
