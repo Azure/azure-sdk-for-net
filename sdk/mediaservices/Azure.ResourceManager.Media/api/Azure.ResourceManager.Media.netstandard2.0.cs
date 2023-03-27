@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.Media
         public string Container { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public string EncryptionScope { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string StorageAccountName { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaAssetStorageEncryptionFormat? StorageEncryptionFormat { get { throw null; } }
@@ -366,7 +365,6 @@ namespace Azure.ResourceManager.Media
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaAccessControl KeyDeliveryAccessControl { get { throw null; } set { } }
         public System.Guid? MediaServicesAccountId { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaServicesPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
@@ -2147,7 +2145,6 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaAccessControl KeyDeliveryAccessControl { get { throw null; } set { } }
         public System.Guid? MediaServiceId { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaServicesPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
@@ -2159,26 +2156,6 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal MediaServicesEdgePolicies() { }
         public Azure.ResourceManager.Media.Models.EdgeUsageDataCollectionPolicy UsageDataCollectionPolicy { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaServicesMinimumTlsVersion : System.IEquatable<Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaServicesMinimumTlsVersion(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion Tls10 { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion Tls11 { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion Tls12 { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion Tls13 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion left, Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion left, Azure.ResourceManager.Media.Models.MediaServicesMinimumTlsVersion right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class MediaServicesNameAvailabilityContent
     {

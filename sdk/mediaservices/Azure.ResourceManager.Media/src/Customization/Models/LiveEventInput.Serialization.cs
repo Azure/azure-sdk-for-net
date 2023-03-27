@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("streamingProtocol"u8);
+            writer.WritePropertyName("streamingProtocol");
             writer.WriteStringValue(StreamingProtocol.ToString());
             if (Optional.IsDefined(AccessControl))
             {
                 if (AccessControl != null)
                 {
-                    writer.WritePropertyName("accessControl"u8);
+                    writer.WritePropertyName("accessControl");
                     writer.WriteObjectValue(AccessControl);
                 }
                 else
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(KeyFrameIntervalDuration))
             {
-                writer.WritePropertyName("keyFrameIntervalDuration"u8);
+                writer.WritePropertyName("keyFrameIntervalDuration");
                 writer.WriteStringValue(KeyFrameIntervalDuration.Value, "P");
             }
             if (Optional.IsDefined(AccessToken))
             {
-                writer.WritePropertyName("accessToken"u8);
+                writer.WritePropertyName("accessToken");
                 writer.WriteStringValue(AccessToken);
             }
             if (Optional.IsCollectionDefined(Endpoints))
             {
-                writer.WritePropertyName("endpoints"u8);
+                writer.WritePropertyName("endpoints");
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
@@ -56,10 +56,6 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventInput DeserializeLiveEventInput(JsonElement element)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
             LiveEventInputProtocol streamingProtocol = default;
             Optional<LiveEventInputAccessControl> accessControl = default;
             Optional<TimeSpan> keyFrameIntervalDuration = default;
@@ -67,12 +63,12 @@ namespace Azure.ResourceManager.Media.Models
             Optional<IList<LiveEventEndpoint>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streamingProtocol"u8))
+                if (property.NameEquals("streamingProtocol"))
                 {
                     streamingProtocol = new LiveEventInputProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accessControl"u8))
+                if (property.NameEquals("accessControl"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +78,7 @@ namespace Azure.ResourceManager.Media.Models
                     accessControl = LiveEventInputAccessControl.DeserializeLiveEventInputAccessControl(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyFrameIntervalDuration"u8))
+                if (property.NameEquals("keyFrameIntervalDuration"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,12 +93,12 @@ namespace Azure.ResourceManager.Media.Models
                     keyFrameIntervalDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("accessToken"u8))
+                if (property.NameEquals("accessToken"))
                 {
                     accessToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoints"u8))
+                if (property.NameEquals("endpoints"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

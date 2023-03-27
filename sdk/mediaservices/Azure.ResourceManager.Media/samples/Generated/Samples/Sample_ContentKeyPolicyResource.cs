@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAContentKeyPolicyByName()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-get-by-name.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-get-by-name.json
             // this example is just showing the usage of "ContentKeyPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this ContentKeyPolicyResource created on azure
             // for more information of creating ContentKeyPolicyResource, please refer to the document of ContentKeyPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contosorg";
+            string resourceGroupName = "contoso";
             string accountName = "contosomedia";
             string contentKeyPolicyName = "PolicyWithMultipleOptions";
             ResourceIdentifier contentKeyPolicyResourceId = ContentKeyPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, contentKeyPolicyName);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAKeyPolicy()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-delete.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-delete.json
             // this example is just showing the usage of "ContentKeyPolicies_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this ContentKeyPolicyResource created on azure
             // for more information of creating ContentKeyPolicyResource, please refer to the document of ContentKeyPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contosorg";
+            string resourceGroupName = "contoso";
             string accountName = "contosomedia";
             string contentKeyPolicyName = "PolicyWithPlayReadyOptionAndOpenRestriction";
             ResourceIdentifier contentKeyPolicyResourceId = ContentKeyPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, contentKeyPolicyName);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateAContentKeyPolicy()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-update.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-update.json
             // this example is just showing the usage of "ContentKeyPolicies_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this ContentKeyPolicyResource created on azure
             // for more information of creating ContentKeyPolicyResource, please refer to the document of ContentKeyPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contosorg";
+            string resourceGroupName = "contoso";
             string accountName = "contosomedia";
             string contentKeyPolicyName = "PolicyWithClearKeyOptionAndTokenRestriction";
             ResourceIdentifier contentKeyPolicyResourceId = ContentKeyPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, contentKeyPolicyName);
@@ -126,7 +126,7 @@ Name = "ClearKeyOption",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPolicyPropertiesWithSecrets_GetAnContentKeyPolicyWithSecrets()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-get-with-secrets.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-get-with-secrets.json
             // this example is just showing the usage of "ContentKeyPolicies_GetPolicyPropertiesWithSecrets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ Name = "ClearKeyOption",
             // this example assumes you already have this ContentKeyPolicyResource created on azure
             // for more information of creating ContentKeyPolicyResource, please refer to the document of ContentKeyPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contosorg";
+            string resourceGroupName = "contoso";
             string accountName = "contosomedia";
             string contentKeyPolicyName = "PolicyWithMultipleOptions";
             ResourceIdentifier contentKeyPolicyResourceId = ContentKeyPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, contentKeyPolicyName);
