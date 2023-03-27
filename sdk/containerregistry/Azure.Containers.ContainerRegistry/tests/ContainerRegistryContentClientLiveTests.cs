@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
+using Azure.Test.Perf;
 using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests
@@ -661,52 +662,28 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var uneven = 20;
             long size = (1024 * 1024 * 1024 * sizeInGiB) + uneven;
 
-            var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId);
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
 
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "LargeFile");
-            string uploadFileName = "blob.bin";
+            // Upload the large blob
+            Stream uploadStream = RandomStream.Create(size);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
 
-            if (!File.Exists(Path.Combine(path, uploadFileName)))
-            {
-                WriteLargeFile(path, uploadFileName, size);
-            }
-
-            // Upload the large file
-            using var fs = File.OpenRead(Path.Combine(path, uploadFileName));
-            var uploadResult = await client.UploadBlobAsync(fs);
-
-            // Download the large file
-            var downloadFileName = "blob_downloaded.bin";
-            var filePath = Path.Combine(path, downloadFileName);
+            // Download to a file stream
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "LargeFile");
+            string downloadFileName = "blob_downloaded.bin";
+            string filePath = Path.Combine(path, downloadFileName);
 
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
             }
 
-            using var downloadFs = File.OpenWrite(filePath);
-            await client.DownloadBlobToAsync(uploadResult.Value.Digest, downloadFs);
+            using FileStream downloadFs = File.OpenWrite(filePath);
+            await client.DownloadBlobToAsync(uploadResult.Digest, downloadFs);
 
             Assert.IsTrue(File.Exists(filePath));
             Assert.AreEqual(size, new FileInfo(filePath).Length);
-        }
-
-        private void WriteLargeFile(string path, string fileName, long size)
-        {
-            Directory.CreateDirectory(path);
-            using var fs = File.OpenWrite(Path.Combine(path, fileName));
-
-            int writeBufferSize = 1024 * 1024 * 64; // 64MB
-
-            long bytesWritten = 0;
-            while (bytesWritten < size)
-            {
-                var length = Math.Min(writeBufferSize, size - bytesWritten);
-                var buffer = GetRandomBuffer(length);
-                fs.Write(buffer, 0, buffer.Length);
-                bytesWritten += buffer.Length;
-            };
         }
 
         [RecordedTest]
