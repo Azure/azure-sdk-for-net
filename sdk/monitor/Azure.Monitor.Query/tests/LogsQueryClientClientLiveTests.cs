@@ -43,6 +43,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQuery()
         {
+            TestContext.Progress.WriteLine("CanQuery");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
@@ -72,6 +73,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoPrimitiveString()
         {
+            TestContext.Progress.WriteLine("CanQueryIntoPrimitiveString");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync<string>(TestEnvironment.WorkspaceId,
@@ -84,6 +86,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryPartialSuccess()
         {
+            TestContext.Progress.WriteLine("CanQueryIntoPartialSuccess");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
@@ -101,6 +104,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public void ThrowsOnQueryPartialSuccess()
         {
+            TestContext.Progress.WriteLine("ThrowsQueryIntoPrimitiveString");
             var client = CreateClient();
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(() => client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
@@ -113,6 +117,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryAdditionalWorkspace()
         {
+            TestContext.Progress.WriteLine("CanQueryAdditionalWorkspace");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync<string>(TestEnvironment.WorkspaceId,
@@ -130,6 +135,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoPrimitiveInt()
         {
+            TestContext.Progress.WriteLine("CanQueryIntoPrimitiveInt");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync<int>(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName} | count",
@@ -141,6 +147,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoClass()
         {
+            TestContext.Progress.WriteLine("CanQueryIntoClass");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync<TestModel>(TestEnvironment.WorkspaceId,
@@ -157,6 +164,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoDictionary()
         {
+            TestContext.Progress.WriteLine("CanQueryIntoDictionary");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync<Dictionary<string, object>>(TestEnvironment.WorkspaceId,
@@ -177,6 +185,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoIDictionary()
         {
+            TestContext.Progress.WriteLine("CanQueryIntoIDictionary");
             var client = CreateClient();
 
             Response<IReadOnlyList<IDictionary<string, object>>> results = await client.QueryWorkspaceAsync<IDictionary<string, object>>(TestEnvironment.WorkspaceId,
@@ -197,6 +206,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryBatch()
         {
+            TestContext.Progress.WriteLine("CanQueryBatch");
             var client = CreateClient();
             LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
@@ -213,6 +223,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryBatchMixed()
         {
+            TestContext.Progress.WriteLine("CanQueryBatchMixed");
             var client = CreateClient();
             LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
@@ -238,6 +249,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryAllSupportedTypes()
         {
+            TestContext.Progress.WriteLine("CanQueryAllSupportedTypes");
             var client = CreateClient();
 
             Response<LogsQueryResult> results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
@@ -297,6 +309,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryAllSupportedTypesIntoModel()
         {
+            TestContext.Progress.WriteLine("CanQueryAllSupportedTypesIntoModel");
             var client = CreateClient();
 
             Response<IReadOnlyList<TestModelForTypes>> results = await client.QueryWorkspaceAsync<TestModelForTypes>(TestEnvironment.WorkspaceId,
@@ -331,6 +344,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryAllSupportedTypesIntoModelNullable()
         {
+            TestContext.Progress.WriteLine("CanQueryAllSupportedTypesIntoModelNullable");
             var client = CreateClient();
 
             Response<IReadOnlyList<TestModelForTypesNullable>> results = await client.QueryWorkspaceAsync<TestModelForTypesNullable>(TestEnvironment.WorkspaceId,
@@ -365,6 +379,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryAllSupportedTypesIntoModelNulls()
         {
+            TestContext.Progress.WriteLine("CanQueryAllSupportedTypesIntoModelNulls");
             var client = CreateClient();
 
             Response<IReadOnlyList<TestModelForTypesNullable>> results = await client.QueryWorkspaceAsync<TestModelForTypesNullable>(TestEnvironment.WorkspaceId,
@@ -399,6 +414,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoPrimitive()
         {
+            TestContext.Progress.WriteLine("CanQueryIntoPrimitive");
             var client = CreateClient();
 
             Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), (await client.QueryWorkspaceAsync<DateTimeOffset>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(2015-12-31 23:59:59.9) ]", _logsTestData.DataTimeRange)).Value[0]);
@@ -415,6 +431,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoNullablePrimitive()
         {
+            TestContext.Progress.WriteLine("CanQueryIntoNullablePrimitive");
             var client = CreateClient();
 
             Assert.IsNull((await client.QueryWorkspaceAsync<DateTimeOffset?>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(null) ]", _logsTestData.DataTimeRange)).Value[0]);
@@ -430,6 +447,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryIntoNullablePrimitiveNull()
         {
+            TestContext.Progress.WriteLine("CanQueryIntoNullablePrimitiveNull");
             var client = CreateClient();
 
             var results = await client.QueryWorkspaceAsync<DateTimeOffset?>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(null) ]", _logsTestData.DataTimeRange);
@@ -440,6 +458,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryWithTimespan()
         {
+            TestContext.Progress.WriteLine("CanQueryWithTimespan");
             var timespan = TimeSpan.FromSeconds(5);
 
             var client = CreateClient();
@@ -469,6 +488,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryBatchWithTimespan()
         {
+            TestContext.Progress.WriteLine("CanQueryBatchWithTimespan");
             var timespan = TimeSpan.FromSeconds(5);
 
             var client = CreateClient();
@@ -494,6 +514,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public void ThrowsExceptionWhenQueryFails()
         {
+            TestContext.Progress.WriteLine("ThrowsExceptionWhenQueryFails");
             var client = CreateClient();
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, "this won't work", _logsTestData.DataTimeRange));
 
@@ -504,6 +525,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task ThrowsExceptionWhenQueryFailsBatch()
         {
+            TestContext.Progress.WriteLine("ThrowsExceptionWhenQueryFailsBatch");
             var client = CreateClient();
 
             LogsBatchQuery batch = new LogsBatchQuery();
@@ -519,6 +541,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task ThrowsExceptionWhenPartialSuccess()
         {
+            TestContext.Progress.WriteLine("ThrowsExceptionWhenPartialSuccess");
             var client = CreateClient();
 
             LogsBatchQuery batch = new LogsBatchQuery();
@@ -534,6 +557,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task ThrowsExceptionWhenBatchQueryNotFound()
         {
+            TestContext.Progress.WriteLine("ThrowsExceptionWhenBatchQueryNotFound");
             var client = CreateClient();
 
             LogsBatchQuery batch = new LogsBatchQuery();
@@ -552,6 +576,7 @@ namespace Azure.Monitor.Query.Tests
         [TestCase(false)]
         public async Task CanQueryWithStatistics(bool include)
         {
+            TestContext.Progress.WriteLine("CanQueryWithStatistics");
             var client = CreateClient();
 
             var response = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange, options: new LogsQueryOptions()
@@ -575,6 +600,7 @@ namespace Azure.Monitor.Query.Tests
         [TestCase(false)]
         public async Task CanQueryWithVisualization(bool include)
         {
+            TestContext.Progress.WriteLine("CanQueryWithVisualization");
             var client = CreateClient();
 
             var response = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, "datatable (s: string, i: long) [ \"a\", 1, \"b\", 2, \"c\", 3 ] | render columnchart", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
@@ -598,6 +624,7 @@ namespace Azure.Monitor.Query.Tests
         [TestCase(false)]
         public async Task CanQueryWithStatisticsBatch(bool include)
         {
+            TestContext.Progress.WriteLine("CanQueryWithStatisticsBatch");
             var client = CreateClient();
 
             LogsBatchQuery batch = new LogsBatchQuery();
@@ -622,6 +649,7 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanSetServiceTimeout()
         {
+            TestContext.Progress.WriteLine("CanSetServiceTimeout");
             var client = CreateClient();
 
             // Sometimes the service doesn't abort the query quickly enough
@@ -669,6 +697,7 @@ namespace Azure.Monitor.Query.Tests
         [TestCaseSource(nameof(Queries))]
         public async Task CanQueryWithFormattedQuery(FormattableStringWrapper query)
         {
+            TestContext.Progress.WriteLine("CanQueryWithFormattedQuery");
             var client = CreateClient();
 
             var response = await client.QueryWorkspaceAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQuery(query.Value), _logsTestData.DataTimeRange);
