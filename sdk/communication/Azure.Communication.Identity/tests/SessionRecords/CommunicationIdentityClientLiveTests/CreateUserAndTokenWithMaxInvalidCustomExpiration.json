@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "56",
         "Content-Type": "application/json",
-        "traceparent": "00-c9601f614c39f16898dfdad70838e9ab-b6a44d01b514bdc4-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20230313.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "36c7a9ce554b7e3fca6648c47a7beb9d",
+        "traceparent": "00-b640977c369bdea2616ab16947b62138-8cc7222beb3fe827-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20230112.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cdf45f367d17596ffab8f890a13b9413",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 13 Mar 2023 09:47:55 GMT",
+        "x-ms-date": "Thu, 12 Jan 2023 11:02:41 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,17 +23,17 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01, 2023-08-01",
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01",
         "Content-Type": "application/json",
-        "Date": "Mon, 13 Mar 2023 09:47:54 GMT",
-        "MS-CV": "mc/LXoQxLEq2/r4ClD7GGw.2.0",
+        "Date": "Thu, 12 Jan 2023 11:02:41 GMT",
+        "MS-CV": "/vmUtcQyXUKTrmun1kgJmQ.2.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0SvEOZAAAAABiv3Fg0OXlQqe90nKXrJZCSEVMMDFFREdFMjAxNAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "00ei/YwAAAABGoAPI61HGQq5eZoUX7mZiSEVMMDFFREdFMjAxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "36c7a9ce554b7e3fca6648c47a7beb9d",
-        "X-Processing-Time": "12ms"
+        "x-ms-client-request-id": "cdf45f367d17596ffab8f890a13b9413",
+        "X-Processing-Time": "38ms"
       },
       "ResponseBody": {
         "error": {
@@ -46,6 +46,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "96986958"
+    "RandomSeed": "1613475619"
   }
 }

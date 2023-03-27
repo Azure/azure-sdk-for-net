@@ -9,7 +9,6 @@ using Azure.Core;
 namespace Azure.Communication.Identity
 {
     [CodeGenModel("CommunicationIdentityAccessTokenResult")]
-    [CodeGenSuppress("CommunicationUserIdentifierAndToken", typeof(CommunicationIdentity))]
     public partial class CommunicationUserIdentifierAndToken
     {
         private readonly AccessToken? _accessToken;
