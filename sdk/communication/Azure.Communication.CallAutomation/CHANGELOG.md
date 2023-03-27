@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.1-alpha.4 (Unreleased)
+- Fixed StopDialog bug
+
 ## 1.0.1-alpha.3 (Unreleased)
 - Added DialogInputType to all events
 

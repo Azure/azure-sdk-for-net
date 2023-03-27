@@ -1984,7 +1984,12 @@
     },
     "StopDialogRequest": {
       "type": "object",
-      "properties": {}
+        "properties": {
+            "id": {
+                "description": "filler field",
+                "type":  "string"
+            }
+        }
     },
     "GetParticipantsResponse": {
       "description": "The response payload for getting participants of the call.",
