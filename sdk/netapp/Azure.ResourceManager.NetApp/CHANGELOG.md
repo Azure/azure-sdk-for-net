@@ -15,7 +15,7 @@
 
 ### Breaking Changes
 - NetAppVault is no longer needed scheduled for deprecation
-- VaultId is not longer needed has been deprecation from NetAppVolumeBackupConfiguration in api-version 2022-09-01, it is accesible in pervious api-verisons 2022-05-01 and older api-version
+- VaultId is not longer needed it has been deprecated from NetAppVolumeBackupConfiguration in api-version 2022-09-01, but will continue to be supported in pervious api-verisons, 2022-05-01 and older
 ### Bugs Fixed
 
 ### Other Changes

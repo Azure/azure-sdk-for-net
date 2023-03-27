@@ -18,6 +18,10 @@ using System.Diagnostics;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
+    /// <summary>
+    /// This test class specificly targets api-version 2022-05-01 to test vault and vaultId that were deprecated in 2022-09-01
+    /// but will continue to be supproted in previous api-versions.
+    /// </summary>
     [ClientTestFixture(true, "2022-05-01")]
     public class ANFBackupTests2022_05 : NetAppTestBase
     {
