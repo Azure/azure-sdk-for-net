@@ -56,8 +56,8 @@ namespace Azure.Analytics.Synapse.Spark.Samples
                 ExecutorCount = 2
             };
 
-            SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(request);
-            SparkBatchJob jobCreated = await createOperation.WaitForCompletionAsync();
+            SparkBatchOperation createOperation = await client.CreateSparkBatchJobAsync(WaitUntil.Completed, request);
+            SparkBatchJob jobCreated = createOperation.Value;
             #endregion
 
             #region Snippet:ListSparkBatchJobsAsync

@@ -12,9 +12,7 @@ using Azure.Analytics.Synapse.Spark.Models;
 namespace Azure.Analytics.Synapse.Spark
 {
     /// <summary>
-    /// A long-running operation for:
-    /// <see cref="SparkBatchClient.StartCreateSparkBatchJobAsync(SparkBatchJobOptions, bool?, CancellationToken)"/>,
-    /// <see cref="SparkBatchClient.StartCreateSparkBatchJob(SparkBatchJobOptions, bool?, CancellationToken)"/>,
+    /// A long-running operation for spark batch operation.
     /// </summary>
     public class SparkBatchOperation : Operation<SparkBatchJob>
     {

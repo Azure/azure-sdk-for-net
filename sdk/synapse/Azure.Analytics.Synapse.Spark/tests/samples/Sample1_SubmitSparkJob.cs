@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
                 ExecutorCount = 2
             };
 
-            SparkBatchOperation createOperation = client.StartCreateSparkBatchJob(request);
+            SparkBatchOperation createOperation = client.CreateSparkBatchJob(WaitUntil.Started, request);
             while (!createOperation.HasCompleted)
             {
                 System.Threading.Thread.Sleep(2000);

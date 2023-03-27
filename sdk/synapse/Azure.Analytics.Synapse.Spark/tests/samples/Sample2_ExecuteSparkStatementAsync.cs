@@ -44,8 +44,8 @@ namespace Azure.Analytics.Synapse.Spark.Samples
                 ExecutorCount = 2
             };
 
-            SparkSessionOperation createSessionOperation = await client.StartCreateSparkSessionAsync(request);
-            SparkSession sessionCreated = await createSessionOperation.WaitForCompletionAsync();
+            SparkSessionOperation createSessionOperation = await client.CreateSparkSessionAsync(WaitUntil.Completed, request);
+            SparkSession sessionCreated = createSessionOperation.Value;
             #endregion
 
             #region Snippet:GetSparkSessionAsync
@@ -60,8 +60,8 @@ namespace Azure.Analytics.Synapse.Spark.Samples
                 Code = @"print(""Hello world\n"")"
             };
 
-            SparkStatementOperation createStatementOperation = await client.StartCreateSparkStatementAsync(sessionCreated.Id, sparkStatementRequest);
-            SparkStatement statementCreated = await createStatementOperation.WaitForCompletionAsync();
+            SparkStatementOperation createStatementOperation = await client.CreateSparkStatementAsync(WaitUntil.Started, sessionCreated.Id, sparkStatementRequest);
+            SparkStatement statementCreated = createStatementOperation.Value;
             #endregion
 
             #region Snippet:GetSparkStatementAsync

@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
                 ExecutorCount = 2
             };
 
-            SparkSessionOperation createSessionOperation = client.StartCreateSparkSession(request);
+            SparkSessionOperation createSessionOperation = client.CreateSparkSession(WaitUntil.Started, request);
             while (!createSessionOperation.HasCompleted)
             {
                 System.Threading.Thread.Sleep(2000);
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
                 Code = @"print(""Hello world\n"")"
             };
 
-            SparkStatementOperation createStatementOperation = client.StartCreateSparkStatement(sessionCreated.Id, sparkStatementRequest);
+            SparkStatementOperation createStatementOperation = client.CreateSparkStatement(WaitUntil.Started, sessionCreated.Id, sparkStatementRequest);
             while (!createStatementOperation.HasCompleted)
             {
                 System.Threading.Thread.Sleep(2000);

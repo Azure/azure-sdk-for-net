@@ -12,9 +12,7 @@ using Azure.Analytics.Synapse.Spark.Models;
 namespace Azure.Analytics.Synapse.Spark
 {
     /// <summary>
-    /// A long-running operation for:
-    /// <see cref="SparkSessionClient.StartCreateSparkStatementAsync(int, SparkStatementOptions, CancellationToken)"/>,
-    /// <see cref="SparkSessionClient.StartCreateSparkStatement(int, SparkStatementOptions, CancellationToken)"/>,
+    /// A long-running operation for CreateSparkStatement
     /// </summary>
     public class SparkStatementOperation : Operation<SparkStatement>
     {

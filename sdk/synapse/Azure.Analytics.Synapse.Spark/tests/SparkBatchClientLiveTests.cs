@@ -43,8 +43,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
             // Submit the Spark job
             SparkBatchJobOptions createParams = SparkTestUtilities.CreateSparkJobRequestParameters(Recording, TestEnvironment);
-            SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
-            SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
+            var sparkBatchOperation = await client.CreateSparkBatchJobAsync(WaitUntil.Completed, createParams).ConfigureAwait(false);
+            SparkBatchJob jobCreateResponse = sparkBatchOperation.Value;
 
             // Verify the Spark batch job submission starts successfully
             Assert.True(LivyStates.Starting == jobCreateResponse.State || LivyStates.Running == jobCreateResponse.State || LivyStates.Success == jobCreateResponse.State,
@@ -63,7 +63,6 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24513")]
         public async Task TestSparkBatchJobCompletesWhenJobComplete()
         {
             SparkBatchClient client = CreateClient();
@@ -73,9 +72,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             // Set completion type to wait for completion of job execution.
             createParams.CreationCompletionType = SparkBatchOperationCompletionType.JobExecution;
 
-            // Submit the Spark job
-            SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
-            SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
+            var createOperation = await client.CreateSparkBatchJobAsync(WaitUntil.Completed, createParams).ConfigureAwait(false);
+            SparkBatchJob jobCreateResponse = createOperation.Value;
 
             // Verify the Spark batch job exuecution completes successfully
             Assert.True(LivyStates.Success == jobCreateResponse.State  && jobCreateResponse.Result == SparkBatchJobResultType.Succeeded,
@@ -101,7 +99,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
             // Submit the Spark job
             SparkBatchJobOptions createParams = SparkTestUtilities.CreateSparkJobRequestParameters(Recording, TestEnvironment);
-            SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
+            SparkBatchOperation createOperation = await client.CreateSparkBatchJobAsync(WaitUntil.Started, createParams);
 
             // Create another SparkBatchOperation
             SparkBatchOperation anotherOperation =
