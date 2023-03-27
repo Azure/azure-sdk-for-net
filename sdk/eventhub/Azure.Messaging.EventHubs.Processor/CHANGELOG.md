@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Enhanced the log emitted when an event processor begins reading from a partition to report whether the offset chosen was based on a checkpoint or default value.
+
 ## 5.8.1 (2023-03-09)
 
 ### Bugs Fixed
