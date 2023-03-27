@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
                 {
                     KeyEncryptionKeyIdentity = new RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity()
                     {
-                        UserAssignedIdentityResourceId = "/subscriptions/your-subscription/resourceGroups/your-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/your-identity",
+                        UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/your-subscription/resourceGroups/your-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/your-identity"),
                         IdentityType = RedisEnterpriseCustomerManagedKeyIdentityType.UserAssignedIdentity,
                     },
                     KeyEncryptionKeyUri = new Uri("https://your-kv.vault.azure.net/keys/your-key/your-key-version"),
