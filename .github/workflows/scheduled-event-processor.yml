@@ -26,7 +26,14 @@ jobs:
     name: Handle ${{ github.event.schedule }} ${{ github.event.action }} event
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: 'Sparse Checkout'
+        run: |
+          set -ex
+          git clone --no-checkout --filter=tree:0 https://github.com/${{ github.repository }} .
+          git sparse-checkout init
+          git sparse-checkout set '.github'
+          # head_ref will be empty outside of pull request events, which will choose the repository default branch
+          git checkout ${{ github.head_ref }}
 
       # To run github-event-processor built from source, for testing purposes, uncomment everything
       # in between the Start/End-Build From Source comments and comment everything in between the
@@ -36,7 +43,7 @@ jobs:
         run: >
           dotnet tool install
           Azure.Sdk.Tools.GitHubEventProcessor
-          --version 1.0.0-dev.20230324.4
+          --version 1.0.0-dev.20230328.3
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash
