@@ -15,20 +15,20 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Mock
 {
     /// <summary> A class to add extension methods to PartnerTopicResource. </summary>
-    public partial class PartnerTopicResourceExtensionClient : ArmResource
+    public partial class PartnerTopicResourceExtension : ArmResource
     {
         private ClientDiagnostics _partnerTopicClientDiagnostics;
         private PartnerTopicsRestOperations _partnerTopicRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerTopicResourceExtensionClient"/> class for mocking. </summary>
-        protected PartnerTopicResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="PartnerTopicResourceExtension"/> class for mocking. </summary>
+        protected PartnerTopicResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerTopicResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PartnerTopicResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PartnerTopicResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PartnerTopicResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "PartnerTopicResourceExtensionClient.GetPartnerTopics", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "PartnerTopicResourceExtension.GetPartnerTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "PartnerTopicResourceExtensionClient.GetPartnerTopics", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "PartnerTopicResourceExtension.GetPartnerTopics", "value", "nextLink", cancellationToken);
         }
     }
 }

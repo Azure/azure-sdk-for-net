@@ -15,20 +15,20 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Mock
 {
     /// <summary> A class to add extension methods to EventGridDomainResource. </summary>
-    public partial class EventGridDomainResourceExtensionClient : ArmResource
+    public partial class EventGridDomainResourceExtension : ArmResource
     {
         private ClientDiagnostics _eventGridDomainDomainsClientDiagnostics;
         private DomainsRestOperations _eventGridDomainDomainsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EventGridDomainResourceExtensionClient"/> class for mocking. </summary>
-        protected EventGridDomainResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="EventGridDomainResourceExtension"/> class for mocking. </summary>
+        protected EventGridDomainResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EventGridDomainResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridDomainResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EventGridDomainResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EventGridDomainResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridDomainDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridDomainDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "EventGridDomainResourceExtensionClient.GetEventGridDomains", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "EventGridDomainResourceExtension.GetEventGridDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridDomainDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridDomainDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "EventGridDomainResourceExtensionClient.GetEventGridDomains", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "EventGridDomainResourceExtension.GetEventGridDomains", "value", "nextLink", cancellationToken);
         }
     }
 }

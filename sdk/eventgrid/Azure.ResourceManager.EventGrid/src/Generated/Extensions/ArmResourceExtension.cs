@@ -12,17 +12,17 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Mock
 {
     /// <summary> A class to add extension methods to ArmResource. </summary>
-    public partial class ArmResourceExtensionClient : ArmResource
+    public partial class ArmResourceExtension : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="ArmResourceExtensionClient"/> class for mocking. </summary>
-        protected ArmResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="ArmResourceExtension"/> class for mocking. </summary>
+        protected ArmResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArmResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArmResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ArmResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ArmResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

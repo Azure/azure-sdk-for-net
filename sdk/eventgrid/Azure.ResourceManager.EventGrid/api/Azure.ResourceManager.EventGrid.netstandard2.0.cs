@@ -999,6 +999,86 @@ namespace Azure.ResourceManager.EventGrid
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.VerifiedPartnerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.EventGrid.Mock
+{
+    public partial class ArmResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ArmResourceExtension() { }
+        public virtual Azure.ResourceManager.EventGrid.EventSubscriptionCollection GetEventSubscriptions() { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.ExtensionTopicResource GetExtensionTopic() { throw null; }
+    }
+    public partial class EventGridDomainResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected EventGridDomainResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridDomainResource> GetEventGridDomains(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridDomainResource> GetEventGridDomainsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class EventGridTopicResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected EventGridTopicResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridTopicResource> GetEventGridTopics(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridTopicResource> GetEventGridTopicsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic> GetEventTypes(string providerNamespace, string resourceTypeName, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic> GetEventTypesAsync(string providerNamespace, string resourceTypeName, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class EventSubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected EventSubscriptionResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicType(string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicTypeAsync(string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsData(Azure.Core.AzureLocation location, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsDataAsync(Azure.Core.AzureLocation location, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicType(Azure.Core.AzureLocation location, string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicTypeAsync(Azure.Core.AzureLocation location, string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PartnerConfigurationResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected PartnerConfigurationResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.PartnerConfigurationResource> GetPartnerConfigurations(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.PartnerConfigurationResource> GetPartnerConfigurationsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PartnerNamespaceResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected PartnerNamespaceResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.PartnerNamespaceResource> GetPartnerNamespaces(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.PartnerNamespaceResource> GetPartnerNamespacesAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PartnerRegistrationResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected PartnerRegistrationResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.PartnerRegistrationResource> GetPartnerRegistrations(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.PartnerRegistrationResource> GetPartnerRegistrationsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PartnerTopicResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected PartnerTopicResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.PartnerTopicResource> GetPartnerTopics(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.PartnerTopicResource> GetPartnerTopicsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.EventGrid.EventGridDomainCollection GetEventGridDomains() { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridTopicCollection GetEventGridTopics() { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerConfigurationResource GetPartnerConfiguration() { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerNamespaceCollection GetPartnerNamespaces() { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerRegistrationCollection GetPartnerRegistrations() { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerTopicCollection GetPartnerTopics() { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.SystemTopicCollection GetSystemTopics() { throw null; }
+    }
+    public partial class SystemTopicResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SystemTopicResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.SystemTopicResource> GetSystemTopics(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.SystemTopicResource> GetSystemTopicsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtension() { }
+        public virtual Azure.ResourceManager.EventGrid.TopicTypeCollection GetTopicTypes() { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.VerifiedPartnerCollection GetVerifiedPartners() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.EventGrid.Models
 {
     public abstract partial class AdvancedFilter

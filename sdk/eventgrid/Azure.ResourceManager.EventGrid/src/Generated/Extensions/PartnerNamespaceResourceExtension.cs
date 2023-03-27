@@ -15,20 +15,20 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Mock
 {
     /// <summary> A class to add extension methods to PartnerNamespaceResource. </summary>
-    public partial class PartnerNamespaceResourceExtensionClient : ArmResource
+    public partial class PartnerNamespaceResourceExtension : ArmResource
     {
         private ClientDiagnostics _partnerNamespaceClientDiagnostics;
         private PartnerNamespacesRestOperations _partnerNamespaceRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceResourceExtensionClient"/> class for mocking. </summary>
-        protected PartnerNamespaceResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceResourceExtension"/> class for mocking. </summary>
+        protected PartnerNamespaceResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PartnerNamespaceResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PartnerNamespaceResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerNamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerNamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceResourceExtensionClient.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceResourceExtension.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerNamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerNamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceResourceExtensionClient.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceResourceExtension.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
         }
     }
 }

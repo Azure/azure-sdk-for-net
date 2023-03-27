@@ -15,20 +15,20 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Mock
 {
     /// <summary> A class to add extension methods to PartnerRegistrationResource. </summary>
-    public partial class PartnerRegistrationResourceExtensionClient : ArmResource
+    public partial class PartnerRegistrationResourceExtension : ArmResource
     {
         private ClientDiagnostics _partnerRegistrationClientDiagnostics;
         private PartnerRegistrationsRestOperations _partnerRegistrationRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerRegistrationResourceExtensionClient"/> class for mocking. </summary>
-        protected PartnerRegistrationResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="PartnerRegistrationResourceExtension"/> class for mocking. </summary>
+        protected PartnerRegistrationResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerRegistrationResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PartnerRegistrationResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PartnerRegistrationResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PartnerRegistrationResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerRegistrationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerRegistrationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationResourceExtensionClient.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationResourceExtension.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerRegistrationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerRegistrationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationResourceExtensionClient.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationResourceExtension.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -17,20 +17,20 @@ using Azure.ResourceManager.EventGrid.Models;
 namespace Azure.ResourceManager.EventGrid.Mock
 {
     /// <summary> A class to add extension methods to EventGridTopicResource. </summary>
-    public partial class EventGridTopicResourceExtensionClient : ArmResource
+    public partial class EventGridTopicResourceExtension : ArmResource
     {
         private ClientDiagnostics _eventGridTopicTopicsClientDiagnostics;
         private TopicsRestOperations _eventGridTopicTopicsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EventGridTopicResourceExtensionClient"/> class for mocking. </summary>
-        protected EventGridTopicResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="EventGridTopicResourceExtension"/> class for mocking. </summary>
+        protected EventGridTopicResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EventGridTopicResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridTopicResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EventGridTopicResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EventGridTopicResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridTopicTopicsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicResourceExtensionClient.GetEventGridTopics", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicResourceExtension.GetEventGridTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridTopicTopicsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicResourceExtensionClient.GetEventGridTopics", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicResourceExtension.GetEventGridTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicResourceExtension.GetEventTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EventGrid.Mock
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicResourceExtension.GetEventTypes", "value", null, cancellationToken);
         }
     }
 }
