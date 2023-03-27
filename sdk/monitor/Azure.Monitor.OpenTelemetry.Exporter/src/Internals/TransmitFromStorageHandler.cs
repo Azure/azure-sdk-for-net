@@ -12,7 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     internal class TransmitFromStorageHandler : IDisposable
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
-        private readonly PersistentBlobProvider _blobProvider;
+        internal PersistentBlobProvider _blobProvider;
         private readonly TransmissionStateManager _transmissionStateManager;
         private readonly System.Timers.Timer _transmitFromStorageTimer;
         private bool _disposed;

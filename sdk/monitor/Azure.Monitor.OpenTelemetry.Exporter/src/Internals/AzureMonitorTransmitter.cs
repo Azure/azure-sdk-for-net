@@ -26,6 +26,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal PersistentBlobProvider? _fileBlobProvider;
         private readonly AzureMonitorStatsbeat? _statsbeat;
         private readonly ConnectionVars _connectionVars;
+        internal readonly TransmissionStateManager _transmissionStateManager;
+        internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
         private bool _disposed;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
@@ -41,7 +43,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
 
+            _transmissionStateManager = new TransmissionStateManager();
+
             _fileBlobProvider = InitializeOfflineStorage(options);
+
+            if (_fileBlobProvider != null)
+            {
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager);
+            }
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars);
         }
@@ -165,10 +174,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 if (result == ExportResult.Failure && _fileBlobProvider != null)
                 {
+                    _transmissionStateManager.EnableBackOff(httpMessage.Response);
                     result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider);
                 }
                 else
                 {
+                    _transmissionStateManager.ResetConsecutiveErrors();
+                    _transmissionStateManager.CloseTransmission();
                     AzureMonitorExporterEventSource.Log.WriteInformational("TransmissionSuccess", "Successfully transmitted a batch of telemetry Items.");
                 }
             }
