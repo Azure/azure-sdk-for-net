@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
                   singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
-                  cancellationTokenSource: job._cancellationTokenSource)
+                  cancellationToken: job._cancellationToken)
         {
         }
 
@@ -75,7 +75,7 @@ namespace Azure.Storage.DataMovement
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
                   singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
-                  cancellationTokenSource: job._cancellationTokenSource,
+                  cancellationToken: job._cancellationToken,
                   jobPartStatus: jobPartStatus,
                   length: length)
         {
@@ -129,7 +129,7 @@ namespace Azure.Storage.DataMovement
             {
                 try
                 {
-                    StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                    StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                     fileLength = properties.ContentLength;
                 }
                 catch (Exception ex)
@@ -194,7 +194,7 @@ namespace Azure.Storage.DataMovement
                         sourceResource: _sourceResource,
                         overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                         completeLength: completeLength,
-                        cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                        cancellationToken: _cancellationToken).ConfigureAwait(false);
                 if (asyncCopy)
                 {
                     _copyStatusHandler = GetCopyStatusController(this);
@@ -231,7 +231,7 @@ namespace Azure.Storage.DataMovement
                     overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                     range: new HttpRange(0, blockSize),
                     completeLength: length,
-                    cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 if (blockSize == length)
                 {
@@ -302,7 +302,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // Apply necessary transfer completions on the destination.
-                await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                await _destinationResource.CompleteTransferAsync(_cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
                 await DisposeHandlers().ConfigureAwait(false);
@@ -337,7 +337,7 @@ namespace Azure.Storage.DataMovement
             if (waitEnabled)
             {
                 TimeSpan suggestedInterval = TimeSpan.FromSeconds(DataMovementConstants.StatusCheckInSec);
-                await Task.Delay(suggestedInterval, _cancellationTokenSource.Token).ConfigureAwait(false);
+                await Task.Delay(suggestedInterval, _cancellationToken).ConfigureAwait(false);
             }
 
             // Call GetProperties
@@ -352,7 +352,7 @@ namespace Azure.Storage.DataMovement
                         properties.CopyId,
                         ParseRangeTotalLength(properties.CopyProgress),
                         false,
-                        _cancellationTokenSource.Token)).ConfigureAwait(false);
+                        _cancellationToken)).ConfigureAwait(false);
                 }
                 else
                 {
@@ -379,7 +379,7 @@ namespace Azure.Storage.DataMovement
                         properties.CopyId,
                         ParseRangeTotalLength(properties.CopyProgress),
                         false,
-                        _cancellationTokenSource.Token)).ConfigureAwait(false);
+                        _cancellationToken)).ConfigureAwait(false);
                 }
                 else
                 {
@@ -404,7 +404,7 @@ namespace Azure.Storage.DataMovement
                     overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                     range: new HttpRange(offset, blockLength),
                     completeLength: expectedLength,
-                    cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
                 // Invoke event handler to keep track of all the stage blocks
                 await _commitBlockHandler.InvokeEvent(
                     new StageChunkEventArgs(
@@ -413,7 +413,7 @@ namespace Azure.Storage.DataMovement
                         offset,
                         blockLength,
                         true,
-                        _cancellationTokenSource.Token)).ConfigureAwait(false);
+                        _cancellationToken)).ConfigureAwait(false);
             }
             // If we fail to stage a block, we need to make sure the rest of the stage blocks are cancelled
             // (Core already performs the retry policy on the one stage block request
@@ -446,11 +446,11 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CompleteFileDownload()
         {
-            CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
+            CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
             try
             {
                 // Apply necessary transfer completions on the destination.
-                await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                await _destinationResource.CompleteTransferAsync(_cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
                 await DisposeHandlers().ConfigureAwait(false);

@@ -40,7 +40,7 @@ namespace Azure.Storage.DataMovement
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
                   singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
-                  cancellationTokenSource: job._cancellationTokenSource)
+                  cancellationToken: job._cancellationToken)
         {
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Storage.DataMovement
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
                   singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
-                  cancellationTokenSource: job._cancellationTokenSource,
+                  cancellationToken: job._cancellationToken,
                   jobPartStatus: jobPartStatus,
                   length: length)
         {
@@ -125,7 +125,7 @@ namespace Azure.Storage.DataMovement
             long? fileLength = default;
             try
             {
-                StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                 fileLength = properties.ContentLength;
             }
             catch (Exception ex)
@@ -222,7 +222,7 @@ namespace Azure.Storage.DataMovement
                             streamLength: blockSize,
                             completeLength: expectedlength,
                             options: default,
-                            cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                            cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                     // Set completion status to completed
                     await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
@@ -233,7 +233,7 @@ namespace Azure.Storage.DataMovement
                     ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync(
                         position: 0,
                         length: blockSize,
-                        cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                        cancellationToken: _cancellationToken).ConfigureAwait(false);
                     using (Stream stream = result.Content)
                     {
                         slicedStream = await GetOffsetPartitionInternal(
@@ -241,7 +241,7 @@ namespace Azure.Storage.DataMovement
                             (int)0,
                             (int)blockSize,
                             UploadArrayPool,
-                            _cancellationTokenSource.Token).ConfigureAwait(false);
+                            _cancellationToken).ConfigureAwait(false);
                         await _destinationResource.WriteFromStreamAsync(
                             stream: slicedStream,
                             streamLength: blockSize,
@@ -249,7 +249,7 @@ namespace Azure.Storage.DataMovement
                             position: 0,
                             completeLength: expectedlength,
                             default,
-                            _cancellationTokenSource.Token).ConfigureAwait(false);
+                            _cancellationToken).ConfigureAwait(false);
                     }
                 }
                 ReportBytesWritten(blockSize);
@@ -302,7 +302,7 @@ namespace Azure.Storage.DataMovement
                 ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync(
                     position: offset,
                     length: blockLength,
-                    cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
                 using (Stream stream = result.Content)
                 {
                     slicedStream = await GetOffsetPartitionInternal(
@@ -310,7 +310,7 @@ namespace Azure.Storage.DataMovement
                         (int)offset,
                         (int)blockLength,
                         UploadArrayPool,
-                        _cancellationTokenSource.Token).ConfigureAwait(false);
+                        _cancellationToken).ConfigureAwait(false);
                     await _destinationResource.WriteFromStreamAsync(
                         stream: slicedStream,
                         streamLength: blockLength,
@@ -318,7 +318,7 @@ namespace Azure.Storage.DataMovement
                         position: offset,
                         completeLength: completeLength,
                         default,
-                        _cancellationTokenSource.Token).ConfigureAwait(false);
+                        _cancellationToken).ConfigureAwait(false);
                 }
                 // Invoke event handler to keep track of all the stage blocks
                 await _commitBlockHandler.InvokeEvent(
@@ -328,7 +328,7 @@ namespace Azure.Storage.DataMovement
                         offset,
                         blockLength,
                         true,
-                        _cancellationTokenSource.Token)).ConfigureAwait(false);
+                        _cancellationToken)).ConfigureAwait(false);
             }
             // If we fail to stage a block, we need to make sure the rest of the stage blocks are cancelled
             // (Core already performs the retry policy on the one stage block request
@@ -346,11 +346,11 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CompleteTransferAsync()
         {
-            CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
+            CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
             try
             {
                 // Apply necessary transfer completions on the destination.
-                await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                await _destinationResource.CompleteTransferAsync(_cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
                 await DisposeHandlers().ConfigureAwait(false);

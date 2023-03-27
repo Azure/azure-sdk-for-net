@@ -79,8 +79,24 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         public async Task AwaitCompletion(CancellationToken cancellationToken = default)
         {
-            cancellationToken.Register(() => _state._completionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
-            await _state._completionSource.Task.ConfigureAwait(false);
+            cancellationToken.Register(() => _state.CompletionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
+            await _state.CompletionSource.Task.ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Attempts to pause the current Data Transfer.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns>
+        /// Will return false if the data transfer has already been completed or paused, or if a pause
+        /// is already being attempted.
+        ///
+        /// Will return true if the pause is currently processing. It does not mean the transfer has fully
+        /// reached a state of being paused/completed.
+        /// </returns>
+        public Task<bool> TryPauseAsync(CancellationToken cancellationToken = default)
+        {
+            return _state.TryPauseAsync(cancellationToken);
         }
     }
 }

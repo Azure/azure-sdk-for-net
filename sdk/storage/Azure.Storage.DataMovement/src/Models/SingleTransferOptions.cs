@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement.Models
 
         /// <summary>
         /// Optional. Defines the checkpoint id that the transfer should continue from and will
-        /// grab transfer information from TransferManagerOptions.Checkpointer.
+        /// grab transfer information from <see cref="TransferManagerOptions.Checkpointer"/>.
         /// </summary>
         public string ResumeFromCheckpointId { get; set; }
 

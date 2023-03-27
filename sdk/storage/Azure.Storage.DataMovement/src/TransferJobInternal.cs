@@ -24,15 +24,6 @@ namespace Azure.Storage.DataMovement
         internal DataTransfer _dataTransfer { get; set; }
 
         /// <summary>
-        /// Cancellation Token Source
-        ///
-        /// Will be initialized when the tasks are running.
-        ///
-        /// Will be disposed of once all tasks of the job have completed or have been cancelled.
-        /// </summary>
-        internal CancellationTokenSource _cancellationTokenSource { get; set; }
-
-        /// <summary>
         /// Plan file writer for the respective job
         /// </summary>
         internal TransferCheckpointer _checkpointer { get; set; }
@@ -91,10 +82,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal StorageResourceCreateMode _createMode;
 
-        /// <summary>
-        /// Transfer Status for the job.
-        /// </summary>
-        internal StorageTransferStatus _transferStatus;
         private object _statusLock = new object();
 
         /// <summary>
@@ -141,6 +128,8 @@ namespace Azure.Storage.DataMovement
         public List<JobPartInternal> _jobParts;
         internal bool _enumerationComplete;
 
+        public CancellationToken _cancellationToken { get; internal set; }
+
         /// <summary>
         /// Constructor for mocking
         /// </summary>
@@ -161,18 +150,17 @@ namespace Azure.Storage.DataMovement
             SyncAsyncEventHandler<SingleTransferCompletedEventArgs> singleTransferEventHandler)
         {
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
+            _dataTransfer._state.SetTransferStatus(StorageTransferStatus.Queued);
             _errorHandling = errorHandling;
             _createMode = createMode;
             _checkpointer = checkPointer;
             QueueChunkTask = queueChunkTask;
-            _transferStatus = StorageTransferStatus.Queued;
             _hasFailures = false;
             _hasSkipped = false;
-
-            _cancellationTokenSource = new CancellationTokenSource();
             _arrayPool = arrayPool;
             _jobParts = new List<JobPartInternal>();
             _enumerationComplete = false;
+            _cancellationToken = dataTransfer._state.CancellationTokenSource.Token;
 
             TransferStatusEventHandler = statusEventHandler;
             TransferFailedEventHandler = failedEventHandler;
@@ -269,9 +257,9 @@ namespace Azure.Storage.DataMovement
         public void TriggerJobCancellation()
         {
             DisposeHandlers();
-            if (!_cancellationTokenSource.IsCancellationRequested)
+            if (!_dataTransfer._state.CancellationTokenSource.IsCancellationRequested)
             {
-                _cancellationTokenSource.Cancel();
+                _dataTransfer._state.CancellationTokenSource.Cancel();
             }
         }
 
@@ -281,8 +269,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async Task JobPartEvent(TransferStatusEventArgs args)
         {
+            StorageTransferStatus status = _dataTransfer._state.GetTransferStatus();
             if (args.StorageTransferStatus == StorageTransferStatus.Completed
-                && _transferStatus < StorageTransferStatus.Completed)
+                && status < StorageTransferStatus.Completed)
             {
                 if (_enumerationComplete)
                 {
@@ -290,11 +279,11 @@ namespace Azure.Storage.DataMovement
                 }
             }
             else if (args.StorageTransferStatus == StorageTransferStatus.Paused &&
-                    _transferStatus == StorageTransferStatus.Paused)
+                    status == StorageTransferStatus.Paused)
             {
                 await OnJobStatusChangedAsync(StorageTransferStatus.Paused).ConfigureAwait(false);
             }
-            else if (args.StorageTransferStatus > _transferStatus)
+            else if (args.StorageTransferStatus > status)
             {
                 await OnJobStatusChangedAsync(args.StorageTransferStatus).ConfigureAwait(false);
             }
@@ -305,13 +294,7 @@ namespace Azure.Storage.DataMovement
             bool statusChanged = false;
             lock (_statusLock)
             {
-                //TODO: change to RaiseAsync after implementing ClientDiagnostics for TransferManager
-                if (_transferStatus != status)
-                {
-                    statusChanged = true;
-                    _transferStatus = status;
-                }
-                _dataTransfer._state.SetTransferStatus(status);
+                statusChanged = _dataTransfer._state.SetTransferStatus(status);
             }
             if (statusChanged)
             {
@@ -322,7 +305,7 @@ namespace Azure.Storage.DataMovement
                             transferId: _dataTransfer.Id,
                             transferStatus: status,
                             isRunningSynchronously: false,
-                            cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
+                            cancellationToken: _cancellationToken)).ConfigureAwait(false);
                 }
                 await SetCheckpointerStatus(status).ConfigureAwait(false);
             }
@@ -336,7 +319,7 @@ namespace Azure.Storage.DataMovement
                     transferId: _dataTransfer.Id,
                     transferStatus: status,
                     isRunningSynchronously: false,
-                    cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
+                    cancellationToken: _cancellationToken)).ConfigureAwait(false);
         }
 
         internal async virtual Task SetCheckpointerStatus(StorageTransferStatus status)
@@ -344,7 +327,7 @@ namespace Azure.Storage.DataMovement
             await _checkpointer.SetJobTransferStatusAsync(
                 transferId: _dataTransfer.Id,
                 status: status,
-                cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
         }
 
         internal async Task OnEnumerationComplete()

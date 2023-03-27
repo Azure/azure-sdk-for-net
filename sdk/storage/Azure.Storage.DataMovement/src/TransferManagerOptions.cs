@@ -33,9 +33,7 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Optional. Defines the checkpoint ID that the transfer should continue from.
-        ///
-        /// TODO: https://github.com/Azure/azure-sdk-for-net/issues/32955
         /// </summary>
-        internal TransferCheckpointer Checkpointer { get; set; }
+        public TransferCheckpointer Checkpointer { get; set; }
     }
 }

@@ -55,9 +55,9 @@ namespace Azure.Storage.DataMovement
         internal int _maxJobChunkTasks;
 
         /// <summary>
-        /// Ongoing transfers
+        /// Ongoing transfers indexed at the transfer id.
         /// </summary>
-        internal List<DataTransfer> _dataTransfers;
+        internal IDictionary<string, DataTransfer> _dataTransfers;
 
         /// <summary>
         /// Desginated checkpointer for the respective transfer manager.
@@ -120,9 +120,9 @@ namespace Azure.Storage.DataMovement
             _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
             _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());
             _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
-            _dataTransfers = new List<DataTransfer>();
+            _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
-            _checkpointer = _checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
+            _checkpointer = options.Checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
             _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : ErrorHandlingOptions.StopOnAllFailures;
         }
 
@@ -223,12 +223,31 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Attempts to pause the transfer of the respective id.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="transfer"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        internal virtual Task<bool> TryPauseTransferAsync(string id)
+        public virtual Task<bool> TryPauseTransferAsync(DataTransfer transfer, CancellationToken cancellationToken = default)
+            => TryPauseTransferAsync(transfer.Id, cancellationToken);
+
+        /// <summary>
+        /// Attempts to pause the transfer of the respective id.
+        /// </summary>
+        /// <param name="transferId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Task<bool> TryPauseTransferAsync(string transferId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
+            if (_dataTransfers.TryGetValue(transferId, out DataTransfer transfer))
+            {
+                return transfer.TryPauseAsync(cancellationToken: cancellationToken);
+            }
+            else
+            {
+                throw Errors.InvalidTransferId(nameof(TryPauseAllTransfersAsync), transferId);
+            }
         }
 
         /// <summary>
@@ -236,7 +255,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        internal virtual Task<bool> TryPauseAllTransfersAsync()
+        public virtual Task<bool> TryPauseAllTransfersAsync()
         {
             throw new NotImplementedException();
         }
@@ -254,7 +273,6 @@ namespace Azure.Storage.DataMovement
         #endregion Transfer Job Management
 
         #region Start Transfer
-
         /// <summary>
         /// Initiate transfer
         /// </summary>
@@ -420,7 +438,7 @@ namespace Azure.Storage.DataMovement
 
             // Queue Job
             await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
-            _dataTransfers.Add(dataTransfer);
+            _dataTransfers.Add(dataTransfer.Id, dataTransfer);
 
             return dataTransfer;
         }
@@ -611,7 +629,7 @@ namespace Azure.Storage.DataMovement
 
             // Queue Job
             await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
-            _dataTransfers.Add(dataTransfer);
+            _dataTransfers.Add(dataTransfer.Id, dataTransfer);
 
             return dataTransfer;
         }
@@ -636,8 +654,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Disposes
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <returns>A <see cref="ValueTask"/> of disposing the <see cref="TransferManager"/>.</returns>
         ValueTask IAsyncDisposable.DisposeAsync()
         {
             if (!_channelCancellationTokenSource.IsCancellationRequested)
@@ -656,7 +673,7 @@ namespace Azure.Storage.DataMovement
         private string GetNewTransferId()
         {
             string id = Guid.NewGuid().ToString();
-            while (_dataTransfers.FindIndex(transfer => transfer.Id.Equals(id)) >= 0)
+            while (_dataTransfers.TryGetValue(id, out DataTransfer value))
             {
                 CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
                 id = Guid.NewGuid().ToString();

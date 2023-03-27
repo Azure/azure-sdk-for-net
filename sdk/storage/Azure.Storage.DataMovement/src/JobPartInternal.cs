@@ -35,7 +35,7 @@ namespace Azure.Storage.DataMovement
         ///
         /// Will be disposed of once all tasks of the job have completed or have been cancelled.
         /// </summary>
-        internal CancellationTokenSource _cancellationTokenSource { get; set; }
+        internal CancellationToken _cancellationToken { get; set; }
 
         /// <summary>
         /// Plan file writer for the respective job.
@@ -142,7 +142,7 @@ namespace Azure.Storage.DataMovement
             SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
             SyncAsyncEventHandler<TransferSkippedEventArgs> skippedEventHandler,
             SyncAsyncEventHandler<SingleTransferCompletedEventArgs> singleTransferEventHandler,
-            CancellationTokenSource cancellationTokenSource,
+            CancellationToken cancellationToken,
             StorageTransferStatus jobPartStatus = StorageTransferStatus.Queued,
             long? length = default)
         {
@@ -154,7 +154,7 @@ namespace Azure.Storage.DataMovement
             _errorHandling = errorHandling;
             _createMode = createMode;
             _checkpointer = checkpointer;
-            _cancellationTokenSource = cancellationTokenSource;
+            _cancellationToken = cancellationToken;
             _arrayPool = arrayPool;
             PartTransferStatusEventHandler = jobPartEventHandler;
             TransferStatusEventHandler = statusEventHandler;
@@ -193,9 +193,9 @@ namespace Azure.Storage.DataMovement
 
         internal async Task TriggerCancellation(StorageTransferStatus status)
         {
-            if (!_cancellationTokenSource.IsCancellationRequested)
+            if (!_cancellationToken.IsCancellationRequested)
             {
-                _cancellationTokenSource.Cancel();
+                _dataTransfer._state.TriggerCancellation();
             }
             await OnTransferStatusChanged(status).ConfigureAwait(false);
             _dataTransfer._state.ResetTransferredBytes();
@@ -231,7 +231,7 @@ namespace Azure.Storage.DataMovement
                     _dataTransfer.Id,
                     transferStatus,
                     false,
-                    _cancellationTokenSource.Token)).ConfigureAwait(false);
+                    _cancellationToken)).ConfigureAwait(false);
             }
         }
 
@@ -254,7 +254,7 @@ namespace Azure.Storage.DataMovement
                         _sourceResource,
                         _destinationResource,
                         false,
-                        _cancellationTokenSource.Token)).ConfigureAwait(false);
+                        _cancellationToken)).ConfigureAwait(false);
             }
         }
 
@@ -271,7 +271,7 @@ namespace Azure.Storage.DataMovement
                     _sourceResource,
                     _destinationResource,
                     false,
-                    _cancellationTokenSource.Token)).ConfigureAwait(false);
+                    _cancellationToken)).ConfigureAwait(false);
             }
             await OnTransferStatusChanged(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
         }
@@ -290,7 +290,7 @@ namespace Azure.Storage.DataMovement
                     _destinationResource,
                     ex,
                     false,
-                    _cancellationTokenSource.Token)).ConfigureAwait(false);
+                    _cancellationToken)).ConfigureAwait(false);
             }
             // Trigger job cancellation if the failed handler is enabled
             await TriggerCancellation(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
@@ -307,7 +307,7 @@ namespace Azure.Storage.DataMovement
                         partNumber: PartNumber,
                         chunksTotal: chunksTotal,
                         headerStream: stream,
-                        cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                        cancellationToken: _cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -317,7 +317,7 @@ namespace Azure.Storage.DataMovement
                 transferId: _dataTransfer.Id,
                 partNumber: PartNumber,
                 status: status,
-                cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
         }
 
         internal long CalculateBlockSize(long length)

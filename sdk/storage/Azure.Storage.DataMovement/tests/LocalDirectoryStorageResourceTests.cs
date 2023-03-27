@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             List<string> paths = new List<string>();
-            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectory();
             string folderPath = test.DirectoryPath;
 
             for (int i = 0; i < 3; i++)
@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
-            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectory();
             string folderPath = test.DirectoryPath;
 
             for (int i = 0; i < 3; i++)
@@ -98,7 +98,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
-            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectory();
             string folderPath = test.DirectoryPath;
 
             for (int i = 0; i < 3; i++)

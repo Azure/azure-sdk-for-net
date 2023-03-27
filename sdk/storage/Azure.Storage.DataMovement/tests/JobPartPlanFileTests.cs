@@ -16,7 +16,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task CreateJobPartPlanFileAsync_Base()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectory();
             await CreateRandomFileAsync(test.DirectoryPath);
             int jobPart = 5;
             string transferId = GetNewTransferId();
@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task CreateJobPartPlanFileAsync_FileName()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectoryAsync();
+            using DisposingLocalDirectory test = GetTestLocalDirectory();
             await CreateRandomFileAsync(test.DirectoryPath);
             int jobPart = 5;
             string transferId = GetNewTransferId();

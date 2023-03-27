@@ -80,7 +80,7 @@ namespace Azure.Storage.DataMovement.Tests
             return files;
         }
 
-        public static DisposingLocalDirectory GetTestLocalDirectoryAsync(string directoryPath = default)
+        public static DisposingLocalDirectory GetTestLocalDirectory(string directoryPath = default)
         {
             if (string.IsNullOrEmpty(directoryPath))
             {

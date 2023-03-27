@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
                   singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
-                  cancellationTokenSource: job._cancellationTokenSource)
+                  cancellationToken: job._cancellationToken)
         { }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Azure.Storage.DataMovement
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
                   singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
-                  cancellationTokenSource: job._cancellationTokenSource,
+                  cancellationToken: job._cancellationToken,
                   jobPartStatus: jobPartStatus,
                   length: length)
         { }
@@ -158,7 +158,7 @@ namespace Azure.Storage.DataMovement
             Task<ReadStreamStorageResourceResult> initialTask = _sourceResource.ReadStreamAsync(
                         position: 0,
                         length: _initialTransferSize,
-                        _cancellationTokenSource.Token);
+                        _cancellationToken);
 
             ReadStreamStorageResourceResult initialResult = default;
             try
@@ -169,7 +169,7 @@ namespace Azure.Storage.DataMovement
             {
                 // Range not accepted, we need to attempt to use a default range
                 initialResult = await _sourceResource.ReadStreamAsync(
-                    cancellationToken: _cancellationTokenSource.Token)
+                    cancellationToken: _cancellationToken)
                     .ConfigureAwait(false);
             }
             // If the initial request returned no content (i.e., a 304),
@@ -244,7 +244,7 @@ namespace Azure.Storage.DataMovement
                 // To prevent requesting a range that is invalid when
                 // we already know the length we can just make one get blob request.
                 ReadStreamStorageResourceResult result = await _sourceResource.
-                    ReadStreamAsync(cancellationToken: _cancellationTokenSource.Token)
+                    ReadStreamAsync(cancellationToken: _cancellationToken)
                     .ConfigureAwait(false);
 
                 // If the initial request returned no content (i.e., a 304),
@@ -295,11 +295,11 @@ namespace Azure.Storage.DataMovement
         #region PartitionedDownloader
         internal async Task CompleteFileDownload()
         {
-            CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
+            CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
             try
             {
                 // Apply necessary transfer completions on the destination.
-                await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                await _destinationResource.CompleteTransferAsync(_cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
                 await DisposeHandlers().ConfigureAwait(false);
@@ -321,7 +321,7 @@ namespace Azure.Storage.DataMovement
                 ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync(
                     range.Offset,
                     (long) range.Length,
-                    _cancellationTokenSource.Token).ConfigureAwait(false);
+                    _cancellationToken).ConfigureAwait(false);
                 await _downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
                     transferId: _dataTransfer.Id,
                     success: true,
@@ -329,7 +329,7 @@ namespace Azure.Storage.DataMovement
                     bytesTransferred: (long)range.Length,
                     result: result.Content,
                     false,
-                    _cancellationTokenSource.Token)).ConfigureAwait(false);
+                    _cancellationToken)).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -349,7 +349,7 @@ namespace Azure.Storage.DataMovement
             Stream source,
             long expectedLength)
         {
-            CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
+            CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
 
             try
             {
@@ -361,7 +361,7 @@ namespace Azure.Storage.DataMovement
                     streamLength: sourceLength,
                     completeLength: expectedLength,
                     options: default,
-                    cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
             }
             catch (IOException ex)
             when (_createMode == StorageResourceCreateMode.Skip &&
@@ -383,7 +383,7 @@ namespace Azure.Storage.DataMovement
 
         public async Task WriteChunkToTempFile(string chunkFilePath, Stream source)
         {
-            CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
+            CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
 
             try
             {
@@ -392,7 +392,7 @@ namespace Azure.Storage.DataMovement
                     await source.CopyToAsync(
                         fileStream,
                         Constants.DefaultDownloadCopyBufferSize,
-                        _cancellationTokenSource.Token)
+                        _cancellationToken)
                         .ConfigureAwait(false);
                 }
             }
@@ -411,11 +411,11 @@ namespace Azure.Storage.DataMovement
         // TODO: https://github.com/Azure/azure-sdk-for-net/issues/33016
         private async Task FlushFinalCryptoStreamInternal()
         {
-            CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
+            CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
 
             try
             {
-                await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                await _destinationResource.CompleteTransferAsync(_cancellationToken).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
