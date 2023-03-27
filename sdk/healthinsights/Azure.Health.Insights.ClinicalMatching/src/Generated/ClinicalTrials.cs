@@ -24,6 +24,18 @@ namespace Azure.Health.Insights.ClinicalMatching
             RegistryFilters = new ChangeTrackingList<ClinicalTrialRegistryFilter>();
         }
 
+        /// <summary> Initializes a new instance of ClinicalTrials. </summary>
+        /// <param name="customTrials"> A list of clinical trials. </param>
+        /// <param name="registryFilters">
+        /// A list of filters, each one creating a selection of trials from a given
+        /// clinical trial registry.
+        /// </param>
+        internal ClinicalTrials(IList<ClinicalTrialDetails> customTrials, IList<ClinicalTrialRegistryFilter> registryFilters)
+        {
+            CustomTrials = customTrials;
+            RegistryFilters = registryFilters;
+        }
+
         /// <summary> A list of clinical trials. </summary>
         public IList<ClinicalTrialDetails> CustomTrials { get; }
         /// <summary>

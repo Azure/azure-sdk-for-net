@@ -29,6 +29,66 @@ namespace Azure.Health.Insights.ClinicalMatching
             FacilityAreas = new ChangeTrackingList<GeographicArea>();
         }
 
+        /// <summary> Initializes a new instance of ClinicalTrialRegistryFilter. </summary>
+        /// <param name="conditions">
+        /// Trials with any of the given medical conditions will be included in the selection (provided that other limitations are satisfied).
+        /// Leaving this list empty will not limit the medical conditions.
+        /// </param>
+        /// <param name="studyTypes">
+        /// Trials with any of the given study types will be included in the selection (provided that other limitations are satisfied).
+        /// Leaving this list empty will not limit the study types.
+        /// </param>
+        /// <param name="recruitmentStatuses">
+        /// Trials with any of the given recruitment statuses will be included in the selection (provided that other limitations are satisfied).
+        /// Leaving this list empty will not limit the recruitment statuses.
+        /// </param>
+        /// <param name="sponsors">
+        /// Trials with any of the given sponsors will be included in the selection (provided that other limitations are satisfied).
+        /// Leaving this list empty will not limit the sponsors.
+        /// </param>
+        /// <param name="phases">
+        /// Trials with any of the given phases will be included in the selection (provided that other limitations are satisfied).
+        /// Leaving this list empty will not limit the phases.
+        /// </param>
+        /// <param name="purposes">
+        /// Trials with any of the given purposes will be included in the selection (provided that other limitations are satisfied).
+        /// Leaving this list empty will not limit the purposes.
+        /// </param>
+        /// <param name="ids">
+        /// Trials with any of the given identifiers will be included in the selection (provided that other limitations are satisfied).
+        /// Leaving this list empty will not limit the trial identifiers.
+        /// </param>
+        /// <param name="sources">
+        /// Trials with any of the given sources will be included in the selection (provided that other limitations are satisfied).
+        /// Leaving this list empty will not limit the sources.
+        /// </param>
+        /// <param name="facilityNames">
+        /// Trials with any of the given facility names will be included in the selection (provided that other limitations are satisfied).
+        /// Leaving this list empty will not limit the trial facility names.
+        /// </param>
+        /// <param name="facilityLocations">
+        /// Trials with any of the given facility locations will be included in the selection (provided that other limitations are satisfied).
+        /// Leaving this list empty will not limit the trial facility locations.
+        /// </param>
+        /// <param name="facilityAreas">
+        /// Trials with any of the given facility area boundaries will be included in the selection (provided that other limitations are satisfied).
+        /// Leaving this list empty will not limit the trial facility area boundaries.
+        /// </param>
+        internal ClinicalTrialRegistryFilter(IList<string> conditions, IList<ClinicalTrialStudyType> studyTypes, IList<ClinicalTrialRecruitmentStatus> recruitmentStatuses, IList<string> sponsors, IList<ClinicalTrialPhase> phases, IList<ClinicalTrialPurpose> purposes, IList<string> ids, IList<ClinicalTrialSource> sources, IList<string> facilityNames, IList<GeographicLocation> facilityLocations, IList<GeographicArea> facilityAreas)
+        {
+            Conditions = conditions;
+            StudyTypes = studyTypes;
+            RecruitmentStatuses = recruitmentStatuses;
+            Sponsors = sponsors;
+            Phases = phases;
+            Purposes = purposes;
+            Ids = ids;
+            Sources = sources;
+            FacilityNames = facilityNames;
+            FacilityLocations = facilityLocations;
+            FacilityAreas = facilityAreas;
+        }
+
         /// <summary>
         /// Trials with any of the given medical conditions will be included in the selection (provided that other limitations are satisfied).
         /// Leaving this list empty will not limit the medical conditions.

@@ -15,6 +15,15 @@ namespace Azure.Health.Insights.ClinicalMatching
         {
         }
 
+        /// <summary> Initializes a new instance of AcceptedAgeRange. </summary>
+        /// <param name="minimumAge"> A person's age, given as a number (value) and a unit (e.g. years, months). </param>
+        /// <param name="maximumAge"> A person's age, given as a number (value) and a unit (e.g. years, months). </param>
+        internal AcceptedAgeRange(AcceptedAge minimumAge, AcceptedAge maximumAge)
+        {
+            MinimumAge = minimumAge;
+            MaximumAge = maximumAge;
+        }
+
         /// <summary> A person's age, given as a number (value) and a unit (e.g. years, months). </summary>
         public AcceptedAge MinimumAge { get; set; }
         /// <summary> A person's age, given as a number (value) and a unit (e.g. years, months). </summary>
