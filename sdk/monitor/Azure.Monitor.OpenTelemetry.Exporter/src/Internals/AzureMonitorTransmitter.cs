@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// </summary>
     internal class AzureMonitorTransmitter : ITransmitter
     {
-        internal readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
+        private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         internal PersistentBlobProvider? _fileBlobProvider;
         private readonly AzureMonitorStatsbeat? _statsbeat;
         private readonly ConnectionVars _connectionVars;

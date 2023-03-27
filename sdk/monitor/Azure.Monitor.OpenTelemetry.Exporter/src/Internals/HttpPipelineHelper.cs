@@ -9,9 +9,6 @@ using System.Threading;
 
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -128,64 +125,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return Encoding.UTF8.GetBytes(partialContent);
-        }
-
-        internal static ExportResult IsSuccess(HttpMessage httpMessage)
-        {
-            if (httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
-            {
-                return ExportResult.Success;
-            }
-
-            return ExportResult.Failure;
-        }
-
-        internal static void HandleFailures(HttpMessage httpMessage, PersistentBlob blob, PersistentBlobProvider blobProvider)
-        {
-            int statusCode = 0;
-            bool shouldRetry = true;
-
-            if (httpMessage.HasResponse)
-            {
-                statusCode = httpMessage.Response.Status;
-                switch (statusCode)
-                {
-                    case ResponseStatusCodes.PartialSuccess:
-                        // Parse retry-after header
-                        // Send Failed Messages To Storage
-                        // Delete existing file
-                        TrackResponse trackResponse = GetTrackResponse(httpMessage);
-                        var content = GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
-                        if (content != null)
-                        {
-                            blob.TryDelete();
-                            blobProvider.SaveTelemetry(content);
-                        }
-                        break;
-                    case ResponseStatusCodes.RequestTimeout:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
-                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
-                    case ResponseStatusCodes.Unauthorized:
-                    case ResponseStatusCodes.Forbidden:
-                    case ResponseStatusCodes.InternalServerError:
-                    case ResponseStatusCodes.BadGateway:
-                    case ResponseStatusCodes.ServiceUnavailable:
-                    case ResponseStatusCodes.GatewayTimeout:
-                        break;
-                    default:
-                        shouldRetry = false;
-                        break;
-                }
-            }
-
-            if (shouldRetry)
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is stored offline for retry");
-            }
-            else
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is dropped");
-            }
         }
     }
 }
