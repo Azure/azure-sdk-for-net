@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -79,7 +78,6 @@ namespace Azure.AI.TextAnalytics.Tests
         private const int ExtractSummaryMaxSentenceCount = 5;
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task ExtractSummaryWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -97,7 +95,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task ExtractSummaryBatchWithRankOrderTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -121,7 +118,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task ExtractSummaryBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -147,7 +143,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task ExtractSummaryBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -165,7 +160,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task ExtractSummaryBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -189,7 +183,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task ExtractSummaryBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -207,7 +200,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task ExtractSummaryBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -231,7 +223,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task ExtractSummaryBatchConvenienceWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -249,7 +240,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task AnalyzeOperationExtractSummaryWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();

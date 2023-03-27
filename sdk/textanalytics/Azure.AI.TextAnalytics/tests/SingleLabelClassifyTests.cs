@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -44,7 +43,6 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyWithDisableServiceLogs()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -69,7 +67,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -105,7 +102,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -133,7 +129,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -166,7 +161,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyBatchTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -194,7 +188,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -227,7 +220,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         [Ignore("Issue https://github.com/Azure/azure-sdk-for-net/issues/25152")]
         public async Task SingleLabelClassifyWithMultipleActions()
         {
@@ -265,7 +257,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task StartSingleLabelClassify()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -280,7 +271,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         public async Task StartSingleLabelClassifyWithName()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -299,7 +289,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task SingleLabelClassifyBatchConvenienceWithAutoDetectedLanguageTest()
         {
@@ -318,7 +307,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeOperationSingleLabelClassifyWithAutoDetectedLanguageTest()
         {
