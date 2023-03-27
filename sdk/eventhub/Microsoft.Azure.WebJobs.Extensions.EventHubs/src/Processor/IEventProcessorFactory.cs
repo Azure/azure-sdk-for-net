@@ -5,6 +5,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
     internal interface IEventProcessorFactory
     {
-        IEventProcessor CreateEventProcessor();
+        IEventProcessor CreatePartitionProcessor();
     }
 }

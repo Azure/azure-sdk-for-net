@@ -33,7 +33,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             return anonymousAccess ? CreateAnonymousClient() : CreateAuthenticatedClient();
         }
 
-        public ContainerRegistryBlobClient CreateBlobClient(string repository)
+        public ContainerRegistryContentClient CreateBlobClient(string repository, int? chunkSize = default)
         {
             string endpoint = TestEnvironment.Endpoint;
             Uri authorityHost = GetAuthorityHost(endpoint);
@@ -44,7 +44,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 Audience = audience
             });
 
-            return InstrumentClient(new ContainerRegistryBlobClient(
+            return InstrumentClient(new ContainerRegistryContentClient(
                     new Uri(endpoint),
                     repository,
                     TestEnvironment.Credential,
@@ -171,12 +171,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 });
         }
 
-        private ContainerRegistryBlobClient GetUploadClient(Uri endpoint, string repository)
+        private ContainerRegistryContentClient GetUploadClient(Uri endpoint, string repository)
         {
             Uri authorityHost = GetAuthorityHost(endpoint.ToString());
 
             // We won't record the set-up calls, so don't instrument this client.
-            return new ContainerRegistryBlobClient(endpoint,
+            return new ContainerRegistryContentClient(endpoint,
                 repository,
                 TestEnvironment.Credential,
                 new ContainerRegistryClientOptions()

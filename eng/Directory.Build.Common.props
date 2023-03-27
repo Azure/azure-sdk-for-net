@@ -78,7 +78,7 @@
 
   <PropertyGroup>
     <EnableClientSdkAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableClientSdkAnalyzers>
-    <EnableNetAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableNetAnalyzers>
+    <EnableMicrosoftCodeAnalysisNetAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableMicrosoftCodeAnalysisNetAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <EnableBannedApiAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableBannedApiAnalyzers>
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
