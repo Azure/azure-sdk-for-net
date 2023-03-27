@@ -40,7 +40,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-2769/providers/Microsoft.Communication/emailServices/email-test6794?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-2769/providers/Microsoft.Communication/emailServices/email-test6794?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -92,7 +92,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-2769/providers/Microsoft.Communication/emailServices/email-test6794/domains/domain-3197.com?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-2769/providers/Microsoft.Communication/emailServices/email-test6794/domains/domain-3197.com?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -191,7 +191,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-2769/providers/Microsoft.Communication/emailServices/email-test6794/domains/domain-3197.com/senderUsernames/un-3118?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-2769/providers/Microsoft.Communication/emailServices/email-test6794/domains/domain-3197.com/senderUsernames/un-3118?api-version=2023-03-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -250,7 +250,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-2769/providers/Microsoft.Communication/emailServices/email-test6794/domains/domain-3197.com/senderUsernames?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-2769/providers/Microsoft.Communication/emailServices/email-test6794/domains/domain-3197.com/senderUsernames?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -305,7 +305,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-2769/providers/Microsoft.Communication/emailServices/email-test6794/domains/domain-3197.com/senderUsernames?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-2769/providers/Microsoft.Communication/emailServices/email-test6794/domains/domain-3197.com/senderUsernames?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -360,7 +360,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/communication-rg-2769/providers/Microsoft.Communication/emailServices/email-test6794/domains/domain-3197.com/senderUsernames/un-3118?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/communication-rg-2769/providers/Microsoft.Communication/emailServices/email-test6794/domains/domain-3197.com/senderUsernames/un-3118?api-version=2023-03-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",

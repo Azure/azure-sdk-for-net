@@ -40,7 +40,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-8824/providers/Microsoft.Communication/emailServices/email-service-3690?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-8824/providers/Microsoft.Communication/emailServices/email-service-3690?api-version=2023-03-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -62,7 +62,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+        "Azure-AsyncOperation": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "621",
         "Content-Type": "application/json; charset=utf-8",
@@ -105,7 +105,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -143,7 +143,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -181,7 +181,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -219,7 +219,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -257,7 +257,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -295,7 +295,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -333,7 +333,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -371,7 +371,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -409,7 +409,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/039c290e-24b2-43f1-8787-bf0cd35770cc*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -448,7 +448,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-8824/providers/Microsoft.Communication/emailServices/email-service-3690?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-8824/providers/Microsoft.Communication/emailServices/email-service-3690?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -499,7 +499,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-8824/providers/Microsoft.Communication/emailServices/email-service-3690?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-8824/providers/Microsoft.Communication/emailServices/email-service-3690?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -551,7 +551,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-8824/providers/Microsoft.Communication/emailServices?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-8824/providers/Microsoft.Communication/emailServices?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -606,7 +606,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-8824/providers/Microsoft.Communication/emailServices/email-service-3690?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/resourceGroups/Communication-RG-8824/providers/Microsoft.Communication/emailServices/email-service-3690?api-version=2023-03-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -620,14 +620,14 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+        "Azure-AsyncOperation": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "4",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 21 Mar 2023 14:05:19 GMT",
         "ETag": "\u00227801f841-0000-0700-0000-6419b9a00000\u0022",
         "Expires": "-1",
-        "Location": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+        "Location": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
@@ -644,7 +644,7 @@
       "ResponseBody": "null"
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -682,7 +682,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -720,7 +720,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -758,7 +758,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -796,7 +796,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -834,7 +834,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -872,7 +872,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -910,7 +910,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -948,7 +948,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -986,7 +986,7 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-31",
+      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/ce1bff77-08c1-4199-b7a5-52194a42b6ce/providers/Microsoft.Communication/locations/CENTRALUS/operationStatuses/11eeb570-a322-49b6-8870-73a5e6555694*B358BD0F03468A61F6E712489CDB1DF3AE3893AD7EE591D65FE0C836102FB6F1?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",

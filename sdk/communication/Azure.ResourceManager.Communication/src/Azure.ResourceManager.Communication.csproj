@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.0</Version>
+    <Version>1.1.0-beta.7</Version>
     <PackageId>Azure.ResourceManager.Communication</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Communication.</Description>
     <PackageTags>azure;management;communication</PackageTags>

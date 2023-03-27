@@ -1,15 +1,14 @@
 # Release History
 
-## 1.1.0 (2023-03-31)
+## 1.1.0-beta.7 (Unreleased)
 
 ### Features Added
-- Added SenderUsernameResource, SenderUsernameResourceCollection and SenderUsernameResourceData to support the new resource type.
 
 ### Breaking Changes
-- This refresh updates `Azure.ResourceManager.Communication` library to the Azure resource management SDK standards and matches the patterns in the rest of the new Azure management libraries. [Resource management using the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/resource-management?tabs=PowerShell)
-- Removed ValidSenderUsernames property from CommunicationServiceResourceData.
-- CommunicationResource RegenerateKey and RegenerateKeyAsync are no longer marked as long running operations.
-- CommunicationResource Update and UpdateAsync are no longer marked as long running operations.
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.1.0-beta.6 (2023-02-14)
 
