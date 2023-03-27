@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- If diagnostic tracing is enabled, diagnostic tracing information is retained on `EventData` instances when they are added to an `EventDataBatch`. This matches the existing behavior when sending events using the `SendEventsAsync` method that takes an `IEnumerable<EventData>`.
+
 ### Bugs Fixed
 
 - Changed the approach that the event processor uses to validate permissions on startup to ensure that it does not interrupt other processors already running by temporarily asserting ownership of a partition.
