@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The SendDtmfOptions. </summary>
     internal partial class SendDtmfOptionsInternal
     {
-        /// <summary> Initializes a new instance of SendDtmfOptions. </summary>
+        /// <summary> Initializes a new instance of SendDtmfOptionsInternal. </summary>
         /// <param name="targetParticipant"> Target participant of Send DTMF tone. </param>
         /// <param name="tones"> The captured tones. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> or <paramref name="tones"/> is null. </exception>

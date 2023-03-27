@@ -8,35 +8,29 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ContinuousDtmfRecognitionToneReceived. </summary>
-    internal partial class ContinuousDtmfRecognitionToneReceived
+    public partial class ContinuousDtmfRecognitionToneReceived
     {
-        /// <summary> Initializes a new instance of DtmfToneReceived. </summary>
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
         internal ContinuousDtmfRecognitionToneReceived()
         {
         }
 
-        internal ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
+        /// <param name="toneInfo"> Information about Tone. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId or skype chain ID. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        internal ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo, string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation)
         {
-        ToneInfo = toneInfo;
+            ToneInfo = toneInfo;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
-            OperationContext = operationContext;
             ResultInformation = resultInformation;
-            
         }
 
         /// <summary> Information about Tone. </summary>
         public ToneInfo ToneInfo { get; }
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Server call ID. </summary>
-        public string ServerCallId { get; }
-        /// <summary> Correlation ID for event to call correlation. Also called ChainId or skype chain ID. </summary>
-        public string CorrelationId { get; }
-        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
-        public string OperationContext { get; }
-        /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
-        public ResultInformation ResultInformation { get; }
     }
 }

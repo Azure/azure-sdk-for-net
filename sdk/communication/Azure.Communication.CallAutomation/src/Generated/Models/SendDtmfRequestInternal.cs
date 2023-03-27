@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The SendDtmfRequest. <summary>
+    /// <summary> The SendDtmfRequest. </summary>
     internal partial class SendDtmfRequestInternal
     {
-        /// <summary> Initializes a new instance of SendDtmfRequest. </summary>
+        /// <summary> Initializes a new instance of SendDtmfRequestInternal. </summary>
         /// <param name="sendDtmfOptions"> Defines options for continuous dtmf recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sendDtmfOptions"/> is null. </exception>
         public SendDtmfRequestInternal(SendDtmfOptionsInternal sendDtmfOptions)

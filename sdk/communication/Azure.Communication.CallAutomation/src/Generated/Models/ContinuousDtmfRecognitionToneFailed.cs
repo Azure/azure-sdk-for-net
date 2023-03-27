@@ -7,25 +7,30 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The DtmfToneFailed. </summary>
-    internal partial class DtmfToneFailed
+    /// <summary> The ContinuousDtmfRecognitionToneFailed. </summary>
+    public partial class ContinuousDtmfRecognitionToneFailed
     {
-        /// <summary> Initializes a new instance of DtmfToneFailed. </summary>
-        internal DtmfToneFailed()
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
+        internal ContinuousDtmfRecognitionToneFailed()
         {
+        }
+
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
+        /// <param name="toneInfo"> Information about Tone. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        internal ContinuousDtmfRecognitionToneFailed(ToneInfo toneInfo, string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation)
+        {
+            ToneInfo = toneInfo;
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            ResultInformation = resultInformation;
         }
 
         /// <summary> Information about Tone. </summary>
         public ToneInfo ToneInfo { get; }
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Server call ID. </summary>
-        public string ServerCallId { get; }
-        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
-        public string CorrelationId { get; }
-        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
-        public string OperationContext { get; }
-        /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
-        public ResultInformation ResultInformation { get; }
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     [CodeGenModel("ContinuousDtmfRecognitionOptions")]
     internal partial class ContinuousDtmfRecognitionOptionsInternal

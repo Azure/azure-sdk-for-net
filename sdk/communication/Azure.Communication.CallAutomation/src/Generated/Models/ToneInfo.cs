@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The information about the tone. </summary>
-    internal partial class ToneInfo
+    public partial class ToneInfo
     {
         /// <summary> Initializes a new instance of ToneInfo. </summary>
         /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
