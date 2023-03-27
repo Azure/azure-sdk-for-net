@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeBackupConfiguration(backupPolicyId.Value, Optional.ToNullable(policyEnforced), Optional.ToNullable(backupEnabled));
+            return new NetAppVolumeBackupConfiguration(backupPolicyId.Value, Optional.ToNullable(policyEnforced), Optional.ToNullable(backupEnabled)){ VaultId = vaultId };
         }
     }
 }

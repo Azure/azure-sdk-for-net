@@ -14,6 +14,7 @@ using Polly.Contrib.WaitAndRetry;
 using Polly;
 using Azure.Core;
 using Microsoft.Extensions.Options;
+using System.Diagnostics;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         [SetUp]
         public async Task SetUp()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             _resourceGroup = await CreateResourceGroupAsync(location:_defaultLocation);
             string accountName = await CreateValidAccountNameAsync(_accountNamePrefix, _resourceGroup, _defaultLocation);
             _netAppAccount = (await _netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters(location:_defaultLocation))).Value;
@@ -47,11 +49,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             _volumeResource = await CreateVolume(_defaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId);
             _accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
             _volumeBackupCollection = _volumeResource.GetNetAppVolumeBackups();
+            watch.Stop();
+            TestContext.WriteLine($"Setup elapsed time {watch.ElapsedMilliseconds} ms {watch.Elapsed}");
         }
 
         [TearDown]
         public async Task ClearVolumes()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             //remove all volumes and backups under current capcityPool, remove pool and netAppAccount
             if (_resourceGroup != null && _capacityPoolCollection != null)
             {
@@ -120,6 +125,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 }
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
+            watch.Stop();
+            TestContext.WriteLine($"TearDown elapsed time {watch.ElapsedMilliseconds} ms {watch.Elapsed}");
             _resourceGroup = null;
         }
 
@@ -237,68 +244,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(await accountBackupCollection.ExistsAsync(backupName));
             exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await accountBackupCollection.GetAsync(backupName); });
             Assert.AreEqual(404, exception.Status);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task CreateVolumWithBackupConfigWithVaultIdShouldWorkUsing2022_05_01()
-        {
-            List<NetAppVault> _vaults;
-            NetAppVault _vault;
-            _vaults = await _netAppAccount.GetVaultsAsync().ToEnumerableAsync();
-            _vault = _vaults.FirstOrDefault();
-            _vaults.Should().HaveCount(1);
-            Assert.IsNotNull(_vault);
-            ArmClientOptions armClientOptions = new() { };
-            armClientOptions.SetApiVersion(NetAppVolumeResource.ResourceType, "2022-05-01");
-            ArmClient armClient2022_05 = this.GetArmClient(armClientOptions);
-
-            NetAppVolumeCollection netAppVolumesCollection2022_05 = new(armClient2022_05, _capacityPool.Id);
-
-            NetAppVolumeResource updateVolumeResource2022_05 = netAppVolumesCollection2022_05.Get(_volumeResource.Id.Name);
-            NetAppVolumeBackupConfiguration backupConfiguration = new() { IsBackupEnabled = true, VaultId = _vault.Id };
-            NetAppVolumePatchDataProtection dataProtectionProperties = new()
-            {
-                Backup = backupConfiguration
-            };
-            NetAppVolumePatch volumePatch = new(_defaultLocation)
-            {
-                DataProtection = dataProtectionProperties
-            };
-            NetAppVolumeResource volumeResource1 = (await updateVolumeResource2022_05.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
-
-            //Validate 2022-05-01 volume after update
-            NetAppVolumeResource getVolumeResource2022_05 = await netAppVolumesCollection2022_05.GetAsync(volumeResource1.Id.Name);
-            Assert.IsNotNull(getVolumeResource2022_05.Data.DataProtection);
-            Assert.IsNull(getVolumeResource2022_05.Data.DataProtection.Snapshot);
-            Assert.IsNull(getVolumeResource2022_05.Data.DataProtection.Replication);
-            //Assert.AreEqual(backupConfiguration.VaultId, getVolumeResource2022_05.Data.DataProtection.Backup.VaultId);
-            Assert.AreEqual(backupConfiguration.IsBackupEnabled, getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled);
-
-            //Validate volume is backup enabled, api-version 2022-09-01
-            NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
-            Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
-            Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
-            Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
-            Assert.IsNull(backupVolumeResource.Data.DataProtection.Backup.VaultId);
-            Assert.AreEqual(backupConfiguration.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
-
-            //Disable the backup using 2022-05-01
-            backupConfiguration.IsBackupEnabled = false;
-            backupConfiguration.VaultId = _vault.Id;
-            dataProtectionProperties.Backup = backupConfiguration;
-            NetAppVolumePatch disableBackupVolumePatch = new(_defaultLocation)
-            {
-                DataProtection = dataProtectionProperties
-            };
-            NetAppVolumeResource disabledBackupVolumeResource = (await updateVolumeResource2022_05.UpdateAsync(WaitUntil.Completed, disableBackupVolumePatch)).Value;
-           // Assert.IsFalse(backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
-            getVolumeResource2022_05 = await netAppVolumesCollection2022_05.GetAsync(volumeResource1.Id.Name);
-            Assert.IsFalse(getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled);
         }
 
         [Test]

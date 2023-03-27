@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.NetApp.Tests
         {
         }
 
+        protected NetAppManagementTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
+        {
+        }
+
         protected NetAppManagementTestBase(bool isAsync)
             : base(isAsync)
         {

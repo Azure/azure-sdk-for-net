@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         {
         }
 
+        protected NetAppTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
+        {
+        }
+
         public static NetAppAccountData GetDefaultNetAppAccountParameters(string location = "", NetAppAccountActiveDirectory activeDirectory = null)
         {
             if (string.IsNullOrWhiteSpace(location))
