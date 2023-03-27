@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallAutomation
@@ -359,6 +358,135 @@ namespace Azure.Communication.CallAutomation
             }
             else
             { return null; }
+        }
+
+        /// <summary>
+        /// Starts recognizing Dtmf tones continuously in async mode.
+        /// </summary>
+        /// <param name="continuousDtmfOptions">Configuration attributes to start continuous Dtmf Recognition.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<StartContinuousDtmfRecognizingResult>> StartContinuousDtmfRecognizingAsync(ContinuousDtmfRecognizeOptions continuousDtmfOptions,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartContinuousDtmfRecognizing)}");
+            scope.Start();
+            try
+            {
+                ContinuousDtmfRecognitionRequestInternal request = CreateContinuousDtmfRequest(continuousDtmfOptions);
+
+                var response = await CallMediaRestClient.StartContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+
+                var result = new StartContinuousDtmfRecognizingResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts recognizing Dtmf tones continuously.
+        /// </summary>
+        /// <param name="continuousDtmfOptions">Configuration attributes to start continuous Dtmf Recognition.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<StartContinuousDtmfRecognizingResult> StartContinuousDtmfRecognizing(ContinuousDtmfRecognizeOptions continuousDtmfOptions,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartContinuousDtmfRecognizing)}");
+            scope.Start();
+            try
+            {
+                ContinuousDtmfRecognitionRequestInternal request = CreateContinuousDtmfRequest(continuousDtmfOptions);
+
+                var response = CallMediaRestClient.StartContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
+
+                var result = new StartContinuousDtmfRecognizingResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+/*        /// <summary>
+        /// Stops recognizing continuous Dtmf tones in async mode.
+        /// </summary>
+        /// <param name="continuousDtmfOptions">Configuration attributes to stop continuous Dtmf Recognition.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<StopContinuousDtmfRecognizingResult>> StopContinuousDtmfRecognizingAsync(ContinuousDtmfRecognizeOptions continuousDtmfOptions,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopContinuousDtmfRecognizing)}");
+            scope.Start();
+            try
+            {
+                ContinuousDtmfRecognitionRequestInternal request = CreateContinuousDtmfRequest(continuousDtmfOptions);
+
+                var response = await CallMediaRestClient.StopContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+
+                var result = new StopContinuousDtmfRecognizingResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops recognizing continuous Dtmf tones.
+        /// </summary>
+        /// <param name="continuousDtmfOptions">Configuration attributes to stop continuous Dtmf Recognition.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<StopContinuousDtmfRecognizingResult> StopContinuousDtmfRecognizing(ContinuousDtmfRecognizeOptions continuousDtmfOptions,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopContinuousDtmfRecognizing)}");
+            scope.Start();
+            try
+            {
+                ContinuousDtmfRecognitionRequestInternal request = CreateContinuousDtmfRequest(continuousDtmfOptions);
+
+                var response = CallMediaRestClient.StopContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
+
+                var result = new StopContinuousDtmfRecognizingResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }*/
+
+        private ContinuousDtmfRecognitionRequestInternal CreateContinuousDtmfRequest(ContinuousDtmfRecognizeOptions continuousDtmfOptions)
+        {
+            if (continuousDtmfOptions == null)
+            {
+                throw new ArgumentNullException(nameof(continuousDtmfOptions));
+            }
+
+            ContinuousDtmfRecognitionOptionsInternal optionsInternal = new ContinuousDtmfRecognitionOptionsInternal
+                (CommunicationIdentifierSerializer.Serialize(continuousDtmfOptions.TargetParticipant));
+
+            return new ContinuousDtmfRecognitionRequestInternal(optionsInternal);
         }
     }
 }
