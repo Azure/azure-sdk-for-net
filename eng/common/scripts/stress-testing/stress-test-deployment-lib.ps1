@@ -383,10 +383,12 @@ function CheckDependencies()
 }
 
 function generateRetryTestsHelmValues ($pkg, $releaseName, $generatedHelmValues) {
-    $pods = kubectl get pods -n $pkg.namespace -o json | ConvertFrom-Json
+    $podOutput = RunOrExitOnFailure kubectl get pods -n $pkg.namespace -o json
+    $pods = $podOutput | ConvertFrom-Json
 
     # Get all jobs within this helm release
-    $helmResources = helm status -n $pkg.Namespace $pkg.ReleaseName --show-resources
+    
+    $helmStatusOutput = RunOrExitOnFailure helm status -n $pkg.Namespace $pkg.ReleaseName --show-resources
     # -----Example output-----
     # NAME: <Release Name>
     # LAST DEPLOYED: Mon Jan 01 12:12:12 2020
@@ -408,12 +410,12 @@ function generateRetryTestsHelmValues ($pkg, $releaseName, $generatedHelmValues)
     # <job name 2>   0/1          5h5m       5h5m
     $discoveredJob = $False
     $jobs = @()
-    foreach ($helmResource in $helmResources) {
-        if ($discoveredJob -and $helmResource -match "==>") {break}
+    foreach ($line in $helmStatusOutput) {
+        if ($discoveredJob -and $line -match "==>") {break}
         if ($discoveredJob) {
-            $jobs += ($helmResource -split '\s+')[0] | Where-Object {($_ -ne "NAME") -and ($_)}
+            $jobs += ($line -split '\s+')[0] | Where-Object {($_ -ne "NAME") -and ($_)}
         }
-        if ($helmResource -match "==> v1/Job") {
+        if ($line -match "==> v1/Job") {
             $discoveredJob = $True
         }
     }
@@ -426,7 +428,8 @@ function generateRetryTestsHelmValues ($pkg, $releaseName, $generatedHelmValues)
             $revision = $jobRevision
         }
 
-        $podPhase = kubectl describe jobs -n $pkg.Namespace $job | Select-String "0 Failed"
+        $jobOutput = RunOrExitOnFailure kubectl describe jobs -n $pkg.Namespace $job
+        $podPhase = $jobOutput | Select-String "0 Failed"
         if ([System.String]::IsNullOrEmpty($podPhase)) {
             $failedJobsScenario += $job.split("-$($pkg.ReleaseName)")[0]
         }
