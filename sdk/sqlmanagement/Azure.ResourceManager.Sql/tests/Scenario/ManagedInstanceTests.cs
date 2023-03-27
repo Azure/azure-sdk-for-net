@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-        private string SubnetId;
+        private string _subnetId;
 
         public ManagedInstanceTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -32,46 +32,10 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             ResourceGroupResource resourceGroup = rgLro.Value;
             _resourceGroupIdentifier = resourceGroup.Id;
 
-            //Prerequisites: 1. create NetworkSecurityGroup
-            string networkSecurityGroupName = SessionRecording.GenerateAssetName("networkSecurityGroup-");
-            NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
-            {
-                Location = AzureLocation.WestUS2,
-            };
-            var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
-
-            //2. create Route table
-            string routeTableName = SessionRecording.GenerateAssetName("routeTable-");
-            RouteTableData routeTableData = new RouteTableData()
-            {
-                Location = AzureLocation.WestUS2,
-            };
-            var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTableData);
-
-            //3. create Virtual network
+            // create Virtual network
             string vnetName = SessionRecording.GenerateAssetName("vnet-");
-            var vnetData = new VirtualNetworkData()
-            {
-                Location = "westus2",
-                Subnets =
-                {
-                    new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
-                    new SubnetData()
-                    {
-                        Name = "ManagedInstance",
-                        AddressPrefix = "10.10.2.0/24",
-                        Delegations =
-                        {
-                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql/managedInstances"}
-                        },
-                        RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
-                        NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
-                    }
-                },
-            };
-            vnetData.AddressPrefixes.Add("10.10.0.0/16");
-            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
-            SubnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
+            var vnet = await CreateVirtualNetwork(vnetName, resourceGroup);
+            _subnetId = SubnetResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, vnetName, "ManagedInstance");
             await StopSessionRecordingAsync();
         }
 
@@ -98,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 AdministratorLogin = $"admin-{managedInstanceName}",
                 AdministratorLoginPassword = CreateGeneralPassword(),
-                SubnetId = new ResourceIdentifier(SubnetId),
+                SubnetId = new ResourceIdentifier(_subnetId),
                 IsPublicDataEndpointEnabled = false,
                 MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default"),
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
@@ -136,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
             list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1,list.Count);
+            Assert.AreEqual(1, list.Count);
             Assert.AreEqual(managedInstanceName, list.FirstOrDefault().Data.Name);
             Assert.AreEqual("westus2", list.FirstOrDefault().Data.Location.ToString());
 

@@ -34,12 +34,9 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             // create Managed Instance
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
-            string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
-            string routeTableName = Recording.GenerateAssetName("route-table-");
             string vnetName = Recording.GenerateAssetName("vnet-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-
             string databaseName = Recording.GenerateAssetName("mi-database-");
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
             var collection = managedInstance.GetManagedDatabases();
 
             // 1.CreateOrUpdata

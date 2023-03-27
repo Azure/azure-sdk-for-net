@@ -44,17 +44,14 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             // Create Managed Instance
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
-            string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
-            string routeTableName = Recording.GenerateAssetName("route-table-");
             string vnetName = Recording.GenerateAssetName("vnet-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, networkSecurityGroupName, routeTableName, vnetName, AzureLocation.WestUS2, _resourceGroup);
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
 
             var collection = managedInstance.GetManagedInstancePrivateEndpointConnections();
 
             // Create Private endpoint
-            var vnet = _resourceGroup.GetVirtualNetworks().GetAllAsync().ToEnumerableAsync().Result.FirstOrDefault();
-            await CreateDefaultPrivateEndpoint(managedInstance, vnet, AzureLocation.WestUS2, _resourceGroup);
+            await CreateDefaultPrivateEndpoint(managedInstance, AzureLocation.WestUS2, _resourceGroup);
 
             // 1.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();

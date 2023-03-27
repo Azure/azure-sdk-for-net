@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     {
         private ResourceGroupResource _resourceGroup;
 
-        public AllowedConnectionsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public AllowedConnectionsTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             await CreateVirtualMachine(_resourceGroup, networkInterface.Id, vmName);
             if (TestEnvironment.Mode == RecordedTestMode.Record)
             {
-                //Thread.Sleep(20 * 60 * 1000); // wait for VM auto connect, costs 20mins or more
+                Thread.Sleep(20 * 60 * 1000); // wait for VM auto connect, costs 20mins or more
             }
         }
 

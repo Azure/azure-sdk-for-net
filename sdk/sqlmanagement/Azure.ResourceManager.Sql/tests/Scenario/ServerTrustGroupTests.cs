@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string vnetName2 = Recording.GenerateAssetName("vnet-");
             Task[] tasks = new Task[]
             {
-                CreateDefaultManagedInstance(managedInstanceName1, networkSecurityGroupName1, routeTableName1, vnetName1, AzureLocation.WestUS2, _resourceGroup),
-                CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, AzureLocation.WestUS2, _resourceGroup),
+                CreateDefaultManagedInstance(managedInstanceName1, vnetName1, AzureLocation.WestUS2, _resourceGroup),
+                CreateDefaultManagedInstance(managedInstanceName2, vnetName2, AzureLocation.WestUS2, _resourceGroup),
             };
             Task.WaitAll(tasks);
             ResourceIdentifier primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName1)).Value.Data.Id;
