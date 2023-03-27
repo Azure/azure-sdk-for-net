@@ -954,16 +954,18 @@ namespace Azure.Containers.ContainerRegistry
                     chunkSize = (int)chunkResult.Headers.ContentLength.Value;
 
                     int offset = 0;
+                    int remaining = chunkSize;
                     int length = async ?
-                        await chunkResult.Value.ReadAsync(buffer, offset, chunkSize, cancellationToken).ConfigureAwait(false) :
-                        chunkResult.Value.Read(buffer, offset, chunkSize);
+                        await chunkResult.Value.ReadAsync(buffer, offset, remaining, cancellationToken).ConfigureAwait(false) :
+                        chunkResult.Value.Read(buffer, offset, remaining);
 
                     while (offset < chunkSize)
                     {
                         offset += length;
+                        remaining -= length;
                         length = async ?
-                            await chunkResult.Value.ReadAsync(buffer, offset, chunkSize, cancellationToken).ConfigureAwait(false) :
-                            chunkResult.Value.Read(buffer, offset, chunkSize);
+                            await chunkResult.Value.ReadAsync(buffer, offset, remaining, cancellationToken).ConfigureAwait(false) :
+                            chunkResult.Value.Read(buffer, offset, remaining);
                     }
 
                     sha256.TransformBlock(buffer, 0, chunkSize, buffer, 0);

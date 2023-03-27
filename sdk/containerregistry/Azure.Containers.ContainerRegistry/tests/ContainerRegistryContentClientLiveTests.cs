@@ -563,6 +563,34 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        public async Task CanDownloadBlobToStream_Large()
+        {
+            // Download a blob that is larger than the max chunk size.
+            int blobSize = 6 * 1024 * 1024;
+
+            // Arrange
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
+
+            byte[] data = GetRandomBuffer(blobSize);
+
+            using MemoryStream uploadStream = new(data);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
+            string digest = uploadResult.Digest;
+
+            // Act
+            using var downloadStream = new MemoryStream();
+            await client.DownloadBlobToAsync(digest, downloadStream);
+            string digestOfDownload = BlobHelper.ComputeDigest(downloadStream);
+
+            Assert.AreEqual(digest, digestOfDownload);
+            Assert.AreEqual(blobSize, downloadStream.Length);
+
+            // Clean up
+            await client.DeleteBlobAsync(digest);
+        }
+
+        [RecordedTest]
         [Ignore(reason: "We don't currently support configurable chunk size on download.")]
         public async Task CanDownloadBlobToStreamInEqualSizeChunks()
         {
