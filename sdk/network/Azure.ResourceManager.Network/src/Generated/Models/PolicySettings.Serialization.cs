@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsDefined(RequestBodyCheck))
             {
-                writer.WritePropertyName("requestBodyCheck");
+                writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
             if (Optional.IsDefined(MaxRequestBodySizeInKb))
             {
-                writer.WritePropertyName("maxRequestBodySizeInKb");
+                writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
             }
             if (Optional.IsDefined(FileUploadLimitInMb))
             {
-                writer.WritePropertyName("fileUploadLimitInMb");
+                writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> fileUploadLimitInMb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
                     state = new WebApplicationFirewallEnabledState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                     mode = new WebApplicationFirewallMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requestBodyCheck"))
+                if (property.NameEquals("requestBodyCheck"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
                     requestBodyCheck = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxRequestBodySizeInKb"))
+                if (property.NameEquals("maxRequestBodySizeInKb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                     maxRequestBodySizeInKb = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fileUploadLimitInMb"))
+                if (property.NameEquals("fileUploadLimitInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ObjectType))
             {
-                writer.WritePropertyName("objectType");
+                writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
             if (Optional.IsDefined(TargetStorageAccountId))
             {
-                writer.WritePropertyName("targetStorageAccountId");
+                writer.WritePropertyName("targetStorageAccountId"u8);
                 writer.WriteStringValue(TargetStorageAccountId);
             }
             writer.WriteEndObject();
@@ -31,17 +31,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static IdentityBasedRestoreDetails DeserializeIdentityBasedRestoreDetails(JsonElement element)
         {
             Optional<string> objectType = default;
-            Optional<string> targetStorageAccountId = default;
+            Optional<ResourceIdentifier> targetStorageAccountId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetStorageAccountId"))
+                if (property.NameEquals("targetStorageAccountId"u8))
                 {
-                    targetStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

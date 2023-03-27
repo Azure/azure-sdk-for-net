@@ -17,42 +17,42 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RxBytes))
             {
-                writer.WritePropertyName("rxBytes");
+                writer.WritePropertyName("rxBytes"u8);
                 writer.WriteNumberValue(RxBytes.Value);
             }
             if (Optional.IsDefined(RxPackets))
             {
-                writer.WritePropertyName("rxPackets");
+                writer.WritePropertyName("rxPackets"u8);
                 writer.WriteNumberValue(RxPackets.Value);
             }
             if (Optional.IsDefined(RxErrors))
             {
-                writer.WritePropertyName("rxErrors");
+                writer.WritePropertyName("rxErrors"u8);
                 writer.WriteNumberValue(RxErrors.Value);
             }
             if (Optional.IsDefined(RxDropped))
             {
-                writer.WritePropertyName("rxDropped");
+                writer.WritePropertyName("rxDropped"u8);
                 writer.WriteNumberValue(RxDropped.Value);
             }
             if (Optional.IsDefined(TxBytes))
             {
-                writer.WritePropertyName("txBytes");
+                writer.WritePropertyName("txBytes"u8);
                 writer.WriteNumberValue(TxBytes.Value);
             }
             if (Optional.IsDefined(TxPackets))
             {
-                writer.WritePropertyName("txPackets");
+                writer.WritePropertyName("txPackets"u8);
                 writer.WriteNumberValue(TxPackets.Value);
             }
             if (Optional.IsDefined(TxErrors))
             {
-                writer.WritePropertyName("txErrors");
+                writer.WritePropertyName("txErrors"u8);
                 writer.WriteNumberValue(TxErrors.Value);
             }
             if (Optional.IsDefined(TxDropped))
             {
-                writer.WritePropertyName("txDropped");
+                writer.WritePropertyName("txDropped"u8);
                 writer.WriteNumberValue(TxDropped.Value);
             }
             writer.WriteEndObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<long> txDropped = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rxBytes"))
+                if (property.NameEquals("rxBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                     rxBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rxPackets"))
+                if (property.NameEquals("rxPackets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     rxPackets = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rxErrors"))
+                if (property.NameEquals("rxErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     rxErrors = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rxDropped"))
+                if (property.NameEquals("rxDropped"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                     rxDropped = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("txBytes"))
+                if (property.NameEquals("txBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                     txBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("txPackets"))
+                if (property.NameEquals("txPackets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                     txPackets = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("txErrors"))
+                if (property.NameEquals("txErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                     txErrors = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("txDropped"))
+                if (property.NameEquals("txDropped"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

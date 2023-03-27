@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricArmId"))
+                if (property.NameEquals("fabricArmId"u8))
                 {
                     fabricArmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("processServer"))
+                if (property.NameEquals("processServer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     processServer = ProcessServerDetails.DeserializeProcessServerDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("rcmProxy"))
+                if (property.NameEquals("rcmProxy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     rcmProxy = RcmProxyDetails.DeserializeRcmProxyDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("pushInstaller"))
+                if (property.NameEquals("pushInstaller"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     pushInstaller = PushInstallerDetails.DeserializePushInstallerDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("replicationAgent"))
+                if (property.NameEquals("replicationAgent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     replicationAgent = ReplicationAgentDetails.DeserializeReplicationAgentDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("reprotectAgent"))
+                if (property.NameEquals("reprotectAgent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     reprotectAgent = ReprotectAgentDetails.DeserializeReprotectAgentDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("marsAgent"))
+                if (property.NameEquals("marsAgent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     marsAgent = MarsAgentDetails.DeserializeMarsAgentDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dra"))
+                if (property.NameEquals("dra"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     dra = DraDetails.DeserializeDraDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("switchProviderBlockingErrorDetails"))
+                if (property.NameEquals("switchProviderBlockingErrorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

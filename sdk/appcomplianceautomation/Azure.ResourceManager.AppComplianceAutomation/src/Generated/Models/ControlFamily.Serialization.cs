@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<IReadOnlyList<Control>> controls = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("familyName"))
+                if (property.NameEquals("familyName"u8))
                 {
                     familyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("familyType"))
+                if (property.NameEquals("familyType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     familyType = new ControlFamilyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("familyStatus"))
+                if (property.NameEquals("familyStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     familyStatus = new ControlFamilyStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("controls"))
+                if (property.NameEquals("controls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

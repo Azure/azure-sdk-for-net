@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StatusCode))
             {
-                writer.WritePropertyName("statusCode");
+                writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode.Value.ToString());
             }
             if (Optional.IsDefined(CustomErrorPageUri))
             {
-                writer.WritePropertyName("customErrorPageUrl");
+                writer.WritePropertyName("customErrorPageUrl"u8);
                 writer.WriteStringValue(CustomErrorPageUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<Uri> customErrorPageUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                     statusCode = new ApplicationGatewayCustomErrorStatusCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("customErrorPageUrl"))
+                if (property.NameEquals("customErrorPageUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

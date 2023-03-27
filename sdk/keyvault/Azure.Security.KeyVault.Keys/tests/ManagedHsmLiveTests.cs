@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V7_4_Preview_1,
+        KeyClientOptions.ServiceVersion.V7_4,
         KeyClientOptions.ServiceVersion.V7_3,
         KeyClientOptions.ServiceVersion.V7_2)]
     public class ManagedHsmLiveTests : KeyClientLiveTests
@@ -116,20 +116,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonElement keyElement = doc.RootElement.GetProperty("key").GetProperty("key");
             Assert.AreEqual(key.Id, keyElement.GetProperty("kid").GetString());
             Assert.AreEqual(JsonValueKind.String, keyElement.GetProperty("key_hsm").ValueKind);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_4_Preview_1)]
-        public async Task CreateOkpKey()
-        {
-            string keyName = Recording.GenerateId();
-
-            CreateOkpKeyOptions options = new(keyName, hardwareProtected: false);
-            KeyVaultKey key = await Client.CreateOkpKeyAsync(options);
-            RegisterForCleanup(key.Name);
-
-            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
-            AssertKeyVaultKeysEqual(key, keyReturned);
         }
     }
 }

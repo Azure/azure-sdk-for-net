@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the VirtualMachineRunCommand data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualMachineRunCommand data model.
+    /// Describes a Virtual Machine run command.
+    /// </summary>
     public partial class VirtualMachineRunCommandData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineRunCommandData. </summary>

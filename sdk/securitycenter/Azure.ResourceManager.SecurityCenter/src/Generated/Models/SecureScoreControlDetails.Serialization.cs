@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Definition))
             {
-                writer.WritePropertyName("definition");
+                writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
             }
-            writer.WritePropertyName("score");
+            writer.WritePropertyName("score"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<double> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("healthyResourceCount"))
+                        if (property0.NameEquals("healthyResourceCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             healthyResourceCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("unhealthyResourceCount"))
+                        if (property0.NameEquals("unhealthyResourceCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             unhealthyResourceCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("notApplicableResourceCount"))
+                        if (property0.NameEquals("notApplicableResourceCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             notApplicableResourceCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("weight"))
+                        if (property0.NameEquals("weight"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             weight = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("definition"))
+                        if (property0.NameEquals("definition"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             definition = SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("score"))
+                        if (property0.NameEquals("score"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("max"))
+                                if (property1.NameEquals("max"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                                     max = property1.Value.GetInt32();
                                     continue;
                                 }
-                                if (property1.NameEquals("current"))
+                                if (property1.NameEquals("current"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                                     current = property1.Value.GetDouble();
                                     continue;
                                 }
-                                if (property1.NameEquals("percentage"))
+                                if (property1.NameEquals("percentage"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {

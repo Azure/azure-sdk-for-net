@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ApiVersions))
             {
-                writer.WritePropertyName("apiVersions");
+                writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
                 foreach (var item in ApiVersions)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(SwaggerSpecFolderUri))
             {
-                writer.WritePropertyName("swaggerSpecFolderUri");
+                writer.WritePropertyName("swaggerSpecFolderUri"u8);
                 writer.WriteStringValue(SwaggerSpecFolderUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<Uri> swaggerSpecFolderUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("apiVersions"))
+                if (property.NameEquals("apiVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     apiVersions = array;
                     continue;
                 }
-                if (property.NameEquals("swaggerSpecFolderUri"))
+                if (property.NameEquals("swaggerSpecFolderUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

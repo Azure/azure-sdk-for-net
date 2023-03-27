@@ -106,14 +106,37 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task ListLoadTest()
         {
+            int pageSizeHint = 2;
             AsyncPageable<BinaryData> responsePageable = _loadTestAdministrationClient.GetTestsAsync();
-            await foreach (var page in responsePageable.AsPages())
+
+            int count = 0;
+
+            await foreach (var page in responsePageable.AsPages(pageSizeHint: pageSizeHint))
             {
+                count++;
+
                foreach (var value in page.Values)
                {
                     JsonDocument jsonDocument = JsonDocument.Parse(value.ToString());
-                    Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
+                    Assert.NotNull(jsonDocument.RootElement.GetProperty("testId").ToString());
+
+                    Console.WriteLine(value.ToString());
                }
+            }
+
+            int i = 0;
+            await foreach (var page in responsePageable.AsPages(pageSizeHint: pageSizeHint))
+            {
+                i++;
+
+                if (i<count)
+                {
+                    Assert.AreEqual(pageSizeHint, page.Values.Count);
+                }
+                else
+                {
+                    Assert.LessOrEqual(page.Values.Count, pageSizeHint);
+                }
             }
         }
 
@@ -295,7 +318,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task UploadTestFile()
         {
-            FileUploadOperation fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
+            FileUploadResultOperation fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
                 WaitUntil.Completed, _testId, _fileName, RequestContent.Create(
                     File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
                     )

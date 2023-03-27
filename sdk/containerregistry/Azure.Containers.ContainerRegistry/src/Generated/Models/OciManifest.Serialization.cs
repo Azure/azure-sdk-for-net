@@ -21,12 +21,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             writer.WriteStartObject();
             if (Optional.IsDefined(Config))
             {
-                writer.WritePropertyName("config");
+                writer.WritePropertyName("config"u8);
                 writer.WriteObjectValue(Config);
             }
             if (Optional.IsCollectionDefined(Layers))
             {
-                writer.WritePropertyName("layers");
+                writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
@@ -38,7 +38,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 if (Annotations != null)
                 {
-                    writer.WritePropertyName("annotations");
+                    writer.WritePropertyName("annotations"u8);
                     writer.WriteObjectValue(Annotations);
                 }
                 else
@@ -48,7 +48,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
             if (Optional.IsDefined(SchemaVersion))
             {
-                writer.WritePropertyName("schemaVersion");
+                writer.WritePropertyName("schemaVersion"u8);
                 writer.WriteNumberValue(SchemaVersion.Value);
             }
             writer.WriteEndObject();
@@ -62,7 +62,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("config"))
+                if (property.NameEquals("config"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     config = OciBlobDescriptor.DeserializeOciBlobDescriptor(property.Value);
                     continue;
                 }
-                if (property.NameEquals("layers"))
+                if (property.NameEquals("layers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     layers = array;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     annotations = OciAnnotations.DeserializeOciAnnotations(property.Value);
                     continue;
                 }
-                if (property.NameEquals("schemaVersion"))
+                if (property.NameEquals("schemaVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     continue;
                 }
             }
-            return new OciManifest(Optional.ToNullable(schemaVersion), config.Value, Optional.ToList(layers), annotations.Value);
+            return new OciManifest(config.Value, Optional.ToList(layers), annotations.Value, Optional.ToNullable(schemaVersion));
         }
 
         internal partial class OciManifestConverter : JsonConverter<OciManifest>

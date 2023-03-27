@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<IReadOnlyList<InstancesSearchStringSuggestion>> suggestions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("suggestions"))
+                if (property.NameEquals("suggestions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

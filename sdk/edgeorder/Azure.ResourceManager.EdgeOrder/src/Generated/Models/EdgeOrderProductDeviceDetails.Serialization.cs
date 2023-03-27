@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<string> managementResourceTenantId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serialNumber"))
+                if (property.NameEquals("serialNumber"u8))
                 {
                     serialNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managementResourceId"))
+                if (property.NameEquals("managementResourceId"u8))
                 {
                     managementResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managementResourceTenantId"))
+                if (property.NameEquals("managementResourceTenantId"u8))
                 {
                     managementResourceTenantId = property.Value.GetString();
                     continue;

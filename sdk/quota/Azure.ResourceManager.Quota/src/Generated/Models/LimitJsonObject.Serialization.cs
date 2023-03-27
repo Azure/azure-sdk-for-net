@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Quota.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("limitObjectType");
+            writer.WritePropertyName("limitObjectType"u8);
             writer.WriteStringValue(LimitObjectType.ToString());
             writer.WriteEndObject();
         }

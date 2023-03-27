@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Automation
             Optional<IReadOnlyDictionary<string, string>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Automation
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Automation
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("jobScheduleId"))
+                        if (property0.NameEquals("jobScheduleId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automation
                             jobScheduleId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("schedule"))
+                        if (property0.NameEquals("schedule"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Automation
                             schedule = ScheduleAssociationProperty.DeserializeScheduleAssociationProperty(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("runbook"))
+                        if (property0.NameEquals("runbook"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.Automation
                             runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("runOn"))
+                        if (property0.NameEquals("runOn"u8))
                         {
                             runOn = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("parameters"))
+                        if (property0.NameEquals("parameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

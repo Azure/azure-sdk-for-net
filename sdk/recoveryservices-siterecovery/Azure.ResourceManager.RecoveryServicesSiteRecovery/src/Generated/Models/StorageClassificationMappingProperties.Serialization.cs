@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> targetStorageClassificationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetStorageClassificationId"))
+                if (property.NameEquals("targetStorageClassificationId"u8))
                 {
                     targetStorageClassificationId = property.Value.GetString();
                     continue;

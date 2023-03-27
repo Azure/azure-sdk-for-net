@@ -10,39 +10,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class JWKHeader : IUtf8JsonSerializable
+    internal partial class JWKHeader
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Crv))
-            {
-                writer.WritePropertyName("crv");
-                writer.WriteStringValue(Crv);
-            }
-            if (Optional.IsDefined(Kid))
-            {
-                writer.WritePropertyName("kid");
-                writer.WriteStringValue(Kid);
-            }
-            if (Optional.IsDefined(Kty))
-            {
-                writer.WritePropertyName("kty");
-                writer.WriteStringValue(Kty);
-            }
-            if (Optional.IsDefined(X))
-            {
-                writer.WritePropertyName("x");
-                writer.WriteStringValue(X);
-            }
-            if (Optional.IsDefined(Y))
-            {
-                writer.WritePropertyName("y");
-                writer.WriteStringValue(Y);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static JWKHeader DeserializeJWKHeader(JsonElement element)
         {
             Optional<string> crv = default;
@@ -52,27 +21,27 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> y = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("crv"))
+                if (property.NameEquals("crv"u8))
                 {
                     crv = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kid"))
+                if (property.NameEquals("kid"u8))
                 {
                     kid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kty"))
+                if (property.NameEquals("kty"u8))
                 {
                     kty = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x"))
+                if (property.NameEquals("x"u8))
                 {
                     x = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("y"))
+                if (property.NameEquals("y"u8))
                 {
                     y = property.Value.GetString();
                     continue;

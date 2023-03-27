@@ -263,7 +263,12 @@
         "tcpkeepalive",
         "wasi",
         "wmem",
-        "Oidc"
+        "Oidc",
+        "Ebpf",
+        "Ipvs",
+        "Keda",
+        "Kata",
+        "Mshv"
       ]
     },
     {
@@ -729,6 +734,12 @@
       ]
     },
     {
+      "filename": "**/sdk/resourcehealth/**/*.cs",
+      "words": [
+        "occured"
+      ]
+    },
+    {
       "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
       "words": [
         "reimage",
@@ -981,12 +992,28 @@
       ]
     },
     {
+      "filename": "**/sdk/voiceservices/**/*.cs",
+      "words": [
+        "Esrp",
+        "Pcma",
+        "Pcmu"
+      ]
+    },
+    {
       "filename": "**/sdk/webpubsub/**/*.cs",
       "words": [
         "protobuf",
         "Ackable",
         "awps"
         ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*.cs",
+      "words": [
+        "Probs",
+        "Logprobs",
+        "Logit"
+      ]
     }
   ],
   "allowCompoundWords": true

@@ -13,8 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
     /// A class representing the DataBoxEdgeRoleAddon data model.
-    /// Please note <see cref="DataBoxEdgeRoleAddonData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="EdgeArcAddon"/> and <see cref="EdgeIotAddon"/>.
+    /// Role Addon
     /// Please note <see cref="DataBoxEdgeRoleAddonData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="EdgeArcAddon"/> and <see cref="EdgeIotAddon"/>.
     /// </summary>

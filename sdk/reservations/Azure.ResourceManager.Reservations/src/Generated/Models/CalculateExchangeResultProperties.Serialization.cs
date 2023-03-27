@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<ExchangePolicyErrors> policyResult = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionId"))
+                if (property.NameEquals("sessionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     sessionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("netPayable"))
+                if (property.NameEquals("netPayable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     netPayable = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("refundsTotal"))
+                if (property.NameEquals("refundsTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     refundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("purchasesTotal"))
+                if (property.NameEquals("purchasesTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     purchasesTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("reservationsToPurchase"))
+                if (property.NameEquals("reservationsToPurchase"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     reservationsToPurchase = array;
                     continue;
                 }
-                if (property.NameEquals("reservationsToExchange"))
+                if (property.NameEquals("reservationsToExchange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     reservationsToExchange = array;
                     continue;
                 }
-                if (property.NameEquals("policyResult"))
+                if (property.NameEquals("policyResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -6,7 +6,6 @@
     <Description>DigitalTwins.Tests Class Library</Description>
     <AssemblyName>DigitalTwins.Tests</AssemblyName>
     <VersionPrefix>2022-05-31</VersionPrefix>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   
   <PropertyGroup>

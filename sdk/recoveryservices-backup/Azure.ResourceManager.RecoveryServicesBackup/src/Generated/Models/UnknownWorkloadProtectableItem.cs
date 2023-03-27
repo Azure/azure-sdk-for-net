@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectableItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
-        internal UnknownWorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, ProtectionStatus? protectionState) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
+        internal UnknownWorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
         {
             ProtectableItemType = protectableItemType ?? "Unknown";
         }

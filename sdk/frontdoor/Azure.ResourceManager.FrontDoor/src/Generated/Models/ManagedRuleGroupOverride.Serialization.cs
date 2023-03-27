@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleGroupName");
+            writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
             if (Optional.IsCollectionDefined(Exclusions))
             {
-                writer.WritePropertyName("exclusions");
+                writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsCollectionDefined(Rules))
             {
-                writer.WritePropertyName("rules");
+                writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<IList<ManagedRuleOverride>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleGroupName"))
+                if (property.NameEquals("ruleGroupName"u8))
                 {
                     ruleGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("exclusions"))
+                if (property.NameEquals("exclusions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     exclusions = array;
                     continue;
                 }
-                if (property.NameEquals("rules"))
+                if (property.NameEquals("rules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

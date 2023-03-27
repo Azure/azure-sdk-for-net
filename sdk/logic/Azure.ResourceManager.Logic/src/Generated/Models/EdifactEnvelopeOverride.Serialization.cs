@@ -17,77 +17,77 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MessageId))
             {
-                writer.WritePropertyName("messageId");
+                writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
             if (Optional.IsDefined(MessageVersion))
             {
-                writer.WritePropertyName("messageVersion");
+                writer.WritePropertyName("messageVersion"u8);
                 writer.WriteStringValue(MessageVersion);
             }
             if (Optional.IsDefined(MessageRelease))
             {
-                writer.WritePropertyName("messageRelease");
+                writer.WritePropertyName("messageRelease"u8);
                 writer.WriteStringValue(MessageRelease);
             }
             if (Optional.IsDefined(MessageAssociationAssignedCode))
             {
-                writer.WritePropertyName("messageAssociationAssignedCode");
+                writer.WritePropertyName("messageAssociationAssignedCode"u8);
                 writer.WriteStringValue(MessageAssociationAssignedCode);
             }
             if (Optional.IsDefined(TargetNamespace))
             {
-                writer.WritePropertyName("targetNamespace");
+                writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
             if (Optional.IsDefined(FunctionalGroupId))
             {
-                writer.WritePropertyName("functionalGroupId");
+                writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
             }
             if (Optional.IsDefined(SenderApplicationQualifier))
             {
-                writer.WritePropertyName("senderApplicationQualifier");
+                writer.WritePropertyName("senderApplicationQualifier"u8);
                 writer.WriteStringValue(SenderApplicationQualifier);
             }
             if (Optional.IsDefined(SenderApplicationId))
             {
-                writer.WritePropertyName("senderApplicationId");
+                writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
             }
             if (Optional.IsDefined(ReceiverApplicationQualifier))
             {
-                writer.WritePropertyName("receiverApplicationQualifier");
+                writer.WritePropertyName("receiverApplicationQualifier"u8);
                 writer.WriteStringValue(ReceiverApplicationQualifier);
             }
             if (Optional.IsDefined(ReceiverApplicationId))
             {
-                writer.WritePropertyName("receiverApplicationId");
+                writer.WritePropertyName("receiverApplicationId"u8);
                 writer.WriteStringValue(ReceiverApplicationId);
             }
             if (Optional.IsDefined(ControllingAgencyCode))
             {
-                writer.WritePropertyName("controllingAgencyCode");
+                writer.WritePropertyName("controllingAgencyCode"u8);
                 writer.WriteStringValue(ControllingAgencyCode);
             }
             if (Optional.IsDefined(GroupHeaderMessageVersion))
             {
-                writer.WritePropertyName("groupHeaderMessageVersion");
+                writer.WritePropertyName("groupHeaderMessageVersion"u8);
                 writer.WriteStringValue(GroupHeaderMessageVersion);
             }
             if (Optional.IsDefined(GroupHeaderMessageRelease))
             {
-                writer.WritePropertyName("groupHeaderMessageRelease");
+                writer.WritePropertyName("groupHeaderMessageRelease"u8);
                 writer.WriteStringValue(GroupHeaderMessageRelease);
             }
             if (Optional.IsDefined(AssociationAssignedCode))
             {
-                writer.WritePropertyName("associationAssignedCode");
+                writer.WritePropertyName("associationAssignedCode"u8);
                 writer.WriteStringValue(AssociationAssignedCode);
             }
             if (Optional.IsDefined(ApplicationPassword))
             {
-                writer.WritePropertyName("applicationPassword");
+                writer.WritePropertyName("applicationPassword"u8);
                 writer.WriteStringValue(ApplicationPassword);
             }
             writer.WriteEndObject();
@@ -112,77 +112,77 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> applicationPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageVersion"))
+                if (property.NameEquals("messageVersion"u8))
                 {
                     messageVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageRelease"))
+                if (property.NameEquals("messageRelease"u8))
                 {
                     messageRelease = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageAssociationAssignedCode"))
+                if (property.NameEquals("messageAssociationAssignedCode"u8))
                 {
                     messageAssociationAssignedCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetNamespace"))
+                if (property.NameEquals("targetNamespace"u8))
                 {
                     targetNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("functionalGroupId"))
+                if (property.NameEquals("functionalGroupId"u8))
                 {
                     functionalGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderApplicationQualifier"))
+                if (property.NameEquals("senderApplicationQualifier"u8))
                 {
                     senderApplicationQualifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderApplicationId"))
+                if (property.NameEquals("senderApplicationId"u8))
                 {
                     senderApplicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("receiverApplicationQualifier"))
+                if (property.NameEquals("receiverApplicationQualifier"u8))
                 {
                     receiverApplicationQualifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("receiverApplicationId"))
+                if (property.NameEquals("receiverApplicationId"u8))
                 {
                     receiverApplicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controllingAgencyCode"))
+                if (property.NameEquals("controllingAgencyCode"u8))
                 {
                     controllingAgencyCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupHeaderMessageVersion"))
+                if (property.NameEquals("groupHeaderMessageVersion"u8))
                 {
                     groupHeaderMessageVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupHeaderMessageRelease"))
+                if (property.NameEquals("groupHeaderMessageRelease"u8))
                 {
                     groupHeaderMessageRelease = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("associationAssignedCode"))
+                if (property.NameEquals("associationAssignedCode"u8))
                 {
                     associationAssignedCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationPassword"))
+                if (property.NameEquals("applicationPassword"u8))
                 {
                     applicationPassword = property.Value.GetString();
                     continue;

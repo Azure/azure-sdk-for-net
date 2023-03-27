@@ -1,0 +1,46 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk2319.openai.azure.com/openai/deployments/BAD_DEPLOYMENT_ID/completions?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "26",
+        "Content-Type": "application/json",
+        "traceparent": "00-1832669fc2d8729dade3176fc57cf4e9-8d5d5313fdca85fa-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230214.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "c51b43dca621ec76c34b7677947207a8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world"
+        ]
+      },
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "apim-request-id": "47321a34-8290-4367-8774-37b887260462",
+        "Content-Length": "104",
+        "Content-Type": "application/json",
+        "Date": "Tue, 14 Feb 2023 23:03:18 GMT",
+        "OpenAI-Processing-Ms": "0.9795",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-region": "West Europe"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "DeploymentNotFound",
+          "message": "The API deployment for the resource does not exist."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
+    "OPENAI_ENDPOINT": "https://sdk2319.openai.azure.com/",
+    "RandomSeed": "782122506"
+  }
+}

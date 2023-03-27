@@ -34,17 +34,17 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<int> page = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString().ToFieldValueType();
                     continue;
                 }
-                if (property.NameEquals("valueString"))
+                if (property.NameEquals("valueString"u8))
                 {
                     valueString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueDate"))
+                if (property.NameEquals("valueDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer.Models
                     valueDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("valueTime"))
+                if (property.NameEquals("valueTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,12 +64,12 @@ namespace Azure.AI.FormRecognizer.Models
                     valueTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
-                if (property.NameEquals("valuePhoneNumber"))
+                if (property.NameEquals("valuePhoneNumber"u8))
                 {
                     valuePhoneNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueNumber"))
+                if (property.NameEquals("valueNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.AI.FormRecognizer.Models
                     valueNumber = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("valueInteger"))
+                if (property.NameEquals("valueInteger"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.AI.FormRecognizer.Models
                     valueInteger = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("valueArray"))
+                if (property.NameEquals("valueArray"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.AI.FormRecognizer.Models
                     valueArray = array;
                     continue;
                 }
-                if (property.NameEquals("valueObject"))
+                if (property.NameEquals("valueObject"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +126,7 @@ namespace Azure.AI.FormRecognizer.Models
                     valueObject = dictionary;
                     continue;
                 }
-                if (property.NameEquals("valueSelectionMark"))
+                if (property.NameEquals("valueSelectionMark"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,17 +136,17 @@ namespace Azure.AI.FormRecognizer.Models
                     valueSelectionMark = property.Value.GetString().ToSelectionMarkState();
                     continue;
                 }
-                if (property.NameEquals("valueCountryRegion"))
+                if (property.NameEquals("valueCountryRegion"u8))
                 {
                     valueCountryRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("boundingBox"))
+                if (property.NameEquals("boundingBox"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +161,7 @@ namespace Azure.AI.FormRecognizer.Models
                     boundingBox = array;
                     continue;
                 }
-                if (property.NameEquals("confidence"))
+                if (property.NameEquals("confidence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +171,7 @@ namespace Azure.AI.FormRecognizer.Models
                     confidence = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("elements"))
+                if (property.NameEquals("elements"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -186,7 +186,7 @@ namespace Azure.AI.FormRecognizer.Models
                     elements = array;
                     continue;
                 }
-                if (property.NameEquals("page"))
+                if (property.NameEquals("page"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

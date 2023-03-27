@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServices
 {
-    /// <summary> A class representing the ManagedServicesRegistrationAssignment data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedServicesRegistrationAssignment data model.
+    /// The registration assignment.
+    /// </summary>
     public partial class ManagedServicesRegistrationAssignmentData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentData. </summary>

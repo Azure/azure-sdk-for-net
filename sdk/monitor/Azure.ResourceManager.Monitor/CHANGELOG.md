@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 1.0.1 (2023-02-21)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
 ## 1.0.0 (2022-09-26)
 
 This release is the first stable release of the Monitor Management library.
@@ -18,6 +25,7 @@ This release is the first stable release of the Monitor Management library.
 
 - The type of `MonitorScaleCapacity.minimum`, `MonitorScaleCapacity.maximum` and `MonitorScaleCapacity.default` were changed to `integer`.
 - The type of `RecurrentSchedule.Days` was changed to `MonitorDayOfWeek`.
+- Removed the extension methods `GetDiagnosticSettings` and `GetDiagnosticSetting` that extends from `ArmResource`.
 
 ### Other Changes
 

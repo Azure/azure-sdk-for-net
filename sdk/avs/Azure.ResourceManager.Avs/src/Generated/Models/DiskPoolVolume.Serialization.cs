@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Avs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetId");
+            writer.WritePropertyName("targetId"u8);
             writer.WriteStringValue(TargetId);
-            writer.WritePropertyName("lunName");
+            writer.WritePropertyName("lunName"u8);
             writer.WriteStringValue(LunName);
             if (Optional.IsDefined(MountOption))
             {
-                writer.WritePropertyName("mountOption");
+                writer.WritePropertyName("mountOption"u8);
                 writer.WriteStringValue(MountOption.Value.ToString());
             }
             writer.WriteEndObject();
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetId"))
+                if (property.NameEquals("targetId"u8))
                 {
                     targetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lunName"))
+                if (property.NameEquals("lunName"u8))
                 {
                     lunName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountOption"))
+                if (property.NameEquals("mountOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs.Models
                     mountOption = new LunMountMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;

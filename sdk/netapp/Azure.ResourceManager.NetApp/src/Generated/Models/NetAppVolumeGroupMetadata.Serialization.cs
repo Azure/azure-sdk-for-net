@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GroupDescription))
             {
-                writer.WritePropertyName("groupDescription");
+                writer.WritePropertyName("groupDescription"u8);
                 writer.WriteStringValue(GroupDescription);
             }
             if (Optional.IsDefined(ApplicationType))
             {
-                writer.WritePropertyName("applicationType");
+                writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
             if (Optional.IsDefined(ApplicationIdentifier))
             {
-                writer.WritePropertyName("applicationIdentifier");
+                writer.WritePropertyName("applicationIdentifier"u8);
                 writer.WriteStringValue(ApplicationIdentifier);
             }
             if (Optional.IsCollectionDefined(GlobalPlacementRules))
             {
-                writer.WritePropertyName("globalPlacementRules");
+                writer.WritePropertyName("globalPlacementRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in GlobalPlacementRules)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             if (Optional.IsDefined(DeploymentSpecId))
             {
-                writer.WritePropertyName("deploymentSpecId");
+                writer.WritePropertyName("deploymentSpecId"u8);
                 writer.WriteStringValue(DeploymentSpecId);
             }
             writer.WriteEndObject();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<long> volumesCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupDescription"))
+                if (property.NameEquals("groupDescription"u8))
                 {
                     groupDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationType"))
+                if (property.NameEquals("applicationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     applicationType = new NetAppApplicationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("applicationIdentifier"))
+                if (property.NameEquals("applicationIdentifier"u8))
                 {
                     applicationIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("globalPlacementRules"))
+                if (property.NameEquals("globalPlacementRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     globalPlacementRules = array;
                     continue;
                 }
-                if (property.NameEquals("deploymentSpecId"))
+                if (property.NameEquals("deploymentSpecId"u8))
                 {
                     deploymentSpecId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("volumesCount"))
+                if (property.NameEquals("volumesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabCustomImage data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabCustomImage data model.
+    /// A custom image.
+    /// </summary>
     public partial class DevTestLabCustomImageData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabCustomImageData. </summary>

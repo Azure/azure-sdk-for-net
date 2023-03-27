@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> threatType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("confidence"))
+                if (property.NameEquals("confidence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,27 +32,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     confidence = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("providerName"))
+                if (property.NameEquals("providerName"u8))
                 {
                     providerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reportLink"))
+                if (property.NameEquals("reportLink"u8))
                 {
                     reportLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threatDescription"))
+                if (property.NameEquals("threatDescription"u8))
                 {
                     threatDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threatName"))
+                if (property.NameEquals("threatName"u8))
                 {
                     threatName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threatType"))
+                if (property.NameEquals("threatType"u8))
                 {
                     threatType = property.Value.GetString();
                     continue;

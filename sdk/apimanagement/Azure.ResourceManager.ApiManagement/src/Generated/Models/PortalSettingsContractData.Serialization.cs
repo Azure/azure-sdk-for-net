@@ -17,36 +17,36 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(ValidationKey))
             {
-                writer.WritePropertyName("validationKey");
+                writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
             if (Optional.IsDefined(IsSubscriptions))
             {
-                writer.WritePropertyName("subscriptions");
+                writer.WritePropertyName("subscriptions"u8);
                 writer.WriteObjectValue(IsSubscriptions);
             }
             if (Optional.IsDefined(IsUserRegistration))
             {
-                writer.WritePropertyName("userRegistration");
+                writer.WritePropertyName("userRegistration"u8);
                 writer.WriteObjectValue(IsUserRegistration);
             }
             if (Optional.IsDefined(IsRedirectEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsRedirectEnabled.Value);
             }
             if (Optional.IsDefined(TermsOfService))
             {
-                writer.WritePropertyName("termsOfService");
+                writer.WritePropertyName("termsOfService"u8);
                 writer.WriteObjectValue(TermsOfService);
             }
             writer.WriteEndObject();
@@ -67,22 +67,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<TermsOfServiceProperties> termsOfService = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("url"))
+                        if (property0.NameEquals("url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             uri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("validationKey"))
+                        if (property0.NameEquals("validationKey"u8))
                         {
                             validationKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("subscriptions"))
+                        if (property0.NameEquals("subscriptions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("userRegistration"))
+                        if (property0.NameEquals("userRegistration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("termsOfService"))
+                        if (property0.NameEquals("termsOfService"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

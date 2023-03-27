@@ -735,13 +735,12 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var vmssName = TestUtilities.GenerateName("vmss");
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
                 VirtualMachineScaleSet inputVMScaleSet;
-                var serviceArtifaceReferenceId = "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/crpTestrgarco/providers/Microsoft.Compute/galleries/mygalleryForCrp97f7/serviceArtifacts/serviceArtifactWithPirImage2/vmArtifactsProfiles/myVMP";
+                var serviceArtifaceReferenceId = "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/crparcobvt/providers/Microsoft.Compute/galleries/galleryForArcoBvt/serviceArtifacts/serviceArtifactWithPirImage/vmArtifactsProfiles/myVMP";
 
                 try
                 {
@@ -794,6 +793,7 @@ namespace Compute.Tests
                     //of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
+                
             }
         }
 
@@ -808,6 +808,8 @@ namespace Compute.Tests
             EnsureClientsInitialized(context);
 
             ImageReference imageRef = imageReference ?? GetPlatformVMImage(useWindowsImage: true);
+            const string expectedOSName = "Windows Server 2012 R2 Datacenter", expectedOSVersion = "Microsoft Windows NT 6.3.9600.0", expectedComputerName = "test000000", expectedHyperVGeneration = "V1";
+
             // Create resource group
             var rgName = TestUtilities.GenerateName(TestPrefix);
             var vmssName = TestUtilities.GenerateName("vmss");
@@ -975,7 +977,7 @@ namespace Compute.Tests
                 if (validateVmssVMInstanceView)
                 {
                     VirtualMachineScaleSetVMInstanceView vmssVMInstanceView = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName, vmssName, "0");
-                    ValidateVMScaleSetVMInstanceView(vmssVMInstanceView, hasManagedDisks, dedicatedHostReferenceId);
+                    ValidateVMScaleSetVMInstanceView(vmssVMInstanceView, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion, expectedHyperVGeneration, dedicatedHostReferenceId);
                 }
 
                 vmScaleSetValidator?.Invoke(getResponse);

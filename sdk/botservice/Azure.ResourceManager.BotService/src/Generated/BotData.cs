@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    /// <summary> A class representing the Bot data model. </summary>
+    /// <summary>
+    /// A class representing the Bot data model.
+    /// Bot resource definition
+    /// </summary>
     public partial class BotData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of BotData. </summary>

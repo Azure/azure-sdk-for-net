@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GpuType))
             {
-                writer.WritePropertyName("gpuType");
+                writer.WritePropertyName("gpuType"u8);
                 writer.WriteStringValue(GpuType);
             }
             if (Optional.IsDefined(GpuUsedUnitsCount))
             {
-                writer.WritePropertyName("gpuUsedUnitsCount");
+                writer.WritePropertyName("gpuUsedUnitsCount"u8);
                 writer.WriteNumberValue(GpuUsedUnitsCount.Value);
             }
             if (Optional.IsDefined(GpuFreeUnitsCount))
             {
-                writer.WritePropertyName("gpuFreeUnitsCount");
+                writer.WritePropertyName("gpuFreeUnitsCount"u8);
                 writer.WriteNumberValue(GpuFreeUnitsCount.Value);
             }
             if (Optional.IsDefined(GpuReservedForFailoverUnitsCount))
             {
-                writer.WritePropertyName("gpuReservedForFailoverUnitsCount");
+                writer.WritePropertyName("gpuReservedForFailoverUnitsCount"u8);
                 writer.WriteNumberValue(GpuReservedForFailoverUnitsCount.Value);
             }
             if (Optional.IsDefined(GpuTotalUnitsCount))
             {
-                writer.WritePropertyName("gpuTotalUnitsCount");
+                writer.WritePropertyName("gpuTotalUnitsCount"u8);
                 writer.WriteNumberValue(GpuTotalUnitsCount.Value);
             }
             writer.WriteEndObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<int> gpuTotalUnitsCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("gpuType"))
+                if (property.NameEquals("gpuType"u8))
                 {
                     gpuType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("gpuUsedUnitsCount"))
+                if (property.NameEquals("gpuUsedUnitsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     gpuUsedUnitsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("gpuFreeUnitsCount"))
+                if (property.NameEquals("gpuFreeUnitsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     gpuFreeUnitsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("gpuReservedForFailoverUnitsCount"))
+                if (property.NameEquals("gpuReservedForFailoverUnitsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     gpuReservedForFailoverUnitsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("gpuTotalUnitsCount"))
+                if (property.NameEquals("gpuTotalUnitsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

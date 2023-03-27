@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Media.Models
             Guid assetFileId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("initializationVector"))
+                if (property.NameEquals("initializationVector"u8))
                 {
                     initializationVector = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assetFileName"))
+                if (property.NameEquals("assetFileName"u8))
                 {
                     assetFileName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assetFileId"))
+                if (property.NameEquals("assetFileId"u8))
                 {
                     assetFileId = property.Value.GetGuid();
                     continue;

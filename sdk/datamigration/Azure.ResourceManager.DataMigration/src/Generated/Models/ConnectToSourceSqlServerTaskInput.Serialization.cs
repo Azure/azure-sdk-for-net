@@ -15,41 +15,41 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceConnectionInfo");
+            writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
             if (Optional.IsDefined(CheckPermissionsGroup))
             {
-                writer.WritePropertyName("checkPermissionsGroup");
+                writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
             if (Optional.IsDefined(CollectDatabases))
             {
-                writer.WritePropertyName("collectDatabases");
+                writer.WritePropertyName("collectDatabases"u8);
                 writer.WriteBooleanValue(CollectDatabases.Value);
             }
             if (Optional.IsDefined(CollectLogins))
             {
-                writer.WritePropertyName("collectLogins");
+                writer.WritePropertyName("collectLogins"u8);
                 writer.WriteBooleanValue(CollectLogins.Value);
             }
             if (Optional.IsDefined(CollectAgentJobs))
             {
-                writer.WritePropertyName("collectAgentJobs");
+                writer.WritePropertyName("collectAgentJobs"u8);
                 writer.WriteBooleanValue(CollectAgentJobs.Value);
             }
             if (Optional.IsDefined(CollectTdeCertificateInfo))
             {
-                writer.WritePropertyName("collectTdeCertificateInfo");
+                writer.WritePropertyName("collectTdeCertificateInfo"u8);
                 writer.WriteBooleanValue(CollectTdeCertificateInfo.Value);
             }
             if (Optional.IsDefined(ValidateSsisCatalogOnly))
             {
-                writer.WritePropertyName("validateSsisCatalogOnly");
+                writer.WritePropertyName("validateSsisCatalogOnly"u8);
                 writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);
             }
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
-                writer.WritePropertyName("encryptedKeyForSecureFields");
+                writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
             writer.WriteEndObject();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> encryptedKeyForSecureFields = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
                     sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("checkPermissionsGroup"))
+                if (property.NameEquals("checkPermissionsGroup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     checkPermissionsGroup = property.Value.GetString().ToServerLevelPermissionsGroup();
                     continue;
                 }
-                if (property.NameEquals("collectDatabases"))
+                if (property.NameEquals("collectDatabases"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     collectDatabases = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("collectLogins"))
+                if (property.NameEquals("collectLogins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     collectLogins = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("collectAgentJobs"))
+                if (property.NameEquals("collectAgentJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     collectAgentJobs = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("collectTdeCertificateInfo"))
+                if (property.NameEquals("collectTdeCertificateInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     collectTdeCertificateInfo = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("validateSsisCatalogOnly"))
+                if (property.NameEquals("validateSsisCatalogOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validateSsisCatalogOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("encryptedKeyForSecureFields"))
+                if (property.NameEquals("encryptedKeyForSecureFields"u8))
                 {
                     encryptedKeyForSecureFields = property.Value.GetString();
                     continue;

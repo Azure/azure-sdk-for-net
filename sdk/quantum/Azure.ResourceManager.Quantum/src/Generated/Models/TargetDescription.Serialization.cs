@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<IReadOnlyList<string>> acceptedContentEncodings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("acceptedDataFormats"))
+                if (property.NameEquals("acceptedDataFormats"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     acceptedDataFormats = array;
                     continue;
                 }
-                if (property.NameEquals("acceptedContentEncodings"))
+                if (property.NameEquals("acceptedContentEncodings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

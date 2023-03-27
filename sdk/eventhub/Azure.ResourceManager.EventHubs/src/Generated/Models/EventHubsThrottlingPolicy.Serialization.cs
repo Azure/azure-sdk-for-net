@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("rateLimitThreshold");
+            writer.WritePropertyName("rateLimitThreshold"u8);
             writer.WriteNumberValue(RateLimitThreshold);
-            writer.WritePropertyName("metricId");
+            writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId.ToString());
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ApplicationGroupPolicyType.ToString());
             writer.WriteEndObject();
         }
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.EventHubs.Models
             ApplicationGroupPolicyType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rateLimitThreshold"))
+                if (property.NameEquals("rateLimitThreshold"u8))
                 {
                     rateLimitThreshold = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("metricId"))
+                if (property.NameEquals("metricId"u8))
                 {
                     metricId = new EventHubsMetricId(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ApplicationGroupPolicyType(property.Value.GetString());
                     continue;

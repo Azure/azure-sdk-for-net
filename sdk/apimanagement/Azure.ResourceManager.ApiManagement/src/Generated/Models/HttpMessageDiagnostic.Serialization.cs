@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(Body))
             {
-                writer.WritePropertyName("body");
+                writer.WritePropertyName("body"u8);
                 writer.WriteObjectValue(Body);
             }
             if (Optional.IsDefined(DataMasking))
             {
-                writer.WritePropertyName("dataMasking");
+                writer.WritePropertyName("dataMasking"u8);
                 writer.WriteObjectValue(DataMasking);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<DataMasking> dataMasking = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     headers = array;
                     continue;
                 }
-                if (property.NameEquals("body"))
+                if (property.NameEquals("body"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     body = BodyDiagnosticSettings.DeserializeBodyDiagnosticSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataMasking"))
+                if (property.NameEquals("dataMasking"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

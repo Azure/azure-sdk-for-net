@@ -138,9 +138,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             }
 
-            // Check that the FHIR bundle is not null, but empty.
-            Assert.IsNotNull(result1.FhirBundle);
-            Assert.AreEqual(0, result1.FhirBundle.Count);
+            Assert.IsNull(result1.FhirBundle);
         }
 
         [RecordedTest]
@@ -463,7 +461,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
             {
-                FhirVersion = WellKnownFhirVersion.V4_0_1,
+                FhirVersion = FhirVersion.V4_0_1,
                 DocumentType = HealthcareDocumentType.DischargeSummary
             });
 
@@ -480,7 +478,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Check the FHIR bundle.
             Assert.IsNotNull(resultCollection[0].FhirBundle);
-            Assert.Greater(resultCollection[0].FhirBundle.Count, 0);
         }
 
         [RecordedTest]
@@ -493,7 +490,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
             {
-                FhirVersion = WellKnownFhirVersion.V4_0_1,
+                FhirVersion = FhirVersion.V4_0_1,
             }));
 
             Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));

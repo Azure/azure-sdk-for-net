@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary> A class representing the ScopeMap data model. </summary>
+    /// <summary>
+    /// A class representing the ScopeMap data model.
+    /// An object that represents a scope map for a container registry.
+    /// </summary>
     public partial class ScopeMapData : ResourceData
     {
         /// <summary> Initializes a new instance of ScopeMapData. </summary>

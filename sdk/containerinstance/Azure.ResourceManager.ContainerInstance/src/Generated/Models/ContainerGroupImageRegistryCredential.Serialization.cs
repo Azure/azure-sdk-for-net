@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("server");
+            writer.WritePropertyName("server"u8);
             writer.WriteStringValue(Server);
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
             if (Optional.IsDefined(IdentityUri))
             {
-                writer.WritePropertyName("identityUrl");
+                writer.WritePropertyName("identityUrl"u8);
                 writer.WriteStringValue(IdentityUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -50,27 +50,27 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<Uri> identityUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("server"))
+                if (property.NameEquals("server"u8))
                 {
                     server = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityUrl"))
+                if (property.NameEquals("identityUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

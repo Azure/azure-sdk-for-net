@@ -12,7 +12,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppVolumeQuotaRule data model. </summary>
+    /// <summary>
+    /// A class representing the NetAppVolumeQuotaRule data model.
+    /// Quota Rule of a Volume
+    /// </summary>
     public partial class NetAppVolumeQuotaRuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NetAppVolumeQuotaRuleData. </summary>

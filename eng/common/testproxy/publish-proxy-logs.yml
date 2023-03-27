@@ -1,0 +1,16 @@
+parameters:
+  rootFolder: '$(Build.SourcesDirectory)'
+
+steps:
+  - pwsh: |
+      Copy-Item -Path "${{ parameters.rootFolder }}/test-proxy.log" -Destination "${{ parameters.rootFolder }}/proxy.log"
+    displayName: Copy Log File
+
+  - template: ../pipelines/templates/steps/publish-artifact.yml
+    parameters:
+      ArtifactName: "$(System.JobName)-proxy-logs"
+      ArtifactPath: "${{ parameters.rootFolder }}/proxy.log"
+
+  - pwsh: |
+      Remove-Item -Force ${{ parameters.rootFolder }}/proxy.log
+    displayName: Cleanup Copied Log File

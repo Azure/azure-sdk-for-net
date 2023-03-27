@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the PremierAddOn data model. </summary>
+    /// <summary>
+    /// A class representing the PremierAddOn data model.
+    /// Premier add-on.
+    /// </summary>
     public partial class PremierAddOnData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PremierAddOnData. </summary>

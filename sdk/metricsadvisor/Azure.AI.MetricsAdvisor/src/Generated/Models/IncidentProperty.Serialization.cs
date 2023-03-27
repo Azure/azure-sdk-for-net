@@ -20,22 +20,22 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<double?> expectedValueOfRootNode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxSeverity"))
+                if (property.NameEquals("maxSeverity"u8))
                 {
                     maxSeverity = new AnomalySeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("incidentStatus"))
+                if (property.NameEquals("incidentStatus"u8))
                 {
                     incidentStatus = new AnomalyIncidentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("valueOfRootNode"))
+                if (property.NameEquals("valueOfRootNode"u8))
                 {
                     valueOfRootNode = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("expectedValueOfRootNode"))
+                if (property.NameEquals("expectedValueOfRootNode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

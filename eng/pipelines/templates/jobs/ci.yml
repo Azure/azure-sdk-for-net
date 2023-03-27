@@ -16,7 +16,7 @@ parameters:
   default: not-specified
 - name: BuildSnippets
   type: boolean
-  default: false
+  default: true
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -44,7 +44,7 @@ jobs:
   - job: Build
     pool:
       name: azsdk-pool-mms-win-2022-general
-      vmImage: MMS2022
+      vmImage: windows-2022
 
     variables:
       Codeql.Enabled: true
@@ -182,7 +182,7 @@ jobs:
         inputs:
           command: custom
           custom: 'tool'
-          arguments: 'install --global --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" --version "1.0.0-dev.20211119.1" "Azure.Sdk.Tools.SnippetGenerator"'
+          arguments: 'restore'
           workingDirectory: '$(Agent.BuildDirectory)'
 
       - task: PowerShell@2
@@ -219,7 +219,7 @@ jobs:
     - job: Compliance
       pool:
         name: azsdk-pool-mms-win-2022-general
-        vmImage: MMS2022
+        vmImage: windows-2022
       steps:
         - task: UsePythonVersion@0
           displayName: "Use Python 3.6"

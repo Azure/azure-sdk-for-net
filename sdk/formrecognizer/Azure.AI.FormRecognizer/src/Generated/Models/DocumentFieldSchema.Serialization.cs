@@ -22,22 +22,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<IReadOnlyDictionary<string, DocumentFieldSchema>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString().ToDocumentFieldType();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("example"))
+                if (property.NameEquals("example"u8))
                 {
                     example = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("items"))
+                if (property.NameEquals("items"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     items = DeserializeDocumentFieldSchema(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

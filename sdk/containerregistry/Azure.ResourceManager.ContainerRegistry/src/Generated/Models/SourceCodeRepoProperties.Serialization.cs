@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceControlType");
+            writer.WritePropertyName("sourceControlType"u8);
             writer.WriteStringValue(SourceControlType.ToString());
-            writer.WritePropertyName("repositoryUrl");
+            writer.WritePropertyName("repositoryUrl"u8);
             writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             if (Optional.IsDefined(Branch))
             {
-                writer.WritePropertyName("branch");
+                writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
             if (Optional.IsDefined(SourceControlAuthProperties))
             {
-                writer.WritePropertyName("sourceControlAuthProperties");
+                writer.WritePropertyName("sourceControlAuthProperties"u8);
                 writer.WriteObjectValue(SourceControlAuthProperties);
             }
             writer.WriteEndObject();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<SourceCodeRepoAuthInfo> sourceControlAuthProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceControlType"))
+                if (property.NameEquals("sourceControlType"u8))
                 {
                     sourceControlType = new SourceControlType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("repositoryUrl"))
+                if (property.NameEquals("repositoryUrl"u8))
                 {
                     repositoryUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("branch"))
+                if (property.NameEquals("branch"u8))
                 {
                     branch = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceControlAuthProperties"))
+                if (property.NameEquals("sourceControlAuthProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

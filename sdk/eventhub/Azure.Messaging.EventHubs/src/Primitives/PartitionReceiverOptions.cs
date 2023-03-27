@@ -66,6 +66,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   messages that were read will be returned.
         /// </summary>
         ///
+        /// <value>The default wait time is 60 seconds.</value>
+        ///
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested wait time is negative.</exception>
         ///
         public TimeSpan? DefaultMaximumReceiveWaitTime
@@ -88,6 +90,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   identifier.
         /// </summary>
         ///
+        /// <value>If not specified, a random unique identifier will be generated.</value>
+        ///
         public string Identifier { get; set; }
 
         /// <summary>
@@ -100,7 +104,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   not be allowed to be created, if they already exist, will encounter an exception during the next attempted operation.
         /// </summary>
         ///
-        /// <value>The relative priority to associate with an exclusive reader; for a non-exclusive reader, this value should be <c>null</c>.</value>
+        /// <value>
+        ///   The relative priority to associate with an exclusive reader; for a non-exclusive reader, this value should be <c>null</c>.  The
+        ///   default owner level is <c>null</c>.
+        /// </value>
         ///
         /// <exception cref="EventHubsException">
         ///   Occurs when the owner level is set and the <see cref="PartitionReceiver"/> is unable to read from the requested Event Hub partition due to being denied
@@ -122,6 +129,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   The <see cref="PrefetchCount" /> is a control that developers can use to help tune performance for the specific
         ///   needs of an application, given its expected size of events, throughput needs, and expected scenarios for using
         ///   Event Hubs.
+        ///
+        ///   The default prefetch count is 300.
         /// </value>
         ///
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is negative.</exception>
@@ -153,6 +162,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   smaller than the number of bytes specified, and will always contain at least one event when the <see cref="PrefetchSizeInBytes" />
         ///   is specified.  A heuristic is used to predict the average event size to use for size calculations, which should be expected to fluctuate
         ///   as traffic passes through the system.  Consequently, the resulting resource use will fluctuate as well.</para>
+        ///
+        ///   <para>This option is disabled by default with the value set to <c>null</c>.</para>
         /// </value>
         ///
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested size is negative.</exception>
@@ -177,7 +188,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   associated with a given event, and track that information as events are read.
         /// </summary>
         ///
-        /// <value><c>true</c> if information about a partition's last event should be requested and tracked; otherwise, <c>false</c>.</value>
+        /// <value>
+        ///   <c>true</c> if information about a partition's last event should be requested and tracked; otherwise, <c>false</c>.  The
+        ///   default value is <c>true</c>.
+        /// </value>
         ///
         /// <remarks>
         ///   When information about a partition's last enqueued event is being tracked, each event received from the Event Hubs

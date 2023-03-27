@@ -13,7 +13,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseSqlPoolSecurityAlertPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseSqlPoolSecurityAlertPolicy data model.
+    /// A Sql pool security alert policy.
+    /// </summary>
     public partial class SynapseSqlPoolSecurityAlertPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseSqlPoolSecurityAlertPolicyData. </summary>

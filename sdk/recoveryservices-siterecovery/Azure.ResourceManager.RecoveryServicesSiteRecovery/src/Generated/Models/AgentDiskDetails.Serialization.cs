@@ -21,22 +21,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<int> lunId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"))
+                if (property.NameEquals("diskId"u8))
                 {
                     diskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskName"))
+                if (property.NameEquals("diskName"u8))
                 {
                     diskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isOSDisk"))
+                if (property.NameEquals("isOSDisk"u8))
                 {
                     isOSDisk = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacityInBytes"))
+                if (property.NameEquals("capacityInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     capacityInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lunId"))
+                if (property.NameEquals("lunId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

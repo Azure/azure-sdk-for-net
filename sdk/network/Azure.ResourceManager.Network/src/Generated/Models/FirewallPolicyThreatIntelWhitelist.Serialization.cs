@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IPAddresses))
             {
-                writer.WritePropertyName("ipAddresses");
+                writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPAddresses)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {
-                writer.WritePropertyName("fqdns");
+                writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Fqdns)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> fqdns = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddresses"))
+                if (property.NameEquals("ipAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                     ipAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("fqdns"))
+                if (property.NameEquals("fqdns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

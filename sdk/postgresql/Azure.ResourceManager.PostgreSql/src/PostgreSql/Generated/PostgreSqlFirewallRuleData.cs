@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    /// <summary> A class representing the PostgreSqlFirewallRule data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlFirewallRule data model.
+    /// Represents a server firewall rule.
+    /// </summary>
     public partial class PostgreSqlFirewallRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlFirewallRuleData. </summary>

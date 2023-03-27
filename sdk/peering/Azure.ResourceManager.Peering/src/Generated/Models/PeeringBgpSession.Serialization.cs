@@ -18,47 +18,47 @@ namespace Azure.ResourceManager.Peering.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionPrefixV4))
             {
-                writer.WritePropertyName("sessionPrefixV4");
+                writer.WritePropertyName("sessionPrefixV4"u8);
                 writer.WriteStringValue(SessionPrefixV4);
             }
             if (Optional.IsDefined(SessionPrefixV6))
             {
-                writer.WritePropertyName("sessionPrefixV6");
+                writer.WritePropertyName("sessionPrefixV6"u8);
                 writer.WriteStringValue(SessionPrefixV6);
             }
             if (Optional.IsDefined(MicrosoftSessionIPv4Address))
             {
-                writer.WritePropertyName("microsoftSessionIPv4Address");
+                writer.WritePropertyName("microsoftSessionIPv4Address"u8);
                 writer.WriteStringValue(MicrosoftSessionIPv4Address.ToString());
             }
             if (Optional.IsDefined(MicrosoftSessionIPv6Address))
             {
-                writer.WritePropertyName("microsoftSessionIPv6Address");
+                writer.WritePropertyName("microsoftSessionIPv6Address"u8);
                 writer.WriteStringValue(MicrosoftSessionIPv6Address.ToString());
             }
             if (Optional.IsDefined(PeerSessionIPv4Address))
             {
-                writer.WritePropertyName("peerSessionIPv4Address");
+                writer.WritePropertyName("peerSessionIPv4Address"u8);
                 writer.WriteStringValue(PeerSessionIPv4Address.ToString());
             }
             if (Optional.IsDefined(PeerSessionIPv6Address))
             {
-                writer.WritePropertyName("peerSessionIPv6Address");
+                writer.WritePropertyName("peerSessionIPv6Address"u8);
                 writer.WriteStringValue(PeerSessionIPv6Address.ToString());
             }
             if (Optional.IsDefined(MaxPrefixesAdvertisedV4))
             {
-                writer.WritePropertyName("maxPrefixesAdvertisedV4");
+                writer.WritePropertyName("maxPrefixesAdvertisedV4"u8);
                 writer.WriteNumberValue(MaxPrefixesAdvertisedV4.Value);
             }
             if (Optional.IsDefined(MaxPrefixesAdvertisedV6))
             {
-                writer.WritePropertyName("maxPrefixesAdvertisedV6");
+                writer.WritePropertyName("maxPrefixesAdvertisedV6"u8);
                 writer.WriteNumberValue(MaxPrefixesAdvertisedV6.Value);
             }
             if (Optional.IsDefined(Md5AuthenticationKey))
             {
-                writer.WritePropertyName("md5AuthenticationKey");
+                writer.WritePropertyName("md5AuthenticationKey"u8);
                 writer.WriteStringValue(Md5AuthenticationKey);
             }
             writer.WriteEndObject();
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<string> md5AuthenticationKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionPrefixV4"))
+                if (property.NameEquals("sessionPrefixV4"u8))
                 {
                     sessionPrefixV4 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sessionPrefixV6"))
+                if (property.NameEquals("sessionPrefixV6"u8))
                 {
                     sessionPrefixV6 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("microsoftSessionIPv4Address"))
+                if (property.NameEquals("microsoftSessionIPv4Address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Peering.Models
                     microsoftSessionIPv4Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("microsoftSessionIPv6Address"))
+                if (property.NameEquals("microsoftSessionIPv6Address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Peering.Models
                     microsoftSessionIPv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("peerSessionIPv4Address"))
+                if (property.NameEquals("peerSessionIPv4Address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Peering.Models
                     peerSessionIPv4Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("peerSessionIPv6Address"))
+                if (property.NameEquals("peerSessionIPv6Address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Peering.Models
                     peerSessionIPv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sessionStateV4"))
+                if (property.NameEquals("sessionStateV4"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Peering.Models
                     sessionStateV4 = new PeeringSessionStateV4(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sessionStateV6"))
+                if (property.NameEquals("sessionStateV6"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Peering.Models
                     sessionStateV6 = new PeeringSessionStateV6(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maxPrefixesAdvertisedV4"))
+                if (property.NameEquals("maxPrefixesAdvertisedV4"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Peering.Models
                     maxPrefixesAdvertisedV4 = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPrefixesAdvertisedV6"))
+                if (property.NameEquals("maxPrefixesAdvertisedV6"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Peering.Models
                     maxPrefixesAdvertisedV6 = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("md5AuthenticationKey"))
+                if (property.NameEquals("md5AuthenticationKey"u8))
                 {
                     md5AuthenticationKey = property.Value.GetString();
                     continue;

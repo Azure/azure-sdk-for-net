@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("matchVariables");
+            writer.WritePropertyName("matchVariables"u8);
             writer.WriteStartArray();
             foreach (var item in MatchVariables)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("operator");
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
             if (Optional.IsDefined(NegationConditon))
             {
-                writer.WritePropertyName("negationConditon");
+                writer.WritePropertyName("negationConditon"u8);
                 writer.WriteBooleanValue(NegationConditon.Value);
             }
-            writer.WritePropertyName("matchValues");
+            writer.WritePropertyName("matchValues"u8);
             writer.WriteStartArray();
             foreach (var item in MatchValues)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Transforms))
             {
-                writer.WritePropertyName("transforms");
+                writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
                 foreach (var item in Transforms)
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<WebApplicationFirewallTransform>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("matchVariables"))
+                if (property.NameEquals("matchVariables"u8))
                 {
                     List<MatchVariable> array = new List<MatchVariable>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Network.Models
                     matchVariables = array;
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     @operator = new WebApplicationFirewallOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("negationConditon"))
+                if (property.NameEquals("negationConditon"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
                     negationConditon = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("matchValues"))
+                if (property.NameEquals("matchValues"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     matchValues = array;
                     continue;
                 }
-                if (property.NameEquals("transforms"))
+                if (property.NameEquals("transforms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
