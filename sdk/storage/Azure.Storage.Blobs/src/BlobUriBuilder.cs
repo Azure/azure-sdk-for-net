@@ -284,8 +284,7 @@ namespace Azure.Storage.Blobs
         {
             if (_uri == null)
             {
-                RequestUriBuilder builder = BuildUri();
-                _uri = builder.ToUri();
+                _uri = BuildUri().ToUri();
             }
             return _uri;
         }
@@ -355,13 +354,12 @@ namespace Azure.Storage.Blobs
             }
 
             // Use RequestUriBuilder, which has slightly nicer formatting
-            string pathStr = path.ToString();
             return new RequestUriBuilder
             {
                 Scheme = Scheme,
                 Host = Host,
                 Port = Port,
-                Path = pathStr,
+                Path = path.ToString(),
                 Query = query.Length > 0 ? "?" + query.ToString() : null
             };
         }

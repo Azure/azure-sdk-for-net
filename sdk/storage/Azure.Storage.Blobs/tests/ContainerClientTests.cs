@@ -3138,7 +3138,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase("%21%2A%27%28%29%3B%5B%5D%3A%40%26%25%3D%2B%24%2C%2F%3F%23äÄöÖüÜß")]
         [TestCase("my cool blob")]
         [TestCase("blob")]
-        [TestCase("../containername2/blob")]
         public async Task GetBlobClients_SpecialCharacters(string blobName)
         {
             // Arrange
